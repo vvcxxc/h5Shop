@@ -1,0 +1,53 @@
+/** flex 工具函数 */
+
+.flex
+  display flex
+  flex-direction: row
+  &.column
+    flex-direction: column
+  &.center
+    align-items: center
+    justify-content: center
+  &.top
+    align-items: flex-start
+  &.bottom
+    align-items: flex-end
+  &.left
+    justify-content: flex-start
+  &.right
+    justify-content: flex-end
+  >.item
+    flex: 1
+
+
+/** 一些默认样式 */
+page
+body
+  font-size: 28px
+  color: #313131
+  background: #F4F4F4
+
+view
+  color: #313131
+
+
+/** 覆盖 taro-ui 的一些样式 */
+.at-list__item .item-extra__info
+  font-size: 20px !important
+
+.at-list__item-content
+  font-size: 30px !important
+
+.at-list__item
+  padding 36px !important
+
+.tac
+  text-align: center
+.tar
+  text-align: right
+.tal
+  text-align: left
+
+.at-search-bar
+  &:after
+    border: none;

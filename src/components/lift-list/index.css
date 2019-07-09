@@ -1,0 +1,20 @@
+.over {
+  overflow: hidden;
+}
+
+.line {
+  padding: 6px 40px 10px 62px;
+  border-bottom: 1px solid #ededed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #fff;
+}
+
+.click-line {
+  color: #fe7b70;
+}
+/*# sourceMappingURL=index.css.map */

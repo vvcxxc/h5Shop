@@ -1,0 +1,168 @@
+.ticket-buy-view
+    color: #313131
+    border: 2px solid #FFEBCD
+    background-color: #FFFAF4
+    border-radius: 5px
+    padding: 30px 40px
+    position: relative
+    &:after,
+    &:before
+        display: block
+        content: ''
+        position: absolute
+        top: 50%
+        transform: translate(0,-50%) rotate(-45deg)
+        width 30px
+        height 30px
+        border-radius: 30px
+        border-left: 2px solid #FFEBCD
+        border-top: 2px solid #FFEBCD
+        background-color: #fff
+    &:after
+        left -15px
+        transform: translate(0,-50%) rotate(135deg)
+    &:before
+        right -15px
+    .image
+        width: 30px
+        height 30px
+        position: absolute
+        right 48px
+        top: 38px
+
+    .tit
+        font-size: 28px
+    .money
+        font-size: 64px
+    .ft
+        display: flex
+        align-items: center
+        justify-content: space-between
+        .desc
+            font-size: 28px
+            color: #666
+        .tags
+            .tag-text
+                color: #FA5D49
+                font-size: 24px
+                border: 2px solid #FA5D49
+                padding 6px 10px
+                border-radius: 5px
+                margin-right: 12px
+
+
+
+
+.set-meal
+    .set-meal__tit
+        font-size: 36px
+        margin-bottom: 20px
+        .fwb
+            font-weight: bold
+    .ft-more
+        margin-top: 16px
+        color #999
+        padding-bottom: 20px
+        border-bottom: 1px solid rgba(0,0,0,0.07)
+        .taro-text
+            transform: rotate(90deg)
+    .pd30
+        padding: 30px
+    .bcff
+        background-color: #fff
+    .mt20
+        margin-top: 20px
+    .swiper
+        .image
+            width 100%
+    .info
+        padding: 30px
+        .tit
+            font-size: 38px
+            margin-bottom: 13px
+        .desc
+            font-size: 26px
+            margin-bottom: 20px
+        .tags
+            .tag-text
+                padding: 6px
+                border-radius: 5px
+                border: 0.05rem solid #FA5D49
+                font-size: 24px
+                color: #FA5D49
+                margin-right: 10px
+    .shop
+        .image
+            width 113px
+            height 113px
+        .item
+            padding-left: 30px
+        .address-view   
+            font-size: 28px
+            color #313131
+            padding: 34px 0 29px 
+            .address-image
+                width 30px
+                height 30px
+            .mobile-image
+                height 30px
+                width 30px
+                padding-left: 34px
+            .distance
+                padding: 0 15px
+            .text
+                border-left: 1px solid #999999
+                border-right: 1px solid #999999
+                overflow hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                padding: 0 15px
+                height: 28px
+                line-height: 28px
+    .remark
+        .label
+            font-size: 30px
+            color: #999999
+            line-height:38px;
+            margin-bottom: 24px
+        .label-value
+            font-size: 28px
+            color #313131
+            margin-bottom: 37px
+            &:last-child
+                margin-bottom: 0
+    .graphic-details
+        .image
+            width 100%
+    .occupied
+        height 150px
+        background-color: #fff
+        z-index 10
+        .layer-ft-buy
+            position: fixed
+            left 0
+            right 0
+            bottom: 0
+            border:1px solid rgba(225, 225, 225, 1);
+            box-shadow:0px -4px 12px 1px rgba(0, 0, 0, 0.1);
+            background-color: #fff
+            z-index 10
+            justify-content: space-between
+            align-items: center
+            padding: 0 30px
+            .money
+                color #EE3131
+                font-size: 40px
+                .count
+                    font-size: 68px
+            .btn-buy
+                width:220px;
+                height:74px;
+                background:linear-gradient(90deg,rgba(255,148,20,1),rgba(254,134,88,1),rgba(255,23,9,1));
+                border-radius:37px;
+                font-weight:bold;
+                font-size:30px;
+                border: none;
+                color #fff
+                &:after
+                    border: none;

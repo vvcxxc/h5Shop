@@ -1,0 +1,186 @@
+area-block()
+  .title
+    margin-bottom 20px
+    font-size 36px
+    color rgba(51, 51, 51, 1)
+    font-weight 600
+    display flex
+    align-items center
+    .icon
+      margin-right 10px
+      font-size 40px
+.detail
+  font-size 29px
+  color #333
+  font-family "HiraginoSansGB-W3"
+  .container
+    background-color #fff
+    padding 22px 0 110px 0
+    .area-coupon-info,
+    .area-play,
+    .area-attention,
+    .area-supplier-info
+      padding 0 22px
+      margin-bottom 40px
+      area-block()
+    .active-get-gift
+      color pink
+    .area-buy
+      box-sizing border-box
+      position fixed
+      bottom 0
+      left 0
+      width 100vw
+      display flex
+      align-items center
+      justify-content space-between
+      background-color #fff
+      padding 10px 22px
+      border-top 2px solid #f5f5f5
+      .text:first-child
+        color #FF9900
+        font-size 32px
+      .text
+        font-size 24px
+      .action-buy
+        margin 0
+        padding 0 40px
+        border-radius 60px
+        height 80px
+        line-height 80px
+        color #fff
+        background-color #FF9900
+        font-size 32px
+    .area-gift
+      position relative
+      .container
+        padding 0 22px
+        margin-bottom 40px
+        area-block()
+      .view-detail
+        position absolute
+        right 30px
+        top 0
+        color rgba(6, 193, 174, 1)
+      .name
+        color rgba(51, 51, 51, 1)
+        font-size 32px
+      .brief
+        margin-bottom 22px
+        color rgba(153, 153, 153, 1)
+        font-size 24px
+      .image-wrapper
+        height 160px
+        .item
+          width 160px
+          height inherit
+          background-color rgba(153, 153, 153, 1)
+          display inline-block
+          margin-right 22px
+      .distribution
+        padding 10px 0
+        background-color rgba(246, 246, 246, 1)
+        .iconfont
+          margin 0 10px 0 20px
+          &.active-get-gift
+            color #FF9900
+    .area-supplier-info
+      .content
+        display flex
+        .avatar
+          .icon
+            width 147px
+            height 147px
+            background-color rgba(0, 0, 0, 0.1)
+            margin-right 16px
+            border-radius 10px
+        .description
+          flex 1
+          .item
+            padding-top 5px
+
+    .area-attention
+      .item
+        margin-bottom 5px
+        .name
+          color #000
+          font-weight 600
+          margin-right 10px
+        .content-sub
+          padding-left 15px
+          .item-sub
+            position relative
+            padding-left 20px
+            &:before
+              position absolute
+              content " "
+              width 6px
+              height 6px
+              top 50%
+              left 0
+              transform translateY(-50%)
+              background-color #333
+              border-radius 50%
+    .area-coupon-info
+      .item
+        margin-bottom 5px
+      .name
+        font-weight 700
+      .image
+        width 100%
+        height 320px
+        background-color rgba(0, 0, 0, 0.1)
+      .brief
+        position relative
+        color rgba(153, 153, 153, 1)
+        font-size 30px
+        margin-bottom 20px
+        // padding-left 70px
+        // .classify
+        //   position absolute
+        //   left 0
+        //   bottom 8px
+        //   padding 0 5px
+        //   font-size 18px
+        //   border-radius 5px
+        //   border 1px solid #FB4E44
+        //   color #FB4E44
+        //   background-color #FFF1F0
+    .area-play
+      padding 0 22px
+      .title
+        margin-bottom 20px
+        font-size 36px
+        color rgba(51, 51, 51, 1)
+        font-weight: 600
+        text-align center
+      .steps
+        display flex
+        justify-content space-around
+        .item
+          display flex
+          flex-direction column
+          align-items center
+          .number
+            position relative
+            width 40px
+            height 40px
+            line-height 40px
+            border-radius 50%
+            color #fff
+            background-color #F57F17
+            text-align center
+            .line
+              position absolute
+              top 50%
+              transform translateY(-50%)
+              left 88px
+              height 2px
+              background-color #F57F17
+              width 100px
+          .text
+            max-width 112px
+            line-height 30px
+            margin-top 20px
+            font-size 24px
+            text-align center

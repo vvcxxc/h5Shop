@@ -1,0 +1,248 @@
+.page {
+  height: 100vh;
+}
+
+.page > .item {
+  overflow: scroll;
+}
+
+.head {
+  position: relative;
+}
+
+.head .banner-img {
+  width: 100%;
+}
+
+.head .purchase-tip {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  height: 50px;
+  background: black;
+  opacity: 0.7;
+  border-radius: 0 5px 5px 0;
+  color: #fff;
+  font-size: 22px;
+  padding: 0 10px;
+}
+
+.head .purchase-tip .img {
+  width: 38px;
+  height: 38px;
+  background-color: #ccc;
+  border-radius: 38px;
+  margin-right: 6px;
+}
+
+.content {
+  background-color: #fff;
+  padding: 24px;
+}
+
+.content .title {
+  font-size: 38px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.content .time {
+  font-size: 26px;
+  color: #999999;
+  line-height: 1;
+  margin-top: 26px;
+}
+
+.content .labels {
+  padding: 34px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.content .labels .item {
+  display: inline-block;
+  height: 35px;
+  background: #fde8e5;
+  border-radius: 5px;
+  line-height: 35px;
+  padding: 0 16px;
+  font-size: 24px;
+  color: #fa5d49;
+  margin-right: 12px;
+}
+
+.content .detail {
+  font-size: 26px;
+}
+
+.content .detail .title {
+  margin: 28px 0 10px;
+}
+
+.content .detail .see-more {
+  padding-top: 26px;
+  color: #999;
+}
+
+.content .detail .see-more .img {
+  width: 25px;
+  margin-left: 10px;
+}
+
+.give {
+  padding: 30px 28px;
+  background-color: #fff;
+  margin-top: 16px;
+}
+
+.give .title {
+  font-size: 38px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.give .title .link {
+  font-size: 26px;
+  color: #ff6654;
+  font-weight: normal;
+}
+
+.give .sub-title {
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 28px;
+}
+
+.give .label {
+  padding: 6px 13px;
+  background: #fde8e5;
+  border-radius: 5px;
+  font-size: 24px;
+  color: #fa5d49;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.give .img {
+  width: 100%;
+}
+
+.flow {
+  width: 100%;
+  height: 84px;
+  background-color: #fff;
+  margin-top: 16px;
+}
+
+.flow .showy {
+  width: 47px;
+  height: 47px;
+  margin-right: 4px;
+}
+
+.flow .text {
+  width: 40px;
+  font-size: 20px;
+  color: #666;
+  line-height: 1;
+  margin-right: 20px;
+}
+
+.flow .arrow {
+  background-color: #ccc;
+  width: 9px;
+  height: 16px;
+  margin-right: 24px;
+}
+
+.regiment-rule {
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.regiment-rule .title {
+  font-style: 38px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 22px;
+}
+
+.regiment-rule .title > .item {
+  font-style: 38px;
+}
+
+.regiment-rule .title .help {
+  width: 35px;
+  height: 35px;
+}
+
+.regiment-rule .see-more {
+  padding-top: 26px;
+  color: #999;
+}
+
+.regiment-rule .see-more .img {
+  width: 25px;
+  margin-left: 10px;
+}
+
+.regiment-rule .rule {
+  padding: 0 24px;
+}
+
+.regiment-rule .rule .label {
+  font-size: 30px;
+  color: #999;
+}
+
+.regiment-rule .rule .item {
+  font-style: 28px;
+}
+
+.footer {
+  border-top: 1px solid #e1e1e1;
+  background-color: #fff;
+}
+
+.footer .price {
+  padding-left: 20px;
+}
+
+.footer .price .current {
+  font-size: 50px;
+  color: #ee3131;
+}
+
+.footer .price .current .small {
+  font-size: 30px;
+  margin-bottom: -10px;
+  color: #ee3131;
+}
+
+.footer .old {
+  font-size: 24px;
+  color: #999999;
+  margin-bottom: -10px;
+}
+
+.footer .old .strikethrough {
+  color: #999999;
+  text-decoration: line-through;
+}
+
+.footer .btn {
+  font-size: 30px;
+  height: 116px;
+  text-align: center;
+  line-height: 116px;
+  width: 200px;
+  border-left: 1px solid #e1e1e1;
+}
+
+.footer .btn.regiment {
+  color: #fff;
+  background: -webkit-gradient(linear, left top, right top, from(#ff9414), color-stop(#fe8658), to(#ff1709));
+  background: linear-gradient(90deg, #ff9414, #fe8658, #ff1709);
+}
+/*# sourceMappingURL=index.css.map */

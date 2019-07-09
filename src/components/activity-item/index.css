@@ -1,0 +1,82 @@
+.component {
+  background-color: #fff;
+  padding: 25px;
+  margin: 10px 0;
+}
+
+.head-btn {
+  width: 107px;
+  height: 40px;
+  background: #fde8e5;
+  border-radius: 5px;
+  font-size: 24px;
+  color: #ff3922;
+  text-align: center;
+  line-height: 40px;
+}
+
+.store-btn {
+  width: 264px;
+  height: 43px;
+  border: 1px solid #999999;
+  border-radius: 5px;
+  text-align: center;
+  color: #666;
+  margin-top: 10px;
+}
+
+.merchant-icon {
+  margin-right: 7px;
+  width: 23px;
+  height: 21px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #e5e5e5;
+  margin-top: 8px;
+}
+
+.hot-img {
+  padding-top: 22px;
+}
+
+.hot-img > .item:first-child {
+  margin-right: 10px;
+}
+
+.hot-img .img {
+  width: 100%;
+}
+
+.price {
+  font-size: 40px;
+  font-weight: bold;
+  color: #ed6b24;
+  line-height: 1;
+  margin-right: 17px;
+}
+
+.info {
+  font-size: 24px;
+  font-weight: 400;
+  color: #999999;
+}
+
+.check-btn {
+  width: 190px;
+  height: 52px;
+  background: -webkit-gradient(linear, left top, right top, from(#ff9414), color-stop(#fe8658), to(#ff1709));
+  background: linear-gradient(90deg, #ff9414, #fe8658, #ff1709);
+  border-radius: 5px;
+  font-size: 24px;
+  color: #fff;
+  text-align: center;
+  line-height: 52px;
+}
+
+.bottom {
+  margin-top: 26px;
+}
+/*# sourceMappingURL=index.css.map */

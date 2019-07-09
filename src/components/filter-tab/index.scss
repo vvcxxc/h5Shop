@@ -1,0 +1,14 @@
+.filter {
+	.item {
+		height: 94px;
+		align-items: center;
+	}
+	.title {
+		margin-right: 8px;
+	}
+	.checked {
+		.title {
+			color: #ff6654;
+		}
+	}
+}

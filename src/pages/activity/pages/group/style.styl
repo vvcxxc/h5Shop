@@ -1,0 +1,407 @@
+area-block()
+  position relative
+  // margin-top 30px
+  border-radius 10px
+  background-color #fff
+  box-shadow 3px 3px 10px rgba(0, 0, 0, 0.1)
+  font-size 29px
+  color #333
+  .title
+    text-align center
+    position relative
+    height 96px
+    background-repeat no-repeat
+    background-position center
+    background-size 100%
+    margin 0 20px
+    line-height 96px
+  .split
+    height 20px
+    background-color #FAFAFA
+  .content
+    display flex
+    padding 20px
+
+.group
+  min-height 100vh
+  background-repeat no-repeat
+  background-size 100%
+  background-color #fff
+  overflow hidden
+  .area-coupon
+    position relative
+    padding 22px
+    background-color #F1F1F1
+  .gift-wrapper
+    background-color #F1F1F1
+    padding 22px 22px 0 22px
+    .area-gift
+      area-block()
+      .tips
+        position absolute
+        top 12px
+        left 0
+        color #fff
+        background-color #FD4A3B
+        padding 1px 16px
+        border-bottom-right-radius 20rpx
+        border-top-right-radius 20rpx
+        font-size 24px
+      .icon
+        flex 0 0 180px
+        width 180px
+        height 180px
+        background-color rgba(51, 51, 51, 1)
+        border-radius 10px
+        margin-right 20px
+      .description
+        flex 1
+        .name
+          color rgba(51, 51, 51, 1)
+          font-size 32px
+        .brief
+          color rgba(153, 153, 153, 1)
+          font-size 24px
+          min-height 80px
+        .price
+          color rgba(51, 51, 51, 1)
+          font-size 32px
+  .area-title
+    font-size 36px
+    color #fff
+    font-family Helvetica
+    text-align center
+    margin-top 50px
+  .area-panel
+    padding 0 22px 40px 22px
+    margin-top 50px
+    .actions
+      margin-top 50px
+      display flex
+      .item
+        flex 1
+        font-family Helvetica
+      .invite
+        border 2px solid #FF9900
+        color #FF9900
+        background-color #fff
+      .join, .used
+        margin-right 30px
+        color #fff
+        background-color #FF9900
+    .group-tips
+      text-align center
+      margin-top 50px
+      font-size 32px
+      font-family "HiraginoSansGB-W3"
+    .participator-wrapper
+      .item
+        display inline-block
+        position relative
+        width 93px
+        height 93px
+        // background-color pink
+        background-color rgba(0, 0, 0, 0.1)
+        border 1px solid rgba(0, 0, 0, 0.1)
+        border-radius 50%
+        margin-right 20px
+        overflow hidden
+        .icon
+          width inherit
+          height inherit
+    .time
+      color #999
+      margin-top 50px
+      text-align center
+      font-size 28px
+      .text
+        margin-right 10px
+    .coupon-info
+      display flex
+      padding 20px
+      border-radius 10px
+      background-color #fff
+      box-shadow 0 4px 10px #ccc
+      color #333
+      font-size 29px
+      .avatar
+        flex 0 0 164px
+        width 164px
+        height 164px
+        margin-right 20px
+        .icon
+          width inherit
+          height inherit
+          background-color: rgba(0, 0, 0, 0.1)
+      .description
+        .name
+          font-size 32px
+        .brief
+          margin-top 10px
+          color #7D7F87
+        .remark
+          margin-top 20px
+          line-height 36px
+          display flex
+          align-items center
+          // .classify, .price, .price-old
+          //   display inline-block
+          .classify
+            padding 0 10px
+            margin-right 10px
+            font-size 24px
+            border-radius 5px
+            border 2px solid #FB4E44
+            color #FB4E44
+            background-color #FFF1F0
+          .price
+            color #FB4E44
+            margin-right 10px
+          .price-old
+            text-decoration line-through
+
+
+      // .action-prohibit {
+      //   color: #999;
+      // }
+
+      // .group-purchase-coupon .remark .text,
+      // .group-purchase-coupon .remark .group-purchase-price {
+      //   display: inline-block;
+      // }
+
+      // .group-purchase-coupon .remark .text {
+      //   text-decoration: line-through;
+      // }
+
+      // .group-purchase-coupon .remark .group-purchase-price {
+      //   color: #FB4E44;
+      //   margin-right: 10px;
+      // }
+
+// .area-present .tips {
+//   position: absolute;
+//   top: 8px;
+//   left: 0;
+//   color: #fff;
+//   background-color: #FD4A3B;
+//   padding: 1px 16px;
+//   border-bottom-right-radius: 20px;
+//   border-top-right-radius: 20px;
+//   font-size: 24px;
+// }
+
+// .area-present .split {
+//   height: 20px;
+//   background-color: #fbfbfb;
+// }
+
+// .area-present {
+//   position: relative;
+//   border-radius: 10px;
+//   background-color: #fff;
+//   margin-top: 30px;
+//   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+// }
+
+// .area-present .content {
+//   display: flex;
+//   padding: 20px;
+// }
+
+// .area-present .image {
+//   flex: 0 0 180px;
+//   width: 180px;
+//   height: 180px;
+//   background-color: #F1F1F1;
+//   border-radius: 10px;
+//   margin-right: 20px;
+// }
+
+// .area-present .description {
+//   flex: 1;
+// }
+
+// .area-present .name {
+//   color: rgba(51, 51, 51, 1);
+//   font-size: 32px;
+// }
+
+// .area-present .brief {
+//   color: rgba(153, 153, 153, 1);
+//   font-size: 24px;
+//   min-height: 80px;
+// }
+
+// .area-present .price {
+//   color: rgba(51, 51, 51, 1);
+//   font-size: 32px;
+// }
+
+// .group-purchase-container > .title .text {
+//   font-size: 36px;
+//   color: #fff;
+//   font-family: Helvetica;
+// }
+
+// .group-purchase-panel {
+//   padding: 0 22px;
+//   padding-bottom: 40px;
+// }
+
+// .description {
+//   flex: 1;
+// }
+
+// .description .name {
+//   color: #333;
+//   font-size: 32px;
+// }
+
+// .description .brief {
+//   margin-top: 10px;
+//   color: #7D7F87;
+// }
+
+// .description .remark {
+//   margin-top: 20px;
+//   color: #7D7F87;
+// }
+
+// .group-purchase-count-down .text {
+//   color: #999;
+//   margin-right: 20px;
+// }
+
+// .group-purchase-count-down .colon {
+//   margin: 0 5px;
+// }
+
+// .group-purchase-count-down .time-item {
+//   display: inline-block;
+//   width: 43px;
+//   height:43px;
+//   padding: 2px 2px 0 2px;
+//   border-radius: 4px;
+//   color: #fff;
+//   background-color: #FF6600;
+// }
+
+// .group-purchase-participator .member {
+//   display: inline-block;
+//   position: relative;
+//   width: 93px;
+//   height: 93px;
+//   background-color: rgba(0, 0, 0, 0.1);
+//   border-radius: 50%;
+//   margin-right: 20px;
+//   overflow: hidden;
+// }
+
+// .group-purchase-participator .member.leader::after {
+//   position: absolute;
+//   box-sizing: content-box;
+//   padding: 1px 2px;
+//   content: "团长";
+//   width: 55px;
+//   left: 50%;
+//   bottom: -5px;
+//   transform: translateX(-50%);
+//   font-size: 24px;
+//   color: #fff;
+//   background-color: #FF9900;
+//   border-radius: 5px;
+//   text-align: center;
+// }
+
+// .group-purchase-participator .member .icon {
+//   width: inherit;
+//   height: inherit;
+// }
+
+// .group-purchase-tips {
+//   font-size: 32px;
+//   font-family: HiraginoSansGB-W3;
+// }
+
+// .actions {
+//   display: flex;
+// }
+
+// .actions .action-item {
+//   flex: 1;
+//   font-family: Helvetica;
+// }
+
+// .coupon-wrapper .split.more {
+//   padding: 20px;
+// }
+
+// .action-item.action-join, .action-item.action-use {
+//   margin-right: 30px;
+//   color: #fff;
+//   background-color: #FF9900;
+// }
+
+// .action-item.action-invite {
+//   border: 2px solid #FF9900;
+//   color: #FF9900;
+//   background-color: #fff;
+// }
+
+
+
+// .c-coupon-container .coupon-status {
+//   flex: 0 0 160px;
+//   width: 160px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   text-align: center;
+// }
+
+// .coupon-status .text {
+//   color: #55585E;
+//   font-size: 24px;
+// }
+
+// .coupon-status .action-buy {
+//   font-size: 24px;
+//   color: #fff;
+//   width: inherit;
+//   height: 48px;
+//   line-height: 48px;
+//   background-color: #FF3737;
+//   border-radius: 30px;
+//   border: 0 none;
+// }
+
+// .coupon-status .coupon-process {
+//   margin-top: 10px;
+//   background-color: #ECECEC;
+//   border-radius: 10px;
+// }
+
+// .coupon-status .process {
+//   position: relative;
+//   height: 20px;
+//   width: 80px;
+//   border-radius: 10px;
+//   background: linear-gradient(to right, #FFC90F, #FF5B08);
+// }
+
+// .coupon-wrapper {
+//   position: relative;
+//   overflow: hidden;
+//   padding: 0 22px;
+//   padding-bottom: 22px;
+//   background-color: #F1F1F1;
+// }
+
+// .mt-30 {
+//   margin-top: 30px;
+// }
+
+// .mt-50 {
+//   margin-top: 50px;
+// }

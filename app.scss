@@ -1,0 +1,33 @@
+/** flex 工具函数 */
+.flex {
+	display: flex;
+	flex-direction: row;
+	&.column {
+		flex-direction: column;
+	}
+	&.center {
+		align-items: center;
+		justify-content: center;
+	}
+	&.top {
+		align-items: flex-start;
+	}
+	&.bottom {
+		align-items: flex-end;
+	}
+	&.left {
+		justify-content: flex-start;
+	}
+	&.right {
+		justify-content: flex-end;
+	}
+	> .item {
+		flex: 1;
+	}
+}
+
+.at-search-bar {
+	&::after {
+		border: none;
+	}
+}

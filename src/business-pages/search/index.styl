@@ -1,0 +1,109 @@
+.daily-recommend
+    .bcfff
+        background-color: #fff
+    .search-input
+        padding: 10px 30px
+        .item
+            background-color: #F0F0F0
+            border-radius: 34px
+            height 68px
+            text-align: center
+    .sort-view
+        .sort-text
+            flex: 1
+            display flex
+            align-items: center
+            justify-content: center
+            .triangle
+                position: relative
+                padding-right: 30px
+                height 10px
+                transition: all .3s
+                &:after
+                    display block
+                    content: ''
+                    border: 10px solid transparent
+                    border-top-color: #999999
+                    margin-left: 10px
+        .active
+             .triangle
+                  transform: rotateX(180deg)
+                   
+    .scroll-view
+        padding: 15px 0
+        .shop-cell
+           
+            background-color: #fff
+            .shop-cell__bd
+                 padding: 26px 24px 0
+                .image
+                    width 153px
+                    height 152px
+                    flex-shrink: 0
+                .content
+                    width calc(100% - 183px)
+                    padding-left: 30px
+                    .flex
+                        justify-content: space-between
+                        font-size: 32px
+                        .item
+                            text-overflow: ellipsis
+                            white-space: nowrap
+                            overflow: hidden
+                    .fs24
+                        font-size: 24px
+                    .c666
+                        color: #666666
+                    .mb20
+                        margin-bottom: 20px
+                    .mb10
+                        margin-bottom: 10px
+                    .scroll-flex
+                        display flex
+                        width: max-content
+                        text-align: center
+                        .tag-view
+                            display block
+                            width 105px
+                            height 38px
+                            line-height: 38px
+                            border: 2px solid #FF6654
+                            border-radius:5px
+                            font-size: 20px
+                            color: #FF6654
+                            margin: 0 5px
+                            &.active
+                                background-color: #FDE8E5
+                                color #FB4F39
+            .adv-cells
+                padding: 26px 24px 0
+                margin-top: 30px
+                .image
+                    width calc((100% - 12px)/2)
+                    height 177px
+                    &:first-child
+                        margin-right: 12px
+            .present
+                height 84px
+                background-color: #FDE8E5
+                display flex
+                padding: 0 24px
+                align-items: center
+                .label
+                    background: #D97B0B
+                    height 32px
+                    width 32px
+                    font-size: 19px
+                    color: #fff
+                .desc
+                    font-size: 24px
+                    color #313131
+                    text-overflow: ellipsis
+                    white-space: nowrap
+                    overflow: hidden
+                    padding: 0 15px
+                    .cc71d0b
+                        color: #C71D0B
+                .count
+                    font-size: 20px
+                    color: #666

@@ -1,0 +1,36 @@
+.page {
+  padding: 0px 10px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.page .title {
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.page .title .line {
+  text-align: center;
+  width: 30%;
+  padding: 8px 0px;
+}
+
+.page .list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 15px 30px 10px 80px;
+  border-bottom: 1px solid #ededed;
+}
+
+.mt-5 {
+  margin-top: -18px;
+}
+/*# sourceMappingURL=index.css.map */
