@@ -5,6 +5,7 @@ import './index.styl';
 import request from '../../services/request';
 import questTwo from '../../services/requesTwo'
 import { connect } from '@tarojs/redux'
+import getLocation from '@/utils/getLocation';
 
 @connect(
 	state => ({
@@ -65,7 +66,10 @@ export default class Index extends Component<any> {
 		// this.showLoading();
 		this.requestTab(); //经营列表
 		this.localStorageData();
-		this.requestLocation();
+    // this.requestLocation();
+    getLocation.then(res => {
+      console.log(res)
+    })
 	}
 
 	requestLocation = () => {
@@ -131,7 +135,6 @@ export default class Index extends Component<any> {
 		Taro.getLocation({ type: 'wgs84' }).then(res => {
 			this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
 			this.setState({ locations: res }, () => {
-
 				this.getCity();
 				if (this.state.deal_cate_id == null) {
 					this.requestHomeList({ xpoint: res.longitude, ypoint: res.latitude })
@@ -257,16 +260,28 @@ export default class Index extends Component<any> {
 
 
 	handleClick = (_id, e) => {
-		Taro.navigateTo({ url: '../../pages/business/index?id=' + _id })
+		Taro.navigateTo({
+			url: '/pages/business/index?id=' + _id
+		})
 	};
 
 	judgeData = (value1) => {
 		return typeof (value1) === 'string' ? (value1.length > 1 ? '' : 'none') : 'none'
 	}
 
+	controlPicture = (gift, coupon) => { // 控制图片显示
+		if (!coupon && !gift) return false //两个图片都没有 显示门头照preview
+		if (!gift) return 1 //礼品图不存在 只显示一张coupon
+		return 2 //两张都显示
+	}
+
 	render() {
 		return (
 			<View className="index">
+				{/* <View style="	display: flex; justify-content: center; height:48px; backgroundColor:rgba(255,242,230,1);
+					align-items:center">
+				你还有未领取的礼品 去“我的礼品”看看
+			</View> */}
 				<View className="head">
 					<View className="search">
 						<View className="flex center container">
@@ -295,7 +310,7 @@ export default class Index extends Component<any> {
 					<Image src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/MfwcW2Qn5hC8T4mfJT8t5NcAEh7pTQRb.png"}></Image>
 					<Image src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/wWmWHKBjWZbkxYNPGPRZAst8CKbfNsGk.png"}></Image>
 				</View>
-				<View className="tab flex">
+				<View className="tab flex" style="background-color:#fff ; overflow :hidden;">
 					{this.state.titleList.map((item: any, index) => (
 						<View
 							key={" "}
@@ -322,25 +337,29 @@ export default class Index extends Component<any> {
 										<View className="title item">{item.name}</View>
 										<AtIcon value="chevron-right" color="#999" size="16px" />
 									</View>
-									<View className="flex " style="position:relative">
-										<View className="tag" style={{ backgroundColor: item.label.indexOf('免费礼品') !== -1 ? '#fde8e5' : '#fff' }}>免费礼品</View>
-										<View className="tag" style={{ backgroundColor: item.label.indexOf('优秀商家') !== -1 ? '#fde8e5' : '#fff' }}>优秀商家</View>
-										<View className="tag" style={{ backgroundColor: item.label.indexOf('现金卷') !== -1 ? '#fde8e5' : '#fff' }}>现金卷</View>
+									<View className="flex " style="position:relative;">
+										{
+											item.label.map((item1: any, index1: any) => {
+												return <View className="tag" style="background-color:#fff">{item1}</View>
+											})
+										}
 										<View style="position:absolute; right:0px; line-height:1; bottom:2px;font-size:12px;" >{item.distance}
 										</View>
 									</View>
 								</View>
 							</View>
-							<View
-								className={'all-data ' + (this.styleControl(item) ? '' : 'pb8')}
-								onClick={this.handleClick.bind(this, item.id)}>
-								<View className='banner'
-									style={{ width: typeof (item.coupon_image_url) === 'string' ? (item.coupon_image_url.length > 1 ? '50%' : '100%') : '100%' }}>
-									<Image src={item.coupon_image_url} />
+							{/* {</View>
+							// 如果左边的图有  右边的没有  就显示左边的图百分百的比例
+								 如果两张图都没有  就显示门头照
+								 item.preview   coupon_image_url gift_pic
+							 */}
+							<View className="content_box" onClick={this.handleClick.bind(this, item.id)}>
+								<View className='content_img'	>
+									<Image src={this.controlPicture(item.gift_pic, item.coupon_image_url) === false ? item.preview : item.coupon_image_url} />
 								</View>
-								<View className="banner ml10"
-									style={{ display: item.coupon_image_url ? '' : 'none' }}>
-									<Image src={item.preview} />
+								<View className={this.controlPicture(item.gift_pic, item.coupon_image_url) === 2 ?
+									'content_img' : 'hidden_content_img'}>
+									<Image src={item.gift_pic} />
 								</View>
 							</View>
 							<View>

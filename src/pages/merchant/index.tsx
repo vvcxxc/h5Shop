@@ -31,7 +31,7 @@ export default class MerChantPage extends Component {
 	}
 	componentWillMount() {
 		this.getPosition();// 经纬度
-		Taro.showLoading({ title: 'loading', mask: true })//显示loading
+		// Taro.showLoading({ title: 'loading', mask: true })//显示loading
 	}
 
 	componentDidMount() {

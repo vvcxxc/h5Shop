@@ -6,7 +6,7 @@ import {
   NOT_FIND,
   NOT_SIGN
 } from "@/utils/constants";
-// import { toMiniProgramSign } from "@/utils/sign";
+import { toMiniProgramSign } from "@/utils/sign";
 
 const BASIC_API = process.env.BASIC_API;
 interface Params {
@@ -56,7 +56,7 @@ const http = (params: Params): Promise<any> => {
             })
             break
           case NOT_SIGN:
-            // toMiniProgramSign(BASIC_API)
+            toMiniProgramSign(BASIC_API)
             return reject(new Error('--- no sign ---'))
           case NOT_FIND:
             Taro.showToast({

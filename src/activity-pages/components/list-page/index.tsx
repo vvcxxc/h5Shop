@@ -3,7 +3,7 @@ import { View } from '@tarojs/components';
 import { AtSearchBar } from 'taro-ui';
 
 import './index.scss';
-import FilterTab from 'src/components/filter-tab';
+// import FilterTab from 'src/components/filter-tab';
 
 interface Props {
 	hasBg?: boolean;
@@ -30,7 +30,7 @@ class ListPage extends PureComponent<Props> {
 					onConfirm={this.handleSearch}
 				/>
 				<View className={this.props.hasBg ? 'bg' : ''}>
-					<FilterTab onChange={this.handleSearch}/>
+					{/* <FilterTab onChange={this.handleSearch}/> */}
 				</View>
 				<View className="item">{this.props.children}</View>
 			</View>

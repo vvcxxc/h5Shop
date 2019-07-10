@@ -6,6 +6,8 @@ import {
   NOT_FIND,
   NOT_SIGN
 } from "@/utils/constants";
+import { toMiniProgramSign } from "@/utils/sign";
+const BASIC_API = process.env.BASIC_API;
 interface Options extends RequestParams {
   /**替换的主机域名 */
   host?: string;
@@ -14,23 +16,6 @@ interface Options extends RequestParams {
 const host = "http://test.api.tdianyi.com/";
 
 export default function request(options: Options) {
-  const pages = Taro.getCurrentPages();
-
-  // console.log(pages[pages.length - 1].route.indexOf("confirm-order"));
-  if (pages[pages.length - 1].route.indexOf("confirm-order") == -1) {
-    if (pages.length == 9) {
-      Taro.showToast({
-        title: "页面打开太多，请回退关闭几个页面",
-        icon: 'none',
-        duration: 2000
-      })
-      setTimeout(() => {
-        Taro.navigateBack({
-        })
-      }, 2000)
-      return new Promise((resolve, reject) => { })
-    }
-  }
   const token = Taro.getStorageSync("token");
   options.header = { ...options.header, Authorization: token };
   return new Promise((resolve, reject) => {
@@ -61,6 +46,7 @@ export default function request(options: Options) {
             })
             break
           case NOT_SIGN:
+            toMiniProgramSign(BASIC_API)
             return reject(new Error('--- no sign ---'))
           case NOT_FIND:
               Taro.showToast({

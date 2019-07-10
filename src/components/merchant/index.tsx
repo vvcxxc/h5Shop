@@ -18,7 +18,7 @@ export default class Merchant extends Component<Props> {
 	};
 	state: {
 		showLine: false,
-		num:1
+		num: 1
 	}
 	componentDidMount() {
 	}
@@ -31,7 +31,7 @@ export default class Merchant extends Component<Props> {
 		const that = this.props.merchant
 		if (this.props.merchant) {
 			if (
-				that.exchange_coupon_name ===null &&
+				that.exchange_coupon_name === null &&
 				that.gift_coupon_name === null &&
 				that.gift_name === null) {
 				return false
@@ -43,44 +43,51 @@ export default class Merchant extends Component<Props> {
 
 	handleClick = (_id, e) => {
 		Taro.navigateTo({
-			url: '/pages/business/index?id=' + _id
+			url: '/detail-pages/business/index?id=' + _id
 		})
 	};
 
 	judgeData = (value1) => {
 		return typeof (value1) === 'string' ? (value1.length > 1 ? '' : 'none') : 'none'
 	}
+	controlPicture = (gift, coupon) => { // 控制图片显示
+		if (!coupon && !gift) return false //两个图片都没有 显示门头照preview
+		if (!gift) return 1 //礼品图不存在 只显示一张coupon
+		return 2 //两张都显示
+	}
 	render() {
 		const that = this.props.merchant
 		this.styleControl()
 		return (
 			<View className={('merchant') + ' ' + (this.styleControl() ? '' : 'update-inset')}>
-				<View className="content flex" onClick={this.handleClick.bind(this, this.props.merchant.id)}>
-					{this.props.type !== 'activity' && <Image className="img" src={that.shop_door_header_img} />}
+				<View className="content flex"
+					style={{ paddingBottom: this.controlPicture(that.gift_pic, that.coupon_image_url) === false ? '10px' : ' 0px'}}
+					onClick={this.handleClick.bind(this, this.props.merchant.id)}>
+					{this.props.type !== 'activity' && <Image className="img" src={that.preview} />}
+					{/* shop_door_header_img */}
 					<View className="item" style="padding-top:15px">
 						<View className="flex">
 							<View className="title item">{that.name}</View>
 							<AtIcon value="chevron-right" color="#999" size="16px" />
 						</View>
 						<View className="flex " style="position:relative">
-							<View className="tag" style={{ backgroundColor: that.label.indexOf('免费礼品') !== -1 ? '#fde8e5' : '#fff' }}>免费礼品</View>
-							<View className="tag" style={{ backgroundColor: that.label.indexOf('优秀商家') !== -1 ? '#fde8e5' : '#fff' }}>优秀商家</View>
-							<View className="tag" style={{ backgroundColor: that.label.indexOf('现金卷') !== -1 ? '#fde8e5' : '#fff' }}>现金卷</View>
+							{
+								that.label.map((item1: any, index1: any) => {
+									return <View className="tag" style="background-color:#fff">{item1}</View>
+								})
+							}
 							<View style="position:absolute; right:0px; line-height:1; bottom:2px;font-size:12px;" >{that.distance}
-							</View>
+							</View> 
 						</View>
 					</View>
 				</View>
-				<View
-					className={'all-data ' + (this.styleControl() ? '' :'pb8')}
-					onClick={this.handleClick.bind(this, this.props.merchant.id)}>
-					<View className='banner'
-						style={{ width: typeof (that.coupon_image_url) === 'string' ? (that.coupon_image_url.length > 1 ? '50%' : '100%') : '100%' }}>
+				<View className="content_box" onClick={this.handleClick.bind(this, that.id)} style={{ display: this.controlPicture(that.gift_pic, that.coupon_image_url)===false? 'none':''}}>
+					<View className='content_img'	>
 						<Image src={that.coupon_image_url} />
 					</View>
-					<View className="banner ml10"
-						style={{ display: that.coupon_image_url ? '' : 'none' }}>
-						<Image src={that.preview} />
+					<View className={this.controlPicture(that.gift_pic, that.coupon_image_url) === 2 ?
+						'content_img' : 'hidden_content_img'}>
+						<Image src={that.gift_pic} />
 					</View>
 				</View>
 				<View>
@@ -114,7 +121,7 @@ export default class Merchant extends Component<Props> {
 						<View style="color:#939393;margin-right:3px;">{this.state.showLine ? '收起' : '更多活动'}</View>
 						<AtIcon value={this.state.showLine ? 'chevron-up' : 'chevron-down'} size='12' color='#939393'></AtIcon>
 					</View>
-					<View  style={{height:'10px',backgroundColor:'#ededed'}}></View>
+					<View style={{ height: '10px', backgroundColor: '#ededed' }}></View>
 				</View>
 			</View>
 		);

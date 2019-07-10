@@ -1,6 +1,5 @@
 .merchant {
 	background-color: #fff;
-	// margin-top: 20px;
 	&.inset {
 		margin: 20px 20px 20px;
 		border-radius: 50px;
@@ -13,7 +12,7 @@
 		padding: 22px;
 		padding-bottom: 0;
 		.img {
-			width: 152px;
+			width: 170px;
 			height: 152px;
 			margin-right: 30px;
 		}
@@ -117,5 +116,34 @@
 
 .ml10{
 	margin-left: 10px;
+}
+
+// 重新构造图片
+.content_box {
+	display: flex; 
+	justify-content: space-between;
+	align-items:center;
+	padding:20px 25px; 
+	.content_img {
+		height:20vh; 
+		width:50% ; 
+		image {
+			height:100%;
+			width:100% ;
+			border-radius: 10px;
+		}
+	}
+	.content_update_img {
+		height:22vh; 
+		width:100% ; 
+			image {
+			height:100%;
+			width:100% ;
+			border-radius: 10px;
+		}
+	}
+	.hidden_content_img {
+		display: none;
+	}
 }
 
