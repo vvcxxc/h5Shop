@@ -42,7 +42,7 @@ export default class Index extends Component {
 	}
 
 	componentDidMount() {
-    // this.getToken();
+	// this.getToken();
 	}
 	// getToken() {
 	// 	request({
@@ -190,7 +190,6 @@ export default class Index extends Component {
 				this.setState({ storeList: res.store_info.data, storeHeadImg: res.banner });
 			})
 	}
-
 
 	render() {
 		return (
