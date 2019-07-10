@@ -21,27 +21,27 @@ export default class My extends Component {
     userInfo: {}
   }
   componentDidMount() {
-    // this.handleGetUserinfo()
-    // Taro.showShareMenu()
+    this.handleGetUserinfo()
+    Taro.showShareMenu()
   }
 
   /**
    * 获取用户信息
    */
-  // handleGetUserinfo = (): void => {
-  //   const { userInfo } = this.state
-  //   if (!userInfo.nickName) {
-  //     const userInfo = Taro.getStorageSync("userInfo")
-  //     if (userInfo) {
-  //       this.setState({
-  //         userInfo
-  //       })
-  //     } else {
-  //       const { toMiniProgramSign } = require("../../utils/sign")
-  //       toMiniProgramSign(process.env.BASIC_API)
-  //     }
-  //   }
-  // }
+  handleGetUserinfo = (): void => {
+    const { userInfo } = this.state
+    if (!userInfo.nickName) {
+      const userInfo = Taro.getStorageSync("userInfo")
+      if (userInfo) {
+        this.setState({
+          userInfo
+        })
+      } else {
+        const { toMiniProgramSign } = require("../../utils/sign")
+        toMiniProgramSign(process.env.BASIC_API)
+      }
+    }
+  }
   render() {
     const { cells, userInfo } = this.state
     return (

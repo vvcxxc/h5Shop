@@ -19,6 +19,14 @@
   padding: 8px 0px;
 }
 
+.page .title .linRed {
+  color: red;
+}
+
+.page .title .linWat {
+  color: '#666666';
+}
+
 .page .list {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -26,11 +34,25 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 15px 30px 10px 80px;
+  padding: 15px 30px 15px 80px;
   border-bottom: 1px solid #ededed;
 }
 
-.mt-5 {
+.page .mt-5 {
   margin-top: -18px;
+}
+
+.page .myPositing {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+}
+
+.page .rising {
+  z-index: 3;
+}
+
+.page .falling {
+  z-index: -6;
 }
 /*# sourceMappingURL=index.css.map */

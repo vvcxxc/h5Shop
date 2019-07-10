@@ -4,8 +4,6 @@ import { AtSearchBar } from 'taro-ui';
 import './index.styl';
 import request from '../../services/request';
 import List from './list';
-import FilterTab from 'src/components/filter-tab';
-import LiftList from 'src/components/lift-list';
 
 import FilterTotal from "src/components/filter-total";
 interface defineType {
@@ -107,9 +105,6 @@ export default class MerChantPage extends Component {
 		}
 		if (id3) {
 			define.sort_id = id3
-		}
-		else {
-
 		}
 		request({
 			url: 'v3/stores',

@@ -1,12 +1,15 @@
 .merchant {
   background-color: #fff;
-  margin-top: 20px;
 }
 
 .merchant.inset {
   margin: 20px 20px 20px;
   border-radius: 50px;
   padding-top: 20px;
+}
+
+.merchant.update-inset {
+  border-radius: 22px;
 }
 
 .merchant .content {
@@ -49,6 +52,25 @@
   line-height: 38px;
   margin-right: 10px;
   margin-top: 18px;
+}
+
+.merchant .flex-right {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+.merchant .all-data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0px 12px;
+  margin-top: 15px;
+}
+
+.merchant .pb8 {
+  padding-bottom: 25px;
 }
 
 .banner {

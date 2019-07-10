@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import "taro-ui/dist/style/components/tabs.scss";
 import CashCoupon1 from "./cash-coupon1/index";
 import CashCoupon2 from "./cash-coupon2/index";
@@ -17,7 +17,15 @@ export default class Order extends Component {
   config: Config = {
     navigationBarTitleText: "我的订单"
   };
+  constructor(props) {
+    super(props);
+    Object.assign(this.state, this.props)
+    this.showcode = this.showcode.bind(this)
+  }
   state = {
+    _codeinfo: "",
+    _codeimg: "",
+    _codeshow: false,
     current: 0,//taro组件用的
     coupon: [],//taro组件用的
     coupon1: [
@@ -81,7 +89,20 @@ export default class Order extends Component {
     this.getData();
   }
 
-
+  // 触底事件
+  onReachBottom = () => {
+    Taro.showLoading({
+      title: 'loading',
+      mask: true
+    })
+    // console.log(this.state.current);
+    this.state.current == 1 ? this.getData1() : (
+      this.state.current == 2 ? this.getData2() : (
+        this.state.current == 3 ? this.getData3() : (
+          this.state.current == 4 ? this.getData2() : "")))
+    Taro.hideLoading()
+  }
+  //页面加载统一获取一次
   getData() {
     request({
       url: "v3/user/coupons",
@@ -141,10 +162,7 @@ export default class Order extends Component {
       }
     })
       .then((res: any) => {
-        console.log(res)
-        console.log(this.state.coupon.length)
         let temp = this.state.coupon1.concat(res);
-        console.log(temp.length)
 
         this.setState({ coupon: temp, coupon1: temp, loading: false })
       })
@@ -203,10 +221,51 @@ export default class Order extends Component {
     console.log(this.state.coupon.length)
   }
 
+  showcode(_id) {
+    // console.log("爸爸" + _id);
+    Taro.showLoading({
+      title: 'loading',
+      mask: true
+    })
+    request({
+      url: "v3/user/coupons/info",
+      data: { coupons_log_id: _id, xpoint: '', ypoint: '' }
+    })
+      .then((res: any) => {
+        // console.log(res.youhui_sn);
+        this.setState({ _codeinfo: res.youhui_sn });
+      })
+    request({
+      url: 'api/wap/coupon/showCode',
+      data: { coupons_log_id: _id },
+    })
+      .then((res: any) => {
+        // console.log(res);
+        this.setState({ _codeimg: res });
+      })
+    this.setState({ _codeshow: true });
+    Taro.hideLoading();
+  }
+
   render() {
     const tabList = [{ title: '未使用' }, { title: '已使用' }, { title: '已过期' }, { title: '已退款' }]
     return (
-      <View className="order flex column">
+      <View className="order flex column"  >
+
+        {this.state._codeshow ?
+          <View className="code_show" onClick={() => { this.setState({ _codeshow: false }) }}>
+            <View className="code_background"> </View>
+            <View className="codeBox" >
+              <View className="codeBox_info">商家扫码/输码验证即可消费</View>
+              <View className="codeBox_img">
+                <Image className="code_img" src={this.state._codeimg} />
+              </View>
+              <View className="codeBox_msg">{this.state._codeinfo}</View>
+            </View>
+          </View>
+          : ""
+        }
+
         <View>
           {
             (this.state.current == 0 && this.state.coupon1.length == 0) ?
@@ -242,62 +301,77 @@ export default class Order extends Component {
           }
         </View>
 
-        <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick0.bind(this)}>
+        <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick0.bind(this)} >
           <AtTabsPane current={this.state.current} index={0} >
             <View className="tiket_box">
-              {this.state.coupon1.map((item) => (
-                item.coupons_type.toString() == "1" ?
-                  <CashCoupon2 bg_img_type={1} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} /> : ""
-              ))}
-              {this.state.coupon1.map((item) => (
-                item.coupons_type.toString() == "0" ?
-                  <CashCoupon1 bg_img_type={0} type={1} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} /> : ""
-              ))}
-              {/* <CashCoupon2 bg_img_type={1} _id="0" return_money="50" pay_money="150" youhui_type="1" timer="654564" sname="滴滴滴" list_brief="解放萨哈林岛" />
-              <CashCoupon1 bg_img_type={0} _id="1" type={1} return_money="100" pay_money="20" youhui_type="1" timer="100" sname="ddddd" list_brief="解放萨哈林岛" _image="http://oss.tdianyi.com/front/mCAEJZbM3kmRGGJtDpnhKNzdEtWAnBEf.jpg" /> */}
+              {
+                this.state.coupon1.map((item) => (
+                  item.coupons_type.toString() == "1" ? <View key={item.coupons_log_id}>
+                    <CashCoupon2 bg_img_type={1} type={0} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
+              {
+                this.state.coupon1.map((item) => (
+                  item.coupons_type.toString() == "0" ? <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={0} type={1} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} clickcode={this.showcode}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <View className="tiket_box">
-              {/* <CashCoupon2 bg_img_type={2} _id="0" return_money="50" pay_money="150" youhui_type="1" timer="654564" sname="滴滴滴" list_brief="解放萨哈林岛" />
-              <CashCoupon1 bg_img_type={1} type={0} _id="1" return_money="100" pay_money="300" youhui_type="1" timer="100" sname="广告费个" list_brief="解放萨哈林岛" _image="http://oss.tdianyi.com/front/mCAEJZbM3kmRGGJtDpnhKNzdEtWAnBEf.jpg" /> */}
-
-              {this.state.coupon2.map((item) => (
-                item.coupons_type.toString() == "1" ?
-                  <CashCoupon2 bg_img_type={2} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} /> : ""
-              ))}
-              {this.state.coupon2.map((item) => (
-                item.coupons_type.toString() == "0" ?
-                  <CashCoupon1 bg_img_type={1} type={0} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} /> : ""
-              ))}
+              {
+                this.state.coupon2.map((item) => (
+                  item.coupons_type.toString() == "1" ? <View key={item.coupons_log_id}>
+                    <CashCoupon2 bg_img_type={2} type={0} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
+              {
+                this.state.coupon2.map((item) => (
+                  item.coupons_type.toString() == "0" ? <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={1} type={0} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} clickcode={null}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
             <View className="tiket_box">
-              {/* <CashCoupon2 bg_img_type={0} _id="0" return_money="50" pay_money="150" youhui_type="1" timer="654564" sname="滴滴滴" list_brief="解放萨哈林岛" />
-              <CashCoupon1 bg_img_type={0} type={0} _id="1" return_money="100" pay_money="20" youhui_type="1" timer="100" sname="ddddd" list_brief="解放萨哈林岛" _image="http://oss.tdianyi.com/front/mCAEJZbM3kmRGGJtDpnhKNzdEtWAnBEf.jpg" /> */}
-              {this.state.coupon3.map((item) => (
-                item.coupons_type.toString() == "1" ?
-                  <CashCoupon2 bg_img_type={0} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} /> : ""
-              ))}
-              {this.state.coupon3.map((item) => (
-                item.coupons_type.toString() == "0" ?
-                  <CashCoupon1 bg_img_type={0} type={0} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} /> : ""
-              ))}
+              {
+                this.state.coupon3.map((item) => (
+                  item.coupons_type.toString() == "1" ? <View key={item.coupons_log_id}>
+                    <CashCoupon2 bg_img_type={0} type={0} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
+              {
+                this.state.coupon3.map((item) => (
+                  item.coupons_type.toString() == "0" ? <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={0} type={0} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} clickcode={null}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
             <View className="tiket_box">
-              {/* <CashCoupon2 bg_img_type={1} _id="0" return_money="50" pay_money="150" youhui_type="1" timer="654564" sname="滴滴滴" list_brief="解放萨哈林岛" />
-              <CashCoupon1 bg_img_type={0} type={2} _id="1" return_money="100" pay_money="20" youhui_type="1" timer="100" sname="ddddd" list_brief="解放萨哈林岛" _image="http://oss.tdianyi.com/front/mCAEJZbM3kmRGGJtDpnhKNzdEtWAnBEf.jpg" /> */}
-              {this.state.coupon4.map((item) => (
-                item.coupons_type.toString() == "1" ?
-                  <CashCoupon2 bg_img_type={1} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} /> : ""
-              ))}
-              {this.state.coupon4.map((item) => (
-                item.coupons_type.toString() == "0" ?
-                  <CashCoupon1 bg_img_type={0} type={2} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} /> : ""
-              ))}
+              {
+                this.state.coupon4.map((item) => (
+                  item.coupons_type.toString() == "1" ? <View key={item.coupons_log_id}>
+                    <CashCoupon2 bg_img_type={1} type={1} _id={item.coupons_log_id} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
+              {
+                this.state.coupon4.map((item) => (
+                  item.coupons_type.toString() == "0" ? <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={0} type={2} _id={item.coupons_log_id} return_money={item.money} youhui_type={item.coupons_type} timer={item.confirm_time} sname={item.coupons_name} list_brief={item.suppliername} _image={item.image} clickcode={null}  expiration={item.expiration}/>
+                  </View> : ""
+                ))
+              }
             </View>
           </AtTabsPane>
         </AtTabs>

@@ -1,6 +1,6 @@
 @import '../../utils/config.styl'
 .head
-  height 312px
+  // height 312px
   background: #ccc
   .search
     background: #ffffff
@@ -24,19 +24,161 @@
         padding 0 20px
         color: #666
         font-size: 28px
-      at-icon
+      .at-icon
         margin-top -4px
 .menus
-    padding 20px 10px 0
+    padding 0px 10px 0
     background: #fff
+    height 40px
   .item
   .img
     width: 100%
     height auto
 .swiper 
-  height 24vh
+  height 25vh
   overflow hidden
+  background-color: #fff;
   .image 
+    max-height: 100%
+    width 100%
+.advert
+  display:flex;
+  height 200px
+  padding-top 0
+  margin-top -10px
+  background-color #fff
+  image 
     height 100%
     width 100%
-   
+.tab
+    height 70px
+    background: #fff
+    .label
+      height 100%
+      line-height 70px
+      border-bottom 4px solid #fff
+    >.active
+      .label
+        color theme-color
+        border-bottom 4px solid theme-color
+.merchant {
+	background-color: #fff;
+	margin-top: 20px;
+	&.inset {
+		margin: 20px 20px 20px;
+		border-radius: 50px;
+		padding-top: 20px;
+	}
+	&.update-inset {
+		border-radius: 22px;
+	}
+	.content {
+		padding: 22px;
+		padding-bottom: 0;
+		.img {
+			width: 152px;
+			height: 152px;
+			margin-right: 30px;
+		}
+		.title {
+			font-size: 32px;
+			line-height: 1;
+		}
+		.label {
+			font-size: 24px;
+			color: #666;
+			margin-top: 40px;
+			line-height: 1;
+		}
+		.right-icon {
+			width: 15px;
+			height: 27px;
+			opacity: 0.38;
+		}
+		.tag {
+			width: 105px;
+			height: 38px;
+			border: 1px solid rgba(255, 102, 84, 1);
+			border-radius: 5px;
+			font-size: 20px;
+			color: rgba(255, 102, 84, 1);
+			text-align: center;
+			line-height: 38px;
+			margin-right: 10px;
+			margin-top: 18px;
+		}
+	}
+	.flex-right{
+		flex-direction:row-reverse;
+	}
+	.all-data {
+		display:flex;
+		padding:0px 12px;
+		margin-top:15px;
+	}
+	.pb8 {
+		padding-bottom: 25px;
+	}
+}
+
+.banner{
+	width:50%;
+	height: 260px;
+	image {
+		background-color: #ccc;
+		width:100%;
+		height: 100%;
+		max-width: 100%;
+		max-height: 100%;
+		border-radius: 8px;
+	}
+}
+
+
+	
+.give {
+	width: 100%;
+	height: 84px;
+	font-size: 24px;
+	padding: 0 22px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #EDEDED;
+	.icon {
+		width: 32px;
+		height: 27px;
+		background: rgba(217, 123, 11, 1);
+		border-radius: 2px;
+		text-align: center;
+		line-height: 27px;
+		font-size: 19px;
+		color: #fff;
+		margin-right: 15px;
+	}
+	.strong {
+		color: #c71d0b;
+	}
+	.info {
+		font-size: 20px;
+		color: #666;
+	}
+}
+.more {
+	height: 70px;
+	font-size: 20px;
+	color: #999;
+	.img {
+		width: 27px;
+		height: 15px;
+		margin-left: 6px;
+	}
+}
+.ellipsis-one {
+	overflow:hidden; 
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.ml10{
+	margin-left: 10px;
+}
+

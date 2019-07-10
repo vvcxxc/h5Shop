@@ -1,0 +1,313 @@
+[33mcommit b6fed26f9a172dfe11a74c369b143af83ae09617[m[33m ([m[1;36mHEAD -> [m[1;32mQL[m[33m)[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Mon Jul 8 09:05:32 2019 +0800
+
+    feat:首页使用dva
+
+[33mcommit 305456c7afa4a0d0c24721ea352973ed59505d75[m[33m ([m[1;31morigin/QL[m[33m)[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Sat Jul 6 10:01:46 2019 +0800
+
+    style:首頁商家展示圖樣式修改
+
+[33mcommit d4f979a7e24a9596357742be93243ec958798528[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Fri Jul 5 10:18:24 2019 +0800
+
+    feat:麒麟和子敬代碼合并
+
+[33mcommit cadd3806618e4bd83dc733383fde412eaa122dc4[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Fri Jul 5 10:11:38 2019 +0800
+
+    feat:麒麟和子敬代碼合并
+
+[33mcommit dfa7b9860dc1234e4b4fe51d3b58afdbb3c27ffc[m
+Merge: ef189f4 5b85fbc
+Author: vvcxxc <asd123>
+Date:   Fri Jul 5 09:45:41 2019 +0800
+
+    715
+
+[33mcommit ef189f4835f1e8e0c235bf012ac93d40ddd4849b[m
+Author: vvcxxc <asd123>
+Date:   Fri Jul 5 09:27:26 2019 +0800
+
+    7/5
+
+[33mcommit 5b85fbcf174a2fc70aee9af5a175757a982f1e69[m
+Merge: 1755a2c 5bc16c4
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Fri Jul 5 09:22:21 2019 +0800
+
+    QL 合并 dev
+
+[33mcommit 1755a2c24bd4b8175274e246d8cacc809f66eabb[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Fri Jul 5 09:05:27 2019 +0800
+
+    feat:去掉console.log
+
+[33mcommit 30d8869bb1733304271f478c295c06bfe30b1197[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Fri Jul 5 08:53:13 2019 +0800
+
+    fea:實現下拉加載更多
+
+[33mcommit 460e721b712ef5df39ca30c44ea8844a02f4e66b[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 17:40:12 2019 +0800
+
+    en
+
+[33mcommit 5a985332867d0dd88bbc056e9ab3988483cd3043[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 17:24:10 2019 +0800
+
+    分包
+
+[33mcommit a6df9651ebb94c2c8a74146e6e8f3dd2d36c5f8e[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 16:31:21 2019 +0800
+
+    嗯哼
+
+[33mcommit 5bc16c40e58bac108f40db62f358ccbb288b3802[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 11:52:37 2019 +0800
+
+    测试
+
+[33mcommit 789755d373bfdbc0ea7f111c36d048b17b6ac26e[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 11:51:13 2019 +0800
+
+    测试
+
+[33mcommit eb2898a7a7af228c7d9064e1cd5653f7ec3a91c0[m
+Merge: ade1d52 90b3cda
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 09:53:14 2019 +0800
+
+    feat:000
+
+[33mcommit ade1d5219a0b59cbf587c5e5d21044b188e3d35b[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 09:51:38 2019 +0800
+
+    feat
+
+[33mcommit 58274aa34c54ce726f05ab3ac9041392b7153125[m
+Author: vvcxxc <asd123>
+Date:   Thu Jul 4 09:50:02 2019 +0800
+
+    ，，
+
+[33mcommit 90b3cdad9655cc3545047719e9898e20478b53e7[m
+Author: xiaoqilin <2597462505@qq.com>
+Date:   Thu Jul 4 09:02:06 2019 +0800
+
+    feat:首页接口替换
+
+[33mcommit 53978151d47061645b54bd2a9c28b3131aacaad7[m
+Author: vvcxxc <asd123>
+Date:   Wed Jul 3 13:59:38 2019 +0800
+
+    合并
+
+[33mcommit 43f25945a078e39a28a5de8dc5abaa52df3457b9[m
+Author: vvcxxc <asd123>
+Date:   Wed Jul 3 12:46:02 2019 +0800
+
+    最后一次挣扎
+
+[33mcommit f540acf424c8ea3a07d1fd8eddbef78b3bf1f57a[m
+Author: vvcxxc <asd123>
+Date:   Wed Jul 3 11:35:20 2019 +0800
+
+    订单详情路由
+
+[33mcommit 50e14f6ecc848f4e467f25cfd062b7dc225d38ad[m
+Author: vvcxxc <asd123>
+Date:   Wed Jul 3 11:10:24 2019 +0800
+
+    支付，要靠本地缓存获取openid，需要进入小程序时登录授权模块那边配合
+
+[33mcommit 6d7214a06f3f083ae85169945c3c204a64d56689[m
+Author: vvcxxc <asd123>
+Date:   Tue Jul 2 12:46:44 2019 +0800
+
+    嗯
+
+[33mcommit 34c7244c8014f59fed1d772a50dbdf1e325d9f90[m
+Author: vvcxxc <asd123>
+Date:   Tue Jul 2 10:37:30 2019 +0800
+
+    订正request
+
+[33mcommit e7582636e548f43ab8d68e7b0a7b85552e922592[m
+Author: vvcxxc <asd123>
+Date:   Tue Jul 2 10:05:42 2019 +0800
+
+    针对小程序打开页面不能超过十个的问题，在页面request请求添加了提示
+
+[33mcommit 30bd3c8db9576142bd98ed3ed621d01ad6fe1498[m
+Author: vvcxxc <asd123>
+Date:   Mon Jul 1 16:04:35 2019 +0800
+
+    第二次修改商家详情，部分样式
+
+[33mcommit f0d8f4907b7433db3d09b532f05946ce123e3bda[m
+Author: vvcxxc <asd123>
+Date:   Mon Jul 1 12:52:27 2019 +0800
+
+    “商家详情第一次提交
+
+[33mcommit 1bfae53b5e0d582c666ceb50cbf7bf039739e5cd[m
+Author: zhaolin <601996845@qq.com>
+Date:   Tue Jun 25 17:45:24 2019 +0800
+
+    zl
+
+[33mcommit 33852f5f19cf0b3642aacf7566fe77aae562a172[m
+Merge: 09ea457 7fdd837
+Author: zhaolin <601996845@qq.com>
+Date:   Mon Jun 24 18:03:54 2019 +0800
+
+    zl
+
+[33mcommit 09ea457f820bd8084d1da57706f65550facc1490[m
+Author: zhaolin <601996845@qq.com>
+Date:   Sat Jun 22 18:45:31 2019 +0800
+
+    zl
+
+[33mcommit 7fdd837fed74c8f66fbaf9bf5c338ab8f32d887c[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Sat Jun 22 17:16:39 2019 +0800
+
+    feat: 更新依赖
+
+[33mcommit 3d5418a4f18e413b7b73ca1fa45b02da1dcca982[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Sun Jun 9 01:11:42 2019 +0800
+
+    feat: 详情
+
+[33mcommit f75f9e25720dca2c6cab00b14d05c645106a3f87[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Sun Jun 9 00:15:35 2019 +0800
+
+    faet: 底部
+
+[33mcommit a4eb3b8e0be8600d4588b2dd83c1a4f3e6e4e359[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Sun Jun 9 00:01:04 2019 +0800
+
+    feat: 详情
+
+[33mcommit daa39aeebac6db0937734160f6e0a169d431a7ad[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Sat Jun 8 10:19:17 2019 +0800
+
+    feat: 拼团详情
+
+[33mcommit eec80177fa352edcfba8832060846e4d8fd456a2[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Thu Jun 6 00:32:08 2019 +0800
+
+    faet: 邀请好友增值
+
+[33mcommit fd9fdcc8f6538a52d2567493afd73672e3de2f7c[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed Jun 5 23:28:50 2019 +0800
+
+    feat: 活动
+
+[33mcommit c5e834771a2010e9abb54d60fde868a78ab4c3e5[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed Jun 5 22:33:13 2019 +0800
+
+    feat: 活动首页
+
+[33mcommit e954ca3a36dcd27b94d93187d46eed652bcb92c9[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed Jun 5 17:13:05 2019 +0800
+
+    feat: 首页搜索
+
+[33mcommit 5e8a18846e3e94af1ac8e700cf1fb01eb7d4d181[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed Jun 5 16:35:45 2019 +0800
+
+    feat: 首页
+
+[33mcommit c3342019fb07609e1adcd5c7529676ab4283765c[m
+Author: 长安 <chang1996an@163.com>
+Date:   Fri May 31 22:53:45 2019 +0800
+
+    剩余页面
+
+[33mcommit 2e34597d0ebf5bab6399030fb0b800f7d6805695[m
+Author: 长安 <chang1996an@163.com>
+Date:   Fri May 31 00:13:00 2019 +0800
+
+    今日推荐 缺一个形态
+
+[33mcommit 5bdead31e4958c376e613470a64a4147e51597d5[m
+Author: 长安 <chang1996an@163.com>
+Date:   Thu May 30 22:47:01 2019 +0800
+
+    优惠套餐及优惠券
+
+[33mcommit e99f7a48d60628273002d2ca8762fb9f153536e6[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Thu May 30 21:53:01 2019 +0800
+
+    feat: 地址列表
+
+[33mcommit 28ca032e2aeb319b017b8b53a244b8df990d954b[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Thu May 30 11:03:24 2019 +0800
+
+    feat: 活动组件
+
+[33mcommit a6978a5c535b7289b249ec1adec3a1d79a504a3d[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed May 29 23:10:59 2019 +0800
+
+    fix: 组件事件
+
+[33mcommit a4cb0f3c1748b0e466fb307458396575c81ebb61[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed May 29 23:08:50 2019 +0800
+
+    feat: 商家列表
+
+[33mcommit 2d67ecfc5081ff5304eb261f438869291f69a1ee[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Wed May 29 21:55:41 2019 +0800
+
+    feat: 优化
+
+[33mcommit 4745d44ce5ca4a3146c87d4ea761a51850ae0cbc[m
+Author: lca <chang1996an@163.com>
+Date:   Mon May 27 22:55:06 2019 +0800
+
+    商家详情
+
+[33mcommit b2f0c1865312023ebb82b7b2a0911e485fe9fb5f[m
+Author: lca <chang1996an@163.com>
+Date:   Sat May 25 18:58:42 2019 +0800
+
+    文字滚动增加
+
+[33mcommit 8204e40b2a499d199a19d67eca86254b95aa869c[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Thu May 23 23:48:08 2019 +0800
+
+    feat: 设置城市
+
+[33mcommit 3f3e607abe3df500ae524374c9e6962d61103a42[m
+Author: domen <mixiaofeng1996@gmail.com>
+Date:   Thu May

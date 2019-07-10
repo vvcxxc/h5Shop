@@ -3,6 +3,58 @@
 .order
   height 100vh
   position relative
+  .code_show
+    position fixed
+    width:100%
+    height:100%
+    z-index:4
+    .code_background
+      position fixed
+      background:#686868
+      width:100%
+      height:100%
+      z-index:4
+      opacity 0.8
+    .codeBox
+      position:fixed
+      width:400px
+      height:500px
+      left:50%
+      top:50%
+      margin-left:-250px
+      margin-top:-300px
+      background:#fff
+      z-index 5
+      .codeBox_info
+        position absolute
+        width 400px
+        height 40px
+        left:50%
+        top:5%
+        font-size 25px
+        font-weight bold
+        margin-left:-200px
+        text-align center
+      .codeBox_img
+        position absolute
+        width 300px
+        height 300px
+        left:50%
+        top:20%
+        margin-left:-150px
+        background #cccccc
+        .code_img
+          width 100%
+          height 100%
+      .codeBox_msg
+        position absolute
+        width 400px
+        height 40px
+        left:50%
+        top:85%
+        font-size 35px
+        margin-left:-200px
+        text-align center
   .msgBox
     position absolute
     width 14rem
@@ -11,6 +63,7 @@
     top 50%
     margin-left -7rem
     margin-top -5rem
+    z-index 5
     .imgBox
       position absolute
       width 5rem
@@ -28,6 +81,7 @@
       font-size 28px
       color #313131
       text-align center
+      font-size 25px
     .toHome
       position absolute
       top 85%
@@ -42,6 +96,7 @@
       color #666666
       // background: linear-gradient(to bottom , #cccccc, #ffffff);
       border-radius .25rem
+
 .content-wrap
   overflow-y: scroll
 

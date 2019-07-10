@@ -56,41 +56,6 @@ export default class ConfirmOrder extends Component {
       this.setState({ amount: Number(this.state.amount) + 1 })
     }
   }
-  //login() {
-  // Taro.showLoading({
-  //   title: "授权中...",
-  // });
-  // Taro.login({
-  //   success: function (res) {
-  //     if (res.code) {
-  //       let wcode = res.code;
-  //       // 用户登录凭证（有效期五分钟）。开发者需要在开发者服务器后台调用 api，使用 code 换取 openid 和 session_key 等信息
-  //       Taro.request({
-  //         url: 'https://api.weixin.qq.com/sns/jscode2session',
-  //         method: "GET",
-  //         data: {
-  //           app_id: "wx5f2271a7c946fef1",
-  //           secret: "ca3f3056515e106637122db6a6ba8155",
-  //           grant_type: "authorization_code",
-  //           js_code: wcode || "",
-  //         },
-  //         success(res) {
-  //           const { statusCode, data: { openid, token, unionid } } = res;
-  //           Taro.hideLoading();
-  //           if () {
-  //             Taro.setStorageSync("openid", openid)
-  //             Taro.setStorageSync("unionid", unionid)
-  //             // Taro.setStorageSync("token", `Bearer ${token}`)
-  //           }
-  //         },
-  //         fail(err) {
-  //         }
-  //       })
-  //     } else {
-  //     }
-  //   }
-  // })
-  //}
   payMoney() {
     Taro.showLoading({
       title: 'loading',
@@ -99,15 +64,12 @@ export default class ConfirmOrder extends Component {
     request({
       url: 'api/wap/coupon/wxWechatPay',
       method: "POST",
-      // header:{
-      //   Authorization:"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC9qc2NvZGUyc2Vzc2lvbiIsImlhdCI6MTU2MjA2MDA5MCwiZXhwIjoxNTYyMzYwMDkwLCJuYmYiOjE1NjIwNjAwOTAsImp0aSI6IkFaMHNlcmtSb29jY2Rwa2MiLCJzdWIiOjMwMzEsInBydiI6ImY2YjcxNTQ5ZGI4YzJjNDJiNzU4MjdhYTQ0ZjAyYjdlZTUyOWQyNGQifQ.BKuDc9LWnwK30cVTRwVksMySuuAvPwNnHd0y9RHyBYY",
-      // },
       data: {
         youhui_id: this.state.coupon.id,
         store_id: this.state.store.id,
         youhui_number: this.state.amount,
-        type: "1",  //1 微信 2支付宝			
-        openid: Taro.getStorageSync("openid"), //登录时获取设置本地缓存
+        type: "1",  //1 微信 2支付宝
+        open_id: Taro.getStorageSync("openid"), //登录时获取设置本地缓存
         // open_id: "oCRAS0aZJrVnuK3K-pw0b1AZslzM"
         // alipay_user_id: ""
       }
@@ -122,8 +84,6 @@ export default class ConfirmOrder extends Component {
           signType: res.signType,
           paySign: res.paySign,
           success(res) {
-
-            console.log("支付成功");
             () => {
               this.setState({
                 pay_bull: "支付成功",
@@ -133,8 +93,6 @@ export default class ConfirmOrder extends Component {
 
           },
           fail(err) {
-
-            console.log("支付失败");
             () => {
               this.setState({
                 pay_bull: "支付失败",

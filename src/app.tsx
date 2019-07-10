@@ -48,18 +48,20 @@ class App extends Component {
 			'pages/merchant/index',
 			'pages/activity/index',
 			'pages/business/index',
-      'pages/orderdetail/index',
       "pages/activity/pages/detail/detail",
       "pages/activity/pages/group/group",
       "pages/activity/pages/appreciation/appreciation",
       "pages/activity/pages/list/list",
+
 		],
 		subPackages: [
 			{
 				/**各种详情页面 比如商家详情页 */
 				root: "detail-pages",
 				pages: [
-					'gift/gift'
+          'gift/gift',
+          'orderdetail/index',
+          'orderdetail/refundProgress'
 				]
 			},
 			{
@@ -154,16 +156,9 @@ class App extends Component {
 		define: '22'
 	}
 	componentDidShow() {
-		this.getToken();
 	}
 	componentDidHide() { }
 	componentDidCatchError() { }
-
-	getToken() {
-		request({
-			url: 'api/wap/testLogin'
-		}).then((res: any) => Taro.setStorageSync('token', res.token));
-	}
 
 	// 在 App 类中的 render() 函数没有实际作用
 	// 请勿修改此函数

@@ -51,7 +51,7 @@ export default class Activity extends Component<ActivityProps> {
   }
 
   componentDidMount() {
-    // Taro.showShareMenu()
+    Taro.showShareMenu()
     this.fetchActivityCenter()
   }
 

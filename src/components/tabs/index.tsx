@@ -23,6 +23,7 @@ export default class Tabs extends Component<Props> {
     this.props.onChange(id);
   }
   render() {
+    // let list = this.props.list ? this.props.list : []
     return (
       <View className="tab flex">
         {this.props.list.map((item, index) => (
@@ -34,7 +35,6 @@ export default class Tabs extends Component<Props> {
             }
             onClick={this.handlerTablChange.bind(this, index,item.id)}
           >
-            
             <View className="label">{item.name}</View>
           </View>
         ))}

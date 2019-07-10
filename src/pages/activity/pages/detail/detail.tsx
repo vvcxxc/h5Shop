@@ -54,7 +54,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     const { type = 1, id = "", gift_id = "", activity_id = "" } = this.$router.params
     this.fetchDetail(type, id)
     this.fetchGiftinfo(gift_id, activity_id)
-    // Taro.showShareMenu()
+    Taro.showShareMenu()
   }
 
   onShareAppMessage() {
@@ -62,7 +62,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
 
     const {list_brief, image  } = this.state.detail
     const { id = "1095",  activity_id, gift_id, type} = this.$router.params
-
     return {
       title: `${userInfo.nickName}邀请您参加『${list_brief}』`,
       path: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`,

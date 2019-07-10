@@ -32,11 +32,13 @@ export default class PaySuccess extends Component<Props> {
       id: "",
       name: '',
       address: '',
+      preview:"",
       store_img_one: "",
       store_img_three: "",
       store_img_two: "",
       collect: "0",
       distance: ""
+
     },
     recommend: [//本店其它的推荐
       {
@@ -124,9 +126,8 @@ export default class PaySuccess extends Component<Props> {
         yPoint: res.latitude,
         xPoint: res.longitude
       }, () => {
-        request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xPoint: this.state.xPoint, yPoint: this.state.yPoint } })
+        request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
           .then((res: any) => {
-            console.log(res);
             that.setState({
               business_list: res.store.Info,
               recommend: res.recommend,
@@ -211,8 +212,8 @@ export default class PaySuccess extends Component<Props> {
           </View>
           <ScrollView scrollX className="scroll-view">
             <View className="flex">
+              <Image className="image" src={this.state.business_list.preview} />
               <Image className="image" src={this.state.business_list.store_img_one} />
-              <Image className="image" src={this.state.business_list.store_img_three} />
               <Image className="image" src={this.state.business_list.store_img_two} />
             </View>
           </ScrollView>
@@ -258,7 +259,7 @@ export default class PaySuccess extends Component<Props> {
           <View className="recommend-cells">
             {
               this.state.recommend.map((item) => (
-                <View className="recommend-cell flex center" onClick={this.handleClick3.bind(this, item.id)}>
+                <View className="recommend-cell flex center"  key={item.id} onClick={this.handleClick3.bind(this, item.id)}>
                   <Image className="image" src={item.preview} />
                   <View className="recommend-cell__bd item">
                     <View className="tit">{item.name}</View>
