@@ -8,10 +8,10 @@ interface Props {
 
 class ActivityList extends PureComponent<Props> {
 	render() {
-		const list = this.props.list.map(_ => (
+		const isList =	(		this.props.list.map(_ => (
 			<Merchant type="activity" merchant={_} key={_} onClick={this.props.onClick} />
-		));
-		return <View>{list}</View>;
+		)))
+		return <View>{isList}</View>;
 	}
 }
 export default ActivityList;

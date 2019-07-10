@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { FETCH_OK } from "./constants";
 import { getCode } from "./getInfo";
-import { getBrowserType } from './common';
+
 /**
  * 小程序登录
  */
@@ -70,25 +70,11 @@ export const miniProgramSign = (params: Params): Promise<SignResponse> => {
 /**
  * 跳转至登陆页面
  */
-// export const toMiniProgramSign = (basicApi: string): void => {
-//   const pages = Taro.getCurrentPages();
-//   const currentUrl = pages[0]["route"];
-//   const id = Taro.getStorageSync("authid") || "";
-//   Taro.redirectTo({
-//     url: `/pages/auth/auth?basicApi=${basicApi}&currentUrl=/${currentUrl}&id=${id}`
-//   });
-// }
-
-
-/**
- * h5登录
- */
-
-export const Login = () => {
-  let type = getBrowserType();
-  if(type == 'wechat'){
-    console.log('wechat')
-  }else{
-    console.log('alipay')
-  }
+export const toMiniProgramSign = (basicApi: string): void => {
+  const pages = Taro.getCurrentPages();
+  const currentUrl = pages[0]["route"];
+  const id = Taro.getStorageSync("authid") || "";
+  Taro.redirectTo({
+    url: `/pages/auth/auth?basicApi=${basicApi}&currentUrl=/${currentUrl}&id=${id}`
+  });
 }

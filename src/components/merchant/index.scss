@@ -1,10 +1,13 @@
 .merchant {
 	background-color: #fff;
-	margin-top: 20px;
+	// margin-top: 20px;
 	&.inset {
 		margin: 20px 20px 20px;
 		border-radius: 50px;
 		padding-top: 20px;
+	}
+	&.update-inset {
+		border-radius: 22px;
 	}
 	.content {
 		padding: 22px;
@@ -42,11 +45,21 @@
 			margin-top: 18px;
 		}
 	}
+	.flex-right{
+		flex-direction:row-reverse;
+	}
+	.all-data {
+		display:flex;
+		padding:0px 12px;
+		margin-top:15px;
+	}
+	.pb8 {
+		padding-bottom: 25px;
+	}
 }
 
 .banner{
 	width:50%;
-	// height:240px;
 	height: 260px;
 	image {
 		background-color: #ccc;

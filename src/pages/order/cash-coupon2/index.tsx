@@ -12,8 +12,13 @@ interface Props {
   timer: any,
   sname: any,
   list_brief: any,
-  bg_img_type: any
+  bg_img_type: any,
+  type: any,
+  expiration: any
 }
+
+//type: 0为空白，1再来一单
+// bg_img_type: 0为灰色，1为蓝色,2为灰色已使用
 
 /**现金优惠券 */
 export default class CashCoupon extends Component<Props> {
@@ -25,9 +30,27 @@ export default class CashCoupon extends Component<Props> {
   handleClick = (_id, e) => {
     Taro.navigateTo({
       // url: '/pages/orderdetail/index?couponType="1"&ticketColor='+this.props.bg_img_type+'&ticketUsed=' + this.props.bg_img_type
-      url: '/pages/orderdetail/index?id='+_id
+      url: '/detail-pages/orderdetail/index?id=' + _id
 
     })
+  }
+  buyMore = (_id, expiration, e) => {
+
+    let arr1 = expiration.toString().split(" ");
+    let data1 = arr1[0].toString().split("-");
+    let data2 = arr1[1].toString().split(":");
+    var expirationDate = new Date(data1[0], data1[1], data1[2], data2[0], data2[1], data2[2]);
+    let nowDate = new Date();
+    if (expirationDate >= nowDate) {
+      Taro.navigateTo({
+        url: '/business-pages/ticket-buy/index?id=' + _id
+      })
+    }else{
+      Taro.showToast({ title:'活动已过期',icon:'none' })
+    }
+
+
+    e.stopPropagation();
   }
   render() {
     return (
@@ -54,11 +77,6 @@ export default class CashCoupon extends Component<Props> {
               <View className="info">满{this.props._total_fee}可用</View>
             </View>
           </View>
-          {/* <Image
-          className="middle-bg"
-          mode="widthFix"
-          src={require("./middle-bg.png")}
-        /> */}
           <View className="item content" style={{ position: "relative" }}>
             <View className="head flex">
               {
@@ -70,6 +88,9 @@ export default class CashCoupon extends Component<Props> {
             </View>
             {/* <View className="date">{this.props.timer}</View> */}
             <View className="info" style={{ position: "absolute", bottom: "20px", padding: "0" }}>{this.props.list_brief}</View>
+            {
+              this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id, this.props.expiration)}>再来一单</View> : ""
+            }
           </View>
         </View>
       </View>

@@ -6,7 +6,7 @@ import { View, Text, Image } from "@tarojs/components";
 import "./index.styl";
 
 interface Props {
-  cuoPonsId:number
+  cuoPonsId?:number
   handerClickCb ?:Function
 }
 

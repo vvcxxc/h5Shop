@@ -70,7 +70,7 @@ export default class CashCouponListComponent extends Component<Props> {
 				<View className="bcfff ticket" id="couponList_tiket" >
 					{
 						this.state.couponList_bull ? this.state.cashCouponList.map((item) => (
-							<div>
+							<div  key={item.id}>
 								{/* <View className="merchant-details__tit" >
 									<View style={{ height: "5px" }}></View>
 									<Text className="mark bc5D84E0">券</Text>
@@ -106,11 +106,15 @@ export default class CashCouponListComponent extends Component<Props> {
 									</View>
 								</View>
 								<br /></div>}
-					<View className="ft-more flex center"
-						style={{ textAlign: "center", margin: "0", width: "100%", background: "#fff" }}
-						onClick={() => { this.setState({ couponList_bull: !this.state.couponList_bull }) }} >{this.state.couponList_bull ? "收回" : "查看更多"}
-						{this.state.couponList_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />}
-					</View>
+					{
+						this.state.cashCouponList.length != 1 ? <View className="ft-more flex center"
+							style={{ textAlign: "center", margin: "0", width: "100%", background: "#fff" }}
+							onClick={() => { this.setState({ couponList_bull: !this.state.couponList_bull }) }} >{this.state.couponList_bull ? "收回" : "查看更多"}
+							{this.state.couponList_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />}
+						</View> : ""
+					}
+
+
 				</View>
 				<View style={{ height: "10px" }}></View>
 				<hr />

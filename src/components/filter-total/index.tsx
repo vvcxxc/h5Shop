@@ -85,7 +85,7 @@ export default class filterTotal extends Component<Props> {
     });
   }
 
-  listClick1 = (index, id?,name?) => () => {
+  listClick1  (index, id?, name?) {
     this.clearClick0();  //清除所有
     if (this.state.listId1 === id) {
       this.setState({ red1: false })
@@ -94,18 +94,17 @@ export default class filterTotal extends Component<Props> {
         this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
       })
       return
-    } 
+    }
     this.setState({ red1: true })
-    this.setState({ name1:name})
+    this.setState({ name1: name })
     this.setState({ listId1: id }, () => {
       this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
     })
     this.setState({ list1: index })
-    
   }
 
-  listClick2 = (index, id?,name?) => () => {
-     this.clearClick0(); //让三个 全部隐藏
+  listClick2 (index, id?, name?) {
+    this.clearClick0(); //让三个 全部隐藏
     if (this.state.listId2 === id) {
       this.setState({ red2: false })
       this.setState({ name2: null })
@@ -114,16 +113,16 @@ export default class filterTotal extends Component<Props> {
         this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
       })
       return
-    } 
+    }
     this.setState({ red2: true })
     this.setState({ name2: name })
-     this.setState({ listId2: id }, () => {
+    this.setState({ listId2: id }, () => {
       this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
     })
     this.setState({ list2: index })
   }
 
-  listClick3 = (index, id?,name?) => () => {
+  listClick3 (index, id?,name?) {
     this.clearClick0(); //让三个 全部隐藏
     if (this.state.listId3 === id) {
       this.setState({ red3: false })
@@ -172,8 +171,6 @@ export default class filterTotal extends Component<Props> {
       })
   }
 
-
-
   render() {
     return <View className="page">
       <View className="title">
@@ -201,7 +198,7 @@ export default class filterTotal extends Component<Props> {
             const checked1 = index === this.state.list1;
             return <View className='list'
               key={''}
-              onClick={this.listClick1(index, item.id,item.name)}
+              onClick={this.listClick1.bind(this,index, item.id,item.name)}
             >
               <View>{item.name}</View>
               <AtIcon value='check' size={(checked1 ? '12' : '0')} color='#fe7b70'></AtIcon>
@@ -215,7 +212,7 @@ export default class filterTotal extends Component<Props> {
             const checked2 = index === this.state.list2;
             return <View className='list'
               key={''}
-              onClick={this.listClick2(index, item.id,item.name)}
+              onClick={this.listClick2.bind(this,index, item.id,item.name)}
             >
               <View>{item.name}</View>
               <AtIcon value='check' size={(checked2 ? '12' : '0')} color='#fe7b70'></AtIcon>
@@ -227,7 +224,7 @@ export default class filterTotal extends Component<Props> {
         {
           this.state.selectData3.map((item, index) => {
             const checked3 = index === this.state.list3;
-            return <View className='list' key={''} onClick={this.listClick3(index, item.id,item.name)} >
+            return <View className='list' key={''} onClick={this.listClick3.bind(this,index, item.id,item.name)} >
               <View>{item.name}</View>
               <AtIcon value='check' size={(checked3 ? '12' : '0')} color='#fe7b70'></AtIcon>
             </View>

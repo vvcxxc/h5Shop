@@ -7,8 +7,10 @@
  */
 const counter = require('../pages/counter/model').default
 const data = require('../pages/data/model').default
+const search = require('../pages/index/models').default
 
 export default [
   counter,
   data,
+  search
 ]

@@ -16,8 +16,6 @@ export default class CashCoupon extends Component<Props> {
     addGlobalClass: true
   };
   handleClick = (_id, e) => {
-    console.log(_id);
-    console.log(e);
     Taro.navigateTo({
       url: '../ticket-buy/index?id=' + _id
     })

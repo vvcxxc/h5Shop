@@ -37,7 +37,6 @@ export default class ExchangeCouponComponent extends Component<Props> {
         exchangeCouponList_bull: false
     }
     componentDidMount() {
-        console.log(this.props.exchangeCouponList)
         this.setState({
             exchangeCouponList: this.props.exchangeCouponList
         })
@@ -69,13 +68,13 @@ export default class ExchangeCouponComponent extends Component<Props> {
                 <View className="discounts-view bcfff" >
                     {
                         this.state.exchangeCouponList_bull ? this.state.exchangeCouponList.map((item) => (
-                            <div >
+                            <div key={item.id}>
                                 {/* <View className="merchant-details__tit">
                                     <View style={{ height: "10px" }}></View>
                                     <Text className="mark bc5D84E0" style={{ background: "#58bc58" }}>惠</Text>
                                     <Text className="fwb">优惠信息</Text>
                                 </View> */}
-                                <View className="discounts-cells"  onClick={this.handleClick.bind(this, item.id)}>
+                                <View className="discounts-cells" onClick={this.handleClick.bind(this, item.id)}>
                                     <View className="discounts-cell flex center">
                                         <Image className="image" src={item.image} />
                                         <View className="discounts-cell__bd item">
@@ -103,18 +102,22 @@ export default class ExchangeCouponComponent extends Component<Props> {
                                             <View className="desc">{this.state.exchangeCouponList[0].brief}</View>
                                             <View className="flex center" style={{ position: "relative" }}>
                                                 <View className="money" style={{ position: 'absolute', left: '20px' }}>￥{this.state.exchangeCouponList[0].pay_money}</View>
-                                                <Button className="btn-buy"  onClick={this.handleClick2.bind(this, this.state.exchangeCouponList[0].id)}style={{ position: 'absolute', right: '20px' }}>立即购买</Button>
+                                                <Button className="btn-buy" onClick={this.handleClick2.bind(this, this.state.exchangeCouponList[0].id)} style={{ position: 'absolute', right: '20px' }}>立即购买</Button>
                                             </View>
                                         </View>
                                     </View>
                                 </View>
                             </div>
                     }
-                    <View className="ft-more flex center"
-                        style={{ textAlign: "center", margin: "0", width: "100%", background: "#fff" }}
-                        onClick={() => { this.setState({ exchangeCouponList_bull: !this.state.exchangeCouponList_bull }) }} >{this.state.exchangeCouponList_bull ? "收回" : "查看更多"}
-                        {this.state.exchangeCouponList_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />}
-                    </View>
+
+                    {
+                        this.state.exchangeCouponList.length != 1 ?
+                            <View className="ft-more flex center"
+                                style={{ textAlign: "center", margin: "0", width: "100%", background: "#fff" }}
+                                onClick={() => { this.setState({ exchangeCouponList_bull: !this.state.exchangeCouponList_bull }) }} >{this.state.exchangeCouponList_bull ? "收回" : "查看更多"}
+                                {this.state.exchangeCouponList_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />}
+                            </View> : ""
+                    }
                     <View style={{ height: "10px" }}></View>
                 </View>
             </View>

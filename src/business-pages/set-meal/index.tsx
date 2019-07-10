@@ -46,7 +46,7 @@ export default class PaySuccess extends Component {
       saddress: "",
       sname: "",
       tel: "",
-      // distance:""
+      distance: ""
     },
     goods_album: [
       {
@@ -74,15 +74,15 @@ export default class PaySuccess extends Component {
     Taro.showLoading({
       title: 'loading',
     })
-    // console.log(this.$router.params)
     Taro.getLocation({ type: 'wgs84' }).then(res => {
       this.setState({
         yPoint: res.latitude,
         xPoint: res.longitude
       }, () => {
-        request({ url: 'v3/discount_coupons/' + this.$router.params.id })
+        request({
+          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
+        })
           .then((res: any) => {
-            console.log(res);
             this.setState({
               coupon: res.info.coupon,
               store: res.info.store,
@@ -99,7 +99,6 @@ export default class PaySuccess extends Component {
 
   }
   handleClick = (id, e) => {
-    console.log(id)
     Taro.navigateTo({
       url: '../../business-pages/confirm-order/index?id=' + id
     })
@@ -188,7 +187,7 @@ export default class PaySuccess extends Component {
             <View style={{ width: "10%" }}>
               <Image className="address-image" src={AddressImg} />
             </View>
-            {/* <View className="distance">2.6m</View> */}
+            <View className="distance">{this.state.store.distance}</View>
             <View className="text flex-item" style={{ width: "80%" }}>{this.state.store.saddress}</View>
             <View style={{ width: "10%" }}>
               <Image className="mobile-image" src={MobileImg} />
@@ -215,7 +214,7 @@ export default class PaySuccess extends Component {
 
             {
               this.state.goods_album.map((item) => (
-                <Image src={item.image_url} style={{ width: "100%" }} />
+                <Image src={item.image_url} style={{ width: "100%" }} key={item.id} />
               ))
             }
 
@@ -230,7 +229,10 @@ export default class PaySuccess extends Component {
           </View>
           {
             this.state.recommend.map((item) => (
-              <CashCoupon _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} sname={item.sname} _image={item.image} />))
+              <View key={item.id} >
+                <CashCoupon _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} sname={item.sname} _image={item.image} />
+              </View>
+            ))
           }
 
           {/* <CashCoupon _id={"1"} return_money={"11"} pay_money={"22"} youhui_type={"1"} timer={"1111"} list_brief={"5555555"} sname={"222"} /> */}

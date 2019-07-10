@@ -29,7 +29,7 @@ export default class MyWelfare extends Component {
   }
 
   componentDidMount() {
-    // Taro.showShareMenu()
+    Taro.showShareMenu()
 
     this.fetchGift()
   }
