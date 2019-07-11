@@ -5,7 +5,7 @@ import './index.styl';
 import request from '../../services/request';
 import questTwo from '../../services/requesTwo'
 import { connect } from '@tarojs/redux'
-import getLocation from '@/utils/getLocation';
+import { getLocation } from '@/utils/getInfo';
 
 @connect(
 	state => ({
@@ -67,8 +67,10 @@ export default class Index extends Component<any> {
 		this.requestTab(); //经营列表
 		this.localStorageData();
     // this.requestLocation();
-    getLocation.then(res => {
+    getLocation().then(res => {
       console.log(res)
+    }).catch(err => {
+      console.log(err);
     })
 	}
 
@@ -87,7 +89,7 @@ export default class Index extends Component<any> {
 
 	localStorageData = () => {
 		if (Object.keys(this.$router.params).length < 1) {
-			this.getLocation();
+			// this.getLocation();
 			return
 		}
 		Taro.getStorage({ key: 'router' }).then((res: any) => {
@@ -131,27 +133,27 @@ export default class Index extends Component<any> {
 
 	}
 	// get location
-	getLocation = () => {
-		Taro.getLocation({ type: 'wgs84' }).then(res => {
-			this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
-			this.setState({ locations: res }, () => {
-				this.getCity();
-				if (this.state.deal_cate_id == null) {
-					this.requestHomeList({ xpoint: res.longitude, ypoint: res.latitude })
-				} else {
-					this.setState({
-						meta: {
-							xpoint: this.state.locations.longitude,
-							ypoint: this.state.locations.latitude,
-							deal_cate_id: this.state.deal_cate_id
-						}
-					}, () => {
-						this.requestHomeList(this.state.meta)
-					})
-				}
-			})
-		})
-	}
+	// getLocation = () => {
+	// 	Taro.getLocation({ type: 'wgs84' }).then(res => {
+	// 		this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
+	// 		this.setState({ locations: res }, () => {
+	// 			this.getCity();
+	// 			if (this.state.deal_cate_id == null) {
+	// 				this.requestHomeList({ xpoint: res.longitude, ypoint: res.latitude })
+	// 			} else {
+	// 				this.setState({
+	// 					meta: {
+	// 						xpoint: this.state.locations.longitude,
+	// 						ypoint: this.state.locations.latitude,
+	// 						deal_cate_id: this.state.deal_cate_id
+	// 					}
+	// 				}, () => {
+	// 					this.requestHomeList(this.state.meta)
+	// 				})
+	// 			}
+	// 		})
+	// 	})
+	// }
 
 	// 获取城市
 	getCity = () => {

@@ -72,45 +72,81 @@ export const getOpenid = (code: string): Promise<any> => {
  * latitude: 纬度,
  * ...
  */
-interface Location {
-  longitude: number;
-  latitude: number;
-}
-export const getLocation = (): Promise<Location> => {
+// interface Location {
+//   longitude: number;
+//   latitude: number;
+// }
+// export const getLocation = (): Promise<Location> => {
+//   return new Promise((resolve, reject) => {
+//     const location = Taro.getStorageSync("location")
+//     if (location) return resolve(location)
+//     Taro.getSetting({
+//       success({ authSetting }) {
+//         const flagLocation = authSetting["scope.userLocation"]
+//         if (flagLocation) {
+//           Taro.getLocation({
+//             type: "wgs84",
+//             success(res) {
+//               Taro.setStorageSync("location", res)
+//               return resolve(res)
+//             },
+//             fail(err) {
+//               return reject(err)
+//             }
+//           })
+//         } else if (flagLocation === false) {
+//           const errMsg = "user refused to location authorization, try authorization again please."
+//           return reject(errMsg)
+//         } else {
+//           Taro.getLocation({
+//             type: "wgs84",
+//             // @ts-ignore
+//             success(res) {
+//               Taro.setStorageSync("location", res)
+//               return resolve(res)
+//             },
+//             fail(err) {
+//               return reject(err)
+//             }
+//           })
+//         }
+//       }
+//     })
+//   })
+// }
+export const getLocation = () => {
+  var map = new AMap.Map('', {
+      resizeEnable: true
+  });
   return new Promise((resolve, reject) => {
-    const location = Taro.getStorageSync("location")
-    if (location) return resolve(location)
-    Taro.getSetting({
-      success({ authSetting }) {
-        const flagLocation = authSetting["scope.userLocation"]
-        if (flagLocation) {
-          Taro.getLocation({
-            type: "wgs84",
-            success(res) {
-              Taro.setStorageSync("location", res)
-              return resolve(res)
-            },
-            fail(err) {
-              return reject(err)
-            }
-          })
-        } else if (flagLocation === false) {
-          const errMsg = "user refused to location authorization, try authorization again please."
-          return reject(errMsg)
-        } else {
-          Taro.getLocation({
-            type: "wgs84",
-            // @ts-ignore
-            success(res) {
-              Taro.setStorageSync("location", res)
-              return resolve(res)
-            },
-            fail(err) {
-              return reject(err)
-            }
-          })
-        }
-      }
-    })
+    const location = Taro.getStorageSync("location");
+    if(location) return resolve(location)
+      AMap.plugin('AMap.Geolocation', function () {
+          var geolocation = new AMap.Geolocation({
+              enableHighAccuracy: true,
+              timeout: 1000,
+              buttonPosition: 'RB',
+              buttonOffset: new AMap.Pixel(10, 20),
+              zoomToAccuracy: true,
+          });
+          map.addControl(geolocation);
+          geolocation.getCurrentPosition(function (status, result) {
+              if (status == 'complete') {
+                let res = {
+                  latitude : result.position.lat,
+                  longitude : result.position.lng
+                }
+                Taro.setStorageSync("location", res);
+                resolve({
+                  latitude : result.position.lat,
+                  longitude : result.position.lng
+                })
+              } else {
+                  reject({
+                      msg : result.message
+                  })
+              }
+          });
+      });
   })
 }
