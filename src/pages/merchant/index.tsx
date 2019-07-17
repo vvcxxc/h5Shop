@@ -6,7 +6,7 @@ import request from '../../services/request';
 import List from './list';
 import { getLocation } from '../../utils/getInfo'
 
-import FilterTotal from "src/components/filter-total";
+import FilterTotal from "@/components/filter-total";
 interface defineType {
 	deal_cate_id?: number,
 	distance_id?: number,
