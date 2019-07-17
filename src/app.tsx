@@ -86,8 +86,6 @@ class App extends Component {
 				root: 'activity-pages',
 
 				pages: [
-					'group-booking/index',
-          'group-booking/detail/index',
           'my-activity/my.activity',
           "my-welfare/pages/gift/welfare.gift",
           'offline/order'
