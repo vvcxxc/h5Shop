@@ -117,7 +117,6 @@ export default class Index extends Component<any> {
   // get location
   getLocatione = () => {
     getLocation().then((res: any) => {
-      // console.log('3432')
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
       this.setState({ locations: res }, () => {
         this.getCity();
