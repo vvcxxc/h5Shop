@@ -13,8 +13,13 @@ import { DetailProp } from "../detail"
 
 export default class DetailAppreciation extends Component<DetailProp> {
   static defaultProps: DetailProp = {
-    data: {},
-    giftinfo: null,
+    data: {
+      description: [],
+
+    },
+    giftinfo: {
+      image_details: []
+    },
     isChecked: false,
     isFreePostage: false,
     onAction() {},
@@ -24,7 +29,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
   /**
    * 点击处理
    */
-  handleClick(e) {
+  handleClick = (e) => {
     const { action } = e.currentTarget.dataset
     const { onAction } = this.props
     onAction(action, null)
@@ -72,10 +77,10 @@ export default class DetailAppreciation extends Component<DetailProp> {
                   {data.location_name || "暂无"}
                 </View>
                 <View className="item name">{data.name || "暂无"}</View>
-                <View className="item brief">
+                {/* <View className="item brief">
                   {data.list_brief || "暂无"}
                 </View>
-                <Image className="item image" src={data.image} />
+                <Image className="item image" src={data.image} /> */}
               </View>
             </View>
             <View className="area-attention">
@@ -93,7 +98,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                 <View className="item">
                   <Text className="name">使用规则:</Text>
                   <View className="content-sub">
-                    {
+                    {/* {
                       data.description.map((item, index) => {
                         return (
                           <View className="item-sub" key={index}>
@@ -101,7 +106,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                           </View>
                         )
                       })
-                    }
+                    } */}
                   </View>
                 </View>
               </View>
@@ -141,11 +146,11 @@ export default class DetailAppreciation extends Component<DetailProp> {
                           className="image-wrapper"
                           style="white-space: nowrap;"
                         >
-                          {
+                          {/* {
                             giftinfo.image_details.map((item, index) => {
                               return <Image className="item" key={index} src={item} />
                             })
-                          }
+                          } */}
                         </View>
                       </ScrollView>
                     </View>

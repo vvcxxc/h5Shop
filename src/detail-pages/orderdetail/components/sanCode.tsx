@@ -16,11 +16,11 @@ function SanCode(props: sanCodeProps) {
 
 
     return <View className='z_sanCodeContent' >
-        <View>
+        <View className='code_box1'>
             {/* <Image src={ url ? url : Code }  /> */}
-            <Image src={url} />
+            <Image className='code_image' src={url} />
         </View>
-        <View style={{ textDecoration: status == "1" ? "none" : "line-through" }} >{code}</View>
+        <View  className='code_box2' style={{ textDecoration: status == "1" ? "none" : "line-through" }} >{code}</View>
     </View>
 }
 

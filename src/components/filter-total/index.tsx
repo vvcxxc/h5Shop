@@ -90,6 +90,7 @@ export default class filterTotal extends Component<Props> {
     if (this.state.listId1 === id) {
       this.setState({ red1: false })
       this.setState({ name1: null })
+      this.setState({ list1: null })
       this.setState({ listId1: null }, () => {
         this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
       })
@@ -127,6 +128,7 @@ export default class filterTotal extends Component<Props> {
     if (this.state.listId3 === id) {
       this.setState({ red3: false })
       this.setState({ name3: null })
+      this.setState({ list3: null })
       this.setState({ listId3: null }, () => {
         this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
       })
@@ -147,7 +149,8 @@ export default class filterTotal extends Component<Props> {
       data: { type: 1 }
     })
       .then((res: any) => {
-        this.setState({ selectData1: res })
+
+        this.setState({ selectData1: res.data })
       })
   }
 
@@ -157,7 +160,7 @@ export default class filterTotal extends Component<Props> {
       data: { type: 2 }
     })
       .then((res: any) => {
-        this.setState({ selectData2: res })
+        this.setState({ selectData2: res.data })
       })
   }
 
@@ -167,7 +170,7 @@ export default class filterTotal extends Component<Props> {
       data: { type: 3 }
     })
       .then((res: any) => {
-        this.setState({ selectData3: res })
+        this.setState({ selectData3: res.data })
       })
   }
 

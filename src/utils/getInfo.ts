@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro"
 const SERVER_API = "https://api.weixin.qq.com/sns/jscode2session"
-
+import { getBrowserType } from './common';
+import wx from 'weixin-js-sdk';
 /**
  * 获取codeid
  */
@@ -59,7 +60,7 @@ export const getOpenid = (code: string): Promise<any> => {
       success(res) {
         return resolve(res)
       },
-      fail (err) {
+      fail(err) {
         return reject(err)
       }
     })
@@ -115,38 +116,68 @@ export const getOpenid = (code: string): Promise<any> => {
 //   })
 // }
 export const getLocation = () => {
-  var map = new AMap.Map('', {
-      resizeEnable: true
-  });
-  return new Promise((resolve, reject) => {
-    const location = Taro.getStorageSync("location");
-    if(location) return resolve(location)
-      AMap.plugin('AMap.Geolocation', function () {
-          var geolocation = new AMap.Geolocation({
-              enableHighAccuracy: true,
-              timeout: 1000,
-              buttonPosition: 'RB',
-              buttonOffset: new AMap.Pixel(10, 20),
-              zoomToAccuracy: true,
-          });
-          map.addControl(geolocation);
-          geolocation.getCurrentPosition(function (status, result) {
-              if (status == 'complete') {
-                let res = {
-                  latitude : result.position.lat,
-                  longitude : result.position.lng
-                }
-                Taro.setStorageSync("location", res);
-                resolve({
-                  latitude : result.position.lat,
-                  longitude : result.position.lng
-                })
-              } else {
-                  reject({
-                      msg : result.message
-                  })
-              }
-          });
+  let type = getBrowserType();
+  if (type == 'wechat') {
+    let url = window.location.href.split('#')[0]
+    Taro.request({
+      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    }).then(res => {
+      console.log(res.data);
+      let { data } = res;
+      wx.config({
+        debug: true,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+          "getLocation",
+          "openLocation"
+        ]
       });
-  })
+      wx.ready(res => {
+        console.log(res)
+      })
+    })
+  } else {
+    var map = new AMap.Map('', {
+      resizeEnable: true
+    });
+    return new Promise((resolve, reject) => {
+      const location = Taro.getStorageSync("location");
+      if (location) return resolve(location)
+      AMap.plugin('AMap.Geolocation', function () {
+        var geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,
+          timeout: 1000,
+          buttonPosition: 'RB',
+          buttonOffset: new AMap.Pixel(10, 20),
+          zoomToAccuracy: true,
+        });
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition(function (status, result) {
+          if (status == 'complete') {
+            let res = {
+              latitude: result.position.lat,
+              longitude: result.position.lng
+            }
+            Taro.setStorageSync("location", res);
+            resolve({
+              latitude: result.position.lat,
+              longitude: result.position.lng
+            })
+          } else {
+            reject({
+              msg: result.message
+            })
+          }
+        });
+      });
+    })
+  }
+
 }

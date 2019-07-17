@@ -6,8 +6,8 @@ import {
   NOT_FIND,
   NOT_SIGN
 } from "@/utils/constants";
-import { toMiniProgramSign } from "@/utils/sign";
-const BASIC_API = process.env.BASIC_API;
+// import { toMiniProgramSign } from "@/utils/sign";
+// const BASIC_API = process.env.BASIC_API;
 interface Options extends RequestParams {
   /**替换的主机域名 */
   host?: string;
@@ -38,7 +38,7 @@ export default function request(options: Options) {
             })
             break
           case FETCH_OK:
-            return resolve(res.data.data)
+            return resolve(res.data)
           case FETCH_BAD:
             Taro.showToast({
               title: data.message || "bad request",
@@ -46,7 +46,7 @@ export default function request(options: Options) {
             })
             break
           case NOT_SIGN:
-            toMiniProgramSign(BASIC_API)
+            // toMiniProgramSign(BASIC_API)
             return reject(new Error('--- no sign ---'))
           case NOT_FIND:
               Taro.showToast({

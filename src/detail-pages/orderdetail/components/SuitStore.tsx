@@ -21,23 +21,24 @@ export function SuitStore(props: suitStoreProps) {
       store_name,
       capita,
       image,
-      supplier_id
+      supplier_id,
+      preview
    } = props.suitStoreProps
    // console.log(props.suitStoreProps);
    return <View className='a_buyBox' style={{ paddingBottom: '0' }}
       onClick={() => {
          Taro.navigateTo({
-            url: '/pages/business/index?id='+supplier_id
+            url: '/pages/business/index?id=' + supplier_id
          })
       }}
    >
       <View className='a_one' >适用商铺</View>
       <View className='a_imgBox'  >
-         <Image src={image} />
+         <Image className='_img' src={preview} />
          <View className='a_imgDes'  >
-            <View>{store_name}</View>
-            <View>人均：{capita}</View>
-            <Text>></Text>
+            <View className="a_imgDes_info1">{store_name}</View>
+            <View className="a_imgDes_info2">人均：{capita}</View>
+            <Text className='a_text'>></Text>
          </View>
       </View>
       <View className='a_dres' >

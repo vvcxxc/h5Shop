@@ -1,5 +1,5 @@
 @import '../../utils/config.styl'
-.head
+.headr
   // height 312px
   background: #ccc
   .search
@@ -15,11 +15,10 @@
         font-size: 28px
       .chevron-down
         margin-left 10px
-      .long-string
+     .long-string
         width 2px
         height 26px
         background: theme-color
-        margin 0 26px 0 32px
       .search-input
         padding 0 20px
         color: #666
@@ -34,33 +33,41 @@
   .img
     width: 100%
     height auto
-.swiper 
+.swiper
   height 25vh
   overflow hidden
   background-color: #fff;
-  .image 
+  .image
     max-height: 100%
     width 100%
-.advert
+.advert {
   display:flex;
-  height 200px
-  padding-top 0
-  margin-top -10px
-  background-color #fff
-  image 
-    height 100%
-    width 100%
+  height: 200px;
+  padding-top: 0;
+  margin-top :-10px;
+  background-color :#fff;
+  overflow: hidden;
+  .taro-img{
+    height: 200px;
+  }
+   image {
+     height: 100%;
+      width: 100%;
+   }
+}
 .tab
     height 70px
     background: #fff
     .label
       height 100%
-      line-height 70px
-      border-bottom 4px solid #fff
-    >.active
-      .label
-        color theme-color
-        border-bottom 4px solid theme-color
+      line-height 95px
+      border-bottom 4px solid #f6f6f6
+   .active
+		.label
+			font-size: 37px
+			color theme-color
+			border-bottom 8px solid theme-color
+			font-weight bold
 .merchant {
 	background-color: #fff;
 	margin-top: 20px;
@@ -98,7 +105,6 @@
 		.tag {
 			width: 105px;
 			height: 38px;
-			border: 1px solid rgba(255, 102, 84, 1);
 			border-radius: 5px;
 			font-size: 20px;
 			color: rgba(255, 102, 84, 1);
@@ -135,12 +141,11 @@
 }
 
 
-	
+
 .give {
-	width: 100%;
 	height: 84px;
 	font-size: 24px;
-	padding: 0 22px;
+	margin-left: 22px;
 	box-sizing: border-box;
 	border-bottom: 1px solid #EDEDED;
 	.icon {
@@ -173,7 +178,7 @@
 	}
 }
 .ellipsis-one {
-	overflow:hidden; 
+	overflow:hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -184,29 +189,45 @@
 
 // 重新构造图片
 .content_box {
-	display: flex; 
+	display: flex;
 	justify-content: space-between;
 	align-items:center;
-	padding:20px 25px; 
+	padding:20px 25px;
 	.content_img {
-		height:20vh; 
-		width:50% ; 
-		image {
+		height:20vh;
+		width:50%;
+		.taro-img {
+			height:20vh;
+      width:100% ;
+			image {
 			height:100%;
-			width:100% 
+			width:100% ;
 			border-radius: 10px;
+			}
 		}
 	}
 	.content_update_img {
-		height:22vh; 
-		width:100% ; 
+		height:22vh;
+		width:100% ;
 			image {
 			height:100%;
-			width:100% 
+			width:100%
 			border-radius: 10px;
 		}
 	}
 	.hidden_content_img {
 		display: none;
+
 	}
 }
+
+.no_receive {
+	display: flex;
+	justify-content: center;
+	height:95px;
+	background-color:rgba(255,242,230,1);
+	align-items:center;
+	}
+
+
+

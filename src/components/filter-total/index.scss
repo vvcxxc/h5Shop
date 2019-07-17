@@ -1,10 +1,8 @@
 .page {
-  padding:0px 10px;
-  overflow:hidden;
   background-color:#fff;
   .title {
-    margin-top: 10px;
     display:flex;  
+    overflow:hidden;
     justify-content: space-around;
     .line {
       text-align: center;
@@ -24,15 +22,15 @@
     justify-content:space-between;
     padding:15px 30px 15px 80px;
     border-bottom:1px solid #ededed;
-    
   }
   .mt-5{
     margin-top :-18px;
   }
   .myPositing {
+    // display: flex;
+    width: 100%;
     position:absolute;
     background-color:#fff;
-    width:100%;
   }
   .rising {
     z-index: 3;

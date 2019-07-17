@@ -153,9 +153,17 @@ class App extends Component {
 		define: '22'
 	}
 	componentDidShow() {
+    this.getToken();
 	}
 	componentDidHide() { }
-	componentDidCatchError() { }
+  componentDidCatchError() { }
+  getToken() {
+		request({
+			url: 'api/wap/testLogin'
+		}).then((res: any) => {
+      Taro.setStorageSync('token', res.data.token)
+    });
+	}
 
 	// 在 App 类中的 render() 函数没有实际作用
 	// 请勿修改此函数

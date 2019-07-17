@@ -24,7 +24,8 @@ function Index (){
         }).then((res:any)=>{
            
                console.log(res)
-               setData( Object.assign({},defaultData,res) )
+               //res.data=>res
+               setData( Object.assign({},defaultData,res.data) )
            
         }).catch(()=>{
            Taro.showToast({ title:'加载失败',icon:'none' })
@@ -57,19 +58,19 @@ function Index (){
                  ￥{ defaultData.refund_money }  { defaultData.refund_typ === 1 ? '已退款' : '部分退款'  } 
              </View>
              <View className='z_item'  >
-                <Text>退款金额：</Text><Text>￥{defaultData.refund_money}</Text>
+                <Text className='z_item_info1'>退款金额：</Text><Text className='z_item_info2'>￥{defaultData.refund_money}</Text>
              </View>
              <View className='z_item'  >
-                <Text>退款账户：</Text><Text>{handerTypeReturn()}</Text>
+                <Text className='z_item_info1'>退款账户：</Text><Text className='z_item_info2'>{handerTypeReturn()}</Text>
              </View>
              <View className='z_item'  >
-                <Text>退款进程：</Text><Text>{ defaultData.schedule *1 === 1 ? '未到账' : '已到账' }</Text>
+                <Text className='z_item_info1'>退款进程：</Text><Text className='z_item_info2'>{ defaultData.schedule *1 === 1 ? '未到账' : '已到账' }</Text>
              </View>
              <View className='z_item'  >
-                <Text>申请时间：</Text><Text>{defaultData.apply_time}</Text>
+                <Text className='z_item_info1'>申请时间：</Text><Text className='z_item_info2'>{defaultData.apply_time}</Text>
              </View>
              <View className='z_item'  >
-                <Text>退款时间：</Text><Text>{defaultData.refund_time}</Text>
+                <Text className='z_item_info1'>退款时间：</Text><Text className='z_item_info2'>{defaultData.refund_time}</Text>
              </View>
            </View>
 }

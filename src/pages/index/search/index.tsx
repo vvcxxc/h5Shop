@@ -1,9 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro';
-import { View, Image, Canvas } from '@tarojs/components';
-import { AtSearchBar, AtIndexes, AtIcon } from 'taro-ui';
+import { View } from '@tarojs/components';
+import { AtSearchBar, AtIcon } from 'taro-ui';
 import './index.scss';
-import request from '../../../services/request'
-// import { Search } from "../../../../defienGlobal";
 
 interface Props {
 	history: {
@@ -20,7 +18,9 @@ class IndexSearchPage extends PureComponent<Props> {
 	state = {
 		searchStr: '',
 		locationList: [],
-		list:['上海市', '杭州市', '北京市', '广州市', '天津市', '南京市', '武汉市', '苏州市', '福州市']
+		list: [],
+		searchData: [],
+		showStorage:true
 	};
 
 	constructor(props) {
@@ -28,9 +28,16 @@ class IndexSearchPage extends PureComponent<Props> {
 	}
 
 	componentWillMount() {
+		
+		
 	}
 
 	componentDidMount() {
+		if (Taro.getStorageSync("searchKey").length >= 1) {
+			this.setState({ showStorage:true})
+		} else {
+			this.setState({ showStorage: false })
+		}
 	}
 
 	// 往下滚动触发
@@ -48,15 +55,37 @@ class IndexSearchPage extends PureComponent<Props> {
 		this.setState({ searchStr: value });
 	}
 
-	onActionClick=()=> {
+	onActionClick = () => {
+		let meta = Taro.getStorageSync("searchKey") ? Taro.getStorageSync("searchKey") : []
+		if (meta.length < 9 && this.state.searchStr) {
+			meta.unshift(this.state.searchStr)
+			Taro.setStorageSync("searchKey", meta)
+		} else if (meta.length >= 9 && this.state.searchStr) {
+			meta.splice(8, 1)
+			meta.unshift(this.state.searchStr)
+			Taro.setStorageSync("searchKey", meta)
+		}
+		if (meta.length>=1) this.setState({ showStorage:true})
 		Taro.reLaunch(
 			{ url: '../../merchant/index?value=' + this.state.searchStr  }
     )
 	}
 
+	lineOnclick = (item) => {
+		Taro.reLaunch(
+			{ url: '../../merchant/index?value=' + item }
+		)
+	}
+
+	clearStorage = () => {
+		this.setState({ showStorage: false })
+		Taro.clearStorageSync()
+	}
+
 	handleSearch = () => { };
 
 	render() {
+		let saveSearch = Taro.getStorageSync("searchKey") ? Taro.getStorageSync("searchKey"):[]
 		return (
 			<View style='height:100vh; background-color:#fff;'>
 				<View className="flex column page">
@@ -67,30 +96,32 @@ class IndexSearchPage extends PureComponent<Props> {
 						onConfirm={this.handleSearch}
 						onActionClick={this.onActionClick.bind(this)}
 					/>
-					<View className="item content">
+					<View className="item content"
+						style={{ display: !this.state.showStorage ? 'none' : '' }}
+					>
 						<View className="head flex center">
 							<View className="text item" style=" display:flex;  justify-content:space-between;">
 								<View style="color:#999999;">历史搜索</View>
-								<AtIcon value='trash' size='20' color='#999999'></AtIcon>
+								<AtIcon value='trash' size='20' color='#999999' onClick={this.clearStorage.bind(this)}></AtIcon>
 							</View>
-						</View>
+						</View>	
 						<View className="history">
 							{
-								this.state.list.map((item, index) => {
-									return <View className="item" key={index}>{item}</View>
+								saveSearch.map((item, index) => {
+									return <View className="item" onClick={this.lineOnclick.bind(this,item)} key={index}>{item}</View>
 								})
 							}
 						</View>
 					</View>
 					<View >
-						<View style="color:#999999; padding-left:20px;margin-bottom:20px;">大家都在搜</View>
-						<View className="history" style="padding:0px 20px 0px 20px;">
+						{/* <View style="color:#999999; padding-left:20px;margin-bottom:20px;">大家都在搜</View> */}
+						{/* <View className="history" style="padding:0px 20px 0px 20px;">
 							{
 								this.state.list.map((item, index) => {
 									return <View className="item" key={index}>{item}</View>
 								})
 							}
-						</View>
+						</View> */}
 					</View>
 				</View>
 				<View>

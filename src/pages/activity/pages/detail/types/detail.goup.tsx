@@ -90,7 +90,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                 <View className="item">
                   <Text className="name">使用规则:</Text>
                   <View className="content-sub">
-                    {
+                    {/* {
                       data.description.map((item, index) => {
                         return (
                           <View className="item-sub" key={index}>
@@ -98,7 +98,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                           </View>
                         )
                       })
-                    }
+                    } */}
                   </View>
                 </View>
               </View>
@@ -137,11 +137,11 @@ export default class DetailAppreciation extends Component<DetailProp> {
                           className="image-wrapper"
                           style="white-space: nowrap;"
                         >
-                          {
+                          {/* {
                             giftinfo.image_details.map((item, index) => {
                               return <Image className="item" key={index} src={item} />
                             })
-                          }
+                          } */}
                         </View>
                       </ScrollView>
                     </View>

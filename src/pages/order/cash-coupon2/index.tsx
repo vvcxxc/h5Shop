@@ -6,10 +6,12 @@ import "./index.styl";
 
 interface Props {
   _id: any,
+  _logid:any,
   return_money: any,
   _total_fee: any,
   youhui_type: any,
   timer: any,
+  confirm_time: any,
   sname: any,
   list_brief: any,
   bg_img_type: any,
@@ -28,28 +30,16 @@ export default class CashCoupon extends Component<Props> {
     addGlobalClass: true
   };
   handleClick = (_id, e) => {
+    console.log(_id)
     Taro.navigateTo({
-      // url: '/pages/orderdetail/index?couponType="1"&ticketColor='+this.props.bg_img_type+'&ticketUsed=' + this.props.bg_img_type
+      // url: '/detail-pages/orderdetail/index?id=' + _id
       url: '/detail-pages/orderdetail/index?id=' + _id
-
     })
   }
-  buyMore = (_id, expiration, e) => {
-
-    let arr1 = expiration.toString().split(" ");
-    let data1 = arr1[0].toString().split("-");
-    let data2 = arr1[1].toString().split(":");
-    var expirationDate = new Date(data1[0], data1[1], data1[2], data2[0], data2[1], data2[2]);
-    let nowDate = new Date();
-    if (expirationDate >= nowDate) {
+  buyMore = (_id, e) => {
       Taro.navigateTo({
         url: '/business-pages/ticket-buy/index?id=' + _id
       })
-    }else{
-      Taro.showToast({ title:'活动已过期',icon:'none' })
-    }
-
-
     e.stopPropagation();
   }
   render() {
@@ -64,13 +54,11 @@ export default class CashCoupon extends Component<Props> {
         }
         <View
           className="cash-coupon flex active"
-          // style={{ backgroundImage: `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/kG4tMT5SerAGN44WsKpbE5dNsYAp5dhC.png")` }}
-          onClick={this.handleClick.bind(this, this.props._id)}
+          onClick={this.handleClick.bind(this, this.props._logid)}
         >
 
           <View
             className="secondary flex center"
-          // style={{ backgroundImage: `url(${secondaryActiveBg})` }}
           >
             <View className="money-wrap" style={{ paddingTop: '20px' }}>
               ￥<Text className="money">{this.props.return_money}</Text>
@@ -86,10 +74,13 @@ export default class CashCoupon extends Component<Props> {
               }
               {this.props.sname}
             </View>
-            {/* <View className="date">{this.props.timer}</View> */}
-            <View className="info" style={{ position: "absolute", bottom: "20px", padding: "0" }}>{this.props.list_brief}</View>
+            {/* <View className="date" >{this.props.list_brief}</View> */}
+            <View className="info" >{this.props.timer}</View>
+            <View className="info" >免预约/全部商品可用</View>
+
+            {this.props.bg_img_type == 2 ? <View className="info" style={{ marginTop: "10px" }}>使用日期： {this.props.confirm_time}</View> : ""}
             {
-              this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id, this.props.expiration)}>再来一单</View> : ""
+              this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)}>再来一单</View> : ""
             }
           </View>
         </View>

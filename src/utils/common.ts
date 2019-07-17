@@ -15,3 +15,17 @@ export const getCode = (): Promise<any> => {
     })
   })
 }
+
+/**
+ * 判断浏览器类型
+ * */
+export const getBrowserType = () => {
+  switch (true) {
+    case navigator.userAgent.toLowerCase().indexOf('micromessenger') > 0:
+      return 'wechat'
+    case navigator.userAgent.toLowerCase().indexOf('alipay') > 0:
+      return 'alipay'
+    default:
+      return 'alipay'
+  }
+}
