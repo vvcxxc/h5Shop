@@ -26,7 +26,7 @@ export default class MyActivity extends Component<MyActivityProp> {
     current: 0
   }
   componentDidMount() {
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
     const { current = 0 } = this.props
     const { api } = myActivity[current]
     this.fetchActivity(api, current)

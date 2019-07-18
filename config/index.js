@@ -72,6 +72,11 @@ const config = {
     publicPath: "/",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
+    devServer: {
+      host: '192.168.2.109',
+      inline: true,
+      port: 8090,
+    },
     module: {
       postcss: {
         autoprefixer: {
@@ -85,9 +90,18 @@ const config = {
           config: {
             namingPattern: "module", // 转换模式，取值为 global/module
             generateScopedName: "[name]__[local]___[hash:base64:5]"
-          }
-        }
-      }
+          },
+
+        },
+      },
+      rules: [{
+          test: /\.scss$/,
+          use: [
+              "style-loader", // creates style nodes from JS strings
+              "css-loader", // translates CSS into CommonJS
+              "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          ]
+      }]
     }
   }
 };

@@ -13,8 +13,13 @@ import { DetailProp } from "../detail"
 
 export default class DetailAppreciation extends Component<DetailProp> {
   static defaultProps: DetailProp = {
-    data: {},
-    giftinfo: null,
+    data: {
+      description: [],
+
+    },
+    giftinfo: {
+      image_details: []
+    },
     isChecked: false,
     isFreePostage: false,
     onAction() {},
@@ -24,7 +29,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
   /**
    * 点击处理
    */
-  handleClick(e) {
+  handleClick = (e) => {
     const { action } = e.currentTarget.dataset
     const { onAction } = this.props
     console.log(this.props)
@@ -101,7 +106,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                             {item}
                           </View>
                         )
-                      }): ''
+                      }) : ''
                     }
                   </View>
                 </View>

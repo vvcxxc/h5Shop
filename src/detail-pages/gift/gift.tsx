@@ -22,7 +22,7 @@ export default class Gift extends Component<GiftProp> {
   }
 
   componentDidMount() {
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
 
     const { gift_id = "", activity_id = "" } = this.$router.params
     this.fetchGiftinfo(activity_id, gift_id)

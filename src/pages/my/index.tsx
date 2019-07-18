@@ -22,7 +22,7 @@ export default class My extends Component {
   }
   componentDidMount() {
     this.handleGetUserinfo()
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
   }
 
   /**

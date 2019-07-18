@@ -18,7 +18,7 @@ export default class List extends Component {
     list: []
   }
   componentDidMount() {
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
 
     const { type } = this.$router.params
     this.handleSetTitle(type)

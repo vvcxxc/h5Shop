@@ -41,6 +41,8 @@ function Index() {
   const [isApply, showApply] = useState(false)
   let setTimeOut = setTimeoutCallback()
   const {
+    coupons_log_id,//优惠券记录ID
+    coupons_id,//优惠券ID
     description, //["仅限本店使用"]
     begin_time,//"2019-01-07 00:00:00"
     end_time, //"2019-01-15 00:00:00"
@@ -59,8 +61,11 @@ function Index() {
     store_name,//店铺名称
     image,//券图片
     coupons_name,//优惠券名称
-    total_fee,
-    supplier_id
+    total_fee,//满多少可用
+    supplier_id,//店铺id
+    pay_money,//实际购买价格,
+    preview,//门店图
+    source//购买状态，345可以退款
   } = dataInfo
   const { _Imgurl } = youhuiurl;
   useAsyncEffect(async () => {
@@ -70,7 +75,7 @@ function Index() {
         data: { coupons_log_id: cuoPonsId },
       })
         .then((res: any) => {
-          let youhuiurl_temp = { _Imgurl: res };
+          let youhuiurl_temp = { _Imgurl: res.data };
           setYouhuiurl(Object.assign({}, youhuiurl, youhuiurl_temp))
         })
     }
@@ -79,7 +84,7 @@ function Index() {
       data: { coupons_log_id: cuoPonsId, xpoint: '', ypoint: '' }
     })
       .then((res: any) => {
-        setDataInfo(Object.assign({}, dataInfo, res));
+        setDataInfo(Object.assign({}, dataInfo, res.data ));
       })
       .catch(() => {
         Taro.showToast({ title: '数据请求失败', icon: 'none' })
@@ -115,8 +120,8 @@ function Index() {
       <View className='a_head' >
         {
           coupons_type == 1 ?
-            <CashCoupon2 bg_img_type={status == "1" ? 1 : (status == "2" ? 2 : 0)} type={0} _id={cuoPonsId} return_money={money} _total_fee={total_fee} youhui_type={coupons_type} timer={begin_time + " - " + end_time} sname={coupons_name} list_brief={store_name} expiration={expiration}/> :
-            <CashCoupon1 bg_img_type={status == "2" ? 1 : 0} type={0} _id={cuoPonsId} return_money={money} youhui_type={coupons_type} timer={begin_time + " - " + end_time} sname={coupons_name} list_brief={store_name} _image={image}  clickcode={null}  expiration={expiration}/>
+            <CashCoupon2 bg_img_type={status == "1" ? 1 : (status == "2" ? 2 : 0)} type={0} _id={cuoPonsId} _logid={coupons_log_id} confirm_time={confirm_time} return_money={money} _total_fee={total_fee} youhui_type={coupons_type} timer={begin_time + " - " + end_time} sname={store_name} list_brief={coupons_name} expiration={expiration} /> :
+            <CashCoupon1 bg_img_type={status == "2" ? 1 : 0} type={0} _id={cuoPonsId} _logid={coupons_log_id} confirm_time={confirm_time} return_money={money} youhui_type={coupons_type} timer={begin_time + " - " + end_time} sname={store_name} list_brief={coupons_name} _image={image} clickcode={null} />
         }
       </View>
       { /* 购买须知  */}
@@ -142,7 +147,7 @@ function Index() {
 
               <View className='a_sanCodeBox' style={{ opacity: status == "1" ? 1 : 0.3 }}>
                 <View className='a_sancodeLast' >
-                  <Text style={{ letterSpacing: '10rpx' }} >订单号:</Text>
+                  <Text className='a_sanCodeBox_text' style={{ letterSpacing: '10rpx' }} >订单号:</Text>
                 </View>
                 <SanCode code={youhui_sn} url={_Imgurl} status={status} />
               </View>
@@ -152,17 +157,17 @@ function Index() {
       }
       { /* 订单信息  */}
       <View className='z_billingInfo' >
-        <BillingInfo billingInfoProps={{ youhui_sn, cuoPonsId, tel, money, create_time, refund_time, confirm_time, status }} />
+        <BillingInfo billingInfoProps={{ youhui_sn, cuoPonsId, tel, money, create_time, refund_time, confirm_time, status, pay_money }} />
       </View>
       { /* 适用商铺  */}
       <View className='z_billingInfo' >
-        <SuitStore suitStoreProps={{ distance, location_address, store_name, capita, image,supplier_id }} />
+        <SuitStore suitStoreProps={{ distance, location_address, store_name, capita, image, supplier_id, preview }} />
       </View>
       { /* 申请退款 */}
       {
-        status * 1 === 1 && !handerExceedTimeLimit(end_time) ?
+        status * 1 === 1 && (source == 3 || source == 4 || source == 5) ?
           <View className='z_applyReturn' >
-            <View onClick={handerApplyShow}  >申请退款</View>
+            <View className='z_applyReturn_info' onClick={handerApplyShow}  >申请退款</View>
           </View>
           : null
       }
@@ -173,8 +178,8 @@ function Index() {
             <View className='a_mastContent' >
               <View className='a_return' >确定要申请退款吗</View>
               <View className='a_returnB' >
-                <View onClick={handerApplyShow} >取消</View>
-                <View onClick={toReturnMoney} >确定</View>
+                <View className='a_returnB_info1' onClick={handerApplyShow} >取消</View>
+                <View className='a_returnB_info2' onClick={toReturnMoney} >确定</View>
               </View>
             </View>
           </View> : null

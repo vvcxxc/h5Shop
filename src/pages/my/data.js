@@ -8,12 +8,12 @@ export const cells = [
     path: "/pages/order/index",
     open_type: "switchTab"
   },
-  {
-    text: "扫码支付订单记录",
-    icon: iconOrder,
-    path: "/activity-pages/offline/order",
-    open_type: "navigate"
-  },
+  // {
+  //   text: "扫码支付订单记录",
+  //   icon: iconOrder,
+  //   path: "/activity-pages/offline/order",
+  //   open_type: "navigate"
+  // },
   {
     text: "福利中心",
     icon: iconWelfare,

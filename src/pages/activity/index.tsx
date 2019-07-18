@@ -14,7 +14,7 @@ import "./activity.styl"
 import Coupon from "@/components/coupon/coupon"
 import { ACTION_JUMP } from "@/utils/constants"
 // import { getLocation } from "@/utils/getInfo"
-import {getLocation} from '@/utils/getLocation'
+import {getLocation} from '@/utils/getInfo'
 
 // import { connect } from "@tarojs/redux"
 
@@ -52,7 +52,7 @@ export default class Activity extends Component<ActivityProps> {
   }
 
   componentDidMount() {
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
     this.fetchActivityCenter()
   }
 

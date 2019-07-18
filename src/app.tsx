@@ -86,8 +86,6 @@ class App extends Component {
 				root: 'activity-pages',
 
 				pages: [
-					'group-booking/index',
-          'group-booking/detail/index',
           'my-activity/my.activity',
           "my-welfare/pages/gift/welfare.gift",
           'offline/order'
@@ -155,8 +153,7 @@ class App extends Component {
 	componentDidShow() {
 	}
 	componentDidHide() { }
-	componentDidCatchError() { }
-
+  componentDidCatchError() { }
 	// 在 App 类中的 render() 函数没有实际作用
 	// 请勿修改此函数
 	render() {

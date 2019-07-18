@@ -1,4 +1,5 @@
 import Taro from "@tarojs/taro"
+import { getBrowserType } from '@/utils/common'
 
 /**
  * 小程序支付
@@ -12,17 +13,23 @@ export interface Signature {
   paySign: string;
 }
 export const payment = (signature: Signature): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    if (!Object.keys(signature).length) return reject("--- 签名为空 ---")
-    Taro.requestPayment({
-      ...signature,
-      // @ts-ignore
-      success(res) {
-        return resolve(res)
-      },
-      fail(err) {
-        return reject(err)
-      }
+  let type = getBrowserType()
+  if(type == 'wechat'){
+    return new Promise((resolve, reject) => {
+      if (!Object.keys(signature).length) return reject("--- 签名为空 ---")
+      Taro.requestPayment({
+        ...signature,
+        // @ts-ignore
+        success(res) {
+          return resolve(res)
+        },
+        fail(err) {
+          return reject(err)
+        }
+      })
     })
-  })
+  }else{
+
+  }
+
 }

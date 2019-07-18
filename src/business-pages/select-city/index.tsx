@@ -3,6 +3,7 @@ import { View, ScrollView } from "@tarojs/components";
 import { AtSearchBar, AtIcon, AtIndexes, AtActivityIndicator, AtList, AtListItem } from "taro-ui";
 import "./index.styl";
 import request from '../../services/request'
+import { getLocation } from '@/utils/getInfo';
 export default class SelectCity extends Component {
 
   state = {
@@ -48,7 +49,7 @@ export default class SelectCity extends Component {
 
   // get location
   getLocation = () => {
-    Taro.getLocation({ type: 'wgs84' }).then(res => {
+    getLocation().then(res => {
       this.setState({ locations: res }, () => {
         this.getCity();
       })
@@ -72,11 +73,11 @@ export default class SelectCity extends Component {
     Taro.setStorage({
       key: 'router',
       data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
-    }) 
+    })
     if (index == 1) {
       Taro.reLaunch({ url: '../../pages/index/index?router' })
     }
-   
+
   }
 
   handleSearchBarChange = value => {
@@ -97,7 +98,7 @@ export default class SelectCity extends Component {
 
   // click 热门城市
   searchData = (name, id) => {
-    Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } }) 
+    Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
     Taro.reLaunch({ url: '../../pages/index/index?router' })
   }
 

@@ -5,7 +5,7 @@ import { View, Text, Image } from "@tarojs/components";
 import "./index.styl";
 
 interface Props {
-  _id: any, return_money: any, pay_money: any, youhui_type: any, timer: any, sname: any, list_brief: any, _image:any }
+  _id: any, return_money: any, pay_money: any, youhui_type: any, timer: any, yname: any, list_brief: any, _image:any,expire_day:any }
 
 /**现金优惠券 */
 export default class CashCoupon extends Component<Props> {
@@ -38,10 +38,11 @@ export default class CashCoupon extends Component<Props> {
         /> */}
         <View className="item content">
           <View className="head flex">
-            <View className="label flex center">{this.props.sname}</View>
+            <View className="label flex center">{this.props.yname}</View>
           </View>
-          <View className="date">{this.props.timer}</View>
-          <View className="info">{this.props.list_brief}</View>
+          <View className="date">{this.props.list_brief}</View>
+          <View className="info">购买后{this.props.expire_day}日内有效</View>
+          <View className="_free" >￥{this.props.pay_money}</View>
         </View>
       </View>
     );
