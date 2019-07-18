@@ -136,11 +136,32 @@ export const getLocation = () => {
         signature: data.signature,
         jsApiList: [
           "getLocation",
-          "openLocation"
         ]
       });
-      wx.ready(res => {
-        console.log(res)
+      wx.ready(() => {
+        wx.getLocation({
+          type: 'wgs84',
+          success: function (res: any) {
+            let latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+            let longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+            // let location = {
+            //   latitude,
+            //   longitude
+            // };
+            const location = Taro.getStorageSync("location");
+            if (location) return resolve(location)
+            Taro.setStorageSync("location", {
+              latitude,
+              longitude
+            });
+            return new Promise((resolve) => {
+              resolve({
+                latitude,
+                longitude
+              })
+            })
+          }
+        });
       })
     })
   } else {
