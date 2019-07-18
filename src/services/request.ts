@@ -20,7 +20,6 @@ const host = "http://test.api.tdianyi.com/";
 const token_name = process.env.TOKEN;
 export default function request(options: Options) {
   const token = Cookie.get(token_name) || '';
-  console.log('123:'+Cookie.get('unionid'))
   options.header = { ...options.header, Authorization: `Bearer ${token}` };
   return new Promise((resolve, reject) => {
     /**拼接接口地址 */

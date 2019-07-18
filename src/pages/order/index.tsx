@@ -4,7 +4,6 @@ import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import "taro-ui/dist/style/components/tabs.scss";
 import CashCoupon1 from "./cash-coupon1/index";
 import CashCoupon2 from "./cash-coupon2/index";
-import { Cookie } from 'js-cookie';
 import "./index.styl";
 import request from "../../services/request";
 
@@ -100,7 +99,6 @@ export default class Order extends Component {
     this.setState(()=>{
       this.getData();
     })
-    console.log('cookie:'+Cookie.get('test_token_auth'))
 
   }
 
