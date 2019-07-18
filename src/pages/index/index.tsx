@@ -117,7 +117,10 @@ export default class Index extends Component<any> {
   }
   // get location
   getLocatione = () => {
+    console.log(123)
     getLocation().then((res: any) => {
+      console.log('12',res)
+
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
       this.setState({ locations: res }, () => {
         this.getCity();
@@ -334,7 +337,6 @@ export default class Index extends Component<any> {
 
      // 点击广告
   advertOnclick = () => {
-  console.log(this.state.need_jump,'0-00099099')
     if (!this.state.need_jump) return
     request({
       url: 'v3/ads/onclick',
