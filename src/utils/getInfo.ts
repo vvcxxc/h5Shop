@@ -118,7 +118,7 @@ export const getOpenid = (code: string): Promise<any> => {
 export const getLocation = () => {
   let type = getBrowserType();
   if (type == 'wechat') {
-    let url = window.location.href.split('#')[0]
+    let url = window.location.href;
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',

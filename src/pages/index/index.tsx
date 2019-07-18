@@ -36,7 +36,8 @@ export default class Index extends Component<any> {
     showGift: null,
     indexImgId: null,
     adLogId: null,
-    need_jump:null
+    need_jump:null,
+    return_data:false
   };
 
   constructor(props) {
@@ -183,9 +184,14 @@ export default class Index extends Component<any> {
 
   onPullDownRefresh () { // 自带 下拉事件
     this.localStorageData();
+    this.setState({return_data:false})
   }
 
   onReachBottom () { 	// 自带 触底事件
+    // let return_data
+
+    // if(return_data) return
+    if(this.state.return_data) return
     this.showLoading()
     this.setState({ page: this.state.page + 1 },()=>{
       let miss = {
@@ -203,7 +209,12 @@ export default class Index extends Component<any> {
         .then((res: any) => {
           Taro.stopPullDownRefresh()
           Taro.hideLoading()
-          console.log(res.data,'data')
+          console.log(res.data.store_info.data,'data')
+          if(res.data.store_info.data.length<1){
+            this.setState({return_data:true})
+          }else {
+            this.setState({return_data:false})
+          }
           this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
         })
     })
@@ -424,15 +435,6 @@ export default class Index extends Component<any> {
                     </View>
                     <View>{item.distance} </View>
                   </View>
-                  {/* <View className="flex " style="position:relative; height:40px">
-										{
-											item.label.map((item1: any, index1: any) => {
-												return <View className="tag" style="background-color:#fff; position: relative; z-index:99">{item1}</View>
-											})
-										}
-										<View style="position:absolute; right:0px; line-height:1; bottom:2px;font-size:12px;" >{item.distance}
-										</View>
-									</View> */}
                 </View>
               </View>
               <View className="content_box" onClick={this.handleClick.bind(this, item.id)}
