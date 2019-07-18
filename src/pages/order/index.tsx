@@ -4,7 +4,7 @@ import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import "taro-ui/dist/style/components/tabs.scss";
 import CashCoupon1 from "./cash-coupon1/index";
 import CashCoupon2 from "./cash-coupon2/index";
-
+import { Cookie } from 'js-cookie';
 import "./index.styl";
 import request from "../../services/request";
 
@@ -26,59 +26,65 @@ export default class Order extends Component {
     current: 0,//taro组件用的
     coupon: [],//taro组件用的
     coupon1: [
-      {
-        coupons_log_id: "",
-        coupons_id: "",
-        create_time: "",
-        expiration: "",
-        coupons_name: "",
-        money: "",
-        suppliername: "",
-        image: "",
-        coupons_type: "",
-        confirm_time: "",
-        total_fee: "",
-      }
+      // {
+      //   coupons_log_id: "",
+      //   coupons_id: "",
+      //   create_time: "",
+      //   expiration: "",
+      //   coupons_name: "",
+      //   money: "",
+      //   suppliername: "",
+      //   image: "",
+      //   coupons_type: "",
+      //   confirm_time: "",
+      //   total_fee: "",
+      // }
     ],//4个tab的数据分开算
-    coupon2: [{
-      coupons_log_id: "",
-      coupons_id: "",
-      create_time: "",
-      expiration: "",
-      coupons_name: "",
-      money: "",
-      suppliername: "",
-      image: "",
-      coupons_type: "",
-      confirm_time: "",
-      total_fee: ""
-    }],
-    coupon3: [{
-      coupons_log_id: "",
-      coupons_id: "",
-      create_time: "",
-      expiration: "",
-      coupons_name: "",
-      money: "",
-      suppliername: "",
-      image: "",
-      coupons_type: "",
-      confirm_time: "",
-      total_fee: ""
-    }],
-    coupon4: [{
-      coupons_log_id: "",
-      coupons_id: "",
-      create_time: "",
-      expiration: "",
-      coupons_name: "",
-      money: "",
-      suppliername: "",
-      image: "",
-      coupons_type: "",
-      confirm_time: "",
-      total_fee: ""
-    }],
+    coupon2: [
+    //   {
+    //   coupons_log_id: "",
+    //   coupons_id: "",
+    //   create_time: "",
+    //   expiration: "",
+    //   coupons_name: "",
+    //   money: "",
+    //   suppliername: "",
+    //   image: "",
+    //   coupons_type: "",
+    //   confirm_time: "",
+    //   total_fee: ""
+    // }
+  ],
+    coupon3: [
+    //   {
+    //   coupons_log_id: "",
+    //   coupons_id: "",
+    //   create_time: "",
+    //   expiration: "",
+    //   coupons_name: "",
+    //   money: "",
+    //   suppliername: "",
+    //   image: "",
+    //   coupons_type: "",
+    //   confirm_time: "",
+    //   total_fee: ""
+    // }
+  ],
+    coupon4: [
+    //   {
+    //   coupons_log_id: "",
+    //   coupons_id: "",
+    //   create_time: "",
+    //   expiration: "",
+    //   coupons_name: "",
+    //   money: "",
+    //   suppliername: "",
+    //   image: "",
+    //   coupons_type: "",
+    //   confirm_time: "",
+    //   total_fee: ""
+    // }
+  ],
     page1: 1,
     page2: 1,
     page3: 1,
@@ -91,15 +97,10 @@ export default class Order extends Component {
       title: "loading",
       mask: true
     });
-    // request({
-    //   url: 'api/wap/testLogin'
-    // }).then((res: any) => {
-    //   Taro.setStorageSync('token', res.token);
-    //   this.getData();
-    // })
     this.setState(()=>{
       this.getData();
     })
+    console.log('cookie:'+Cookie.get('test_token_auth'))
 
   }
 

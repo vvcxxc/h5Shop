@@ -402,7 +402,7 @@ export default class Index extends Component<any> {
         </View>
         {
           this.state.storeList.map((item: any, index: any) => {
-            return <View className='merchant  activity inset '
+            return <View className='merchant inset '
               style={{
                 paddingBottom: this.styleControl(item) ? '5px' : '0px',
                 borderRadius: this.styleControl(item) ? '' : '20px'

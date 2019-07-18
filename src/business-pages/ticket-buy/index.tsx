@@ -1,14 +1,16 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text, Image, ScrollView, Button, Swiper, SwiperItem } from "@tarojs/components";
+import { View, Text, Image, Button } from "@tarojs/components";
 import "./index.styl";
 import "../set-meal/index";
 import { AtIcon, AtToast } from "taro-ui";
-import CashCoupon from './cash-coupon/index'
+import CashCoupon1 from '../set-meal/cash-coupon/index'
+import CashCoupon2 from './cash-coupon/index'
 import MobileImg from '../../assets/dianhua.png'
 import AddressImg from '../../assets/address.png'
 import request from '../../services/request'
-import { V4MAPPED } from "dns";
-export default class PaySuccess extends Component {
+import { getLocation } from "@/utils/getInfo"
+
+export default class  TicketBuy extends Component {
   config = {
     navigationBarTitleText: "优惠信息"
   };
@@ -37,6 +39,7 @@ export default class PaySuccess extends Component {
       return_money: "",
       yname: "",
       youhui_type: 0,
+      expire_day: ''
     },
     store: {
       brief: "",
@@ -46,7 +49,8 @@ export default class PaySuccess extends Component {
       saddress: "",
       sname: "",
       tel: "",
-      distance: ""
+      distance: "",
+      shop_door_header_img: ""
     },
     goods_album: [
       {
@@ -65,7 +69,10 @@ export default class PaySuccess extends Component {
       return_money: "",
       sname: "",
       yname: "",
-      youhui_type: '0'
+      youhui_type: 1,
+      expire_day: '',
+      total_fee: '',
+      image: ''
     }]
   };
 
@@ -73,27 +80,51 @@ export default class PaySuccess extends Component {
     Taro.showLoading({
       title: 'loading',
     })
-    // console.log(this.$router.params)
-    Taro.getLocation({ type: 'wgs84' }).then(res => {
-      this.setState({
-        yPoint: res.latitude,
-        xPoint: res.longitude
-      }, () => {
-        request({
-          url: '/v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
-        })
-          .then((res: any) => {
-            this.setState({
-              coupon: res.info.coupon,
-              store: res.info.store,
-              goods_album: res.info.goods_album,
-              recommend: res.recommend.data
-            })
-            Taro.hideLoading()
-          }).catch(function (error) { console.log(error); });
-
+    getLocation().then((res: any) => {
+      let xPoint = res.longitude;
+      let yPoint = res.longitude;
+      request({
+        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint, ypoint: yPoint }
       })
+        .then((res: any) => {
+          console.log(res);
+          //合并代码后可以打开这个
+          if (res.code != 200) {
+            Taro.hideLoading()
+            Taro.showToast({ title: '信息错误', icon: 'none' })
+            setTimeout(() => {
+              Taro.navigateBack({
+              })
+            }, 2000)
+          }
+          this.setState({
+            coupon: res.data.info.coupon,
+            store: res.data.info.store,
+            goods_album: res.data.info.goods_album,
+            recommend: res.data.recommend.data
+          })
+          Taro.hideLoading()
+        }).catch(function (error) {
+          Taro.hideLoading()
+          Taro.showToast({ title: '数据请求失败', icon: 'none' })
+          setTimeout(() => {
+            Taro.navigateBack({
+            })
+          }, 2000)
+        });
+
+
+    }).catch(err => {
+      setTimeout(() => {
+        Taro.showToast({ title: '信息错误', icon: 'none' })
+        Taro.navigateBack({
+        })
+      }, 2000)
     })
+
+
+
+
 
 
   }
@@ -105,6 +136,7 @@ export default class PaySuccess extends Component {
   }
   handleClick2 = (_id, e) => {
     Taro.navigateTo({
+      //url: '/detail-pages/business/index?id=' + _id
       url: '/pages/business/index?id=' + _id
     })
   };
@@ -139,11 +171,12 @@ export default class PaySuccess extends Component {
                 :
                 <AtIcon className="image" value="star" color="#999" size="24px" onClick={this.keepCollect.bind(this)} />
             } */}
-
-            <View className="hd tit">{this.state.coupon.brief}</View>
+            <View className="_expire">购买后{this.state.coupon.expire_day}日内有效</View>
+            <View className="hd tit">{this.state.store.sname}</View>
             <View className="bd money">¥{this.state.coupon.return_money}</View>
             <View className="ft" style={{ position: "relative" }}>
               <View className="desc">{this.state.coupon.yname}</View>
+
               <View className="tags" style={{ position: "absolute", right: "0" }}>
                 <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('可叠加') !== -1 ? '#fde8e5' : '#fff' }}>可叠加</Text>
                 <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('随时退') !== -1 ? '#fde8e5' : '#fff' }}>随时退</Text>
@@ -157,7 +190,7 @@ export default class PaySuccess extends Component {
             <Text className="fwb">适用店铺</Text>
           </View>
           <View className="flex center">
-            <Image className="image" src={this.state.coupon.image} />
+            <Image className="image" src={this.state.store.shop_door_header_img} />
             <View className="item">
               <View className="tit">{this.state.store.sname}</View>
               {/* <View className="money">人均：￥222.00</View> */}
@@ -165,10 +198,10 @@ export default class PaySuccess extends Component {
             <AtIcon value="chevron-right" color="#999" size="24px" />
           </View>
           <View className="address-view flex center">
-            <Image className="address-image" src={AddressImg} />
+            <Image className="address-image" style={{width:"15px",height:"15px"}} src={AddressImg} />
             <View className="distance">{this.state.store.distance}</View>
-            <View className="text flex-item">{this.state.store.saddress}</View>
-            <Image className="mobile-image" src={MobileImg} />
+            <View className="text flex-item" style={{ width: "80%" }}>{this.state.store.saddress}</View>
+            <Image className="mobile-image" style={{width:"15px",height:"15px"}} src={MobileImg} />
           </View>
         </View>
         {/* <View className="remark mt20 pd30 bcff">
@@ -203,7 +236,11 @@ export default class PaySuccess extends Component {
           {
             this.state.recommend.map((item) => (
               <View key={item.id}>
-                <CashCoupon _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} sname={item.sname} />
+                {
+                  item.youhui_type == 0 ? <CashCoupon1 _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} yname={item.yname} _image={item.image} expire_day={item.expire_day} />
+                    : <CashCoupon2 _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} yname={item.yname} expire_day={item.expire_day} total_fee={item.total_fee} />
+
+                }
               </View>
             ))
           }

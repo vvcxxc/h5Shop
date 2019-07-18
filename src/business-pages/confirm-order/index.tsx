@@ -29,17 +29,20 @@ export default class ConfirmOrder extends Component {
     pay_data: "支付成功"
   };
   componentWillMount() {
-    Taro.showLoading({
-      title: 'loading',
-    })
-    request({ url: '/v3/discount_coupons/' + this.$router.params.id })
-      .then((res: any) => {
-        this.setState({
-          coupon: res.info.coupon,
-          store: res.info.store
-        })
-        Taro.hideLoading()
-      });
+      Taro.showLoading({
+        title: 'loading',
+      })
+      console.log(this.$router.params.id)
+      request({ url: 'v3/discount_coupons/' + this.$router.params.id })
+        .then((res: any) => {
+          console.log(res);
+          this.setState({
+            coupon: res.data.info.coupon,
+            store: res.data.info.store
+          })
+          Taro.hideLoading()
+        });
+
 
   }
   componentDidMount() {
@@ -75,37 +78,40 @@ export default class ConfirmOrder extends Component {
       }
     })
       .then((res: any) => {
-        Taro.hideLoading();
-        // 发起支付
-        Taro.requestPayment({
-          timeStamp: res.timeStamp,
-          nonceStr: res.nonceStr,
-          package: res.package,
-          signType: res.signType,
-          paySign: res.paySign,
-          success(res) {
-            () => {
-              this.setState({
-                pay_bull: "支付成功",
-                pay_data: true
-              })
-            }
+        // Taro.hideLoading();
+        // // 发起支付
+        // Taro.requestPayment({
+        //   timeStamp: res.data.timeStamp,
+        //   nonceStr: res.data.nonceStr,
+        //   package: res.data.package,
+        //   signType: res.data.signType,
+        //   paySign: res.data.paySign,
+        //   success(res) {
+        //     Taro.switchTab({
+        //       url: '/pages/order/index',
+        //       success: () => {
+        //         var page = Taro.getCurrentPages().pop();
+        //         if (page == undefined || page == null) return;
+        //         page.onLoad();
+        //       }
+        //     })
+        //     console.log('支付成功')
+        //     this.setState({
+        //       pay_bull: "支付成功",
+        //       pay_data: true
+        //     });
 
-          },
-          fail(err) {
-            () => {
-              this.setState({
-                pay_bull: "支付失败",
-                pay_data: true
-              })
-            }
-          },
-          complete() {
-            // Taro.navigateTo({
-            //   url: ""
-            // })
-          }
-        })
+
+        //   },
+        //   fail(err) {
+        //     () => {
+        //       this.setState({
+        //         pay_bull: "支付失败",
+        //         pay_data: true
+        //       })
+        //     }
+        //   },
+        //})
       });
   }
   render() {
@@ -117,7 +123,7 @@ export default class ConfirmOrder extends Component {
         }
         <View className="content">
           <View className="flex center">
-            <View className="item label">{this.state.coupon.yname}</View>
+            <View className="item label">{this.state.store.sname}{this.state.coupon.yname}</View>
             <View>{this.state.coupon.pay_money}元</View>
           </View>
           <View className="flex center">
@@ -133,7 +139,7 @@ export default class ConfirmOrder extends Component {
           <View className="flex center">
             <View className="item label">金额</View>
             <View className="price">
-              {this.state.coupon.pay_money * this.state.amount}元
+              ￥{this.state.coupon.pay_money * this.state.amount}
             </View>
           </View>
         </View>

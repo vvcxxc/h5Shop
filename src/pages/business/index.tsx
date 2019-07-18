@@ -195,6 +195,7 @@ export default class PaySuccess extends Component<Props> {
     Taro.navigateTo({
       url: '../../business-pages/confirm-order/index?id=' + id
     })
+    e.stopPropagation();
   }
 
 
@@ -241,15 +242,12 @@ export default class PaySuccess extends Component<Props> {
               {/* <View className="money">人均：￥62</View> */}
             </View>
             {
-              this.state.business_list.collect.toString() == "1" ?
+
+              this.state.keepCollect_bull ?
                 <AtIcon className="image" value="star-2" color="#FFBF00" size="24px" onClick={this.keepCollect.bind(this)} />
                 :
-                (
-                  this.state.keepCollect_bull ?
-                    <AtIcon className="image" value="star-2" color="#FFBF00" size="24px" onClick={this.keepCollect.bind(this)} />
-                    :
-                    <AtIcon className="image" value="star" color="#999" size="24px" onClick={this.keepCollect.bind(this)} />
-                )
+                <AtIcon className="image" value="star" color="#999" size="24px" onClick={this.keepCollect.bind(this)} />
+
             }
           </View>
           <ScrollView scrollX className="scroll-view" >
@@ -511,7 +509,7 @@ export default class PaySuccess extends Component<Props> {
             {
               this.state.exchangeCouponList.length != 1 ?
                 <View className="ft-more flex center"
-                  style={{ textAlign: "center", width: "100%", background: "#fff", paddingBottom: "0",marginTop:"0" }}
+                  style={{ textAlign: "center", width: "100%", background: "#fff", paddingBottom: "0", marginTop: "0" }}
                   onClick={() => { this.setState({ exchangeCouponList_bull: !this.state.exchangeCouponList_bull }) }} >
                   < View className="more-box" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}>
 

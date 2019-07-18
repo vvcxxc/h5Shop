@@ -1,8 +1,10 @@
 module.exports = {
   env: {
     NODE_ENV: '"development"',
-    LOGIN_URL: 'https://test.api.tdianyi.com/wechat/jscode2session',
-    BASIC_API: '"https://test.api.tdianyi.com/"'
+    BASIC_API: '"https://test.api.tdianyi.com/"',
+    OPEN_ID: '"test_open_id"',
+    TOKEN: '"test_token_auth"',
+    UNION_ID: '"unionid"'
   },
   defineConstants: {
   },

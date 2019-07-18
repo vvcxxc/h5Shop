@@ -29,3 +29,5 @@ export const getBrowserType = () => {
       return 'alipay'
   }
 }
+
+

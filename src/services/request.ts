@@ -6,6 +6,9 @@ import {
   NOT_FIND,
   NOT_SIGN
 } from "@/utils/constants";
+import {Login} from '@/utils/sign';
+import Cookie from 'js-cookie';
+// import {Cookie} from '@/utils/cookie';
 // import { toMiniProgramSign } from "@/utils/sign";
 // const BASIC_API = process.env.BASIC_API;
 interface Options extends RequestParams {
@@ -14,10 +17,11 @@ interface Options extends RequestParams {
 }
 
 const host = "http://test.api.tdianyi.com/";
-
+const token_name = process.env.TOKEN;
 export default function request(options: Options) {
-  const token = Taro.getStorageSync("token");
-  options.header = { ...options.header, Authorization: token };
+  const token = Cookie.get(token_name) || '';
+  console.log('123:'+Cookie.get('unionid'))
+  options.header = { ...options.header, Authorization: `Bearer ${token}` };
   return new Promise((resolve, reject) => {
     /**拼接接口地址 */
     options.url = options.host
@@ -46,7 +50,7 @@ export default function request(options: Options) {
             })
             break
           case NOT_SIGN:
-            // toMiniProgramSign(BASIC_API)
+              Login();
             return reject(new Error('--- no sign ---'))
           case NOT_FIND:
               Taro.showToast({
