@@ -54,7 +54,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     const { type = 1, id = "", gift_id = "", activity_id = "" } = this.$router.params
     this.fetchDetail(type, id)
     this.fetchGiftinfo(gift_id, activity_id)
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
   }
 
   onShareAppMessage() {
@@ -83,7 +83,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
    */
   // @ts-ignore
   handleAction = (action: string, data: any): void => {
-    console.log(this.fetchPayment)
     switch(action) {
       case ACTION_CHECKED:
         const { isChecked } = this.state
@@ -182,13 +181,30 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       activity_id,
       gift_id
     }
-    const { data } = await getGiftinfo(params)
+    const { data } = await getGiftinfo(JSON.stringify(params))
+    console.log('data',data)
     const isFreePostage = data.mail_mode === FREE_POSTAGE
     this.setState({
       giftBasicInfo: data,
       // isChecked: isFreePostage,
       isFreePostage
     })
+    // if (!gift_id || !activity_id) return
+    // if (+gift_id === 0) return
+    // const params = {
+    //   activity_id,
+    //   gift_id
+    // }
+    // Taro.request({
+    //   url : 'https://test.api.tdianyi.com/api/wap/Integral/goodsDetail',
+    //   method : 'POST',
+    //   header : {
+    //     "Content-Type" :"application/json"
+    //   },
+    //   data : JSON.stringify(params),      
+    // }).then(res => {
+    //   console.log(res)
+    // })
   }
 
   /**

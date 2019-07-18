@@ -13,7 +13,8 @@ import carousel from "@/static/images/img_carousel.png"
 import "./activity.styl"
 import Coupon from "@/components/coupon/coupon"
 import { ACTION_JUMP } from "@/utils/constants"
-import { getLocation } from "@/utils/getInfo"
+// import { getLocation } from "@/utils/getInfo"
+import {getLocation} from '@/utils/getLocation'
 
 // import { connect } from "@tarojs/redux"
 
@@ -78,8 +79,8 @@ export default class Activity extends Component<ActivityProps> {
     const location = await getLocation()
 
     const params = {
-      xpoint: location.longitude || "",
-      ypoint: location.latitude || ""
+      xpoint: location.lng || "",
+      ypoint: location.lat || ""
     }
     const {
       data: {

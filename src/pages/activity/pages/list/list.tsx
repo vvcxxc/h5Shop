@@ -5,7 +5,9 @@ import { getCouponList } from "@/api"
 import { activityData } from "../../data"
 import { TYPE_APPRECIATION, TYPE_GROUP, ACTION_JUMP } from "@/utils/constants"
 import NoData from "@/components/nodata/no.data"
-import { getLocation } from "@/utils/getInfo"
+// import { getLocation } from "@/utils/getInfo"
+import {getLocation} from '@/utils/getLocation'
+import qs from 'querystring';
 import "./style.styl"
 
 export default class List extends Component {
@@ -66,8 +68,8 @@ export default class List extends Component {
     const location = await getLocation()
 
     const locationParams = {
-      xpoint: location.longitude || "",
-      ypoint: location.latitude || ""
+      xpoint: location.lng || "",
+      ypoint: location.lat || ""
     }
 
     const {

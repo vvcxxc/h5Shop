@@ -374,6 +374,11 @@
   resolved "https://registry.npm.taobao.org/@tarojs/taro/download/@tarojs/taro-1.3.2.tgz#fee8d5c685e5dbb18e2247eba5245ef96f64a017"
   integrity sha1-/ujVxoXl27GOIkfrpSRe+W9koBc=
 
+"@tarojs/taro@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.npm.taobao.org/@tarojs/taro/download/@tarojs/taro-1.3.9.tgz#a2944575c813e452ccdfa0bc9cbbe06c27d726fc"
+  integrity sha1-opRFdcgT5FLM36C8nLvgbCfXJvw=
+
 "@tarojs/taroize@1.3.2":
   version "1.3.2"
   resolved "https://registry.npm.taobao.org/@tarojs/taroize/download/@tarojs/taroize-1.3.2.tgz#6d272849d60ea8756ef094cb1f51ad6142ff8d87"
@@ -468,6 +473,14 @@
     webpack-chain "4.9.0"
     webpack-dev-server "3.1.14"
     webpack-format-messages "2.0.3"
+
+"@tarojs/with-weapp@^1.3.5":
+  version "1.3.9"
+  resolved "https://registry.npm.taobao.org/@tarojs/with-weapp/download/@tarojs/with-weapp-1.3.9.tgz#c0fc799ded11fcf88b15dfc645b1aa205634cbc7"
+  integrity sha1-wPx5ne0R/PiLFd/GRbGqIFY0y8c=
+  dependencies:
+    "@tarojs/taro" "1.3.9"
+    lodash "^4.17.11"
 
 "@types/caseless@*":
   version "0.12.2"
@@ -1106,6 +1119,14 @@ aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
+
+axios@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.npm.taobao.org/axios/download/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  integrity sha1-jgm/89kSLhM/e4EByPvdAO09Krg=
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
 
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0, babel-code-frame@^6.8.0:
   version "6.26.0"
@@ -4506,6 +4527,13 @@ fn-name@~2.0.1:
   resolved "https://registry.yarnpkg.com/fn-name/-/fn-name-2.0.1.tgz#5214d7537a4d06a4a301c0cc262feb84188002e7"
   integrity sha1-UhTXU3pNBqSjAcDMJi/rhBiAAuc=
 
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
+  dependencies:
+    debug "=3.1.0"
+
 follow-redirects@^1.0.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.6.1.tgz#514973c44b5757368bad8bddfe52f81f015c94cb"
@@ -5658,6 +5686,11 @@ is-buffer@^1.1.4, is-buffer@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
   integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
+
+is-buffer@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/is-buffer/download/is-buffer-2.0.3.tgz#4ecf3fcf749cbd1e472689e109ac66261a25e725"
+  integrity sha1-Ts8/z3ScvR5HJonhCaxmJhol5yU=
 
 is-builtin-module@^1.0.0:
   version "1.0.0"
@@ -8843,6 +8876,11 @@ redux-saga@^0.16.0:
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.2.tgz#993662e86bc945d8509ac2b8daba3a8c615cc971"
   integrity sha512-iIjKnRThI5sKPEASpUvySemjzwqwI13e3qP7oLub+FycCRDysLSAOwt958niZW6LhxfmS6Qm1BzbU70w/Koc4w==
 
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha1-UcLBmhhe1Rh6qpotCLZm0NZGdiI=
+
 redux@3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.1.tgz#bfc535c757d3849562ead0af18ac52122cd7268e"
@@ -9376,7 +9414,7 @@ sass-graph@^2.2.4:
     scss-tokenizer "^0.2.3"
     yargs "^7.0.0"
 
-sass-loader@7.1.0:
+sass-loader@7.1.0, sass-loader@^7.1.0:
   version "7.1.0"
   resolved "http://r.cnpmjs.org/sass-loader/download/sass-loader-7.1.0.tgz#16fd5138cb8b424bf8a759528a1972d72aad069d"
   integrity sha1-Fv1ROMuLQkv4p1lSihly1yqtBp0=
@@ -10282,10 +10320,10 @@ taro-css-to-react-native@1.3.2:
     css-mediaquery "^0.1.2"
     postcss-value-parser "^3.3.0"
 
-taro-ui@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/taro-ui/-/taro-ui-2.1.0.tgz#fb2774d6261db75311ac6ce7be243c412c65a322"
-  integrity sha512-M2fb6TFAHCa+xXB4vcYk3rLnop1D4XUdEfjtDKU3VYTw9KbD5dEG9x9iONV9SSn+7ClozSTxa27Otwiji/f/ZA==
+taro-ui@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npm.taobao.org/taro-ui/download/taro-ui-2.2.1.tgz#26f74f1f5e278888a87ee921ac71f33dffcb8601"
+  integrity sha1-JvdPH14niIiofukhrHHzPf/LhgE=
   dependencies:
     "@types/react" "^16.7.3"
     bind-decorator "^1.0.11"

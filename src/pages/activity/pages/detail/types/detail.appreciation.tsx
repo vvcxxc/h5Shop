@@ -27,6 +27,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
   handleClick(e) {
     const { action } = e.currentTarget.dataset
     const { onAction } = this.props
+    console.log(this.props)
     onAction(action, null)
   }
   render() {
@@ -72,10 +73,10 @@ export default class DetailAppreciation extends Component<DetailProp> {
                   {data.location_name || "暂无"}
                 </View>
                 <View className="item name">{data.name || "暂无"}</View>
-                <View className="item brief">
+                {/* <View className="item brief">
                   {data.list_brief || "暂无"}
                 </View>
-                <Image className="item image" src={data.image} />
+                <Image className="item image" src={data.image} /> */}
               </View>
             </View>
             <View className="area-attention">
@@ -94,13 +95,13 @@ export default class DetailAppreciation extends Component<DetailProp> {
                   <Text className="name">使用规则:</Text>
                   <View className="content-sub">
                     {
-                      data.description.map((item, index) => {
+                      data.description ? data.description.map((item, index) => {
                         return (
                           <View className="item-sub" key={index}>
                             {item}
                           </View>
                         )
-                      })
+                      }): ''
                     }
                   </View>
                 </View>
@@ -142,9 +143,9 @@ export default class DetailAppreciation extends Component<DetailProp> {
                           style="white-space: nowrap;"
                         >
                           {
-                            giftinfo.image_details.map((item, index) => {
+                            giftinfo.image_details ? giftinfo.image_details.map((item, index) => {
                               return <Image className="item" key={index} src={item} />
-                            })
+                            }) : ''
                           }
                         </View>
                       </ScrollView>
@@ -153,14 +154,14 @@ export default class DetailAppreciation extends Component<DetailProp> {
                   <View
                     className="view-detail"
                     data-action="view"
-                    onClick={this.handleClick}
+                    onClick={this.handleClick.bind(this)}
                   >
                     查看详情
                   </View>
                   <View
                     className="distribution"
                     data-action="checked"
-                    onClick={this.handleClick}
+                    onClick={this.handleClick.bind(this)}
                   >
                     <Text className={`iconfont ${checkedStyle}`}>&#xe77c;</Text>
                     {
@@ -178,7 +179,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                 <View className="price">
                   <View className="text">
                     {`¥${data.pay_money || "0.00"}`}
-                    {isChecked && giftinfo.postage ? ` + ${giftinfo.postage || ""}` : '' }
+                    {isChecked && giftinfo ? ` + ${giftinfo.postage || ""}` : '' }
                   </View>
                   <View className="text">
                     {`起始金额 ￥${data.init_money || "0.00"} 最高增值 ¥${data.return_money || "0.00"}`}
@@ -187,7 +188,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                 <Button
                   className="action-buy"
                   data-action="get"
-                  onClick={this.handleClick}
+                  onClick={this.handleClick.bind(this)}
                 >
                   立即购买
                 </Button>

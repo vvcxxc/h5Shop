@@ -31,6 +31,7 @@ const http = (params: Params): Promise<any> => {
       header: {
         Accept: "application/json",
         Authorization: Taro.getStorageSync("token") || "",
+        "Content-Type" : "application/json" 
       },
       data,
       method
