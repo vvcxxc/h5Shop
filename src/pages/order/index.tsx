@@ -98,7 +98,7 @@ export default class Order extends Component {
     });
     this.setState(()=>{
       this.getData();
-    })
+    });
 
   }
 
