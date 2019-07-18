@@ -118,7 +118,7 @@ export const getOpenid = (code: string): Promise<any> => {
 export const getLocation = () => {
   let type = getBrowserType();
   if (type == 'wechat') {
-    let url = window.location.href.split('#')[0]
+    let url = window.location.href;
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -136,11 +136,32 @@ export const getLocation = () => {
         signature: data.signature,
         jsApiList: [
           "getLocation",
-          "openLocation"
         ]
       });
-      wx.ready(res => {
-        console.log('res', res)
+      wx.ready(() => {
+        wx.getLocation({
+          type: 'wgs84',
+          success: function (res: any) {
+            let latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+            let longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+            // let location = {
+            //   latitude,
+            //   longitude
+            // };
+            const location = Taro.getStorageSync("location");
+            if (location) return resolve(location)
+            Taro.setStorageSync("location", {
+              latitude,
+              longitude
+            });
+            return new Promise((resolve) => {
+              resolve({
+                latitude,
+                longitude
+              })
+            })
+          }
+        });
       })
     })
   } else {

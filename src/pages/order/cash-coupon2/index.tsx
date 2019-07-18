@@ -69,8 +69,8 @@ export default class CashCoupon extends Component<Props> {
             <View className="head flex">
               {
                 this.props.bg_img_type == 1 ?
-                  <View className="label flex center" style={{ background: "#5d84e0" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View> :
-                  <View className="label flex center" style={{ background: "#cccccc" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View>
+                  <View className="label flex center" style={{ background: "#5d84e0",borderBottom:"none" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View> :
+                  <View className="label flex center" style={{ background: "#cccccc",borderBottom:"none"  }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View>
               }
               {this.props.sname}
             </View>
