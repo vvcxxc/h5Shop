@@ -269,7 +269,7 @@ export default class PaySuccess extends Component<Props> {
 
         {
           this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
+            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center",paddingTop:"10px" }}>
               <View className="mark" style={{
                 fontSize: " 10px",
                 color: "#fff",
