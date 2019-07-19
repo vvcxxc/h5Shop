@@ -53,13 +53,14 @@ export default class CashCoupon extends Component<Props> {
     e.stopPropagation();
   }
   render() {
+    const { _logid, _id } = this.props;
     return (
       <View
         className="cash-coupon flex active"
         style={{
           backgroundImage: this.props.bg_img_type == 0 ? `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/D3Ws4B7kH8PwEsDdJiDtzaNtZdtWcZBr.png")` : `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/by5b6PKpQ5QYREYfdMZhSPD5rBYRefyR.png")`
         }}
-        onClick={this.handleClick.bind(this, this.props._logid)}
+        onClick={this.handleClick.bind(this, _logid)}
       >
         <View className="secondary flex center" >
           <Image src={this.props._image} style={{ width: "100%", height: "100%" }} />
@@ -79,8 +80,8 @@ export default class CashCoupon extends Component<Props> {
           {this.props.type == 2 ? <View className="info">免预约</View> : ""}
           {this.props.bg_img_type == 1 ? <View className="info" style={{marginTop:"10px"}}>使用日期： {this.props.confirm_time}</View> : ""}
           {
-            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._id)}>立即使用</View> : (
-              this.props.type == 2 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)} >再来一单</View> : <View></View>)
+            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, _id)}>立即使用</View> : (
+              this.props.type == 2 ? <View className="buymore" onClick={this.buyMore.bind(this, _id)} >再来一单</View> : <View></View>)
           }
 
 

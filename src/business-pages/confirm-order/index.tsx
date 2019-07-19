@@ -63,7 +63,6 @@ export default class ConfirmOrder extends Component {
     })
     let _type;
     let browserType = getBrowserType();
-    console.log(browserType);
     if (browserType == 'wechat') {
       _type = 1;
     } else if (browserType == 'alipay') {
