@@ -71,7 +71,7 @@ export default class CashCoupon extends Component<Props> {
         /> */}
         <View className="item content">
           <View className="head flex">
-            <View className="label flex center">{this.props.sname}</View>
+            <View className="label flex center" style={{color:"#000",borderBottom:"none"}}>{this.props.sname}</View>
           </View>
 
           <View className="date">{this.props.list_brief}</View>
