@@ -205,7 +205,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     //   header : {
     //     "Content-Type" :"application/json"
     //   },
-    //   data : JSON.stringify(params),      
+    //   data : JSON.stringify(params),
     // }).then(res => {
     //   console.log(res)
     // })

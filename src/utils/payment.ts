@@ -32,17 +32,18 @@ export const payment = (signature: Signature): Promise<any> => {
       window.WeixinJSBridge.invoke(
         'getBrandWCPayRequest', {
         "appId":signature.appId,
-        "timeStamp":signature.timeStamp, 
-        "nonceStr":signature.nonceStr, 
+        "timeStamp":signature.timeStamp,
+        "nonceStr":signature.nonceStr,
         "package":signature.package,
-        "signType":signature.signType, 
+        "signType":signature.signType,
         "paySign":signature.paySign
         },
         function(res){
-        // if(res.err_msg == "get_brand_wcpay_request:ok" ){
-        // _this.$router.push({name:'activity',params:message})
-        // } 
-        });
+        if(res.err_msg == "get_brand_wcpay_request:ok" ){
+         return resolve(res)
+        }
+        }
+        );
     })
   }else{
 
