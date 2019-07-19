@@ -2,7 +2,7 @@ import Taro, { useState, useEffect, DependencyList, navigateBack } from "@tarojs
 import { View, Text } from '@tarojs/components';
 
 import './style.scss'
-import { defaultYouhuiImg, defaultData, handerExceedTimeLimit, routeGo } from './unit'
+import { defaultYouhuiImg, defaultData, routeGo } from './unit'
 import request from '../../services/request'
 import { BuyShouldKnow } from './components/BuyShouldKnow'
 import { BillingInfo } from './components/BillingInfo'
@@ -16,22 +16,6 @@ function useAsyncEffect(cb: Function, dep: DependencyList) {
   }, dep)
 }
 
-
-
-function setTimeoutCallback() {
-  let timer: any
-  return function (fn: Function, time: number) {
-    if (timer) clearTimeout(timer)
-    timer = setTimeout(() => {
-      fn()
-    }, time)
-  }
-}
-
-
-
-
-
 function Index() {
 
   // console.log(this.$router)
@@ -39,7 +23,6 @@ function Index() {
   const [dataInfo, setDataInfo] = useState(Object.assign({}, defaultData))
   const [youhuiurl, setYouhuiurl] = useState(Object.assign({}, defaultYouhuiImg))
   const [isApply, showApply] = useState(false)
-  let setTimeOut = setTimeoutCallback()
   const {
     coupons_log_id,//优惠券记录ID
     coupons_id,//优惠券ID
@@ -106,9 +89,7 @@ function Index() {
         routeGo('/pages/orderdetail/refundProgress', cuoPonsId)
       } else {
         handerApplyShow()
-        setTimeOut(() => {
-          Taro.showToast({ title: '退款失败', icon: 'none' })
-        }, 500)
+        Taro.showToast({ title: '退款失败', icon: 'none', duration: 2000 })
       }
     }).catch(() => {
       Taro.showToast({ title: '退款失败', icon: 'none' })
