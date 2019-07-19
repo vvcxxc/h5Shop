@@ -29,7 +29,8 @@ export default class MerChantPage extends Component {
 		page: 1,
 		deal_cate_id: null,
 		distance_id: null,
-		sort_id:null
+    sort_id:null,
+    show_bottom:false
 	};
 
 	constructor(props) {
@@ -135,6 +136,11 @@ export default class MerChantPage extends Component {
 			}
 		})
 			.then((res: any) => {
+        if(res.data.store_info.data.length<1){
+          this.setState({show_bottom:true})
+        }else {
+          this.setState({show_bottom:false})
+        }
 				if (index === 1) {
 					this.setState({ stores: [...this.state.stores, ...res.data.store_info.data], storeHeadImg: res.data.banner });
 				} else {
@@ -147,12 +153,14 @@ export default class MerChantPage extends Component {
 
 	// 微信自带监听 滑动事件
 	onPullDownRefresh  () {
-		this.requestData(this.state.locationPosition.longitude, this.state.locationPosition.latitude) //渲染页面
+    this.requestData(this.state.locationPosition.longitude, this.state.locationPosition.latitude) //渲染页面
+    this.setState({show_bottom:false})
 	}
 
 	// 触底事件
 	onReachBottom () {
-		Taro.showLoading({ title: 'loading', mask: true })//显示loading
+    if(this.state.show_bottom) return
+    Taro.showLoading({ title: 'loading', mask: true })//显示loading
 		this.setState({ page: this.state.page + 1 }, ()=> {
 			this.filterClick(1, this.state.deal_cate_id, this.state.distance_id, this.state.sort_id)
 		})

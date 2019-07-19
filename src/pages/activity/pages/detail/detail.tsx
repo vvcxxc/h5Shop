@@ -119,7 +119,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     const { type = 1, id = "", gift_id = "", activity_id = "", publictypeid } = this.$router.params
     let params: GetPaymentSignture = {
       url: "",
-      xcx: 1,
+      xcx: 0,
       type,
       open_id: openid,
       unionid,

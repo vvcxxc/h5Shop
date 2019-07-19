@@ -37,8 +37,8 @@ export default class My extends Component {
           userInfo
         })
       } else {
-        const { toMiniProgramSign } = require("../../utils/sign")
-        toMiniProgramSign(process.env.BASIC_API)
+        // const { toMiniProgramSign } = require("../../utils/sign")
+        // toMiniProgramSign(process.env.BASIC_API)
       }
     }
   }
