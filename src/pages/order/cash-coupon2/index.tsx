@@ -43,7 +43,6 @@ export default class CashCoupon extends Component<Props> {
     e.stopPropagation();
   }
   render() {
-    const { _logid, _id } = this.props
     return (
       <View className="cash-coupon-box">
         {
@@ -55,7 +54,7 @@ export default class CashCoupon extends Component<Props> {
         }
         <View
           className="cash-coupon flex active"
-          onClick={this.handleClick.bind(this, _logid)}
+          onClick={this.handleClick.bind(this, this.props._logid)}
         >
 
           <View
@@ -81,7 +80,7 @@ export default class CashCoupon extends Component<Props> {
 
             {this.props.bg_img_type == 2 ? <View className="info" style={{ marginTop: "10px" }}>使用日期： {this.props.confirm_time}</View> : ""}
             {
-              this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, _id)}>再来一单</View> : ""
+              this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)}>再来一单</View> : ""
             }
           </View>
         </View>

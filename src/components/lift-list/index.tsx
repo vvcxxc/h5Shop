@@ -20,24 +20,21 @@ class LiftList extends PureComponent<Props> {
 
   constructor() {
     super(...arguments)
- 
+
   }
   componentWillMount() {
-  
+
   }
   componentDidMount() {
   }
-  
+
   handleClick = (index, id,name) => () => {
     this.setState({ current: index})
     // this.props.updateData({null,id,name})
   };
- 
+
   render() {
-<<<<<<< HEAD
     console.log(this.state.data,'data')
-=======
->>>>>>> 5b85fbcf174a2fc70aee9af5a175757a982f1e69
     const tabsEle = this.props.merchant.map((item, index,_) => {
       const checked = index === this.state.current;
       return (
