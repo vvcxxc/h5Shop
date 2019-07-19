@@ -85,6 +85,7 @@ export default class ConfirmOrder extends Component {
         store_id: this.state.store.id,
         youhui_number: this.state.amount,
         type: _type,  //1 微信 2支付宝
+        xcx: 1,
         // open_id: Cookie.get(process.env.OPEN_ID), //登录时获取设置本地缓存
 
         open_id: Cookie.get(process.env.OPEN_ID),
