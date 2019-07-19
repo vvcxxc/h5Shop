@@ -79,8 +79,8 @@ export default class Activity extends Component<ActivityProps> {
     const location = await getLocation()
 
     const params = {
-      xpoint: location.lng || "",
-      ypoint: location.lat || ""
+      xpoint: location.longitude || "",
+      ypoint: location.latitude || ""
     }
     const {
       data: {
