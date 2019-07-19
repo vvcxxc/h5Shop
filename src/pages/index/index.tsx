@@ -53,6 +53,7 @@ export default class Index extends Component<any> {
     this.localStorageData();
     this.requestLocation();
     this.showGift();
+    // this.controlVersion()
   }
 
   requestLocation = () => {
@@ -355,6 +356,15 @@ export default class Index extends Component<any> {
         })
       })
   }
+
+// controlVersion = () => {
+//   request({
+//   url: 'v3/stores/pay_store/826',
+//   })
+//   .then((res: any) => {
+//     console.log(res,'3478743285478')
+//   })
+//   }
 
 
   render() {
