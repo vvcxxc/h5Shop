@@ -13,7 +13,8 @@ import carousel from "@/static/images/img_carousel.png"
 import "./activity.styl"
 import Coupon from "@/components/coupon/coupon"
 import { ACTION_JUMP } from "@/utils/constants"
-import { getLocation } from "@/utils/getInfo"
+// import { getLocation } from "@/utils/getInfo"
+import {getLocation} from '@/utils/getInfo'
 
 // import { connect } from "@tarojs/redux"
 

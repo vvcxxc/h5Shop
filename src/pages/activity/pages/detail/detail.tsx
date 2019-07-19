@@ -1,5 +1,6 @@
 import Taro, { Component } from "@tarojs/taro"
 import { Block } from "@tarojs/components"
+import Cookie from 'js-cookie';
 import {
   getCouponDetail,
   getGiftinfo,
@@ -55,7 +56,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     console.log(activity_id)
     this.fetchDetail(type, id)
     this.fetchGiftinfo(gift_id, activity_id)
-    Taro.showShareMenu()
+    // Taro.showShareMenu()
   }
 
   onShareAppMessage() {
@@ -75,7 +76,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
    */
   handleAfterPayment(): void {
     Taro.navigateTo({
-      url: "/pages/my-activity/my.activity"
+      url: "/activity-pages/my-activity/my.activity"
     })
   }
 
@@ -121,8 +122,8 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       url: "",
       xcx: 0,
       type,
-      open_id: openid,
-      unionid,
+      open_id: Cookie.get(process.env.OPEN_ID),
+      unionid: Cookie.get(process.env.UNION_ID),
       ...(
         isChecked
           ? { gift_id, activity_id }
@@ -156,14 +157,16 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       default:
         console.log("no type~")
     }
-    const { data } = await getPaymentSignture(params).catch(err => {
-      console.log(err)
-      throw Error("--- 获取支付签名错误 ---")
-    })
-    await payment(data).catch(err => {
-      console.log(err)
-      throw Error("--- 支付调起出错 ---")
-    })
+    // const { data } = await getPaymentSignture(params).catch(err => {
+    //   console.log(err)
+    //   throw Error("--- 获取支付签名错误 ---")
+    // })
+    // await payment(data).catch(err => {
+    //   console.log(err)
+    //   throw Error("--- 支付调起出错 ---")
+    // })
+    const { data } = await getPaymentSignture(params)
+    await payment(data)
     Taro.showToast({
       title: '购买成功',
       icon: 'none'
@@ -182,13 +185,30 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       activity_id,
       gift_id
     }
-    const { data } = await getGiftinfo(params)
+    const { data } = await getGiftinfo(JSON.stringify(params))
+    console.log('data',data)
     const isFreePostage = data.mail_mode === FREE_POSTAGE
     this.setState({
       giftBasicInfo: data,
       // isChecked: isFreePostage,
       isFreePostage
     })
+    // if (!gift_id || !activity_id) return
+    // if (+gift_id === 0) return
+    // const params = {
+    //   activity_id,
+    //   gift_id
+    // }
+    // Taro.request({
+    //   url : 'https://test.api.tdianyi.com/api/wap/Integral/goodsDetail',
+    //   method : 'POST',
+    //   header : {
+    //     "Content-Type" :"application/json"
+    //   },
+    //   data : JSON.stringify(params),      
+    // }).then(res => {
+    //   console.log(res)
+    // })
   }
 
   /**

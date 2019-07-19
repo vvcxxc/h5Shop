@@ -31,6 +31,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
   }
   render() {
     const { data, giftinfo, isChecked, isFreePostage } = this.props
+    console.log('giftinfo',giftinfo)
     const checkedStyle = isChecked
       ? "active-get-gift"
       : ""
@@ -68,11 +69,11 @@ export default class DetailAppreciation extends Component<DetailProp> {
                   {data.name || "暂无"}
                 </View>
                 <View className="item name">{data.youhui_name || "暂无"}</View>
-                <View className="item brief">
+                {/* <View className="item brief">
                   <Text className="classify">{`${data.number}人团`}</Text>
                   <Text className="text">{data.list_brief || "暂无"}</Text>
                 </View>
-                <Image className="item image" src={data.image} />
+                <Image className="item image" src={data.image} /> */}
               </View>
               </View>
             <View className="area-attention">
@@ -90,15 +91,15 @@ export default class DetailAppreciation extends Component<DetailProp> {
                 <View className="item">
                   <Text className="name">使用规则:</Text>
                   <View className="content-sub">
-                    {/* {
-                      data.description.map((item, index) => {
+                    {
+                      data.description ? data.description.map((item, index) => {
                         return (
                           <View className="item-sub" key={index}>
                             {item}
                           </View>
                         )
-                      })
-                    } */}
+                      }) : ''
+                    }
                   </View>
                 </View>
               </View>
@@ -137,11 +138,11 @@ export default class DetailAppreciation extends Component<DetailProp> {
                           className="image-wrapper"
                           style="white-space: nowrap;"
                         >
-                          {/* {
-                            giftinfo.image_details.map((item, index) => {
+                          {
+                            giftinfo.image_details ? giftinfo.image_details.map((item, index) => {
                               return <Image className="item" key={index} src={item} />
-                            })
-                          } */}
+                            }) : ''
+                          }
                         </View>
                       </ScrollView>
                     </View>
@@ -174,7 +175,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
               <View className="price">
                 <View className="text">
                   {`¥${data.participation_money}`}
-                  {!isFreePostage && isChecked && giftinfo.postage && (<Block>{` + ${giftinfo.postage || ''}`}</Block>)}
+                  {!isFreePostage && isChecked && giftinfo && (<Block>{` + ${giftinfo.postage || ''}`}</Block>)}
                 </View>
                 <View className="text">原价{data.pay_money || "0.00"}元</View>
               </View>

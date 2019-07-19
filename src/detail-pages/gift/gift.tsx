@@ -64,9 +64,9 @@ export default class Gift extends Component<GiftProp> {
             <View className="title">商品详情</View>
             <View className="content">
               {
-                data.image_details.map((item, index) => {
+                data.image_details ? data.image_details.map((item, index) => {
                   return <Image className="item image" key={index} src={item} />
-                })
+                }) : ''
               }
             </View>
           </View>
