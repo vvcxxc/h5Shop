@@ -6,7 +6,7 @@ import './style.scss'
 import request from '../../services/request'
 import CashCoupon1 from "@/pages/order/cash-coupon1/index";
 import CashCoupon2 from "@/pages/order/cash-coupon2/index";
-
+import { getLocation } from '@/utils/getInfo'
 
 export default class Orderdetail extends Component {
   config = {
@@ -46,28 +46,32 @@ export default class Orderdetail extends Component {
   };
 
   componentWillMount() {
-    request({
-      url: "v3/user/coupons/info",
-      data: { coupons_log_id: this.$router.params.id, xpoint: '', ypoint: '' }
-    })
-      .then((res: any) => {
-        console.log(res);
-        this.setState({ defaultData: res.data }, () => {
-          if (this.state.defaultData.coupons_type * 1 == 0) { //兑换券获取兑换码
-            request({
-              url: 'api/wap/coupon/showCode',
-              data: { coupons_log_id: this.$router.params.id },
-            })
-              .then((res: any) => {
-                this.setState({ _Imgurl: res.data })
+    getLocation().then((res: any) => {
+      // xpoint: res.longitude, ypoint: res.latitude
+      let xPoint = res.longitude;
+      let yPoint = res.latitude;
+      request({
+        url: "v3/user/coupons/info",
+        data: { coupons_log_id: this.$router.params.id, xpoint: xPoint, ypoint: yPoint }
+      })
+        .then((res: any) => {
+          console.log(res);
+          this.setState({ defaultData: res.data }, () => {
+            if (this.state.defaultData.coupons_type * 1 == 0) { //兑换券获取兑换码
+              request({
+                url: 'api/wap/coupon/showCode',
+                data: { coupons_log_id: this.$router.params.id },
               })
-          }
+                .then((res: any) => {
+                  this.setState({ _Imgurl: res.data })
+                })
+            }
+          })
         })
-      })
-      .catch(() => {
-        Taro.showToast({ title: '数据请求失败', icon: 'none' })
-      })
-
+        .catch(() => {
+          Taro.showToast({ title: '数据请求失败', icon: 'none' })
+        })
+    })
   }
 
   toReturnMoney = () => {
@@ -121,7 +125,7 @@ export default class Orderdetail extends Component {
                 <View className='a_three' >{this.state.defaultData.begin_time} - {this.state.defaultData.end_time}</View>
                 <View className='a_four' >使用规则：</View>
                 {
-                  this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>)
+                  this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
                 }
                 {/* <View className='a_last'  onClick={handerShowMore}  > { isMore ? '收起更多' : '查看更多' } </View>  */}
               </View>

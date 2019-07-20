@@ -207,7 +207,7 @@ export default class PaySuccess extends Component<Props> {
     })
     request({
       url: "v3/stores/collection",
-      method: "GET",
+      method: "PUT",
       data: { store_id: _id }
     })
       .then((res: any) => {
