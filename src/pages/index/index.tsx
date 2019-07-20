@@ -5,6 +5,9 @@ import './index.styl';
 import request from '../../services/request';
 // import { connect } from '@tarojs/redux'
 import { getLocation } from '../../utils/getInfo'
+import VersionOne from './versionOne/index'
+import VersionTwo from './versionTwo/index'
+import VersionThree from './versionThree/index'
 
 export default class Index extends Component<any> {
 	/**

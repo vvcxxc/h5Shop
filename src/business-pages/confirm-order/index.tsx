@@ -73,6 +73,27 @@ export default class ConfirmOrder extends Component {
         icon: "none"
       });
     }
+    let datas = {}
+    if(_type == 1 ){
+      datas = {
+        youhui_id: this.state.coupon.id,
+        store_id: this.state.store.id,
+        youhui_number: this.state.amount,
+        type: _type,  //1 微信 2支付宝
+        xcx: 0,
+        open_id: Cookie.get(process.env.OPEN_ID),
+      }
+    }else {
+      datas = {
+        youhui_id: this.state.coupon.id,
+        store_id: this.state.store.id,
+        youhui_number: this.state.amount,
+        type: _type,  //1 微信 2支付宝
+        xcx: 0,
+        alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
+      }
+    }
+
     //请求支付属性
     request({
       url: 'api/wap/coupon/wxWechatPay',
@@ -80,17 +101,7 @@ export default class ConfirmOrder extends Component {
       header: {
         "Content-Type": "application/json"
       },
-      data: JSON.stringify({
-        youhui_id: this.state.coupon.id,
-        store_id: this.state.store.id,
-        youhui_number: this.state.amount,
-        type: _type,  //1 微信 2支付宝
-        xcx: 0,
-        // open_id: Cookie.get(process.env.OPEN_ID), //登录时获取设置本地缓存
-
-        open_id: Cookie.get(process.env.OPEN_ID),
-        // alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
-      })
+      data: JSON.stringify(datas)
     })
       .then((res: any) => {
         Taro.hideLoading();
@@ -119,7 +130,7 @@ export default class ConfirmOrder extends Component {
         } else if (_type == 2) {
           //支付宝
           window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data, // 必传，此使用方式下该字段必传
+            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
             // bizType:"xxx",                          // 非必传，默认为 “trade”
             // bizSubType:"",                          // 非必传，默认为 “”
             // bizContext:""                           // 非必传，默认为H5启动选项(safePayContext)
