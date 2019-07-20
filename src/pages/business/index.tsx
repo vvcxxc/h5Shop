@@ -212,16 +212,16 @@ export default class PaySuccess extends Component<Props> {
     })
       .then((res: any) => {
         Taro.hideLoading();
-        if (res) {
-          // if (res.code==200) {
+        if (res.code == 200) {
           this.setState({
             keepCollect_bull: !this.state.keepCollect_bull
           })
-          Taro.showToast({
-            title: res.data,
-            icon: "none"
-          })
+
         }
+        Taro.showToast({
+          title: res.data,
+          icon: "none"
+        })
       })
   }
   render() {
@@ -269,7 +269,7 @@ export default class PaySuccess extends Component<Props> {
 
         {
           this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center",paddingTop:"10px" }}>
+            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center", paddingTop: "10px" }}>
               <View className="mark" style={{
                 fontSize: " 10px",
                 color: "#fff",

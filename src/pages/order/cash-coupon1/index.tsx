@@ -31,16 +31,17 @@ export default class CashCoupon extends Component<Props> {
     addGlobalClass: true
   };
   handleClick = (_id, e) => {
-    console.log(1)
-    // console.log(e.target)
+    // console.log(this.$router.path)
+    if (this.$router.path.indexOf("orderdetail") < 0) {
     Taro.navigateTo({
-      url: '/detail-pages/orderdetail/index?id=' + _id
+    // url: '/detail-pages/orderdetail/index?id=' + _id
+    url: '/detail-pages/orderdetail/index?id=' + _id
     })
-    e.stopPropagation();
-  }
-  useNow = (_id, e) => {
+    }
+    }
+  useNow = (_logid, e) => {
     // console.log("儿子" + _id)
-     this.props.clickcode(this.props._id);
+     this.props.clickcode(this.props._logid);
     e.stopPropagation();
   }
   buyMore = (_id, e) => {
@@ -79,7 +80,7 @@ export default class CashCoupon extends Component<Props> {
           {this.props.type == 2 ? <View className="info">免预约</View> : ""}
           {this.props.bg_img_type == 1 ? <View className="info" style={{marginTop:"10px"}}>使用日期： {this.props.confirm_time}</View> : ""}
           {
-            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._id)}>立即使用</View> : (
+            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._logid)}>立即使用</View> : (
               this.props.type == 2 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)} >再来一单</View> : <View></View>)
           }
 

@@ -30,12 +30,14 @@ export default class CashCoupon extends Component<Props> {
     addGlobalClass: true
   };
   handleClick = (_id, e) => {
-    console.log(_id)
+    // console.log(this.$router.path)
+    if (this.$router.path.indexOf("orderdetail") < 0) {
     Taro.navigateTo({
-      // url: '/detail-pages/orderdetail/index?id=' + _id
-      url: '/detail-pages/orderdetail/index?id=' + _id
+    // url: '/detail-pages/orderdetail/index?id=' + _id
+    url: '/detail-pages/orderdetail/index?id=' + _id
     })
-  }
+    }
+    }
   buyMore = (_id, e) => {
       Taro.navigateTo({
         url: '/business-pages/ticket-buy/index?id=' + _id
