@@ -1,6 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
-import { AtIcon } from 'taro-ui';
 import './index.styl'
 interface Props {
   list?: any,
@@ -11,14 +10,18 @@ export default class VersionThree extends Component<Props>{
   state = {
 
   }
-
+  handleClick = (id: any) => {
+    Taro.navigateTo({
+      url: '/pages/business/index?id=' + id
+    })
+  }
   render() {
     let that = this.props.list
     let then = this.props.data
     console.log(this.props.data)
     return (
       <View className="version_three">
-        < View className="show_box" >
+        < View className="show_box" onClick={this.handleClick.bind(this, that.id)}>
 
           <View className="title_top" >
             <Text>{that.name}</Text>
@@ -62,7 +65,7 @@ export default class VersionThree extends Component<Props>{
             <View>
               <Image src={that.image} />
               <View className="ellipsis_text ellipsis-one" >50元rjkrkjwii优jiouoiuiuio惠券</View>
-            </View> 
+            </View>
 
           </View>
         </View>

@@ -1,18 +1,21 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
-import { AtIcon } from 'taro-ui';
 import './index.styl'
 interface Props {
   list?:any
 }
 export default class VersionTwo extends Component<Props>{
-
+  handleClick = (id: any) => {
+    Taro.navigateTo({
+      url: '/pages/business/index?id=' + id
+    })
+  }
   render() {
     let that = this.props.list
     return (
       <View className="version_two">
-        < View className="show_box" >
-          
+        < View className="show_box" onClick={this.handleClick.bind(this, that.id)}>
+
           <View className="title_top" >
             <Text>{that.name}</Text>
             <View className="into">
@@ -37,7 +40,7 @@ export default class VersionTwo extends Component<Props>{
             <Image src={that.preview} />
           </View>
         </View>
-      </View> 
+      </View>
     )
   }
 }

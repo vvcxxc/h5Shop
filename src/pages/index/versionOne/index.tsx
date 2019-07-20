@@ -16,8 +16,10 @@ export default class VersionOne extends Component<Props> {
   componentDidMount() {
   }
 
-  handleClick = () => {
-
+  handleClick = (id: any) => {
+    Taro.navigateTo({
+      url: '/pages/business/index?id=' + id
+    })
   }
 
   judgeData = (value1) => {

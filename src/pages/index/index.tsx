@@ -511,16 +511,20 @@ export default class Index extends Component<any> {
 getPayStore = async() => {
   let location = await getLocation();
   console.log(123)
-  console.log(this.$router.params)
-  request({
-     url: 'v3/stores/pay_store/717',
-     data: { xpoint: location.longitude, ypoint:location.latitude}
-   })
-     .then((res: any) => {
-      this.setState({
-        hahaData: res
+  console.log(this.$router.params.store_id)
+  let id = this.$router.params.store_id;
+  if(id){
+    request({
+      url: 'v3/stores/pay_store/717',
+      data: { xpoint: location.longitude, ypoint:location.latitude}
+    })
+      .then((res: any) => {
+        this.setState({
+          hahaData: res,
+        })
       })
-     })
+  }
+
 }
 
 // 控制显示哪个组件
