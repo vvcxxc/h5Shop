@@ -40,7 +40,153 @@ export default class Index extends Component<any> {
     indexImgId: null,
     adLogId: null,
     need_jump:null,
-    return_data:false
+    return_data:false,
+    hahaData: {
+      "code": 200,
+      "message": "success",
+      "data": {
+        "cashCouponList": [
+          {
+            "id": 1859,
+            "name": "",
+            "image": "",
+            "image_type": 1,
+            "address": "0",
+            "list_brief": "0",
+            "brief": "0",
+            "youhui_type": 1,
+            "begin_time": "",
+            "end_time": "",
+            "pay_money": 50,
+            "total_fee": 101,
+            "expire_day": 30,
+            "description": "",
+            "return_money": 100
+          },
+          {
+            "id": 1822,
+            "name": "",
+            "image": "",
+            "image_type": 1,
+            "address": "0",
+            "list_brief": "0",
+            "brief": "0",
+            "youhui_type": 1,
+            "begin_time": "",
+            "end_time": "",
+            "pay_money": 15,
+            "total_fee": 0,
+            "expire_day": 15,
+            "description": "",
+            "return_money": 100
+          },
+          {
+            "id": 1769,
+            "name": "",
+            "image": "",
+            "image_type": 1,
+            "address": "0",
+            "list_brief": "0",
+            "brief": "0",
+            "youhui_type": 1,
+            "begin_time": "",
+            "end_time": "",
+            "pay_money": 1,
+            "total_fee": 10,
+            "expire_day": 15,
+            "description": "",
+            "return_money": 15
+          }
+        ],
+        "exchangeCouponList": [
+          {
+            "id": 1858,
+            "name": "",
+            "image": "",
+            "image_type": 1,
+            "address": "0",
+            "list_brief": "0",
+            "brief": "0",
+            "youhui_type": 0,
+            "begin_time": "",
+            "end_time": "",
+            "pay_money": 50,
+            "total_fee": 0,
+            "expire_day": 30,
+            "description": "",
+            "return_money": 100
+          },
+          {
+            "id": 1853,
+            "name": "",
+            "image": "",
+            "image_type": 1,
+            "address": "0",
+            "list_brief": "0",
+            "brief": "0",
+            "youhui_type": 0,
+            "begin_time": "",
+            "end_time": "",
+            "pay_money": 1,
+            "total_fee": 0,
+            "expire_day": 7,
+            "description": "",
+            "return_money": 10
+          },
+          {
+            "id": 1700,
+            "name": "",
+            "image": "",
+            "image_type": 1,
+            "address": "0",
+            "list_brief": "0",
+            "brief": "0",
+            "youhui_type": 0,
+            "begin_time": "",
+            "end_time": "",
+            "pay_money": 1,
+            "total_fee": 0,
+            "expire_day": 10,
+            "description": "",
+            "return_money": 199
+          }
+        ],
+        "info": {
+          "id": 717,
+          "name": "",
+          "address": "",
+          "open_time": "",
+          "brief": "",
+          "xpoint": "",
+          "ypoint": "",
+          "image_type": 1,
+          "preview": "",
+          "store_img_one": "",
+          "store_img_two": "",
+          "is_recommend": 1,
+          "supplier_id": 0,
+          "coupon_image_url": "",
+          "gift_price": "",
+          "participation_money": "",
+          "pay_money": "",
+          "gift_pic": "",
+          "gift_name": "",
+          "gift_coupon_name": "",
+          "cash_coupon_name": "",
+          "exchange_coupon_name": "",
+          "shop_door_header_img": "",
+          "label": [
+            "免费礼品",
+            "优秀商家",
+            "现金券"
+          ],
+          "have_gift_pic": 1,
+          "have_activity_pic": 1,
+          "distance": ""
+        },
+        "view_type": 3
+      }
+    }
   };
 
   constructor(props) {
@@ -51,12 +197,13 @@ export default class Index extends Component<any> {
   }
 
   componentDidMount() {
+    this.getPayStore();
     this.showLoading();
     this.requestTab(); //经营列表
     this.localStorageData();
     this.requestLocation();
     this.showGift();
-    // this.controlVersion()
+    this.controlVersion()
   }
 
   requestLocation = () => {
@@ -360,14 +507,33 @@ export default class Index extends Component<any> {
       })
   }
 
-// controlVersion = () => {
-//   request({
-//   url: 'v3/stores/pay_store/826',
-//   })
-//   .then((res: any) => {
-//     console.log(res,'3478743285478')
-//   })
-//   }
+// 获取中奖门店信息
+getPayStore = async() => {
+  let location = await getLocation();
+  console.log(123)
+  console.log(this.$router.params)
+  request({
+     url: 'v3/stores/pay_store/717',
+     data: { xpoint: location.longitude, ypoint:location.latitude}
+   })
+     .then((res: any) => {
+      this.setState({
+        hahaData: res
+      })
+     })
+}
+
+// 控制显示哪个组件
+controlVersion = () => {
+  let dome: any = {
+    [1]: <VersionOne list={this.state.hahaData.data.info}/>,
+    [2]: <VersionTwo list={this.state.hahaData.data.info}/>,
+    [3]: <VersionThree list={this.state.hahaData.data.info}
+      data={this.state.hahaData.data.cashCouponList} />
+  }
+  return dome[this.state.hahaData.data.view_type]
+
+}
 
 
   render() {
@@ -409,6 +575,11 @@ export default class Index extends Component<any> {
         >你还有未领取的礼品 去
 					<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text>	看看
 				</View>
+
+        {
+          this.controlVersion()
+        }
+
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (
             <View

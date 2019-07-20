@@ -17,7 +17,7 @@ export default class VersionOne extends Component<Props> {
   }
 
   handleClick = () => {
-    
+
   }
 
   judgeData = (value1) => {
@@ -60,8 +60,8 @@ export default class VersionOne extends Component<Props> {
             </View>
             <View className="img_right">
               <Image className="img" src={that.gift_pic}></Image>
-              <Image className="lin_img" src={require('../../../assets/lin.png')} ></Image>
-              <Image className="lin_two_img" src={require('../../../assets/qiu.png')} ></Image>
+              <Image className="lin_img" src={require('./lin.png')} ></Image>
+              <Image className="lin_two_img" src={require('./qiu.png')} ></Image>
             </View>
           </View>
           <View className="coupons" style={{ display: this.judgeData(that.gift_name) }}>

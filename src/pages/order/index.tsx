@@ -108,26 +108,34 @@ export default class Order extends Component {
   onPullDownRefresh() {
     if (this.state.current == 0) {
       this.setState({
-        page1: 1
+        page1: 1,
+        lengthbull1: true,
+        coupon1: []
       }, () => {
         this.getData1();
       })
     } else if (this.state.current == 1) {
       this.setState({
-        page2: 1
+        page2: 1,
+        lengthbull2: true,
+        coupon2: []
       }, () => {
         this.getData2();
       })
 
     } else if (this.state.current == 2) {
       this.setState({
-        page3: 1
+        page3: 1,
+        lengthbull3: true,
+        coupon3: []
       }, () => {
         this.getData3();
       })
     } else if (this.state.current == 3) {
       this.setState({
-        page4: 1
+        page4: 1,
+        lengthbull4: true,
+        coupon4: []
       }, () => {
         this.getData4();
       })

@@ -6,7 +6,7 @@ import "./index.styl";
 
 interface Props {
   _id: any,
-  _logid:any,
+  _logid: any,
   return_money: any,
   _total_fee: any,
   youhui_type: any,
@@ -32,16 +32,16 @@ export default class CashCoupon extends Component<Props> {
   handleClick = (_id, e) => {
     // console.log(this.$router.path)
     if (this.$router.path.indexOf("orderdetail") < 0) {
-    Taro.navigateTo({
-    // url: '/detail-pages/orderdetail/index?id=' + _id
-    url: '/detail-pages/orderdetail/index?id=' + _id
-    })
-    }
-    }
-  buyMore = (_id, e) => {
       Taro.navigateTo({
-        url: '/business-pages/ticket-buy/index?id=' + _id
+        // url: '/detail-pages/orderdetail/index?id=' + _id
+        url: '/detail-pages/orderdetail/index?id=' + _id
       })
+    }
+  }
+  buyMore = (_id, e) => {
+    Taro.navigateTo({
+      url: '/business-pages/ticket-buy/index?id=' + _id
+    })
     e.stopPropagation();
   }
   render() {
@@ -71,8 +71,8 @@ export default class CashCoupon extends Component<Props> {
             <View className="head flex">
               {
                 this.props.bg_img_type == 1 ?
-                  <View className="label flex center" style={{ background: "#5d84e0",borderBottom:"none" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View> :
-                  <View className="label flex center" style={{ background: "#cccccc",borderBottom:"none"  }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View>
+                  <View className="label flex center" style={{ background: "#5d84e0", borderBottom: "none" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View> :
+                  <View className="label flex center" style={{ background: "#cccccc", borderBottom: "none" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View>
               }
               {this.props.sname}
             </View>
