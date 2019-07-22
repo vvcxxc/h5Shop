@@ -34,7 +34,7 @@ export default class VersionThree extends Component<Props>{
                 })
               }
             </View>
-            <View className="activity">{that.distance}</View>
+            <View className="activity_two">{that.distance}</View>
           </View >
           <View className="img_box">
             <View>
@@ -58,7 +58,7 @@ export default class VersionThree extends Component<Props>{
             <View>
               <Image src={that.image} />
               <View className="ellipsis_text ellipsis-one">{then[2].name}</View>
-            </View> 
+            </View>
           </View>
         </View>
       </View>

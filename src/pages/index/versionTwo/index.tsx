@@ -31,7 +31,7 @@ export default class VersionTwo extends Component<Props>{
                 })
               }
             </View>
-            <View className="activity">{that.distance}</View>
+            <View className="activity_two">{that.distance}</View>
           </View >
 
           <View className="img_box">

@@ -207,10 +207,6 @@ export default class Index extends Component<any> {
   }
 
   requestLocation = () => {
-    Taro.getStorage({ key: 'allCity' })
-      .then(res => {
-        return
-      })
     request({ url: 'v3/district', data: { model_type: '2' } })
       .then((res: any) => {
         Taro.setStorage({ key: 'allCity', data: res.data.city_list })
@@ -511,7 +507,7 @@ export default class Index extends Component<any> {
 getPayStore = async() => {
   let location = await getLocation();
   console.log(123)
-  console.log(this.$router.params.store_id)
+  console.log(this.$router.params)
   let id = this.$router.params.store_id;
   if(id){
     request({
