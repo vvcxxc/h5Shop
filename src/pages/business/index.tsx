@@ -32,8 +32,8 @@ export default class PaySuccess extends Component<Props> {
       store_img_three: "",
       store_img_two: "",
       collect: "0",
-      distance: ""
-
+      distance: "",
+      tel: ""
     },
     recommend: [//本店其它的推荐
       {
@@ -198,7 +198,17 @@ export default class PaySuccess extends Component<Props> {
     e.stopPropagation();
   }
 
-
+  //打电话
+  makePhoneCall = () => {
+    console.log(this.state.business_list.tel)
+    Taro.makePhoneCall({
+      phoneNumber: this.state.business_list.tel
+    })
+      .then((res: any) => {
+        console.log(res)
+      })
+  }
+  //收藏
   keepCollect(e: any) {
     let _id = this.state.business_list.id;
     // console.log(_id);
@@ -260,7 +270,7 @@ export default class PaySuccess extends Component<Props> {
           <View className="address flex center">
             <Image className="address-img" style={{ marginRight: "10px" }} src={AddressImg} />
             <View className="text item">{this.state.business_list.address}</View>
-            <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} />
+            <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)}/>
           </View>
         </View>
 

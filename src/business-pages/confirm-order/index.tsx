@@ -74,7 +74,7 @@ export default class ConfirmOrder extends Component {
       });
     }
     let datas = {}
-    if(_type == 1 ){
+    if (_type == 1) {
       datas = {
         youhui_id: this.state.coupon.id,
         store_id: this.state.store.id,
@@ -83,7 +83,7 @@ export default class ConfirmOrder extends Component {
         xcx: 0,
         open_id: Cookie.get(process.env.OPEN_ID),
       }
-    }else {
+    } else {
       datas = {
         youhui_id: this.state.coupon.id,
         store_id: this.state.store.id,
@@ -120,7 +120,12 @@ export default class ConfirmOrder extends Component {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
                 Taro.switchTab({
-                  url: '/pages/order/index'
+                  url: '/pages/order/index',
+                  success: function (e) {
+                    let page = Taro.getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onShow();
+                  }
                 })
               } else {
                 //微信失败
@@ -138,7 +143,13 @@ export default class ConfirmOrder extends Component {
             if (res.status == "200") {
               //支付宝成功
               Taro.switchTab({
-                url: '/pages/order/index'
+                url: '/pages/order/index',
+                success: function (e) {
+                  let page = Taro.getCurrentPages().pop();
+                  if (page == undefined || page == null) return;
+                  page.onShow();
+
+                }
               })
             } else {
               //支付宝失败

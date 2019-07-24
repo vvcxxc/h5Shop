@@ -140,6 +140,17 @@ export default class SetMeal extends Component {
       url: '/pages/business/index?id=' + _id
     })
   };
+  //打电话
+  makePhoneCall = () => {
+    // console.log(this.state.store.tel)
+    Taro.makePhoneCall({
+      phoneNumber: this.state.store.tel
+    })
+      .then((res: any) => {
+        console.log(res)
+      })
+  }
+
   keepCollect(e) {
     //假接口，还没好
     // let _id = this.state.coupon.id;
@@ -219,7 +230,7 @@ export default class SetMeal extends Component {
             <Image className="address-image" style={{ width: "15px", height: "15px" }} src={AddressImg} />
             <View className="distance">{this.state.store.distance}</View>
             <View className="text flex-item" style={{ width: "80%" }}>{this.state.store.saddress}</View>
-            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} />
+            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)}/>
 
           </View>
         </View>

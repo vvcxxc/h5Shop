@@ -29,7 +29,8 @@
   .myPositing {
     // display: flex;
     width: 100%;
-    position:absolute;
+    // position:absolute;
+    position: relative;
     background-color:#fff;
     height: 30px;
     overflow: hidden;
@@ -44,6 +45,6 @@
 
   .falling {
     z-index: -6;
-
+    height: 0px;
   }
 }
