@@ -45,146 +45,10 @@ export default class Index extends Component<any> {
       "code": 200,
       "message": "success",
       "data": {
-        "cashCouponList": [
-          {
-            "id": 1859,
-            "name": "",
-            "image": "",
-            "image_type": 1,
-            "address": "0",
-            "list_brief": "0",
-            "brief": "0",
-            "youhui_type": 1,
-            "begin_time": "",
-            "end_time": "",
-            "pay_money": 50,
-            "total_fee": 101,
-            "expire_day": 30,
-            "description": "",
-            "return_money": 100
-          },
-          {
-            "id": 1822,
-            "name": "",
-            "image": "",
-            "image_type": 1,
-            "address": "0",
-            "list_brief": "0",
-            "brief": "0",
-            "youhui_type": 1,
-            "begin_time": "",
-            "end_time": "",
-            "pay_money": 15,
-            "total_fee": 0,
-            "expire_day": 15,
-            "description": "",
-            "return_money": 100
-          },
-          {
-            "id": 1769,
-            "name": "",
-            "image": "",
-            "image_type": 1,
-            "address": "0",
-            "list_brief": "0",
-            "brief": "0",
-            "youhui_type": 1,
-            "begin_time": "",
-            "end_time": "",
-            "pay_money": 1,
-            "total_fee": 10,
-            "expire_day": 15,
-            "description": "",
-            "return_money": 15
-          }
-        ],
-        "exchangeCouponList": [
-          {
-            "id": 1858,
-            "name": "",
-            "image": "",
-            "image_type": 1,
-            "address": "0",
-            "list_brief": "0",
-            "brief": "0",
-            "youhui_type": 0,
-            "begin_time": "",
-            "end_time": "",
-            "pay_money": 50,
-            "total_fee": 0,
-            "expire_day": 30,
-            "description": "",
-            "return_money": 100
-          },
-          {
-            "id": 1853,
-            "name": "",
-            "image": "",
-            "image_type": 1,
-            "address": "0",
-            "list_brief": "0",
-            "brief": "0",
-            "youhui_type": 0,
-            "begin_time": "",
-            "end_time": "",
-            "pay_money": 1,
-            "total_fee": 0,
-            "expire_day": 7,
-            "description": "",
-            "return_money": 10
-          },
-          {
-            "id": 1700,
-            "name": "",
-            "image": "",
-            "image_type": 1,
-            "address": "0",
-            "list_brief": "0",
-            "brief": "0",
-            "youhui_type": 0,
-            "begin_time": "",
-            "end_time": "",
-            "pay_money": 1,
-            "total_fee": 0,
-            "expire_day": 10,
-            "description": "",
-            "return_money": 199
-          }
-        ],
-        "info": {
-          "id": 717,
-          "name": "",
-          "address": "",
-          "open_time": "",
-          "brief": "",
-          "xpoint": "",
-          "ypoint": "",
-          "image_type": 1,
-          "preview": "",
-          "store_img_one": "",
-          "store_img_two": "",
-          "is_recommend": 1,
-          "supplier_id": 0,
-          "coupon_image_url": "",
-          "gift_price": "",
-          "participation_money": "",
-          "pay_money": "",
-          "gift_pic": "",
-          "gift_name": "",
-          "gift_coupon_name": "",
-          "cash_coupon_name": "",
-          "exchange_coupon_name": "",
-          "shop_door_header_img": "",
-          "label": [
-            "免费礼品",
-            "优秀商家",
-            "现金券"
-          ],
-          "have_gift_pic": 1,
-          "have_activity_pic": 1,
-          "distance": ""
-        },
-        "view_type": 3
+        "cashCouponList": [],
+        "exchangeCouponList": [],
+        "info": {},
+        "view_type": null
       }
     }
   };
@@ -508,10 +372,10 @@ getPayStore = async() => {
   let location = await getLocation();
   console.log(123)
   console.log(this.$router.params)
-  let id = this.$router.params.store_id;
+  let id = this.$router.params.id;
   if(id){
     request({
-      url: 'v3/stores/pay_store/717',
+      url: 'v3/stores/pay_store/'+ id,
       data: { xpoint: location.longitude, ypoint:location.latitude}
     })
       .then((res: any) => {
