@@ -292,7 +292,7 @@ export default class PaySuccess extends Component<Props> {
                 textAlign: "center",
                 width: '12px'
               }}>礼</View>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "0" }}>拼团送豪礼</Text>
+              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "12px" }}>拼团送豪礼</Text>
             </View>
             <View className="hidden-box" id="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
               {
@@ -367,7 +367,7 @@ export default class PaySuccess extends Component<Props> {
                 textAlign: "center",
                 width: '12px'
               }}>增</Text>
-              <Text className="fwb hidden-box" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "0" }}>增值低价买</Text>
+              <Text className="fwb hidden-box" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>增值低价买</Text>
             </View>
             <View style={{ width: "100%", overflow: "hidden", height: this.state.activity_appre_bull ? "auto" : "9rem" }}>
               {
@@ -445,7 +445,7 @@ export default class PaySuccess extends Component<Props> {
                 textAlign: "center",
                 width: '12px'
               }}>券</Text>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "0" }}>现金券</Text>
+              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>现金券</Text>
             </View>
             <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", height: this.state.couponList_bull ? "auto" : "130px" }}>
               {
@@ -495,7 +495,7 @@ export default class PaySuccess extends Component<Props> {
                 textAlign: "center",
                 width: '12px'
               }}>惠</Text>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "0" }}>优惠信息</Text>
+              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>优惠信息</Text>
             </View>
             <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "110px" }}>
               {
