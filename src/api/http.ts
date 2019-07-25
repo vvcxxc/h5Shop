@@ -59,7 +59,7 @@ const http = (params: Params): Promise<any> => {
             })
             break
           case NOT_SIGN:
-            Login()
+            Login();
             return reject(new Error('--- no sign ---'))
           case NOT_FIND:
             Taro.showToast({

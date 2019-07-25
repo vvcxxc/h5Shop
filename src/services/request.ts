@@ -50,7 +50,7 @@ export default function request(options: Options) {
             break
           case NOT_SIGN:
               Login();
-            return reject(new Error('--- no sign ---'))
+            return reject(new Error('--- no Sign ---'))
           case NOT_FIND:
               Taro.showToast({
                 title: "not find",

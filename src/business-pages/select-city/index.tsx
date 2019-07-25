@@ -228,19 +228,19 @@ export default class SelectCity extends Component {
   // click 热门城市
   searchData = (name, id) => {
     Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
-    Taro.reLaunch({ url: '../../pages/index/index?router' })
+    Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
 
   // 全国列表数据 点击
   onClick = (item, event) => {
     Taro.setStorage({ key: 'router', data: { city_id: item.id, city_name: item.name } })
-    Taro.reLaunch({ url: '../../pages/index/index?router' })
+    Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
 
   // 搜索列表点击
   lineOnClick = (id, name) => {
     Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
-    Taro.reLaunch({ url: '../../pages/index/index?router' })
+    Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
   // 回车键 模糊搜索
   handleSearch = () => {

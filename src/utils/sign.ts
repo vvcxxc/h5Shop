@@ -11,6 +11,7 @@ export const Login = () => {
   let type = getBrowserType();
   if(process.env.NODE_ENV == 'development'){
     if(Cookie.get('test_token_auth')){
+      console.log('已登录')
       return
     }
     request({

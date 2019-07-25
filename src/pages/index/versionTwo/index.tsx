@@ -35,9 +35,9 @@ export default class VersionTwo extends Component<Props>{
           </View >
 
           <View className="img_box">
-            <Image src={that.preview} />
-            <Image className="img" src={that.preview} />
-            <Image src={that.preview} />
+            <Image src={that.preview || that.store_img_one || that.store_img_two} />
+            <Image className="img" src={that.store_img_one || that.preview || that.store_img_two} />
+            <Image src={that.store_img_two || that.preview || that.store_img_one} />
           </View>
         </View>
       </View>

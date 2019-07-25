@@ -84,46 +84,48 @@ export default class Index extends Component<any> {
       this.getLocatione();
       return
     }
-    Taro.getStorage({ key: 'router' }).then((res: any) => {
-      if (res.data.city_name && res.data.city_id) {
-        this.setState({ cityName: res.data.city_name })
-        this.setState({ cityId: res.data.city_id })
-        if (this.state.deal_cate_id) {
-          this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
-            this.requestHomeList(this.state.meta)
-          })
-        } else {
-          this.setState({ meta: { city_id: res.data.city_id } }, () => {
-            this.requestHomeList(this.state.meta)
-          })
-        }
-      }
-      if (res.data.xpoint || res.data.ypoint) {
-        if (this.state.deal_cate_id) {
-          this.setState({
-            meta: {
-              xpoint: res.data.xpoint,
-              ypoint: res.data.ypoint,
-              deal_cate_id: this.state.deal_cate_id
-            }
-          }, () => {
-            this.requestHomeList(this.state.meta)
-          })
-        } else {
-          this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
-            request({
-              url: 'v3/city_name',
-              data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
+    if(this.$router.params.router){
+      Taro.getStorage({ key: 'router' }).then((res: any) => {
+        if (res.data.city_name && res.data.city_id) {
+          this.setState({ cityName: res.data.city_name })
+          this.setState({ cityId: res.data.city_id })
+          if (this.state.deal_cate_id) {
+            this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
+              this.requestHomeList(this.state.meta)
             })
-              .then((res: any) => {
-                this.setState({ cityName: res.data.city })
-              })
-            this.requestHomeList(this.state.meta)
-            this.getCityId()
-          })
+          } else {
+            this.setState({ meta: { city_id: res.data.city_id } }, () => {
+              this.requestHomeList(this.state.meta)
+            })
+          }
         }
-      }
-    })
+        if (res.data.xpoint || res.data.ypoint) {
+          if (this.state.deal_cate_id) {
+            this.setState({
+              meta: {
+                xpoint: res.data.xpoint,
+                ypoint: res.data.ypoint,
+                deal_cate_id: this.state.deal_cate_id
+              }
+            }, () => {
+              this.requestHomeList(this.state.meta)
+            })
+          } else {
+            this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
+              request({
+                url: 'v3/city_name',
+                data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
+              })
+                .then((res: any) => {
+                  this.setState({ cityName: res.data.city })
+                })
+              this.requestHomeList(this.state.meta)
+              this.getCityId()
+            })
+          }
+        }
+      })
+    }
 
   }
   // get location
@@ -391,8 +393,8 @@ getPayStore = async() => {
 controlVersion = () => {
   let dome: any = {
     [1]: <VersionOne list={this.state.hahaData.data.info}/>,
-    [2]: <VersionTwo list={this.state.hahaData.data.info}/>,
-    [3]: <VersionThree list={this.state.hahaData.data.info}
+    [3]: <VersionTwo list={this.state.hahaData.data.info}/>,
+    [2]: <VersionThree list={this.state.hahaData.data.info}
       data={this.state.hahaData.data.cashCouponList} />
   }
   return dome[this.state.hahaData.data.view_type]
