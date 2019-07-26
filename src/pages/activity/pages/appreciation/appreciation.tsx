@@ -260,18 +260,18 @@ export default class Appreciation extends Component {
             <View className="area-title">邀请好友增值</View>
             <View className="area-panel">
               <View className="user-info">
-                <Image className="icon" src={userinfo.user_portrait} />
-                <View className="text">{userinfo.user_name}</View>
+                <Image className="icon" src={userinfo? userinfo.user_portrait : null} />
+                <View className="text">{userinfo ? userinfo.user_name : null}</View>
               </View>
               <View className="rule">活动规则</View>
               <View className="coupon-info">
                 <View className="avatar">
-                  <Image className="icon" src={couponinfo.image} />
+                  <Image className="icon" src={couponinfo ? couponinfo.image : null} />
                 </View>
                 <View className="description">
-                  <View className="item name text-ellipsis-two-lines">{couponinfo.name}</View>
-                  <View className="item brief">{couponinfo.text}</View>
-                  <View className="item price">{couponinfo.appreciation_count_money}</View>
+                  <View className="item name text-ellipsis-two-lines">{couponinfo ? couponinfo.name : null}</View>
+                  <View className="item brief">{couponinfo ? couponinfo.text : null}</View>
+                  <View className="item price">{couponinfo ? couponinfo.appreciation_count_money : null}</View>
                 </View>
               </View>
               <View className="process">
@@ -280,9 +280,9 @@ export default class Appreciation extends Component {
                 </View>
               </View>
               <View className="status">
-                <View className="text appreciation-init">启始{couponinfo.init_money}元</View>
-                <View className="text appreciating">已增值{couponinfo.appreciation_money}元</View>
-                <View className="text appreciation-max">最高{couponinfo.money}元</View>
+                <View className="text appreciation-init">启始{couponinfo ? couponinfo.init_money : null}元</View>
+                <View className="text appreciating">已增值{couponinfo ? couponinfo.appreciation_money : null}元</View>
+                <View className="text appreciation-max">最高{couponinfo ? couponinfo.money : null}元</View>
               </View>
             </View>
             <View className="area-action">

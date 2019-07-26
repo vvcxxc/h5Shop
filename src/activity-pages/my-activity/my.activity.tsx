@@ -70,6 +70,7 @@ export default class MyActivity extends Component<MyActivityProp> {
   }
 
   handleToggle = (current: number) => {
+    current = Number(current)
     const { api } = myActivity[current]
     this.fetchActivity(api, current)
   }
