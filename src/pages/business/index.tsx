@@ -230,8 +230,8 @@ export default class PaySuccess extends Component<Props> {
     // console.log(this.state.business_list.xpoint,this.state.business_list.ypoint);
     let browserType = getBrowserType();
     if (browserType == 'wechat') {
-      let latitude = this.state.business_list.xpoint *1;
-      let longitude = this.state.business_list.ypoint *1;
+      let latitude = this.state.business_list.xpoint * 1;
+      let longitude = this.state.business_list.ypoint * 1;
       let url = window.location;
       Taro.request({
         url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
@@ -239,15 +239,8 @@ export default class PaySuccess extends Component<Props> {
         data: {
           url
         }
-      }).then(() => {
-        let url = window.location;
-        Taro.request({
-          url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-          method: 'GET',
-          data: {
-            url
-          }
-        }).then(res => {
+      })
+        .then(res => {
           let { data } = res;
           wx.config({
             debug: false,
@@ -260,7 +253,7 @@ export default class PaySuccess extends Component<Props> {
               "openLocation"
             ]
           })
-          wx.ready(()=> {
+          wx.ready(() => {
             wx.openLocation({
               latitude,
               longitude,
@@ -268,14 +261,13 @@ export default class PaySuccess extends Component<Props> {
               name: this.state.business_list.name,
               address: '123123',
               infoUrl: '123123',
-              success: ()=>{
+              success: () => {
                 console.log(12)
               }
             })
+
           })
         })
-
-      })
 
 
     } else if (browserType == 'alipay') {
@@ -349,7 +341,7 @@ export default class PaySuccess extends Component<Props> {
             </View>
           </ScrollView>
           <View className="address flex center">
-            <Image className="address-img" style={{ marginRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)}/>
+            <Image className="address-img" style={{ marginRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)} />
             <View className="text item">{this.state.business_list.address}</View>
             <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
