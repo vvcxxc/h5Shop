@@ -273,13 +273,13 @@ export default class Group extends Component {
               >
                 <View className="participator-wrapper">
                   {
-                    basicinfo.rsParticipate.map((item, index) => {
+                    basicinfo.rsParticipate ? basicinfo.rsParticipate.map((item, index) => {
                       return (
                         <View className="item" key={index}>
                           <Image className="icon" src={item.user_portrait} />
                         </View>
                       )
-                    })
+                    }) : null
                   }
                 </View>
               </ScrollView>
@@ -293,7 +293,7 @@ export default class Group extends Component {
                       data-publictypeid={basicinfo.id}
                       data-id={basicinfo.youhui_id}
                       data-type="55"
-                      onClick={this.handleClick}
+                      onClick={this.handleClick.bind(this)}
                     >
                       参加拼团
                     </Button>
@@ -304,7 +304,7 @@ export default class Group extends Component {
                     <Button
                     className="item used"
                     data-action="use"
-                    onClick={this.handleClick}
+                    onClick={this.handleClick.bind(this)}
                   >
                     去使用
                   </Button>
@@ -330,7 +330,7 @@ export default class Group extends Component {
                   <View
                     className="area-gift"
                     data-action="view"
-                    onClick={this.handleClick}
+                    onClick={this.handleClick.bind(this)}
                   >
                     <View
                       className="title"
@@ -366,7 +366,7 @@ export default class Group extends Component {
               }
             </View>
           </View>
-          {isQrcode && <Qrcode data={base64} onAction={this.handleClick} />}
+          {isQrcode && <Qrcode data={base64} onAction={this.handleClick.bind(this)} />}
         </View>
       </Block>
     )
