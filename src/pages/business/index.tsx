@@ -240,14 +240,37 @@ export default class PaySuccess extends Component<Props> {
           url
         }
       }).then(() => {
-        wx.ready(()=> {
-          wx.openLocation({
-            latitude,
-            longitude,
-            scale: 18,
-            name: this.state.business_list.name
+        let url = window.location;
+        Taro.request({
+          url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+          method: 'GET',
+          data: {
+            url
+          }
+        }).then(res => {
+          console.log(res.data);
+          let { data } = res;
+          wx.config({
+            debug: false,
+            appId: data.appId,
+            timestamp: data.timestamp,
+            nonceStr: data.nonceStr,
+            signature: data.signature,
+            jsApiList: [
+              "getLocation",
+              "openLocation"
+            ]
+          })
+          wx.ready(()=> {
+            wx.openLocation({
+              latitude,
+              longitude,
+              scale: 18,
+              name: this.state.business_list.name
+            })
           })
         })
+
       })
 
 

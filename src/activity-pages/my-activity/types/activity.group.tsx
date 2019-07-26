@@ -16,7 +16,7 @@ export default class ActivityGroup extends Component<ActivityGroupProp> {
   /**
    * 点击处理
    */
-  handleClick(e) {
+  handleClick = (e) => {
     const { action } = e.currentTarget.dataset
     const {
       onAction,
