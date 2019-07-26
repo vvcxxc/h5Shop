@@ -11,6 +11,7 @@ export const Login = () => {
   let type = getBrowserType();
   if(process.env.NODE_ENV == 'development'){
     if(Cookie.get('test_token_auth')){
+      console.log('已登录')
       return
     }
     request({
@@ -32,7 +33,7 @@ export const Login = () => {
     }else{
       let url = BASIC_API +"ali/getZfbUserInfo";
       url = encodeURIComponent(url);
-      window.location.href = BASIC_API +'/ali/zfbUserAuth?from='+from+'&code_id=0&url='+url;
+      window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=433&url='+url;
     }
   }
 

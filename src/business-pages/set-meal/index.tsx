@@ -8,6 +8,7 @@ import request from '../../services/request'
 import MobileImg from '../../assets/dianhua.png'
 import AddressImg from '../../assets/address.png'
 import { getLocation } from "@/utils/getInfo"
+import isArray = require("lodash/isArray");
 
 export default class SetMeal extends Component {
   config = {
@@ -83,7 +84,7 @@ export default class SetMeal extends Component {
     getLocation().then((res: any) => {
       console.log(res)
       let xPoint = res.longitude;
-      let yPoint = res.longitude;
+      let yPoint = res.latitude;
       request({
         url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint, ypoint: yPoint }
       })
@@ -140,6 +141,17 @@ export default class SetMeal extends Component {
       url: '/pages/business/index?id=' + _id
     })
   };
+  //打电话
+  makePhoneCall = () => {
+    // console.log(this.state.store.tel)
+    Taro.makePhoneCall({
+      phoneNumber: this.state.store.tel
+    })
+      .then((res: any) => {
+        console.log(res)
+      })
+  }
+
   keepCollect(e) {
     //假接口，还没好
     // let _id = this.state.coupon.id;
@@ -219,7 +231,7 @@ export default class SetMeal extends Component {
             <Image className="address-image" style={{ width: "15px", height: "15px" }} src={AddressImg} />
             <View className="distance">{this.state.store.distance}</View>
             <View className="text flex-item" style={{ width: "80%" }}>{this.state.store.saddress}</View>
-            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} />
+            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)}/>
 
           </View>
         </View>
@@ -230,16 +242,30 @@ export default class SetMeal extends Component {
           <View>
             <View className="label">有效期：</View>
             <View className="label-value">购买后{this.state.coupon.expire_day}日内有效</View>
-            <View className="label">使用规则：</View>
-            <View className="label-value">
+            {
+              Array.isArray(this.state.coupon.description) ? (
+                <View>
+                  <View className="label">使用规则：</View>
+                    <View className="label-value">
+                      {
 
-              {
-                this.state.coupon.description.map((item) => (
-                  <View className="label-value_info">.  {item}</View >
-                ))
-              }
+                        this.state.coupon.description.map((item) => (
+                          <View className="label-value_info">.  {item}</View >
+                        ))
+                      }
+                    </View>
+                </View>
 
-            </View>
+              ) : (
+                <View>
+                  <View className="label">使用规则：</View>
+                    <View className="label-value">
+                      <View className="label-value_info">.  {this.state.coupon.description}</View >
+                    </View>
+                </View>
+              )
+            }
+
           </View>
           {/* <View className="ft-more flex center">查看更多<AtIcon value="chevron-right" color="#999" size="16px" /></View> */}
         </View>

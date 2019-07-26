@@ -72,11 +72,11 @@ const config = {
     publicPath: "/",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
-    devServer: {
-      host: '192.168.2.109',
-      inline: true,
-      port: 8090,
-    },
+    // devServer: {
+    //   // host: '192.168.2.198',
+    //   inline: true,
+    //   port: 8090,
+    // },
     module: {
       postcss: {
         autoprefixer: {
@@ -109,6 +109,9 @@ const config = {
 module.exports = function(merge) {
   if (process.env.NODE_ENV === "development") {
     return merge({}, config, require("./dev"));
+  }else if (process.env.NODE_ENV === "production"){
+    return merge({}, config, require("./prod"));
+  }else if (process.env.NODE_ENV === "test"){
+    return merge({}, config, require("./test"));
   }
-  return merge({}, config, require("./prod"));
 };

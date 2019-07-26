@@ -28,8 +28,8 @@ class IndexSearchPage extends PureComponent<Props> {
 	}
 
 	componentWillMount() {
-		
-		
+
+
 	}
 
 	componentDidMount() {
@@ -65,15 +65,16 @@ class IndexSearchPage extends PureComponent<Props> {
 			meta.unshift(this.state.searchStr)
 			Taro.setStorageSync("searchKey", meta)
 		}
-		if (meta.length>=1) this.setState({ showStorage:true})
-		Taro.reLaunch(
-			{ url: '../../merchant/index?value=' + this.state.searchStr  }
+    if (meta.length>=1) this.setState({ showStorage:true})
+    console.log(this.state.searchStr)
+		Taro.navigateTo(
+			{ url: '/pages/merchant/index?value=' + this.state.searchStr  }
     )
 	}
 
 	lineOnclick = (item) => {
-		Taro.reLaunch(
-			{ url: '../../merchant/index?value=' + item }
+		Taro.navigateTo(
+			{ url: '/pages/merchant/index?value=' + item }
 		)
 	}
 
@@ -104,7 +105,7 @@ class IndexSearchPage extends PureComponent<Props> {
 								<View style="color:#999999;">历史搜索</View>
 								<AtIcon value='trash' size='20' color='#999999' onClick={this.clearStorage.bind(this)}></AtIcon>
 							</View>
-						</View>	
+						</View>
 						<View className="history">
 							{
 								saveSearch.map((item, index) => {

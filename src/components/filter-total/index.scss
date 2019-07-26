@@ -1,12 +1,12 @@
 .page {
   background-color:#fff;
   .title {
-    display:flex;  
+    display:flex;
     overflow:hidden;
     justify-content: space-around;
     .line {
       text-align: center;
-      width:30%; 
+      width:30%;
       padding: 8px 0px;
     }
     .linRed {
@@ -29,15 +29,22 @@
   .myPositing {
     // display: flex;
     width: 100%;
-    position:absolute;
+    // position:absolute;
+    position: relative;
     background-color:#fff;
+    height: 30px;
+    overflow: hidden;
+    visibility: hidden;
   }
   .rising {
+    height: auto;
     z-index: 3;
+    overflow: auto;
+    visibility: visible;
   }
 
   .falling {
     z-index: -6;
-    
+    height: 0px;
   }
 }

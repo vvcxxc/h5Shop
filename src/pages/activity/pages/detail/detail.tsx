@@ -114,8 +114,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
    * @type TYPE_GROUP_OPEN => 开团
    */
   async fetchPayment(): Promise<void> {
-    const openid = Taro.getStorageSync("openid")
-    const unionid = Taro.getStorageSync("unionid")
     const { isChecked } = this.state
     const { type = 1, id = "", gift_id = "", activity_id = "", publictypeid } = this.$router.params
     let params: GetPaymentSignture = {
@@ -205,7 +203,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     //   header : {
     //     "Content-Type" :"application/json"
     //   },
-    //   data : JSON.stringify(params),      
+    //   data : JSON.stringify(params),
     // }).then(res => {
     //   console.log(res)
     // })

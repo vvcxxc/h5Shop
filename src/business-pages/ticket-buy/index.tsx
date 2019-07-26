@@ -10,7 +10,7 @@ import AddressImg from '../../assets/address.png'
 import request from '../../services/request'
 import { getLocation } from "@/utils/getInfo"
 
-export default class  TicketBuy extends Component {
+export default class TicketBuy extends Component {
   config = {
     navigationBarTitleText: "优惠信息"
   };
@@ -82,7 +82,7 @@ export default class  TicketBuy extends Component {
     })
     getLocation().then((res: any) => {
       let xPoint = res.longitude;
-      let yPoint = res.longitude;
+      let yPoint = res.latitude;
       request({
         url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint, ypoint: yPoint }
       })
@@ -122,11 +122,6 @@ export default class  TicketBuy extends Component {
       }, 2000)
     })
 
-
-
-
-
-
   }
   handleClick = (id, e) => {
     console.log(id)
@@ -140,6 +135,16 @@ export default class  TicketBuy extends Component {
       url: '/pages/business/index?id=' + _id
     })
   };
+  //打电话
+  makePhoneCall = () => {
+    // console.log(this.state.store.tel)
+    Taro.makePhoneCall({
+      phoneNumber: this.state.store.tel
+    })
+      .then((res: any) => {
+        console.log(res)
+      })
+  }
   keepCollect(e) {
     //假接口，还没好
     // let _id = this.state.coupon.id;
@@ -198,10 +203,10 @@ export default class  TicketBuy extends Component {
             <AtIcon value="chevron-right" color="#999" size="24px" />
           </View>
           <View className="address-view flex center">
-            <Image className="address-image" style={{width:"15px",height:"15px"}} src={AddressImg} />
+            <Image className="address-image" style={{ width: "15px", height: "15px" }} src={AddressImg} />
             <View className="distance">{this.state.store.distance}</View>
             <View className="text flex-item" style={{ width: "80%" }}>{this.state.store.saddress}</View>
-            <Image className="mobile-image" style={{width:"15px",height:"15px"}} src={MobileImg} />
+            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
         </View>
         {/* <View className="remark mt20 pd30 bcff">

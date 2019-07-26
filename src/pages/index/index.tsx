@@ -5,6 +5,9 @@ import './index.styl';
 import request from '../../services/request';
 // import { connect } from '@tarojs/redux'
 import { getLocation } from '../../utils/getInfo'
+import VersionOne from './versionOne/index'
+import VersionTwo from './versionTwo/index'
+import VersionThree from './versionThree/index'
 
 export default class Index extends Component<any> {
 	/**
@@ -37,7 +40,17 @@ export default class Index extends Component<any> {
     indexImgId: null,
     adLogId: null,
     need_jump:null,
-    return_data:false
+    return_data:false,
+    hahaData: {
+      "code": 200,
+      "message": "success",
+      "data": {
+        "cashCouponList": [],
+        "exchangeCouponList": [],
+        "info": {},
+        "view_type": null
+      }
+    }
   };
 
   constructor(props) {
@@ -48,18 +61,16 @@ export default class Index extends Component<any> {
   }
 
   componentDidMount() {
+    this.getPayStore();
     this.showLoading();
     this.requestTab(); //经营列表
     this.localStorageData();
     this.requestLocation();
     this.showGift();
+    this.controlVersion()
   }
 
   requestLocation = () => {
-    Taro.getStorage({ key: 'allCity' })
-      .then(res => {
-        return
-      })
     request({ url: 'v3/district', data: { model_type: '2' } })
       .then((res: any) => {
         Taro.setStorage({ key: 'allCity', data: res.data.city_list })
@@ -73,54 +84,55 @@ export default class Index extends Component<any> {
       this.getLocatione();
       return
     }
-    Taro.getStorage({ key: 'router' }).then((res: any) => {
-      if (res.data.city_name && res.data.city_id) {
-        this.setState({ cityName: res.data.city_name })
-        this.setState({ cityId: res.data.city_id })
-        if (this.state.deal_cate_id) {
-          this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
-            this.requestHomeList(this.state.meta)
-          })
-        } else {
-          this.setState({ meta: { city_id: res.data.city_id } }, () => {
-            this.requestHomeList(this.state.meta)
-          })
-        }
-      }
-      if (res.data.xpoint || res.data.ypoint) {
-        if (this.state.deal_cate_id) {
-          this.setState({
-            meta: {
-              xpoint: res.data.xpoint,
-              ypoint: res.data.ypoint,
-              deal_cate_id: this.state.deal_cate_id
-            }
-          }, () => {
-            this.requestHomeList(this.state.meta)
-          })
-        } else {
-          this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
-            request({
-              url: 'v3/city_name',
-              data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
+    if(this.$router.params.router){
+      Taro.getStorage({ key: 'router' }).then((res: any) => {
+        if (res.data.city_name && res.data.city_id) {
+          this.setState({ cityName: res.data.city_name })
+          this.setState({ cityId: res.data.city_id })
+          if (this.state.deal_cate_id) {
+            this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
+              this.requestHomeList(this.state.meta)
             })
-              .then((res: any) => {
-                this.setState({ cityName: res.data.city })
-              })
-            this.requestHomeList(this.state.meta)
-            this.getCityId()
-          })
+          } else {
+            this.setState({ meta: { city_id: res.data.city_id } }, () => {
+              this.requestHomeList(this.state.meta)
+            })
+          }
         }
-      }
-    })
+        if (res.data.xpoint || res.data.ypoint) {
+          if (this.state.deal_cate_id) {
+            this.setState({
+              meta: {
+                xpoint: res.data.xpoint,
+                ypoint: res.data.ypoint,
+                deal_cate_id: this.state.deal_cate_id
+              }
+            }, () => {
+              this.requestHomeList(this.state.meta)
+            })
+          } else {
+            this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
+              request({
+                url: 'v3/city_name',
+                data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
+              })
+                .then((res: any) => {
+                  this.setState({ cityName: res.data.city })
+                })
+              this.requestHomeList(this.state.meta)
+              this.getCityId()
+            })
+          }
+        }
+      })
+    }else{
+      this.getLocatione()
+    }
 
   }
   // get location
   getLocatione = () => {
-    console.log(123)
     getLocation().then((res: any) => {
-      console.log('12',res)
-
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
       this.setState({ locations: res }, () => {
         this.getCity();
@@ -359,6 +371,36 @@ export default class Index extends Component<any> {
       })
   }
 
+// 获取中奖门店信息
+getPayStore = async() => {
+  let location = await getLocation();
+  let id = this.$router.params.id;
+  if(id){
+    request({
+      url: 'v3/stores/pay_store/'+ id,
+      data: { xpoint: location.longitude, ypoint:location.latitude}
+    })
+      .then((res: any) => {
+        this.setState({
+          hahaData: res,
+        })
+      })
+  }
+
+}
+
+// 控制显示哪个组件
+controlVersion = () => {
+  let dome: any = {
+    [1]: <VersionOne list={this.state.hahaData.data.info}/>,
+    [3]: <VersionTwo list={this.state.hahaData.data.info}/>,
+    [2]: <VersionThree list={this.state.hahaData.data.info}
+      data={this.state.hahaData.data.cashCouponList} />
+  }
+  return dome[this.state.hahaData.data.view_type]
+
+}
+
 
   render() {
     return (
@@ -399,6 +441,11 @@ export default class Index extends Component<any> {
         >你还有未领取的礼品 去
 					<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text>	看看
 				</View>
+
+        {
+          this.controlVersion()
+        }
+
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (
             <View
