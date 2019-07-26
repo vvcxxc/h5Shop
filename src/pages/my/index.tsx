@@ -2,7 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro"
 import { Block, View, Image, Text, Navigator } from "@tarojs/components"
 import { cells } from "./data"
 import "./style.my.styl"
-
+import request from '@/services/request'
 interface Cell {
   text: string;
   icon: string;
@@ -11,6 +11,7 @@ interface Cell {
 interface State {
   cells: Cell[];
   userInfo: any;
+  user_img: string;
 }
 export default class My extends Component {
   config: Config = {
@@ -18,11 +19,20 @@ export default class My extends Component {
   }
   state: State = {
     cells,
-    userInfo: {}
+    userInfo: {},
+    user_img: ''
   }
   componentDidMount() {
     this.handleGetUserinfo()
     // Taro.showShareMenu()
+    request({
+      url: 'v3/user/home_index'
+    }).then(res => {
+      console.log(res)
+      this.setState({
+        user_img: res.data.avatar
+      })
+    })
   }
 
   /**
@@ -43,13 +53,13 @@ export default class My extends Component {
     }
   }
   render() {
-    const { cells, userInfo } = this.state
+    const { cells, userInfo, user_img } = this.state
     return (
       <Block>
         <View className="my">
           <View className="area-userinfo">
             <View className="avatar">
-              <Image className="icon" src={userInfo.avatarUrl} />
+              <Image className="icon" src={user_img} />
             </View>
             <View className="description">
               <Text className="text">{userInfo.nickName}</Text>

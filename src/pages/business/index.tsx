@@ -248,7 +248,6 @@ export default class PaySuccess extends Component<Props> {
             url
           }
         }).then(res => {
-          console.log(res.data);
           let { data } = res;
           wx.config({
             debug: false,
@@ -295,7 +294,7 @@ export default class PaySuccess extends Component<Props> {
       url: "v3/stores/collection",
       method: 'PUT',
       data: {
-        store_id: 123
+        store_id: _id
       }
     })
       .then((res: any) => {
