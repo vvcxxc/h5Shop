@@ -24,7 +24,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
   /**
    * 点击处理
    */
-  handleClick(e) {
+  handleClick = (e) => {
     const { action } = e.currentTarget.dataset
     const { onAction } = this.props
     onAction(action, null)

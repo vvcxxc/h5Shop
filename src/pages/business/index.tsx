@@ -131,17 +131,29 @@ export default class PaySuccess extends Component<Props> {
       }, () => {
         request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
           .then((res: any) => {
-            console.log(res);
-            that.setState({
-              business_list: res.data.store.Info,
-              recommend: res.data.recommend,
-              activity_group: res.data.store.activity_group,
-              activity_appre: res.data.store.activity_appreciation,
-              cashCouponList: res.data.store.cashCouponList,
-              exchangeCouponList: res.data.store.exchangeCouponList,
-              keepCollect_bull: res.data.store.Info.collect ? true : false
-            })
-            Taro.hideLoading()
+            if(res.code == 200){
+              that.setState({
+                business_list: res.data.store.Info,
+                recommend: res.data.recommend,
+                activity_group: res.data.store.activity_group,
+                activity_appre: res.data.store.activity_appreciation,
+                cashCouponList: res.data.store.cashCouponList,
+                exchangeCouponList: res.data.store.exchangeCouponList,
+                keepCollect_bull: res.data.store.Info.collect ? true : false
+              })
+              Taro.hideLoading()
+            }else{
+              Taro.showToast({
+                title: res.data,
+                icon: 'none',
+                duration: 2000
+              })
+              setTimeout(()=>{
+                Taro.navigateBack()
+              },2000)
+
+            }
+
           }).catch(err => {
             console.log(err);
           })
@@ -166,7 +178,6 @@ export default class PaySuccess extends Component<Props> {
   }
   // 去增值活动
   gotoAppreciation(_id) {
-    console.log(_id)
     Taro.navigateTo({
       url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1'
     })

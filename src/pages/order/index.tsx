@@ -153,52 +153,6 @@ export default class Order extends Component {
           this.state.current == 3 ? this.getData2() : "")))
   }
 
-  //页面加载统一获取一次
-  // getData() {
-
-  //   request({
-  //     url: "v3/user/coupons",
-  //     data: {
-  //       coupons_status: 1,
-  //       page: 1
-  //     }
-  //   })
-  //     .then((res: any) => {
-  //       this.setState({ coupon: res.data, coupon1: res.data, page1: 1 })
-  //     })
-  //   request({
-  //     url: "v3/user/coupons",
-  //     data: {
-  //       coupons_status: 2,
-  //       page: 1
-  //     }
-  //   })
-  //     .then((res: any) => {
-  //       this.setState({ coupon2: res.data, page2: 1 })
-  //     })
-  //   request({
-  //     url: "v3/user/coupons",
-  //     data: {
-  //       coupons_status: 3,
-  //       page: 1
-  //     }
-  //   })
-  //     .then((res: any) => {
-  //       this.setState({ coupon3: res.data, page3: 1 })
-  //     })
-  //   request({
-  //     url: "v3/user/coupons",
-  //     data: {
-  //       coupons_status: 4,
-  //       page: 1
-  //     }
-  //   })
-  //     .then((res: any) => {
-  //       this.setState({ coupon4: res.data, page4: 1 })
-  //     })
-  //   Taro.hideLoading();
-  // }
-
   getData1() {
     if (this.state.lengthbull1) {
       Taro.showLoading({
@@ -358,7 +312,7 @@ export default class Order extends Component {
   render() {
     const tabList = [{ title: '未使用' }, { title: '已使用' }, { title: '已过期' }, { title: '已退款' }]
     return (
-      <View className="order flex column"  >
+      <View className="orders flex column"  >
 
         {this.state._codeshow ?
           <View className="code_show" onClick={() => { this.setState({ _codeshow: false }) }}>

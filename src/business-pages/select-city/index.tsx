@@ -329,7 +329,7 @@ export default class SelectCity extends Component {
           onActionClick={this.onActionClick.bind(this)}
         />
         <View className={'search-wrap ' + 'search-result' + ' ' + (!this.state.showSearchList ? 'search-hidden' : 'search-show')}
-          style="width:100vm; overflow-y:none; overflow-x:none;padding:0px 10px;"
+          style="width:100vm; overflow-y:none; overflow-x:none;"
         >
           {
             this.state.searchList.map((item: any, index: any) => {

@@ -82,7 +82,7 @@ export default class TicketBuy extends Component {
     })
     getLocation().then((res: any) => {
       let xPoint = res.longitude;
-      let yPoint = res.longitude;
+      let yPoint = res.latitude;
       request({
         url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint, ypoint: yPoint }
       })

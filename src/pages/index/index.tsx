@@ -125,6 +125,8 @@ export default class Index extends Component<any> {
           }
         }
       })
+    }else{
+      this.getLocatione()
     }
 
   }
@@ -372,8 +374,6 @@ export default class Index extends Component<any> {
 // 获取中奖门店信息
 getPayStore = async() => {
   let location = await getLocation();
-  console.log(123)
-  console.log(this.$router.params)
   let id = this.$router.params.id;
   if(id){
     request({
