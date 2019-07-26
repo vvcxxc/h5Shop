@@ -118,7 +118,7 @@ export default class Orderdetail extends Component {
             <View className='z_buyShouldKnow' >
               <View className='a_buyBox' >
                 <View className='a_one' >购买须知
-                  {this.state.defaultData.status == 1 ? <Text className='a_outTime'  >已过期</Text> : null}
+                  {this.state.defaultData.status == 2 ? <Text className='a_outTime'  >已使用</Text> : null}
                   {this.state.defaultData.status == 3 ? <Text className='a_outTime'  >已退款</Text> : null}
                 </View>
                 <View className='a_two' >有效期</View>
