@@ -7,6 +7,7 @@ import MobileImg from '../../assets/dianhua.png'
 import AddressImg from '../../assets/address.png'
 import "taro-ui/dist/style/components/toast.scss";
 import { getLocation } from "@/utils/getInfo"
+import { getBrowserType } from "@/utils/common";
 
 
 
@@ -131,7 +132,7 @@ export default class PaySuccess extends Component<Props> {
       }, () => {
         request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
           .then((res: any) => {
-            if(res.code == 200){
+            if (res.code == 200) {
               that.setState({
                 business_list: res.data.store.Info,
                 recommend: res.data.recommend,
@@ -142,15 +143,15 @@ export default class PaySuccess extends Component<Props> {
                 keepCollect_bull: res.data.store.Info.collect ? true : false
               })
               Taro.hideLoading()
-            }else{
+            } else {
               Taro.showToast({
                 title: res.data,
                 icon: 'none',
                 duration: 2000
               })
-              setTimeout(()=>{
+              setTimeout(() => {
                 Taro.navigateBack()
-              },2000)
+              }, 2000)
 
             }
 
@@ -219,17 +220,47 @@ export default class PaySuccess extends Component<Props> {
         console.log(res)
       })
   }
+  //地图
+  routePlanning = () => {
+    // //现在所在
+    // console.log(this.state.xPoint,this.state.yPoint);
+    // //店铺所在
+    // console.log(this.state.business_list.xpoint,this.state.business_list.ypoint);
+    let browserType = getBrowserType();
+    console.log(browserType);
+    if (browserType == 'wechat') {
+      let latitude = this.state.xPoint;
+      let longitude = this.state.yPoint;
+      Taro.openLocation({
+        latitude,
+        longitude,
+        scale: 18
+      })
+    } else if (browserType == 'alipay') {
+      Taro.navigateTo({
+        url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.business_list.xpoint + ',' + this.state.business_list.ypoint + '&destName=' + this.state.business_list.name + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
+      })
+    } else {
+      Taro.showToast({
+        title: "信息出错",
+        icon: "none"
+      });
+    }
+  }
   //收藏
-  keepCollect(e: any) {
+  keepCollect = (e) => {
     let _id = this.state.business_list.id;
-    // console.log(_id);
+    console.log(_id);
+    console.log(this.state.business_list.id, 'eee')
     Taro.showLoading({
       title: 'loading',
     })
     request({
       url: "v3/stores/collection",
-      method: "PUT",
-      data: { store_id: _id }
+      method: 'PUT',
+      data: {
+        store_id: 123
+      }
     })
       .then((res: any) => {
         Taro.hideLoading();
@@ -237,7 +268,6 @@ export default class PaySuccess extends Component<Props> {
           this.setState({
             keepCollect_bull: !this.state.keepCollect_bull
           })
-
         }
         Taro.showToast({
           title: res.data,
@@ -279,9 +309,9 @@ export default class PaySuccess extends Component<Props> {
             </View>
           </ScrollView>
           <View className="address flex center">
-            <Image className="address-img" style={{ marginRight: "10px" }} src={AddressImg} />
+            <Image className="address-img" style={{ marginRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)}/>
             <View className="text item">{this.state.business_list.address}</View>
-            <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)}/>
+            <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
         </View>
 
