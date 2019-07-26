@@ -255,7 +255,7 @@ export default class Appreciation extends Component {
     } = this.state.basicinfo
     return (
       <Block>
-        <View className="appreciation" style={`background-image: url(http://tmwl-resources.tdianyi.com/miniProgram/MiMaQuan/img_appreciation.png)`}>
+        <View className="appreciations" style={`background-image: url(http://tmwl-resources.tdianyi.com/miniProgram/MiMaQuan/img_appreciation.png)`}>
           <View className="container">
             <View className="area-title">邀请好友增值</View>
             <View className="area-panel">
