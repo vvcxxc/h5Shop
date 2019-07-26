@@ -408,8 +408,10 @@ controlVersion = () => {
         <View className="headr">
           <View className="search">
             <View className="flex center container">
-              <View className="city" style="padding-right:15px;" onClick={this.showSelectCity}>
+              <View className="city" style="padding-right:15px; width: 20%" onClick={this.showSelectCity}>
+                <View className='ellipsis-one flex' style='width:70%; display: inline-block'>
                 {this.state.cityName}
+                </View>
                 <AtIcon
                   onClick={this.showSelectCity}
                   className="chevron-down"

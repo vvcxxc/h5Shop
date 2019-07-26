@@ -1,10 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import { AtIcon, AtToast } from "taro-ui";
 import { getBrowserType } from "@/utils/common";
 import Cookie from 'js-cookie'
 import request from '../../services/request'
 import "./index.styl";
+import addimg from '../../assets/add.png';
+import addimg2 from '../../assets/add2.png';
+import cutimg from '../../assets/cut.png';
+import cutimg2 from '../../assets/cut2.png';
 
 export default class ConfirmOrder extends Component {
   config = {
@@ -177,9 +181,15 @@ export default class ConfirmOrder extends Component {
           <View className="flex center">
             <View className="item label">数量</View>
             <View className="flex center">
-              <AtIcon value="subtract-circle" color={this.state.amount > 1 ? "#FF6654" : "#999"} onClick={this.cutnum.bind(this)} />
+              {/* <AtIcon value="subtract-circle" color={this.state.amount > 1 ? "#FF6654" : "#999"} onClick={this.cutnum.bind(this)} /> */}
+              <View className="subimg" style={{ width: "22px", height: "22px" }} onClick={this.cutnum.bind(this)}>
+                <Image className="image" style={{ width: "100%", height: "100%" }} src={this.state.amount > 1 ? cutimg : cutimg2} />
+              </View>
               <View className="amount" >{this.state.amount}</View>
-              <AtIcon value="add-circle" color={this.state.amount < 10 ? "#FF6654" : "#999"} onClick={this.addnum.bind(this)} />
+              {/* <AtIcon value="add-circle" color={this.state.amount < 10 ? "#FF6654" : "#999"} onClick={this.addnum.bind(this)} /> */}
+              <View className="addimg" style={{ width: "22px", height: "22px" }} onClick={this.addnum.bind(this)}>
+                <Image className="image" style={{ width: "100%", height: "100%" }} src={this.state.amount < 10 ? addimg : addimg2} />
+              </View>
             </View>
           </View>
         </View>
