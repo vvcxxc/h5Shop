@@ -230,8 +230,8 @@ export default class PaySuccess extends Component<Props> {
     // console.log(this.state.business_list.xpoint,this.state.business_list.ypoint);
     let browserType = getBrowserType();
     if (browserType == 'wechat') {
-      let latitude = this.state.business_list.xpoint;
-      let longitude = this.state.business_list.ypoint;
+      let latitude = this.state.business_list.xpoint *1;
+      let longitude = this.state.business_list.ypoint *1;
       let url = window.location;
       Taro.request({
         url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
@@ -265,7 +265,12 @@ export default class PaySuccess extends Component<Props> {
               latitude,
               longitude,
               scale: 18,
-              name: this.state.business_list.name
+              name: this.state.business_list.name,
+              address: '123123',
+              infoUrl: '123123',
+              success: ()=>{
+                console.log(12)
+              }
             })
           })
         })
