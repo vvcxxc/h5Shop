@@ -239,27 +239,17 @@ export default class PaySuccess extends Component<Props> {
         data: {
           url
         }
-      }).then(res => {
-        let { data } = res;
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "openLocation",
-          ]
-        });
-      })
-      wx.ready(()=> {
-        wx.openLocation({
-          latitude,
-          longitude,
-          scale: 18,
-          name: this.state.business_list.name
+      }).then(() => {
+        wx.ready(()=> {
+          wx.openLocation({
+            latitude,
+            longitude,
+            scale: 18,
+            name: this.state.business_list.name
+          })
         })
       })
+
 
     } else if (browserType == 'alipay') {
       Taro.navigateTo({
