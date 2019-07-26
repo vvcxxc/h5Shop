@@ -8,7 +8,7 @@ import AddressImg from '../../assets/address.png'
 import "taro-ui/dist/style/components/toast.scss";
 import { getLocation } from "@/utils/getInfo"
 import { getBrowserType } from "@/utils/common";
-
+import wx from 'weixin-js-sdk';
 
 
 interface Props {
@@ -34,7 +34,9 @@ export default class PaySuccess extends Component<Props> {
       store_img_two: "",
       collect: "0",
       distance: "",
-      tel: ""
+      tel: "",
+      ypoint: 0,
+      xpoint: 0,
     },
     recommend: [//本店其它的推荐
       {
@@ -227,15 +229,50 @@ export default class PaySuccess extends Component<Props> {
     // //店铺所在
     // console.log(this.state.business_list.xpoint,this.state.business_list.ypoint);
     let browserType = getBrowserType();
-    console.log(browserType);
     if (browserType == 'wechat') {
-      let latitude = this.state.xPoint;
-      let longitude = this.state.yPoint;
-      Taro.openLocation({
-        latitude,
-        longitude,
-        scale: 18
+      let latitude = this.state.business_list.xpoint;
+      let longitude = this.state.business_list.ypoint;
+      let url = window.location;
+      Taro.request({
+        url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+        method: 'GET',
+        data: {
+          url
+        }
+      }).then(() => {
+        let url = window.location;
+        Taro.request({
+          url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+          method: 'GET',
+          data: {
+            url
+          }
+        }).then(res => {
+          let { data } = res;
+          wx.config({
+            debug: false,
+            appId: data.appId,
+            timestamp: data.timestamp,
+            nonceStr: data.nonceStr,
+            signature: data.signature,
+            jsApiList: [
+              "getLocation",
+              "openLocation"
+            ]
+          })
+          wx.ready(()=> {
+            wx.openLocation({
+              latitude,
+              longitude,
+              scale: 18,
+              name: this.state.business_list.name
+            })
+          })
+        })
+
       })
+
+
     } else if (browserType == 'alipay') {
       Taro.navigateTo({
         url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.business_list.xpoint + ',' + this.state.business_list.ypoint + '&destName=' + this.state.business_list.name + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
@@ -250,8 +287,6 @@ export default class PaySuccess extends Component<Props> {
   //收藏
   keepCollect = (e) => {
     let _id = this.state.business_list.id;
-    console.log(_id);
-    console.log(this.state.business_list.id, 'eee')
     Taro.showLoading({
       title: 'loading',
     })
@@ -259,7 +294,7 @@ export default class PaySuccess extends Component<Props> {
       url: "v3/stores/collection",
       method: 'PUT',
       data: {
-        store_id: 123
+        store_id: _id
       }
     })
       .then((res: any) => {

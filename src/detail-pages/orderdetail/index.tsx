@@ -80,8 +80,8 @@ export default class Orderdetail extends Component {
       method: 'POST',
       data: { coupons_log_id: this.state.defaultData.coupons_log_id },
     }).then((res: any) => {
-      if (res.message == '退款成功') {
-        Taro.showToast({ title: '退款成功' })
+      if (res.message == '退款成功！') {
+        Taro.showToast({ title: '退款成功！' })
         Taro.navigateTo({
           url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
         })
