@@ -14,6 +14,7 @@ export const Login = () => {
       console.log('已登录')
       return
     }
+    //Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY0MTI3OTU4LCJleHAiOjE1NjQ0Mjc5NTgsIm5iZiI6MTU2NDEyNzk1OCwianRpIjoiNVNrN2pONVlCNzNxMTZlNCIsInN1YiI6MzAxOCwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.on55ndqIkFM_s_ElxzMy3dHwOdcbQBh7KwjqvjRwvTA')
     request({
 			url: 'api/wap/testLogin'
 		}).then((res: any) => {
