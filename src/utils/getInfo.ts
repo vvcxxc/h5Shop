@@ -135,7 +135,7 @@ export const getLocation = () => {
       console.log(res.data);
       let { data } = res;
       wx.config({
-        debug: false,
+        debug: true,
         appId: data.appId,
         timestamp: data.timestamp,
         nonceStr: data.nonceStr,

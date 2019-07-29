@@ -223,56 +223,56 @@ export default class Group extends Component {
 
   share() {
     let url = window.location.href;
-    Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        let { data } = res;
-        wx.config({
-          debug: true,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "onMenuShareAppMessage",
-          ]
-        })
-        wx.ready(() => {
-          wx.onMenuShareAppMessage({
-            title: '123', // 分享标题
-            desc: '', // 分享描述
-            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: '', // 分享图标
-            type: '', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-              // 用户点击了分享后执行的回调函数
-              alert('分享成功！')
-            }
-          })
-
-        })
-      })
-    // wx.ready(() => {
-    //   alert('点击了')
-    //   wx.onMenuShareAppMessage({
-    //     title: '分享啊', // 分享标题
-    //     desc: '123', // 分享描述
-    //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-    //     imgUrl: '', // 分享图标
-    //     type: '', // 分享类型,music、video或link，不填默认为link
-    //     dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-    //     success: function () {
-    //     // 用户点击了分享后执行的回调函数
-    //     alert('分享成功')
-    //     }
-    //   })
+    // Taro.request({
+    //   url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+    //   method: 'GET',
+    //   data: {
+    //     url
+    //   }
     // })
+    //   .then(res => {
+    //     let { data } = res;
+    //     wx.config({
+    //       debug: true,
+    //       appId: data.appId,
+    //       timestamp: data.timestamp,
+    //       nonceStr: data.nonceStr,
+    //       signature: data.signature,
+    //       jsApiList: [
+    //         "onMenuShareAppMessage",
+    //       ]
+    //     })
+    //     wx.ready(() => {
+    //       wx.onMenuShareAppMessage({
+    //         title: '123', // 分享标题
+    //         desc: '', // 分享描述
+    //         link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    //         imgUrl: '', // 分享图标
+    //         type: '', // 分享类型,music、video或link，不填默认为link
+    //         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    //         success: function () {
+    //           // 用户点击了分享后执行的回调函数
+    //           alert('分享成功！')
+    //         }
+    //       })
+
+    //     })
+    //   })
+    wx.ready(() => {
+      alert('点击了')
+      wx.onMenuShareAppMessage({
+        title: '分享啊', // 分享标题
+        desc: '123', // 分享描述
+        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: '', // 分享图标
+        type: '', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+        // 用户点击了分享后执行的回调函数
+        alert('分享成功')
+        }
+      })
+    })
 
   }
   render() {
