@@ -65,18 +65,18 @@ export default class Index extends Component<any> {
     this.showLoading();
     this.requestTab(); //经营列表
     this.localStorageData();
-    this.requestLocation();
+    // this.requestLocation();
     this.showGift();
     this.controlVersion()
   }
 
-  requestLocation = () => {
-    request({ url: 'v3/district', data: { model_type: '2' } })
-      .then((res: any) => {
-        Taro.setStorage({ key: 'allCity', data: res.data.city_list })
+  // requestLocation = () => {
+  //   request({ url: 'v3/district', data: { model_type: '2' } })
+  //     .then((res: any) => {
+  //       Taro.setStorage({ key: 'allCity', data: res.data.city_list })
 
-      })
-  }
+  //     })
+  // }
 
 
   localStorageData = () => {

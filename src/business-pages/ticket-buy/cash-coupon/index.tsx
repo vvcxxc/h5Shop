@@ -37,7 +37,7 @@ export default class CashCoupon extends Component<Props> {
           // style={{ backgroundImage: `url(${secondaryActiveBg})` }}
           >
             <View className="money-wrap">
-              ￥<Text className="money">{this.props.return_money}</Text>
+             <Text className="money">￥{this.props.return_money}</Text>
               <View className="info">满{this.props.total_fee}可用</View>
             </View>
           </View>
