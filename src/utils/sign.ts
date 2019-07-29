@@ -22,11 +22,8 @@ export const Login = () => {
     //   Cookie.set('test_token_auth', token)
     // });
   }else{
-    if(Cookie.get('test_token_auth')){
-      console.log('已登录')
-      return
-    }
     if (type == 'wechat'){
+      alert('登陆啦！')
       let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
       url = encodeURIComponent(url);
       let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&connect_redirect=1&state=STATE&state=STATE';

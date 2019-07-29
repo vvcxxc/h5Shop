@@ -10,7 +10,7 @@ export default class GiftView extends Component<{ data: any; onAction: any }> {
   /**
    * 点击事件
    */
-  handleClick(e) {
+  handleClick = (e) => {
     const { action } = e.currentTarget.dataset
     const { onAction } = this.props
     onAction(action)
