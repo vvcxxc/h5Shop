@@ -62,7 +62,7 @@ export default class CashCoupon extends Component<Props> {
           <View
             className="secondary flex center"
           >
-            <View className="money-wrap" style={{ paddingTop: '20px' }}>
+            <View className="money-wrap">
               ￥<Text className="money">{this.props.return_money}</Text>
               <View className="info">满{this.props._total_fee}可用</View>
             </View>

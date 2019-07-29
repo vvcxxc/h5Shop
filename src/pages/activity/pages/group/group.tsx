@@ -85,7 +85,7 @@ export default class Group extends Component {
    */
   // @ts-ignore
   handleAction(action: string, data: any, type = 0): void {
-    switch(action) {
+    switch (action) {
       case ACTION_JUMP: {
         const {
           youhui_id: id,
@@ -221,7 +221,7 @@ export default class Group extends Component {
     })
   }
 
-  share(){
+  share() {
     let url = window.location.href;
     // Taro.request({
     //   url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
@@ -239,24 +239,40 @@ export default class Group extends Component {
     //       nonceStr: data.nonceStr,
     //       signature: data.signature,
     //       jsApiList: [
-    //         "updateAppMessageShareData",
+    //         "onMenuShareAppMessage",
     //       ]
     //     })
     //     wx.ready(() => {
-
+    //       wx.onMenuShareAppMessage({
+    //         title: '123', // 分享标题
+    //         desc: '', // 分享描述
+    //         link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    //         imgUrl: '', // 分享图标
+    //         type: '', // 分享类型,music、video或link，不填默认为link
+    //         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    //         success: function () {
+    //           // 用户点击了分享后执行的回调函数
+    //         }
+    //       })
 
     //     })
     //   })
-    wx.updateAppMessageShareData({
-      title: '快来帮我拼团！！', // 分享标题
-      desc: '拼团活动', // 分享描述
-      link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: '', // 分享图标
-      success: function () {
-        // 设置成功
+    wx.ready(() => {
+      alert('点击了')
+      wx.onMenuShareAppMessage({
+        title: '分享啊', // 分享标题
+        desc: '123', // 分享描述
+        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: '', // 分享图标
+        type: '', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+        // 用户点击了分享后执行的回调函数
         alert('分享成功')
-      }
-  })
+        }
+      })
+    })
+
   }
   render() {
     const {
@@ -342,11 +358,11 @@ export default class Group extends Component {
                 {
                   isShowUse && (
                     <Button
-                    className="item used"
-                    data-action="use"
-                    onClick={this.handleClick.bind(this)}
-                  >
-                    去使用
+                      className="item used"
+                      data-action="use"
+                      onClick={this.handleClick.bind(this)}
+                    >
+                      去使用
                   </Button>
                   )
                 }
@@ -354,11 +370,11 @@ export default class Group extends Component {
                   // 未完成就表示可以参团
                   !isFinish && (
                     <Button
-                    className="item invite"
-                    openType="share"
-                    onClick={this.share}
-                  >
-                    邀请好友参团
+                      className="item invite"
+                      openType="share"
+                      onClick={this.share}
+                    >
+                      邀请好友参团
                   </Button>
                   )
                 }

@@ -132,6 +132,7 @@ export const getLocation = () => {
         url
       }
     }).then(res => {
+      console.log(res.data);
       let { data } = res;
       wx.config({
         debug: false,
@@ -142,7 +143,7 @@ export const getLocation = () => {
         jsApiList: [
           "getLocation",
           "openLocation",
-          "updateAppMessageShareData"
+          "onMenuShareAppMessage"
         ]
       });
     })
