@@ -233,7 +233,7 @@ export default class Group extends Component {
       .then(res => {
         let { data } = res;
         wx.config({
-          debug: false,
+          debug: true,
           appId: data.appId,
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
@@ -252,6 +252,7 @@ export default class Group extends Component {
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
               // 用户点击了分享后执行的回调函数
+              alert('分享成功！')
             }
           })
 
