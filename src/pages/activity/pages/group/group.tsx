@@ -75,7 +75,7 @@ export default class Group extends Component {
   /**
    * 点击动作(如果是跳转动作的时候, 带上参数type, id, publictypeid)
    */
-  handleClick(e): void {
+  handleClick = (e): void => {
     const { action, type } = e.currentTarget.dataset
     this.handleAction(action, null, type)
   }
@@ -84,7 +84,7 @@ export default class Group extends Component {
    * 用户动作集中处理(跳转, 查看, 使用, 关闭动作)
    */
   // @ts-ignore
-  handleAction(action: string, data: any, type = 0): void {
+  handleAction = (action: string, data: any, type = 0): void => {
     switch (action) {
       case ACTION_JUMP: {
         const {
@@ -247,7 +247,7 @@ export default class Group extends Component {
             title: '分享', // 分享标题
             desc: '123', // 分享描述
             link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: '', // 分享图标
+            imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
             success: function () {
               // 用户点击了分享后执行的回调函数
               alert('分享成功！')

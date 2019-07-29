@@ -110,7 +110,7 @@ export default class Appreciation extends Component {
   /**
    * 点击动作
    */
-  handleClick(e) {
+  handleClick =(e)=> {
     const { action } = e.currentTarget.dataset
     switch(action) {
       case ACTION_JUMP: {
@@ -137,7 +137,7 @@ export default class Appreciation extends Component {
   /**
    * 用户动作集中处理
    */
-  handleAction(action: string, data: any) {
+  handleAction = (action: string, data: any) => {
     switch(action) {
       case ACTION_APPRECIATION:
         this.fetchAppreciation()
