@@ -6,8 +6,7 @@ import { activityData } from "../../data"
 import { TYPE_APPRECIATION, TYPE_GROUP, ACTION_JUMP } from "@/utils/constants"
 import NoData from "@/components/nodata/no.data"
 // import { getLocation } from "@/utils/getInfo"
-import {getLocation} from '@/utils/getLocation'
-import qs from 'querystring';
+import {getLocation} from '@/utils/getInfo'
 import "./style.styl"
 
 export default class List extends Component {
