@@ -223,39 +223,40 @@ export default class Group extends Component {
 
   share(){
     let url = window.location.href;
-    Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        let { data } = res;
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "updateAppMessageShareData",
-          ]
-        })
-        wx.ready(() => {
-          wx.updateAppMessageShareData({
-            title: '快来帮我拼团！！', // 分享标题
-            desc: '拼团活动', // 分享描述
-            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: '', // 分享图标
-            success: function () {
-              // 设置成功
-              alert('分享成功')
-            }
-        })
+    // Taro.request({
+    //   url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+    //   method: 'GET',
+    //   data: {
+    //     url
+    //   }
+    // })
+    //   .then(res => {
+    //     let { data } = res;
+    //     wx.config({
+    //       debug: false,
+    //       appId: data.appId,
+    //       timestamp: data.timestamp,
+    //       nonceStr: data.nonceStr,
+    //       signature: data.signature,
+    //       jsApiList: [
+    //         "updateAppMessageShareData",
+    //       ]
+    //     })
+    //     wx.ready(() => {
 
-        })
-      })
+
+    //     })
+    //   })
+    wx.updateAppMessageShareData({
+      title: '快来帮我拼团！！', // 分享标题
+      desc: '拼团活动', // 分享描述
+      link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: '', // 分享图标
+      success: function () {
+        // 设置成功
+        alert('分享成功')
+      }
+  })
   }
   render() {
     const {

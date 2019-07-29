@@ -132,7 +132,6 @@ export const getLocation = () => {
         url
       }
     }).then(res => {
-      console.log(res.data);
       let { data } = res;
       wx.config({
         debug: false,
@@ -142,7 +141,8 @@ export const getLocation = () => {
         signature: data.signature,
         jsApiList: [
           "getLocation",
-          "openLocation"
+          "openLocation",
+          "updateAppMessageShareData"
         ]
       });
     })
