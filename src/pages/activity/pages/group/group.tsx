@@ -32,6 +32,7 @@ interface State {
   isShowUse: boolean;
   isQrcode: boolean;
   base64: string;
+  isShare: boolean;
 }
 export default class Group extends Component {
   config = {
@@ -46,6 +47,7 @@ export default class Group extends Component {
     isShowUse: false,
     isQrcode: false,
     base64: "",
+    isShare: false
   }
   async componentDidMount() {
     // Taro.showShareMenu()
@@ -221,8 +223,9 @@ export default class Group extends Component {
     })
   }
 
-  share() {
+  share = () => {
     let url = window.location.href;
+    this.setState({isShare: true})
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -244,8 +247,8 @@ export default class Group extends Component {
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
-            title: '分享', // 分享标题
-            desc: '123', // 分享描述
+            title: '分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分析法风萧萧兮寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻', // 分享标题
+            desc: '分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分析法风萧萧兮寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻', // 分享描述
             link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
             success: function () {
@@ -256,21 +259,11 @@ export default class Group extends Component {
 
         })
       })
-    // wx.ready(() => {
-
-    //   wx.onMenuShareAppMessage({
-    //     title: '分享啊', // 分享标题
-    //     desc: '123', // 分享描述
-    //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-    //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-    //     success: function () {
-    //       // 用户点击了分享后执行的回调函数
-    //       alert('分享成功')
-    //     }
-    //   })
-    // })
-
   }
+  closeShare = () => {
+    this.setState({isShare: false});
+  }
+
   render() {
     const {
       basicinfo,
@@ -280,7 +273,8 @@ export default class Group extends Component {
       isShowUse,
       isJoin,
       isQrcode,
-      base64
+      base64,
+      isShare
     } = this.state
     const surplus = basicinfo.number
       ? basicinfo.number - basicinfo.participation_number
@@ -422,6 +416,23 @@ export default class Group extends Component {
           </View>
           {isQrcode && <Qrcode data={base64} onAction={this.handleClick.bind(this)} />}
         </View>
+        {/* 分享 */}
+        {
+          isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  快点分享给好友
+                </View>
+                <View className='share_text'>
+                  一起拼团领礼品吧
+                </View>
+                <Image src={require('../../../../assets/share_arro.png')} className='share_img'/>
+              </View>
+            </View>
+          ) : null
+        }
+
       </Block>
     )
   }

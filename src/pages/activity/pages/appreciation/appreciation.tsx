@@ -19,6 +19,7 @@ import {
   NOT_GET
 } from "../../data"
 import { ACTION_APPRECIATION, ACTION_JUMP, ACTION_VIEW } from "@/utils/constants"
+import wx from 'weixin-js-sdk';
 
 type State = {
   isRule: boolean;
@@ -33,6 +34,7 @@ type State = {
   isAppreciation: boolean;
   isInvite: boolean;
   isGet: boolean;
+  isShare: boolean;
 };
 
 export default class Appreciation extends Component {
@@ -51,7 +53,8 @@ export default class Appreciation extends Component {
     giftBasicInfo: {},
     isInvite: false,
     isAppreciation: false,
-    isGet: false
+    isGet: false,
+    isShare: false
   }
   async componentDidMount() {
     // Taro.showShareMenu()
@@ -239,6 +242,46 @@ export default class Appreciation extends Component {
       basicinfo: data
     })
   }
+  share = () => {
+    let url = window.location.href;
+    this.setState({isShare: true})
+    Taro.request({
+      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: [
+            "updateAppMessageShareData",
+          ]
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: '分享', // 分享标题
+            desc: '123', // 分享描述
+            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
+            success: function () {
+              // 用户点击了分享后执行的回调函数
+              alert('分享成功！')
+            }
+          })
+
+        })
+      })
+  }
+  closeShare = () => {
+    this.setState({isShare: false});
+  }
   render() {
     const {
       giftBasicInfo,
@@ -247,7 +290,8 @@ export default class Appreciation extends Component {
       appreciationProcess,
       isAppreciation,
       isInvite,
-      isGet
+      isGet,
+      isShare
     } = this.state
     const {
       userdata: userinfo,
@@ -314,7 +358,7 @@ export default class Appreciation extends Component {
                 isInvite && (
                   <Button
                     className="item action-invite"
-                    openType="share"
+                    onClick={this.share}
                   >
                     邀请好友增值
                   </Button>
@@ -393,6 +437,22 @@ export default class Appreciation extends Component {
             </View>
           </View>
         </View>
+        {/* 分享 */}
+        {
+          isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  快点分享给好友
+                </View>
+                <View className='share_text'>
+                  一起增值领礼品吧
+                </View>
+                <Image src={require('../../../../assets/share_arro.png')} className='share_img'/>
+              </View>
+            </View>
+          ) : null
+        }
       </Block>
     )
   }
