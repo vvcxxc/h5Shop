@@ -272,7 +272,6 @@ export default class Appreciation extends Component {
             imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
             success: function () {
               // 用户点击了分享后执行的回调函数
-              alert('分享成功！')
             }
           })
 
