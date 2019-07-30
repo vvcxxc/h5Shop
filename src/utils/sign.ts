@@ -24,6 +24,9 @@ export const Login = () => {
   }else{
     if (type == 'wechat'){
       let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
+      if(process.env.NODE_ENV == 'test'){
+        url = 'https://test.api.tdianyi.com/wechat/wxoauth?code_id=0&from='+from
+      }
       url = encodeURIComponent(url);
       let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&connect_redirect=1&state=STATE&state=STATE';
       return window.location.href = urls;
