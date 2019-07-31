@@ -217,7 +217,6 @@ export default class PaySuccess extends Component<Props> {
 
   //打电话
   makePhoneCall = () => {
-    console.log(this.state.business_list.tel)
     Taro.makePhoneCall({
       phoneNumber: this.state.business_list.tel
     })

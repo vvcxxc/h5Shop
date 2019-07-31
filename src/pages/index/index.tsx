@@ -393,8 +393,8 @@ getPayStore = async() => {
 controlVersion = () => {
   let dome: any = {
     [1]: <VersionOne list={this.state.hahaData.data.info}/>,
-    [3]: <VersionTwo list={this.state.hahaData.data.info}/>,
-    [2]: <VersionThree list={this.state.hahaData.data.info}
+    [2]: <VersionTwo list={this.state.hahaData.data.info}/>,
+    [3]: <VersionThree list={this.state.hahaData.data.info}
       data={this.state.hahaData.data.cashCouponList} />
   }
   return dome[this.state.hahaData.data.view_type]
