@@ -467,7 +467,7 @@ export default class PaySuccess extends Component<Props> {
                           <View className="present_recommend">{item.gift_desc}</View>
                         </View>
                         <View className="box_right" style={{ overflow: "hidden" }}>
-                          <Image className="image" src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                          <Image className="image" src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
                         </View>
                       </View>
                     </View>
