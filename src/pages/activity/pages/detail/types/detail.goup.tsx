@@ -175,7 +175,9 @@ export default class DetailAppreciation extends Component<DetailProp> {
               <View className="price">
                 <View className="text">
                   {`¥${data.participation_money}`}
-                  {!isFreePostage && isChecked && giftinfo && (<Block>{` + ${giftinfo.postage || ''}`}</Block>)}
+                  {/* {!isFreePostage && isChecked && giftinfo && (<Block>{` + ${giftinfo.postage || ''}`}</Block>)} */}
+                  {/* {!isFreePostage && isChecked && giftinfo && giftinfo.postage} */}
+                  {isChecked && giftinfo ? ` + ${giftinfo.postage || ""}` : '' }
                 </View>
                 <View className="text">原价{data.pay_money || "0.00"}元</View>
               </View>

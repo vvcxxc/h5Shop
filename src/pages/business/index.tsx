@@ -62,7 +62,8 @@ export default class PaySuccess extends Component<Props> {
         gift_pic: "",
         activity_id: '',
         youhui_id: '',
-        image_url_info: ''
+        image_url_info: '',
+        gift_id: ''
       }
     ],
     activity_appre: [
@@ -77,7 +78,9 @@ export default class PaySuccess extends Component<Props> {
         init_money: '',
         gift_pic: "",
         youhui_id: '',
-        gift_desc: ''
+        gift_desc: '',
+        gift_id: '',
+        activity_id: ''
       }
     ],
     cashCouponList: [
@@ -174,15 +177,15 @@ export default class PaySuccess extends Component<Props> {
     console.log('触底事件')
   }
   //去拼团活动
-  gotoGroup(_id) {
+  gotoGroup(_id, gift_id, activity_id) {
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5'
+      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id='+gift_id+'&activity_id='+activity_id
     })
   }
   // 去增值活动
-  gotoAppreciation(_id) {
+  gotoAppreciation(_id,gift_id,activity_id) {
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1'
+      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1&gift_id='+gift_id+'&activity_id='+activity_id
     })
   }
   //现金券详情
@@ -400,7 +403,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.participation_money}</Text>
                           <Text className="count">已拼{item.participation_number}件</Text>
                         </View>
-                        <Button className="btn-go" onClick={this.gotoGroup.bind(this, item.youhui_id)}>立刻开团</Button>
+                        <Button className="btn-go" onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>立刻开团</Button>
                       </View>
                     </View>
                   </View>
@@ -477,7 +480,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.pay_money}</Text>
                           {/* <Text className="count">{item.activity_brief}</Text> */}
                         </View>
-                        <Button className="btn-go" onClick={this.gotoAppreciation.bind(this, item.youhui_id)}>立刻增值</Button>
+                        <Button className="btn-go" onClick={this.gotoAppreciation.bind(this, item.youhui_id,item.gift_id,item.activity_id)}>立刻增值</Button>
                       </View>
                     </View>
                   </View>
