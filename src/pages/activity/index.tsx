@@ -119,7 +119,7 @@ export default class Activity extends Component<ActivityProps> {
               </Navigator>
             </SwiperItem>
           </Swiper>
-          <View className="area-activity-list">
+          {/* <View className="area-activity-list">
             <View className="weui-grids" style="border: 0 none;">
               {
                 activitys.map((item, index) => {
@@ -135,6 +135,28 @@ export default class Activity extends Component<ActivityProps> {
                         <View className="weui-grid__label">{item.text}</View>
                       </View>
                     </Block>
+                  )
+                })
+              }
+            </View>
+          </View> */}
+          <View className="area-activity-list">
+            <View
+              // className="weui-grids"
+              style={{ border: " 0 none", display: "flex", height: "200px",  flexWrap: "wrap" }}>
+              {
+                activitys.map((item, index) => {
+                  return (
+                    <View
+                      key={index}
+                      onClick={this.goTo.bind(this, item.path)}
+                      // className="weui-grid"
+                      // hoverClass="weui-grid_active"
+                      style={{ border: "none", flex: "25%", display: "flex",  flexDirection: "column", justifyContent: "center", alignItems: "center" }}
+                    >
+                      <Image className="weui-grid__icon" src={item.src} />
+                      <View className="weui-grid__label">{item.text}</View>
+                    </View>
                   )
                 })
               }

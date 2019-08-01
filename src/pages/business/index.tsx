@@ -245,7 +245,7 @@ export default class PaySuccess extends Component<Props> {
         .then(res => {
           let { data } = res;
           wx.config({
-            debug: true,
+            debug: false,
             appId: data.appId,
             timestamp: data.timestamp,
             nonceStr: data.nonceStr,
@@ -261,11 +261,7 @@ export default class PaySuccess extends Component<Props> {
               longitude,
               scale: 18,
               name: this.state.business_list.name,
-              address: '123123',
-              infoUrl: '123123',
-              success: () => {
-                console.log(12)
-              }
+              address: this.state.business_list.address,
             })
 
           })
@@ -522,7 +518,7 @@ export default class PaySuccess extends Component<Props> {
               }}>券</Text>
               <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>现金券</Text>
             </View>
-            <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", height: this.state.couponList_bull ? "auto" : "130px" }}>
+            <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", height: this.state.couponList_bull ? "auto" : "5.56rem" }}>
               {
                 this.state.cashCouponList.map((item) => (
                   <View className="ticket-view flex center" key={item.id} style={{ position: 'relative' }} onClick={this.handleClick.bind(this, item.id)}>
@@ -572,7 +568,7 @@ export default class PaySuccess extends Component<Props> {
               }}>惠</Text>
               <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>优惠信息</Text>
             </View>
-            <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "110px" }}>
+            <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "5.4rem" }}>
               {
                 this.state.exchangeCouponList.map((item) => (
                   <View className="discounts-view" key={item.id} onClick={this.handleClick2.bind(this, item.id)}>
@@ -596,7 +592,7 @@ export default class PaySuccess extends Component<Props> {
                 <View className="ft-more flex center"
                   style={{ textAlign: "center", width: "100%", background: "#fff", paddingBottom: "0", marginTop: "0" }}
                   onClick={() => { this.setState({ exchangeCouponList_bull: !this.state.exchangeCouponList_bull }) }} >
-                  < View className="more-box" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}>
+                  < View className="more-box">
 
                     {this.state.exchangeCouponList_bull ? "收回" : "查看更多"}
                     {
