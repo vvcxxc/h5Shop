@@ -37,7 +37,7 @@ export default class MyWelfare extends Component {
   /**
    * 用户动作: 领取|查看|提交|
    */
-  handleAction(action: string, data: any) {
+  handleAction = (action: string, data: any) => {
     switch (action) {
       case ACTION_SUBMIT:
         this.handleSubmitinfo()
@@ -66,7 +66,7 @@ export default class MyWelfare extends Component {
   /**
    * 领取礼物(, 用户输入处理)
    */
-  handleUserWriteinfo(e) {
+  handleUserWriteinfo = (e) => {
     const { value, dataset: { type } } = e.currentTarget
     const merge = Object.assign({}, this.state.userReceiveinfo, { [type]: value })
     this.setState({

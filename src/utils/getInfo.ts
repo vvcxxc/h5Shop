@@ -142,7 +142,9 @@ export const getLocation = () => {
         signature: data.signature,
         jsApiList: [
           "getLocation",
-          "openLocation"
+          "openLocation",
+          "onMenuShareAppMessage",
+          "updateAppMessageShareData"
         ]
       });
     })

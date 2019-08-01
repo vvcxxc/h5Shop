@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    NODE_ENV: '"production"',
+    NODE_ENV: '"test"',
     BASIC_API: '"https://test.api.tdianyi.com/"',
     OPEN_ID: '"test_open_id"',
     TOKEN: '"test_token_auth"',

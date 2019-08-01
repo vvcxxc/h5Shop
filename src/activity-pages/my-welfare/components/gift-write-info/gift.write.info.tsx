@@ -12,7 +12,7 @@ export default class GiftWriteInfo extends Component<{data: any; onWrite: any; o
   /**
    * 点击事件
    */
-  handleClick(e) {
+  handleClick =(e)=> {
     const { action } = e.currentTarget.dataset
     const { onAction } = this.props
     onAction(action)

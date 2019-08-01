@@ -142,14 +142,15 @@ export default class SetMeal extends Component {
     })
   };
   //打电话
-  makePhoneCall = () => {
+  makePhoneCall = (e) => {
     // console.log(this.state.store.tel)
     Taro.makePhoneCall({
       phoneNumber: this.state.store.tel
     })
       .then((res: any) => {
         console.log(res)
-      })
+      });
+      e.stopPropagation();
   }
 
   keepCollect(e) {

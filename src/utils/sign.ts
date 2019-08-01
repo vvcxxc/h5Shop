@@ -14,20 +14,19 @@ export const Login = () => {
       console.log('已登录')
       return
     }
-    //Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY0MTI3OTU4LCJleHAiOjE1NjQ0Mjc5NTgsIm5iZiI6MTU2NDEyNzk1OCwianRpIjoiNVNrN2pONVlCNzNxMTZlNCIsInN1YiI6MzAxOCwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.on55ndqIkFM_s_ElxzMy3dHwOdcbQBh7KwjqvjRwvTA')
-    request({
-			url: 'api/wap/testLogin'
-		}).then((res: any) => {
-      let token = res.data.token.split(' ')[1];
-      Cookie.set('test_token_auth', token)
-    });
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY0NDUwMjc2LCJleHAiOjE1NjQ3NTAyNzYsIm5iZiI6MTU2NDQ1MDI3NiwianRpIjoiT0Y2NExMQ3JEcU1HZUZhOSIsInN1YiI6MzAxOCwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.yJU4Gi9mupCgTTaEu1B6X_76vhCQuCY298kYv-PKofY')
+    // request({
+		// 	url: 'api/wap/testLogin'
+		// }).then((res: any) => {
+    //   let token = res.data.token.split(' ')[1];
+    //   Cookie.set('test_token_auth', token)
+    // });
   }else{
-    if(Cookie.get('test_token_auth')){
-      console.log('已登录')
-      return
-    }
     if (type == 'wechat'){
       let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
+      if(process.env.NODE_ENV == 'test'){
+        url = 'https://test.api.tdianyi.com/wechat/wxoauth?code_id=0&from='+from
+      }
       url = encodeURIComponent(url);
       let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&connect_redirect=1&state=STATE&state=STATE';
       return window.location.href = urls;

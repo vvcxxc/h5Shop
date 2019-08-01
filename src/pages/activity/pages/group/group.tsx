@@ -20,6 +20,8 @@ import { GROUP_AREADY, UNUSED, USED } from "../../data"
 import { ACTION_JUMP, ACTION_USE, ACTION_VIEW, ACTION_CLOSE } from "@/utils/constants"
 import Coupon from "@/components/coupon/coupon"
 import Qrcode from "@/components/qrcode/qrcode"
+import wx from 'weixin-js-sdk';
+
 
 interface State {
   basicinfo: any;
@@ -30,6 +32,7 @@ interface State {
   isShowUse: boolean;
   isQrcode: boolean;
   base64: string;
+  isShare: boolean;
 }
 export default class Group extends Component {
   config = {
@@ -44,6 +47,7 @@ export default class Group extends Component {
     isShowUse: false,
     isQrcode: false,
     base64: "",
+    isShare: false
   }
   async componentDidMount() {
     // Taro.showShareMenu()
@@ -73,7 +77,7 @@ export default class Group extends Component {
   /**
    * 点击动作(如果是跳转动作的时候, 带上参数type, id, publictypeid)
    */
-  handleClick(e): void {
+  handleClick = (e): void => {
     const { action, type } = e.currentTarget.dataset
     this.handleAction(action, null, type)
   }
@@ -82,8 +86,8 @@ export default class Group extends Component {
    * 用户动作集中处理(跳转, 查看, 使用, 关闭动作)
    */
   // @ts-ignore
-  handleAction(action: string, data: any, type = 0): void {
-    switch(action) {
+  handleAction = (action: string, data: any, type = 0): void => {
+    switch (action) {
       case ACTION_JUMP: {
         const {
           youhui_id: id,
@@ -218,6 +222,47 @@ export default class Group extends Component {
       basicinfo: data
     })
   }
+
+  share = () => {
+    let url = window.location.href;
+    this.setState({isShare: true})
+    Taro.request({
+      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: [
+            "updateAppMessageShareData",
+          ]
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: '分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分析法风萧萧兮寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻', // 分享标题
+            desc: '分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分析法风萧萧兮寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻', // 分享描述
+            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
+            success: function () {
+              // 用户点击了分享后执行的回调函数
+            }
+          })
+
+        })
+      })
+  }
+  closeShare = () => {
+    this.setState({isShare: false});
+  }
+
   render() {
     const {
       basicinfo,
@@ -227,7 +272,8 @@ export default class Group extends Component {
       isShowUse,
       isJoin,
       isQrcode,
-      base64
+      base64,
+      isShare
     } = this.state
     const surplus = basicinfo.number
       ? basicinfo.number - basicinfo.participation_number
@@ -302,11 +348,11 @@ export default class Group extends Component {
                 {
                   isShowUse && (
                     <Button
-                    className="item used"
-                    data-action="use"
-                    onClick={this.handleClick.bind(this)}
-                  >
-                    去使用
+                      className="item used"
+                      data-action="use"
+                      onClick={this.handleClick.bind(this)}
+                    >
+                      去使用
                   </Button>
                   )
                 }
@@ -314,10 +360,11 @@ export default class Group extends Component {
                   // 未完成就表示可以参团
                   !isFinish && (
                     <Button
-                    className="item invite"
-                    openType="share"
-                  >
-                    邀请好友参团
+                      className="item invite"
+                      openType="share"
+                      onClick={this.share}
+                    >
+                      邀请好友参团
                   </Button>
                   )
                 }
@@ -368,6 +415,23 @@ export default class Group extends Component {
           </View>
           {isQrcode && <Qrcode data={base64} onAction={this.handleClick.bind(this)} />}
         </View>
+        {/* 分享 */}
+        {
+          isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  快点分享给好友
+                </View>
+                <View className='share_text'>
+                  一起拼团领礼品吧
+                </View>
+                <Image src={require('../../../../assets/share_arro.png')} className='share_img'/>
+              </View>
+            </View>
+          ) : null
+        }
+
       </Block>
     )
   }

@@ -16,7 +16,7 @@ interface Options extends RequestParams {
   host?: string;
 }
 
-const host = "http://test.api.tdianyi.com/";
+const host = process.env.BASIC_API;
 const token_name = process.env.TOKEN;
 export default function request(options: Options) {
   const token = Cookie.get(token_name) || '';
