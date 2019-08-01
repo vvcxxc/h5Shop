@@ -1,8 +1,8 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "tarojs-ts-cli",
+	"projectname": "h5Shop",
 	"description": "tarojs-ts-cli",
-	"appid": "wx5f2271a7c946fef1",
+	"appid": "wxd80cc817bb283f08",
 	"setting": {
 		"urlCheck": false,
 		"es6": false,
