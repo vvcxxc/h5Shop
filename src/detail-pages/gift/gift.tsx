@@ -66,7 +66,7 @@ export default class Gift extends Component<GiftProp> {
               {
                 data.image_details ? data.image_details.map((item, index) => {
                   return <Image className="item image" key={index} src={item} />
-                }) : ''
+                }) : null
               }
             </View>
           </View>
