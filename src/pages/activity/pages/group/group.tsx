@@ -224,6 +224,8 @@ export default class Group extends Component {
   }
 
   share = () => {
+    // console.log(this.state.basicinfo)
+    let info = this.state.basicinfo;
     let url = window.location.href;
     this.setState({isShare: true})
     Taro.request({
@@ -246,15 +248,22 @@ export default class Group extends Component {
           ]
         })
         wx.ready(() => {
-          wx.updateAppMessageShareData({
-            title: '分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分析法风萧萧兮寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻', // 分享标题
-            desc: '分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分享分析法风萧萧兮寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻', // 分享描述
-            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-            success: function () {
-              // 用户点击了分享后执行的回调函数
-            }
-          })
+          // if(info.gift_id){
+          //   wx.updateAppMessageShareData({
+          //     title: `${info.participation_money}元拼团！100%有奖，你还在等什么！`, // 分享标题
+          //     desc: `【仅剩${info.}个名额】我x元拼了x超值套餐，还有惊喜礼品，等你来跟我一起拼！`, // 分享描述
+          //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
+          //   })
+          // }else{
+          //   wx.updateAppMessageShareData({
+          //     title: `就差你啦！我在抢${info.participation_money}元套餐，快跟我一起拼吧！`, // 分享标题
+          //     desc: `买了不后悔！我${info.participation_money}元拼了${info.pay_money}超值套餐，快来跟我一起完成拼团吧。`, // 分享描述
+          //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
+          //   })
+          // }
+
 
         })
       })
