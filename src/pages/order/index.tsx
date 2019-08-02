@@ -10,7 +10,7 @@ import request from "../../services/request";
 export default class Order extends Component {
   config: Config = {
     navigationBarTitleText: "我的订单",
-    enablePullDownRefresh: true,
+    enablePullDownRefresh: false,
 
   };
   constructor(props) {
@@ -147,6 +147,7 @@ export default class Order extends Component {
   }
   // 触底
   onReachBottom() {
+    console.log(123)
     this.state.current == 0 ? this.getData1() : (
       this.state.current == 1 ? this.getData2() : (
         this.state.current == 2 ? this.getData3() : (
@@ -154,6 +155,7 @@ export default class Order extends Component {
   }
 
   getData1() {
+    console.log(this.state.lengthbull1)
     if (this.state.lengthbull1) {
       Taro.showLoading({
         title: "loading",
@@ -167,12 +169,10 @@ export default class Order extends Component {
         }
       })
         .then((res: any) => {
-          // console.log(res)
-          console.log(this.state.coupon.length)
           let temp = this.state.coupon1.concat(res.data);
           console.log(temp.length)
-          this.setState({ coupon: temp, coupon1: temp, page1: this.state.page1+ 1 }, () => {
-            if (this.state.page1 >= res.last_page) {
+          this.setState({ coupon: temp, coupon1: temp, page1: this.state.page1 + 1 }, () => {
+            if (this.state.page1 > res.last_page) {
               this.setState({ lengthbull1: false });
             }
           });
@@ -196,8 +196,8 @@ export default class Order extends Component {
       })
         .then((res: any) => {
           let temp = this.state.coupon2.concat(res.data);
-          this.setState({ coupon: temp, coupon2: temp, page2: this.state.page2+ 1 }, () => {
-            if (this.state.page2 >= res.last_page) {
+          this.setState({ coupon: temp, coupon2: temp, page2: this.state.page2 + 1 }, () => {
+            if (this.state.page2 > res.last_page) {
               this.setState({ lengthbull2: false });
             }
           });
@@ -224,8 +224,8 @@ export default class Order extends Component {
       })
         .then((res: any) => {
           let temp = this.state.coupon3.concat(res.data);
-          this.setState({ coupon: temp, coupon3: temp, page3: this.state.page3+ 1 }, () => {
-            if (this.state.page3 >= res.last_page) {
+          this.setState({ coupon: temp, coupon3: temp, page3: this.state.page3 + 1 }, () => {
+            if (this.state.page3 > res.last_page) {
               this.setState({ lengthbull3: false });
             }
           });
@@ -252,8 +252,8 @@ export default class Order extends Component {
       })
         .then((res: any) => {
           let temp = this.state.coupon4.concat(res.data);
-          this.setState({ coupon: temp, coupon4: temp, page4: this.state.page4+ 1 }, () => {
-            if (this.state.page4 >= res.last_page) {
+          this.setState({ coupon: temp, coupon4: temp, page4: this.state.page4 + 1 }, () => {
+            if (this.state.page4 > res.last_page) {
               this.setState({ lengthbull4: false });
             }
           });
@@ -315,8 +315,8 @@ export default class Order extends Component {
       <View className="orders flex column"  >
 
         {this.state._codeshow ?
-          <View className="code_show" onClick={() => { this.setState({ _codeshow: false }) }}>
-            <View className="code_background"> </View>
+          <View className="code_show" onClick={() => { this.setState({ _codeshow: false }) }} onTouchMove={() => { this.setState({ _codeshow: false })}} >
+            <View className="code_background"></View>
             <View className="codeBox" >
               <View className="codeBox_info">商家扫码/输码验证即可消费</View>
               <View className="codeBox_img">
