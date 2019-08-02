@@ -224,7 +224,7 @@ export default class Group extends Component {
   }
 
   share = () => {
-    // console.log(this.state.basicinfo)
+    console.log(this.state.basicinfo)
     let info = this.state.basicinfo;
     let url = window.location.href;
     this.setState({isShare: true})
@@ -248,7 +248,6 @@ export default class Group extends Component {
           ]
         })
         wx.ready(() => {
-          console.log(this.state.basicinfo)
           // if(info.gift_id){
           //   wx.updateAppMessageShareData({
           //     title: `${info.participation_money}元拼团！100%有奖，你还在等什么！`, // 分享标题

@@ -91,7 +91,8 @@ export default class Order extends Component {
     lengthbull1: true,
     lengthbull2: true,
     lengthbull3: true,
-    lengthbull4: true
+    lengthbull4: true,
+    scrollTop: 0
   };
 
 
@@ -103,7 +104,12 @@ export default class Order extends Component {
     this.getData1()
   }
 
-
+  //滚动
+  onPageScroll(e) {
+    this.setState({
+      scrollTop: e.scrollTop
+    })
+  }
   // 下拉
   onPullDownRefresh() {
     if (this.state.current == 0) {
@@ -305,7 +311,11 @@ export default class Order extends Component {
         // console.log(res);
         this.setState({ _codeimg: res.data });
       })
-    this.setState({ _codeshow: true });
+    this.setState({ _codeshow: true }, () => {
+      let dom = document.getElementsByClassName('code_background')[0];
+      dom.style.left = 0;
+      dom.style.top = this.state.scrollTop + 'px';
+    });
     Taro.hideLoading();
   }
 
@@ -315,14 +325,15 @@ export default class Order extends Component {
       <View className="orders flex column"  >
 
         {this.state._codeshow ?
-          <View className="code_show" onClick={() => { this.setState({ _codeshow: false }) }} onTouchMove={() => { this.setState({ _codeshow: false })}} >
-            <View className="code_background"></View>
-            <View className="codeBox" >
-              <View className="codeBox_info">商家扫码/输码验证即可消费</View>
-              <View className="codeBox_img">
-                <Image className="code_img" src={this.state._codeimg} />
+          <View className="code_show" onClick={() => { this.setState({ _codeshow: false }) }} onTouchMove={() => { this.setState({ _codeshow: false }) }} >
+            <View className="code_background">
+              <View className="codeBox" >
+                <View className="codeBox_info">商家扫码/输码验证即可消费</View>
+                <View className="codeBox_img">
+                  <Image className="code_img" src={this.state._codeimg} />
+                </View>
+                <View className="codeBox_msg">{this.state._codeinfo}</View>
               </View>
-              <View className="codeBox_msg">{this.state._codeinfo}</View>
             </View>
           </View>
           : ""
