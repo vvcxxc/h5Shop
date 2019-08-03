@@ -452,10 +452,7 @@ export default class Index extends Component<any> {
   handleSearch = () => Taro.navigateTo({ url: './search/index' });
   // 跳转 搜素城市页面
   showSelectCity = () => {
-    Taro.setStorage({
-      key: 'router',
-      data: { gg: '444444' }
-    })
+
     Taro.navigateTo({ url: '/business-pages/select-city/index' });
   }
 
