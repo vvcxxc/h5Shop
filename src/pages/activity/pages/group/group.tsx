@@ -224,10 +224,10 @@ export default class Group extends Component {
   }
 
   share = () => {
-    console.log(this.state.basicinfo)
+    const { id = "" } = this.$router.params
     let info = this.state.basicinfo;
     let url = window.location.href;
-    this.setState({isShare: true})
+    this.setState({ isShare: true })
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -248,28 +248,17 @@ export default class Group extends Component {
           ]
         })
         wx.ready(() => {
-          // if(info.gift_id){
-          //   wx.updateAppMessageShareData({
-          //     title: `${info.participation_money}元拼团！100%有奖，你还在等什么！`, // 分享标题
-          //     desc: `【仅剩${info.}个名额】我x元拼了x超值套餐，还有惊喜礼品，等你来跟我一起拼！`, // 分享描述
-          //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-          //   })
-          // }else{
-          //   wx.updateAppMessageShareData({
-          //     title: `就差你啦！我在抢${info.participation_money}元套餐，快跟我一起拼吧！`, // 分享标题
-          //     desc: `买了不后悔！我${info.participation_money}元拼了${info.pay_money}超值套餐，快来跟我一起完成拼团吧。`, // 分享描述
-          //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-          //   })
-          // }
-
-
+          wx.updateAppMessageShareData({
+            title: info.header, // 分享标题
+            desc: info.title, // 分享描述
+            link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: info.small_img, // 分享图标
+          })
         })
       })
   }
   closeShare = () => {
-    this.setState({isShare: false});
+    this.setState({ isShare: false });
   }
 
   render() {
@@ -435,7 +424,7 @@ export default class Group extends Component {
                 <View className='share_text'>
                   一起拼团领礼品吧
                 </View>
-                <Image src={require('../../../../assets/share_arro.png')} className='share_img'/>
+                <Image src={require('../../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
           ) : null

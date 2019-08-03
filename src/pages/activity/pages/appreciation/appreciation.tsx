@@ -243,6 +243,8 @@ export default class Appreciation extends Component {
     })
   }
   share = () => {
+    const { id = "" } = this.$router.params
+    let shareInfo = this.state.basicinfo.getTextContent
     let url = window.location.href;
     this.setState({isShare: true})
     Taro.request({
@@ -266,13 +268,10 @@ export default class Appreciation extends Component {
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
-            title: '分享', // 分享标题
-            desc: '123', // 分享描述
-            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-            success: function () {
-              // 用户点击了分享后执行的回调函数
-            }
+            title: shareInfo.header, // 分享标题
+            desc: shareInfo.title, // 分享描述
+            link: shareInfo.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: shareInfo.small_img, // 分享图标
           })
 
         })
