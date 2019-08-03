@@ -61,13 +61,18 @@ export default class Index extends Component<any> {
   }
 
   componentDidMount() {
+    let id = this.$router.params.id;
+    if(id){
+      sessionStorage.setItem('payStore',id)
+    }
     this.getPayStore();
     this.showLoading();
     this.requestTab(); //经营列表
     this.localStorageData();
     this.requestLocation();
     this.showGift();
-    this.controlVersion()
+    this.controlVersion();
+
   }
 
   requestLocation = () => {
@@ -373,20 +378,22 @@ export default class Index extends Component<any> {
 
 // 获取中奖门店信息
 getPayStore = async() => {
-  let location = await getLocation();
-  let id = this.$router.params.id;
+  let id = sessionStorage.getItem('payStore')
   if(id){
-    request({
-      url: 'v3/stores/pay_store/'+ id,
-      data: { xpoint: location.longitude, ypoint:location.latitude}
-    })
-      .then((res: any) => {
-        this.setState({
-          hahaData: res,
-        })
+    let location = await getLocation();
+    // let id = this.$router.params.id;
+    if(id){
+      request({
+        url: 'v3/stores/pay_store/'+ id,
+        data: { xpoint: location.longitude, ypoint:location.latitude}
       })
+        .then((res: any) => {
+          this.setState({
+            hahaData: res,
+          })
+        })
+    }
   }
-
 }
 
 // 控制显示哪个组件

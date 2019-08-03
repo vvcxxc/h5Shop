@@ -64,15 +64,15 @@ export default class Group extends Component {
     this.fetchCoupon(location)
   }
 
-  onShareAppMessage() {
-    const { share: { title, small_img: imageUrl } } = this.state.basicinfo
-    const { id = "" } = this.$router.params
-    return {
-      title,
-      imageUrl,
-      path: `/pages/activity/pages/group/group?id=${id}`
-    }
-  }
+  // onShareAppMessage() {
+  //   const { share: { title, small_img: imageUrl } } = this.state.basicinfo
+  //   const { id = "" } = this.$router.params
+  //   return {
+  //     title,
+  //     imageUrl,
+  //     path: `/pages/activity/pages/group/group?id=${id}`
+  //   }
+  // }
 
   /**
    * 点击动作(如果是跳转动作的时候, 带上参数type, id, publictypeid)
@@ -94,7 +94,7 @@ export default class Group extends Component {
           id: publictypeid,
           gift_id,
           activity_id
-        } = this.state.basicinfo
+        } = data
         let dataId = 0
         if (data && data.id) {
           dataId = data.id
@@ -225,7 +225,7 @@ export default class Group extends Component {
 
   share = () => {
     const { id = "" } = this.$router.params
-    let info = this.state.basicinfo;
+    let info = this.state.basicinfo.share;
     let url = window.location.href;
     this.setState({ isShare: true })
     Taro.request({
