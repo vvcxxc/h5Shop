@@ -237,6 +237,7 @@ export default class Group extends Component {
     })
       .then(res => {
         let { data } = res;
+        console.log(info)
         wx.config({
           debug: false,
           appId: data.appId,
@@ -249,8 +250,8 @@ export default class Group extends Component {
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
-            title: info.header, // 分享标题
-            desc: info.title, // 分享描述
+            title: info.title, // 分享标题
+            desc: info.desc, // 分享描述
             link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: info.small_img, // 分享图标
           })
