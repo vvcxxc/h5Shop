@@ -37,10 +37,10 @@ export default class Index extends Component<any> {
     cityId: null,
     indexImg: '',
     showGift: null,
-    indexImgId: null,
-    adLogId: null,
-    need_jump:null,
-    return_data:false,
+    indexImgId: null,
+    adLogId: null,
+    need_jump: null,
+    return_data: false,
     hahaData: {
       "code": 200,
       "message": "success",
@@ -60,193 +60,342 @@ export default class Index extends Component<any> {
   componentWillMount() {
   }
 
+  // componentDidMount() {
+  //   let id = this.$router.params.id;
+  //   if(id){
+  //     sessionStorage.setItem('payStore',id)
+  //   }
+  //   this.getPayStore();
+  //   this.showLoading();
+  //   this.requestTab(); //经营列表
+  //   this.localStorageData();
+  //   this.requestLocation();
+  //   this.showGift();
+  //   this.controlVersion();
+
+  // }
+
+  // requestLocation = () => {
+  //   request({ url: 'v3/district', data: { model_type: '2' } })
+  //     .then((res: any) => {
+  //       Taro.setStorage({ key: 'allCity', data: res.data.city_list })
+
+  //     })
+  // }
+
+
+  // localStorageData = () => {
+  //   if (Object.keys(this.$router.params).length < 1) {
+  //     this.getLocatione();
+  //     return
+  //   }
+  //   if(this.$router.params.router){
+  //     Taro.getStorage({ key: 'router' }).then((res: any) => {
+  //       if (res.data.city_name && res.data.city_id) {
+  //         this.setState({ cityName: res.data.city_name })
+  //         this.setState({ cityId: res.data.city_id })
+  //         if (this.state.deal_cate_id) {
+  //           this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
+  //             this.requestHomeList(this.state.meta)
+  //           })
+  //         } else {
+  //           this.setState({ meta: { city_id: res.data.city_id } }, () => {
+  //             this.requestHomeList(this.state.meta)
+  //           })
+  //         }
+  //       }
+  //       if (res.data.xpoint || res.data.ypoint) {
+  //         if (this.state.deal_cate_id) {
+  //           this.setState({
+  //             meta: {
+  //               xpoint: res.data.xpoint,
+  //               ypoint: res.data.ypoint,
+  //               deal_cate_id: this.state.deal_cate_id
+  //             }
+  //           }, () => {
+  //             this.requestHomeList(this.state.meta)
+  //           })
+  //         } else {
+  //           this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
+  //             request({
+  //               url: 'v3/city_name',
+  //               data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
+  //             })
+  //               .then((res: any) => {
+  //                 this.setState({ cityName: res.data.city })
+  //               })
+  //             this.requestHomeList(this.state.meta)
+  //             this.getCityId()
+  //           })
+  //         }
+  //       }
+  //     })
+  //   }else{
+  //     this.getLocatione()
+  //   }
+
+  // }
+  // // get location
+  // getLocatione = () => {
+  //   getLocation().then((res: any) => {
+  //     this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
+  //     this.setState({ locations: res }, () => {
+  //       this.getCity();
+  //       if (this.state.deal_cate_id == null) {
+  //         this.requestHomeList({ xpoint: res.longitude, ypoint: res.latitude })
+  //       } else {
+  //         this.setState({
+  //           meta: {
+  //             xpoint: this.state.locations.longitude,
+  //             ypoint: this.state.locations.latitude,
+  //             deal_cate_id: this.state.deal_cate_id
+  //           }
+  //         }, () => {
+  //           this.requestHomeList(this.state.meta)
+  //         })
+  //       }
+  //     })
+  //   })
+  // }
+
+  // // 获取城市
+  // getCity = () => {
+  //   request({
+  //     url: 'v3/city_name',
+  //     data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
+  //   })
+  //     .then((res: any) => {
+  //       this.setState({ cityName: res.data.city }, () => {
+  //         this.getCityId()
+  //       })
+  //     })
+  // }
+
+
+  // getCityId = () => {
+  //   request({
+  //     url: 'v3/citys',
+  //     data: { keyword: this.state.cityName }
+  //   })
+  //     .then((res: any) => {
+  //       this.setState({ cityId: res.data[0].id }, () => {
+  //         this.showImage()
+  //       })
+  //     })
+  // }
+
+  // // 首页数据 初始渲染
+  // requestHomeList = (meta) => {
+  //   this.showLoading();
+  //   Taro.stopPullDownRefresh()
+  //   request({
+  //     url: 'v3/stores',
+  //     data: { ...meta }
+  //   })
+  //     .then((res: any) => {
+  //       Taro.hideLoading()
+  //       this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
+  //     })
+  //     .catch(() => {
+  //       this.showLoading()
+  //     })
+  // }
+
+
+  // onPullDownRefresh () { // 自带 下拉事件
+  //   this.localStorageData();
+  //   this.setState({return_data:false})
+  // }
+
+  // onReachBottom () { 	// 自带 触底事件
+  //   // let return_data
+
+  //   // if(return_data) return
+  //   if(this.state.return_data) return
+  //   this.showLoading()
+  //   this.setState({ page: this.state.page + 1 },()=>{
+  //     let miss = {
+  //       ...this.state.meta, pages: this.state.page
+  //     }
+  //     if (this.state.deal_cate_id) {
+  //       miss['deal_cate_id'] = this.state.deal_cate_id
+  //     }
+  //     request({
+  //       url: 'v3/stores',
+  //       data: {
+  //         ...miss
+  //       }
+  //     })
+  //       .then((res: any) => {
+  //         Taro.stopPullDownRefresh()
+  //         Taro.hideLoading()
+  //         console.log(res.data.store_info.data,'data')
+  //         if(res.data.store_info.data.length<1){
+  //           this.setState({return_data:true})
+  //         }else {
+  //           this.setState({return_data:false})
+  //         }
+  //         this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
+  //       })
+  //   })
+
+  // }
+
+  // // show loading
+  // showLoading = () => {
+  //   Taro.showLoading({
+  //     title: 'loading',
+  //     mask: true
+  //   })
+  // }
+
+  // // 获取title数据
+  // requestTab = () => {
+  //   request({
+  //     url: 'v3/manage_type'
+  //   })
+  //     .then((res: any) => {
+  //       let mete = [{ name: '全部', id: 'all' }, ...res.data]
+  //       this.setState({ titleList: mete })
+  //     })
+  // }
+
+  // handleActivityClick = () => { };
+
+  // // 跳转 搜索商家列表页面
+  // handleSearch = () => Taro.navigateTo({ url: './search/index' });
+  // // 跳转 搜素城市页面
+  // showSelectCity = () => Taro.navigateTo({ url: '/business-pages/select-city/index' });
+
+  // handlerTablChange(current, id, _this) {
+  //   this.setState({ current });
+  //   if (id == 'all' || this.state.deal_cate_id == 'all') {
+  //     this.setState({ deal_cate_id: null })
+  //     this.requestHomeList({ ...this.state.meta })
+  //     return
+  //   }
+  //   this.setState({ deal_cate_id: id })
+  //   this.requestHomeList({ ...this.state.meta, deal_cate_id: id })
+  // }
+
   componentDidMount() {
-    let id = this.$router.params.id;
+      let id = this.$router.params.id;
     if(id){
       sessionStorage.setItem('payStore',id)
     }
-    this.getPayStore();
-    this.showLoading();
-    this.requestTab(); //经营列表
-    this.localStorageData();
     this.requestLocation();
-    this.showGift();
-    this.controlVersion();
-
+    this.recognizer();
+    this.getPayStore();//获取中奖门店信息
   }
 
-  requestLocation = () => {
-    request({ url: 'v3/district', data: { model_type: '2' } })
-      .then((res: any) => {
-        Taro.setStorage({ key: 'allCity', data: res.data.city_list })
-
-      })
-  }
-
-
-  localStorageData = () => {
-    if (Object.keys(this.$router.params).length < 1) {
-      this.getLocatione();
-      return
-    }
-    if(this.$router.params.router){
-      Taro.getStorage({ key: 'router' }).then((res: any) => {
-        if (res.data.city_name && res.data.city_id) {
+  // 识别器
+  recognizer = () => {
+    this.requestTab(); //经营列表
+    // this.getLocationxy()// 获取定位和 城市id 城市名字
+    Taro.getStorage({ key: 'router' }).then((res: any) => {
+      console.log(123)
+      if (Object.keys(res.data).length < 1) {
+        this.requestTab(); //经营列表
+        this.getLocationxy()// 获取定位和 城市id 城市名字
+        return
+      }
+      this.requestTab();
+      if (res.data.city_id && res.data.city_name) {
+        getLocation().then((res2: any) => {
+          let data: any = this.state.meta
+          data.xpoint = res2.longitude
+          data.ypoint = res2.latitude
+          data.city_id = res.data.city_id
+          data.city_name = res.data.city_name
+          data.page = 1
           this.setState({ cityName: res.data.city_name })
-          this.setState({ cityId: res.data.city_id })
-          if (this.state.deal_cate_id) {
-            this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
-              this.requestHomeList(this.state.meta)
-            })
-          } else {
-            this.setState({ meta: { city_id: res.data.city_id } }, () => {
-              this.requestHomeList(this.state.meta)
-            })
-          }
-        }
-        if (res.data.xpoint || res.data.ypoint) {
-          if (this.state.deal_cate_id) {
-            this.setState({
-              meta: {
-                xpoint: res.data.xpoint,
-                ypoint: res.data.ypoint,
-                deal_cate_id: this.state.deal_cate_id
-              }
-            }, () => {
-              this.requestHomeList(this.state.meta)
-            })
-          } else {
-            this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
-              request({
-                url: 'v3/city_name',
-                data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
-              })
-                .then((res: any) => {
-                  this.setState({ cityName: res.data.city })
-                })
-              this.requestHomeList(this.state.meta)
-              this.getCityId()
-            })
-          }
-        }
-      })
-    }else{
-      this.getLocatione()
-    }
-
-  }
-  // get location
-  getLocatione = () => {
-    getLocation().then((res: any) => {
-      this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
-      this.setState({ locations: res }, () => {
-        this.getCity();
-        if (this.state.deal_cate_id == null) {
-          this.requestHomeList({ xpoint: res.longitude, ypoint: res.latitude })
-        } else {
-          this.setState({
-            meta: {
-              xpoint: this.state.locations.longitude,
-              ypoint: this.state.locations.latitude,
-              deal_cate_id: this.state.deal_cate_id
-            }
-          }, () => {
-            this.requestHomeList(this.state.meta)
+          this.setState({ meta: data }, () => {
+            this.requestHomeList(data)
           })
-        }
+        })
+        return
+      }
+
+      if (res.data.xpoint && res.data.ypoint) {
+        let data: any = this.state.meta
+        data.xpoint = res.data.xpoint
+        data.ypoint = res.data.ypoint
+        this.getCity(data)
+        data.page = 1
+        this.setState({ meta: data })
+      }
+    }).catch((res:any)=>{
+      this.getLocationxy()// 获取定位和 城市id 城市名字
+    })
+  }
+
+  getLocationxy = () => {
+    getLocation().then((res: any) => {
+      this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } }, () => {
+        // if (res.longitude.length < 1 && res.latitude.length < 1) {
+        //   let data: any = this.state.meta
+        //   data.city_id = 1924
+        //   this.setState({ meta: data })
+        //   return
+        // }
+        this.getCity()
       })
     })
   }
 
   // 获取城市
-  getCity = () => {
+  getCity = (data?: any) => {
+    let datas = data ? data : this.state.meta
     request({
       url: 'v3/city_name',
-      data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
+      data: datas
     })
       .then((res: any) => {
-        this.setState({ cityName: res.data.city }, () => {
-          this.getCityId()
+        this.setState({ cityName: res.data.city }) //城市名字
+        this.setState({ // 保存了城市id 和经纬度
+          meta: {
+            city_id: res.data.city_id,
+            xpoint: this.state.meta.xpoint,
+            ypoint: this.state.meta.ypoint,
+            page: this.state.page
+          }
+        }, () => {
+          this.showImage();
+          this.requestHomeList(this.state.meta)
         })
       })
   }
-
-
-  getCityId = () => {
-    request({
-      url: 'v3/citys',
-      data: { keyword: this.state.cityName }
-    })
-      .then((res: any) => {
-        this.setState({ cityId: res.data[0].id }, () => {
-          this.showImage()
-        })
-      })
-  }
-
-  // 首页数据 初始渲染
-  requestHomeList = (meta) => {
+  requestHomeList = (data?: any) => {
+    let define = data ? data : this.state.meta
     this.showLoading();
     Taro.stopPullDownRefresh()
     request({
       url: 'v3/stores',
-      data: { ...meta }
+      data: define
     })
       .then((res: any) => {
         Taro.hideLoading()
         this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
+        if (this.state.meta.page > 1) {
+          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
+        }
       })
       .catch(() => {
         this.showLoading()
       })
+
+    Taro.setStorage({
+      key: 'router',
+      data: this.state.meta
+    })
   }
 
-
-  onPullDownRefresh () { // 自带 下拉事件
-    this.localStorageData();
-    this.setState({return_data:false})
-  }
-
-  onReachBottom () { 	// 自带 触底事件
-    // let return_data
-
-    // if(return_data) return
-    if(this.state.return_data) return
-    this.showLoading()
-    this.setState({ page: this.state.page + 1 },()=>{
-      let miss = {
-        ...this.state.meta, pages: this.state.page
-      }
-      if (this.state.deal_cate_id) {
-        miss['deal_cate_id'] = this.state.deal_cate_id
-      }
-      request({
-        url: 'v3/stores',
-        data: {
-          ...miss
-        }
+  // 获取所有城市列表
+  requestLocation = () => {
+    request({ url: 'v3/district', data: { model_type: '2' } })
+      .then((res: any) => {
+        Taro.setStorage({ key: 'allCity', data: res.data.city_list })
       })
-        .then((res: any) => {
-          Taro.stopPullDownRefresh()
-          Taro.hideLoading()
-          console.log(res.data.store_info.data,'data')
-          if(res.data.store_info.data.length<1){
-            this.setState({return_data:true})
-          }else {
-            this.setState({return_data:false})
-          }
-          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
-        })
-    })
-
-  }
-
-  // show loading
-  showLoading = () => {
-    Taro.showLoading({
-      title: 'loading',
-      mask: true
-    })
   }
 
   // 获取title数据
@@ -255,9 +404,46 @@ export default class Index extends Component<any> {
       url: 'v3/manage_type'
     })
       .then((res: any) => {
-        let mete = [{ name: '全部', id: 'all' }, ...res.data]
-        this.setState({ titleList: mete })
+        this.setState({ titleList: [{ name: '全部', id: 'all' }, ...res.data] })
       })
+  }
+
+  handlerTablChange(current, id, _this) {
+    this.setState({ current });
+    let data = this.state.meta
+    data.page = 1
+    this.setState({ meta: data })
+
+    if (id == 'all' || this.state.deal_cate_id == 'all') {
+      delete (this.state.meta['deal_cate_id'])
+      this.requestHomeList({ ...this.state.meta })
+      return
+    }
+    this.setState({ meta: { ...this.state.meta, deal_cate_id: id } })
+    this.requestHomeList({ ...this.state.meta, deal_cate_id: id })
+  }
+
+  onPullDownRefresh() { // 自带 下拉事件
+    let data = this.state.meta
+    data.page = 1
+    this.setState({ meta: data })
+    this.requestHomeList(this.state.meta)
+  }
+
+  onReachBottom() {
+    this.setState({ page: this.state.page + 1 }, () => {
+      this.requestHomeList({ ...this.state.meta })
+    })
+    let data = this.state.meta
+    data.page = data.page + 1
+    this.setState({ meta: data })
+  }
+
+  showLoading = () => {
+    Taro.showLoading({
+      title: 'loading',
+      mask: true
+    })
   }
 
   handleActivityClick = () => { };
@@ -265,18 +451,14 @@ export default class Index extends Component<any> {
   // 跳转 搜索商家列表页面
   handleSearch = () => Taro.navigateTo({ url: './search/index' });
   // 跳转 搜素城市页面
-  showSelectCity = () => Taro.navigateTo({ url: '/business-pages/select-city/index' });
-
-  handlerTablChange(current, id, _this) {
-    this.setState({ current });
-    if (id == 'all' || this.state.deal_cate_id == 'all') {
-      this.setState({ deal_cate_id: null })
-      this.requestHomeList({ ...this.state.meta })
-      return
-    }
-    this.setState({ deal_cate_id: id })
-    this.requestHomeList({ ...this.state.meta, deal_cate_id: id })
+  showSelectCity = () => {
+    Taro.setStorage({
+      key: 'router',
+      data: { gg: '444444' }
+    })
+    Taro.navigateTo({ url: '/business-pages/select-city/index' });
   }
+
 
 
   styleControl = (item) => {
@@ -326,11 +508,11 @@ export default class Index extends Component<any> {
       }
     })
       .then((res: any) => {
-        console.log(res,'res')
+        console.log(res, 'res')
         this.setState({ indexImg: res.data.pic })
-        this.setState({ indexImgId: res.data.id })
-        this.setState({ adLogId: res.data.adLogId })
-        this.setState({ need_jump: res.data.need_jump})
+        this.setState({ indexImgId: res.data.id })
+        this.setState({ adLogId: res.data.adLogId })
+        this.setState({ need_jump: res.data.need_jump })
       })
   }
 
@@ -352,61 +534,61 @@ export default class Index extends Component<any> {
     })
   }
 
-     // 点击广告
-  advertOnclick = () => {
-    if (!this.state.need_jump) return
-    request({
-      url: 'v3/ads/onclick',
-      data: {
-        ad_id: this.state.indexImgId, //广告id
-        ad_log_id: this.state.adLogId //广告日志id
-      }
-    })
-      .then((res: any) => {
-        let define:any = {
-          [1]: '/pages/business/index?id=' + res.data.store_id,//店铺
-          [2]: '/business-pages/ticket-buy/index?id='+ res.data.coupon_id ,//现金券
-          [3]: '/business-pages/set-meal/index?id=' + res.data.coupon_id,//兑换券
-          [4]: '/pages/activity/pages/detail/detail?id=' + res.data.activity_id + '&type=1',//拼团
-          [5]: '/pages/activity/pages/detail/detail?id=' + res.data.activity_id + '&type=5'//增值
-        }
-        Taro.navigateTo({
-          url: define[res.data.popularize_type]
-        })
-      })
-  }
-
-// 获取中奖门店信息
-getPayStore = async() => {
-  let id = sessionStorage.getItem('payStore')
-  if(id){
-    let location = await getLocation();
-    // let id = this.$router.params.id;
-    if(id){
-      request({
-        url: 'v3/stores/pay_store/'+ id,
-        data: { xpoint: location.longitude, ypoint:location.latitude}
-      })
-        .then((res: any) => {
-          this.setState({
-            hahaData: res,
-          })
+  // 点击广告
+  advertOnclick = () => {
+    if (!this.state.need_jump) return
+    request({
+      url: 'v3/ads/onclick',
+      data: {
+        ad_id: this.state.indexImgId, //广告id
+        ad_log_id: this.state.adLogId //广告日志id
+      }
+    })
+      .then((res: any) => {
+        let define: any = {
+          [1]: '/pages/business/index?id=' + res.data.store_id,//店铺
+          [2]: '/business-pages/ticket-buy/index?id=' + res.data.coupon_id,//现金券
+          [3]: '/business-pages/set-meal/index?id=' + res.data.coupon_id,//兑换券
+          [4]: '/pages/activity/pages/detail/detail?id=' + res.data.activity_id + '&type=1',//拼团
+          [5]: '/pages/activity/pages/detail/detail?id=' + res.data.activity_id + '&type=5'//增值
+        }
+        Taro.navigateTo({
+          url: define[res.data.popularize_type]
         })
+      })
+  }
+
+  // 获取中奖门店信息
+  getPayStore = async () => {
+    let id = sessionStorage.getItem('payStore')
+    if (id) {
+      let location = await getLocation();
+      // let id = this.$router.params.id;
+      if (id) {
+        request({
+          url: 'v3/stores/pay_store/' + id,
+          data: { xpoint: location.longitude, ypoint: location.latitude }
+        })
+          .then((res: any) => {
+            this.setState({
+              hahaData: res,
+            })
+          })
+      }
     }
   }
-}
 
-// 控制显示哪个组件
-controlVersion = () => {
-  let dome: any = {
-    [1]: <VersionOne list={this.state.hahaData.data.info}/>,
-    [2]: <VersionTwo list={this.state.hahaData.data.info}/>,
-    [3]: <VersionThree list={this.state.hahaData.data.info}
-      data={this.state.hahaData.data.cashCouponList} />
+  // 控制显示哪个组件
+  controlVersion = () => {
+    let dome: any = {
+      [1]: <VersionOne list={this.state.hahaData.data.info} />,
+      [2]: <VersionTwo list={this.state.hahaData.data.info} />,
+      [3]: <VersionThree list={this.state.hahaData.data.info}
+        data={this.state.hahaData.data.cashCouponList} />
+    }
+    return dome[this.state.hahaData.data.view_type]
+
   }
-  return dome[this.state.hahaData.data.view_type]
-
-}
 
 
   render() {
@@ -417,7 +599,7 @@ controlVersion = () => {
             <View className="flex center container">
               <View className="city" style="padding-right:15px; width: 20%" onClick={this.showSelectCity}>
                 <View className='ellipsis-one flex' style='width:70%; display: inline-block'>
-                {this.state.cityName}
+                  {this.state.cityName}
                 </View>
                 <AtIcon
                   onClick={this.showSelectCity}
@@ -434,12 +616,12 @@ controlVersion = () => {
 							</View>
             </View>
           </View>
-          <View className="swiper"  onClick={this.advertOnclick.bind(this)}>
+          <View className="swiper" onClick={this.advertOnclick.bind(this)}>
             <Image
 
-            src={
-              this.state.indexImg ? this.state.indexImg : "http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/dHBc2GQi27cjhNpsYpAnQYxybxPdADHG.png"
-            } className="image" />
+              src={
+                this.state.indexImg ? this.state.indexImg : "http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/dHBc2GQi27cjhNpsYpAnQYxybxPdADHG.png"
+              } className="image" />
           </View>
         </View>
         <View className="advert">

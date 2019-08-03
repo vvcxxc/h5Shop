@@ -23,7 +23,7 @@ export default class MerChantPage extends Component {
 		search: '',
 		stores: [],
 		filter: [],
-		locationPosition: { longitude: '', latitude: '' },//存储获取到的地理位置
+		locationPosition: { xpoint: '', ypoint: '' },//存储获取到的地理位置
 		select: [],
 		selectData: { name: '', type: "" },
 		page: 1,
@@ -49,19 +49,35 @@ export default class MerChantPage extends Component {
 		this.setState({ search: value });
 	}
 
-	// 获取经纬度
-	getPosition() {
-		getLocation().then((res: any) => {
-			this.setState({ locationPosition: res }, () => {
-				if (this.$router.params.value) {
-					this.setState({ search: this.$router.params.value})
-				}
-				this.requestSearch(this.$router.params.value)//路由渲染
-				let that = this.state.locationPosition
-				this.requestData(that.longitude, that.latitude, this.$router.params.value) //渲染页面
-			})
-		})
-	}
+	// // 获取经纬度
+	// getPosition() {
+	// 	getLocation().then((res: any) => {
+	// 		this.setState({ locationPosition: res }, () => {
+	// 			if (this.$router.params.value) {
+	// 				this.setState({ search: this.$router.params.value})
+	// 			}
+	// 			this.requestSearch(this.$router.params.value)//路由渲染
+	// 			let that = this.state.locationPosition
+	// 			this.requestData(that.longitude, that.latitude, this.$router.params.value) //渲染页面
+	// 		})
+	// 	})
+  // }
+    getPosition() {
+        Taro.getStorage({ key: 'router' }).then((res: any) => {
+          let data: any = this.state.locationPosition
+          data.xpoint = res.data.xpoint
+          data.ypoint = res.data.ypoint
+          data.city_id = res.data.city_id
+          data.page = 1
+          this.setState({ locationPosition: data }, () => {
+            if (this.$router.params.value) {
+              this.setState({ search: this.$router.params.value })
+            }
+            this.requestSearch(this.$router.params.value)//路由渲染
+            this.requestData(this.state.locationPosition)
+          })
+        })
+      }
 
 	//处理 路由跳转 和 搜索
 	requestSearch = (search) => {
@@ -70,8 +86,8 @@ export default class MerChantPage extends Component {
 		request({
 			url: 'v3/stores',
 			data: {
-				xpoint: this.state.locationPosition.longitude,
-				ypoint: this.state.locationPosition.latitude,
+				xpoint: this.state.locationPosition.xpoint,
+				ypoint: this.state.locationPosition.ypoint,
 				keyword: search
 			},
 		})
@@ -82,14 +98,11 @@ export default class MerChantPage extends Component {
 	}
 
 	// 首页页面渲染
-	requestData = (xpoint, ypoint, search?) => {
+	requestData = (data, search?) => {
 		if (search) return
 		request({
 			url: 'v3/stores',
-			data: {
-				xpoint: xpoint,
-				ypoint: ypoint
-			}
+			data
 		})
 			.then((res: any) => {
 				Taro.stopPullDownRefresh()
@@ -100,7 +113,8 @@ export default class MerChantPage extends Component {
 
 
 	filterClick(index, id1?, id2?, id3?) {
-		let define: defineType = {}
+    // let define: defineType = {}
+     let define: any = this.state.locationPosition
 		if (id1) {
 			define.deal_cate_id = id1
 			this.setState({ deal_cate_id:id1})
@@ -125,15 +139,14 @@ export default class MerChantPage extends Component {
 		}
 		if (this.state.search) {
 			define.keyword=this.state.search
-		}
+    }
+    define.page = this.state.page
+    this.setState({
+      locationPosition:define
+    })
 		request({
 			url: 'v3/stores',
-			data: {
-				xpoint: this.state.locationPosition.longitude,
-				ypoint: this.state.locationPosition.latitude,
-				pages: this.state.page,
-				...define
-			}
+			data: define
 		})
 			.then((res: any) => {
         if(res.data.store_info.data.length<1){
@@ -151,20 +164,43 @@ export default class MerChantPage extends Component {
 			})
 	}
 
-	// 微信自带监听 滑动事件
-	onPullDownRefresh  () {
-    this.requestData(this.state.locationPosition.longitude, this.state.locationPosition.latitude) //渲染页面
-    this.setState({show_bottom:false})
-	}
+	// // 微信自带监听 滑动事件
+	// onPullDownRefresh  () {
+  //   this.requestData(this.state.locationPosition.longitude, this.state.locationPosition.latitude) //渲染页面
+  //   this.setState({show_bottom:false})
+	// }
 
-	// 触底事件
-	onReachBottom () {
-    if(this.state.show_bottom) return
-    Taro.showLoading({ title: 'loading', mask: true })//显示loading
-		this.setState({ page: this.state.page + 1 }, ()=> {
-			this.filterClick(1, this.state.deal_cate_id, this.state.distance_id, this.state.sort_id)
-		})
-	}
+	// // 触底事件
+	// onReachBottom () {
+  //   if(this.state.show_bottom) return
+  //   Taro.showLoading({ title: 'loading', mask: true })//显示loading
+	// 	this.setState({ page: this.state.page + 1 }, ()=> {
+	// 		this.filterClick(1, this.state.deal_cate_id, this.state.distance_id, this.state.sort_id)
+	// 	})
+  // }
+
+
+    // 微信自带监听 滑动事件
+  onPullDownRefresh() {
+    this.setState({ show_bottom: false })
+    this.setState({ page: 1 }, () => {
+      let data: any = this.state.locationPosition
+      data.page = 1
+      this.setState({ locationPosition: data }, () => {
+        this.requestData(this.state.locationPosition)
+      })
+    }
+    )
+  }
+
+  // 触底事件
+  onReachBottom () {
+if(this.state.show_bottom) return
+Taro.showLoading({ title: 'loading', mask: true })//显示loading
+    this.setState({ page: this.state.page + 1 }, ()=> {
+      this.filterClick(1, this.state.deal_cate_id, this.state.distance_id, this.state.sort_id)
+    })
+  }
 
 	// 标题点击
 	titleOnClick = (index,deal_cate_id, distance_id, sort_id) => { // 点击事件

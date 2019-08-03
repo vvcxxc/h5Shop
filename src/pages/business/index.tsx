@@ -17,7 +17,8 @@ interface Props {
 
 export default class PaySuccess extends Component<Props> {
   config = {
-    navigationBarTitleText: "商家详情"
+    navigationBarTitleText: "商家详情",
+    enablePullDownRefresh: false
   };
 
 

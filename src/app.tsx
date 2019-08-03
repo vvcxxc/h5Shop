@@ -96,7 +96,7 @@ class App extends Component {
 		window: {
 			backgroundTextStyle: 'dark',
 			navigationBarBackgroundColor: '#fff',
-			navigationBarTitleText: '团卖物联',
+			navigationBarTitleText: '小熊敬礼',
 			navigationBarTextStyle: 'black',
 			enablePullDownRefresh: false, //启用下拉刷新
 			onReachBottomDistance: 50 //距离底部多少px时触发上拉加载事件
@@ -104,7 +104,7 @@ class App extends Component {
 		permission: {
 			// 需要配置这里才能使用位置定位
 			"scope.userLocation": {
-				"desc": "团卖物联"
+				"desc": "小熊敬礼"
 			}
 		},
 		tabBar: {
