@@ -8,6 +8,8 @@ import request from '../../services/request'
 import MobileImg from '../../assets/dianhua.png'
 import AddressImg from '../../assets/address.png'
 import { getLocation } from "@/utils/getInfo"
+import { getBrowserType } from "@/utils/common";
+import wx from 'weixin-js-sdk';
 import isArray = require("lodash/isArray");
 
 export default class SetMeal extends Component {
@@ -50,7 +52,9 @@ export default class SetMeal extends Component {
       sname: "",
       tel: "",
       distance: "",
-      shop_door_header_img: ''
+      shop_door_header_img: '',
+      xpoint: 0,
+      ypoint: 0
     },
     goods_album: [
       {
@@ -150,7 +154,7 @@ export default class SetMeal extends Component {
       .then((res: any) => {
         console.log(res)
       });
-      e.stopPropagation();
+    e.stopPropagation();
   }
 
   keepCollect(e) {
@@ -167,6 +171,59 @@ export default class SetMeal extends Component {
     //     // }
     //   })
   }
+  //地图
+  routePlanning = (e) => {
+		let browserType = getBrowserType();
+		if(browserType == 'wechat') {
+			let longitude = parseFloat(this.state.store.xpoint);
+			let latitude = parseFloat(this.state.store.ypoint);
+			let url = window.location;
+			Taro.request({
+					url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+					method: 'GET',
+					data: {
+						url
+					}
+				})
+				.then(res => {
+					let {
+						data
+					} = res;
+					wx.config({
+						debug: false,
+						appId: data.appId,
+						timestamp: data.timestamp,
+						nonceStr: data.nonceStr,
+						signature: data.signature,
+						jsApiList: [
+							"getLocation",
+							"openLocation"
+						]
+					})
+					wx.ready(() => {
+						wx.openLocation({
+							latitude,
+							longitude,
+							scale: 18,
+							name: this.state.store.sname,
+							address: this.state.store.saddress,
+						})
+
+					})
+				})
+
+		} else if(browserType == 'alipay') {
+			Taro.navigateTo({
+				url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.store.xpoint + ',' + this.state.store.ypoint + '&destName=' + this.state.store.sname + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
+			})
+		} else {
+			Taro.showToast({
+				title: "参数错误",
+				icon: "none"
+			});
+		}
+		e.stopPropagation();
+	}
   render() {
     return (
       <View className="set-meal">
@@ -229,10 +286,10 @@ export default class SetMeal extends Component {
             <AtIcon value="chevron-right" color="#999" size="24px" />
           </View>
           <View className="address-view flex center">
-            <Image className="address-image" style={{ width: "15px", height: "15px" }} src={AddressImg} />
-            <View className="distance">{this.state.store.distance}</View>
-            <View className="text flex-item" style={{ width: "80%" }}>{this.state.store.saddress}</View>
-            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)}/>
+            <Image className="address-image"  onClick = {this.routePlanning.bind(this)} style={{ width: "15px", height: "15px" }} src={AddressImg} />
+            <View className="distance" onClick = {this.routePlanning.bind(this)} >{this.state.store.distance}</View>
+            <View className="text flex-item" onClick = {this.routePlanning.bind(this)} style={{ width: "80%" }}>{this.state.store.saddress}</View>
+            <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
 
           </View>
         </View>
@@ -247,24 +304,24 @@ export default class SetMeal extends Component {
               Array.isArray(this.state.coupon.description) ? (
                 <View>
                   <View className="label">使用规则：</View>
-                    <View className="label-value">
-                      {
+                  <View className="label-value">
+                    {
 
-                        this.state.coupon.description.map((item) => (
-                          <View className="label-value_info">.  {item}</View >
-                        ))
-                      }
-                    </View>
+                      this.state.coupon.description.map((item) => (
+                        <View className="label-value_info">.  {item}</View >
+                      ))
+                    }
+                  </View>
                 </View>
 
               ) : (
-                <View>
-                  <View className="label">使用规则：</View>
+                  <View>
+                    <View className="label">使用规则：</View>
                     <View className="label-value">
                       <View className="label-value_info">.  {this.state.coupon.description}</View >
                     </View>
-                </View>
-              )
+                  </View>
+                )
             }
 
           </View>
