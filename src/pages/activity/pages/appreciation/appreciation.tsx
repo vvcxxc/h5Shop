@@ -58,7 +58,27 @@ export default class Appreciation extends Component {
   }
   async componentDidMount() {
     // Taro.showShareMenu()
-
+    Taro.request({
+      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        console.log(shareInfo)
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: [
+            "updateAppMessageShareData",
+          ]
+        })
+      })
     const { id = "1095" } = this.$router.params
     /**
      * 授权认证用
@@ -247,36 +267,14 @@ export default class Appreciation extends Component {
     let shareInfo = this.state.basicinfo.getTextContent
     let url = window.location.href;
     this.setState({isShare: true})
-    Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        console.log(shareInfo)
-        let { data } = res;
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "updateAppMessageShareData",
-          ]
-        })
-        wx.ready(() => {
-          wx.updateAppMessageShareData({
-            title: shareInfo.title, // 分享标题
-            desc: shareInfo.desc, // 分享描述
-            link: shareInfo.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: shareInfo.small_img, // 分享图标
-          })
 
-        })
+      wx.updateAppMessageShareData({
+        title: shareInfo.title, // 分享标题
+        desc: shareInfo.desc, // 分享描述
+        link: shareInfo.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: shareInfo.small_img, // 分享图标
       })
+
   }
   closeShare = () => {
     this.setState({isShare: false});

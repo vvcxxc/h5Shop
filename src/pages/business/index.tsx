@@ -369,7 +369,7 @@ export default class PaySuccess extends Component<Props> {
             <View className="hidden-box" id="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
               {
                 this.state.activity_group.map((item) => (
-                  <View className="group-purchase bcfff _pintuan" key={item.name}>
+                  <View className="group-purchase bcfff _pintuan" key={item.name} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                     <View style={{ height: "5px" }}></View>
                     <View className="hd">
                       <View className="flex center tuan" style={{ paddingBottom: "5px", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
@@ -410,7 +410,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.participation_money}</Text>
                           <Text className="count">已拼{item.participation_number}件</Text>
                         </View>
-                        <Button className="btn-go" onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>立刻开团</Button>
+                        <Button className="btn-go" >立刻开团</Button>
                       </View>
                     </View>
                   </View>
