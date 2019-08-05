@@ -3,6 +3,7 @@ import Cookie from 'js-cookie'
 import request from '@/services/request';
 import { getBrowserType } from './common';
 const BASIC_API = process.env.BASIC_API;
+const LOGIN_URL = process.env.LOGIN_URL
 /**
  * h5登录
  */
@@ -20,7 +21,7 @@ export const Login = () => {
     if (type == 'wechat'){
       let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
       if(process.env.NODE_ENV == 'test'){
-        url = 'https://test.api.tdianyi.com/wechat/wxoauth?code_id=0&from='+from
+        url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
       }
       url = encodeURIComponent(url);
       let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&connect_redirect=1&state=STATE&state=STATE';
