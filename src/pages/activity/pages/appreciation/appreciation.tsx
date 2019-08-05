@@ -58,6 +58,7 @@ export default class Appreciation extends Component {
   }
   async componentDidMount() {
     // Taro.showShareMenu()
+    let url = window.location.href;
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -66,10 +67,9 @@ export default class Appreciation extends Component {
       }
     })
       .then(res => {
-        console.log(shareInfo)
         let { data } = res;
         wx.config({
-          debug: false,
+          debug: true,
           appId: data.appId,
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
@@ -265,7 +265,7 @@ export default class Appreciation extends Component {
   share = () => {
     const { id = "" } = this.$router.params
     let shareInfo = this.state.basicinfo.getTextContent
-    let url = window.location.href;
+
     this.setState({isShare: true})
 
       wx.updateAppMessageShareData({
