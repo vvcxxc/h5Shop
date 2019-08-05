@@ -180,13 +180,13 @@ export default class PaySuccess extends Component<Props> {
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id='+gift_id+'&activity_id='+activity_id
+      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   // 去增值活动
-  gotoAppreciation(_id,gift_id,activity_id) {
+  gotoAppreciation(_id, gift_id, activity_id) {
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1&gift_id='+gift_id+'&activity_id='+activity_id
+      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   //现金券详情
@@ -340,7 +340,7 @@ export default class PaySuccess extends Component<Props> {
             </View>
           </ScrollView>
           <View className="address flex center">
-            <Image className="address-img" style={{paddingLeft: "10px",paddingRight:"10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)} />
+            <Image className="address-img" style={{ paddingLeft: "10px", paddingRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)} />
             <View className="text item">{this.state.business_list.address}</View>
             <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
@@ -381,12 +381,23 @@ export default class PaySuccess extends Component<Props> {
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
                         <View className="image-list">
-                          <Image className="image" src={item.image_url} />
+                          <View className="image" style={{ position: "relative",overflow:"hidden"  }}>
+                            {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
+                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
+                              <View style={{ textDecoration: "line-through", height: "100%", fontSize: "16px", color: "rgba(225,225,225,.5)" }}>￥300</View>
+                            </View> */}
+                            <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                          </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
                         <View className="image-list">
-                          <Image className="image" src={item.image_url} />
-                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
+                          <View className="image" style={{ position: "relative",overflow:"hidden"  }}>
+                            {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
+                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
+                              <View style={{ textDecoration: "line-through", height: "100%", fontSize: "16px", color: "rgba(225,225,225,.5)" }}>￥300</View>
+                            </View> */}
+                            <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                          </View>                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
                             <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: '2' }} />
                             <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: "3" }} />
                             <Image src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
@@ -476,7 +487,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.pay_money}</Text>
                           {/* <Text className="count">{item.activity_brief}</Text> */}
                         </View>
-                        <Button className="btn-go" onClick={this.gotoAppreciation.bind(this, item.youhui_id,item.gift_id,item.activity_id)}>立刻增值</Button>
+                        <Button className="btn-go" onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>立刻增值</Button>
                       </View>
                     </View>
                   </View>
