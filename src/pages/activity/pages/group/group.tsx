@@ -226,36 +226,12 @@ export default class Group extends Component {
   share = () => {
     const { id = "" } = this.$router.params
     let info = this.state.basicinfo.share;
-    let url = window.location.href;
     this.setState({ isShare: true })
-    Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        let { data } = res;
-        console.log(info)
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "updateAppMessageShareData",
-          ]
-        })
-        wx.ready(() => {
-          wx.updateAppMessageShareData({
-            title: info.title, // 分享标题
-            desc: info.desc, // 分享描述
-            link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: info.small_img, // 分享图标
-          })
-        })
+      wx.updateAppMessageShareData({
+        title: info.title, // 分享标题
+        desc: info.desc, // 分享描述
+        link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: info.small_img, // 分享图标
       })
   }
   closeShare = () => {
