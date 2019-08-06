@@ -7,8 +7,8 @@ module.exports = {
     TOKEN: '"test_token_auth"',
     UNION_ID: '"unionid"',
     ALIPAY_USER_ID:'"test_alipay_user_id"',
-    // LOGIN_URL: '"https://test.api.tdianyi.com"',
-    LOGIN_URL: '"https://api.tdianyi.com"'
+    LOGIN_URL: '"https://test.api.tdianyi.com"',
+    // LOGIN_URL: '"https://api.tdianyi.com"'
   },
   defineConstants: {
   },

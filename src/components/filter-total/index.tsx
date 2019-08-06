@@ -132,8 +132,8 @@ export default class filterTotal extends Component<Props> {
       this.setState({ listId3: null }, () => {
         this.props.onClick(this.state.listId1, this.state.listId2, this.state.listId3)
       })
-      return 
-    } 
+      return
+    }
     this.setState({ red3:true})
     this.setState({ name3: name })
     this.setState({ listId3: id }, () => {
@@ -199,7 +199,7 @@ export default class filterTotal extends Component<Props> {
         {
           this.state.selectData1.map((item, index) => {
             const checked1 = index === this.state.list1;
-            return <View className='list'
+            return <View className='lists'
               key={''}
               onClick={this.listClick1.bind(this,index, item.id,item.name)}
             >
@@ -213,7 +213,7 @@ export default class filterTotal extends Component<Props> {
         {
           this.state.selectData2.map((item, index) => {
             const checked2 = index === this.state.list2;
-            return <View className='list'
+            return <View className='lists'
               key={''}
               onClick={this.listClick2.bind(this,index, item.id,item.name)}
             >
@@ -227,7 +227,7 @@ export default class filterTotal extends Component<Props> {
         {
           this.state.selectData3.map((item, index) => {
             const checked3 = index === this.state.list3;
-            return <View className='list' key={''} onClick={this.listClick3.bind(this,index, item.id,item.name)} >
+            return <View className='lists' key={''} onClick={this.listClick3.bind(this,index, item.id,item.name)} >
               <View>{item.name}</View>
               <AtIcon value='check' size={(checked3 ? '12' : '0')} color='#fe7b70'></AtIcon>
             </View>

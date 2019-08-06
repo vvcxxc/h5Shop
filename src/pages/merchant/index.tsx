@@ -1,9 +1,9 @@
 import Taro, { Component, hideToast } from '@tarojs/taro';
-import { View } from '@tarojs/components';
+import { View, Image } from '@tarojs/components';
 import { AtSearchBar } from 'taro-ui';
 import './index.styl';
 import request from '../../services/request';
-import List from './list';
+import List from './list'
 import { getLocation } from '../../utils/getInfo'
 
 import FilterTotal from "@/components/filter-total";
@@ -80,7 +80,7 @@ export default class MerChantPage extends Component {
       },
     })
       .then((res: any) => {
-        this.setState({ stores: res.data.store_info.data })
+        this.setState({ stores: res.data.store_list.data })
         Taro.hideLoading()
       });
   }
@@ -94,7 +94,7 @@ export default class MerChantPage extends Component {
     })
       .then((res: any) => {
         Taro.stopPullDownRefresh()
-        this.setState({ stores: res.data.store_info.data })
+        this.setState({ stores: res.data.store_list.data })
         Taro.hideLoading()
       })
   }
@@ -137,16 +137,16 @@ export default class MerChantPage extends Component {
       data: define
     })
       .then((res: any) => {
-        if (res.data.store_info.data.length < 1) {
+        if (res.data.store_list.data.length < 1) {
           this.setState({ show_bottom: true })
         } else {
           this.setState({ show_bottom: false })
         }
         if (index === 1) {
-          this.setState({ stores: [...this.state.stores, ...res.data.store_info.data], storeHeadImg: res.data.banner });
+          this.setState({ stores: [...this.state.stores, ...res.data.store_list.data], storeHeadImg: res.data.banner });
         } else {
           this.setState({ page: 1 })
-          this.setState({ stores: res.data.store_info.data })
+          this.setState({ stores: res.data.store_list.data })
         }
         Taro.hideLoading()
       })
@@ -215,6 +215,24 @@ export default class MerChantPage extends Component {
       url: '/detail-pages/business/index?id=' + id
     })
   };
+  labelColor = (color: any) => {
+    let data: any = {
+      ['拼团送礼']: '#D97B0B',
+      ['增值送礼']: '#F0634C',
+      ['认证商户']: '#FFFFFF'
+    }
+    return data[color]
+  }
+
+  // 点击展开或者收回
+  telescopicBox = (index: number, e) => {
+    this.setState({ telescopic: !this.state.telescopic }, () => {
+      let data: any = this.state.stores
+      this.state.telescopic ? data[index].height = 'auto' : data[index].height = '3.2rem'
+      this.setState({ stores: data })
+    })
+    e.stopPropagation();
+  }
 
   render() {
     return (
@@ -227,9 +245,156 @@ export default class MerChantPage extends Component {
         />
         <FilterTotal onClick={this.titleOnClick.bind(this, 0)} />
         <View className="merchant-list" style="background-color:#fff;">
-          <List onClick={this.handleClick} list={
+          {/* <List onClick={this.handleClick} list={
             this.state.stores
-          } />
+          } /> */}
+
+         <View style={{minHeight: '100vh', height: 'auto', background: '#ededed', overflow: 'hidden'}}>
+          {
+            this.state.stores.map((item2: any, index: any) => {
+              return <View className="new_box">
+                <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px' }} onClick={this.handleClick.bind(this,item2.id)}>
+                  <View className="box_title">
+                    <View className="title_l">
+                      <Image src={item2.preview} />
+                    </View>
+                    <View className="title_r">
+                      <View className="view_name1">{item2.name}</View>
+                      <View className="view_name2">
+                        <View>
+                          {
+                            item2.deal_cate ? item2.deal_cate : null
+                          }
+                        </View>
+                        <View>{item2.distance}</View>
+                      </View>
+                      <View className='view'>
+                        {
+                          item2.label.map((item3: any, index1: any) => {
+                            return <View key={''}
+                              className={this.labelColor(item3) === '#FFFFFF' ? 'span' : ''}
+                              style={{border: this.labelColor(item3) == '#FFFFFF' ? '1px solid #ff6654' : 'none',backgroundColor: this.labelColor(item3), marginBottom: 0}}
+                            >{item3}</View>
+                          })
+                        }
+                      </View>
+                    </View>
+                  </View>
+                  <View className="box_bottom" id="box_bottom"
+
+
+                    style={{
+                      height:
+                        !this.state.stores[index].height ?
+                          item2.activity_num > 2 ? '3.2rem' : 'auto' : this.state.stores[index].height,
+                          marginBottom:item2.activity_num >=1 ? '-1px':'15px',
+                      overflow: 'hidden',
+
+
+                    }}
+                  >
+                    <View
+                      style={{
+                        display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <View>
+                        < Image src={
+                          item2.activity ?
+                            (item2.activity.group ? item2.activity.group.icon : null)
+                            : null}
+                        />
+                        <View>
+                          {
+                            item2.activity ? (item2.activity.group ? item2.activity.group.activity_info : null)
+                              : null
+                          }
+                        </View>
+                        <View style={{ color: '#C71D0B' }}>
+                          {
+                            item2.activity ? (item2.activity.group ? item2.activity.group.gift_info : null)
+                              : null
+                          }
+                        </View>
+                      </View>
+                      <View onClick={this.telescopicBox.bind(this, index)}>
+                        <View style={{ marginRight: '10px' }}>
+                          {
+                            item2.activity_num ? item2.activity_num + '个活动' : null
+                          }
+                        </View>
+                        <Image src={
+                          this.state.stores[index].height !== 'auto' ?
+                            require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
+
+                          style={{
+                            display: item2.activity_num > 2 ? '' : 'none',
+                          }}
+                        />
+                      </View>
+                    </View>
+                    <View
+                      style={{ display: item2.activity ? item2.activity.cash_coupon ? '' : 'none' : 'none' }}
+                    >
+                      <Image src={
+                        item2.activity ?
+                          (item2.activity.cash_coupon ? item2.activity.cash_coupon.icon : null)
+                          : null}
+                      />
+                      <View>
+                        {
+                          item2.activity ? (item2.activity.cash_coupon ? item2.activity.cash_coupon.activity_info : null)
+                            : null
+                        }
+                      </View>
+                    </View>
+
+                    <View
+                      style={{ display: item2.activity ? item2.activity.exchange_coupon ? '' : 'none' : 'none' }}
+                    >
+                      <Image src={
+                        item2.activity ?
+                          (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.icon : null)
+                          : null}
+                      />
+                      <View>
+                        {
+                          item2.activity ? (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.activity_info : null)
+                            : null
+                        }
+                      </View>
+                    </View>
+
+                    <View
+                      style={{ display: item2.activity ? item2.activity.zeng ? '' : 'none' : 'none' }}
+                    >
+                      < Image src={
+                        item2.activity ?
+                          (item2.activity.zeng ? item2.activity.zeng.icon : null)
+                          : null}
+                      />
+                      <View>
+                        {
+                          item2.activity ? (item2.activity.zeng ? item2.activity.zeng.activity_info : null)
+                            : null
+                        }
+                        <View style={{color:'#C71D0B'}}>
+                        {
+                          item2.activity ? (item2.activity.zeng ? item2.activity.zeng.gift_info : null)
+                            : null
+                        }
+                        </View>
+                      </View>
+                    </View>
+
+                  </View>
+                </View>
+              </View>
+            })
+          }
+          </View>
+
         </View>
       </View>
     );

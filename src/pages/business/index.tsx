@@ -410,7 +410,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.participation_money}</Text>
                           <Text className="count">已拼{item.participation_number}件</Text>
                         </View>
-                        <Button className="btn-go" >立刻开团</Button>
+                        <Button className="btn-go" >立刻拼团</Button>
                       </View>
                     </View>
                   </View>

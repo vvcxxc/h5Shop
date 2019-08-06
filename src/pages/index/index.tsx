@@ -60,223 +60,6 @@ export default class Index extends Component<any> {
   componentWillMount() {
   }
 
-  // componentDidMount() {
-  //   let id = this.$router.params.id;
-  //   if(id){
-  //     sessionStorage.setItem('payStore',id)
-  //   }
-  //   this.getPayStore();
-  //   this.showLoading();
-  //   this.requestTab(); //经营列表
-  //   this.localStorageData();
-  //   this.requestLocation();
-  //   this.showGift();
-  //   this.controlVersion();
-
-  // }
-
-  // requestLocation = () => {
-  //   request({ url: 'v3/district', data: { model_type: '2' } })
-  //     .then((res: any) => {
-  //       Taro.setStorage({ key: 'allCity', data: res.data.city_list })
-
-  //     })
-  // }
-
-
-  // localStorageData = () => {
-  //   if (Object.keys(this.$router.params).length < 1) {
-  //     this.getLocatione();
-  //     return
-  //   }
-  //   if(this.$router.params.router){
-  //     Taro.getStorage({ key: 'router' }).then((res: any) => {
-  //       if (res.data.city_name && res.data.city_id) {
-  //         this.setState({ cityName: res.data.city_name })
-  //         this.setState({ cityId: res.data.city_id })
-  //         if (this.state.deal_cate_id) {
-  //           this.setState({ meta: { city_id: res.data.city_id, deal_cate_id: this.state.deal_cate_id } }, () => {
-  //             this.requestHomeList(this.state.meta)
-  //           })
-  //         } else {
-  //           this.setState({ meta: { city_id: res.data.city_id } }, () => {
-  //             this.requestHomeList(this.state.meta)
-  //           })
-  //         }
-  //       }
-  //       if (res.data.xpoint || res.data.ypoint) {
-  //         if (this.state.deal_cate_id) {
-  //           this.setState({
-  //             meta: {
-  //               xpoint: res.data.xpoint,
-  //               ypoint: res.data.ypoint,
-  //               deal_cate_id: this.state.deal_cate_id
-  //             }
-  //           }, () => {
-  //             this.requestHomeList(this.state.meta)
-  //           })
-  //         } else {
-  //           this.setState({ meta: { xpoint: res.data.xpoint, ypoint: res.data.ypoint } }, () => {
-  //             request({
-  //               url: 'v3/city_name',
-  //               data: { xpoint: res.data.xpoint, ypoint: res.data.ypoint }
-  //             })
-  //               .then((res: any) => {
-  //                 this.setState({ cityName: res.data.city })
-  //               })
-  //             this.requestHomeList(this.state.meta)
-  //             this.getCityId()
-  //           })
-  //         }
-  //       }
-  //     })
-  //   }else{
-  //     this.getLocatione()
-  //   }
-
-  // }
-  // // get location
-  // getLocatione = () => {
-  //   getLocation().then((res: any) => {
-  //     this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } })
-  //     this.setState({ locations: res }, () => {
-  //       this.getCity();
-  //       if (this.state.deal_cate_id == null) {
-  //         this.requestHomeList({ xpoint: res.longitude, ypoint: res.latitude })
-  //       } else {
-  //         this.setState({
-  //           meta: {
-  //             xpoint: this.state.locations.longitude,
-  //             ypoint: this.state.locations.latitude,
-  //             deal_cate_id: this.state.deal_cate_id
-  //           }
-  //         }, () => {
-  //           this.requestHomeList(this.state.meta)
-  //         })
-  //       }
-  //     })
-  //   })
-  // }
-
-  // // 获取城市
-  // getCity = () => {
-  //   request({
-  //     url: 'v3/city_name',
-  //     data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
-  //   })
-  //     .then((res: any) => {
-  //       this.setState({ cityName: res.data.city }, () => {
-  //         this.getCityId()
-  //       })
-  //     })
-  // }
-
-
-  // getCityId = () => {
-  //   request({
-  //     url: 'v3/citys',
-  //     data: { keyword: this.state.cityName }
-  //   })
-  //     .then((res: any) => {
-  //       this.setState({ cityId: res.data[0].id }, () => {
-  //         this.showImage()
-  //       })
-  //     })
-  // }
-
-  // // 首页数据 初始渲染
-  // requestHomeList = (meta) => {
-  //   this.showLoading();
-  //   Taro.stopPullDownRefresh()
-  //   request({
-  //     url: 'v3/stores',
-  //     data: { ...meta }
-  //   })
-  //     .then((res: any) => {
-  //       Taro.hideLoading()
-  //       this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
-  //     })
-  //     .catch(() => {
-  //       this.showLoading()
-  //     })
-  // }
-
-
-  // onPullDownRefresh () { // 自带 下拉事件
-  //   this.localStorageData();
-  //   this.setState({return_data:false})
-  // }
-
-  // onReachBottom () { 	// 自带 触底事件
-  //   // let return_data
-
-  //   // if(return_data) return
-  //   if(this.state.return_data) return
-  //   this.showLoading()
-  //   this.setState({ page: this.state.page + 1 },()=>{
-  //     let miss = {
-  //       ...this.state.meta, pages: this.state.page
-  //     }
-  //     if (this.state.deal_cate_id) {
-  //       miss['deal_cate_id'] = this.state.deal_cate_id
-  //     }
-  //     request({
-  //       url: 'v3/stores',
-  //       data: {
-  //         ...miss
-  //       }
-  //     })
-  //       .then((res: any) => {
-  //         Taro.stopPullDownRefresh()
-  //         Taro.hideLoading()
-  //         console.log(res.data.store_info.data,'data')
-  //         if(res.data.store_info.data.length<1){
-  //           this.setState({return_data:true})
-  //         }else {
-  //           this.setState({return_data:false})
-  //         }
-  //         this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
-  //       })
-  //   })
-
-  // }
-
-  // // show loading
-  // showLoading = () => {
-  //   Taro.showLoading({
-  //     title: 'loading',
-  //     mask: true
-  //   })
-  // }
-
-  // // 获取title数据
-  // requestTab = () => {
-  //   request({
-  //     url: 'v3/manage_type'
-  //   })
-  //     .then((res: any) => {
-  //       let mete = [{ name: '全部', id: 'all' }, ...res.data]
-  //       this.setState({ titleList: mete })
-  //     })
-  // }
-
-  // handleActivityClick = () => { };
-
-  // // 跳转 搜索商家列表页面
-  // handleSearch = () => Taro.navigateTo({ url: './search/index' });
-  // // 跳转 搜素城市页面
-  // showSelectCity = () => Taro.navigateTo({ url: '/business-pages/select-city/index' });
-
-  // handlerTablChange(current, id, _this) {
-  //   this.setState({ current });
-  //   if (id == 'all' || this.state.deal_cate_id == 'all') {
-  //     this.setState({ deal_cate_id: null })
-  //     this.requestHomeList({ ...this.state.meta })
-  //     return
-  //   }
-  //   this.setState({ deal_cate_id: id })
-  //   this.requestHomeList({ ...this.state.meta, deal_cate_id: id })
-  // }
 
   componentDidMount() {
       let id = this.$router.params.id;
@@ -291,16 +74,18 @@ export default class Index extends Component<any> {
   // 识别器
   recognizer = () => {
     this.requestTab(); //经营列表
-    // this.getLocationxy()// 获取定位和 城市id 城市名字
     Taro.getStorage({ key: 'router' }).then((res: any) => {
       console.log(123)
       if (Object.keys(res.data).length < 1) {
+        console.log('1')
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
         return
       }
       this.requestTab();
+      console.log(res.data.city_id,'id1')
       if (res.data.city_id && res.data.city_name) {
+        console.log(res.data.city_id,'id')
         getLocation().then((res2: any) => {
           let data: any = this.state.meta
           data.xpoint = res2.longitude
@@ -375,9 +160,9 @@ export default class Index extends Component<any> {
     })
       .then((res: any) => {
         Taro.hideLoading()
-        this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
+        this.setState({ storeList: res.data.store_list.data, storeHeadImg: res.data.banner });
         if (this.state.meta.page > 1) {
-          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
+          this.setState({ storeList: [...this.state.storeList, ...res.data.store_list.data], storeHeadImg: res.data.banner });
         }
       })
       .catch(() => {
@@ -554,6 +339,23 @@ export default class Index extends Component<any> {
         })
       })
   }
+  labelColor = (color: any) => {
+    let data: any = {
+      ['拼团送礼']: '#D97B0B',
+      ['增值送礼']: '#F0634C',
+      ['认证商户']: '#FFFFFF'
+    }
+    return data[color]
+  }
+  // 点击展开或者收回
+  telescopicBox = (index: number, e) => {
+    this.setState({ telescopic: !this.state.telescopic }, () => {
+      let data: any = this.state.storeList
+      this.state.telescopic ? data[index].height = 'auto' : data[index].height = '3.2rem'
+      this.setState({ storeList: data })
+    })
+    e.stopPropagation();
+  }
 
   // 获取中奖门店信息
   getPayStore = async () => {
@@ -586,6 +388,7 @@ export default class Index extends Component<any> {
     return dome[this.state.hahaData.data.view_type]
 
   }
+
 
 
   render() {
@@ -622,8 +425,8 @@ export default class Index extends Component<any> {
           </View>
         </View>
         <View className="advert">
-          <Image src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/MfwcW2Qn5hC8T4mfJT8t5NcAEh7pTQRb.png"} onClick={this.gotoGroup}></Image>
-          <Image src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/wWmWHKBjWZbkxYNPGPRZAst8CKbfNsGk.png"} onClick={this.gotoAppre}></Image>
+          <Image src={require('../../assets/group.png')} onClick={this.gotoGroup}></Image>
+          <Image src={require('../../assets/appre.png')} onClick={this.gotoAppre}></Image>
         </View>
         <View className="no_receive" style={{ display: this.state.showGift == 1 ? '' : 'none' }}
         >你还有未领取的礼品 去
@@ -655,69 +458,142 @@ export default class Index extends Component<any> {
             </View>
           ))}
         </View>
-        {
-          this.state.storeList.map((item: any, index: any) => {
-            return <View className='merchant inset '
-              style={{
-                paddingBottom: this.styleControl(item) ? '5px' : '0px',
-                borderRadius: this.styleControl(item) ? '' : '20px'
-              }}>
-              <View className="content flex" onClick={this.handleClick.bind(this, item.id)}>
-                <View className="item">
-                  <View className="flex" style="margin-bottom:5px;">
-                    <View className="title item" style="font-weight:500;">{item.name}</View>
-                    <AtIcon value="chevron-right" color="#999" size="16px" />
-                  </View>
 
-                  <View style="display:flex; justify-content:space-between; margin:5px 0px;">
-                    <View style="display:flex;">
+        {
+          this.state.storeList.map((item2: any, index: any) => {
+            return <View className="new_box">
+              <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px' }} onClick={this.handleClick.bind(this, item2.id)}>
+                <View className="box_title">
+                  <View className="title_l">
+                    <Image src={item2.preview} />
+                  </View>
+                  <View className="title_r">
+                    <View>{item2.name}</View>
+                    <View>
+                      <span>
+                        {
+                          item2.deal_cate ? item2.deal_cate : null
+                        }
+                      </span>
+                      <span>{item2.distance}</span>
+                    </View>
+                    <View className="view">
                       {
-                        item.label.map((item1: any, index1: any) => {
-                          return <View className="tag" key={index1} style="background-color:#fff;border: 1px solid rgba(255, 102, 84, 1);">{item1}</View>
+                        item2.label.map((item3: any, index1: any) => {
+                          return <View key={''}
+                            className={this.labelColor(item3) === '#FFFFFF' ? 'span' : ''}
+                            style={{border: this.labelColor(item3) == '#FFFFFF' ? '1px solid #ff6654' : 'none',backgroundColor: this.labelColor(item3), marginBottom: 0}}
+                          >{item3}</View>
                         })
                       }
                     </View>
-                    <View>{item.distance} </View>
                   </View>
                 </View>
-              </View>
-              <View className="content_box" onClick={this.handleClick.bind(this, item.id)}
-              >
-                <View className='content_img' 	>
-                  <Image src={
-                    this.controlPicture(item.gift_pic, item.coupon_image_url) === false ||
-                      this.controlPicture(item.gift_pic, item.coupon_image_url) === 1 ?
-                      item.preview : item.coupon_image_url} />
-                </View>
-                <View className={this.controlPicture(item.gift_pic, item.coupon_image_url) === 2 ?
-                  'content_img' : 'hidden_content_img'} style="position:relative;  padding-left:2px; margin-left:5px; ">
-                  <Image src={require("./border.png")} style="position:absolute; top:0px;left:0px; z-index:2" />
-                  <Image src={require("./qiu.png")} style="position:absolute; top:-4px;left:41%; width:25px;height:25px; z-index:2" />
-                  <Image src={item.gift_pic} />
-                </View>
-              </View>
-              <View>
-                <View className="give flex center" style={{ display: this.judgeData(item.gift_name) }}>
-                  <View className="icon">礼</View>
-                  <View className="title item ellipsis-one">
-                    <Text>{item.gift_name}</Text>
-                  </View>
-                </View>
-                <View className="give flex center"
-                  style={{ display: typeof (item.cash_coupon_name) === 'string' ? '' : 'none' }}>
-                  <View className="icon" style="background: #5d84e0">券</View>
-                  <View className="title item">
-                    <Text>{item.cash_coupon_name}</Text>
-                  </View>
-                </View>
-                <View className="give flex center"
+                <View className="box_bottom" id="box_bottom"
                   style={{
-                    display: typeof (item.exchange_coupon_name) === 'string' ? '' : 'none'
-                  }}>
-                  <View className="icon" style="background: #5dd8a5">惠</View>
-                  <View className="title item ellipsis-one">
-                    {item.exchange_coupon_name}
+                    height:
+                      !this.state.storeList[index].height ?
+                        item2.activity_num > 2 ? '3.2rem' : 'auto' : this.state.storeList[index].height,
+                    marginBottom: item2.activity_num >= 1 ? '-0.001rem' : '15px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <View
+                    style={{
+                      display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
+                      justifyContent: 'space-between',
+                      borderBottom: item2.activity_num === 1 ? 'none' : '1px solid #eeeeee'
+                    }}
+                  >
+                    <View>
+                      < Image src={
+                        item2.activity ?
+                          (item2.activity.group ? item2.activity.group.icon : null)
+                          : null}
+                      />
+                      <span>
+                        {
+                          item2.activity ? (item2.activity.group ? item2.activity.group.activity_info : null)
+                            : null
+                        }
+                      </span>
+                      <View style={{ color: '#C71D0B' }}>
+                        {
+                          item2.activity ? (item2.activity.group ? item2.activity.group.gift_info : null)
+                            : null
+                        }
+                      </View>
+                    </View>
+                    <View onClick={this.telescopicBox.bind(this, index)}>
+                      <View style={{ marginRight: '10px' }}>
+                        {
+                          item2.activity_num ? item2.activity_num + '个活动' : null
+                        }
+                      </View>
+                      <Image src={
+                        this.state.storeList[index].height !== 'auto' ?
+                          require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
+                        style={{
+                          display: item2.activity_num > 2 ? '' : 'none',
+                        }}
+                      />
+                    </View>
                   </View>
+                  <View
+                    style={{ display: item2.activity ? item2.activity.cash_coupon ? '' : 'none' : 'none',
+
+                  }}
+                  >
+                    <Image src={
+                      item2.activity ?
+                        (item2.activity.cash_coupon ? item2.activity.cash_coupon.icon : null)
+                        : null}
+                    />
+                    <View >
+                      {
+                        item2.activity ? (item2.activity.cash_coupon ? item2.activity.cash_coupon.activity_info : null)
+                          : null
+                      }
+                    </View>
+                  </View>
+
+                  <View
+                    style={{ display: item2.activity ? item2.activity.exchange_coupon ? '' : 'none' : 'none' }}
+                  >
+                    <Image src={
+                      item2.activity ?
+                        (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.icon : null)
+                        : null}
+                    />
+                    <View>
+                      {
+                        item2.activity ? (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.activity_info : null)
+                          : null
+                      }
+                    </View>
+                  </View>
+
+                  <View
+                    style={{ display: item2.activity ? item2.activity.zeng ? '' : 'none' : 'none' }}
+                  >
+                    < Image src={
+                      item2.activity ?
+                        (item2.activity.zeng ? item2.activity.zeng.icon : null)
+                        : null}
+                    />
+                    <View>
+                      {
+                        item2.activity ? (item2.activity.zeng ? item2.activity.zeng.activity_info : null)
+                          : null
+                      }
+                      <View style={{ color: '#C71D0B' }}>
+                        {
+                          item2.activity ? (item2.activity.zeng ? item2.activity.zeng.gift_info : null)
+                            : null
+                        }</View>
+                    </View>
+                  </View>
+
                 </View>
               </View>
             </View>
