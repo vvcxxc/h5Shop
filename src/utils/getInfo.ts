@@ -143,7 +143,6 @@ export const getLocation = () => {
         jsApiList: [
           "getLocation",
           "openLocation",
-          "updateAppMessageShareData"
         ]
       });
     })
