@@ -227,6 +227,7 @@ export default class Group extends Component {
     const { id = "" } = this.$router.params
     let info = this.state.basicinfo.share;
     this.setState({ isShare: true })
+    let url = window.location;
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
