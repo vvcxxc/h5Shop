@@ -6,8 +6,6 @@ import request from '../../services/request';
 // import { connect } from '@tarojs/redux'
 import { getLocation } from '../../utils/getInfo'
 import VersionOne from './versionOne/index'
-import VersionTwo from './versionTwo/index'
-import VersionThree from './versionThree/index'
 
 export default class Index extends Component<any> {
 	/**
@@ -42,14 +40,6 @@ export default class Index extends Component<any> {
     need_jump: null,
     return_data: false,
     hahaData: {
-      "code": 200,
-      "message": "success",
-      "data": {
-        "cashCouponList": [],
-        "exchangeCouponList": [],
-        "info": {},
-        "view_type": null
-      }
     }
   };
 
@@ -75,17 +65,13 @@ export default class Index extends Component<any> {
   recognizer = () => {
     this.requestTab(); //经营列表
     Taro.getStorage({ key: 'router' }).then((res: any) => {
-      console.log(123)
       if (Object.keys(res.data).length < 1) {
-        console.log('1')
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
         return
       }
       this.requestTab();
-      console.log(res.data.city_id, 'id1')
       if (res.data.city_id && res.data.city_name) {
-        console.log(res.data.city_id, 'id')
         getLocation().then((res2: any) => {
           let data: any = this.state.meta
           data.xpoint = res2.longitude
@@ -366,7 +352,7 @@ export default class Index extends Component<any> {
         })
           .then((res: any) => {
             this.setState({
-              hahaData: res,
+              hahaData: res.data.store_info,
             })
           })
       }
@@ -375,13 +361,13 @@ export default class Index extends Component<any> {
 
   // 控制显示哪个组件
   controlVersion = () => {
-    let dome: any = {
-      [1]: <VersionOne list={this.state.hahaData.data.info} />,
-      [2]: <VersionTwo list={this.state.hahaData.data.info} />,
-      [3]: <VersionThree list={this.state.hahaData.data.info}
-        data={this.state.hahaData.data.cashCouponList} />
-    }
-    return dome[this.state.hahaData.data.view_type]
+    // let dome: any = {
+    //   [1]: <VersionOne list={this.state.hahaData.data.info} />,
+    //   [2]: <VersionTwo list={this.state.hahaData.data.info} />,
+    //   [3]: <VersionThree list={this.state.hahaData.data.info}
+    //     data={this.state.hahaData.data.cashCouponList} />
+    // }
+    // return dome[this.state.hahaData.data.view_type]
 
   }
 
@@ -432,13 +418,12 @@ export default class Index extends Component<any> {
 
         <View className="receive_box">
           <View className="receive">已领取</View>
-          <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/s/uPCmihwL5HZrNDE-YmfW4A">公众号</ a>"
+          <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0NTI3OTE3OQ==#wechat_redirect">公众号</ a>"
           获取更多优惠信息</View>
         </View>
 
-        {
-          this.controlVersion()
-        }
+        {/*首页 金黄色组件 */}
+        <VersionOne list={this.state.hahaData} />
 
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (

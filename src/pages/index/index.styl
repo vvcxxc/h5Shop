@@ -232,23 +232,37 @@
 }
 
 .no_receive {
-	display: flex;
-	justify-content: center;
-	height:95px;
-	background-color:rgba(255,242,230,1);
-	align-items:center;
-	}
-
-
-// .receive_box
-//    background-color rgba(255,242,230,1)
-
-  .receive_box {
-    background-color: rgba(255,242,230,1)
-    text-align: center;
-    padding :13px 0;
-
+  display: flex;
+  justify-content: center;
+  height:95px;
+  background-color:rgba(255,242,230,1);
+  align-items:center;
   }
+.receive_box {
+  background-color: rgba(255,242,230,1)
+  text-align: center;
+  padding-top:13px;
+  padding-bottom:16px;
+  .receive{
+    font-family:PingFang-SC-Bold;
+    font-size:35px;
+    line-height:1;
+    color:#FF6654;
+    font-weight:bold;
+    margin-bottom:8px;
+  }
+  .focus_on{
+    font-size:26px;
+    font-family:PingFang-SC-Regular;
+    font-weight:400;
+    line-height:1;
+    color:#313131;
+  a {
+    color:#2649FD;
+    border-bottom:1px solid #2649FD;
+    }
+  }
+}
 .new_box {
   display: flex;
   width: 100%;
