@@ -62,9 +62,9 @@ export default class Index extends Component<any> {
 
 
   componentDidMount() {
-      let id = this.$router.params.id;
-    if(id){
-      sessionStorage.setItem('payStore',id)
+    let id = this.$router.params.id;
+    if (id) {
+      sessionStorage.setItem('payStore', id)
     }
     this.requestLocation();
     this.recognizer();
@@ -83,9 +83,9 @@ export default class Index extends Component<any> {
         return
       }
       this.requestTab();
-      console.log(res.data.city_id,'id1')
+      console.log(res.data.city_id, 'id1')
       if (res.data.city_id && res.data.city_name) {
-        console.log(res.data.city_id,'id')
+        console.log(res.data.city_id, 'id')
         getLocation().then((res2: any) => {
           let data: any = this.state.meta
           data.xpoint = res2.longitude
@@ -109,7 +109,7 @@ export default class Index extends Component<any> {
         data.page = 1
         this.setState({ meta: data })
       }
-    }).catch((res:any)=>{
+    }).catch((res: any) => {
       this.getLocationxy()// 获取定位和 城市id 城市名字
     })
   }
@@ -160,9 +160,9 @@ export default class Index extends Component<any> {
     })
       .then((res: any) => {
         Taro.hideLoading()
-        this.setState({ storeList: res.data.store_list.data, storeHeadImg: res.data.banner });
+        this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
         if (this.state.meta.page > 1) {
-          this.setState({ storeList: [...this.state.storeList, ...res.data.store_list.data], storeHeadImg: res.data.banner });
+          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
         }
       })
       .catch(() => {
@@ -290,7 +290,6 @@ export default class Index extends Component<any> {
       }
     })
       .then((res: any) => {
-        console.log(res, 'res')
         this.setState({ indexImg: res.data.pic })
         this.setState({ indexImgId: res.data.id })
         this.setState({ adLogId: res.data.adLogId })
@@ -300,9 +299,6 @@ export default class Index extends Component<any> {
 
   // 跳转到我的礼品
   routerGift = () => {
-    // Taro.reLaunch(
-    // 	{ url: '../../pages/my/index' }
-    // )
     Taro.navigateTo({ url: '/activity-pages/my-welfare/pages/gift/welfare.gift' });
   }
   gotoGroup = () => {
@@ -482,15 +478,19 @@ export default class Index extends Component<any> {
                         item2.label.map((item3: any, index1: any) => {
                           return <View key={''}
                             className={this.labelColor(item3) === '#FFFFFF' ? 'span' : ''}
-                            style={{border: this.labelColor(item3) == '#FFFFFF' ? '1px solid #ff6654' : 'none',backgroundColor: this.labelColor(item3), marginBottom: 0}}
+                            style={{ border: this.labelColor(item3) == '#FFFFFF' ? '1px solid #ff6654' : 'none', backgroundColor: this.labelColor(item3), marginBottom: 0, lineHeight: 1 }}
                           >{item3}</View>
                         })
                       }
                     </View>
                   </View>
                 </View>
-                <View className="box_bottom" id="box_bottom"
+
+
+                <View
+                  className="box_bottom" id="box_bottom"
                   style={{
+                    position:'relative',
                     height:
                       !this.state.storeList[index].height ?
                         item2.activity_num > 2 ? '3.2rem' : 'auto' : this.state.storeList[index].height,
@@ -498,6 +498,23 @@ export default class Index extends Component<any> {
                     overflow: 'hidden',
                   }}
                 >
+                   <View onClick={this.telescopicBox.bind(this, index)}
+                    style={{
+                      position:'absolute',top:'0',right:'0',
+                      display: item2.activity_num > 2 ? '' : 'none',
+                    }}
+                    >
+                      <View style={{ marginRight: '8px' }}>
+                        {
+                          item2.activity_num ? item2.activity_num + '个活动' : null
+                        }
+                      </View>
+                      <Image style={{marginRight: 0}} src={
+                        this.state.storeList[index].height !== 'auto' ?
+                          require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
+                      />
+                    </View>
+
                   <View
                     style={{
                       display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
@@ -505,55 +522,52 @@ export default class Index extends Component<any> {
                       borderBottom: item2.activity_num === 1 ? 'none' : '1px solid #eeeeee'
                     }}
                   >
-                    <View>
+
+                    <View className="box_bottom_child">
                       < Image src={
                         item2.activity ?
                           (item2.activity.group ? item2.activity.group.icon : null)
                           : null}
                       />
-                      <span>
-                        {
-                          item2.activity ? (item2.activity.group ? item2.activity.group.activity_info : null)
-                            : null
-                        }
-                      </span>
-                      <View style={{ color: '#C71D0B' }}>
-                        {
-                          item2.activity ? (item2.activity.group ? item2.activity.group.gift_info : null)
-                            : null
-                        }
+
+                      <View className=" ellipsis-one"
+                        style={{ width: '9rem', display: 'block' }}
+                      >
+                        <span>
+                          {
+                            item2.activity ? (item2.activity.group ? item2.activity.group.activity_info : null)
+                              : null
+                          }
+                        </span>
+                        <span style={{ color: '#C71D0B' }}>
+                          {
+                            item2.activity ? (item2.activity.group ? item2.activity.group.gift_info : null)
+                              : null
+                          }
+                        </span>
                       </View>
                     </View>
-                    <View onClick={this.telescopicBox.bind(this, index)}>
-                      <View style={{paddingRight: '13rpx', fontSize: '20rpx', display: 'flex', alignItems: 'center'}}>
-                        {
-                          item2.activity_num ? item2.activity_num + '个活动' : null
-                        }
-                      </View>
-                      <Image src={
-                        this.state.storeList[index].height !== 'auto' ?
-                          require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
-                        style={{
-                          display: item2.activity_num > 2 ? '' : 'none',
-                        }}
-                      />
-                    </View>
+
                   </View>
                   <View
-                    style={{ display: item2.activity ? item2.activity.cash_coupon ? '' : 'none' : 'none',
+                    style={{
+                      display: item2.activity ? item2.activity.cash_coupon ? '' : 'none' : 'none',
 
-                  }}
+                    }}
                   >
                     <Image src={
                       item2.activity ?
                         (item2.activity.cash_coupon ? item2.activity.cash_coupon.icon : null)
                         : null}
                     />
-                    <View >
-                      {
-                        item2.activity ? (item2.activity.cash_coupon ? item2.activity.cash_coupon.activity_info : null)
-                          : null
-                      }
+                    <View className=" ellipsis-one"
+                      style={{ width: '9rem', display: 'block' }}>
+                      <span>
+                        {
+                          item2.activity ? (item2.activity.cash_coupon ? item2.activity.cash_coupon.activity_info : null)
+                            : null
+                        }
+                      </span>
                     </View>
                   </View>
 
@@ -565,15 +579,19 @@ export default class Index extends Component<any> {
                         (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.icon : null)
                         : null}
                     />
-                    <View>
-                      {
-                        item2.activity ? (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.activity_info : null)
-                          : null
-                      }
+                    <View className=" ellipsis-one"
+                      style={{ width: '9rem', display: 'block' }}>
+                      <span>
+                        {
+                          item2.activity ? (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.activity_info : null)
+                            : null
+                        }
+                      </span>
                     </View>
                   </View>
 
                   <View
+                    className="box_bottom_child"
                     style={{ display: item2.activity ? item2.activity.zeng ? '' : 'none' : 'none' }}
                   >
                     < Image src={
@@ -581,16 +599,20 @@ export default class Index extends Component<any> {
                         (item2.activity.zeng ? item2.activity.zeng.icon : null)
                         : null}
                     />
-                    <View>
-                      {
-                        item2.activity ? (item2.activity.zeng ? item2.activity.zeng.activity_info : null)
-                          : null
-                      }
-                      <View style={{ color: '#C71D0B' }}>
+                    <View className=" ellipsis-one"
+                      style={{ width: '9rem', display: 'block' }}>
+                      <span>
+                        {
+                          item2.activity ? (item2.activity.zeng ? item2.activity.zeng.activity_info : null)
+                            : null
+                        }
+                      </span>
+                      <span style={{ color: '#C71D0B' }}>
                         {
                           item2.activity ? (item2.activity.zeng ? item2.activity.zeng.gift_info : null)
                             : null
-                        }</View>
+                        }
+                      </span>
                     </View>
                   </View>
 

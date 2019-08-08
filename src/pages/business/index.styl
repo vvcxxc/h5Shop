@@ -81,9 +81,13 @@
                 padding: 0;
             .box_left
                 height:100%
-                flex:242
+                flex:250
                 z-index:3
                 position relative
+                display:flex
+                flex-direction:column
+                justify-content:center
+                align-items:center
                 .box_left_price
                     height: 30%
                     width: 100%
@@ -91,8 +95,7 @@
                     color: #EE3131
                     font-size: 45px
                     margin: 0 auto
-                    margin-top: 30%
-                    margin-bottom: 5%
+                    margin-bottom: 10%
                     display: inline-block
                     ._price
                         font-size: 60px
@@ -102,14 +105,12 @@
                         font-weight: bold
                 .box_left_return
                     text-align :center
-                    font-size :16px
+                    font-size :23px
                     background: #FDE8E5;
                     color: #ff4530;
-                    height: 40px;
-                    width 85%
-                    line-height :40px
-                    margin-right: 5%
-                    float right
+                    padding 10px 15px
+                    line-height: 1;
+                    display: inline-block;
             .box_center
                 height:100%
                 flex:250
@@ -182,19 +183,30 @@
             padding-top : 10px
     .merchant-details__tit
         font-size: 36px
-        paddingLeft: 24px
+        padding-left: 24px
+        height: 52px
+        position: relative
+        display flex
+        align-items: center
         .mark
-            font-size:  10px
+            font-size:  20px
             color: #fff
             background: #D97B0B
-            padding: 1px 5px
-            border-radius:  2px
-            margin-right: 10px
-            width: 14px
+            padding: 2px 10px
+            border-radius:  4px
+            margin-right: 20px
+            width: 28px
             position: absolute
-            left: 5%
+            left: 24px
+            bottom: 0
+            text-align: center
+            vertical-align: inherit
         .fwb
-            fontWeight: bold
+            font-weight: bold
+            position: absolute
+            left: 90px
+            bottom 0px
+            line-height 1
     .ticket
         padding: 24px 24px 0
         .ticket-view
@@ -247,9 +259,9 @@
                     text-align center
                     color #ED2929
                 .btn-buy
-                    height 60px
-                    width 180px
-                    line-height: 44px
+                    height 47px
+                    width 145px
+                    line-height: 47px
                     border-radius: 5px
                     background:linear-gradient(90deg,#FE7450,#FF2614)
                     color: #fff
@@ -287,9 +299,9 @@
                     font-size: 24px
                     color #999
             .btn-buy
-                width 180px
-                height 60px
-                line-height: 44px
+                width 145px
+                height 47px
+                line-height: 47px
                 border-radius: 5px
                 background:linear-gradient(90deg,#FE7450,#FF2614)
                 color: #fff
@@ -297,7 +309,7 @@
                 font-size: 24px
                 padding: 0 20px
                 position absolute
-                bottom 40px
+                bottom 48px
                 right: 0
     .recommend-view
         padding: 24px

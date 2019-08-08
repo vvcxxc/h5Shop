@@ -15,7 +15,7 @@ export const Login = () => {
       console.log('已登录')
       return
     }
-    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY0Nzk0MzQ1LCJleHAiOjE1NjUwOTQzNDUsIm5iZiI6MTU2NDc5NDM0NSwianRpIjoiTVZhZThsSzNVOFNNMEluYyIsInN1YiI6MzAxOCwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.j3_1tG8rtXf8qMBsu5MdvDGOKycV5XYlQFEzcZ4n_O8')
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NjUxNDQwODYsImV4cCI6MTU2NTQ0NDA4NiwibmJmIjoxNTY1MTQ0MDg2LCJqdGkiOiJBcGprZTB0cmZSSUd5WHBQIiwic3ViIjozMDE4LCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.peF1_yA2hBpIss3KM-l1d5pyhwz0K9qHkronOF9ajck')
 
   }else{
     if (type == 'wechat'){

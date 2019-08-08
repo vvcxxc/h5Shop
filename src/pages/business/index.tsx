@@ -131,7 +131,7 @@ export default class PaySuccess extends Component<Props> {
     })
     let that = this;
     getLocation().then((res: any) => {
-      // console.log(res);
+      console.log(res);
       this.setState({
         yPoint: res.latitude,
         xPoint: res.longitude
@@ -350,21 +350,10 @@ export default class PaySuccess extends Component<Props> {
         {/* 拼团活动 */}
 
         {
-          this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center", paddingTop: "10px" }}>
-              <View className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#D97B0B",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>礼</View>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "12px" }}>拼团送豪礼</Text>
+          this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff" ,paddingTop:"12px"}}>
+            <View className="merchant-details__tit" >
+              <View className="mark" style={{backgroundColor: "#D97B0B"}}>礼</View>
+              <Text className="fwb">拼团送豪礼</Text>
             </View>
             <View className="hidden-box" id="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
               {
@@ -436,21 +425,10 @@ export default class PaySuccess extends Component<Props> {
         }
         {/* 增值活动 */}
         {
-          this.state.activity_appre.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
-              <Text className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#C71D0B",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>增</Text>
-              <Text className="fwb hidden-box" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>增值低价买</Text>
+          this.state.activity_appre.length == 0 ? <View></View> : <View style={{ background: "#fff",paddingTop:"12px" }}>
+            <View className="merchant-details__tit" >
+              <Text className="mark" style={{ backgroundColor: "#C71D0B"}}>增</Text>
+              <Text className="fwb" >增值低价买</Text>
             </View>
             <View style={{ width: "100%", overflow: "hidden", height: this.state.activity_appre_bull ? "auto" : "9rem" }}>
               {
@@ -514,21 +492,10 @@ export default class PaySuccess extends Component<Props> {
         }
         {/* 优惠券 */}
         {
-          this.state.cashCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
-              <Text className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#5D84E0",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>券</Text>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>现金券</Text>
+          this.state.cashCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff",paddingTop:"12px"}}>
+            <View className="merchant-details__tit" >
+              <Text className="mark" style={{backgroundColor: "#5D84E0"}}>券</Text>
+              <Text className="fwb">现金券</Text>
             </View>
             <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", height: this.state.couponList_bull ? "auto" : "5.56rem" }}>
               {
@@ -564,21 +531,10 @@ export default class PaySuccess extends Component<Props> {
 
         {/* 优惠信息*/}
         {
-          this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
-              <Text className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#5DD8A5",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>惠</Text>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>优惠信息</Text>
+          this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff",paddingTop:"12px" }}>
+            <View className="merchant-details__tit" >
+              <Text className="mark" style={{backgroundColor: "#5DD8A5"}}>惠</Text>
+              <Text className="fwb">优惠信息</Text>
             </View>
             <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "5.4rem" }}>
               {
@@ -621,7 +577,7 @@ export default class PaySuccess extends Component<Props> {
           this.state.recommend.length == 0 ? "" :
             <View className="recommend-view bcfff">
               <View className="merchant-details__tit">
-                <Text className="fwb">附近推荐</Text>
+                <Text className="fwb" style={{left:"0"}}>附近推荐</Text>
               </View>
               <View className="recommend-cells">
                 {
