@@ -341,8 +341,8 @@ export default class Index extends Component<any> {
 
   // 获取中奖门店信息
   getPayStore = async () => {
-    // let id = sessionStorage.getItem('payStore')
-    let id = 717
+    let id = sessionStorage.getItem('payStore')
+    // let id = 717
     if (id) {
       let location = await getLocation();
       // let id = this.$router.params.id;
