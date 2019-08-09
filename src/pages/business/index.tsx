@@ -342,7 +342,7 @@ export default class PaySuccess extends Component<Props> {
           <View className="address flex center">
             <Image className="address-img" style={{ paddingLeft: "10px", paddingRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)} />
             <View className="text item" onClick={this.routePlanning.bind(this)}>{this.state.business_list.address}</View>
-            <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
+            <Image className="mobile-img" style={{ paddingLeft: "30px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #f0eff0" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
         </View>
 
@@ -361,7 +361,7 @@ export default class PaySuccess extends Component<Props> {
                   <View className="group-purchase bcfff _pintuan" key={item.name} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                     <View style={{ height: "5px" }}></View>
                     <View className="hd">
-                      <View className="flex center tuan" style={{ paddingBottom: "5px", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
+                      <View className="flex center tuan" style={{ paddingBottom: "10px", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
                         <View className="item desc">{item.name}</View>
                         <View className="count">{item.participation_number}人团</View>
                       </View>
@@ -369,7 +369,7 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
-                        <View className="image-list">
+                        <View className="image-list"  style={{ paddingTop: "10px", boxSizing: "border-box" }}>
                           <View className="image" style={{ position: "relative",overflow:"hidden"  }}>
                             {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
@@ -379,7 +379,7 @@ export default class PaySuccess extends Component<Props> {
                           </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
-                        <View className="image-list">
+                        <View className="image-list"  style={{ paddingTop: "10px", boxSizing: "border-box" }}>
                           <View className="image" style={{ position: "relative",overflow:"hidden"  }}>
                             {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
@@ -397,7 +397,7 @@ export default class PaySuccess extends Component<Props> {
                       <View className="flex center">
                         <View className="item">
                           <Text className="money">￥{item.participation_money}</Text>
-                          <Text className="count">已拼{item.participation_number}件</Text>
+                          {/* <Text className="count">已拼{item.participation_number}件</Text> */}
                         </View>
                         <Button className="btn-go" >立刻拼团</Button>
                       </View>
@@ -411,7 +411,7 @@ export default class PaySuccess extends Component<Props> {
               this.state.activity_group.length != 1 ?
                 <View className="ft-more flex center" style={{ textAlign: "center", width: "100%", background: "#fff" }}
                   onClick={() => { this.setState({ activity_group_bull: !this.state.activity_group_bull }); }}>
-                  <View className="more-box">
+                  <View className="more-box" style={{color:"#999",fontSize:"12px" }}>
                     {this.state.activity_group_bull ? "收回" : "查看更多"}
                     {
                       this.state.activity_group_bull ?
@@ -440,7 +440,7 @@ export default class PaySuccess extends Component<Props> {
                         <View className="item desc">{item.name}</View>
                       </View>
                     </View>
-                    <View className="image-list" style={{ position: "relative", marginBottom: "5px" }}>
+                    <View className="image-list" style={{ position: "relative", marginBottom: "10px" }}>
                       {
                         item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
                           <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} />
@@ -478,7 +478,7 @@ export default class PaySuccess extends Component<Props> {
                   style={{ textAlign: "center", width: "100%", background: "#fff" }}
                   onClick={() => { this.setState({ activity_appre_bull: !this.state.activity_appre_bull }) }}
                 >
-                  <View className="more-box">
+                  <View className="more-box" style={{color:"#999",fontSize:"12px" }}>
                     {this.state.activity_appre_bull ? "收回" : "查看更多"}
                     {
                       this.state.activity_appre_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
@@ -497,11 +497,11 @@ export default class PaySuccess extends Component<Props> {
               <Text className="mark" style={{backgroundColor: "#5D84E0"}}>券</Text>
               <Text className="fwb">现金券</Text>
             </View>
-            <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", height: this.state.couponList_bull ? "auto" : "5.56rem" }}>
+            <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden",paddingTop:"0", height: this.state.couponList_bull ? "auto" : "5.05rem" }}>
               {
                 this.state.cashCouponList.map((item) => (
                   <View className="ticket-view flex center" key={item.id} style={{ position: 'relative' }} onClick={this.handleClick.bind(this, item.id)}>
-                    <View className="left" style={{ position: 'absolute', left: '30px' }}>
+                    <View className="left" style={{ position: 'absolute', left: '24px' }}>
                       <View className="money"><View style={{ fontWeight: 'bold', float: "left", marginRight: "10px" }}>￥{item.return_money}</View>{item.name}</View>
                       <View className="desc">购买后{item.expire_day}天有效</View>
                       <View className="sales">极速退/免预约/全部商品可用</View>
@@ -518,7 +518,7 @@ export default class PaySuccess extends Component<Props> {
               this.state.cashCouponList.length != 1 ? <View className="ft-more flex center"
                 style={{ textAlign: "center", width: "100%", background: "#fff" }}
                 onClick={() => { this.setState({ couponList_bull: !this.state.couponList_bull }) }} >
-                < View className="more-box">
+                < View className="more-box" style={{color:"#999",fontSize:"12px" }}>
                   {this.state.couponList_bull ? "收回" : "查看更多"}
                   {
                     this.state.couponList_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
@@ -560,7 +560,7 @@ export default class PaySuccess extends Component<Props> {
                 <View className="ft-more flex center"
                   style={{ textAlign: "center", width: "100%", background: "#fff", paddingBottom: "0", marginTop: "0" }}
                   onClick={() => { this.setState({ exchangeCouponList_bull: !this.state.exchangeCouponList_bull }) }} >
-                  < View className="more-box">
+                  < View className="more-box" style={{color:"#999",fontSize:"12px" }}>
 
                     {this.state.exchangeCouponList_bull ? "收回" : "查看更多"}
                     {

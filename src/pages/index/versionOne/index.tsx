@@ -46,9 +46,9 @@ export default class VersionOne extends Component<Props> {
 
   labelColor = (color: any) => {
     let data: any = {
-      ['拼团送礼']: '#D97B0B',
-      ['增值送礼']: '#F0634C',
-      ['认证商户']: '#EF301C'
+      ['拼团送礼']: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/e78pJkim5TSZdQzBcPHSbz5aDPtM32nC.png',
+      ['增值送礼']: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7KyKnTjB7rSMktxap7Q3hFQaAyc3nG5j.png',
+      ['认证商户']: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/HF5kJnteArYMzH5dQxFAydwd8MsBriEY.png'
     }
     return data[color]
   }
@@ -58,13 +58,13 @@ export default class VersionOne extends Component<Props> {
     // console.log(this.props.list,'444')
     // let meta = ['拼团送礼', '增值送礼', '认证商户']
     return (
-      <View className="new_box"style={{display:that.name? '':'none'}}>
+      <View className="new_box" style={{ display: that.name ? '' : 'none' }}>
         <View className="box_two" style={{ paddingBottom: that.activity ? '' : '4px' }} onClick={this.handleClick.bind(this, that.id)}>
           <View className="box_title">
             <View className="title_l">
               <Image src={that.preview} />
             </View>
-            <View className="title_r">
+            <View className="title_r_two">
               <View>{that.name}</View>
               <View>
                 <span>
@@ -74,18 +74,13 @@ export default class VersionOne extends Component<Props> {
                 </span>
                 <span>{that.distance}</span>
               </View>
-              <View className="view">
+              <div className="title_r_gift">
                 {
-
-                  that.label ?
-                  that.label.map((item3: any, index1: any) => {
-                      return <View key={''}
-                        className={this.labelColor(item3)}
-                        style={{ border: this.labelColor(item3), backgroundColor: this.labelColor(item3), color: '#fff', marginBottom: 0, lineHeight: 1 }}
-                      >{item3}</View>
-                    }) : null
+                   that.label ?  that.label.map((item3: any, index3: number) => {
+                    return < img src={this.labelColor(item3)} alt="" />
+                  }) : null
                 }
-              </View>
+              </div>
             </View>
           </View>
 
@@ -102,24 +97,28 @@ export default class VersionOne extends Component<Props> {
             }}
           >
             <View onClick={this.telescopicBox.bind(this, '1')}
+             className="_child_two"
               style={{
                 position: 'absolute', top: '0', right: '0',
                 display: that.activity_num > 2 ? '' : 'none',
-
               }}
             >
               <View style={{ marginRight: '8px' }}>
-                <span style={{ color: '#7C4310'}}>
+                <span style={{ color: '#7C4310' }}>
                   {
                     that.activity_num ? that.activity_num + '个活动' : null
                   }
-               </span>
+                </span>
               </View>
-              <img  src={
+              <Image src={
+                     that.height !== 'auto' ?
+                     require('../../../assets/san_bottom.png') : require('../../../assets/san_top.png')}
+                    />
+              {/* <img src={
                 that.height !== 'auto' ?
                   require('../../../assets/san_bottom.png')
                   :
-                  require('../../../assets/san_top.png')} alt="" />
+                  require('../../../assets/san_top.png')} alt="" /> */}
             </View>
 
             <View
@@ -129,7 +128,7 @@ export default class VersionOne extends Component<Props> {
                 borderBottom: that.activity_num === 1 ? 'none' : '0.5px solid #f0b068'
               }}
             >
-              <View className="box_bottom_child">
+              <View  className="_child_two">
                 < Image src={
                   that.activity ?
                     (that.activity.group ? that.activity.group.icon : null)
@@ -154,6 +153,7 @@ export default class VersionOne extends Component<Props> {
               </View>
             </View>
             <View
+             className="_child_two"
               style={{
                 display: that.activity ? that.activity.cash_coupon ? '' : 'none' : 'none',
 
@@ -176,6 +176,7 @@ export default class VersionOne extends Component<Props> {
             </View>
 
             <View
+            className="_child_two"
               style={{ display: that.activity ? that.activity.exchange_coupon ? '' : 'none' : 'none' }}
             >
               <Image src={
@@ -195,7 +196,7 @@ export default class VersionOne extends Component<Props> {
             </View>
 
             <View
-              className="box_bottom_child"
+              className="_child_two"
               style={{ display: that.activity ? that.activity.zeng ? '' : 'none' : 'none' }}
             >
               < Image src={

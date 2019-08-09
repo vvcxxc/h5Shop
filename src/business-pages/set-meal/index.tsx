@@ -94,7 +94,6 @@ export default class SetMeal extends Component {
       })
         .then((res: any) => {
           console.log(res);
-          //合并代码后可以打开这个
           if (res.code != 200) {
             Taro.hideLoading()
             Taro.showToast({ title: '信息错误', icon: 'none' })
@@ -173,57 +172,57 @@ export default class SetMeal extends Component {
   }
   //地图
   routePlanning = (e) => {
-		let browserType = getBrowserType();
-		if(browserType == 'wechat') {
-			let longitude = parseFloat(this.state.store.xpoint);
-			let latitude = parseFloat(this.state.store.ypoint);
-			let url = window.location;
-			Taro.request({
-					url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-					method: 'GET',
-					data: {
-						url
-					}
-				})
-				.then(res => {
-					let {
-						data
-					} = res;
-					wx.config({
-						debug: false,
-						appId: data.appId,
-						timestamp: data.timestamp,
-						nonceStr: data.nonceStr,
-						signature: data.signature,
-						jsApiList: [
-							"getLocation",
-							"openLocation"
-						]
-					})
-					wx.ready(() => {
-						wx.openLocation({
-							latitude,
-							longitude,
-							scale: 18,
-							name: this.state.store.sname,
-							address: this.state.store.saddress,
-						})
+    let browserType = getBrowserType();
+    if (browserType == 'wechat') {
+      let longitude = parseFloat(this.state.store.xpoint);
+      let latitude = parseFloat(this.state.store.ypoint);
+      let url = window.location;
+      Taro.request({
+        url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+        method: 'GET',
+        data: {
+          url
+        }
+      })
+        .then(res => {
+          let {
+            data
+          } = res;
+          wx.config({
+            debug: false,
+            appId: data.appId,
+            timestamp: data.timestamp,
+            nonceStr: data.nonceStr,
+            signature: data.signature,
+            jsApiList: [
+              "getLocation",
+              "openLocation"
+            ]
+          })
+          wx.ready(() => {
+            wx.openLocation({
+              latitude,
+              longitude,
+              scale: 18,
+              name: this.state.store.sname,
+              address: this.state.store.saddress,
+            })
 
-					})
-				})
+          })
+        })
 
-		} else if(browserType == 'alipay') {
-			Taro.navigateTo({
-				url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.store.xpoint + ',' + this.state.store.ypoint + '&destName=' + this.state.store.sname + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
-			})
-		} else {
-			Taro.showToast({
-				title: "参数错误",
-				icon: "none"
-			});
-		}
-		e.stopPropagation();
-	}
+    } else if (browserType == 'alipay') {
+      Taro.navigateTo({
+        url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.store.xpoint + ',' + this.state.store.ypoint + '&destName=' + this.state.store.sname + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
+      })
+    } else {
+      Taro.showToast({
+        title: "参数错误",
+        icon: "none"
+      });
+    }
+    e.stopPropagation();
+  }
   render() {
     return (
       <View className="set-meal">
@@ -268,9 +267,9 @@ export default class SetMeal extends Component {
           <View className="desc">{this.state.coupon.list_brief}</View>
 
           <View className="tags">
-            <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('可叠加') !== -1 ? '#fde8e5' : '#fff' }}>可叠加</Text>
-            <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('随时退') !== -1 ? '#fde8e5' : '#fff' }}>随时退</Text>
-            <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('免预约') !== -1 ? '#fde8e5' : '#fff' }}>免预约</Text>
+            <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('可叠加') !== -1 ? '' : '#fff' }}>可叠加</Text>
+            <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('随时退') !== -1 ? '' : '#fff' }}>随时退</Text>
+            <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('免预约') !== -1 ? '' : '#fff' }}>免预约</Text>
           </View>
         </View>
         <View className="shop mt20 pd30 bcff" onClick={this.handleClick2.bind(this, this.state.store.id)}>
@@ -286,9 +285,9 @@ export default class SetMeal extends Component {
             <AtIcon value="chevron-right" color="#999" size="24px" />
           </View>
           <View className="address-view flex center">
-            <Image className="address-image"  onClick = {this.routePlanning.bind(this)} style={{ width: "15px", height: "15px" }} src={AddressImg} />
-            <View className="distance" onClick = {this.routePlanning.bind(this)} >{this.state.store.distance}</View>
-            <View className="text flex-item" onClick = {this.routePlanning.bind(this)} style={{ width: "80%" }}>{this.state.store.saddress}</View>
+            <Image className="address-image" onClick={this.routePlanning.bind(this)} style={{ width: "15px", height: "15px" }} src={AddressImg} />
+            <View className="distance" onClick={this.routePlanning.bind(this)} >{this.state.store.distance}</View>
+            <View className="text flex-item" onClick={this.routePlanning.bind(this)} style={{ width: "80%" }}>{this.state.store.saddress}</View>
             <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
 
           </View>
@@ -333,12 +332,13 @@ export default class SetMeal extends Component {
             <View className="examine-more mt20 pd30 bcff">
               <View className="set-meal__tit">
                 <Text className="fwb">图文详情</Text>
-                {
-                  this.state.goods_album.map((item) => (
-                    <Image src={item.image_url} style={{ width: "100%" }} key={item.id} />
-                  ))
-                }
               </View>
+              {
+                this.state.goods_album.map((item) => (
+                  <Image src={item.image_url} style={{ width: "100%",borderRadius: "8px"}} key={item.id} />
+                ))
+              }
+
             </View> : ""
         }
         <View className="examine-more mt20 pd30 bcff">

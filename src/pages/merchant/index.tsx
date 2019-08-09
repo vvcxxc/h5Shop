@@ -128,14 +128,14 @@ export default class MerChantPage extends Component {
     }
     if (this.state.search) {
       define.keyword = this.state.search
-    }else {
+    } else {
       delete define['keyword']
     }
 
-    if(!id1 && !id2 && !id3){
-     if(define.deal_cate_id)  delete define['deal_cate_id']
-     if(define.distance_id) delete define['distance_id']
-     if(define.sort_id) delete define['sort_id']
+    if (!id1 && !id2 && !id3) {
+      if (define.deal_cate_id) delete define['deal_cate_id']
+      if (define.distance_id) delete define['distance_id']
+      if (define.sort_id) delete define['sort_id']
     }
     define.page = this.state.page
     this.setState({
@@ -214,7 +214,7 @@ export default class MerChantPage extends Component {
     })
   }
   onClearSearch = () => {
-    this.setState({ search: '' },()=>{
+    this.setState({ search: '' }, () => {
       this.$router.params.value = null
       this.setState({ page: 1 }, () => {
         this.filterClick(0, this.state.deal_cate_id, this.state.distance_id, this.state.sort_id)
@@ -230,13 +230,12 @@ export default class MerChantPage extends Component {
   };
   labelColor = (color: any) => {
     let data: any = {
-      ['拼团送礼']: '#D97B0B',
-      ['增值送礼']: '#F0634C',
-      ['认证商户']: '#FFFFFF'
+      ['拼团送礼']: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/e78pJkim5TSZdQzBcPHSbz5aDPtM32nC.png',
+      ['增值送礼']: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7KyKnTjB7rSMktxap7Q3hFQaAyc3nG5j.png',
+      ['认证商户']: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7njShRycfEmZXnDncSBYiyyFdsKDPp5w.png'
     }
     return data[color]
   }
-
   // 点击展开或者收回
   telescopicBox = (index: number, e) => {
     this.setState({ telescopic: !this.state.telescopic }, () => {
@@ -262,165 +261,165 @@ export default class MerChantPage extends Component {
             this.state.stores
           } /> */}
 
-         <View style={{minHeight: '100vh', height: 'auto', background: '#ededed', overflow: 'hidden'}}>
-          {
-            this.state.stores.map((item2: any, index: any) => {
-              return <View className="new_box">
-                <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px' }} onClick={this.handleClick.bind(this,item2.id)}>
-                  <View className="box_title">
-                    <View className="title_l">
-                      <Image src={item2.preview} />
-                    </View>
-                    <View className="title_r">
-                      <View className="view_name1">{item2.name}</View>
-                      <View className="view_name2">
-                        <View style={{fontWeight: 'normal'}}>
-                          {
-                            item2.deal_cate ? item2.deal_cate : null
-                          }
+          <View style={{ minHeight: '100vh', height: 'auto', background: '#ededed', overflow: 'hidden' }}>
+            {
+              this.state.stores.map((item2: any, index: any) => {
+                return <View className="new_box">
+                  <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px' }} onClick={this.handleClick.bind(this, item2.id)}>
+                    <View className="box_title">
+                      <View className="title_l">
+                        <Image src={item2.preview} />
+                      </View>
+                      <View className="title_r">
+                        <View className="title_r_name">{item2.name}</View>
+                        <View className="title_r_distance">
+                          <View style={{ fontWeight: 'normal' }}>
+                            {
+                              item2.deal_cate ? item2.deal_cate : null
+                            }
+                          </View>
+                          <View>{item2.distance}</View>
                         </View>
-                        <View>{item2.distance}</View>
-                      </View>
-                      <View className='view'>
-                        {
-                          item2.label.map((item3: any, index1: any) => {
-                            return <View key={''}
-                              className={this.labelColor(item3) === '#FFFFFF' ? 'span' : ''}
-                              style={{border: this.labelColor(item3) == '#FFFFFF' ? '1px solid #ff6654' : 'none',backgroundColor: this.labelColor(item3), marginBottom: 0}}
-                            >{item3}</View>
-                          })
-                        }
+                        <div className="title_r_gift">
+                          {
+                            item2.label.map ? item2.label.map((item3: any, index3: number) => {
+                              return < img src={this.labelColor(item3)} alt="" />
+                            }) : null
+                          }
+                        </div>
                       </View>
                     </View>
-                  </View>
-                  <View
-                  className="box_bottom" id="box_bottom"
-                  style={{
-                    position:'relative',
-                    height:
-                      !this.state.stores[index].height ?
-                        item2.activity_num > 2 ? '3.2rem' : 'auto' : this.state.stores[index].height,
-                    marginBottom: item2.activity_num >= 1 ? '-0.001rem' : '15px',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <View onClick={this.telescopicBox.bind(this, index)}
-                    style={{
-                      position:'absolute',top:'0',right:'0',
-                      display: item2.activity_num > 2 ? '' : 'none'
-                    }}
+                    <View
+                      className="box_bottom" id="box_bottom"
+                      style={{
+                        position: 'relative',
+                        height:
+                          !this.state.stores[index].height ?
+                            item2.activity_num > 2 ? '3.2rem' : 'auto' : this.state.stores[index].height,
+                        marginBottom: item2.activity_num >= 1 ? '-0.001rem' : '15px',
+                        overflow: 'hidden',
+                      }}
                     >
-                      <View style={{ marginRight: '8px' }}>{ item2.activity_num ? item2.activity_num + '个活动' : null }</View>
-                      <Image
-                        style={{marginRight: 0}}
-                        src={
-                        this.state.stores[index].height !== 'auto' ?require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
-                        />
-                    </View>
-
-
-                  <View
-                    style={{
-                      display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
-                      justifyContent: 'space-between',
-                      borderBottom: item2.activity_num === 1 ? 'none' : '1px solid #eeeeee'
-                    }}
-                  >
-
-                    <View className="box_bottom_child">
-                      < Image src={
-                        item2.activity ?
-                          (item2.activity.group ? item2.activity.group.icon : null)
-                          : null}
-                      />
-
-                      <View className="ellipsis-one"
-                        style={{ width: '9rem', display: 'block' }}
+                      <View onClick={this.telescopicBox.bind(this, index)}
+                        className="_child"
+                        style={{
+                          position: 'absolute', top: '0', right: '0',
+                          display: item2.activity_num > 2 ? '' : 'none'
+                        }}
                       >
-                        <span>
-                          {
-                            item2.activity ? (item2.activity.group ? item2.activity.group.activity_info : null)
-                              : null
-                          }
-                        </span>
-                        <span style={{ color: '#C71D0B' }}>
-                          {
-                            item2.activity ? (item2.activity.group ? item2.activity.group.gift_info : null)
-                              : null
-                          }
-                        </span>
+                        <View style={{ marginRight: '8px' }}>{item2.activity_num ? item2.activity_num + '个活动' : null}</View>
+                        <Image
+                          style={{ marginRight: 0 }}
+                          src={
+                            this.state.stores[index].height !== 'auto' ? require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
+                        />
+                      </View>
+
+
+                      <View
+                        style={{
+                          display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
+                          justifyContent: 'space-between',
+                          borderBottom: item2.activity_num === 1 ? 'none' : '1px solid #eeeeee'
+                        }}
+                      >
+
+                        <View className="_child">
+                          < Image src={
+                            item2.activity ?
+                              (item2.activity.group ? item2.activity.group.icon : null)
+                              : null}
+                          />
+
+                          <View className="ellipsis-one"
+                            style={{ width: '9rem', display: 'block' }}
+                          >
+                            <span>
+                              {
+                                item2.activity ? (item2.activity.group ? item2.activity.group.activity_info : null)
+                                  : null
+                              }
+                            </span>
+                            <span style={{ color: '#C71D0B' }}>
+                              {
+                                item2.activity ? (item2.activity.group ? item2.activity.group.gift_info : null)
+                                  : null
+                              }
+                            </span>
+                          </View>
+                        </View>
+
+                      </View>
+                      <View
+                        className="_child"
+                        style={{ display: item2.activity ? item2.activity.cash_coupon ? '' : 'none' : 'none', }}
+                      >
+                        <Image src={
+                          item2.activity ?
+                            (item2.activity.cash_coupon ? item2.activity.cash_coupon.icon : null)
+                            : null}
+                        />
+                        <View className=" ellipsis-one"
+                          style={{ width: '9rem', display: 'block' }}>
+                          <span>
+                            {
+                              item2.activity ? (item2.activity.cash_coupon ? item2.activity.cash_coupon.activity_info : null)
+                                : null
+                            }
+                          </span>
+                        </View>
+                      </View>
+
+                      <View
+                        className="_child"
+                        style={{ display: item2.activity ? item2.activity.exchange_coupon ? '' : 'none' : 'none' }}
+                      >
+                        <Image src={
+                          item2.activity ?
+                            (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.icon : null)
+                            : null}
+                        />
+                        <View className=" ellipsis-one"
+                          style={{ width: '9rem', display: 'block' }}>
+                          <span>
+                            {
+                              item2.activity ? (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.activity_info : null)
+                                : null
+                            }
+                          </span>
+                        </View>
+                      </View>
+
+                      <View
+                        className="_child"
+                        style={{ display: item2.activity ? item2.activity.zeng ? '' : 'none' : 'none' }}
+                      >
+                        < Image src={
+                          item2.activity ?
+                            (item2.activity.zeng ? item2.activity.zeng.icon : null)
+                            : null}
+                        />
+                        <View className=" ellipsis-one"
+                          style={{ width: '9rem', display: 'block' }}>
+                          <span>
+                            {
+                              item2.activity ? (item2.activity.zeng ? item2.activity.zeng.activity_info : null)
+                                : null
+                            }
+                          </span>
+                          <span style={{ color: '#C71D0B' }}>
+                            {
+                              item2.activity ? (item2.activity.zeng ? item2.activity.zeng.gift_info : null)
+                                : null
+                            }
+                          </span>
+                        </View>
                       </View>
                     </View>
-
-                  </View>
-                  <View
-                    style={{display: item2.activity ? item2.activity.cash_coupon ? '' : 'none' : 'none',}}
-                  >
-                    <Image src={
-                      item2.activity ?
-                        (item2.activity.cash_coupon ? item2.activity.cash_coupon.icon : null)
-                        : null}
-                    />
-                    <View className=" ellipsis-one"
-                      style={{ width: '9rem', display: 'block' }}>
-                      <span>
-                        {
-                          item2.activity ? (item2.activity.cash_coupon ? item2.activity.cash_coupon.activity_info : null)
-                            : null
-                        }
-                      </span>
-                    </View>
-                  </View>
-
-                  <View
-                    style={{ display: item2.activity ? item2.activity.exchange_coupon ? '' : 'none' : 'none' }}
-                  >
-                    <Image src={
-                      item2.activity ?
-                        (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.icon : null)
-                        : null}
-                    />
-                    <View className=" ellipsis-one"
-                      style={{ width: '9rem', display: 'block' }}>
-                      <span>
-                        {
-                          item2.activity ? (item2.activity.exchange_coupon ? item2.activity.exchange_coupon.activity_info : null)
-                            : null
-                        }
-                      </span>
-                    </View>
-                  </View>
-
-                  <View
-                    className="box_bottom_child"
-                    style={{ display: item2.activity ? item2.activity.zeng ? '' : 'none' : 'none' }}
-                  >
-                    < Image src={
-                      item2.activity ?
-                        (item2.activity.zeng ? item2.activity.zeng.icon : null)
-                        : null}
-                    />
-                    <View className=" ellipsis-one"
-                      style={{ width: '9rem', display: 'block' }}>
-                      <span>
-                        {
-                          item2.activity ? (item2.activity.zeng ? item2.activity.zeng.activity_info : null)
-                            : null
-                        }
-                      </span>
-                      <span style={{ color: '#C71D0B' }}>
-                        {
-                          item2.activity ? (item2.activity.zeng ? item2.activity.zeng.gift_info : null)
-                            : null
-                        }
-                      </span>
-                    </View>
-                  </View>
                   </View>
                 </View>
-              </View>
-            })
-          }
+              })
+            }
           </View>
 
         </View>

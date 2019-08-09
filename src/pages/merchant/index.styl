@@ -29,53 +29,42 @@
     width:153px;
     height:152px;
     margin-right 19px;
-    .taro-img {
-      height 100%
-      width 100%
+  .taro-img {
+    width:153px;
+    height:152px;
     }
   }
   .title_r{
     flex: 1;
-    .view_name1{
-      font-size:32px;
-      font-family:PingFang-SC-Bold;
-      color:rgba(49,49,49,1);
-      line-height:1;
-      margin-bottom 19px
-      font-weight: bold;
-    }
-    .view_name2{
-      font-family:PingFang-SC-Medium;
-      color:rgba(102,102,102,1);
-      font-size: 23px;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom 16px;
-    }
-    .view{
-      display: flex;
-      div {
-        height 35px
-        display: flex;
-        align-items: center;
-        padding: 0 12px;
-        font-size: 18px;
-        color:#FFFFFF;
-        border-radius:5px;
-        font-family:PingFang-SC-Medium;
-        margin-right 9px
-      }
-      .span {
-        border:1px solid rgba(255,102,84,1);
-        color:#FF6654;
-        font-size: 18px;
-        box-sizing: border-box
+    position:relative;
+    overflow: hidden;
+  .title_r_name{
+    font-size:32px;
+    font-family:PingFang-SC-Bold;
+    color:rgba(49,49,49,1);
+    font-weight: bold;
+    line-height: 1.3;
+  }
+  .title_r_distance{
+    font-family:PingFang-SC-Medium;
+    color:rgba(102,102,102,1);
+    font-size: 23px;
+    display: flex;
+    justify-content: space-between;
+    margin-top 8px
+  }
+  .title_r_gift{
+    margin-top 31px;
+    img {
+      width:98px;
+      height 35px
+      margin-right 8px
       }
     }
   }
 }
 .box_bottom{
-  div {
+  ._child {
     font-size: 23px;
     display: flex
     color:rgba(49,49,49,1);
@@ -83,24 +72,23 @@
     padding-bottom 25px
     padding-top:25px
     line-height: 1
-    align-items: center
-    display: flex
-    border-bottom:1px solid #eeeeee
-    div {
-      padding-top 0;
-      padding-bottom 0
-      border: 0;
-      line-height 1.1
-    }
-    .taro-img {
-       width: 32px;
-       height 27px;
-       margin-right: 15px;
+    border-bottom:0.5px solid #eeeeee
+  div {
+   line-height: 1.3
+  }
+  .taro-img {
+    width: 32px;
+    height 27px;
+    margin-right: 15px;
     }
   }
+  .single_omit {
+   width: 8rem;
+  }
 }
-.ellipsis-one {
-	overflow:hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+
+.span_center {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
