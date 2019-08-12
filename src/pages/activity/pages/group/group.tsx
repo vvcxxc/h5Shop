@@ -95,7 +95,7 @@ export default class Group extends Component {
           id: publictypeid,
           gift_id,
           activity_id
-        } = data
+        } = this.state.basicinfo;
         let dataId = 0
         if (data && data.id) {
           dataId = data.id
@@ -129,15 +129,20 @@ export default class Group extends Component {
    * 计算: 已完成?|参团?|去使用?
    */
   handleCalculate(data: any): void {
+    // console.log(data)
     const {
       number: groupNumber,
       participation_number: groupParticipator,
       is_group_participation,
       is_employ
     } = data
+
     const isFinish = groupParticipator === groupNumber
     const isJoin = is_group_participation !== GROUP_AREADY
     const isShowUse = isFinish && (is_employ === UNUSED)
+    // const isFinish = false
+    // const isJoin = true
+    // const isShowUse = false
     this.setState({
       isFinish,
       isJoin,
