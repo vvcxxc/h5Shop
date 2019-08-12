@@ -8,7 +8,9 @@ module.exports = {
     UNION_ID: '"unionid"',
     ALIPAY_USER_ID:'"test_alipay_user_id"',
     LOGIN_URL: '"https://test.api.tdianyi.com"',
-    // LOGIN_URL: '"https://api.tdianyi.com"'
+    // LOGIN_URL: '"https://api.tdianyi.com"',
+    GROUP_URL: '"http://test.mall.tdianyi.com/#/pages/activity/pages/group/group?id="',
+    APPRE_URL: '"http://test.mall.tdianyi.com/#/pages/activity/pages/appreciation/appreciation?id="'
   },
   defineConstants: {
   },

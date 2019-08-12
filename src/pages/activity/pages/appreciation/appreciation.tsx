@@ -36,7 +36,7 @@ type State = {
   isGet: boolean;
   isShare: boolean;
 };
-
+const share_url = process.env.APPRE_URL
 export default class Appreciation extends Component {
   config = {
     navigationBarTitleText: "增值"
@@ -250,7 +250,7 @@ export default class Appreciation extends Component {
       wx.updateAppMessageShareData({
         title: shareInfo.title, // 分享标题
         desc: shareInfo.desc, // 分享描述
-        link: shareInfo.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: share_url+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: shareInfo.small_img, // 分享图标
       })
 

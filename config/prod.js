@@ -6,7 +6,9 @@ module.exports = {
     TOKEN: '"token_auth"',
     UNION_ID: '"unionid"',
     ALIPAY_USER_ID:'"alipay_user_id"',
-    LOGIN_URL: '"https://api.tdianyi.com"'
+    LOGIN_URL: '"https://api.tdianyi.com"',
+    GROUP_URL: '"http://mall.tdianyi.com/#/pages/activity/pages/group/group?id="',
+    APPRE_URL: '"http://mall.tdianyi.com/#/pages/activity/pages/appreciation/appreciation?id="'
   },
   defineConstants: {
   },
