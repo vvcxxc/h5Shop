@@ -395,8 +395,7 @@ export default class Index extends Component<any> {
               <View className="long-string" style="margin-right:15px;" />
               <AtIcon className="search-icon" value="search" color="#666666" size={14} />
               <View className="item search-input" onClick={this.handleSearch}>
-                请输入商家名、品类
-              </View>
+                请输入商家名、品类</View>
             </View>
           </View>
           <View className="swiper" onClick={this.advertOnclick.bind(this)}>
@@ -412,9 +411,8 @@ export default class Index extends Component<any> {
           <Image src={require('../../assets/appre.png')} onClick={this.gotoAppre}></Image>
         </View>
         <View className="no_receive" style={{ display: this.state.showGift == 1 ? '' : 'none' }}
-        >你还有未领取的礼品 去
-          <Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
-        </View>
+        >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
+        </View>
 
 
         <View className="receive_box">
