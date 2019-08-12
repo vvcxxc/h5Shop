@@ -394,13 +394,11 @@ export default class Index extends Component<any> {
               </View>
               <View className="long-string" style="margin-right:15px;" />
               <AtIcon className="search-icon" value="search" color="#666666" size={14} />
-              <View className="item search-input" onClick={this.handleSearch}>
-                请输入商家名、品类</View>
+              <View className="item search-input" onClick={this.handleSearch}>请输入商家名、品类</View>
             </View>
           </View>
           <View className="swiper" onClick={this.advertOnclick.bind(this)}>
             <Image
-
               src={
                 this.state.indexImg ? this.state.indexImg : "http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/dHBc2GQi27cjhNpsYpAnQYxybxPdADHG.png"
               } className="image" />
@@ -413,8 +411,6 @@ export default class Index extends Component<any> {
         <View className="no_receive" style={{ display: this.state.showGift == 1 ? '' : 'none' }}
         >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
         </View>
-
-
         <View className="receive_box">
           <View className="receive">已领取</View>
           <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/s/uPCmihwL5HZrNDE-YmfW4A">公众号</ a>"
