@@ -139,7 +139,7 @@ export default class Index extends Component<any> {
   requestHomeList = (data?: any) => {
     let define = data ? data : this.state.meta
     this.showLoading();
-    Taro.stopPullDownRefresh()
+    // Taro.stopPullDownRefresh()
     request({
       url: 'v3/stores',
       data: define
@@ -199,6 +199,9 @@ export default class Index extends Component<any> {
     data.page = 1
     this.setState({ meta: data })
     this.requestHomeList(this.state.meta)
+    setTimeout(() => {
+      Taro.stopPullDownRefresh();
+    }, 1000);
   }
 
   onReachBottom() {
