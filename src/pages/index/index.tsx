@@ -148,7 +148,9 @@ export default class Index extends Component<any> {
         Taro.hideLoading()
         this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
         if (this.state.meta.page > 1) {
-          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner });
+          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner },()=>{
+            this.showImage() //
+          });
         }
       })
       .catch(() => {
@@ -383,7 +385,7 @@ export default class Index extends Component<any> {
         <View className="headr">
           <View className="search">
             <View className="flex center container">
-              <View className="city" style="padding-right:15px; width: 20%" onClick={this.showSelectCity}>
+              <View className="city" style="padding-right:15px; width: 21%" onClick={this.showSelectCity}>
                 <View className='ellipsis-one flex' style='width:70%; display: inline-block'>
                   {this.state.cityName}
                 </View>
