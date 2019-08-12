@@ -225,7 +225,7 @@ export default class MerChantPage extends Component {
   // 跳转详情
   handleClick = id => {
     Taro.navigateTo({
-      url: '/detail-pages/business/index?id=' + id
+      url: '/pages/business/index?id=' + id
     })
   };
   labelColor = (color: any) => {

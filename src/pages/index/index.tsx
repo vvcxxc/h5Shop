@@ -16,7 +16,7 @@ export default class Index extends Component<any> {
 	 * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
 	 */
   config: Config = {
-    navigationBarTitleText: '团卖物联',
+    navigationBarTitleText: '小熊敬礼',
     enablePullDownRefresh: true,
   };
 
