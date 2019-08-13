@@ -70,13 +70,11 @@ export default class Index extends Component<any> {
       if (Object.keys(res.data).length < 1) {
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
-        console.log(1)
         return
       }
       this.requestTab();
       if (res.data.city_id && res.data.city_name) {
         getLocation().then((res2: any) => {
-          console.log(2)
           let data: any = this.state.meta
           data.xpoint = res2.longitude
           data.ypoint = res2.latitude
@@ -88,7 +86,6 @@ export default class Index extends Component<any> {
             this.requestHomeList(data)
           })
         }).catch(()=>{
-          console.log(13)
         })
 
         return
@@ -102,10 +99,8 @@ export default class Index extends Component<any> {
         this.getCity(data)
         data.page = 1
         this.setState({ meta: data })
-        console.log('4')
       }
       if (res.data.city_id && !res.data.xpoint && !res.data.ypoint){
-        console.log(this.state.meta,'43433')
 
         let diff:any = this.state.meta
         diff.city_id = 1942
@@ -117,26 +112,18 @@ export default class Index extends Component<any> {
         this.requestHomeList(this.state.meta)
         this.showImage();
        })
-    // })
-        // this.requestHomeList(this.state.meta)
-        // this.setState({cityName: '广州市'})
-        console.log(5)
       }
     }).catch((res: any) => {
 
 
-      // console.log(6)
       this.getLocationxy()// 获取定位和 城市id 城市名字
-      // this.requestLocation();
     })
   }
 
   getLocationxy = () => {
     getLocation().then((res: any) => {
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } }, () => {
-        // console.log(res,'tres')
         if (res.longitude.length < 1 && res.latitude.length < 1) {
-          console.log(8)
           let data: any = this.state.meta
           data.city_id = 1924
           this.setState({ meta: data },()=>{
@@ -148,7 +135,6 @@ export default class Index extends Component<any> {
       })
 
     }).catch(err => {
-      console.log(7)
       let diff:any = this.state.meta
       diff.city_id = 1942
       diff.xpoint  = ''
@@ -195,16 +181,10 @@ export default class Index extends Component<any> {
       .then((res: any) => {
         Taro.hideLoading()
         this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
-        // console.log(define,'meta')
-        // if(!define.city_id){
-        //   this.showImage(1924) //
-        // }else {
-        //   this.showImage() //
-        // }
+
         this.showImage()
         if (this.state.meta.page > 1) {
           this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner },()=>{
-            // console.log('73898787')
             // this.showImage() //
           });
         }
