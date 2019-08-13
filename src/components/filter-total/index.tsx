@@ -176,6 +176,8 @@ export default class filterTotal extends Component<Props> {
 
   render() {
     return <View className="page">
+
+
       <View className="title">
         <View className={this.state.click1 % 2 === 0 || this.state.red1 ? 'line linRed' : " line linWat"}
           onClick={this.titleClick1(1)} >

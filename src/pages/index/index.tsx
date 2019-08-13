@@ -80,7 +80,7 @@ export default class Index extends Component<any> {
           data.ypoint = res2.latitude
           data.city_id = res.data.city_id
           data.city_name = res.data.city_name
-          data.page = 1
+          data.pages = 1
           this.setState({ cityName: res.data.city_name })
           this.setState({ meta: data }, () => {
             this.requestHomeList(data)
@@ -97,7 +97,7 @@ export default class Index extends Component<any> {
         data.xpoint = res.data.xpoint
         data.ypoint = res.data.ypoint
         this.getCity(data)
-        data.page = 1
+        data.pages = 1
         this.setState({ meta: data })
       }
       if (res.data.city_id && !res.data.xpoint && !res.data.ypoint){
@@ -106,7 +106,7 @@ export default class Index extends Component<any> {
         diff.city_id = 1942
         diff.xpoint  = ''
         diff.ypoint = ''
-        diff.page = 1
+        diff.pages = 1
         this.setState({ cityName: '广州市' })
         this.setState({meta:diff},()=>{
         this.requestHomeList(this.state.meta)
@@ -126,6 +126,7 @@ export default class Index extends Component<any> {
         if (res.longitude.length < 1 && res.latitude.length < 1) {
           let data: any = this.state.meta
           data.city_id = 1924
+          data.pages = 1
           this.setState({ meta: data },()=>{
             // this.showImage()
           })
@@ -139,7 +140,7 @@ export default class Index extends Component<any> {
       diff.city_id = 1942
       diff.xpoint  = ''
       diff.ypoint = ''
-      diff.page = 1
+      diff.pages = 1
       this.setState({ cityName: '广州市' })
        this.setState({meta:diff},()=>{
         this.requestHomeList(this.state.meta)
@@ -161,7 +162,7 @@ export default class Index extends Component<any> {
             city_id: res.data.city_id,
             xpoint: this.state.meta.xpoint,
             ypoint: this.state.meta.ypoint,
-            page: this.state.page
+            pages: this.state.page
           }
         }, () => {
           // this.showImage();
@@ -180,13 +181,14 @@ export default class Index extends Component<any> {
     })
       .then((res: any) => {
         Taro.hideLoading()
-        this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
 
         this.showImage()
-        if (this.state.meta.page > 1) {
+        if (this.state.meta.pages > 1) {
           this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner },()=>{
             // this.showImage() //
           });
+        }else {
+          this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
         }
       })
       .catch(() => {
@@ -219,8 +221,8 @@ export default class Index extends Component<any> {
 
   handlerTablChange(current, id, _this) {
     this.setState({ current });
-    let data = this.state.meta
-    data.page = 1
+    let data:any = this.state.meta
+    data.pages = 1
     this.setState({ meta: data })
 
     if (id == 'all' || this.state.deal_cate_id == 'all') {
@@ -234,7 +236,7 @@ export default class Index extends Component<any> {
 
   onPullDownRefresh() { // 自带 下拉事件
     let data = this.state.meta
-    data.page = 1
+    data.pages = 1
     this.setState({ meta: data })
     this.requestHomeList(this.state.meta)
     setTimeout(() => {
@@ -247,7 +249,7 @@ export default class Index extends Component<any> {
       this.requestHomeList({ ...this.state.meta })
     })
     let data = this.state.meta
-    data.page = data.page + 1
+    data.pages = data.pages + 1
     this.setState({ meta: data })
   }
 
@@ -487,7 +489,7 @@ export default class Index extends Component<any> {
                     <Image src={item2.preview} />
                   </View>
                   <View className="title_r">
-                    <View className="title_r_name">{item2.name}</View>
+                    <View className="title_r_name ellipsis-one" >{item2.name}</View>
                     <View className="title_r_distance">
                       <span>{item2.deal_cate ? item2.deal_cate : null}</span>
                       <span>{item2.distance}</span>

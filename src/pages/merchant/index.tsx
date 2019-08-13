@@ -30,7 +30,8 @@ export default class MerChantPage extends Component {
     deal_cate_id: null,
     distance_id: null,
     sort_id: null,
-    show_bottom: false
+    show_bottom: false,
+    close:false
   };
 
   constructor(props) {
@@ -54,7 +55,7 @@ export default class MerChantPage extends Component {
       data.xpoint = res.data.xpoint
       data.ypoint = res.data.ypoint
       data.city_id = res.data.city_id
-      data.page = 1
+      data.pages = 1
       this.setState({ locationPosition: data }, () => {
         if (this.$router.params.value) {
           console.log('走这里：' + this.$router.params.value)
@@ -137,7 +138,7 @@ export default class MerChantPage extends Component {
       if (define.distance_id) delete define['distance_id']
       if (define.sort_id) delete define['sort_id']
     }
-    define.page = this.state.page
+    define.pages = this.state.page
     this.setState({
       locationPosition: define
     })
@@ -182,7 +183,7 @@ export default class MerChantPage extends Component {
     this.setState({ show_bottom: false })
     this.setState({ page: 1 }, () => {
       let data: any = this.state.locationPosition
-      data.page = 1
+      data.pages = 1
       this.setState({ locationPosition: data }, () => {
         this.requestData(this.state.locationPosition)
       })
@@ -246,6 +247,12 @@ export default class MerChantPage extends Component {
     e.stopPropagation();
   }
 
+  // 点击空白处，筛选的格子也会消失
+  clearClick=()=>{
+    console.log('出发')
+    this.setState({close:true})
+  }
+
   render() {
     return (
       <View>
@@ -255,13 +262,13 @@ export default class MerChantPage extends Component {
           onClear={this.onClearSearch.bind(this)}
           onChange={this.handlerSearch.bind(this)}
         />
-        <FilterTotal onClick={this.titleOnClick.bind(this, 0)} />
+        <FilterTotal onClick={this.titleOnClick.bind(this, 0)}  />
         <View className="merchant-list" style="background-color:#fff;">
           {/* <List onClick={this.handleClick} list={
             this.state.stores
           } /> */}
 
-          <View style={{ minHeight: '100vh', height: 'auto', background: '#ededed', overflow: 'hidden' }}>
+          <View style={{ minHeight: '100vh', height: 'auto', background: '#ededed', overflow: 'hidden' }} onClick={this.clearClick}>
             {
               this.state.stores.map((item2: any, index: any) => {
                 return <View className="new_box">
@@ -271,7 +278,7 @@ export default class MerChantPage extends Component {
                         <Image src={item2.preview} />
                       </View>
                       <View className="title_r">
-                        <View className="title_r_name">{item2.name}</View>
+                        <View className="title_r_name ellipsis-one">{item2.name}</View>
                         <View className="title_r_distance">
                           <View style={{ fontWeight: 'normal' }}>
                             {
@@ -320,7 +327,7 @@ export default class MerChantPage extends Component {
                         style={{
                           display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
                           justifyContent: 'space-between',
-                          borderBottom: item2.activity_num === 1 ? 'none' : '1px solid #eeeeee'
+                          borderBottom: item2.activity_num === 1 ? 'none' : '0.5px solid #eeeeee'
                         }}
                       >
 
