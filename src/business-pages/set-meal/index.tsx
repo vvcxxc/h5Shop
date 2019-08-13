@@ -264,7 +264,7 @@ export default class SetMeal extends Component {
           } */}
           <View className="tit">{this.state.coupon.yname} </View>
 
-          <View className="desc">{this.state.coupon.list_brief}</View>
+          {/* <View className="desc">{this.state.coupon.list_brief}</View> */}
 
           <View className="tags">
             <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('可叠加') !== -1 ? '' : '#fff' }}>可叠加</Text>
