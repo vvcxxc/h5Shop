@@ -38,6 +38,7 @@ export default class MerChantPage extends Component {
     super(props);
   }
   componentWillMount() {
+    Taro.pageScrollTo({scrollTop: 0})
     this.getPosition();// 经纬度
     Taro.showLoading({ title: 'loading', mask: true })//显示loading
   }
