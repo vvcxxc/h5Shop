@@ -567,6 +567,7 @@ export default class Index extends Component<any> {
                         (item2.activity.cash_coupon ? item2.activity.cash_coupon.icon : null)
                         : null}
                     />
+
                     <View className="ellipsis-one"
                       style={{ width: '9rem', display: 'block' }}>
                       <span className="span_center">
