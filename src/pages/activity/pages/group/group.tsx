@@ -260,9 +260,7 @@ export default class Group extends Component {
     //       link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
     //       imgUrl: info.small_img, // 分享图标
     //     })
-
     //   })
-
     // })
          wx.updateAppMessageShareData({
           title: info.title, // 分享标题
