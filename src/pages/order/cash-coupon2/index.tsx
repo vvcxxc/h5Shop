@@ -85,9 +85,9 @@ export default class CashCoupon extends Component<Props> {
             <View className="info" >免预约/全部商品可用</View>
 
             {this.props.bg_img_type == 2 ? <View className="info" style={{ marginTop: "10px" }}>使用日期： {this.props.confirm_time}</View> : ""}
-            {
+            {/* {
               this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)}>再来一单</View> : ""
-            }
+            } */}
           </View>
         </View>
       </View>
