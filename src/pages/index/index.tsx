@@ -57,7 +57,7 @@ export default class Index extends Component<any> {
     if (id) {
       sessionStorage.setItem('payStore', id)
     }
-    // this.requestLocation();
+    this.requestLocation();
     this.recognizer();
     // setTimeout(()=>{
     this.getPayStore();//获取中奖门店信息
