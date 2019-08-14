@@ -8,7 +8,7 @@ const LOGIN_URL = process.env.LOGIN_URL
  * h5登录
  */
 export const Login = () => {
-  const from = window.location.href
+  let from = window.location.href
   let type = getBrowserType();
   if(process.env.NODE_ENV == 'development'){
     if(Cookie.get('test_token_auth')){
