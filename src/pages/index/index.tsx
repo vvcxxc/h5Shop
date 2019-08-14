@@ -553,11 +553,11 @@ export default class Index extends Component<any> {
               key={" "}
               className={
                 "item flex center " +
-                (this.state.current === index ? "active" : "")
+                (this.state.current === index ? "actives" : "")
               }
               onClick={this.handlerTablChange.bind(this, index, item.id)}
             >
-              <View className="label" style="margin-right:30px;">{item.name}</View>
+              <View className="labels" style="margin-right:30px;">{item.name}</View>
             </View>
           ))}
         </View>
