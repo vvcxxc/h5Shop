@@ -58,8 +58,8 @@ export default class Index extends Component<any> {
       sessionStorage.setItem('payStore', id)
     }
     // this.requestLocation();
-    this.recognizer();
     this.getPayStore();//获取中奖门店信息
+    this.recognizer();
   }
 
   // 识别器
@@ -463,7 +463,6 @@ export default class Index extends Component<any> {
   getPayStore = async () => {
     let id = this.$router.params.id || sessionStorage.getItem('payStore')
     // let id = 717
-    alert('走着啦'+id)
     if (id) {
       let location = await getLocation();
       // let id = this.$router.params.id;
