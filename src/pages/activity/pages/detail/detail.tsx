@@ -20,6 +20,7 @@ import DetailAppreciation from "./types/detail.appreciation"
 import DetailGroup from "./types/detail.goup"
 import { activityData } from "../../data"
 import { payment } from "@/utils/payment"
+import { getBrowserType } from '@/utils/common'
 
 interface State {
   detail: any;
@@ -114,6 +115,13 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
    * @type TYPE_GROUP_OPEN => 开团
    */
   async fetchPayment(): Promise<void> {
+    console.log('支付')
+    let as = getBrowserType();
+    console.log(as)
+    if (as == 'alipay') {
+      alert('请前往微信进行购买')
+      return
+    }
     const { isChecked } = this.state
     const { type = 1, id = "", gift_id = "", activity_id = "", publictypeid } = this.$router.params
     let params: GetPaymentSignture = {
