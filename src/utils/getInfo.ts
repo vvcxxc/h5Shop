@@ -150,7 +150,7 @@ export const getLocation = () => {
     return new Promise((resolve, reject) => {
       const location = Taro.getStorageSync("location");
 
-      if (location) return resolve(location)
+      if (location.latitude) return resolve(location)
       wx.ready(() => {
         wx.getLocation({
           type: 'wgs84',
