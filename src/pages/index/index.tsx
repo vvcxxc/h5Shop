@@ -52,15 +52,15 @@ export default class Index extends Component<any> {
   }
 
 
-  async componentDidMount() {
+  componentDidMount() {
     let id = this.$router.params.id;
     if (id) {
       sessionStorage.setItem('payStore', id)
     }
     // this.requestLocation();
-    await this.recognizer();
+    this.recognizer();
     // setTimeout(()=>{
-    await this.getPayStore();//获取中奖门店信息
+    this.getPayStore();//获取中奖门店信息
     // },200)
   }
 
@@ -196,6 +196,9 @@ export default class Index extends Component<any> {
   getLocationxy = () => {
     getLocation().then((res: any) => {
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } }, () => {
+        // 测试一下
+        this.getPayStore();
+
         if (res.longitude.length < 1 && res.latitude.length < 1) {
           console.log(7)
           let data: any = this.state.meta
