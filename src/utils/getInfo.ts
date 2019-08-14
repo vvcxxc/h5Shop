@@ -149,8 +149,8 @@ export const getLocation = () => {
     })
     return new Promise((resolve, reject) => {
       // const location = Taro.getStorageSync("location");
-      // const location:any = JSON.parse(sessionStorage.getItem('location'))
-      // if (location) return resolve(location)
+      const location:any = JSON.parse(sessionStorage.getItem('location'))
+      if (location) return resolve(location)
       wx.ready(() => {
         wx.getLocation({
           type: 'wgs84',
