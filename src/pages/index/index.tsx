@@ -48,7 +48,7 @@ export default class Index extends Component<any> {
   }
 
   componentWillMount() {
-    this.getPayStore();//获取中奖门店信息
+
   }
 
 
@@ -59,7 +59,7 @@ export default class Index extends Component<any> {
     }
     // this.requestLocation();
     this.recognizer();
-
+    this.getPayStore();//获取中奖门店信息
   }
 
   // 识别器
