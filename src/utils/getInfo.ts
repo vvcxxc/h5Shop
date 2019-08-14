@@ -117,6 +117,7 @@ export const getOpenid = (code: string): Promise<any> => {
 // }
 export const getLocation = () => {
   let type = getBrowserType();
+
   if (type == 'wechat') {
     // return new Promise((resolve) => {
     //   resolve({
@@ -132,7 +133,6 @@ export const getLocation = () => {
         url
       }
     }).then(res => {
-      console.log(res.data);
       let { data } = res;
       wx.config({
         debug: false,
@@ -149,6 +149,7 @@ export const getLocation = () => {
     })
     return new Promise((resolve, reject) => {
       const location = Taro.getStorageSync("location");
+
       if (location) return resolve(location)
       wx.ready(() => {
         wx.getLocation({
@@ -164,10 +165,18 @@ export const getLocation = () => {
               latitude,
               longitude
             })
+          },
+          fail: function (){
+            console.log('定位失败啦')
+            reject({
+              latitude: '',
+              longitude: ''
+            })
           }
         });
       }),
-      wx.fail(()=>{
+      wx.error(()=>{
+        console.log('12312ss')
       })
     })
   } else {

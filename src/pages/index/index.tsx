@@ -70,10 +70,12 @@ export default class Index extends Component<any> {
       if (Object.keys(res.data).length < 1) {
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
+        console.log(1)
         return
       }
       this.requestTab();
       if (res.data.city_id && res.data.city_name) {
+        console.log(2)
         getLocation().then((res2: any) => {
           let data: any = this.state.meta
           data.xpoint = res2.longitude
@@ -86,12 +88,13 @@ export default class Index extends Component<any> {
             this.requestHomeList(data)
           })
         }).catch(()=>{
+          console.log(3)
         })
 
         return
       }
       if (res.data.xpoint && res.data.ypoint) {
-
+        console.log(4)
 
         let data: any = this.state.meta
         data.xpoint = res.data.xpoint
@@ -101,7 +104,7 @@ export default class Index extends Component<any> {
         this.setState({ meta: data })
       }
       if (res.data.city_id && !res.data.xpoint && !res.data.ypoint){
-
+        console.log(5)
         let diff:any = this.state.meta
         diff.city_id = 1942
         diff.xpoint  = ''
@@ -114,7 +117,8 @@ export default class Index extends Component<any> {
        })
       }
     }).catch((res: any) => {
-
+      console.log(6)
+      // 第一次进入走这里
 
       this.getLocationxy()// 获取定位和 城市id 城市名字
     })
@@ -124,6 +128,7 @@ export default class Index extends Component<any> {
     getLocation().then((res: any) => {
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } }, () => {
         if (res.longitude.length < 1 && res.latitude.length < 1) {
+          console.log(7)
           let data: any = this.state.meta
           data.city_id = 1924
           data.pages = 1
@@ -132,10 +137,12 @@ export default class Index extends Component<any> {
           })
           return
         }
+        console.log(8)
         this.getCity()
       })
 
     }).catch(err => {
+      console.log(9)
       let diff:any = this.state.meta
       diff.city_id = 1942
       diff.xpoint  = ''
