@@ -58,8 +58,10 @@ export default class Index extends Component<any> {
       sessionStorage.setItem('payStore', id)
     }
     // this.requestLocation();
-    this.getPayStore();//获取中奖门店信息
     this.recognizer();
+    setTimeout(()=>{
+      this.getPayStore();//获取中奖门店信息
+    },200)
   }
 
   // 识别器
