@@ -29,7 +29,7 @@ export const Login = () => {
     }else{
       let url = BASIC_API +"ali/getZfbUserInfo";
       url = encodeURIComponent(url);
-      window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=433&url='+url;
+      window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=227&url='+url;
     }
   }
 
