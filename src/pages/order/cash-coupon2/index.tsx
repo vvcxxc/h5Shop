@@ -71,11 +71,11 @@ export default class CashCoupon extends Component<Props> {
             <View className="head flex">
               {
                 this.props.bg_img_type == 1 ?
-                  <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", verticalAlign: "middle" }}>
-                    <View style={{ background: "#5d84e0", padding: "2px 10px", verticalAlign: "middle" }}> 现金券 </View>
+                  <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ background: "#5d84e0", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
                   </View> :
-                  <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", verticalAlign: "middle" }}>
-                    <View style={{ background: "#cccccc", padding: "2px 10px", verticalAlign: "middle" }}> 现金券 </View>
+                  <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ background: "#cccccc", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
                   </View>
               }
               {this.props.sname}

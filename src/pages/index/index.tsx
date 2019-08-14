@@ -28,7 +28,7 @@ export default class Index extends Component<any> {
     routerId: '', //路由传递的id
     cityName: '',
     page: 1,
-    meta: {},
+    meta: {pages:1},
     deal_cate_id: null,
     current: 0,
     showLine: false,
@@ -71,6 +71,7 @@ export default class Index extends Component<any> {
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
         console.log(1)
+        // alert()
         return
       }
       this.requestTab();
