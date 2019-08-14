@@ -48,6 +48,7 @@ export default class Index extends Component<any> {
   }
 
   componentWillMount() {
+    this.getPayStore();//获取中奖门店信息
   }
 
 
@@ -58,7 +59,7 @@ export default class Index extends Component<any> {
     }
     // this.requestLocation();
     this.recognizer();
-    this.getPayStore();//获取中奖门店信息
+
   }
 
   // 识别器
@@ -466,15 +467,16 @@ export default class Index extends Component<any> {
       let location = await getLocation();
       // let id = this.$router.params.id;
       if (id) {
-        request({
+       let res = await request({
           url: 'v3/stores/pay_store/' + id,
           data: { xpoint: location.longitude || '', ypoint: location.latitude || '' }
         })
-          .then((res: any) => {
-            this.setState({
-              hahaData: res.data.store_info,
-            })
-          })
+          // .then((res: any) => {
+          //   this.setState({
+          //     hahaData: res.data.store_info,
+          //   })
+          // })
+        this.setState({hahaData: res.data.store_info,})
       }
     }
   }
