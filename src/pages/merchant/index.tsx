@@ -51,7 +51,27 @@ export default class MerChantPage extends Component {
     this.setState({ search: value });
   }
   getPosition() {
-    Taro.getStorage({ key: 'router' }).then((res: any) => {
+    // Taro.getStorage({ key: 'router' }).then((res: any) => {
+    //   let data: any = this.state.locationPosition
+    //   data.xpoint = res.data.xpoint
+    //   data.ypoint = res.data.ypoint
+    //   data.city_id = res.data.city_id
+    //   data.pages = 1
+    //   this.setState({ locationPosition: data }, () => {
+    //     if (this.$router.params.value) {
+    //       console.log('走这里：' + this.$router.params.value)
+    //       this.setState({ search: this.$router.params.value })
+    //       this.requestSearch(this.$router.params.value)//路由渲染
+    //     } else {
+    //       this.requestData(this.state.locationPosition)
+    //     }
+    //   })
+    // })
+    let router = JSON.parse(sessionStorage.getItem('router'));
+    if(router){
+      let res = {
+        data:router
+      }
       let data: any = this.state.locationPosition
       data.xpoint = res.data.xpoint
       data.ypoint = res.data.ypoint
@@ -66,7 +86,7 @@ export default class MerChantPage extends Component {
           this.requestData(this.state.locationPosition)
         }
       })
-    })
+    }
   }
 
   //处理 路由跳转 和 搜索

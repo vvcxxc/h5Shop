@@ -65,8 +65,73 @@ export default class Index extends Component<any> {
   recognizer = () => {
     this.requestTab(); //经营列表
 
-    Taro.getStorage({ key: 'router' }).then((res: any) => {
+    // Taro.getStorage({ key: 'router' }).then((res: any) => {
 
+    //   if (Object.keys(res.data).length < 1) {
+    //     this.requestTab(); //经营列表
+    //     this.getLocationxy()// 获取定位和 城市id 城市名字
+    //     console.log(1)
+    //     // alert()
+    //     return
+    //   }
+    //   this.requestTab();
+    //   if (res.data.city_id && res.data.city_name) {
+    //     console.log(2)
+    //     getLocation().then((res2: any) => {
+    //       let data: any = this.state.meta
+    //       data.xpoint = res2.longitude
+    //       data.ypoint = res2.latitude
+    //       data.city_id = res.data.city_id
+    //       data.city_name = res.data.city_name
+    //       data.pages = 1
+    //       this.setState({ cityName: res.data.city_name })
+    //       this.setState({ meta: data }, () => {
+    //         this.requestHomeList(data)
+    //       })
+    //     }).catch(()=>{
+    //       console.log(3)
+    //     })
+
+    //     return
+    //   }
+    //   if (res.data.xpoint && res.data.ypoint) {
+    //     console.log(4)
+
+    //     let data: any = this.state.meta
+    //     data.xpoint = res.data.xpoint
+    //     data.ypoint = res.data.ypoint
+    //     this.getCity(data)
+    //     data.pages = 1
+    //     this.setState({ meta: data })
+    //   }
+    //   if (res.data.city_id && !res.data.xpoint && !res.data.ypoint){
+    //     console.log(5)
+    //     let diff:any = this.state.meta
+    //     diff.city_id = 1942
+    //     diff.xpoint  = ''
+    //     diff.ypoint = ''
+    //     diff.pages = 1
+    //     this.setState({ cityName: '广州市' })
+    //     this.setState({meta:diff},()=>{
+    //     this.requestHomeList(this.state.meta)
+    //     this.showImage();
+    //    })
+    //   }
+    // }).catch((res: any) => {
+    //   console.log(6)
+    //   // 第一次进入走这里
+
+    //   this.getLocationxy()// 获取定位和 城市id 城市名字
+    // })
+
+
+    let router = JSON.parse(sessionStorage.getItem('router'));
+    if(router){
+      let res = {
+        data:router
+      }
+      // res.data= router
+      // console.log(res)
       if (Object.keys(res.data).length < 1) {
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
@@ -117,12 +182,12 @@ export default class Index extends Component<any> {
         this.showImage();
        })
       }
-    }).catch((res: any) => {
+    }else{
       console.log(6)
       // 第一次进入走这里
 
       this.getLocationxy()// 获取定位和 城市id 城市名字
-    })
+    }
   }
 
   getLocationxy = () => {
@@ -203,10 +268,12 @@ export default class Index extends Component<any> {
         this.showLoading()
       })
 
-    Taro.setStorage({
-      key: 'router',
-      data: this.state.meta
-    })
+    // Taro.setStorage({
+    //   key: 'router',
+    //   data: this.state.meta
+    // })
+    sessionStorage.setItem('router', JSON.stringify(this.state.meta))
+
   }
 
   // 获取所有城市列表

@@ -135,7 +135,7 @@ export const getLocation = () => {
     }).then(res => {
       let { data } = res;
       wx.config({
-        debug: true,
+        debug: false,
         appId: data.appId,
         timestamp: data.timestamp,
         nonceStr: data.nonceStr,
@@ -148,8 +148,8 @@ export const getLocation = () => {
       });
     })
     return new Promise((resolve, reject) => {
-      const location = Taro.getStorageSync("location");
-
+      // const location = Taro.getStorageSync("location");
+      const location:any = JSON.parse(sessionStorage.getItem('location'))
       if (location.latitude) return resolve(location)
       wx.ready(() => {
         wx.getLocation({
@@ -157,10 +157,11 @@ export const getLocation = () => {
            success: function (res: any) {
             let latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
             let longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-            Taro.setStorageSync("location", {
-              latitude,
-              longitude
-            });
+            // Taro.setStorageSync("location", {
+            //   latitude,
+            //   longitude
+            // });
+            sessionStorage.setItem('location',JSON.stringify({latitude,longitude}))
             resolve({
               latitude,
               longitude
