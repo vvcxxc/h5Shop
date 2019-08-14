@@ -463,6 +463,7 @@ export default class Index extends Component<any> {
   getPayStore = async () => {
     let id = this.$router.params.id || sessionStorage.getItem('payStore')
     // let id = 717
+    alert('走着啦'+id)
     if (id) {
       let location = await getLocation();
       // let id = this.$router.params.id;
