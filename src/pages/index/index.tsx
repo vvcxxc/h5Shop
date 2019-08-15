@@ -170,6 +170,7 @@ export default class Index extends Component<any> {
         data.ypoint = res.data.ypoint
         this.getCity(data)
         data.pages = 1
+        console.log(data)
         this.setState({ meta: data })
       }
       if (res.data.city_id && !res.data.xpoint && !res.data.ypoint){
