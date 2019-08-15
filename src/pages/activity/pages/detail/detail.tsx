@@ -57,6 +57,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     console.log(gift_id)
     this.fetchDetail(type, id)
     this.fetchGiftinfo(gift_id, activity_id)
+    sessionStorage.setItem('qilin','123')
     // Taro.showShareMenu()
   }
 
