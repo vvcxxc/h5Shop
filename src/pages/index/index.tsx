@@ -28,7 +28,7 @@ export default class Index extends Component<any> {
     routerId: '', //路由传递的id
     cityName: '',
     page: 1,
-    meta: {pages:1},
+    meta: { pages: 1 },
     deal_cate_id: null,
     current: 0,
     showLine: false,
@@ -70,9 +70,9 @@ export default class Index extends Component<any> {
 
 
     let router = JSON.parse(sessionStorage.getItem('router'));
-    if(router){
+    if (router) {
       let res = {
-        data:router
+        data: router
       }
       // res.data= router
       // console.log(res)
@@ -97,7 +97,7 @@ export default class Index extends Component<any> {
           this.setState({ meta: data }, () => {
             this.requestHomeList(data)
           })
-        }).catch(()=>{
+        }).catch(() => {
           console.log(3)
         })
 
@@ -113,20 +113,20 @@ export default class Index extends Component<any> {
         this.getCity(data)
         this.setState({ meta: data })
       }
-      if (res.data.city_id && !res.data.xpoint && !res.data.ypoint){
+      if (res.data.city_id && !res.data.xpoint && !res.data.ypoint) {
         console.log(5)
-        let diff:any = this.state.meta
+        let diff: any = this.state.meta
         diff.city_id = 1942
-        diff.xpoint  = ''
+        diff.xpoint = ''
         diff.ypoint = ''
         diff.pages = 1
         this.setState({ cityName: '广州市' })
-        this.setState({meta:diff},()=>{
-        this.requestHomeList(this.state.meta)
-        this.showImage();
-       })
+        this.setState({ meta: diff }, () => {
+          this.requestHomeList(this.state.meta)
+          this.showImage();
+        })
       }
-    }else{
+    } else {
       console.log(6)
       // 第一次进入走这里
 
@@ -145,7 +145,7 @@ export default class Index extends Component<any> {
           let data: any = this.state.meta
           data.city_id = 1924
           data.pages = 1
-          this.setState({ meta: data },()=>{
+          this.setState({ meta: data }, () => {
             // this.showImage()
           })
           return
@@ -156,15 +156,15 @@ export default class Index extends Component<any> {
 
     }).catch(err => {
       console.log(9)
-      let diff:any = this.state.meta
+      let diff: any = this.state.meta
       diff.city_id = 1942
-      diff.xpoint  = ''
+      diff.xpoint = ''
       diff.ypoint = ''
       diff.pages = 1
       this.setState({ cityName: '广州市' })
-       this.setState({meta:diff},()=>{
+      this.setState({ meta: diff }, () => {
         this.requestHomeList(this.state.meta)
-       })
+      })
     })
   }
 
@@ -204,10 +204,10 @@ export default class Index extends Component<any> {
 
         this.showImage()
         if (this.state.meta.pages > 1) {
-          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner },()=>{
+          this.setState({ storeList: [...this.state.storeList, ...res.data.store_info.data], storeHeadImg: res.data.banner }, () => {
             // this.showImage() //
           });
-        }else {
+        } else {
           this.setState({ storeList: res.data.store_info.data, storeHeadImg: res.data.banner });
         }
       })
@@ -244,7 +244,7 @@ export default class Index extends Component<any> {
   handlerTablChange(current, id, _this) {
     console.log(11)
     this.setState({ current });
-    let data:any = this.state.meta
+    let data: any = this.state.meta
     data.pages = 1
     this.setState({ meta: data })
 
@@ -269,7 +269,7 @@ export default class Index extends Component<any> {
   }
 
   onReachBottom() {
-    if(sessionStorage.getItem('qilin')){
+    if (sessionStorage.getItem('qilin')) {
       sessionStorage.removeItem('qilin')
       return
     }
@@ -339,8 +339,8 @@ export default class Index extends Component<any> {
       })
   }
 
-  showImage = (id?:any) => {
-    let city_id = id? id : this.state.meta.city_id
+  showImage = (id?: any) => {
+    let city_id = id ? id : this.state.meta.city_id
     request({
       url: 'v3/ads',
       data: {
@@ -419,16 +419,16 @@ export default class Index extends Component<any> {
       let location = await getLocation();
       // let id = this.$router.params.id;
       if (id) {
-       let res = await request({
+        let res = await request({
           url: 'v3/stores/pay_store/' + id,
           data: { xpoint: location.longitude || '', ypoint: location.latitude || '' }
         })
-          // .then((res: any) => {
-          //   this.setState({
-          //     hahaData: res.data.store_info,
-          //   })
-          // })
-        this.setState({hahaData: res.data.store_info,})
+        // .then((res: any) => {
+        //   this.setState({
+        //     hahaData: res.data.store_info,
+        //   })
+        // })
+        this.setState({ hahaData: res.data.store_info, })
       }
     }
   }
@@ -485,7 +485,7 @@ export default class Index extends Component<any> {
         >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
         </View>
 
-        {
+        {/* {
           this.state.hahaData.name ? (
             <View className="receive_box">
               <View className="receive">已领取</View>
@@ -493,7 +493,7 @@ export default class Index extends Component<any> {
 获取更多优惠信息</View>
             </View>
           ) : null
-        }
+        } */}
         <VersionOne list={this.state.hahaData} />
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (
