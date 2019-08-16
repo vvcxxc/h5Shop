@@ -55,8 +55,7 @@ export default class VersionOne extends Component<Props> {
 
   render() {
     let that = this.props.list
-    // console.log(this.props.list,'444')
-    // let meta = ['拼团送礼', '增值送礼', '认证商户']
+
     return (
       <View className="new_box" style={{ display: that.name ? '' : 'none' }}>
         <View className="box_two" style={{ paddingBottom: that.activity ? '' : '4px' }} onClick={this.handleClick.bind(this, that.id)}>

@@ -7,16 +7,11 @@ import List from './list'
 import { getLocation } from '../../utils/getInfo'
 
 import FilterTotal from "@/components/filter-total";
-interface defineType {
-  deal_cate_id?: number,
-  distance_id?: number,
-  sort_id?: number,
-  page?: number,
-  keyword?: number | string
-}
+
 export default class MerChantPage extends Component {
   config = {
-    navigationBarTitleText: '商家'
+    navigationBarTitleText: '商家',
+    // enablePullDownRefresh: fa
   };
 
   state = {
@@ -31,7 +26,8 @@ export default class MerChantPage extends Component {
     distance_id: null,
     sort_id: null,
     show_bottom: false,
-    close:false
+    close: false,
+    hidden_filteron:false
   };
 
   constructor(props) {
@@ -51,22 +47,6 @@ export default class MerChantPage extends Component {
     this.setState({ search: value });
   }
   getPosition() {
-    // Taro.getStorage({ key: 'router' }).then((res: any) => {
-    //   let data: any = this.state.locationPosition
-    //   data.xpoint = res.data.xpoint
-    //   data.ypoint = res.data.ypoint
-    //   data.city_id = res.data.city_id
-    //   data.pages = 1
-    //   this.setState({ locationPosition: data }, () => {
-    //     if (this.$router.params.value) {
-    //       console.log('走这里：' + this.$router.params.value)
-    //       this.setState({ search: this.$router.params.value })
-    //       this.requestSearch(this.$router.params.value)//路由渲染
-    //     } else {
-    //       this.requestData(this.state.locationPosition)
-    //     }
-    //   })
-    // })
     let router = JSON.parse(sessionStorage.getItem('router'));
     if(router){
       let res = {
@@ -123,8 +103,6 @@ export default class MerChantPage extends Component {
 
 
   filterClick(index, id1?, id2?, id3?) {
-
-    // let define: defineType = {}
     let define: any = this.state.locationPosition
     if (id1) {
       define.deal_cate_id = id1
@@ -183,24 +161,9 @@ export default class MerChantPage extends Component {
       })
   }
 
-  // // 微信自带监听 滑动事件
-  // onPullDownRefresh  () {
-  //   this.requestData(this.state.locationPosition.longitude, this.state.locationPosition.latitude) //渲染页面
-  //   this.setState({show_bottom:false})
-  // }
-
-  // // 触底事件
-  // onReachBottom () {
-  //   if(this.state.show_bottom) return
-  //   Taro.showLoading({ title: 'loading', mask: true })//显示loading
-  // 	this.setState({ page: this.state.page + 1 }, ()=> {
-  // 		this.filterClick(1, this.state.deal_cate_id, this.state.distance_id, this.state.sort_id)
-  // 	})
-  // }
-
-
   // 微信自带监听 滑动事件
   onPullDownRefresh() {
+    this.setState({ hidden_filteron:true})
     this.setState({ show_bottom: false })
     this.setState({ page: 1 }, () => {
       let data: any = this.state.locationPosition
@@ -270,26 +233,37 @@ export default class MerChantPage extends Component {
 
   // 点击空白处，筛选的格子也会消失
   clearClick=()=>{
-    console.log('出发')
     this.setState({close:true})
+  }
+  
+  filteronScroll = (scroll) => {
+
+  }
+
+  // 隐藏遮挡层
+  hiddenFilteron = () => {
+    this.setState({ hidden_filteron:true})
   }
 
   render() {
     return (
-      <View>
-        <AtSearchBar
-          value={this.state.search}
-          onActionClick={this.onActionClick.bind(this)}
-          onClear={this.onClearSearch.bind(this)}
-          onChange={this.handlerSearch.bind(this)}
+      <View >
+        <View onClick={this.hiddenFilteron}>
+          <AtSearchBar
+            value={this.state.search}
+            onActionClick={this.onActionClick.bind(this)}
+            onClear={this.onClearSearch.bind(this)}
+            onChange={this.handlerSearch.bind(this)}
+          />
+        </View>
+        
+        <FilterTotal
+          onClick={this.titleOnClick.bind(this, 0)}
+          onscroll={this.filteronScroll.bind(this)}
+          hidden={this.state.hidden_filteron}
         />
-        <FilterTotal onClick={this.titleOnClick.bind(this, 0)}  />
         <View className="merchant-list" style="background-color:#fff;">
-          {/* <List onClick={this.handleClick} list={
-            this.state.stores
-          } /> */}
-
-          <View style={{ minHeight: '100vh', height: 'auto', background: '#ededed', overflow: 'hidden' }} onClick={this.clearClick}>
+          <View style={{ minHeight: '100vh', height: 'auto', background: '#ededed'}} onClick={this.clearClick}>
             {
               this.state.stores.map((item2: any, index: any) => {
                 return <View className="new_box">
@@ -332,7 +306,8 @@ export default class MerChantPage extends Component {
                         className="_child"
                         style={{
                           position: 'absolute', top: '0', right: '0',
-                          display: item2.activity_num > 2 ? '' : 'none'
+                          display: item2.activity_num > 2 ? '' : 'none',
+                          border:'none'
                         }}
                       >
                         <View style={{ marginRight: '8px' }}>{item2.activity_num ? item2.activity_num + '个活动' : null}</View>
@@ -342,13 +317,11 @@ export default class MerChantPage extends Component {
                             this.state.stores[index].height !== 'auto' ? require('../../assets/jiao_bottom.png') : require('../../assets/jiao_top.png')}
                         />
                       </View>
-
-
                       <View
                         style={{
                           display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
                           justifyContent: 'space-between',
-                          borderBottom: item2.activity_num === 1 ? 'none' : '0.5px solid #eeeeee'
+                          // borderBottom: item2.activity_num === 1 ? 'none' : '0.5px solid #eeeeee'
                         }}
                       >
 
