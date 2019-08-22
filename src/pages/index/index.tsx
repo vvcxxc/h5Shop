@@ -415,6 +415,7 @@ export default class Index extends Component<any> {
   // 获取中奖门店信息
   getPayStore = async () => {
     let id = this.$router.params.id || sessionStorage.getItem('payStore')
+    // let id = 4565
     if (id) {
       let location = await getLocation();
       // let id = this.$router.params.id;
@@ -485,15 +486,15 @@ export default class Index extends Component<any> {
         >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
         </View>
 
-        {/* {
+        {
           this.state.hahaData.name ? (
             <View className="receive_box">
               <View className="receive">已领取</View>
-              <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/s/uPCmihwL5HZrNDE-YmfW4A">公众号</ a>"
+              <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/s/gWPzHXtNugMrYMacWIzNJg">公众号</ a>"
 获取更多优惠信息</View>
             </View>
           ) : null
-        } */}
+        }
         <VersionOne list={this.state.hahaData} />
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (
