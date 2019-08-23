@@ -5,7 +5,7 @@ import { View, Text, Image } from "@tarojs/components";
 import "./index.styl";
 
 interface Props {
-  _id: any, return_money: any, pay_money: any, youhui_type: any, timer: any, yname: any, list_brief: any, expire_day: any, total_fee: any
+  _id: any, return_money: any, pay_money: any, youhui_type: any, timer: any, yname: any, sname: any, list_brief: any, expire_day: any, total_fee: any
 }
 
 /**现金优惠券 */
@@ -37,7 +37,7 @@ export default class CashCoupon extends Component<Props> {
           // style={{ backgroundImage: `url(${secondaryActiveBg})` }}
           >
             <View className="money-wrap">
-             <Text className="money">￥{this.props.return_money}</Text>
+              <Text className="money">￥{this.props.return_money}</Text>
               <View className="info">满{this.props.total_fee}可用</View>
             </View>
           </View>
@@ -48,7 +48,9 @@ export default class CashCoupon extends Component<Props> {
         /> */}
           <View className="item content" style={{ position: "relative" }}>
             <View className="head flex">
-              <View className="label flex center" style={{ background: "#5d84e0",borderBottom:"none"  }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View>{this.props.yname}
+              <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <View style={{ background: "#5d84e0", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
+              </View>{this.props.sname}
             </View>
             {/* <View className="date">{this.props.timer}</View> */}
             <View className="info" >购买后{this.props.expire_day}日内有效</View>

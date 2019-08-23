@@ -17,7 +17,8 @@ interface Props {
 
 export default class PaySuccess extends Component<Props> {
   config = {
-    navigationBarTitleText: "商家详情"
+    navigationBarTitleText: "商家详情",
+    enablePullDownRefresh: false
   };
 
 
@@ -130,10 +131,44 @@ export default class PaySuccess extends Component<Props> {
     })
     let that = this;
     getLocation().then((res: any) => {
-      // console.log(res);
+      console.log(res);
       this.setState({
-        yPoint: res.latitude,
-        xPoint: res.longitude
+        yPoint: res.latitude || '',
+        xPoint: res.longitude || ''
+      }, () => {
+        request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
+          .then((res: any) => {
+            if (res.code == 200) {
+              that.setState({
+                business_list: res.data.store.Info,
+                recommend: res.data.recommend,
+                activity_group: res.data.store.activity_group,
+                activity_appre: res.data.store.activity_appreciation,
+                cashCouponList: res.data.store.cashCouponList,
+                exchangeCouponList: res.data.store.exchangeCouponList,
+                keepCollect_bull: res.data.store.Info.collect ? true : false
+              })
+              Taro.hideLoading()
+            } else {
+              Taro.showToast({
+                title: res.data,
+                icon: 'none',
+                duration: 2000
+              })
+              setTimeout(() => {
+                Taro.navigateBack()
+              }, 2000)
+
+            }
+
+          }).catch(err => {
+            console.log(err);
+          })
+      })
+    }).catch(err => {
+      this.setState({
+        yPoint: '',
+        xPoint: ''
       }, () => {
         request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
           .then((res: any) => {
@@ -179,13 +214,13 @@ export default class PaySuccess extends Component<Props> {
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id='+gift_id+'&activity_id='+activity_id
+      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   // 去增值活动
-  gotoAppreciation(_id,gift_id,activity_id) {
+  gotoAppreciation(_id, gift_id, activity_id) {
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1&gift_id='+gift_id+'&activity_id='+activity_id
+      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   //现金券详情
@@ -339,9 +374,9 @@ export default class PaySuccess extends Component<Props> {
             </View>
           </ScrollView>
           <View className="address flex center">
-            <Image className="address-img" style={{ marginRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)} />
-            <View className="text item">{this.state.business_list.address}</View>
-            <Image className="mobile-img" style={{ paddingLeft: "10px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #ccc" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
+            <Image className="address-img" style={{ paddingLeft: "10px", paddingRight: "10px" }} src={AddressImg} onClick={this.routePlanning.bind(this)} />
+            <View className="text item" onClick={this.routePlanning.bind(this)}>{this.state.business_list.address}</View>
+            <Image className="mobile-img" style={{ paddingLeft: "30px", paddingTop: "2px", paddingBottom: "2px", borderLeft: "1px solid #f0eff0" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
         </View>
 
@@ -349,29 +384,18 @@ export default class PaySuccess extends Component<Props> {
         {/* 拼团活动 */}
 
         {
-          this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center", paddingTop: "10px" }}>
-              <View className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#D97B0B",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>礼</View>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "12px" }}>拼团送豪礼</Text>
+          this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff" ,paddingTop:"12px"}}>
+            <View className="merchant-details__tit" >
+              <View className="mark" style={{backgroundColor: "#D97B0B"}}>礼</View>
+              <Text className="fwb">拼团送豪礼</Text>
             </View>
             <View className="hidden-box" id="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
               {
                 this.state.activity_group.map((item) => (
-                  <View className="group-purchase bcfff _pintuan" key={item.name}>
+                  <View className="group-purchase bcfff _pintuan" key={item.name} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                     <View style={{ height: "5px" }}></View>
                     <View className="hd">
-                      <View className="flex center tuan" style={{ paddingBottom: "5px", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
+                      <View className="flex center tuan" style={{ paddingBottom: "10px", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
                         <View className="item desc">{item.name}</View>
                         <View className="count">{item.participation_number}人团</View>
                       </View>
@@ -379,13 +403,24 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
-                        <View className="image-list">
-                          <Image className="image" src={item.image_url} />
+                        <View className="image-list"  style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                          <View className="image" style={{ position: "relative",overflow:"hidden"  }}>
+                            {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
+                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
+                              <View style={{ textDecoration: "line-through", height: "100%", fontSize: "16px", color: "rgba(225,225,225,.5)" }}>￥300</View>
+                            </View> */}
+                            <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                          </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
-                        <View className="image-list">
-                          <Image className="image" src={item.image_url} />
-                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
+                        <View className="image-list"  style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                          <View className="image" style={{ position: "relative",overflow:"hidden"  }}>
+                            {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
+                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
+                              <View style={{ textDecoration: "line-through", height: "100%", fontSize: "16px", color: "rgba(225,225,225,.5)" }}>￥300</View>
+                            </View> */}
+                            <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                          </View>                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
                             <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: '2' }} />
                             <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: "3" }} />
                             <Image src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
@@ -396,9 +431,9 @@ export default class PaySuccess extends Component<Props> {
                       <View className="flex center">
                         <View className="item">
                           <Text className="money">￥{item.participation_money}</Text>
-                          <Text className="count">已拼{item.participation_number}件</Text>
+                          {/* <Text className="count">已拼{item.participation_number}件</Text> */}
                         </View>
-                        <Button className="btn-go" onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>立刻开团</Button>
+                        <Button className="btn-go" >立刻拼团</Button>
                       </View>
                     </View>
                   </View>
@@ -410,7 +445,7 @@ export default class PaySuccess extends Component<Props> {
               this.state.activity_group.length != 1 ?
                 <View className="ft-more flex center" style={{ textAlign: "center", width: "100%", background: "#fff" }}
                   onClick={() => { this.setState({ activity_group_bull: !this.state.activity_group_bull }); }}>
-                  <View className="more-box">
+                  <View className="more-box" style={{color:"#999",fontSize:"12px" }}>
                     {this.state.activity_group_bull ? "收回" : "查看更多"}
                     {
                       this.state.activity_group_bull ?
@@ -424,21 +459,10 @@ export default class PaySuccess extends Component<Props> {
         }
         {/* 增值活动 */}
         {
-          this.state.activity_appre.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
-              <Text className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#C71D0B",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>增</Text>
-              <Text className="fwb hidden-box" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>增值低价买</Text>
+          this.state.activity_appre.length == 0 ? <View></View> : <View style={{ background: "#fff",paddingTop:"12px" }}>
+            <View className="merchant-details__tit" >
+              <Text className="mark" style={{ backgroundColor: "#C71D0B"}}>增</Text>
+              <Text className="fwb" >增值低价买</Text>
             </View>
             <View style={{ width: "100%", overflow: "hidden", height: this.state.activity_appre_bull ? "auto" : "9rem" }}>
               {
@@ -450,7 +474,7 @@ export default class PaySuccess extends Component<Props> {
                         <View className="item desc">{item.name}</View>
                       </View>
                     </View>
-                    <View className="image-list" style={{ position: "relative", marginBottom: "5px" }}>
+                    <View className="image-list" style={{ position: "relative", marginBottom: "10px" }}>
                       {
                         item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
                           <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} />
@@ -475,7 +499,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.pay_money}</Text>
                           {/* <Text className="count">{item.activity_brief}</Text> */}
                         </View>
-                        <Button className="btn-go" onClick={this.gotoAppreciation.bind(this, item.youhui_id,item.gift_id,item.activity_id)}>立刻增值</Button>
+                        <Button className="btn-go" onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>立刻增值</Button>
                       </View>
                     </View>
                   </View>
@@ -488,7 +512,7 @@ export default class PaySuccess extends Component<Props> {
                   style={{ textAlign: "center", width: "100%", background: "#fff" }}
                   onClick={() => { this.setState({ activity_appre_bull: !this.state.activity_appre_bull }) }}
                 >
-                  <View className="more-box">
+                  <View className="more-box" style={{color:"#999",fontSize:"12px" }}>
                     {this.state.activity_appre_bull ? "收回" : "查看更多"}
                     {
                       this.state.activity_appre_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
@@ -502,27 +526,16 @@ export default class PaySuccess extends Component<Props> {
         }
         {/* 优惠券 */}
         {
-          this.state.cashCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
-              <Text className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#5D84E0",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>券</Text>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>现金券</Text>
+          this.state.cashCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff",paddingTop:"12px"}}>
+            <View className="merchant-details__tit" >
+              <Text className="mark" style={{backgroundColor: "#5D84E0"}}>券</Text>
+              <Text className="fwb">现金券</Text>
             </View>
-            <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", height: this.state.couponList_bull ? "auto" : "5.56rem" }}>
+            <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden",paddingTop:"0", height: this.state.couponList_bull ? "auto" : "5.05rem" }}>
               {
                 this.state.cashCouponList.map((item) => (
                   <View className="ticket-view flex center" key={item.id} style={{ position: 'relative' }} onClick={this.handleClick.bind(this, item.id)}>
-                    <View className="left" style={{ position: 'absolute', left: '30px' }}>
+                    <View className="left" style={{ position: 'absolute', left: '24px' }}>
                       <View className="money"><View style={{ fontWeight: 'bold', float: "left", marginRight: "10px" }}>￥{item.return_money}</View>{item.name}</View>
                       <View className="desc">购买后{item.expire_day}天有效</View>
                       <View className="sales">极速退/免预约/全部商品可用</View>
@@ -539,7 +552,7 @@ export default class PaySuccess extends Component<Props> {
               this.state.cashCouponList.length != 1 ? <View className="ft-more flex center"
                 style={{ textAlign: "center", width: "100%", background: "#fff" }}
                 onClick={() => { this.setState({ couponList_bull: !this.state.couponList_bull }) }} >
-                < View className="more-box">
+                < View className="more-box" style={{color:"#999",fontSize:"12px" }}>
                   {this.state.couponList_bull ? "收回" : "查看更多"}
                   {
                     this.state.couponList_bull ? <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
@@ -552,21 +565,10 @@ export default class PaySuccess extends Component<Props> {
 
         {/* 优惠信息*/}
         {
-          this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff" }}>
-            <View className="merchant-details__tit" style={{ fontSize: "19px", paddingLeft: "24px", height: "26px", position: "relative", display: "flex", alignItems: "center" }}>
-              <Text className="mark" style={{
-                fontSize: " 10px",
-                color: "#fff",
-                backgroundColor: "#5DD8A5",
-                padding: "1px 5px",
-                borderRadius: " 2px",
-                marginRight: "10px",
-                verticalAlign: "inherit",
-                bottom: "0",
-                textAlign: "center",
-                width: '12px'
-              }}>惠</Text>
-              <Text className="fwb" style={{ fontWeight: "bold", position: "absolute", left: "50px", top: "2px" }}>优惠信息</Text>
+          this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff",paddingTop:"12px" }}>
+            <View className="merchant-details__tit" >
+              <Text className="mark" style={{backgroundColor: "#5DD8A5"}}>惠</Text>
+              <Text className="fwb">优惠信息</Text>
             </View>
             <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "5.4rem" }}>
               {
@@ -592,7 +594,7 @@ export default class PaySuccess extends Component<Props> {
                 <View className="ft-more flex center"
                   style={{ textAlign: "center", width: "100%", background: "#fff", paddingBottom: "0", marginTop: "0" }}
                   onClick={() => { this.setState({ exchangeCouponList_bull: !this.state.exchangeCouponList_bull }) }} >
-                  < View className="more-box">
+                  < View className="more-box" style={{color:"#999",fontSize:"12px" }}>
 
                     {this.state.exchangeCouponList_bull ? "收回" : "查看更多"}
                     {
@@ -609,7 +611,7 @@ export default class PaySuccess extends Component<Props> {
           this.state.recommend.length == 0 ? "" :
             <View className="recommend-view bcfff">
               <View className="merchant-details__tit">
-                <Text className="fwb">附近推荐</Text>
+                <Text className="fwb" style={{left:"0"}}>附近推荐</Text>
               </View>
               <View className="recommend-cells">
                 {

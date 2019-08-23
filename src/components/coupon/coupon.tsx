@@ -28,7 +28,6 @@ export default class Coupon extends Component<CouponProp> {
     if (!receive) return "0%"
     return (receive / user_count * 100).toFixed(0) + "%"
   }
-
   /**
    * 点击集中处理(这里会做下处理, 这些接口返回的数据都tm不一样, 做个屁, 我吃柠檬, 如: list页面用的是id(券id), 有些又用youhui_id)
    */

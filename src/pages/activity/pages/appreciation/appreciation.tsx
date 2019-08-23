@@ -36,7 +36,7 @@ type State = {
   isGet: boolean;
   isShare: boolean;
 };
-
+const share_url = process.env.APPRE_URL
 export default class Appreciation extends Component {
   config = {
     navigationBarTitleText: "增值"
@@ -58,7 +58,6 @@ export default class Appreciation extends Component {
   }
   async componentDidMount() {
     // Taro.showShareMenu()
-
     const { id = "1095" } = this.$router.params
     /**
      * 授权认证用
@@ -243,40 +242,18 @@ export default class Appreciation extends Component {
     })
   }
   share = () => {
-    let url = window.location.href;
-    this.setState({isShare: true})
-    Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        let { data } = res;
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "updateAppMessageShareData",
-          ]
-        })
-        wx.ready(() => {
-          wx.updateAppMessageShareData({
-            title: '分享', // 分享标题
-            desc: '123', // 分享描述
-            link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-            success: function () {
-              // 用户点击了分享后执行的回调函数
-            }
-          })
+    const { id = "" } = this.$router.params
+    let shareInfo = this.state.basicinfo.getTextContent
 
-        })
+    this.setState({isShare: true})
+
+      wx.updateAppMessageShareData({
+        title: shareInfo.title, // 分享标题
+        desc: shareInfo.desc, // 分享描述
+        link: share_url+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: shareInfo.small_img, // 分享图标
       })
+
   }
   closeShare = () => {
     this.setState({isShare: false});

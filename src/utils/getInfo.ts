@@ -117,6 +117,7 @@ export const getOpenid = (code: string): Promise<any> => {
 // }
 export const getLocation = () => {
   let type = getBrowserType();
+
   if (type == 'wechat') {
     // return new Promise((resolve) => {
     //   resolve({
@@ -124,7 +125,7 @@ export const getLocation = () => {
     //     "longitude" : 212
     //   })
     // })
-    let url = window.location;
+    let url = location.href.split('#')[0];
     Taro.request({
       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -132,7 +133,6 @@ export const getLocation = () => {
         url
       }
     }).then(res => {
-      console.log(res.data);
       let { data } = res;
       wx.config({
         debug: false,
@@ -143,13 +143,13 @@ export const getLocation = () => {
         jsApiList: [
           "getLocation",
           "openLocation",
-          "onMenuShareAppMessage",
-          "updateAppMessageShareData"
+          'updateAppMessageShareData'
         ]
       });
     })
-    return new Promise((resolve) => {
-      const location = Taro.getStorageSync("location");
+    return new Promise((resolve, reject) => {
+      // const location = Taro.getStorageSync("location");
+      const location:any = JSON.parse(sessionStorage.getItem('location'))
       if (location) return resolve(location)
       wx.ready(() => {
         wx.getLocation({
@@ -157,16 +157,27 @@ export const getLocation = () => {
            success: function (res: any) {
             let latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
             let longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-            Taro.setStorageSync("location", {
-              latitude,
-              longitude
-            });
+            // Taro.setStorageSync("location", {
+            //   latitude,
+            //   longitude
+            // });
+            sessionStorage.setItem('location',JSON.stringify({latitude,longitude}))
             resolve({
               latitude,
               longitude
             })
+          },
+          fail: function (){
+            console.log('定位失败啦')
+            reject({
+              latitude: '',
+              longitude: ''
+            })
           }
         });
+      }),
+      wx.error(()=>{
+        console.log('12312ss')
       })
     })
   } else {

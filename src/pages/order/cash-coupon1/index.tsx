@@ -79,11 +79,13 @@ export default class CashCoupon extends Component<Props> {
           {this.props.type == 2 ? "" : <View className="info">{this.props.timer}</View>}
           {this.props.type == 2 ? <View className="info">免预约</View> : ""}
           {this.props.bg_img_type == 1 ? <View className="info" style={{ marginTop: "10px" }}>使用日期： {this.props.confirm_time}</View> : ""}
-          {
+          {/* {
             this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._logid)}>立即使用</View> : (
               this.props.type == 2 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)} >再来一单</View> : <View></View>)
+          } */}
+          {
+            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._logid)}>立即使用</View> : null
           }
-
 
         </View>
       </View>

@@ -27,6 +27,12 @@ export default class ActivityGroup extends Component<ActivityGroupProp> {
       id
     })
   }
+  goTo = () =>{
+    console.log(this.props)
+    const id = this.props.data.id
+    Taro.navigateTo({url:'/pages/activity/pages/group/group?id='+id})
+  }
+
   render() {
     const {
       data: { participation_number, number, ...data }
@@ -89,10 +95,7 @@ export default class ActivityGroup extends Component<ActivityGroupProp> {
                 ? <Button className="action">{desc}</Button>
                 : <Button
                     className="action"
-                    openType="share"
-                    data-id={data.id}
-                    data-image={data.image}
-                    data-title={data.name}
+                    onClick={this.goTo}
                   >
                     {desc}
                   </Button>

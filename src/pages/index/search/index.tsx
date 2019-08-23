@@ -12,7 +12,7 @@ interface Props {
 
 class IndexSearchPage extends PureComponent<Props> {
 	config = {
-		navigationBarTitleText: '团卖物联'
+		navigationBarTitleText: '小熊敬礼'
 	};
 
 	state = {

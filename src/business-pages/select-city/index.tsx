@@ -198,10 +198,11 @@ export default class SelectCity extends Component {
   reLocation = (index?) => {
     this.setState({ showIndicator: true })
     this.getLocation();
-    Taro.setStorage({
-      key: 'router',
-      data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
-    })
+    // Taro.setStorage({
+    //   key: 'router',
+    //   data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
+    // })
+    sessionStorage.setItem('router',JSON.stringify({ xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }))
     setTimeout(() => {
       this.setState({ showIndicator: false })
       Taro.switchTab({ url: '/pages/index/index' })
@@ -227,19 +228,22 @@ export default class SelectCity extends Component {
 
   // click 热门城市
   searchData = (name, id) => {
-    Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
+    // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
+    sessionStorage.setItem('router',JSON.stringify( { city_id: id, city_name: name }))
     Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
 
   // 全国列表数据 点击
   onClick = (item, event) => {
-    Taro.setStorage({ key: 'router', data: { city_id: item.id, city_name: item.name } })
+    // Taro.setStorage({ key: 'router', data: { city_id: item.id, city_name: item.name } })
+    sessionStorage.setItem('router',JSON.stringify({ city_id: item.id, city_name: item.name }))
     Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
 
   // 搜索列表点击
   lineOnClick = (id, name) => {
-    Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
+    // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
+    sessionStorage.setItem('router',JSON.stringify({ city_id: id, city_name: name }))
     Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
   // 回车键 模糊搜索

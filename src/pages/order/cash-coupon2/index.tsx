@@ -71,8 +71,12 @@ export default class CashCoupon extends Component<Props> {
             <View className="head flex">
               {
                 this.props.bg_img_type == 1 ?
-                  <View className="label flex center" style={{ background: "#5d84e0", borderBottom: "none" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View> :
-                  <View className="label flex center" style={{ background: "#cccccc", borderBottom: "none" }}>{this.props.youhui_type == "0" ? "兑换券" : "现金券"}</View>
+                  <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ background: "#5d84e0", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
+                  </View> :
+                  <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ background: "#cccccc", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
+                  </View>
               }
               {this.props.sname}
             </View>
@@ -81,9 +85,9 @@ export default class CashCoupon extends Component<Props> {
             <View className="info" >免预约/全部商品可用</View>
 
             {this.props.bg_img_type == 2 ? <View className="info" style={{ marginTop: "10px" }}>使用日期： {this.props.confirm_time}</View> : ""}
-            {
+            {/* {
               this.props.type == 1 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)}>再来一单</View> : ""
-            }
+            } */}
           </View>
         </View>
       </View>

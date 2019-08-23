@@ -34,6 +34,7 @@ interface State {
   base64: string;
   isShare: boolean;
 }
+const share_url = process.env.GROUP_URL
 export default class Group extends Component {
   config = {
     navigationBarTitleText: "社区拼团"
@@ -64,15 +65,15 @@ export default class Group extends Component {
     this.fetchCoupon(location)
   }
 
-  onShareAppMessage() {
-    const { share: { title, small_img: imageUrl } } = this.state.basicinfo
-    const { id = "" } = this.$router.params
-    return {
-      title,
-      imageUrl,
-      path: `/pages/activity/pages/group/group?id=${id}`
-    }
-  }
+  // onShareAppMessage() {
+  //   const { share: { title, small_img: imageUrl } } = this.state.basicinfo
+  //   const { id = "" } = this.$router.params
+  //   return {
+  //     title,
+  //     imageUrl,
+  //     path: `/pages/activity/pages/group/group?id=${id}`
+  //   }
+  // }
 
   /**
    * 点击动作(如果是跳转动作的时候, 带上参数type, id, publictypeid)
@@ -94,7 +95,7 @@ export default class Group extends Component {
           id: publictypeid,
           gift_id,
           activity_id
-        } = this.state.basicinfo
+        } = this.state.basicinfo;
         let dataId = 0
         if (data && data.id) {
           dataId = data.id
@@ -128,15 +129,20 @@ export default class Group extends Component {
    * 计算: 已完成?|参团?|去使用?
    */
   handleCalculate(data: any): void {
+    // console.log(data)
     const {
       number: groupNumber,
       participation_number: groupParticipator,
       is_group_participation,
       is_employ
     } = data
+
     const isFinish = groupParticipator === groupNumber
     const isJoin = is_group_participation !== GROUP_AREADY
     const isShowUse = isFinish && (is_employ === UNUSED)
+    // const isFinish = false
+    // const isJoin = true
+    // const isShowUse = false
     this.setState({
       isFinish,
       isJoin,
@@ -224,52 +230,48 @@ export default class Group extends Component {
   }
 
   share = () => {
-    // console.log(this.state.basicinfo)
-    let info = this.state.basicinfo;
-    let url = window.location.href;
-    this.setState({isShare: true})
-    Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        let { data } = res;
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "updateAppMessageShareData",
-          ]
+    const { id = "" } = this.$router.params
+    let info = this.state.basicinfo.share;
+    this.setState({ isShare: true })
+    // let url = location.href.split('#')[0];
+    // Taro.request({
+    //   url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+    //   method: 'GET',
+    //   data: {
+    //     url
+    //   }
+    // }).then(res => {
+    //   console.log(res.data);
+    //   let { data } = res;
+    //   wx.config({
+    //     debug: true,
+    //     appId: data.appId,
+    //     timestamp: data.timestamp,
+    //     nonceStr: data.nonceStr,
+    //     signature: data.signature,
+    //     jsApiList: [
+    //       'updateAppMessageShareData'
+    //     ]
+    //   });
+    //   wx.ready(()=>{
+    //     wx.updateAppMessageShareData({
+    //       title: info.title, // 分享标题
+    //       desc: info.desc, // 分享描述
+    //       link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    //       imgUrl: info.small_img, // 分享图标
+    //     })
+    //   })
+    // })
+         wx.updateAppMessageShareData({
+          title: info.title, // 分享标题
+          desc: info.desc, // 分享描述
+          link: share_url+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: info.small_img, // 分享图标
         })
-        wx.ready(() => {
-          // if(info.gift_id){
-          //   wx.updateAppMessageShareData({
-          //     title: `${info.participation_money}元拼团！100%有奖，你还在等什么！`, // 分享标题
-          //     desc: `【仅剩${info.}个名额】我x元拼了x超值套餐，还有惊喜礼品，等你来跟我一起拼！`, // 分享描述
-          //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-          //   })
-          // }else{
-          //   wx.updateAppMessageShareData({
-          //     title: `就差你啦！我在抢${info.participation_money}元套餐，快跟我一起拼吧！`, // 分享标题
-          //     desc: `买了不后悔！我${info.participation_money}元拼了${info.pay_money}超值套餐，快来跟我一起完成拼团吧。`, // 分享描述
-          //     link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          //     imgUrl: 'http://oss.tdianyi.com/front/KMQSx3emm6NszAzDDtYrGsRmkrfFp4Tj.png', // 分享图标
-          //   })
-          // }
 
-
-        })
-      })
   }
   closeShare = () => {
-    this.setState({isShare: false});
+    this.setState({ isShare: false });
   }
 
   render() {
@@ -435,7 +437,7 @@ export default class Group extends Component {
                 <View className='share_text'>
                   一起拼团领礼品吧
                 </View>
-                <Image src={require('../../../../assets/share_arro.png')} className='share_img'/>
+                <Image src={require('../../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
           ) : null
