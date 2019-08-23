@@ -424,11 +424,6 @@ export default class Index extends Component<any> {
           url: 'v3/stores/pay_store/' + id,
           data: { xpoint: location.longitude || '', ypoint: location.latitude || '' }
         })
-        // .then((res: any) => {
-        //   this.setState({
-        //     hahaData: res.data.store_info,
-        //   })
-        // })
         this.setState({ hahaData: res.data.store_info, })
       }
     }
