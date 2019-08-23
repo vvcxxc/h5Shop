@@ -15,9 +15,9 @@ export const myActivity = {
  */
 export const activtys = [
   {
-    text: "增值买"
+    text: "增值活动"
   },
   {
-    text: "团团购"
+    text: "社区拼团"
   }
 ]

@@ -46,7 +46,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
           <View className="container">
             <View className="area-block area-play">
               <View className="title" style="font-weight: normal;">
-                增值玩法
+                好友增值玩法
               </View>
               <View className="content steps">
                 <View className="item">
