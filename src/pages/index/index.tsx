@@ -391,12 +391,23 @@ export default class Index extends Component<any> {
   // 点击广告
   advertOnclick = () => {
     if (!this.state.need_jump) return
-    request({
-      url: 'v3/ads/onclick',
-      data: {
+    let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
+    let data = {}
+    if(store_id){
+      data = {
+        ad_id: this.state.indexImgId, //广告id
+        ad_log_id: this.state.adLogId, //广告日志id
+        store_id
+      }
+    }else{
+      data = {
         ad_id: this.state.indexImgId, //广告id
         ad_log_id: this.state.adLogId //广告日志id
       }
+    }
+    request({
+      url: 'v3/ads/onclick',
+      data
     })
       .then((res: any) => {
         let define: any = {
