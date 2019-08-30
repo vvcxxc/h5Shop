@@ -127,7 +127,7 @@ export const getLocation = () => {
     // })
     let url = location.href.split('#')[0];
     Taro.request({
-      url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
       data: {
         url

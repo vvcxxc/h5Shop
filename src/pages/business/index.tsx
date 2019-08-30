@@ -271,7 +271,7 @@ export default class PaySuccess extends Component<Props> {
       let latitude = parseFloat(this.state.business_list.ypoint);
       let url = window.location;
       Taro.request({
-        url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+        url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
         data: {
           url
