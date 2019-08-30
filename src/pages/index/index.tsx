@@ -53,8 +53,13 @@ export default class Index extends Component<any> {
 
   componentDidMount() {
     let id = this.$router.params.id;
+    let store_id = this.$router.params.store_id
+    console.log(this.$router.params)
     if (id) {
       sessionStorage.setItem('payStore', id)
+    }
+    if (store_id) {
+      sessionStorage.setItem('storeId', store_id)
     }
     this.requestLocation();
     this.recognizer();
@@ -341,12 +346,24 @@ export default class Index extends Component<any> {
 
   showImage = (id?: any) => {
     let city_id = id ? id : this.state.meta.city_id
-    request({
-      url: 'v3/ads',
-      data: {
+    let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
+    let data = {}
+
+    if(store_id){
+      data = {
+        position_id: '3',
+        city_id: city_id,
+        store_id
+      }
+    }else{
+      data = {
         position_id: '3',
         city_id: city_id
       }
+    }
+    request({
+      url: 'v3/ads',
+      data
     })
       .then((res: any) => {
         this.setState({ indexImg: res.data.pic })
