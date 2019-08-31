@@ -37,7 +37,7 @@ interface State {
 const share_url = process.env.GROUP_URL
 export default class Group extends Component {
   config = {
-    navigationBarTitleText: "拼团"
+    navigationBarTitleText: "社区拼团"
   }
   state: State = {
     basicinfo: {},
@@ -296,7 +296,7 @@ export default class Group extends Component {
       <Block>
         <View className="group" style="background-image: url(http://tmwl-resources.tdianyi.com/miniProgram/MiMaQuan/img_group.png)">
           <View className="container">
-            <View className="area-title">拼团</View>
+            <View className="area-title">社区拼团</View>
             <View className="area-panel">
               <View className="coupon-info">
                 <View className="avatar">

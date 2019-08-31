@@ -46,7 +46,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
           <View className="container">
             <View className="area-block area-play">
               <View className="title" style="font-weight: normal;">
-                增值玩法
+                好友增值玩法
               </View>
               <View className="content steps">
                 <View className="item">
@@ -190,13 +190,36 @@ export default class DetailAppreciation extends Component<DetailProp> {
                     {`起始金额 ￥${data.init_money || "0.00"} 最高增值 ¥${data.return_money || "0.00"}`}
                   </View>
                 </View>
-                <Button
+                {/* <Button
                   className="action-buy"
                   data-action="get"
                   onClick={this.handleClick.bind(this)}
                 >
                   立即购买
+                </Button> */}
+                {
+                  data.activity_time_status == 1 ? (
+                    <Button
+                      className="action-no-buy"
+                    >
+                      暂未开始
                 </Button>
+                  ) : data.activity_time_status == 2 ? (
+                    <Button
+                      className="action-buy"
+                      data-action="get"
+                      onClick={this.handleClick}
+                    >
+                      立即购买
+                  </Button>
+                  ) : (
+                        <Button
+                          className="action-no-buy"
+                        >
+                          已结束
+                  </Button>
+                      )
+                }
               </View>
             }
           </View>

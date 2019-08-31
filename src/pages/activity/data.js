@@ -13,12 +13,12 @@ import activity8 from "@/static/images/ic_build.png"
 export const activitys = [
   {
     src: activity1,
-    text: "增值买",
+    text: "增值活动",
     path: "/pages/activity/pages/list/list?type=1"
   },
   {
     src: activity2,
-    text: "拼团",
+    text: "社区拼团",
     path: "/pages/activity/pages/list/list?type=5"
   },
   {
