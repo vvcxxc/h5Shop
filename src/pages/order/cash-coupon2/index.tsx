@@ -78,7 +78,7 @@ export default class CashCoupon extends Component<Props> {
                     <View style={{ background: "#cccccc", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
                   </View>
               }
-              {this.props.sname}
+              <View style={{width:"135px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace: "nowrap"}}>{this.props.sname}</View>
             </View>
             {/* <View className="date" >{this.props.list_brief}</View> */}
             <View className="info" >{this.props.timer}</View>

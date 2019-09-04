@@ -50,7 +50,8 @@ export default class CashCoupon extends Component<Props> {
             <View className="head flex">
               <View className="label flex center" style={{ borderBottom: "none", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <View style={{ background: "#5d84e0", padding: "1px 8px", paddingTop: "4px", lineHeight: 1 }}> 现金券 </View>
-              </View>{this.props.sname}
+              </View>
+              <View style={{width:"135px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace: "nowrap"}}>{this.props.sname}</View>
             </View>
             {/* <View className="date">{this.props.timer}</View> */}
             <View className="info" >购买后{this.props.expire_day}日内有效</View>
