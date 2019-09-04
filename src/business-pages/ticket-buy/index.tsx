@@ -240,9 +240,21 @@ export default class TicketBuy extends Component {
               <View className="desc">{this.state.coupon.yname}</View>
 
               <View className="tags" style={{ position: "absolute", right: "0" }}>
-                <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('可叠加') !== -1 ? '' : '#fff' }}>可叠加</Text>
+                {/* <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('可叠加') !== -1 ? '' : '#fff' }}>可叠加</Text>
                 <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('随时退') !== -1 ? '' : '#fff' }}>随时退</Text>
-                <Text className="tag-text" style={{ marginRight:"0",backgroundColor: this.state.coupon.label.indexOf('免预约') !== -1 ? '' : '#fff' }}>免预约</Text>
+                <Text className="tag-text" style={{ marginRight:"0",backgroundColor: this.state.coupon.label.indexOf('免预约') !== -1 ? '' : '#fff' }}>免预约</Text> */}
+                {
+                   this.state.coupon.label.indexOf('可叠加') !== -1 ?
+                    <Text className="tag-text">可叠加</Text> : null
+                }
+                {
+                   this.state.coupon.label.indexOf('随时退') !== -1 ?
+                    <Text className="tag-text">随时退</Text> : null
+                }
+                {
+                   this.state.coupon.label.indexOf('免预约') !== -1 ?
+                    <Text className="tag-text"  >免预约</Text> : null
+                }
               </View>
             </View>
           </View>
