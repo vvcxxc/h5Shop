@@ -230,6 +230,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     } = activityData[asType]
     const params = {
       [field]: id,
+      // [field]: 3657,
       url: api
     }
     const { data } = await getCouponDetail(params)

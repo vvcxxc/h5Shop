@@ -44,7 +44,7 @@ export default class OrderAppreciation extends Component<OrderAppreciationProp> 
             <Text className="item remark">{data.end_time || "暂无"}</Text>
           </View>
           <View className="actions">
-            <Button className="item appreciation" data-action="jump" onClick={onAction}>增值</Button>
+            <Button className="item appreciations" data-action="jump" onClick={onAction}>增值</Button>
           </View>
           <View className="classify">
             <Text className="text">可增值券</Text>

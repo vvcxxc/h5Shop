@@ -7,12 +7,50 @@ import { AtIcon, AtActivityIndicator, AtDivider } from 'taro-ui';
 import carousel from "@/static/images/img_carousel.png"
 import logo from "@/assets/logo.png";
 import "./activity.styl"
+<<<<<<< HEAD
 
 import request from '../../services/request';
 
 export default class Activity extends Component {
   constructor() {
     super(...arguments)
+=======
+import Coupon from "@/components/coupon/coupon"
+import { ACTION_JUMP } from "@/utils/constants"
+// import { getLocation } from "@/utils/getInfo"
+import { getLocation } from '@/utils/getInfo'
+
+// import { connect } from "@tarojs/redux"
+
+interface State {
+  banner?: any[];
+  recommend: any[];
+  seckill?: any[];
+  menu: number;
+}
+interface ActivityProps {
+  handleChange: any;
+}
+// const mapStateToProps = (state, ownProps) => {
+//   return {
+//     isTest: state.test === ownProps.test
+//   }
+// }
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//   return {
+//     handleChange() {
+//       dispatch({
+//         type: "CHANGE"
+//       })
+//     }
+//   }
+// }
+// @connect(mapStateToProps, mapDispatchToProps)
+export default class Activity extends Component<ActivityProps> {
+  state: State = {
+    recommend: [],
+    menu: 0,
+>>>>>>> d14432e058c9b835aff0d26ab3a151c125cadd29
   }
 
   config: Config = {
@@ -52,8 +90,32 @@ export default class Activity extends Component {
 
   }
 
+<<<<<<< HEAD
   componentDidMount = () => {
     this.requestTab()
+=======
+  /**
+   * 用户动作
+   */
+  handleAction(action: string, data: any) {
+    switch (action) {
+      case ACTION_JUMP:
+        const { type, id, gift_id, activity_id } = data
+        if (type == 1) {
+          Taro.navigateTo({
+            url: '/pages/activity/appreciation/index?id=' + id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
+            // url: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`
+          })
+        } else {
+          Taro.navigateTo({
+            url: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`
+          })
+        }
+        break
+      default:
+        console.log("no action~")
+    }
+>>>>>>> d14432e058c9b835aff0d26ab3a151c125cadd29
   }
 
   // 获取标题列表
@@ -313,6 +375,7 @@ export default class Activity extends Component {
                 ))
               }
             </View>
+<<<<<<< HEAD
 
             <View className="store_item">
               <View className="store_img">
@@ -335,6 +398,25 @@ export default class Activity extends Component {
                     <View className="store_any">
                       <Text className="store_follow">关注的店 - </Text>
                       <Text className="store_follow_name">杨大富的五金店</Text>
+=======
+          </View> */}
+          <View className="area-activity-list">
+            <View
+              // className="weui-grids"
+              style={{ border: " 0 none", display: "flex", height: "200px", flexWrap: "wrap" }}>
+              {
+                activitys.map((item, index) => {
+                  return (
+                    <View
+                      key={index}
+                      onClick={this.goTo.bind(this, item.path)}
+                      // className="weui-grid"
+                      // hoverClass="weui-grid_active"
+                      style={{ border: "none", flex: "25%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}
+                    >
+                      <Image className="weui-grid__icon" src={item.src} />
+                      <View className="weui-grid__label">{item.text}</View>
+>>>>>>> d14432e058c9b835aff0d26ab3a151c125cadd29
                     </View>
                     <View className="store_distance">
                       <Text className="store_distance_num">3.5km</Text>

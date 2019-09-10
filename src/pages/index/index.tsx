@@ -53,8 +53,13 @@ export default class Index extends Component<any> {
 
   componentDidMount() {
     let id = this.$router.params.id;
+    let store_id = this.$router.params.store_id
+    console.log(this.$router.params)
     if (id) {
       sessionStorage.setItem('payStore', id)
+    }
+    if (store_id) {
+      sessionStorage.setItem('storeId', store_id)
     }
     this.requestLocation();
     this.recognizer();
@@ -341,12 +346,24 @@ export default class Index extends Component<any> {
 
   showImage = (id?: any) => {
     let city_id = id ? id : this.state.meta.city_id
-    request({
-      url: 'v3/ads',
-      data: {
+    let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
+    let data = {}
+
+    if(store_id){
+      data = {
+        position_id: '3',
+        city_id: city_id,
+        store_id
+      }
+    }else{
+      data = {
         position_id: '3',
         city_id: city_id
       }
+    }
+    request({
+      url: 'v3/ads',
+      data
     })
       .then((res: any) => {
         this.setState({ indexImg: res.data.pic })
@@ -374,12 +391,23 @@ export default class Index extends Component<any> {
   // 点击广告
   advertOnclick = () => {
     if (!this.state.need_jump) return
-    request({
-      url: 'v3/ads/onclick',
-      data: {
+    let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
+    let data = {}
+    if(store_id){
+      data = {
+        ad_id: this.state.indexImgId, //广告id
+        ad_log_id: this.state.adLogId, //广告日志id
+        store_id
+      }
+    }else{
+      data = {
         ad_id: this.state.indexImgId, //广告id
         ad_log_id: this.state.adLogId //广告日志id
       }
+    }
+    request({
+      url: 'v3/ads/onclick',
+      data
     })
       .then((res: any) => {
         let define: any = {
@@ -415,6 +443,7 @@ export default class Index extends Component<any> {
   // 获取中奖门店信息
   getPayStore = async () => {
     let id = this.$router.params.id || sessionStorage.getItem('payStore')
+    // let id = 4565
     if (id) {
       let location = await getLocation();
       // let id = this.$router.params.id;
@@ -423,11 +452,6 @@ export default class Index extends Component<any> {
           url: 'v3/stores/pay_store/' + id,
           data: { xpoint: location.longitude || '', ypoint: location.latitude || '' }
         })
-        // .then((res: any) => {
-        //   this.setState({
-        //     hahaData: res.data.store_info,
-        //   })
-        // })
         this.setState({ hahaData: res.data.store_info, })
       }
     }
@@ -485,15 +509,15 @@ export default class Index extends Component<any> {
         >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
         </View>
 
-        {/* {
+        {
           this.state.hahaData.name ? (
             <View className="receive_box">
               <View className="receive">已领取</View>
-              <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/s/uPCmihwL5HZrNDE-YmfW4A">公众号</ a>"
+              <View className="focus_on">关注"< a href="https://mp.weixin.qq.com/s/gWPzHXtNugMrYMacWIzNJg">公众号</ a>"
 获取更多优惠信息</View>
             </View>
           ) : null
-        } */}
+        }
         <VersionOne list={this.state.hahaData} />
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (

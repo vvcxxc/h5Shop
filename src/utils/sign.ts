@@ -16,6 +16,7 @@ export const Login = () => {
       return
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY2NTI1NjQ0LCJleHAiOjE1NjY4MjU2NDQsIm5iZiI6MTU2NjUyNTY0NCwianRpIjoicTlDZ0JuVE1mUFp1R2pOdyIsInN1YiI6NTM0NSwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.TadiHlwiMXls-vhKZodah4DOvGMwbCgwG5RXJbSoFJU')
     request({
 			url: 'api/wap/testLogin'
@@ -25,6 +26,9 @@ export const Login = () => {
     });
 =======
     Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY1NTk4NDY0LCJleHAiOjE1NjU4OTg0NjQsIm5iZiI6MTU2NTU5ODQ2NCwianRpIjoiMmYzdjFMOUNXYktBR01rWiIsInN1YiI6MzAxOCwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.g_HIAqS1Y_pxnRGMeTX9lFSDP4UJO2c6Xn_CSioQkGY')
+=======
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTY4MDg1OTMzLCJleHAiOjE1NjgzODU5MzMsIm5iZiI6MTU2ODA4NTkzMywianRpIjoiNkZQYkpUeFpkYVlBS0tPciIsInN1YiI6NTM0NSwicHJ2IjoiZjZiNzE1NDlkYjhjMmM0MmI3NTgyN2FhNDRmMDJiN2VlNTI5ZDI0ZCJ9.Xq8A_uFb55v2DofOEGmiQigxjCEYy58dwMIlRm9xaXc')
+>>>>>>> d14432e058c9b835aff0d26ab3a151c125cadd29
 
 >>>>>>> 4498941ed47f9cd3ad644b800450b401521beba4
   }else{
