@@ -1,6 +1,7 @@
 
 import Taro, { Component, useEffect, DependencyList, navigateBack, useReducer } from "@tarojs/taro";
 import { View, Text, Image } from '@tarojs/components';
+import { AtIcon, AtToast } from "taro-ui"
 
 import './style.scss'
 import request from '../../services/request'
@@ -39,10 +40,13 @@ export default class Orderdetail extends Component {
       total_fee: '',
       supplier_id: '',
       source: 0,
-      preview: ''
+      preview: '',
+      source_name: ''
     },
     _Imgurl: "",
-    isApply: false
+    isApply: false,
+
+    checkFlag: false,
   };
 
   componentWillMount() {
@@ -203,8 +207,74 @@ export default class Orderdetail extends Component {
                   }}  >退款进度</Text>
                 </View> : null
             }
+            <View className='a_billingInfo'  >
+              <Text className="a_billingInfo_1" style={{ letterSpacing: '22px' }} >来源</Text>:
+      <Text className="a_billingInfo_2" style={{ marginLeft: '9px' }} >{this.state.defaultData.source_name}</Text>
+            </View>
           </View>
         </View>
+
+        
+        { /* 订单信息  */}
+        <View className='z_billingInfo' >
+
+          <View className='a_buyBox' >
+            <View className='a_one' >使用规则 </View>
+            <View className='a_billingInfo' >
+              <View className="flex">
+                <View>适合商品：</View>
+                <View>
+                  <View>夏季尾货服装类</View>
+                  <View>夏季尾货服装类</View>
+                  <View>夏季尾货服装类</View>
+                </View>
+              </View>
+
+              <View className="flex">
+                <View>使用门槛：</View>
+                <View>
+                  <View>满200元可用</View>
+                </View>
+              </View>
+
+              <View className="flex">
+                <View>券有效期：</View>
+                <View>
+                  <View>领券日起7天有效</View>
+                </View>
+              </View>
+
+              <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 1) ? 'auto' : '4rem' }}>
+                <View>使用规则：</View>
+                <View>
+                  {
+                    this.state.defaultData.description.map((item, index) => (
+                      <View key={index}>{index + 1}. {item}</View>
+                    ))
+                  }
+                </View>
+              </View>
+              {
+                this.state.defaultData.description.length >= 3 ?
+                  <View className="ft-more flex center" style={{ textAlign: "center", width: "100%", background: "#fff", color: "#999" }}
+                    onClick={() => { this.setState({ checkFlag: !this.state.checkFlag }); }}>
+                    <View className="more-box" style={{ color: "#999", fontSize: "12px" }}>
+                      {this.state.checkFlag ? "收回" : "查看更多"}
+                      {
+                        this.state.checkFlag ?
+                          <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
+                      }
+                    </View>
+                  </View>
+                  : <View style={{ width: "100%", background: "#fff", height: "24rpx" }}></View>
+
+              }
+
+            </View>
+          </View>
+        </View>
+
+
         { /* 适用商铺  */}
         <View className='z_billingInfo' >
 

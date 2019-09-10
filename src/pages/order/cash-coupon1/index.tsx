@@ -72,6 +72,7 @@ export default class CashCoupon extends Component<Props> {
         /> */}
         <View className="item content">
           <View className="head flex">
+            <View className="verification_coupons">核销券</View>
             <View className="label flex center" style={{ color: "#000", borderBottom: "none" }}>{this.props.sname}</View>
           </View>
 
