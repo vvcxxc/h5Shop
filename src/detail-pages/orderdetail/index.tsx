@@ -1,7 +1,7 @@
 
 import Taro, { Component, useEffect, DependencyList, navigateBack, useReducer } from "@tarojs/taro";
 import { View, Text, Image } from '@tarojs/components';
-
+import { AtIcon } from 'taro-ui';
 import './style.scss'
 import request from '../../services/request'
 import CashCoupon1 from "@/pages/order/cash-coupon1/index";
@@ -221,7 +221,9 @@ export default class Orderdetail extends Component {
               <View className='a_imgDes'  >
                 <View className="a_imgDes_info1">{this.state.defaultData.store_name}</View>
                 <View className="a_imgDes_info2">人均：{this.state.defaultData.capita}</View>
-                <Text className='a_text'>></Text>
+                <Text className='a_text'>
+                <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
+                </Text>
               </View>
             </View>
             <View className='a_dres' >
