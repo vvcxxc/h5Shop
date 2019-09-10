@@ -479,12 +479,12 @@ export default class Appre extends Component<Props>{
           </View>
           <View className="paymoney_buynow" onClick={this.payment.bind(this)}>立即购买</View>
         </View>
-{/*
+
         <Zoom
           src={this.state.imgZoomSrc}
           showBool={this.state.imgZoom}
-          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
-        /> */}
+          onChange={() => { this.setState({ imgZoom: false }) }}
+        />
 
       </View>
     );

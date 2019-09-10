@@ -1,12 +1,8 @@
 
 import Taro, { Component, useEffect, DependencyList, navigateBack, useReducer } from "@tarojs/taro";
 import { View, Text, Image } from '@tarojs/components';
-<<<<<<< HEAD
 import { AtIcon, AtToast } from "taro-ui"
 
-=======
-import { AtIcon } from 'taro-ui';
->>>>>>> d14432e058c9b835aff0d26ab3a151c125cadd29
 import './style.scss'
 import request from '../../services/request'
 import CashCoupon1 from "@/pages/order/cash-coupon1/index";
@@ -131,9 +127,16 @@ export default class Orderdetail extends Component {
                 </View>
                 <View className='a_two' >有效期</View>
                 <View className='a_three' >{this.state.defaultData.begin_time} - {this.state.defaultData.end_time}</View>
-                <View className='a_four' >使用规则：</View>
+
                 {
-                  this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
+                   this.state.defaultData.description.length ? (
+                     <View>
+                       <View className='a_four' >使用规则：</View>
+                        {
+                          this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
+                        }
+                     </View>
+                   ) : null
                 }
                 {/* <View className='a_last'  onClick={handerShowMore}  > { isMore ? '收起更多' : '查看更多' } </View>  */}
               </View>
@@ -218,21 +221,21 @@ export default class Orderdetail extends Component {
           </View>
         </View>
 
-        
+
         { /* 订单信息  */}
         <View className='z_billingInfo' >
 
           <View className='a_buyBox' >
             <View className='a_one' >使用规则 </View>
             <View className='a_billingInfo' >
-              <View className="flex">
+              {/* <View className="flex">
                 <View>适合商品：</View>
                 <View>
                   <View>夏季尾货服装类</View>
                   <View>夏季尾货服装类</View>
                   <View>夏季尾货服装类</View>
                 </View>
-              </View>
+              </View> */}
 
               <View className="flex">
                 <View>使用门槛：</View>
@@ -249,14 +252,21 @@ export default class Orderdetail extends Component {
               </View>
 
               <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 1) ? 'auto' : '4rem' }}>
-                <View>使用规则：</View>
-                <View>
-                  {
-                    this.state.defaultData.description.map((item, index) => (
-                      <View key={index}>{index + 1}. {item}</View>
-                    ))
-                  }
-                </View>
+
+                {
+                  this.state.defaultData.description.length ? (
+                    <View>
+                      <View>使用规则：</View>
+                    <View>
+                      {
+                        this.state.defaultData.description.map((item, index) => (
+                          <View key={index}>{index + 1}. {item}</View>
+                        ))
+                      }
+                    </View>
+                    </View>
+                  ) : null
+                }
               </View>
               {
                 this.state.defaultData.description.length >= 3 ?
