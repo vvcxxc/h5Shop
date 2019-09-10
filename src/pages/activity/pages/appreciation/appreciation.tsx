@@ -19,6 +19,7 @@ import {
   NOT_GET
 } from "../../data"
 import { ACTION_APPRECIATION, ACTION_JUMP, ACTION_VIEW } from "@/utils/constants"
+import AppreCoupon from '@/components/appreCoupon'
 import wx from 'weixin-js-sdk';
 
 type State = {
@@ -49,14 +50,17 @@ export default class Appreciation extends Component {
     participators: [],
     basicinfo: {},
     shareinfo: {},
-    userStatusinfo: {},
-    giftBasicInfo: {},
+    userStatusinfo: {
+    },
+    giftBasicInfo: {
+      cover_image: '',
+    },
     isInvite: false,
     isAppreciation: false,
     isGet: false,
     isShare: false
   }
-  async componentDidMount() {
+  async componentWillMount() {
     // Taro.showShareMenu()
     const { id = "1095" } = this.$router.params
     /**
@@ -244,7 +248,6 @@ export default class Appreciation extends Component {
   share = () => {
     const { id = "" } = this.$router.params
     let shareInfo = this.state.basicinfo.getTextContent
-
     this.setState({isShare: true})
 
       wx.updateAppMessageShareData({
@@ -271,29 +274,78 @@ export default class Appreciation extends Component {
     } = this.state
     const {
       userdata: userinfo,
-      userYonhuiInfo: couponinfo
+      userYonhuiInfo: couponinfo,
+      dateTime,
+      buttonstatus
     } = this.state.basicinfo
+    const { gift_id, cover_image } = this.state.giftBasicInfo
+    console.log(this.state.giftBasicInfo)
+    let coupon_info = couponinfo ? {
+      money: couponinfo.money || '',
+      limit_money: couponinfo.total_fee,
+      gift_image: this.state.giftBasicInfo ? this.state.giftBasicInfo.cover_image : '',
+      youhui_type: couponinfo.youhui_type
+    } : {}
     return (
       <Block>
-        <View className="appreciations" style={`background-image: url(http://tmwl-resources.tdianyi.com/miniProgram/MiMaQuan/img_appreciation.png)`}>
+        <View className="appreciation" style={`background-image: url(http://tmwl-resources.tdianyi.com/miniProgram/MiMaQuan/img_appreciation.png)`}>
           <View className="container">
-            <View className="area-title">邀请好友增值</View>
+            {
+              buttonstatus ? buttonstatus.isself == 1 ? (
+                <View className="area-title">邀请好友增值</View>
+              ) : (
+                <View className="area-title">帮{userinfo.user_name}增值</View>
+              ) : null
+            }
+
             <View className="area-panel">
               <View className="user-info">
-                <Image className="icon" src={userinfo? userinfo.user_portrait : null} />
-                <View className="text">{userinfo ? userinfo.user_name : null}</View>
+                <Image className="icon" src={require('../../../../assets/shop.png')} />
+                <View className="text">{couponinfo ? couponinfo.store_name : ''}</View>
               </View>
-              <View className="rule">活动规则</View>
-              <View className="coupon-info">
-                <View className="avatar">
-                  <Image className="icon" src={couponinfo ? couponinfo.image : null} />
-                </View>
-                <View className="description">
-                  <View className="item name text-ellipsis-two-lines">{couponinfo ? couponinfo.name : null}</View>
-                  <View className="item brief">{couponinfo ? couponinfo.text : null}</View>
-                  <View className="item price">{couponinfo ? couponinfo.appreciation_count_money : null}</View>
-                </View>
-              </View>
+              {/* 增值券 */}
+              {
+                couponinfo ? couponinfo.youhui_type == 1 ? (
+                  <View>
+                    <AppreCoupon data={coupon_info} />
+                    <View className='coupon_name'>{couponinfo.name}</View>
+                    <View>活动时间：{dateTime.activity_begin_time}-{dateTime.activity_end_time}</View>
+                  </View>
+                ) : couponinfo.youhui_type == 0 ? (
+                  <View>
+                    {
+                      gift_id ? (
+                        <View>
+                            <View style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <View>
+                              <Image src={couponinfo.image} className='coupon_image'/>
+                            </View>
+                            <View className='gift_image'>
+                              <Image src={cover_image} className='coupon_image' style={{position: 'absolute', top: 0, left: 0}}/>
+                              <Image src={require('../../../business/border.png')} className='border_image' />
+                              <Image src={require('../../../business/qiu.png')} className='qiu_image'/>
+                            </View>
+                          </View>
+                          <View className='coupon_name'>{couponinfo.name}</View>
+                          <View>活动时间：{dateTime.activity_begin_time}-{dateTime.activity_end_time}</View>
+                        </View>
+
+                      ) : (
+                        <View style={{display: 'flex', justifyContent: 'space-between'}}>
+                          <View>
+                            <Image src={couponinfo.image} className='coupon_image'/>
+                          </View>
+                          <View className='coupon_infos'>
+                            <View className='coupon_name'>{couponinfo.name}</View>
+                            <View>活动时间：{dateTime.activity_begin_time}-{dateTime.activity_end_time}</View>
+                          </View>
+                      </View>
+                      )
+                    }
+                  </View>
+                ) : null : null
+              }
+
               <View className="process">
                 <View className="process-in" style={`width: ${appreciationProcess}`}>
                   <Image className="icon" src={require("../../../../static/images/ic_process_bar.png")} />
