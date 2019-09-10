@@ -46,6 +46,7 @@ export default class Appre extends Component<Props>{
       preview: "",
       return_money: "",
       supplier_id: 0,
+      store_id:0,
       tel: "",
       total_fee: 0,
       type: 0,
@@ -155,7 +156,7 @@ export default class Appre extends Component<Props>{
   handleClick2 = (e) => {
     Taro.navigateTo({
       // url: '/detail-pages/business/index?id=' + _id
-      url: '/pages/business/index?id=' + this.state.data.supplier_id
+      url: '/pages/business/index?id=' + this.state.data.store_id
     })
   };
   //打电话
