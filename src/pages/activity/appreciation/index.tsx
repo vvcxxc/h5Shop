@@ -18,6 +18,7 @@ interface Props {
 
 export default class Appre extends Component<Props>{
   state = {
+    ruleMore:false,
     imgZoom: false,
     imgZoomSrc: '',
     xPoint: 0,
@@ -242,18 +243,19 @@ export default class Appre extends Component<Props>{
     let datas = {}
     if (_type == 1) {
       datas = {
-        youhui_id: this.state.data.id,
-        store_id: this.state.data.supplier_id,
-        youhui_number: 1,
-        type: _type,  //1 微信 2支付宝
+        youhui_id: this.$router.params.id,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.$router.params.gift_id,
+        open_id: Taro.getStorageSync("openid"),
+        unionid: Taro.getStorageSync("unionid"),
+        type: _type,
         xcx: 0,
-        open_id: Cookie.get(process.env.OPEN_ID),
       }
     } else {
       datas = {
-        youhui_id: this.state.data.id,
-        store_id: this.state.data.supplier_id,
-        youhui_number: 1,
+        youhui_id: this.$router.params.id,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.$router.params.gift_id,
         type: _type,  //1 微信 2支付宝
         xcx: 0,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
@@ -262,7 +264,7 @@ export default class Appre extends Component<Props>{
 
     //请求支付属性
     request({
-      url: 'api/wap/coupon/wxWechatPay',
+      url: 'v1/youhui/wxXcxuWechatPay',
       method: "POST",
       header: {
         "Content-Type": "application/json"
@@ -370,9 +372,6 @@ export default class Appre extends Component<Props>{
                 <View className="appre_head_left_pricebox_info">满{this.state.data.total_fee}可用</View>
               </View>
               <View className="appre_head_right">
-                {
-                  this.state.data.type != 0 ? <View className="appre_head_right_type">全场通用</View> : null
-                }
                 <View className="appre_head_right_total">起始值为{this.state.data.init_money}元</View>
                 <View className="appre_head_right_days">领取后{this.state.data.validity}日内有效</View>
               </View>
@@ -409,33 +408,54 @@ export default class Appre extends Component<Props>{
           <Image className="appre_process2_Image" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/XzPRtr5xGGiEiP8xHiS8tYEwCwyQWib8.png" />
         </View>
 
-        {
-          this.state.data.type == 0 ? <View className="appre_rule" >
-            <View className="appre_rule_title" >温馨提示</View>
-            {/* <View className="appre_rule_time" >
-            <View className="appre_rule_time_key" >适用商品:</View>
-            <View className="appre_rule_time_data" >全场通用</View>
-          </View> */}
-            <View className="appre_rule_time" >
-              <View className="appre_rule_time_key" >券有效期:</View>
-              <View className="appre_rule_time_data" >领取后{this.state.data.validity}日内有效</View>
-            </View>
-            {description ?
-              <View className="appre_rule_list" >
+        <View className="appre_rule" >
+          <View className="appre_rule_title" >使用规则</View>
+          {
+            this.state.data.type != 0 ?
+              <View className="appre_rule_time" >
+                <View className="appre_rule_time_key" >使用范围:</View>
+                <View className="appre_rule_time_data" >全场通用</View>
+              </View> : null
+          }
+          <View className="appre_rule_time" >
+            <View className="appre_rule_time_key" >使用门槛:</View>
+            <View className="appre_rule_time_data" >满{this.state.data.total_fee}元可用</View>
+          </View>
+          <View className="appre_rule_time" >
+            <View className="appre_rule_time_key" >活动时间:</View>
+            <View className="appre_rule_time_data" >{this.state.data.begin_time}-{this.state.data.end_time}</View>
+          </View>
+          <View className="appre_rule_time" >
+            <View className="appre_rule_time_key" >券有效期:</View>
+            <View className="appre_rule_time_data" >领取后{this.state.data.validity}日内有效</View>
+          </View>
+          {
+            (this.state.data.type == 0 && description ) ?
+              <View className="appre_rule_list" style={{ height:description.length <= 3?"auto":( this.state.ruleMore ? "auto" : "4rem" )}}>
                 <View className="appre_rule_list_key" >使用规则:</View>
                 <View className="appre_rule_list_data" >
                   {
-                    description ? description.map((item) => {
+                    (this.state.data.type == 0 && description) ? description.map((item) => {
                       return (
                         <View className="appre_rule_list_msg" >. {item}</View>
                       )
                     }) : null
                   }
                 </View>
+
               </View> : null
-            }
-          </View> : null
-        }
+          }
+          {
+            (this.state.data.type == 0 && description && description.length > 3) ?
+              <View className="appre_rule_list_more" onClick={() => { this.setState({ ruleMore: !this.state.ruleMore }) }}>
+                {this.state.ruleMore ? "收回" : "查看更多"}
+                {
+                  this.state.ruleMore ?
+                    <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
+                }
+              </View> : null
+          }
+        </View>
         <View className="setMeal_store">
           <View className="setMeal_store_box" onClick={this.handleClick2.bind(this)}>
             <View className="setMeal_store_title">适用店铺</View>
@@ -482,7 +502,9 @@ export default class Appre extends Component<Props>{
         <Zoom
           src={this.state.imgZoomSrc}
           showBool={this.state.imgZoom}
-          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+          onChange={() => {
+            this.setState({ imgZoom: false })
+          }}
         />
 
       </View>
