@@ -75,7 +75,7 @@ export default class Activity extends Component<ActivityProps> {
         }
         break
       default:
-        console.log("no action~")
+        console.log("no action~")
     }
   }
 

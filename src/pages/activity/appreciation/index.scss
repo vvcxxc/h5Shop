@@ -1,50 +1,78 @@
 .d_appre {
+  width: 100%;
+  height: auto;
+  padding-bottom: 120px;
+
+
+  .appre_head_activityTitle {
     width: 100%;
-    height: auto;
-    padding-bottom: 120px;
+    height: 125px;
+    box-sizing: border-box;
+    padding: 24px 24px 0 24px;
+    background: #fff;
 
-
-    .appre_head_activityTitle {
-        width: 100%;
-        height: 125px;
-        box-sizing: border-box;
-        padding: 24px 24px 0 24px;
-        background: #fff;
-
-        .appre_head_activityTitle_title {
-            height: 60px;
-            font-size: 45px;
-            font-weight: bold;
-            line-height: 1;
-        }
-
-        .appre_head_activityTitle_time {
-            font-size: 24px;
-            color: #999999;
-        }
+    .appre_head_activityTitle_title {
+      height: 60px;
+      font-size: 45px;
+      font-weight: bold;
+      line-height: 1;
     }
 
-    .test-h {
-        width: 100%;
-        height: 415px;
-
-        .demo-text {
-            width: 100%;
-            height: 100%;
-
-            .demo-text-Img {
-                width: 100%;
-                height: 100%;
-            }
-        }
+    .appre_head_activityTitle_time {
+      font-size: 24px;
+      color: #999999;
     }
+  }
 
-    .appre_hd {
-        padding: 24px 24px 0 24px;
+  .test-h {
+    width: 100%;
+    height: 415px;
+
+    .demo-text {
+      width: 100%;
+      height: 100%;
+
+      .demo-text-Img {
         width: 100%;
-        box-sizing: border-box;
-        background: #fff;
+        height: 100%;
+      }
+    }
+  }
 
+  .appre_hd {
+    padding: 24px 24px 0 24px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+
+    .appre_head {
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      position: relative;
+
+      .appre_head_ticket {
+        width: 100%;
+        height: 220px;
+        background: #fffaf4;
+        border: 2px solid #fff0d9;
+        padding: 35px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        position: relative;
+
+        .appre_head_circle1 {
+          width: 30px;
+          height: 30px;
+          background: #fff;
+          border-radius: 15px;
+          position: absolute;
+          left: -15px;
+          top: 50%;
+          margin-top: -15px;
+        }
+
+<<<<<<< HEAD
         .appre_head {
             width: 100%;
             height: auto;
@@ -157,56 +185,46 @@
                     }
                 }
             }
+=======
+        .appre_head_circle2 {
+          width: 30px;
+          height: 30px;
+          background: #fff;
+          border-radius: 15px;
+          position: absolute;
+          right: -15px;
+          top: 50%;
+          margin-top: -15px;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
         }
 
-        .appre_head_bottom {
-            height: 90px;
-            padding: 20px 40px 0 0;
-            box-sizing: border-box;
+        .appre_head_left {
+          width: 50%;
+          height: 100%;
+          text-align: left;
+          float: left;
 
-            .appre_head_bottom_gift {
-                float: left;
-                border: #fc4833 1px solid;
-                color: #fb7968;
-                background: #fde8e5;
-                border-radius: 8px;
-                font-size: 25px;
-                padding: 8px 15px;
-                box-sizing: border-box;
-                margin-right: 18px;
+          .appre_head_left_pricebox {
+            text-align: center;
+            width: 230px;
+
+            .appre_head_left_pricebox_msg {
+              height: 30px;
+              font-size: 30px;
+              font-weight: bold;
+              line-height: 1;
             }
 
-            .appre_head_bottom_list {
-                float: left;
-                color: #fb7968;
-                background: #fde8e5;
-                border-radius: 8px;
-                font-size: 25px;
-                padding: 8px 15px;
-                box-sizing: border-box;
-                margin-right: 18px;
+            .appre_head_left_pricebox_price {
+              height: 80px;
+              font-size: 60px;
+              font-weight: bold;
+              line-height: 80px;
             }
 
-            .appre_head_bottom_share {
-                float: right;
-                color: #613f04;
-                background: #ffbf13;
-                border-radius: 8px;
-                font-size: 30px;
-                padding: 10px 25px;
-                box-sizing: border-box;
+          }
 
-                .appre_head_bottom_shareimg {
-                    height: 35px;
-                    width: 35px;
-                    margin-right: 10px;
-                    vertical-align: bottom;
-                }
-            }
-        }
-
-    }
-
+<<<<<<< HEAD
     .appre_gift {
         padding: 30px 24px;
         background: #fff;
@@ -215,134 +233,237 @@
         .appre_gift_titlebox {
             height: 40px;
             width: 100%;
+=======
+          .appre_head_left_pricebox_info {
+            font-size: 30px;
+            padding: 5px 20px;
+            line-height: 1;
+            background: #fa5d49;
+            color: #fff;
+            display: inline-block;
+            border-radius: 8px;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
 
-            .appre_gift_title {
-                height: 100%;
-                vertical-align: bottom;
-                font-weight: bold;
-                font-size: 40px;
-                float: left;
-                text-align: left;
-                color: #000;
-            }
 
-            .appre_gift_Imagelist {
-                height: 100%;
-                vertical-align: bottom;
-                font-size: 25px;
-                float: right;
-                text-align: right;
-                color: #ff7a6b;
-            }
+          }
         }
 
+        .appre_head_right {
+          width: 50%;
+          height: 100%;
+          text-align: right;
+          float: left;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          justify-content: flex-end;
 
-        .appre_gift_giftinfo {
-            height: 75px;
+          .appre_head_right_type {
+            padding: 5px 10px;
+            line-height: 1;
+            background: #fff;
+            color: #FE7450;
+            border: #FE7450 1px solid;
+            border-radius: 8px;
             font-size: 25px;
-            text-align: left;
-            line-height: 75px;
+          }
+
+          .appre_head_right_total {
+            margin: 10px 0;
+            text-align: right;
+            color: #666666;
+            font-size: 30px;
+            line-height: 1;
+          }
+
+          .appre_head_right_days {
+            text-align: right;
+            color: #999999;
+            font-size: 30px;
+          }
         }
-
-        .appre_gift_giftmsgbox {
-            height: 40px;
-            margin-bottom: 20px;
-
-            .appre_gift_giftmsg {
-                padding: 8px 15px;
-                line-height: 1;
-                color: #fa5d49;
-                font-size: 25px;
-                float: left;
-                background: #fde8e5;
-                border-radius: 8px;
-            }
-        }
-
-        .appre_gift_giftlist {
-            width: 100%;
-            height: auto;
-
-            .appre_gift_giftlistImg {
-                width: 100%;
-                border-radius: 8px;
-            }
-        }
-
+      }
     }
 
-    .appre_process {
-        height: 85px;
-        margin: 7px 0;
-        display: flex;
-        background: #fff;
-        justify-content: center;
+    .appre_head_bottom {
+      height: 90px;
+      padding: 20px 40px 0 0;
+      box-sizing: border-box;
 
-        .appre_process_list {
-            box-sizing: border-box;
-            width: 130px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
+      .appre_head_bottom_gift {
+        float: left;
+        border: #fc4833 1px solid;
+        color: #fb7968;
+        background: #fde8e5;
+        border-radius: 8px;
+        font-size: 25px;
+        padding: 8px 15px;
+        box-sizing: border-box;
+        margin-right: 18px;
+      }
 
-            .appre_process_list_Image {
-                vertical-align: middle;
-                width: 45px;
-                height: 45px;
-                float: left;
-                background: #fa5d49;
-                border-radius: 22.5px;
-            }
+      .appre_head_bottom_list {
+        float: left;
+        color: #fb7968;
+        background: #fde8e5;
+        border-radius: 8px;
+        font-size: 25px;
+        padding: 8px 15px;
+        box-sizing: border-box;
+        margin-right: 18px;
+      }
 
-            .appre_process_list_msg {
-                vertical-align: middle;
-                width: 50px;
-                height: 100%;
-                text-align: center;
-                float: left;
-                font-size: 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                color: #7a7a7a;
-            }
+      .appre_head_bottom_share {
+        float: right;
+        color: #613f04;
+        background: #ffbf13;
+        border-radius: 8px;
+        font-size: 30px;
+        padding: 10px 25px;
+        box-sizing: border-box;
 
-            .appre_process_list_icon {
-                vertical-align: middle;
-                text-align: center;
-                height: 100%;
-                width: 45px;
-                float: left;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                justify-content: center;
-
-                .appre_process_list_icon_tri {
-                    height: 0;
-                    width: 0;
-                    box-sizing: border-box;
-                    border: 15px solid;
-                    border-color: transparent transparent transparent #c4c4c4;
-                }
-            }
+        .appre_head_bottom_shareimg {
+          height: 35px;
+          width: 35px;
+          margin-right: 10px;
+          vertical-align: bottom;
         }
+      }
     }
 
-    .appre_process2 {
+  }
+
+  .appre_gift {
+    padding: 30px 24px;
+    background: #fff;
+    margin-top: 20px;
+
+    .appre_gift_titlebox {
+      height: 40px;
+      width: 100%;
+
+      .appre_gift_title {
+        height: 100%;
+        vertical-align: bottom;
+        font-weight: bold;
+        font-size: 40px;
+        float: left;
+        text-align: left;
+        color: #000;
+      }
+
+      .appre_gift_Imagelist {
+        height: 100%;
+        vertical-align: bottom;
+        font-size: 25px;
+        float: right;
+        text-align: right;
+        color: #ff7a6b;
+      }
+    }
+
+
+    .appre_gift_giftinfo {
+      height: 75px;
+      font-size: 25px;
+      text-align: left;
+      line-height: 75px;
+    }
+
+    .appre_gift_giftmsgbox {
+      height: 40px;
+      margin-bottom: 20px;
+
+      .appre_gift_giftmsg {
+        padding: 8px 15px;
+        line-height: 1;
+        color: #fa5d49;
+        font-size: 25px;
+        float: left;
+        background: #fde8e5;
+        border-radius: 8px;
+      }
+    }
+
+    .appre_gift_giftlist {
+      width: 100%;
+      height: auto;
+
+      .appre_gift_giftlistImg {
         width: 100%;
+<<<<<<< HEAD
         height: 90px;
         margin: 10px 0;
         padding: 0;
-
-        .appre_process2_Image {
-            width: 100%;
-            height: 100%;
-        }
+=======
+        border-radius: 8px;
+      }
     }
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
 
+  }
+
+  .appre_process {
+    height: 85px;
+    margin: 7px 0;
+    display: flex;
+    background: #fff;
+    justify-content: center;
+
+    .appre_process_list {
+      box-sizing: border-box;
+      width: 130px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      .appre_process_list_Image {
+        vertical-align: middle;
+        width: 45px;
+        height: 45px;
+        float: left;
+        background: #fa5d49;
+        border-radius: 22.5px;
+      }
+
+      .appre_process_list_msg {
+        vertical-align: middle;
+        width: 50px;
+        height: 100%;
+        text-align: center;
+        float: left;
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #7a7a7a;
+      }
+
+      .appre_process_list_icon {
+        vertical-align: middle;
+        text-align: center;
+        height: 100%;
+        width: 45px;
+        float: left;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+
+        .appre_process_list_icon_tri {
+          height: 0;
+          width: 0;
+          box-sizing: border-box;
+          border: 15px solid;
+          border-color: transparent transparent transparent #c4c4c4;
+        }
+      }
+    }
+  }
+
+<<<<<<< HEAD
     .appre_rule {
         background: #fff;
         padding: 24px;
@@ -356,11 +477,36 @@
             font-weight: bold;
             columns: #000;
         }
+=======
+  .appre_process2 {
+    width: 100%;
+    height: 90px;
+    margin: 10px 0;
+    padding: 0;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
 
-        .appre_rule_time {
-            height: 50px;
-            width: 100%;
+    .appre_process2_Image {
+      width: 100%;
+      height: 100%;
+    }
+  }
 
+  .appre_rule {
+    background: #fff;
+    padding: 24px;
+    margin-bottom: 20px;
+
+    .appre_rule_title {
+      height: 60px;
+      text-align: left;
+      font-weight: bold;
+      font-size: 40px;
+      font-weight: bold;
+      columns: #000;
+      margin: 0;
+    }
+
+<<<<<<< HEAD
             .appre_rule_time_key {
                 height: 40px;
                 float: left;
@@ -381,8 +527,56 @@
                 padding-top: 10px;
                 box-sizing: border-box;
             }
-        }
+=======
+    .appre_rule_time {
+      height: 50px;
+      width: 100%;
+      margin: 0;
 
+      .appre_rule_time_key {
+        height: 40px;
+        float: left;
+        width: 165px;
+        text-align: left;
+        color: #adadad;
+        margin: 0;
+      }
+
+      .appre_rule_time_data {
+        float: left;
+        height: 40px;
+        font-size: 25px;
+        margin: 0;
+      }
+    }
+
+    .appre_rule_list {
+      width: 100%;
+      min-height: 50px;
+      overflow: hidden;
+
+      // display: flex;
+      .appre_rule_list_key {
+        height: 40px;
+        width: 165px;
+        text-align: left;
+        color: #adadad;
+        float: left;
+      }
+
+      .appre_rule_list_data {
+        height: auto;
+        margin-left: 165px;
+
+        .appre_rule_list_msg {
+          line-height: 40px;
+          font-size: 25px;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
+        }
+      }
+    }
+
+<<<<<<< HEAD
         .appre_rule_list {
             width: 100%;
             min-height: 50px;
@@ -399,11 +593,23 @@
                 padding-top: 10px;
                 box-sizing: border-box;
             }
+=======
+    .appre_rule_list_more {
+      width: 100%;
+      height: 65px;
+      color: #adadad;
+      border-top: #d6d6d6 1px solid;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-end;
+    }
+  }
 
-            .appre_rule_list_data {
-                height: auto;
-                margin-left: 165px;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
 
+
+<<<<<<< HEAD
                 .appre_rule_list_msg {
                     font-size: 25px;
                     line-height: 30px;
@@ -424,29 +630,47 @@
             align-items: flex-end;
         }
     }
+=======
 
+  .setMeal_store {
+    height: 315px;
+    background: #f4f4f4;
+    border: none;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
 
+    .setMeal_store_box {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      padding: 23px 40px 28px 30px;
+      box-sizing: border-box;
 
+      .setMeal_store_title {
+        height: 60px;
+        text-align: left;
+        font-weight: bold;
+        font-size: 38px;
+      }
 
-    .setMeal_store {
-        height: 315px;
-        background: #f4f4f4;
-        border: none;
+      .setMeal_store_storebox {
+        height: 115px;
+        width: 100%;
+        box-sizing: border-box;
 
-        .setMeal_store_box {
+        .setMeal_store_Image {
+          height: 115px;
+          width: 115px;
+          overflow: hidden;
+          border-radius: 8px;
+          float: left;
+
+          .setMeal_store_img {
             width: 100%;
             height: 100%;
-            background: #fff;
-            padding: 23px 40px 28px 30px;
-            box-sizing: border-box;
+          }
+        }
 
-            .setMeal_store_title {
-                height: 60px;
-                text-align: left;
-                font-weight: bold;
-                font-size: 38px;
-            }
-
+<<<<<<< HEAD
             .setMeal_store_storebox {
                 height: 115px;
                 width: 100%;
@@ -499,105 +723,59 @@
                     float: right;
                 }
             }
+=======
+        .setMeal_store_msg {
+          width: 400px;
+          padding: 25px 0 15px 25px;
+          box-sizing: border-box;
+          float: left;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
 
-            .setMeal_store_addressbox {
-                width: 100%;
-                height: 80px;
-                padding-top: 35px;
-                box-sizing: border-box;
-                display: flex;
-                line-height: 40px;
+          .setMeal_store_name {
+            height: 50px;
+            font-size: 35px;
+            font-weight: bold;
+            text-align: left;
+          }
 
-                .setMeal_store_distance {
-                    width: 115px;
-                    position: relative;
-                    float: left;
-                    border-right: 1px #ccc solid;
-
-                    .setMeal_store_distance_Image {
-                        width: 30px;
-                        height: 40px;
-                        position: absolute;
-                        left: 0;
-
-                        .setMeal_store_distance_AddressImg {
-                            width: 30px;
-                            height: 40px;
-                        }
-                    }
-
-                    .setMeal_store_distance_info {
-                        height: 40px;
-                        position: absolute;
-                        left: 30px;
-                        padding: 0 8px;
-                        font-size: 24px;
-                    }
-                }
-
-                .setMeal_store_address {
-                    flex: 1;
-                    padding: 0 16px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    font-size: 26px;
-                }
-
-                .setMeal_store_mobile {
-                    width: 60px;
-                    height: 40px;
-                    padding-left: 30px;
-                    float: right;
-                    border-left: 1px #ccc solid;
-
-                    .setMeal_store_MobileImg {
-                        width: 30px;
-                        height: 40px;
-                        float: right;
-                    }
-                }
-            }
+          .setMeal_store_price {
+            font-size: 24px;
+            text-align: left;
+            color: #666666;
+          }
         }
-    }
 
+        .setMeal_store_icon {
+          height: 100%;
+          width: 40px;
+          box-sizing: border-box;
+          color: #666666;
+          padding-top: 30px;
+          float: right;
+        }
+      }
 
-    .paymoney_box {
-        height: 115px;
-        position: fixed;
-        bottom: 0;
+      .setMeal_store_addressbox {
         width: 100%;
-        background: #fff;
-        border-top: 1px solid #ccc;
+        height: 80px;
+        padding-top: 35px;
         box-sizing: border-box;
-        padding: 20px 28px;
+        display: flex;
+        line-height: 40px;
 
-        .paymoney_price {
-            width: 450px;
-            height: 55px;
-            float: left;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 15px;
+        .setMeal_store_distance {
+          width: 115px;
+          position: relative;
+          float: left;
+          border-right: 1px #ccc solid;
 
+          .setMeal_store_distance_Image {
+            width: 30px;
+            height: 40px;
+            position: absolute;
+            left: 0;
 
-            .paymoney_price_icon {
-                font-size: 30px;
-                float: left;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                color: #ee3131;
-            }
-
-            .paymoney_price_num {
-                font-size: 50px;
-                color: #ee3131;
-                float: left;
-                line-height: 1;
-
-            }
-
+<<<<<<< HEAD
             .paymoney_price_info {
                 margin-left: 15px;
                 font-size: 24px;
@@ -607,21 +785,110 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
+=======
+            .setMeal_store_distance_AddressImg {
+              width: 30px;
+              height: 40px;
+>>>>>>> 5ba9ae5605daae36dcb14cc9273f00d530f61a47
             }
+          }
 
+          .setMeal_store_distance_info {
+            height: 40px;
+            position: absolute;
+            left: 30px;
+            padding: 0 8px;
+            font-size: 24px;
+          }
         }
 
-        .paymoney_buynow {
-            width: 225px;
-            height: 75px;
-            line-height: 75px;
+        .setMeal_store_address {
+          flex: 1;
+          padding: 0 16px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 26px;
+        }
+
+        .setMeal_store_mobile {
+          width: 60px;
+          height: 40px;
+          padding-left: 30px;
+          float: right;
+          border-left: 1px #ccc solid;
+
+          .setMeal_store_MobileImg {
+            width: 30px;
+            height: 40px;
             float: right;
-            border-radius: 37.5px;
-            background: linear-gradient(90deg, #FE7450, #FF2614);
-            color: #fff;
-            text-align: center;
-            font-size: 30px;
+          }
         }
+      }
     }
+  }
+
+
+  .paymoney_box {
+    height: 115px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ccc;
+    box-sizing: border-box;
+    padding: 20px 28px;
+
+    .paymoney_price {
+      width: 450px;
+      height: 55px;
+      float: left;
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 15px;
+
+
+      .paymoney_price_icon {
+        font-size: 30px;
+        float: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        color: #ee3131;
+      }
+
+      .paymoney_price_num {
+        font-size: 50px;
+        color: #ee3131;
+        float: left;
+        line-height: 1;
+
+      }
+
+      .paymoney_price_info {
+        margin-left: 15px;
+        font-size: 30px;
+        color: #d6d6d6;
+        float: left;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+    }
+
+    .paymoney_buynow {
+      width: 225px;
+      height: 75px;
+      line-height: 75px;
+      float: right;
+      border-radius: 37.5px;
+      background: linear-gradient(90deg, #FE7450, #FF2614);
+      color: #fff;
+      text-align: center;
+      font-size: 30px;
+    }
+  }
 
 }

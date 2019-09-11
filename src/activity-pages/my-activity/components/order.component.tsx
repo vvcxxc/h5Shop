@@ -20,9 +20,9 @@ export default class OrderComponent extends Component<OrderProp> {
    */
   handleClick = (e: any) => {
     const { action } = e.currentTarget.dataset
-    const { onAction, data: { type, id } } = this.props
+    const { onAction, data: { type, id,is_share } } = this.props
     onAction(action, {
-      type,
+      type: is_share,
       id
     })
   }
@@ -56,14 +56,14 @@ export default class OrderComponent extends Component<OrderProp> {
   }
   render() {
     const {
-      data: { type, type_status, ...rest }
+      data: { type, type_status,is_share, ...rest }
     } = this.props
     const isUsed = this.handleCalculateUsed(type_status)
     const isOverDue = this.handleCalculateOverDue(type_status)
     return (
       <Block>
         {
-          type === TYPE_APPRECIATION
+          is_share === TYPE_APPRECIATION
             ? <OrderAppreciation
                 data={rest}
                 progress={this.handleCalculateProgress()}
