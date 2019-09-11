@@ -349,7 +349,7 @@
     margin-bottom: 20px;
 
     .appre_rule_title {
-      height: 70px;
+      height: 60px;
       text-align: left;
       font-weight: bold;
       font-size: 40px;
@@ -362,6 +362,7 @@
       height: 50px;
       width: 100%;
       margin: 0;
+
       .appre_rule_time_key {
         height: 40px;
         float: left;
@@ -381,8 +382,10 @@
 
     .appre_rule_list {
       width: 100%;
+      min-height: 50px;
+      overflow: hidden;
 
-      // display: flex;
+      // display: flex;
       .appre_rule_list_key {
         height: 40px;
         width: 165px;
@@ -400,7 +403,17 @@
           font-size: 25px;
         }
       }
+    }
 
+    .appre_rule_list_more {
+      width: 100%;
+      height: 65px;
+      color: #adadad;
+      border-top: #d6d6d6 1px solid;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-end;
     }
   }
 
