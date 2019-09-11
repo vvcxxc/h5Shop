@@ -81,7 +81,8 @@ export default class PaySuccess extends Component<Props> {
         youhui_id: '',
         gift_desc: '',
         gift_id: '',
-        activity_id: ''
+        activity_id: '',
+        expire_day: ''
       }
     ],
     cashCouponList: [
@@ -131,7 +132,6 @@ export default class PaySuccess extends Component<Props> {
     })
     let that = this;
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
@@ -194,7 +194,6 @@ export default class PaySuccess extends Component<Props> {
               }, 2000)
 
             }
-
           }).catch(err => {
             console.log(err);
           })
@@ -202,15 +201,42 @@ export default class PaySuccess extends Component<Props> {
     })
   }
 
-  componentDidMount() {
-  }
-  onPullDownRefresh() {
-    console.log('下拉事件')
-  }
+  // componentDidMount() {
+  //     let url = window.location;
+  //     Taro.request({
+  //       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+  //       method: 'GET',
+  //       data: {
+  //         url
+  //       }
+  //     })
+  //       .then(res => {
+  //         let { data } = res;
+  //         wx.config({
+  //           debug: true,
+  //           appId: data.appId,
+  //           timestamp: data.timestamp,
+  //           nonceStr: data.nonceStr,
+  //           signature: data.signature,
+  //           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+  //         })
+  //         wx.ready(() => {
+  //           wx.updateAppMessageShareData({
+  //             title: '发现一家你喜欢的店铺'+this.state.business_list.name+'，速来围观！',
+  //             desc: '刚刚发现了这家店铺'+this.state.business_list.name+'，活动多多，优惠空前，你绝对喜欢，快点进来看看！',
+  //             // link: 'http://test.api.supplier.tdianyi.com/pages/business/index?id='+this.state.business_list.id,
+  //             link: '/pages/business/index?id='+this.state.business_list.id,
+  //             imgUrl: this.state.business_list.preview,
+  //             success: function () {
+  //               //成功后触发
+  //               console.log("分享成功")
+  //             }
+  //           })
+  //         })
+  //       })
+  // }
 
-  onReachBottom() {
-    console.log('触底事件')
-  }
+
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
     Taro.navigateTo({
@@ -238,7 +264,6 @@ export default class PaySuccess extends Component<Props> {
   }
   //去附近店铺
   handleClick3 = (_id, e) => {
-    // console.log(_id);
     Taro.navigateTo({
       url: './index?id=' + _id
     })
@@ -257,15 +282,10 @@ export default class PaySuccess extends Component<Props> {
       phoneNumber: this.state.business_list.tel
     })
       .then((res: any) => {
-        console.log(res)
       })
   }
   //地图
   routePlanning = () => {
-    // //现在所在
-    // console.log(this.state.xPoint,this.state.yPoint);
-    // //店铺所在
-    // console.log(this.state.business_list.xpoint,this.state.business_list.ypoint);
     let browserType = getBrowserType();
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.business_list.xpoint);
@@ -299,11 +319,8 @@ export default class PaySuccess extends Component<Props> {
               name: this.state.business_list.name,
               address: this.state.business_list.address,
             })
-
           })
         })
-
-
     } else if (browserType == 'alipay') {
       Taro.navigateTo({
         url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.business_list.xpoint + ',' + this.state.business_list.ypoint + '&destName=' + this.state.business_list.name + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
@@ -342,7 +359,6 @@ export default class PaySuccess extends Component<Props> {
       })
   }
   render() {
-    // console.log(this.state.keepCollect_bull);
     return (
       <View className="merchant-details">
         {/* {
@@ -422,8 +438,8 @@ export default class PaySuccess extends Component<Props> {
                             </View> */}
                             <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                           </View>                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
-                            <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: '2' }} />
-                            <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: "3" }} />
+                            <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: 2 }} />
+                            <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: 3 }} />
                             <Image src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
                           </View>
                         </View>
@@ -475,6 +491,7 @@ export default class PaySuccess extends Component<Props> {
                         <View className="item desc">{item.name}</View>
                       </View>
                     </View>
+
                     <View className="image-list" style={{ position: "relative", marginBottom: "10px" }}>
                       {
                         item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
@@ -482,18 +499,43 @@ export default class PaySuccess extends Component<Props> {
                       }
                       <View className="img" style={{ width: "100%" }}   >
                         <View className="box_left">
-                          <View className="box_left_price">￥ <View className="_price">{item.pay_money}</View></View>
-                          <View className="box_left_return">最高可抵{parseInt(item.return_money)}元</View>
+                        <View className="box_left_return">最高价值</View>
+                          <View className="box_left_price">￥ <View className="_price">{item.return_money}</View></View>
                         </View>
                         <View className="box_center">
-                          <View className="present"><View className="present_text">{item.name}</View></View>
-                          <View className="present_recommend">{item.gift_desc}</View>
+                          <View className="present">
+                            <View className="present_text1">
+                              <View className="present_text1_box">全场通用</View>
+                            </View>
+                            <View className="present_text2">{item.expire_day}天内有效</View>
+                            <View className="present_text3">满{item.init_money}元可用</View>
+                          </View>
                         </View>
                         <View className="box_right" style={{ overflow: "hidden" }}>
                           <Image className="image" src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
                         </View>
                       </View>
                     </View>
+                    {/* 没礼品 */}
+                    {/* <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                      <View className="image" style={{ position: "relative", overflow: "hidden" }}>
+                        <Image src={"http://oss.tdianyi.com/front/HdPdCbyTs3FSz2EpmPFPBJcMBQJb58ec.png"} style={{ width: "100%", height: "100%" }} />
+                      </View>
+                      <Image className="image" src={"http://oss.tdianyi.com/front/HdPdCbyTs3FSz2EpmPFPBJcMBQJb58ec.png"} style={{ marginLeft: "7px" }} />
+                    </View> */}
+                    {/* 有礼品 */}
+                    {/* <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                      <View className="image" style={{ position: "relative", overflow: "hidden" }}>
+                        <Image src={"http://oss.tdianyi.com/front/HdPdCbyTs3FSz2EpmPFPBJcMBQJb58ec.png"} style={{ width: "100%", height: "100%" }} />
+                      </View>
+                      <View className="image" style={{ position: "relative", display: "flex", background: "red", marginLeft: "7px" }}>
+                        <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: 2 }} />
+                        <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: 3 }} />
+                        <Image src={"http://oss.tdianyi.com/front/HdPdCbyTs3FSz2EpmPFPBJcMBQJb58ec.png"} style={{ width: "100%", height: "100%" }} />
+                      </View>
+                    </View>  */}
+
+
                     <View className="ft ">
                       <View className="flex center">
                         <View className="item">
