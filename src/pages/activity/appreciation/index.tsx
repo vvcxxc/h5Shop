@@ -18,6 +18,7 @@ interface Props {
 
 export default class Appre extends Component<Props>{
   state = {
+    ruleMore: false,
     imgZoom: false,
     imgZoomSrc: '',
     xPoint: 0,
@@ -259,18 +260,19 @@ export default class Appre extends Component<Props>{
     let datas = {}
     if (_type == 1) {
       datas = {
-        youhui_id: this.state.data.id,
-        store_id: this.state.data.supplier_id,
-        youhui_number: 1,
-        type: _type,  //1 微信 2支付宝
+        youhui_id: this.$router.params.id,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.$router.params.gift_id,
+        open_id: Taro.getStorageSync("openid"),
+        unionid: Taro.getStorageSync("unionid"),
+        type: _type,
         xcx: 0,
-        open_id: Cookie.get(process.env.OPEN_ID),
       }
     } else {
       datas = {
-        youhui_id: this.state.data.id,
-        store_id: this.state.data.supplier_id,
-        youhui_number: 1,
+        youhui_id: this.$router.params.id,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.$router.params.gift_id,
         type: _type,  //1 微信 2支付宝
         xcx: 0,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
@@ -280,7 +282,7 @@ export default class Appre extends Component<Props>{
 
     //请求支付属性
     request({
-      url: 'api/wap/coupon/wxWechatPay',
+      url: 'v1/youhui/wxXcxuWechatPay',
       method: "POST",
       header: {
         "Content-Type": "application/json"
