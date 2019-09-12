@@ -33,7 +33,7 @@ export default class Appre extends Component<Props>{
       description: [],
       distances: "",
       end_time: "",
-      gift: { title: "", price: "", postage: "" },
+      gift: { title: "", price: "", postage: "", mail_mode: '' },
       gift_id: 0,
       gift_pic: '',
       id: 0,
@@ -344,7 +344,6 @@ export default class Appre extends Component<Props>{
       })
   }
 
-
   render() {
     const { images, description } = this.state.data;
     return (
@@ -493,7 +492,7 @@ export default class Appre extends Component<Props>{
         </View>
 
         {
-          this.state.data.gift.mail_mode == '2' ? (
+          (this.state.data.gift && this.state.data.gift.mail_mode) == '2' ? (
             <View className='choose_postage' onClick={this.chooseGift}>
 
               <View>
