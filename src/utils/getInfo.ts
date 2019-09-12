@@ -117,7 +117,7 @@ export const getOpenid = (code: string): Promise<any> => {
 // }
 export const getLocation = () => {
   let type = getBrowserType();
-
+  console.log(type, "8989");
   if (type == 'wechat') {
     // return new Promise((resolve) => {
     //   resolve({
@@ -149,25 +149,25 @@ export const getLocation = () => {
     })
     return new Promise((resolve, reject) => {
       // const location = Taro.getStorageSync("location");
-      const location:any = JSON.parse(sessionStorage.getItem('location'))
+      const location: any = JSON.parse(sessionStorage.getItem('location'))
       if (location) return resolve(location)
       wx.ready(() => {
         wx.getLocation({
           type: 'wgs84',
-           success: function (res: any) {
+          success: function (res: any) {
             let latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
             let longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
             // Taro.setStorageSync("location", {
             //   latitude,
             //   longitude
             // });
-            sessionStorage.setItem('location',JSON.stringify({latitude,longitude}))
+            sessionStorage.setItem('location', JSON.stringify({ latitude, longitude }))
             resolve({
               latitude,
               longitude
             })
           },
-          fail: function (){
+          fail: function () {
             console.log('定位失败啦')
             reject({
               latitude: '',
@@ -176,9 +176,9 @@ export const getLocation = () => {
           }
         });
       }),
-      wx.error(()=>{
-        console.log('12312ss')
-      })
+        wx.error(() => {
+          console.log('error')
+        })
     })
   } else {
     var map = new AMap.Map('', {
