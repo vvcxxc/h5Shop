@@ -77,6 +77,10 @@ const config = {
       inline: true,
       port: 8090,
     },
+    output: {
+      filename: 'js/[name].[hash:8].js',
+      chunkFilename: 'js/[name].[chunkhash:8].js'
+    },
     module: {
       postcss: {
         autoprefixer: {
