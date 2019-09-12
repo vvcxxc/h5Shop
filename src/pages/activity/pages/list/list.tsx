@@ -74,13 +74,12 @@ export default class List extends Component {
    */
   fetchCoupon = async (type: number) => {
     // const location = await getLocation()
-    getLocation().then((res: any) => {
-      const locationParams = {
+    let locationParams;
+    await getLocation().then((res: any) => {
+      locationParams = {
           xpoint: res.longitude || "",
           ypoint: res.latitude || ""
         }
-        console.log(res,'麒麟');
-        
     })
     // const locationParams = {
     //   xpoint: location.longitude || "",
