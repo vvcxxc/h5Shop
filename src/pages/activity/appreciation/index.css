@@ -264,6 +264,7 @@
 .d_appre .appre_gift .appre_gift_giftlist .appre_gift_giftlistImg {
   width: 100%;
   border-radius: 8px;
+  height: auto;
 }
 
 .d_appre .appre_process {
