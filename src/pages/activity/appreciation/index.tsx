@@ -446,19 +446,31 @@ export default class Appre extends Component<Props>{
             <View className="appre_rule_time_key" >券有效期:</View>
             <View className="appre_rule_time_data" >领取后{this.state.data.validity}日内有效</View>
           </View>
-          {description ?
-            <View className="appre_rule_list" >
-              <View className="appre_rule_list_key" >使用规则:</View>
-              <View className="appre_rule_list_data" >
+          {
+            (this.state.data.type == 0 && description) ?
+              <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "4rem") }}>
+                <View className="appre_rule_list_key" >使用规则:</View>
+                <View className="appre_rule_list_data" >
+                  {
+                    (this.state.data.type == 0 && description) ? description.map((item) => {
+                      return (
+                        <View className="appre_rule_list_msg" >. {item}</View>
+                      )
+                    }) : null
+                  }
+                </View>
+
+              </View> : null
+          }
+          {
+            (this.state.data.type == 0 && description && description.length > 3) ?
+              <View className="appre_rule_list_more" onClick={() => { this.setState({ ruleMore: !this.state.ruleMore }) }}>
+                {this.state.ruleMore ? "收回" : "查看更多"}
                 {
-                  (this.state.data.type == 0 && description) ? description.map((item) => {
-                    return (
-                      <View className="appre_rule_list_msg" >. {item}</View>
-                    )
-                  }) : null
+                  this.state.ruleMore ?
+                    <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
                 }
-              </View>
-            </View> : null
+              </View> : null
           }
         </View>
         <View className="setMeal_store">
@@ -500,8 +512,6 @@ export default class Appre extends Component<Props>{
                   this.state.isPostage ? <Image src={require('../../../assets/choose.png')} className='choose' /> : <Image src={require('../../../assets/nochoose.png')} className='choose' />
                 }
               </View>
-
-
               （邮费 {this.state.data.gift.postage}元）{this.state.data.gift.title}
             </View>) : null
         }
