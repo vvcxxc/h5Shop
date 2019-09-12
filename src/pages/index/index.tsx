@@ -6,7 +6,7 @@ import request from '../../services/request';
 // import { connect } from '@tarojs/redux'
 import { getLocation } from '../../utils/getInfo'
 import VersionOne from './versionOne/index'
-
+import Cookie from 'js-cookie';
 export default class Index extends Component<any> {
 	/**
 	 * 指定config的类型声明为: Taro.Config
@@ -132,7 +132,6 @@ export default class Index extends Component<any> {
         })
       }
     } else {
-      console.log(6)
       // 第一次进入走这里
 
       this.getLocationxy()// 获取定位和 城市id 城市名字
@@ -142,11 +141,12 @@ export default class Index extends Component<any> {
   getLocationxy = () => {
     getLocation().then((res: any) => {
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } }, () => {
+        // Cookie.set('tempLocation', JSON.stringify(this.state.meta));
+        // console.log( JSON.stringify(this.state.meta),"889")
         // 测试一下
         this.getPayStore();
 
         if (res.longitude.length < 1 && res.latitude.length < 1) {
-          console.log(7)
           let data: any = this.state.meta
           data.city_id = 1924
           data.pages = 1
@@ -349,13 +349,13 @@ export default class Index extends Component<any> {
     let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
     let data = {}
 
-    if(store_id){
+    if (store_id) {
       data = {
         position_id: '3',
         city_id: city_id,
         store_id
       }
-    }else{
+    } else {
       data = {
         position_id: '3',
         city_id: city_id
@@ -393,13 +393,13 @@ export default class Index extends Component<any> {
     if (!this.state.need_jump) return
     let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
     let data = {}
-    if(store_id){
+    if (store_id) {
       data = {
         ad_id: this.state.indexImgId, //广告id
         ad_log_id: this.state.adLogId, //广告日志id
         store_id
       }
-    }else{
+    } else {
       data = {
         ad_id: this.state.indexImgId, //广告id
         ad_log_id: this.state.adLogId //广告日志id

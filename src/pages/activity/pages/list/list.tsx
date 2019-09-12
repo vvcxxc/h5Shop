@@ -4,6 +4,7 @@ import Coupon from "@/components/coupon/coupon"
 import { getCouponList } from "@/api"
 import { activityData } from "../../data"
 import { TYPE_APPRECIATION, TYPE_GROUP, ACTION_JUMP } from "@/utils/constants"
+// import Cookie from 'js-cookie';
 import NoData from "@/components/nodata/no.data"
 // import { getLocation } from "@/utils/getInfo"
 import { getLocation } from '@/utils/getInfo'
@@ -17,11 +18,12 @@ export default class List extends Component {
     list: []
   }
   componentDidMount() {
+    // console.log( Cookie.get('tempLocation'))
     // Taro.showShareMenu()
-
     const { type } = this.$router.params
+    console.log(type);
     this.handleSetTitle(type)
-    this.fetchCoupon(type)
+    this.fetchCoupon(type);
   }
 
   /**
@@ -70,14 +72,21 @@ export default class List extends Component {
   /**
    * 获取优惠券
    */
-  async fetchCoupon(type: number) {
-    const location = await getLocation()
+  fetchCoupon = async (type: number) => {
+    // const location = await getLocation()
+    let locationParams;
+    await getLocation().then((res: any) => {
+      locationParams = {
+          xpoint: res.longitude || "",
+          ypoint: res.latitude || ""
+        }
+    })
+    // const locationParams = {
+    //   xpoint: location.longitude || "",
+    //   ypoint: location.latitude || ""
+    // }
 
-    const locationParams = {
-      xpoint: location.lng || "",
-      ypoint: location.lat || ""
-    }
-
+    console.log(location, "~~~~~~~~~~~~~~~~~")
     const {
       list: { api, method }
     } = activityData[type]
