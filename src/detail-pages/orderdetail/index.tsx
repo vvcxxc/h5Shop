@@ -226,7 +226,7 @@ export default class Orderdetail extends Component {
         <View className='z_billingInfo' >
 
           <View className='a_buyBox' >
-            <View className='a_one' >使用规则 </View>
+            <View className='a_one' >温馨提示 </View>
             <View className='a_billingInfo' >
               {/* <View className="flex">
                 <View>适合商品：</View>
