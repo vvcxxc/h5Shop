@@ -501,8 +501,6 @@ export default class Appre extends Component<Props>{
                   this.state.isPostage ? <Image src={require('../../../assets/choose.png')} className='choose' /> : <Image src={require('../../../assets/nochoose.png')} className='choose' />
                 }
               </View>
-
-
               （邮费 {this.state.data.gift.postage}元）{this.state.data.gift.title}
             </View>) : null
         }
