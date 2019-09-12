@@ -448,7 +448,7 @@ export default class Appre extends Component<Props>{
           </View>
           {
             (this.state.data.type == 0 && description) ?
-              <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "4rem") }}>
+              <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "2.5rem") }}>
                 <View className="appre_rule_list_key" >使用规则:</View>
                 <View className="appre_rule_list_data" >
                   {
