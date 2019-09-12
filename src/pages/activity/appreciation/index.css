@@ -368,6 +368,7 @@
   line-height: 1;
   padding-top: 10px;
   box-sizing: border-box;
+  font-size: 25px;
 }
 
 .d_appre .appre_rule .appre_rule_time .appre_rule_time_data {
@@ -394,6 +395,7 @@
   line-height: 30px;
   padding-top: 10px;
   box-sizing: border-box;
+  font-size: 25px;
 }
 
 .d_appre .appre_rule .appre_rule_list .appre_rule_list_data {
