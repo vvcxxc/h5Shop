@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon } from 'taro-ui';
+import { AtIcon, AtNoticebar } from 'taro-ui';
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
@@ -18,6 +18,7 @@ interface Props {
 
 export default class Appre extends Component<Props>{
   state = {
+    ruleMore: false,
     imgZoom: false,
     imgZoomSrc: '',
     xPoint: 0,
@@ -32,7 +33,7 @@ export default class Appre extends Component<Props>{
       description: [],
       distances: "",
       end_time: "",
-      gift: { title: "", price: "", postage: "" },
+      gift: { title: "", price: "", postage: "", mail_mode: '' },
       gift_id: 0,
       gift_pic: '',
       id: 0,
@@ -52,7 +53,8 @@ export default class Appre extends Component<Props>{
       validity: 0,
       xpoint: "",
       ypoint: "",
-    }
+    },
+    isPostage: true
   };
 
   componentDidMount = () => {
@@ -87,6 +89,13 @@ export default class Appre extends Component<Props>{
               } else {
                 imgList = [];
               }
+              if (res.data.gift_id) {
+                if (res.data.gift.mail_mode == 2) {
+                  this.setState({ isPostage: true })
+                }
+              } else {
+                this.setState({ isPostage: false })
+              }
               console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
                 console.log("lalaal", this.state.imagesList)
@@ -120,6 +129,13 @@ export default class Appre extends Component<Props>{
                 imgList = new Array(image).concat(images);
               } else {
                 imgList = [];
+              }
+              if (res.data.gift_id) {
+                if (res.data.gift.mail_mode == 2) {
+                  this.setState({ isPostage: true })
+                }
+              } else {
+                this.setState({ isPostage: false })
               }
               console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
@@ -221,7 +237,9 @@ export default class Appre extends Component<Props>{
     e.stopPropagation();
   }
 
-
+  chooseGift = () => {
+    this.setState({ isPostage: !this.state.isPostage })
+  }
 
   payment() {
     Taro.showLoading({
@@ -240,29 +258,32 @@ export default class Appre extends Component<Props>{
       });
     }
     let datas = {}
+    console.log(Taro.getStorageSync("open_id"))
     if (_type == 1) {
       datas = {
-        youhui_id: this.state.data.id,
-        store_id: this.state.data.supplier_id,
-        youhui_number: 1,
-        type: _type,  //1 微信 2支付宝
-        xcx: 0,
+        youhui_id: this.$router.params.id,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.$router.params.gift_id,
         open_id: Cookie.get(process.env.OPEN_ID),
+        unionid: Cookie.get(process.env.UNION_ID),
+        type: _type,
+        xcx: 0,
       }
     } else {
       datas = {
-        youhui_id: this.state.data.id,
-        store_id: this.state.data.supplier_id,
-        youhui_number: 1,
+        youhui_id: this.$router.params.id,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.$router.params.gift_id,
         type: _type,  //1 微信 2支付宝
         xcx: 0,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
       }
     }
 
+
     //请求支付属性
     request({
-      url: 'api/wap/coupon/wxWechatPay',
+      url: 'v1/youhui/wxXcxuWechatPay',
       method: "POST",
       header: {
         "Content-Type": "application/json"
@@ -324,14 +345,13 @@ export default class Appre extends Component<Props>{
       })
   }
 
-
   render() {
     const { images, description } = this.state.data;
     return (
       <View className="d_appre" >
         <View className="appre_head_activityTitle">
           <View className="appre_head_activityTitle_title">{this.state.data.name}</View>
-          <View className="appre_head_activityTitle_time">活动时间 : {this.state.data.begin_time}-{this.state.data.end_time}</View>
+          <View className="appre_head_activityTitle_time">活动时间 : {this.state.data.activity_begin_time}-{this.state.data.activity_end_time}</View>
         </View>
 
         {
@@ -370,9 +390,6 @@ export default class Appre extends Component<Props>{
                 <View className="appre_head_left_pricebox_info">满{this.state.data.total_fee}可用</View>
               </View>
               <View className="appre_head_right">
-                {
-                  this.state.data.type != 0 ? <View className="appre_head_right_type">全场通用</View> : null
-                }
                 <View className="appre_head_right_total">起始值为{this.state.data.init_money}元</View>
                 <View className="appre_head_right_days">领取后{this.state.data.validity}日内有效</View>
               </View>
@@ -409,33 +426,54 @@ export default class Appre extends Component<Props>{
           <Image className="appre_process2_Image" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/XzPRtr5xGGiEiP8xHiS8tYEwCwyQWib8.png" />
         </View>
 
-        {
-          this.state.data.type == 0 ? <View className="appre_rule" >
-            <View className="appre_rule_title" >温馨提示</View>
-            {/* <View className="appre_rule_time" >
-            <View className="appre_rule_time_key" >适用商品:</View>
-            <View className="appre_rule_time_data" >全场通用</View>
-          </View> */}
-            <View className="appre_rule_time" >
-              <View className="appre_rule_time_key" >券有效期:</View>
-              <View className="appre_rule_time_data" >领取后{this.state.data.validity}日内有效</View>
-            </View>
-            {description ?
-              <View className="appre_rule_list" >
+        <View className="appre_rule" >
+          <View className="appre_rule_title" >温馨提示</View>
+          {
+            this.state.data.type != 0 ?
+              <View className="appre_rule_time" >
+                <View className="appre_rule_time_key" >使用范围:</View>
+                <View className="appre_rule_time_data" >全场通用</View>
+              </View> : null
+          }
+          <View className="appre_rule_time" >
+            <View className="appre_rule_time_key" >使用门槛:</View>
+            <View className="appre_rule_time_data" >满{this.state.data.total_fee}元可用</View>
+          </View>
+          <View className="appre_rule_time" >
+            <View className="appre_rule_time_key" >活动时间:</View>
+            <View className="appre_rule_time_data" >{this.state.data.activity_begin_time}-{this.state.data.activity_end_time}</View>
+          </View>
+          <View className="appre_rule_time" >
+            <View className="appre_rule_time_key" >券有效期:</View>
+            <View className="appre_rule_time_data" >领取后{this.state.data.validity}日内有效</View>
+          </View>
+          {
+            (this.state.data.type == 0 && description) ?
+              <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "2.5rem") }}>
                 <View className="appre_rule_list_key" >使用规则:</View>
                 <View className="appre_rule_list_data" >
                   {
-                    description ? description.map((item) => {
+                    (this.state.data.type == 0 && description) ? description.map((item) => {
                       return (
                         <View className="appre_rule_list_msg" >. {item}</View>
                       )
                     }) : null
                   }
                 </View>
+
               </View> : null
-            }
-          </View> : null
-        }
+          }
+          {
+            (this.state.data.type == 0 && description && description.length > 3) ?
+              <View className="appre_rule_list_more" onClick={() => { this.setState({ ruleMore: !this.state.ruleMore }) }}>
+                {this.state.ruleMore ? "收回" : "查看更多"}
+                {
+                  this.state.ruleMore ?
+                    <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
+                }
+              </View> : null
+          }
+        </View>
         <View className="setMeal_store">
           <View className="setMeal_store_box" onClick={this.handleClick2.bind(this)}>
             <View className="setMeal_store_title">适用店铺</View>
@@ -465,25 +503,41 @@ export default class Appre extends Component<Props>{
             </View>
           </View>
         </View>
+        {
+          (this.state.data.gift && this.state.data.gift.mail_mode) == '2' ? (
+            <View className='choose_postage' onClick={this.chooseGift}>
 
+              <View>
+                {
+                  this.state.isPostage ? <Image src={require('../../../assets/choose.png')} className='choose' /> : <Image src={require('../../../assets/nochoose.png')} className='choose' />
+                }
+              </View>
+              （邮费 {this.state.data.gift.postage}元）
+              <View className='lbmsg' >
+                <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
+              </View>
+            </View>) : null
+        }
         <View className="paymoney_box">
           <View className="paymoney_price">
             <View className="paymoney_price_icon">￥</View>
             <View className="paymoney_price_num">{this.state.data.pay_money}</View>
             {
-              this.state.data.gift ? <View className="paymoney_price_info">(含{this.state.data.gift.postage}元运费)</View> : null
+              this.state.isPostage ? <View className='paymoney_price_info'> {'+' + this.state.data.gift.postage}</View> : null
             }
 
 
           </View>
           <View className="paymoney_buynow" onClick={this.payment.bind(this)}>立即购买</View>
         </View>
-{/*
+
         <Zoom
           src={this.state.imgZoomSrc}
           showBool={this.state.imgZoom}
-          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
-        /> */}
+          onChange={() => {
+            this.setState({ imgZoom: false })
+          }}
+        />
 
       </View>
     );

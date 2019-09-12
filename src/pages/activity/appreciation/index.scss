@@ -1,7 +1,7 @@
 .d_appre {
     width: 100%;
     height: auto;
-    padding-bottom: 120px;
+    padding-bottom: 110px;
 
 
     .appre_head_activityTitle {
@@ -84,14 +84,15 @@
                 }
 
                 .appre_head_left {
-                    width: 50%;
                     height: 100%;
                     text-align: left;
                     float: left;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
 
                     .appre_head_left_pricebox {
                         text-align: center;
-                        width: 230px;
 
                         .appre_head_left_pricebox_msg {
                             height: 30px;
@@ -126,11 +127,12 @@
                     width: 50%;
                     height: 100%;
                     text-align: right;
-                    float: left;
+                    float: right;
                     display: flex;
                     flex-direction: column;
                     align-items: flex-end;
                     justify-content: flex-end;
+
                     .appre_head_right_type {
                         padding: 5px 10px;
                         line-height: 1;
@@ -210,6 +212,7 @@
         padding: 30px 24px;
         background: #fff;
         margin-top: 20px;
+
         .appre_gift_titlebox {
             height: 40px;
             width: 100%;
@@ -264,6 +267,7 @@
             .appre_gift_giftlistImg {
                 width: 100%;
                 border-radius: 8px;
+                height: auto;
             }
         }
 
@@ -331,8 +335,8 @@
 
     .appre_process2 {
         width: 100%;
-        height: 100px;
-        margin: 10px 0;
+        height: 90px;
+        margin: 20px 0;
         padding: 0;
 
         .appre_process2_Image {
@@ -344,9 +348,10 @@
     .appre_rule {
         background: #fff;
         padding: 24px;
-margin-bottom: 20px;
+        margin-bottom: 20px;
+
         .appre_rule_title {
-            height: 70px;
+            height: 60px;
             text-align: left;
             font-weight: bold;
             font-size: 40px;
@@ -364,17 +369,26 @@ margin-bottom: 20px;
                 width: 165px;
                 text-align: left;
                 color: #adadad;
+                line-height: 1;
+                padding-top: 10px;
+                box-sizing: border-box;
+                font-size: 25px;
             }
 
             .appre_rule_time_data {
                 float: left;
                 height: 40px;
                 font-size: 25px;
+                line-height: 1;
+                padding-top: 10px;
+                box-sizing: border-box;
             }
         }
 
         .appre_rule_list {
             width: 100%;
+            min-height: 50px;
+            overflow: hidden;
 
             // display: flex;
             .appre_rule_list_key {
@@ -383,6 +397,10 @@ margin-bottom: 20px;
                 text-align: left;
                 color: #adadad;
                 float: left;
+                line-height: 30px;
+                padding-top: 10px;
+                box-sizing: border-box;
+                font-size: 25px;
             }
 
             .appre_rule_list_data {
@@ -390,11 +408,22 @@ margin-bottom: 20px;
                 margin-left: 165px;
 
                 .appre_rule_list_msg {
-                    line-height: 40px;
                     font-size: 25px;
+                    line-height: 30px;
+                    padding-top: 10px;
+                    box-sizing: border-box;
                 }
             }
+        }
 
+        .appre_rule_list_more {
+            width: 100%;
+            height: 65px;
+            color: #adadad;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -405,6 +434,7 @@ margin-bottom: 20px;
         height: 315px;
         background: #f4f4f4;
         border: none;
+        margin-bottom: 100px;
 
         .setMeal_store_box {
             width: 100%;
@@ -439,8 +469,8 @@ margin-bottom: 20px;
                 }
 
                 .setMeal_store_msg {
-                    width: 400px;
-                    padding: 25px 0 15px 25px;
+                    width: 500px;
+                    padding: 0 0 15px 25px;
                     box-sizing: border-box;
                     float: left;
 
@@ -449,6 +479,10 @@ margin-bottom: 20px;
                         font-size: 35px;
                         font-weight: bold;
                         text-align: left;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                     }
 
                     .setMeal_store_price {
@@ -529,6 +563,45 @@ margin-bottom: 20px;
         }
     }
 
+    .choose_postage {
+        height: 55px;
+        background: #fff;
+        position: fixed;
+        bottom: 115px;
+        width: 100%;
+        padding: 10px 0;
+        line-height: 55px;
+        padding-left: 55px;
+
+        .choose {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%)
+        }
+
+        .lbmsg {
+            width: 500px;
+            padding: 0;
+            display: inline-block;
+
+            .at-noticebar {
+                padding-left: 0;
+            }
+
+            .at-noticebar {
+                background: #fff;
+
+
+            }
+
+            .at-noticebar {
+                color: #000;
+            }
+        }
+    }
 
     .paymoney_box {
         height: 115px;
@@ -536,7 +609,7 @@ margin-bottom: 20px;
         bottom: 0;
         width: 100%;
         background: #fff;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid #eee;
         box-sizing: border-box;
         padding: 20px 28px;
 
@@ -568,13 +641,14 @@ margin-bottom: 20px;
 
             .paymoney_price_info {
                 margin-left: 15px;
-                font-size: 30px;
-                color: #d6d6d6;
-                float: left;
-                width: 200px;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
+                font-size: 50px;
+                color: #ee3131;
+                // float: left;
+                width: 203px;
+                line-height: 1;
+                // display: flex;
+                // flex-direction: column;
+                // justify-content: flex-end;
             }
 
         }

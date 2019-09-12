@@ -88,6 +88,12 @@
                 flex-direction:column
                 justify-content:center
                 align-items:center
+                .box_left_return
+                    text-align :center
+                    font-size :23px
+                    font-weight bold
+                    color: #000;
+                    font-size 36px
                 .box_left_price
                     height: 30%
                     width: 100%
@@ -95,22 +101,14 @@
                     color: #EE3131
                     font-size: 45px
                     margin: 0 auto
-                    margin-bottom: 10%
-                    display: inline-block
+                    display flex
+                    flex-direction:row
+                    justify-content:center
                     ._price
                         font-size: 60px
-                        display: inline-block
-                        text-align: center
+                        line-height 1
                         color: #EE3131
                         font-weight: bold
-                .box_left_return
-                    text-align :center
-                    font-size :23px
-                    background: #FDE8E5;
-                    color: #ff4530;
-                    padding 10px 15px
-                    line-height: 1;
-                    display: inline-block;
             .box_center
                 height:100%
                 flex:250
@@ -119,24 +117,54 @@
                 font-weight bold
                 box-sizing border-box
                 .present
-                    height: 50%
+                    height: 70%
                     width: 90%
-                    margin: 20% 5% 0
+                    margin: 17% 5% 0
                     font-size: 25px
-                   .present_text
-                    display:-webkit-box
-                    -webkit-line-clamp: 2
-                    overflow: hidden
-                    -webkit-box-orient: vertical
-                .present_recommend
-                    height: 30%
-                    width: 200px
-                    padding-left: 5%
-                    font-size: 20px
-                    color: #ccc
-                    overflow: hidden
-                    white-space: nowrap
-                    text-overflow: ellipsis
+                    display flex
+                    flex-direction : column
+                    align-items :flex-end
+                    .present_text
+                        display:-webkit-box
+                        -webkit-line-clamp: 2
+                        overflow: hidden
+                        -webkit-box-orient: vertical
+                    .present_text1
+                        flex 4
+                        font-size 24px
+                        display flex
+                        flex-direction : column
+                        align-items :flex-end
+                        justify-content center
+                        .present_text1_box
+                            border 2px red solid
+                            padding 0px 20px
+                            border-radius 28px
+                    .present_text2
+                        font-size 20px
+                        color #686868
+                        flex 2
+                        display flex
+                        flex-direction : column
+                        align-items :flex-end
+                        justify-content flex-end
+                    .present_text3
+                        flex 3
+                        font-size 28px
+                        color #000
+                        display flex
+                        flex-direction : column
+                        align-items :flex-end
+                        justify-content flex-end
+                // .present_recommend
+                //     height: 30%
+                //     width: 200px
+                //     padding-left: 5%
+                //     font-size: 20px
+                //     color: #ccc
+                //     overflow: hidden
+                //     white-space: nowrap
+                //     text-overflow: ellipsis
             .box_right
                 box-sizing: border-box
                 height:99%
@@ -190,7 +218,7 @@
         flex-direction:row
         align-items: center
         justify-content : flex-start
-        .mark
+        .iconImg
            height 27px
            width 32px
            margin-right 17px

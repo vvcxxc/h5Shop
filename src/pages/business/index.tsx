@@ -36,8 +36,8 @@ export default class PaySuccess extends Component<Props> {
       collect: "0",
       distance: "",
       tel: "",
-      ypoint: 0,
-      xpoint: 0,
+      ypoint: '',
+      xpoint: '',
     },
     recommend: [//本店其它的推荐
       {
@@ -81,7 +81,9 @@ export default class PaySuccess extends Component<Props> {
         youhui_id: '',
         gift_desc: '',
         gift_id: '',
-        activity_id: ''
+        activity_id: '',
+        youhui_type:0,
+        expire_day:''
       }
     ],
     cashCouponList: [
@@ -131,7 +133,6 @@ export default class PaySuccess extends Component<Props> {
     })
     let that = this;
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
@@ -194,7 +195,6 @@ export default class PaySuccess extends Component<Props> {
               }, 2000)
 
             }
-
           }).catch(err => {
             console.log(err);
           })
@@ -202,15 +202,42 @@ export default class PaySuccess extends Component<Props> {
     })
   }
 
-  componentDidMount() {
-  }
-  onPullDownRefresh() {
-    console.log('下拉事件')
-  }
+  // componentDidMount() {
+  //     let url = window.location;
+  //     Taro.request({
+  //       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
+  //       method: 'GET',
+  //       data: {
+  //         url
+  //       }
+  //     })
+  //       .then(res => {
+  //         let { data } = res;
+  //         wx.config({
+  //           debug: true,
+  //           appId: data.appId,
+  //           timestamp: data.timestamp,
+  //           nonceStr: data.nonceStr,
+  //           signature: data.signature,
+  //           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+  //         })
+  //         wx.ready(() => {
+  //           wx.updateAppMessageShareData({
+  //             title: '发现一家你喜欢的店铺'+this.state.business_list.name+'，速来围观！',
+  //             desc: '刚刚发现了这家店铺'+this.state.business_list.name+'，活动多多，优惠空前，你绝对喜欢，快点进来看看！',
+  //             // link: 'http://test.api.supplier.tdianyi.com/pages/business/index?id='+this.state.business_list.id,
+  //             link: '/pages/business/index?id='+this.state.business_list.id,
+  //             imgUrl: this.state.business_list.preview,
+  //             success: function () {
+  //               //成功后触发
+  //               console.log("分享成功")
+  //             }
+  //           })
+  //         })
+  //       })
+  // }
 
-  onReachBottom() {
-    console.log('触底事件')
-  }
+
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
     Taro.navigateTo({
@@ -238,7 +265,6 @@ export default class PaySuccess extends Component<Props> {
   }
   //去附近店铺
   handleClick3 = (_id, e) => {
-    // console.log(_id);
     Taro.navigateTo({
       url: './index?id=' + _id
     })
@@ -257,15 +283,10 @@ export default class PaySuccess extends Component<Props> {
       phoneNumber: this.state.business_list.tel
     })
       .then((res: any) => {
-        console.log(res)
       })
   }
   //地图
   routePlanning = () => {
-    // //现在所在
-    // console.log(this.state.xPoint,this.state.yPoint);
-    // //店铺所在
-    // console.log(this.state.business_list.xpoint,this.state.business_list.ypoint);
     let browserType = getBrowserType();
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.business_list.xpoint);
@@ -299,11 +320,8 @@ export default class PaySuccess extends Component<Props> {
               name: this.state.business_list.name,
               address: this.state.business_list.address,
             })
-
           })
         })
-
-
     } else if (browserType == 'alipay') {
       Taro.navigateTo({
         url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.business_list.xpoint + ',' + this.state.business_list.ypoint + '&destName=' + this.state.business_list.name + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
@@ -342,7 +360,6 @@ export default class PaySuccess extends Component<Props> {
       })
   }
   render() {
-    // console.log(this.state.keepCollect_bull);
     return (
       <View className="merchant-details">
         {/* {
@@ -386,8 +403,8 @@ export default class PaySuccess extends Component<Props> {
 
         {
           this.state.activity_group.length == 0 ? <View></View> : <View style={{ background: "#fff", paddingTop: "12px" }}>
-           <View className="merchant-details__tit" style={{ paddingTop: "10px" }} >
-              <Image className="mark" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/ping.png" />
+            <View className="merchant-details__tit" style={{ paddingTop: "10px" }} >
+              <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/ping.png" />
               <Text className="fwb" >拼团送豪礼</Text>
             </View>
             <View className="hidden-box" id="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
@@ -422,8 +439,8 @@ export default class PaySuccess extends Component<Props> {
                             </View> */}
                             <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                           </View>                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
-                            <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: '2' }} />
-                            <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: "3" }} />
+                            <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: 2 }} />
+                            <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: 3 }} />
                             <Image src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
                           </View>
                         </View>
@@ -462,7 +479,7 @@ export default class PaySuccess extends Component<Props> {
         {
           this.state.activity_appre.length == 0 ? <View></View> : <View style={{ background: "#fff", paddingTop: "12px" }}>
             <View className="merchant-details__tit">
-              <Image className="mark" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/zeng.png" />
+              <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/zeng.png" />
               <Text className="fwb hidden-box" >增值低价买</Text>
             </View>
             <View style={{ width: "100%", overflow: "hidden", height: this.state.activity_appre_bull ? "auto" : "9rem" }}>
@@ -475,25 +492,76 @@ export default class PaySuccess extends Component<Props> {
                         <View className="item desc">{item.name}</View>
                       </View>
                     </View>
-                    <View className="image-list" style={{ position: "relative", marginBottom: "10px" }}>
+                    {/* <View className="image-list" style={{ position: "relative", marginBottom: "10px" }}>
                       {
                         item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
                           <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} />
                       }
                       <View className="img" style={{ width: "100%" }}   >
                         <View className="box_left">
-                          <View className="box_left_price">￥ <View className="_price">{item.pay_money}</View></View>
-                          <View className="box_left_return">最高可抵{parseInt(item.return_money)}元</View>
+                        <View className="box_left_return">最高价值</View>
+                          <View className="box_left_price">￥ <View className="_price">{item.return_money}</View></View>
                         </View>
                         <View className="box_center">
-                          <View className="present"><View className="present_text">{item.name}</View></View>
-                          <View className="present_recommend">{item.gift_desc}</View>
+                          <View className="present">
+                            <View className="present_text1">
+                              <View className="present_text1_box">全场通用</View>
+                            </View>
+                            <View className="present_text2">{item.expire_day}天内有效</View>
+                            <View className="present_text3">满{item.init_money}元可用</View>
+                          </View>
                         </View>
                         <View className="box_right" style={{ overflow: "hidden" }}>
                           <Image className="image" src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
                         </View>
                       </View>
-                    </View>
+                    </View> */}
+
+                    {
+                      item.youhui_type == 1 ? (
+                        <View className="image-list" style={{ position: "relative", marginBottom: "5px" }}>
+                          {
+                            item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
+                              <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} />
+                          }
+                          <View className="img" style={{ width: "100%" }}   >
+                            <View className="box_left">
+                              <View className="box_left_return">最高价值</View>
+                              <View className="box_left_price">￥ <View className="_price">{item.return_money}</View></View>
+                            </View>
+                            <View className="box_center">
+                              <View className="present">
+                                <View className="present_text1">
+                                  <View className="present_text1_box">全场通用</View>
+                                </View>
+                                <View className="present_text2">{item.expire_day}天内有效</View>
+                                <View className="present_text3">满{item.init_money}元可用</View>
+                              </View>
+                            </View>
+                            <View className="box_right" style={{ overflow: "hidden" }}>
+                              <Image className="image" src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
+                            </View>
+                          </View>
+                        </View>
+                      ) : (
+                          !item.gift_id ? <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                            <View className="image" style={{ position: "relative", overflow: "hidden" }}>
+                              <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                            </View>
+                            <Image className="image" src={item.image_url} style={{ marginLeft: "7px" }} />
+                          </View> :
+                            <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                              <View className="image" style={{ position: "relative", overflow: "hidden" }}>
+                                <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
+                              </View>
+                              <View className="image" style={{ position: "relative", display: "flex", background: "red", marginLeft: "7px" }}>
+                                <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: 2 }} />
+                                <Image src={require("./qiu.png")} style={{ position: 'absolute', top: '-4px', left: '41%', width: '25px', height: '25px', zIndex: 3 }} />
+                                <Image src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
+                              </View>
+                            </View>
+                        )
+                    }
                     <View className="ft ">
                       <View className="flex center">
                         <View className="item">
@@ -529,7 +597,7 @@ export default class PaySuccess extends Component<Props> {
         {
           this.state.cashCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff", paddingTop: "12px" }}>
             <View className="merchant-details__tit" >
-              <Image className="mark" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/quan.png" />
+              <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/quan.png" />
               <Text className="fwb" >现金券</Text>
             </View>
             <View className="ticket hidden-box" style={{ boxSizing: "border-box", width: "100%", overflow: "hidden", paddingTop: "0", height: this.state.couponList_bull ? "auto" : "5.05rem" }}>
@@ -568,7 +636,7 @@ export default class PaySuccess extends Component<Props> {
         {
           this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff", paddingTop: "12px" }}>
             <View className="merchant-details__tit" >
-              <Image className="mark" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/hui.png" />
+              <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/hui.png" />
               <Text className="fwb">优惠信息</Text>
             </View>
             <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "5.4rem" }}>

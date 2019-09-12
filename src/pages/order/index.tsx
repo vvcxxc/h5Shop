@@ -157,7 +157,7 @@ export default class Order extends Component {
     this.state.current == 0 ? this.getData1() : (
       this.state.current == 1 ? this.getData2() : (
         this.state.current == 2 ? this.getData3() : (
-          this.state.current == 3 ? this.getData2() : "")))
+          this.state.current == 3 ? this.getData4() : "")))
   }
 
   getData1() {
@@ -325,7 +325,7 @@ export default class Order extends Component {
       <View className="orders flex column"  >
 
         {this.state._codeshow ?
-          <View className="code_show" onClick={() => { this.setState({ _codeshow: false, _codeimg: '', _codeinfo: '' }) }} onTouchMove={() => { this.setState({ _codeshow: false, _codeimg: '', _codeinfo: '' }) }} >
+          <View className="code_show" onClick={() => { this.setState({ _codeshow: false,_codeimg:'',_codeinfo:'' }) }} onTouchMove={() => { this.setState({ _codeshow: false ,_codeimg:'',_codeinfo:''}) }} >
             <View className="code_background">
               <View className="codeBox" >
                 <View className="codeBox_info">商家扫码/输码验证即可消费</View>
