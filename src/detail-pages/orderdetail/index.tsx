@@ -226,12 +226,12 @@ export default class Orderdetail extends Component {
             <View className='a_one' >使用规则 </View>
             <View className='a_billingInfo' >
               <View className="flex">
-                <View>适合商品：</View>
+                {/* <View>适合商品：</View>
                 <View>
                   <View>夏季尾货服装类</View>
                   <View>夏季尾货服装类</View>
                   <View>夏季尾货服装类</View>
-                </View>
+                </View> */}
               </View>
 
               <View className="flex">
@@ -248,7 +248,7 @@ export default class Orderdetail extends Component {
                 </View>
               </View>
 
-              <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 1) ? 'auto' : '4rem' }}>
+              <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 2) ? 'auto' : '4rem' }}>
                 <View>使用规则：</View>
                 <View>
                   {
