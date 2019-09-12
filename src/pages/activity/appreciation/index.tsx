@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon } from 'taro-ui';
+import { AtIcon, AtNoticebar } from 'taro-ui';
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
@@ -513,7 +513,10 @@ export default class Appre extends Component<Props>{
                   this.state.isPostage ? <Image src={require('../../../assets/choose.png')} className='choose' /> : <Image src={require('../../../assets/nochoose.png')} className='choose' />
                 }
               </View>
-              （邮费 {this.state.data.gift.postage}元）{this.state.data.gift.title}
+              （邮费 {this.state.data.gift.postage}元）
+              <View className='lbmsg' >
+                <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
+              </View>
             </View>) : null
         }
         <View className="paymoney_box">
