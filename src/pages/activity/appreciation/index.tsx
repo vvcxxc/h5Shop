@@ -258,13 +258,14 @@ export default class Appre extends Component<Props>{
       });
     }
     let datas = {}
+    console.log(Taro.getStorageSync("open_id"))
     if (_type == 1) {
       datas = {
         youhui_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
         gift_id: this.$router.params.gift_id,
-        open_id: Taro.getStorageSync("open_id"),
-        unionid: Taro.getStorageSync("unionid"),
+        open_id: Cookie.get(process.env.OPEN_ID),
+        unionid: Cookie.get(process.env.UNION_ID),
         type: _type,
         xcx: 0,
       }
