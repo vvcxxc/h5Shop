@@ -157,7 +157,7 @@ export default class Order extends Component {
     this.state.current == 0 ? this.getData1() : (
       this.state.current == 1 ? this.getData2() : (
         this.state.current == 2 ? this.getData3() : (
-          this.state.current == 3 ? this.getData2() : "")))
+          this.state.current == 3 ? this.getData4() : "")))
   }
 
   getData1() {

@@ -502,7 +502,6 @@ export default class Appre extends Component<Props>{
             </View>
           </View>
         </View>
-
         {
           (this.state.data.gift && this.state.data.gift.mail_mode) == '2' ? (
             <View className='choose_postage' onClick={this.chooseGift}>
