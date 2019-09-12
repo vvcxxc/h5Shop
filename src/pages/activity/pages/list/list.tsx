@@ -4,7 +4,7 @@ import Coupon from "@/components/coupon/coupon"
 import { getCouponList } from "@/api"
 import { activityData } from "../../data"
 import { TYPE_APPRECIATION, TYPE_GROUP, ACTION_JUMP } from "@/utils/constants"
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 import NoData from "@/components/nodata/no.data"
 // import { getLocation } from "@/utils/getInfo"
 import { getLocation } from '@/utils/getInfo'
@@ -18,7 +18,7 @@ export default class List extends Component {
     list: []
   }
   componentDidMount() {
-    console.log( Cookie.get('tempLocation'))
+    // console.log( Cookie.get('tempLocation'))
     // Taro.showShareMenu()
     const { type } = this.$router.params
     console.log(type);
