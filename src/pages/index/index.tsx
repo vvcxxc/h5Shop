@@ -6,7 +6,6 @@ import request from '../../services/request';
 // import { connect } from '@tarojs/redux'
 import { getLocation } from '../../utils/getInfo'
 import VersionOne from './versionOne/index'
-import Cookie from 'js-cookie';
 export default class Index extends Component<any> {
 	/**
 	 * 指定config的类型声明为: Taro.Config
@@ -141,8 +140,7 @@ export default class Index extends Component<any> {
   getLocationxy = () => {
     getLocation().then((res: any) => {
       this.setState({ meta: { xpoint: res.longitude, ypoint: res.latitude } }, () => {
-        // Cookie.set('tempLocation', JSON.stringify(this.state.meta));
-        // console.log( JSON.stringify(this.state.meta),"889")
+
         // 测试一下
         this.getPayStore();
 
