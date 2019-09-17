@@ -637,7 +637,7 @@ export default class PaySuccess extends Component<Props> {
           this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff", paddingTop: "12px" }}>
             <View className="merchant-details__tit" >
               <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/hui.png" />
-              <Text className="fwb">优惠信息</Text>
+              <Text className="fwb">特惠商品</Text>
             </View>
             <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "5.4rem" }}>
               {
