@@ -41,27 +41,28 @@ class App extends Component {
 	 */
 	config: Config = {
 		pages: [
-      'pages/index/index',
+			'pages/index/index',
 			'pages/index/search/index',
 			'pages/my/index',
 			'pages/order/index',
 			'pages/merchant/index',
 			'pages/activity/index',
 			'pages/business/index',
-      "pages/activity/pages/detail/detail",
-      "pages/activity/pages/group/group",
-      "pages/activity/pages/appreciation/appreciation",
-      "pages/activity/pages/list/list",
-      "pages/activity/appreciation/index"
+			"pages/activity/pages/detail/detail",
+			"pages/activity/pages/group/group",
+			"pages/activity/pages/appreciation/appreciation",
+			"pages/activity/pages/list/list",
+			"pages/activity/appreciation/index",
+			"pages/activity/group/index",
 		],
 		subPackages: [
 			{
 				/**各种详情页面 比如商家详情页 */
 				root: "detail-pages",
 				pages: [
-          'gift/gift',
-          'orderdetail/index',
-          'orderdetail/refundProgress'
+					'gift/gift',
+					'orderdetail/index',
+					'orderdetail/refundProgress'
 				]
 			},
 			{
@@ -86,9 +87,9 @@ class App extends Component {
 				root: 'activity-pages',
 
 				pages: [
-          'my-activity/my.activity',
-          "my-welfare/pages/gift/welfare.gift",
-          'offline/order'
+					'my-activity/my.activity',
+					"my-welfare/pages/gift/welfare.gift",
+					'offline/order'
 
 				]
 			}
@@ -153,7 +154,7 @@ class App extends Component {
 	componentDidShow() {
 	}
 	componentDidHide() { }
-  componentDidCatchError() { }
+	componentDidCatchError() { }
 	// 在 App 类中的 render() 函数没有实际作用
 	// 请勿修改此函数
 	render() {

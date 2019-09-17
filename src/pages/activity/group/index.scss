@@ -1,0 +1,779 @@
+.d_appre {
+    width: 100%;
+    height: auto;
+    padding-bottom: 110px;
+
+
+    .appre_head_activityTitle {
+        width: 100%;
+        height: 125px;
+        box-sizing: border-box;
+        padding: 24px 24px 0 24px;
+        background: #fff;
+
+        .appre_head_activityTitle_title {
+            height: 60px;
+            font-size: 45px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .appre_head_activityTitle_time {
+            font-size: 24px;
+            color: #999999;
+        }
+    }
+
+    .test-h {
+        width: 100%;
+        height: 415px;
+
+        .demo-text {
+            width: 100%;
+            height: 100%;
+
+            .demo-text-Img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+
+    .coupon_box_title {
+        width: 100%;
+        height: auto;
+        background: #fff;
+        padding: 25px 25px 0 25px;
+        box-sizing: border-box;
+
+        .group_coupon_title {
+            height: 70px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 40px;
+            text-align: left;
+            color: #000;
+        }
+
+        .group_rule_time {
+            height: 70px;
+            width: 100%;
+
+            .group_rule_time_key {
+                height: 30px;
+                float: left;
+                width: 130px;
+                text-align: left;
+                font-size: 25px;
+                color: #adadad;
+            }
+
+            .group_rule_time_data {
+                float: left;
+                height: 30px;
+                font-size: 25px;
+                text-align: left;
+                color: #adadad;
+            }
+        }
+
+        .group_head_bottom {
+            height: 70px;
+            box-sizing: border-box;
+            border-bottom: 1px #e5e5e5 solid;
+
+            .group_head_bottom_gift {
+                float: left;
+                border: #fc4833 1px solid;
+                color: #fb7968;
+                background: #fde8e5;
+                border-radius: 8px;
+                font-size: 25px;
+                padding: 1px 15px;
+                box-sizing: border-box;
+                margin-right: 18px;
+                max-width: 300px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .group_head_bottom_list {
+                float: left;
+                color: #fb7968;
+                background: #fde8e5;
+                border-radius: 8px;
+                font-size: 25px;
+                padding: 2px 15px;
+                box-sizing: border-box;
+                margin-right: 18px;
+            }
+
+        }
+
+        .group_msg {
+            .group_msg_titlebox {
+                height: 85px;
+                width: 100%;
+                font-size: 40px;
+                font-weight: bold;
+                text-align: left;
+                padding-top: 25px;
+                box-sizing: border-box;
+            }
+
+            .group_msgBox {
+                height: auto;
+                width: 100%;
+                font-weight: bold;
+                padding-top: 20px;
+
+                .group_msgTitle_Box {
+                    display: flex;
+                    flex-direction: row;
+
+                    .group_msgTitle {
+                        flex: 1;
+                        height: 100px;
+                        line-height: 100px;
+                        text-align: center;
+                        color: #999999;
+                    }
+                }
+
+                .group_msgContent_Box {
+                    display: flex;
+                    flex-direction: row;
+
+                    .group_msgContent {
+                        flex: 1;
+                        height: 100px;
+                        line-height: 100px;
+                        text-align: center;
+                        border-top: #eeeeee 1px solid;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                }
+
+            }
+
+
+
+        }
+    }
+
+
+    .appre_gift {
+        padding: 30px 24px;
+        background: #fff;
+        margin-top: 20px;
+
+        .appre_gift_titlebox {
+            height: 40px;
+            width: 100%;
+
+            .appre_gift_title {
+                height: 100%;
+                vertical-align: bottom;
+                font-weight: bold;
+                font-size: 40px;
+                float: left;
+                text-align: left;
+                color: #000;
+            }
+
+            .appre_gift_Imagelist {
+                height: 100%;
+                vertical-align: bottom;
+                font-size: 25px;
+                float: right;
+                text-align: right;
+                color: #ff7a6b;
+            }
+        }
+
+
+        .appre_gift_giftinfo {
+            height: 75px;
+            font-size: 25px;
+            text-align: left;
+            line-height: 75px;
+        }
+
+        .appre_gift_giftmsgbox {
+            height: 40px;
+            margin-bottom: 20px;
+
+            .appre_gift_giftmsg {
+                padding: 8px 15px;
+                line-height: 1;
+                color: #fa5d49;
+                font-size: 25px;
+                float: left;
+                background: #fde8e5;
+                border-radius: 8px;
+            }
+        }
+
+        .appre_gift_giftlist {
+            width: 100%;
+            height: auto;
+
+            .appre_gift_giftlistImg {
+                width: 100%;
+                border-radius: 8px;
+                // height:auto ;
+            }
+        }
+
+    }
+
+    .appre_process {
+        height: 85px;
+        margin: 7px 0;
+        display: flex;
+        background: #fff;
+        justify-content: center;
+
+        .appre_process_list {
+            box-sizing: border-box;
+            width: 130px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            .appre_process_list_Image {
+                vertical-align: middle;
+                width: 45px;
+                height: 45px;
+                float: left;
+                background: #fa5d49;
+                border-radius: 22.5px;
+            }
+
+            .appre_process_list_msg {
+                vertical-align: middle;
+                width: 50px;
+                height: 100%;
+                text-align: center;
+                float: left;
+                font-size: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #7a7a7a;
+            }
+
+            .appre_process_list_icon {
+                vertical-align: middle;
+                text-align: center;
+                height: 100%;
+                width: 45px;
+                float: left;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: center;
+
+                .appre_process_list_icon_tri {
+                    height: 0;
+                    width: 0;
+                    box-sizing: border-box;
+                    border: 15px solid;
+                    border-color: transparent transparent transparent #c4c4c4;
+                }
+            }
+        }
+    }
+
+    .appre_process2 {
+        width: 100%;
+        height: 90px;
+        margin: 20px 0;
+        padding: 0;
+
+        .appre_process2_Image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+
+    .group_num {
+        padding: 20px 24px 0 24px;
+        background: #fff;
+        margin-bottom: 20px;
+
+        .group_num_titlebox {
+            height: 40px;
+            width: 100%;
+            vertical-align: bottom;
+
+            .group_num_title {
+                height: 100%;
+                font-weight: bold;
+                font-size: 40px;
+                float: left;
+                text-align: left;
+                color: #000;
+            }
+
+            .group_num_now {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                font-size: 25px;
+                float: right;
+                text-align: right;
+                color: #ff7a6b;
+            }
+        }
+
+        .group_listbox {
+            width: 100%;
+            height: auto;
+
+            .group_list {
+                height: 130px;
+                width: 100%;
+                padding: 30px 0 20px 0;
+                border-bottom: 1px solid #ededed;
+                box-sizing: border-box;
+
+                .group_list_img {
+                    height: 80px;
+                    width: 80px;
+                    border-radius: 40px;
+                    float: left;
+                    overflow: hidden;
+                    margin-right: 20px;
+
+                    .listImg {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .group_list_name {
+                    height: 80px;
+                    width: 200px;
+                    float: left;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .group_list_btnbox {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    float: right;
+
+                    .group_list_btn {
+                        font-size: 30px;
+                        padding: 15px;
+                        background: linear-gradient(90deg, #FE7450, #FF2614);
+                        border-radius: 8px;
+                        color: #fff;
+
+                    }
+                }
+
+                .group_list_timesbox {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    margin-right: 20px;
+                    float: right;
+                    font-size: 30px;
+
+                    .group_list_lack {
+                        height: 50px;
+                        // width: 160px;
+                        color: #313131;
+                        display: flex;
+                        flex-direction: row;
+
+                        .group_list_lackredblack1 {
+                            width: 65px;
+                            text-align: right;
+                        }
+
+                        .group_list_lackred {
+                            flex: 2;
+                            color: #ff8576;
+                            text-align: right;
+                        }
+
+                        .group_list_lackredblack2 {
+                            width: 65px;
+                            text-align: right;
+                        }
+                    }
+
+                    .group_list_times {
+                        height: 40px;
+                        color: #666666;
+                        text-align: right;
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
+    .appre_rule {
+        background: #fff;
+        padding: 24px;
+        margin-bottom: 20px;
+
+        .appre_rule_title {
+            height: 60px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 40px;
+            font-weight: bold;
+            columns: #000;
+        }
+
+        .appre_rule_time {
+            height: 50px;
+            width: 100%;
+
+            .appre_rule_time_key {
+                height: 40px;
+                float: left;
+                width: 165px;
+                text-align: left;
+                color: #adadad;
+                line-height: 1;
+                padding-top: 10px;
+                box-sizing: border-box;
+                font-size: 25px;
+            }
+
+            .appre_rule_time_data {
+                float: left;
+                height: 40px;
+                font-size: 25px;
+                line-height: 1;
+                padding-top: 10px;
+                box-sizing: border-box;
+            }
+        }
+
+        .appre_rule_list {
+            width: 100%;
+            min-height: 50px;
+            overflow: hidden;
+
+            // display: flex;
+            .appre_rule_list_key {
+                height: 40px;
+                width: 165px;
+                text-align: left;
+                color: #adadad;
+                float: left;
+                line-height: 30px;
+                padding-top: 10px;
+                box-sizing: border-box;
+                font-size: 25px;
+            }
+
+            .appre_rule_list_data {
+                height: auto;
+                margin-left: 165px;
+
+                .appre_rule_list_msg {
+                    font-size: 25px;
+                    line-height: 30px;
+                    padding-top: 10px;
+                    box-sizing: border-box;
+                }
+            }
+        }
+
+        .appre_rule_list_more {
+            width: 100%;
+            height: 65px;
+            color: #adadad;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+
+
+
+    .setMeal_store {
+        height: 315px;
+        background: #f4f4f4;
+        border: none;
+        margin-bottom: 100px;
+
+        .setMeal_store_box {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            padding: 23px 40px 28px 30px;
+            box-sizing: border-box;
+
+            .setMeal_store_title {
+                height: 60px;
+                text-align: left;
+                font-weight: bold;
+                font-size: 38px;
+            }
+
+            .setMeal_store_storebox {
+                height: 115px;
+                width: 100%;
+                box-sizing: border-box;
+
+                .setMeal_store_Image {
+                    height: 115px;
+                    width: 115px;
+                    overflow: hidden;
+                    border-radius: 8px;
+                    float: left;
+
+                    .setMeal_store_img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .setMeal_store_msg {
+                    width: 500px;
+                    padding: 0 0 15px 25px;
+                    box-sizing: border-box;
+                    float: left;
+
+                    .setMeal_store_name {
+                        height: 50px;
+                        font-size: 35px;
+                        font-weight: bold;
+                        text-align: left;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    .setMeal_store_price {
+                        font-size: 24px;
+                        text-align: left;
+                        color: #666666;
+                    }
+                }
+
+                .setMeal_store_icon {
+                    height: 100%;
+                    width: 40px;
+                    box-sizing: border-box;
+                    color: #666666;
+                    padding-top: 30px;
+                    float: right;
+                }
+            }
+
+            .setMeal_store_addressbox {
+                width: 100%;
+                height: 80px;
+                padding-top: 35px;
+                box-sizing: border-box;
+                display: flex;
+                line-height: 40px;
+
+                .setMeal_store_distance {
+                    width: 115px;
+                    position: relative;
+                    float: left;
+                    border-right: 1px #ccc solid;
+
+                    .setMeal_store_distance_Image {
+                        width: 30px;
+                        height: 40px;
+                        position: absolute;
+                        left: 0;
+
+                        .setMeal_store_distance_AddressImg {
+                            width: 30px;
+                            height: 40px;
+                        }
+                    }
+
+                    .setMeal_store_distance_info {
+                        height: 40px;
+                        position: absolute;
+                        left: 30px;
+                        padding: 0 8px;
+                        font-size: 24px;
+                    }
+                }
+
+                .setMeal_store_address {
+                    flex: 1;
+                    padding: 0 16px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 26px;
+                }
+
+                .setMeal_store_mobile {
+                    width: 60px;
+                    height: 40px;
+                    padding-left: 30px;
+                    float: right;
+                    border-left: 1px #ccc solid;
+
+                    .setMeal_store_MobileImg {
+                        width: 30px;
+                        height: 40px;
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+
+    .choose_postage {
+        height: 55px;
+        background: #fff;
+        position: fixed;
+        bottom: 115px;
+        width: 100%;
+        padding: 10px 0;
+        line-height: 55px;
+        padding-left: 55px;
+
+        .choose {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%)
+        }
+
+        .lbmsg {
+            width: 500px;
+            padding: 0;
+            display: inline-block;
+
+            .at-noticebar {
+                padding-left: 0;
+            }
+
+            .at-noticebar {
+                background: #fff;
+
+
+            }
+
+            .at-noticebar {
+                color: #000;
+            }
+        }
+    }
+
+    .paymoney_box {
+        height: 115px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #eee;
+        box-sizing: border-box;
+        padding: 20px 28px;
+
+        .paymoney_price {
+            width: 450px;
+            height: 55px;
+            float: left;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 15px;
+
+
+            .paymoney_price_icon {
+                font-size: 30px;
+                float: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                color: #ee3131;
+            }
+
+            .paymoney_price_num {
+                font-size: 50px;
+                color: #ee3131;
+                float: left;
+                line-height: 1;
+
+            }
+
+            .paymoney_price_oldprice {
+                font-size: 25px;
+                line-height: 1;
+                color: #d6d6d6;
+                float: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                margin-right: 5px;
+                text-decoration: line-through;
+            }
+
+            .paymoney_price_info {
+                margin-left: 15px;
+                font-size: 50px;
+                color: #ee3131;
+                width: 203px;
+                line-height: 1;
+            }
+
+        }
+
+        .paymoney_buynow {
+            width: 225px;
+            height: 75px;
+            line-height: 75px;
+            float: right;
+            border-radius: 37.5px;
+            background: linear-gradient(90deg, #FE7450, #FF2614);
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .paymoney_groupnow {
+            flex: 28;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(90deg, #FE7450, #FF2614);
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+        }
+    }
+
+
+}

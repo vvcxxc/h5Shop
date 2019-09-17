@@ -1,0 +1,748 @@
+.d_appre {
+  width: 100%;
+  height: auto;
+  padding-bottom: 110px;
+}
+
+.d_appre .appre_head_activityTitle {
+  width: 100%;
+  height: 125px;
+  box-sizing: border-box;
+  padding: 24px 24px 0 24px;
+  background: #fff;
+}
+
+.d_appre .appre_head_activityTitle .appre_head_activityTitle_title {
+  height: 60px;
+  font-size: 45px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.d_appre .appre_head_activityTitle .appre_head_activityTitle_time {
+  font-size: 24px;
+  color: #999999;
+}
+
+.d_appre .test-h {
+  width: 100%;
+  height: 415px;
+}
+
+.d_appre .test-h .demo-text {
+  width: 100%;
+  height: 100%;
+}
+
+.d_appre .test-h .demo-text .demo-text-Img {
+  width: 100%;
+  height: 100%;
+}
+
+.d_appre .coupon_box_title {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  padding: 25px 25px 0 25px;
+  box-sizing: border-box;
+}
+
+.d_appre .coupon_box_title .group_coupon_title {
+  height: 70px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: left;
+  color: #000;
+}
+
+.d_appre .coupon_box_title .group_rule_time {
+  height: 70px;
+  width: 100%;
+}
+
+.d_appre .coupon_box_title .group_rule_time .group_rule_time_key {
+  height: 30px;
+  float: left;
+  width: 130px;
+  text-align: left;
+  font-size: 25px;
+  color: #adadad;
+}
+
+.d_appre .coupon_box_title .group_rule_time .group_rule_time_data {
+  float: left;
+  height: 30px;
+  font-size: 25px;
+  text-align: left;
+  color: #adadad;
+}
+
+.d_appre .coupon_box_title .group_head_bottom {
+  height: 70px;
+  box-sizing: border-box;
+  border-bottom: 1px #e5e5e5 solid;
+}
+
+.d_appre .coupon_box_title .group_head_bottom .group_head_bottom_gift {
+  float: left;
+  border: #fc4833 1px solid;
+  color: #fb7968;
+  background: #fde8e5;
+  border-radius: 8px;
+  font-size: 25px;
+  padding: 1px 15px;
+  box-sizing: border-box;
+  margin-right: 18px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d_appre .coupon_box_title .group_head_bottom .group_head_bottom_list {
+  float: left;
+  color: #fb7968;
+  background: #fde8e5;
+  border-radius: 8px;
+  font-size: 25px;
+  padding: 2px 15px;
+  box-sizing: border-box;
+  margin-right: 18px;
+}
+
+.d_appre .coupon_box_title .group_msg .group_msg_titlebox {
+  height: 85px;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 25px;
+  box-sizing: border-box;
+}
+
+.d_appre .coupon_box_title .group_msg .group_msgBox {
+  height: auto;
+  width: 100%;
+  font-weight: bold;
+  padding-top: 20px;
+}
+
+.d_appre .coupon_box_title .group_msg .group_msgBox .group_msgTitle_Box {
+  display: flex;
+  flex-direction: row;
+}
+
+.d_appre .coupon_box_title .group_msg .group_msgBox .group_msgTitle_Box .group_msgTitle {
+  flex: 1;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  color: #999999;
+}
+
+.d_appre .coupon_box_title .group_msg .group_msgBox .group_msgContent_Box {
+  display: flex;
+  flex-direction: row;
+}
+
+.d_appre .coupon_box_title .group_msg .group_msgBox .group_msgContent_Box .group_msgContent {
+  flex: 1;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  border-top: #eeeeee 1px solid;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d_appre .appre_gift {
+  padding: 30px 24px;
+  background: #fff;
+  margin-top: 20px;
+}
+
+.d_appre .appre_gift .appre_gift_titlebox {
+  height: 40px;
+  width: 100%;
+}
+
+.d_appre .appre_gift .appre_gift_titlebox .appre_gift_title {
+  height: 100%;
+  vertical-align: bottom;
+  font-weight: bold;
+  font-size: 40px;
+  float: left;
+  text-align: left;
+  color: #000;
+}
+
+.d_appre .appre_gift .appre_gift_titlebox .appre_gift_Imagelist {
+  height: 100%;
+  vertical-align: bottom;
+  font-size: 25px;
+  float: right;
+  text-align: right;
+  color: #ff7a6b;
+}
+
+.d_appre .appre_gift .appre_gift_giftinfo {
+  height: 75px;
+  font-size: 25px;
+  text-align: left;
+  line-height: 75px;
+}
+
+.d_appre .appre_gift .appre_gift_giftmsgbox {
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.d_appre .appre_gift .appre_gift_giftmsgbox .appre_gift_giftmsg {
+  padding: 8px 15px;
+  line-height: 1;
+  color: #fa5d49;
+  font-size: 25px;
+  float: left;
+  background: #fde8e5;
+  border-radius: 8px;
+}
+
+.d_appre .appre_gift .appre_gift_giftlist {
+  width: 100%;
+  height: auto;
+}
+
+.d_appre .appre_gift .appre_gift_giftlist .appre_gift_giftlistImg {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.d_appre .appre_process {
+  height: 85px;
+  margin: 7px 0;
+  display: flex;
+  background: #fff;
+  justify-content: center;
+}
+
+.d_appre .appre_process .appre_process_list {
+  box-sizing: border-box;
+  width: 130px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.d_appre .appre_process .appre_process_list .appre_process_list_Image {
+  vertical-align: middle;
+  width: 45px;
+  height: 45px;
+  float: left;
+  background: #fa5d49;
+  border-radius: 22.5px;
+}
+
+.d_appre .appre_process .appre_process_list .appre_process_list_msg {
+  vertical-align: middle;
+  width: 50px;
+  height: 100%;
+  text-align: center;
+  float: left;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #7a7a7a;
+}
+
+.d_appre .appre_process .appre_process_list .appre_process_list_icon {
+  vertical-align: middle;
+  text-align: center;
+  height: 100%;
+  width: 45px;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.d_appre .appre_process .appre_process_list .appre_process_list_icon .appre_process_list_icon_tri {
+  height: 0;
+  width: 0;
+  box-sizing: border-box;
+  border: 15px solid;
+  border-color: transparent transparent transparent #c4c4c4;
+}
+
+.d_appre .appre_process2 {
+  width: 100%;
+  height: 90px;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.d_appre .appre_process2 .appre_process2_Image {
+  width: 100%;
+  height: 100%;
+}
+
+.d_appre .group_num {
+  padding: 20px 24px 0 24px;
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+.d_appre .group_num .group_num_titlebox {
+  height: 40px;
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.d_appre .group_num .group_num_titlebox .group_num_title {
+  height: 100%;
+  font-weight: bold;
+  font-size: 40px;
+  float: left;
+  text-align: left;
+  color: #000;
+}
+
+.d_appre .group_num .group_num_titlebox .group_num_now {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 25px;
+  float: right;
+  text-align: right;
+  color: #ff7a6b;
+}
+
+.d_appre .group_num .group_listbox {
+  width: 100%;
+  height: auto;
+}
+
+.d_appre .group_num .group_listbox .group_list {
+  height: 130px;
+  width: 100%;
+  padding: 30px 0 20px 0;
+  border-bottom: 1px solid #ededed;
+  box-sizing: border-box;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_img {
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  float: left;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_img .listImg {
+  width: 100%;
+  height: 100%;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_name {
+  height: 80px;
+  width: 200px;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_btnbox {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  float: right;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_btnbox .group_list_btn {
+  font-size: 30px;
+  padding: 15px;
+  background: linear-gradient(90deg, #FE7450, #FF2614);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_timesbox {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-right: 20px;
+  float: right;
+  font-size: 30px;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_timesbox .group_list_lack {
+  height: 50px;
+  color: #313131;
+  display: flex;
+  flex-direction: row;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_timesbox .group_list_lack .group_list_lackredblack1 {
+  width: 65px;
+  text-align: right;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_timesbox .group_list_lack .group_list_lackred {
+  flex: 2;
+  color: #ff8576;
+  text-align: right;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_timesbox .group_list_lack .group_list_lackredblack2 {
+  width: 65px;
+  text-align: right;
+}
+
+.d_appre .group_num .group_listbox .group_list .group_list_timesbox .group_list_times {
+  height: 40px;
+  color: #666666;
+  text-align: right;
+}
+
+.d_appre .appre_rule {
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.d_appre .appre_rule .appre_rule_title {
+  height: 60px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 40px;
+  font-weight: bold;
+  columns: #000;
+}
+
+.d_appre .appre_rule .appre_rule_time {
+  height: 50px;
+  width: 100%;
+}
+
+.d_appre .appre_rule .appre_rule_time .appre_rule_time_key {
+  height: 40px;
+  float: left;
+  width: 165px;
+  text-align: left;
+  color: #adadad;
+  line-height: 1;
+  padding-top: 10px;
+  box-sizing: border-box;
+  font-size: 25px;
+}
+
+.d_appre .appre_rule .appre_rule_time .appre_rule_time_data {
+  float: left;
+  height: 40px;
+  font-size: 25px;
+  line-height: 1;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+.d_appre .appre_rule .appre_rule_list {
+  width: 100%;
+  min-height: 50px;
+  overflow: hidden;
+}
+
+.d_appre .appre_rule .appre_rule_list .appre_rule_list_key {
+  height: 40px;
+  width: 165px;
+  text-align: left;
+  color: #adadad;
+  float: left;
+  line-height: 30px;
+  padding-top: 10px;
+  box-sizing: border-box;
+  font-size: 25px;
+}
+
+.d_appre .appre_rule .appre_rule_list .appre_rule_list_data {
+  height: auto;
+  margin-left: 165px;
+}
+
+.d_appre .appre_rule .appre_rule_list .appre_rule_list_data .appre_rule_list_msg {
+  font-size: 25px;
+  line-height: 30px;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+.d_appre .appre_rule .appre_rule_list_more {
+  width: 100%;
+  height: 65px;
+  color: #adadad;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.d_appre .setMeal_store {
+  height: 315px;
+  background: #f4f4f4;
+  border: none;
+  margin-bottom: 100px;
+}
+
+.d_appre .setMeal_store .setMeal_store_box {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 23px 40px 28px 30px;
+  box-sizing: border-box;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_title {
+  height: 60px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 38px;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox {
+  height: 115px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_Image {
+  height: 115px;
+  width: 115px;
+  overflow: hidden;
+  border-radius: 8px;
+  float: left;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_Image .setMeal_store_img {
+  width: 100%;
+  height: 100%;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_msg {
+  width: 500px;
+  padding: 0 0 15px 25px;
+  box-sizing: border-box;
+  float: left;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_msg .setMeal_store_name {
+  height: 50px;
+  font-size: 35px;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_msg .setMeal_store_price {
+  font-size: 24px;
+  text-align: left;
+  color: #666666;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_icon {
+  height: 100%;
+  width: 40px;
+  box-sizing: border-box;
+  color: #666666;
+  padding-top: 30px;
+  float: right;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox {
+  width: 100%;
+  height: 80px;
+  padding-top: 35px;
+  box-sizing: border-box;
+  display: flex;
+  line-height: 40px;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance {
+  width: 115px;
+  position: relative;
+  float: left;
+  border-right: 1px #ccc solid;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance .setMeal_store_distance_Image {
+  width: 30px;
+  height: 40px;
+  position: absolute;
+  left: 0;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance .setMeal_store_distance_Image .setMeal_store_distance_AddressImg {
+  width: 30px;
+  height: 40px;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance .setMeal_store_distance_info {
+  height: 40px;
+  position: absolute;
+  left: 30px;
+  padding: 0 8px;
+  font-size: 24px;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_address {
+  flex: 1;
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 26px;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_mobile {
+  width: 60px;
+  height: 40px;
+  padding-left: 30px;
+  float: right;
+  border-left: 1px #ccc solid;
+}
+
+.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_mobile .setMeal_store_MobileImg {
+  width: 30px;
+  height: 40px;
+  float: right;
+}
+
+.d_appre .choose_postage {
+  height: 55px;
+  background: #fff;
+  position: fixed;
+  bottom: 115px;
+  width: 100%;
+  padding: 10px 0;
+  line-height: 55px;
+  padding-left: 55px;
+}
+
+.d_appre .choose_postage .choose {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+}
+
+.d_appre .choose_postage .lbmsg {
+  width: 500px;
+  padding: 0;
+  display: inline-block;
+}
+
+.d_appre .choose_postage .lbmsg .at-noticebar {
+  padding-left: 0;
+}
+
+.d_appre .choose_postage .lbmsg .at-noticebar {
+  background: #fff;
+}
+
+.d_appre .choose_postage .lbmsg .at-noticebar {
+  color: #000;
+}
+
+.d_appre .paymoney_box {
+  height: 115px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #eee;
+  box-sizing: border-box;
+  padding: 20px 28px;
+}
+
+.d_appre .paymoney_box .paymoney_price {
+  width: 450px;
+  height: 55px;
+  float: left;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
+}
+
+.d_appre .paymoney_box .paymoney_price .paymoney_price_icon {
+  font-size: 30px;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #ee3131;
+}
+
+.d_appre .paymoney_box .paymoney_price .paymoney_price_num {
+  font-size: 50px;
+  color: #ee3131;
+  float: left;
+  line-height: 1;
+}
+
+.d_appre .paymoney_box .paymoney_price .paymoney_price_oldprice {
+  font-size: 25px;
+  line-height: 1;
+  color: #d6d6d6;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-right: 5px;
+  text-decoration: line-through;
+}
+
+.d_appre .paymoney_box .paymoney_price .paymoney_price_info {
+  margin-left: 15px;
+  font-size: 50px;
+  color: #ee3131;
+  width: 203px;
+  line-height: 1;
+}
+
+.d_appre .paymoney_box .paymoney_buynow {
+  width: 225px;
+  height: 75px;
+  line-height: 75px;
+  float: right;
+  border-radius: 37.5px;
+  background: linear-gradient(90deg, #FE7450, #FF2614);
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+}
+
+.d_appre .paymoney_box .paymoney_groupnow {
+  flex: 28;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(90deg, #FE7450, #FF2614);
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+}
