@@ -79,28 +79,38 @@ export default class Orderdetail extends Component {
   }
 
   toReturnMoney = () => {
-    request({
-      url: "v3/user/coupons/refund",
-      method: 'POST',
-      data: { coupons_log_id: this.state.defaultData.coupons_log_id },
-    }).then((res: any) => {
-      if (res.message == '退款成功！') {
-        Taro.showToast({ title: '退款成功！' })
-        Taro.navigateTo({
-          url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
-        })
+    Taro.showLoading({
+      title: 'loading',
+      mask: true
+    })
+    let timeout: any;
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      //函数防抖
+      request({
+        url: "v3/user/coupons/refund",
+        method: 'POST',
+        data: { coupons_log_id: this.state.defaultData.coupons_log_id },
+      }).then((res: any) => {
+        Taro.hideLoading();
+        if (res.message == '退款成功！') {
+          Taro.showToast({ title: '退款成功！' })
+          Taro.navigateTo({
+            url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
+          })
 
-      } else {
+        } else {
+          this.setState({ isApply: !this.state.isApply }, () => {
+            Taro.showToast({ title: '退款失败', icon: 'none' })
+          })
+
+        }
+      }).catch(() => {
         this.setState({ isApply: !this.state.isApply }, () => {
           Taro.showToast({ title: '退款失败', icon: 'none' })
         })
-
-      }
-    }).catch(() => {
-      this.setState({ isApply: !this.state.isApply }, () => {
-        Taro.showToast({ title: '退款失败', icon: 'none' })
       })
-    })
+    }, 1000)
   }
 
 
@@ -129,14 +139,14 @@ export default class Orderdetail extends Component {
                 <View className='a_three' >{this.state.defaultData.begin_time} - {this.state.defaultData.end_time}</View>
 
                 {
-                   this.state.defaultData.description.length ? (
-                     <View>
-                       <View className='a_four' >使用规则：</View>
-                        {
-                          this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
-                        }
-                     </View>
-                   ) : null
+                  this.state.defaultData.description.length ? (
+                    <View>
+                      <View className='a_four' >使用规则：</View>
+                      {
+                        this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
+                      }
+                    </View>
+                  ) : null
                 }
                 {/* <View className='a_last'  onClick={handerShowMore}  > { isMore ? '收起更多' : '查看更多' } </View>  */}
               </View>
@@ -299,7 +309,7 @@ export default class Orderdetail extends Component {
                 <View className="a_imgDes_info1">{this.state.defaultData.store_name}</View>
                 <View className="a_imgDes_info2">人均：{this.state.defaultData.capita}</View>
                 <Text className='a_text'>
-                <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
+                  <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
                 </Text>
               </View>
             </View>
