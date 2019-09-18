@@ -602,8 +602,9 @@
   height: 40px;
   position: absolute;
   left: 30px;
-  padding: 0 8px;
-  font-size: 24px;
+  width: 85px;
+  text-align: center;
+  font-size: 18px;
 }
 
 .d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_address {
