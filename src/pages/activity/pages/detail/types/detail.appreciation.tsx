@@ -49,6 +49,7 @@ export default class DetailAppreciation extends Component{
       validity: 0,
       xpoint: "",
       ypoint: "",
+      store_id: ''
     },
     isPostage: true
   };
@@ -162,7 +163,7 @@ export default class DetailAppreciation extends Component{
   handleClick2 = (e) => {
     Taro.navigateTo({
       // url: '/detail-pages/business/index?id=' + _id
-      url: '/pages/business/index?id=' + this.state.data.supplier_id
+      url: '/pages/business/index?id=' + this.state.data.store_id
     })
   };
   //打电话
