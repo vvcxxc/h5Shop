@@ -319,7 +319,7 @@ export default class Appre extends Component<Props>{
           window.AlipayJSBridge.call('tradePay', {
             tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
           }, res => {
-            if (res.status == "200") {
+            if (res.resultCode === "9000") {
               //支付宝成功
               Taro.switchTab({
                 url: '/pages/order/index',
