@@ -144,7 +144,7 @@ export default class ConfirmOrder extends Component {
             // bizSubType:"",                          // 非必传，默认为 “”
             // bizContext:""                           // 非必传，默认为H5启动选项(safePayContext)
           }, res => {
-            if (res.status == "200") {
+            if (res.resultCode === "9000") {
               //支付宝成功
               Taro.switchTab({
                 url: '/pages/order/index',
