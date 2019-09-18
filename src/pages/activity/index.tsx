@@ -66,7 +66,7 @@ export default class Activity extends Component<ActivityProps> {
         if (type == 1) {
           Taro.navigateTo({
             url: '/pages/activity/appreciation/index?id=' + id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
-            // url: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`
+            //  url: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`
           })
         } else {
           Taro.navigateTo({

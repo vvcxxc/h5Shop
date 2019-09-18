@@ -250,23 +250,16 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     return (
       <Block>
         {
-          type === TYPE_APPRECIATION
-            ? <DetailAppreciation
+          type === 1
+            ? <DetailAppreciation/>
+            : type === 5 ?<DetailGroup
                 data={rest}
                 giftinfo={giftBasicInfo}
                 onAction={this.handleAction}
                 isChecked={isChecked}
                 isFreePostage={isFreePostage}
                 showButton={showButton}
-              />
-            : <DetailGroup
-                data={rest}
-                giftinfo={giftBasicInfo}
-                onAction={this.handleAction}
-                isChecked={isChecked}
-                isFreePostage={isFreePostage}
-                showButton={showButton}
-              />
+              /> :  <DetailAppreciation/>
         }
       </Block>
     )
