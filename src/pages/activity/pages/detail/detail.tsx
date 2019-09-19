@@ -247,12 +247,14 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       isFreePostage,
       showButton
     } = this.state
+    const types = this.$router.params.type
+    console.log(types)
     return (
       <Block>
         {
-          type === 1
+          types == 1
             ? <DetailAppreciation/>
-            : type === 5 ?<DetailGroup
+            : types == 5 ?<DetailGroup
                 data={rest}
                 giftinfo={giftBasicInfo}
                 onAction={this.handleAction}

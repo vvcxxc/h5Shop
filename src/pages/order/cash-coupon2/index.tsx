@@ -23,7 +23,7 @@ interface Props {
 //type: 0为空白，1再来一单
 // bg_img_type: 0为灰色，1为蓝色,2为灰色已使用
 
-/**现金优惠券 */
+/**核销券 */
 export default class CashCoupon extends Component<Props> {
   state = {};
 
