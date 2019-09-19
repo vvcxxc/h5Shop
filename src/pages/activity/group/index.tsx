@@ -266,10 +266,10 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage?this.$router.params.gift_id:undefined,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
-        type: 5,
+        type: "5",
         xcx: 0,
         number: 1,
       }
@@ -277,8 +277,8 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage?this.$router.params.gift_id:undefined,
-        type:5,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
+        type: "5",
         xcx: 0,
         number: 1,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
