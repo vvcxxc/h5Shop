@@ -74,7 +74,7 @@ export default class CashCoupon3 extends Component<Props> {
               <AtProgress percent={percent} isHidePercent={true} color='#ff3a10'/>
               <View className='right_money'>
                 <Text>起始￥{this.props.init_money}</Text>
-                <Text style={{color: '#ff3411'}}>已增值￥{this.props.appreciation_money}</Text>
+                <Text style={{color: '#ff3411'}}>已增值至￥{this.props.appreciation_money}</Text>
                 <Text>封顶￥{this.props.money}</Text>
               </View>
             </View>
