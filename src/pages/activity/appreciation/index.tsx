@@ -54,6 +54,7 @@ export default class Appre extends Component<Props>{
       validity: 0,
       xpoint: "",
       ypoint: "",
+      store_id: ''
     },
     isPostage: true
   };
