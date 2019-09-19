@@ -85,7 +85,7 @@ export default class DetailAppreciation extends Component<DetailProp> {
                 <View className="item">
                   <Text className="name">使用开始时间: </Text>
                   <Text className="text">
-                    {`${data.begin_time}-${data.end_time}`}
+                    {`${data.activity_begin_time}-${data.activity_end_time}`}
                   </Text>
                 </View>
                 <View className="item">
