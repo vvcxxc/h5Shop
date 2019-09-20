@@ -25,6 +25,7 @@ export default class Group extends Component<Props>{
     imgZoomSrc: '',
     xPoint: 0,
     yPoint: 0,
+    imagesCurrent: 0,
     imagesList: [],
     data: {
       activity_begin_time: "",
@@ -355,25 +356,38 @@ export default class Group extends Component<Props>{
       <View className="d_appre" >
 
         {
-          this.state.imagesList.length > 0 ? <Swiper
-            className='test-h'
-            indicatorColor='#999'
-            indicatorActiveColor='#333'
-            circular
-            indicatorDots
-            autoplay>
-            {
-              this.state.imagesList ? this.state.imagesList.map((item, index) => {
-                return (
-                  <SwiperItem key={item} >
-                    <View className='demo-text' onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}>
-                      <Image className="demo-text-Img" src={item} />
-                    </View>
-                  </SwiperItem>
-                )
-              }) : null
-            }
-          </Swiper> : null
+          this.state.imagesList.length > 0 ? <View
+            onClick={() => {
+              console.log("5555")
+              this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
+            }}>
+            <Swiper
+              onChange={(e) => {
+                // console.log(e.detail.current)
+                this.setState({ imagesCurrent: e.detail.current })
+              }}
+              className='test-h'
+              indicatorColor='#999'
+              indicatorActiveColor='#333'
+              circular={true}
+
+              indicatorDots
+              autoplay>
+              {
+                this.state.imagesList ? this.state.imagesList.map((item, index) => {
+                  return (
+                    <SwiperItem key={item} >
+                      <View className='demo-text'
+                      //  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}
+                      >
+                        <Image className="demo-text-Img" src={item} />
+                      </View>
+                    </SwiperItem>
+                  )
+                }) : null
+              }
+            </Swiper>
+          </View> : null
         }
 
         <View className="coupon_box_title">

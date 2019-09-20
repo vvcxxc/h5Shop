@@ -23,6 +23,7 @@ export default class Appre extends Component<Props>{
     imgZoomSrc: '',
     xPoint: 0,
     yPoint: 0,
+    imagesCurrent: 0,
     imagesList: [],
     data: {
       activity_begin_time: "",
@@ -30,6 +31,7 @@ export default class Appre extends Component<Props>{
       activity_time_status: 0,
       address: "",
       begin_time: "",
+      imagesCurrent: 0,
       description: [],
       distances: "",
       end_time: "",
@@ -46,7 +48,7 @@ export default class Appre extends Component<Props>{
       pay_money: "",
       preview: "",
       return_money: "",
-      store_id:0,
+      store_id: 0,
       supplier_id: 0,
       tel: "",
       total_fee: 0,
@@ -54,7 +56,6 @@ export default class Appre extends Component<Props>{
       validity: 0,
       xpoint: "",
       ypoint: "",
-      store_id: ''
     },
     isPostage: true
   };
@@ -260,7 +261,7 @@ export default class Appre extends Component<Props>{
       datas = {
         youhui_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage?this.$router.params.gift_id:undefined,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
         type: _type,
@@ -270,7 +271,7 @@ export default class Appre extends Component<Props>{
       datas = {
         youhui_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage?this.$router.params.gift_id:undefined,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         type: _type,  //1 微信 2支付宝
         xcx: 0,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
@@ -353,25 +354,37 @@ export default class Appre extends Component<Props>{
 
         {
           this.state.data.type == 0 ?
-            <Swiper
-              className='test-h'
-              indicatorColor='#999'
-              indicatorActiveColor='#333'
-              circular
-              indicatorDots
-              autoplay>
-              {
-                this.state.imagesList ? this.state.imagesList.map((item, index) => {
-                  return (
-                    <SwiperItem key={item}>
-                      <View className='demo-text' onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}>
-                        <Image className="demo-text-Img" src={item} />
-                      </View>
-                    </SwiperItem>
-                  )
-                }) : null
-              }
-            </Swiper> : null
+            <View
+              onClick={() => {
+                console.log("5555")
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  console.log(e.detail.current)
+                  this.setState({ imagesCurrent: e.detail.current })
+                }}
+                className='test-h'
+                indicatorColor='#999'
+                indicatorActiveColor='#333'
+                circular={true}
+                indicatorDots
+                autoplay>
+                {
+                  this.state.imagesList ? this.state.imagesList.map((item, index) => {
+                    return (
+                      <SwiperItem key={item}>
+                        <View className='demo-text'
+                        //  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}
+                        >
+                          <Image className="demo-text-Img" src={item} />
+                        </View>
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+            </View> : null
         }
 
         <View className="appre_hd" >
