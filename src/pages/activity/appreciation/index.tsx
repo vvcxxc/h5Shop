@@ -360,16 +360,17 @@ export default class Appre extends Component<Props>{
                 this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
               }}>
               <Swiper
-                onChange={(e) => {
-                  console.log(e.detail.current)
-                  this.setState({ imagesCurrent: e.detail.current })
-                }}
-                className='test-h'
-                indicatorColor='#999'
-                indicatorActiveColor='#333'
-                circular={true}
-                indicatorDots
-                autoplay>
+              onChange={(e) => {
+                // console.log(e.detail.current)
+                this.setState({ imagesCurrent: e.detail.current })
+              }}
+              className='test-h'
+              indicatorColor='#999'
+              indicatorActiveColor='#333'
+              circular={true}
+
+              indicatorDots
+              autoplay>
                 {
                   this.state.imagesList ? this.state.imagesList.map((item, index) => {
                     return (
