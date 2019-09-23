@@ -70,10 +70,10 @@ export default class CashCoupon extends Component<Props> {
           mode="widthFix"
           src={{this.props.image}}
         /> */}
-        <View className="item content">
-          <View className="heads flex">
+        <View className="item content" style={{overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+          <View className="head flex" style={{background:"#fff"}}>
             <View className="verification_coupons">核销券</View>
-            <View className="label flex center" style={{ color: "#000", borderBottom: "none" }}>{this.props.sname}</View>
+            <View className="label flex center" style={{ color: "#000", borderBottom: "none", overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{this.props.sname}</View>
           </View>
 
           <View className="date">{this.props.list_brief}</View>

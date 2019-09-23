@@ -3,36 +3,6 @@
     height: auto;
     padding-bottom: 110px;
 
-    .group_head_bottom_share {
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 0;
-        padding-right: 0;
-        border: none;
-        box-sizing: border-box;
-        position: fixed;
-        top: 24px;
-        right: 24px;
-        color: #613f04;
-        background: #ffbf13;
-        border-radius: 8px;
-        font-size: 30px;
-        z-index: 3;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        height: 60px;
-        width: 170px;
-        line-height: 1;
-
-        .shareimg {
-            height: 35px;
-            width: 35px;
-            margin-right: 10px;
-        }
-    }
 
     .appre_head_activityTitle {
         width: 100%;
@@ -69,174 +39,134 @@
         }
     }
 
-    .appre_hd {
-        padding: 24px 24px 0 24px;
+
+    .coupon_box_title {
         width: 100%;
-        box-sizing: border-box;
+        height: auto;
         background: #fff;
+        padding: 25px 25px 0 25px;
+        box-sizing: border-box;
 
-        .appre_head {
+        .group_coupon_title {
+            height: 70px;
             width: 100%;
-            height: auto;
-            box-sizing: border-box;
-            position: relative;
+            font-weight: bold;
+            font-size: 40px;
+            text-align: left;
+            color: #000;
+        }
 
-            .appre_head_ticket {
-                width: 100%;
-                height: 220px;
-                background: #fffaf4;
-                border: 2px solid #fff0d9;
-                padding: 35px;
-                box-sizing: border-box;
-                border-radius: 8px;
-                position: relative;
+        .group_rule_time {
+            height: 70px;
+            width: 100%;
 
-                .appre_head_circle1 {
-                    width: 30px;
-                    height: 30px;
-                    background: #fff;
-                    border-radius: 15px;
-                    position: absolute;
-                    left: -15px;
-                    top: 50%;
-                    margin-top: -15px;
-                }
+            .group_rule_time_key {
+                height: 30px;
+                float: left;
+                width: 130px;
+                text-align: left;
+                font-size: 25px;
+                color: #adadad;
+            }
 
-                .appre_head_circle2 {
-                    width: 30px;
-                    height: 30px;
-                    background: #fff;
-                    border-radius: 15px;
-                    position: absolute;
-                    right: -15px;
-                    top: 50%;
-                    margin-top: -15px;
-                }
-
-                .appre_head_left {
-                    height: 100%;
-                    text-align: left;
-                    float: left;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-
-                    .appre_head_left_pricebox {
-                        text-align: center;
-
-                        .appre_head_left_pricebox_msg {
-                            height: 30px;
-                            font-size: 30px;
-                            font-weight: bold;
-                            line-height: 1;
-                        }
-
-                        .appre_head_left_pricebox_price {
-                            height: 80px;
-                            font-size: 60px;
-                            font-weight: bold;
-                            line-height: 80px;
-                        }
-
-                    }
-
-                    .appre_head_left_pricebox_info {
-                        font-size: 30px;
-                        padding: 5px 20px;
-                        line-height: 1;
-                        background: #fa5d49;
-                        color: #fff;
-                        display: inline-block;
-                        border-radius: 8px;
-
-
-                    }
-                }
-
-                .appre_head_right {
-                    width: 50%;
-                    height: 100%;
-                    text-align: right;
-                    float: right;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-                    justify-content: flex-end;
-
-                    .appre_head_right_type {
-                        padding: 5px 10px;
-                        line-height: 1;
-                        background: #fff;
-                        color: #FE7450;
-                        border: #FE7450 1px solid;
-                        border-radius: 8px;
-                        font-size: 25px;
-                    }
-
-                    .appre_head_right_total {
-                        margin: 10px 0;
-                        text-align: right;
-                        color: #666666;
-                        font-size: 30px;
-                        line-height: 1;
-                    }
-
-                    .appre_head_right_days {
-                        text-align: right;
-                        color: #999999;
-                        font-size: 30px;
-                    }
-                }
+            .group_rule_time_data {
+                float: left;
+                height: 30px;
+                font-size: 25px;
+                text-align: left;
+                color: #adadad;
             }
         }
 
-        .appre_head_bottom {
-            height: 90px;
-            padding: 20px 40px 0 0;
+        .group_head_bottom {
+            height: 70px;
             box-sizing: border-box;
+            border-bottom: 1px #e5e5e5 solid;
 
-            .appre_head_bottom_gift {
+            .group_head_bottom_gift {
                 float: left;
                 border: #fc4833 1px solid;
                 color: #fb7968;
                 background: #fde8e5;
                 border-radius: 8px;
                 font-size: 25px;
-                padding: 8px 15px;
+                padding: 1px 15px;
                 box-sizing: border-box;
                 margin-right: 18px;
+                max-width: 300px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
-            .appre_head_bottom_list {
+            .group_head_bottom_list {
                 float: left;
                 color: #fb7968;
                 background: #fde8e5;
                 border-radius: 8px;
                 font-size: 25px;
-                padding: 8px 15px;
+                padding: 2px 15px;
                 box-sizing: border-box;
                 margin-right: 18px;
             }
 
-            .appre_head_bottom_share {
-                float: right;
-                color: #613f04;
-                background: #ffbf13;
-                border-radius: 8px;
-                font-size: 30px;
-                padding: 10px 25px;
-                box-sizing: border-box;
-
-                .appre_head_bottom_shareimg {
-                    height: 35px;
-                    width: 35px;
-                    margin-right: 10px;
-                    vertical-align: bottom;
-                }
-            }
         }
 
+        .group_msg {
+            .group_msg_titlebox {
+                height: 85px;
+                width: 100%;
+                font-size: 40px;
+                font-weight: bold;
+                text-align: left;
+                padding-top: 25px;
+                box-sizing: border-box;
+            }
+
+            .group_msgBox {
+                height: auto;
+                width: 100%;
+                font-weight: bold;
+                padding-top: 20px;
+
+                .group_msgTitle_Box {
+                    display: flex;
+                    flex-direction: row;
+
+                    .group_msgTitle {
+                        flex: 1;
+                        height: 100px;
+                        line-height: 100px;
+                        text-align: center;
+                        color: #999999;
+                    }
+                }
+
+                .group_msgContent_Box {
+                    display: flex;
+                    flex-direction: row;
+
+                    .group_msgContent {
+                        flex: 1;
+                        height: 100px;
+                        line-height: 100px;
+                        text-align: center;
+                        border-top: #eeeeee 1px solid;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                }
+
+            }
+
+
+
+        }
     }
+
 
     .appre_gift {
         padding: 30px 24px;
@@ -297,7 +227,7 @@
             .appre_gift_giftlistImg {
                 width: 100%;
                 border-radius: 8px;
-                height: auto;
+                // height:auto ;
             }
         }
 
@@ -373,6 +303,135 @@
             width: 100%;
             height: 100%;
         }
+    }
+
+
+    .group_num {
+        padding: 20px 24px 0 24px;
+        background: #fff;
+        margin-bottom: 20px;
+
+        .group_num_titlebox {
+            height: 40px;
+            width: 100%;
+            vertical-align: bottom;
+
+            .group_num_title {
+                height: 100%;
+                font-weight: bold;
+                font-size: 40px;
+                float: left;
+                text-align: left;
+                color: #000;
+            }
+
+            .group_num_now {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                font-size: 25px;
+                float: right;
+                text-align: right;
+                color: #ff7a6b;
+            }
+        }
+
+        .group_listbox {
+            width: 100%;
+            height: auto;
+
+            .group_list {
+                height: 130px;
+                width: 100%;
+                padding: 30px 0 20px 0;
+                border-bottom: 1px solid #ededed;
+                box-sizing: border-box;
+
+                .group_list_img {
+                    height: 80px;
+                    width: 80px;
+                    border-radius: 40px;
+                    float: left;
+                    overflow: hidden;
+                    margin-right: 20px;
+
+                    .listImg {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .group_list_name {
+                    height: 80px;
+                    width: 200px;
+                    float: left;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .group_list_btnbox {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    float: right;
+
+                    .group_list_btn {
+                        font-size: 30px;
+                        padding: 15px;
+                        background: linear-gradient(90deg, #FE7450, #FF2614);
+                        border-radius: 8px;
+                        color: #fff;
+
+                    }
+                }
+
+                .group_list_timesbox {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    margin-right: 20px;
+                    float: right;
+                    font-size: 30px;
+
+                    .group_list_lack {
+                        height: 50px;
+                        // width: 160px;
+                        color: #313131;
+                        display: flex;
+                        flex-direction: row;
+
+                        .group_list_lackredblack1 {
+                            width: 65px;
+                            text-align: right;
+                        }
+
+                        .group_list_lackred {
+                            flex: 2;
+                            color: #ff8576;
+                            text-align: right;
+                        }
+
+                        .group_list_lackredblack2 {
+                            width: 65px;
+                            text-align: right;
+                        }
+                    }
+
+                    .group_list_times {
+                        height: 40px;
+                        color: #666666;
+                        text-align: right;
+                    }
+
+                }
+            }
+
+        }
+
     }
 
     .appre_rule {
@@ -670,16 +729,24 @@
 
             }
 
+            .paymoney_price_oldprice {
+                font-size: 25px;
+                line-height: 1;
+                color: #d6d6d6;
+                float: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                margin-right: 5px;
+                text-decoration: line-through;
+            }
+
             .paymoney_price_info {
                 margin-left: 15px;
                 font-size: 50px;
                 color: #ee3131;
-                // float: left;
                 width: 203px;
                 line-height: 1;
-                // display: flex;
-                // flex-direction: column;
-                // justify-content: flex-end;
             }
 
         }
@@ -695,6 +762,19 @@
             text-align: center;
             font-size: 30px;
         }
+
+        .paymoney_groupnow {
+            flex: 28;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(90deg, #FE7450, #FF2614);
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+        }
     }
+
 
 }

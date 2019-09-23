@@ -7,6 +7,7 @@ import './style.scss'
 import request from '../../services/request'
 import CashCoupon1 from "@/pages/order/cash-coupon1/index";
 import CashCoupon2 from "@/pages/order/cash-coupon2/index";
+import CashCoupon3 from "@/pages/order/cash-coupon3/index";
 import { getLocation } from '@/utils/getInfo'
 
 export default class Orderdetail extends Component {
@@ -41,12 +42,15 @@ export default class Orderdetail extends Component {
       supplier_id: '',
       source: 0,
       preview: '',
-      source_name: ''
+      source_name: '',
+      init_money: '',
+      expire_day: '',
+      appreciation_money: ''
     },
     _Imgurl: "",
     isApply: false,
 
-    checkFlag: false,
+    checkFlag: false,,
   };
 
   componentWillMount() {
@@ -79,41 +83,59 @@ export default class Orderdetail extends Component {
   }
 
   toReturnMoney = () => {
-    request({
-      url: "v3/user/coupons/refund",
-      method: 'POST',
-      data: { coupons_log_id: this.state.defaultData.coupons_log_id },
-    }).then((res: any) => {
-      if (res.message == '退款成功！') {
-        Taro.showToast({ title: '退款成功！' })
-        Taro.navigateTo({
-          url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
-        })
+    Taro.showLoading({
+      title: 'loading',
+      mask: true
+    })
+    let timeout: any;
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      //函数防抖
+      request({
+        url: "v3/user/coupons/refund",
+        method: 'POST',
+        data: { coupons_log_id: this.state.defaultData.coupons_log_id },
+      }).then((res: any) => {
+        Taro.hideLoading();
+        if (res.message == '退款成功！') {
+          Taro.showToast({ title: '退款成功！' })
+          Taro.navigateTo({
+            url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
+          })
 
-      } else {
+        } else {
+          this.setState({ isApply: !this.state.isApply }, () => {
+            Taro.showToast({ title: '退款失败', icon: 'none' })
+          })
+
+        }
+      }).catch(() => {
         this.setState({ isApply: !this.state.isApply }, () => {
           Taro.showToast({ title: '退款失败', icon: 'none' })
         })
-
-      }
-    }).catch(() => {
-      this.setState({ isApply: !this.state.isApply }, () => {
-        Taro.showToast({ title: '退款失败', icon: 'none' })
       })
-    })
+    }, 1000)
   }
 
 
 
 
   render() {
+    console.log(this.state.defaultData.source)
+    const {defaultData} = this.state
     return (
       <View className='index' >
         <View className='a_head' >
           {
-            this.state.defaultData.coupons_type == 1 ?
-              <CashCoupon2 bg_img_type={this.state.defaultData.status == 1 ? 1 : (this.state.defaultData.status == 2 ? 2 : 0)} type={0} _id={this.state.defaultData.coupons_id} _logid={this.state.defaultData.coupons_log_id} confirm_time={this.state.defaultData.confirm_time} return_money={this.state.defaultData.money} _total_fee={this.state.defaultData.total_fee} youhui_type={this.state.defaultData.coupons_type} timer={this.state.defaultData.begin_time + " - " + this.state.defaultData.end_time} sname={this.state.defaultData.store_name} list_brief={this.state.defaultData.coupons_name} expiration={this.state.defaultData.expiration} /> :
+            this.state.defaultData.source == 4 ? <CashCoupon3 bg_img_type={this.state.defaultData.status == 1 ? 1 : (this.state.defaultData.status == 2 ? 2 : 0)} init_money={defaultData.init_money} money={defaultData.money} expire_day={defaultData.expire_day} appreciation_money={defaultData.appreciation_money*1 + defaultData.init_money*1} total_fee={defaultData.total_fee} type={defaultData.coupons_type}/> :
+            this.state.defaultData.coupons_type == 1 && this.state.defaultData.source != 4
+              ?
+              <CashCoupon2 bg_img_type={this.state.defaultData.status == 1 ? 1 : (this.state.defaultData.status == 2 ? 2 : 0)} type={0} _id={this.state.defaultData.coupons_id} _logid={this.state.defaultData.coupons_log_id} confirm_time={this.state.defaultData.confirm_time} return_money={this.state.defaultData.money} _total_fee={this.state.defaultData.total_fee} youhui_type={this.state.defaultData.coupons_type} timer={this.state.defaultData.begin_time + " - " + this.state.defaultData.end_time} sname={this.state.defaultData.store_name} list_brief={this.state.defaultData.coupons_name} expiration={this.state.defaultData.expiration} />
+              :
+              this.state.defaultData.coupons_type == 0 && this.state.defaultData.source != 4 ?
               <CashCoupon1 bg_img_type={this.state.defaultData.status == 2 ? 1 : 0} type={0} _id={this.state.defaultData.coupons_id} _logid={this.state.defaultData.coupons_log_id} confirm_time={this.state.defaultData.confirm_time} return_money={this.state.defaultData.money} youhui_type={this.state.defaultData.coupons_type} timer={this.state.defaultData.begin_time + " - " + this.state.defaultData.end_time} sname={this.state.defaultData.store_name} list_brief={this.state.defaultData.coupons_name} _image={this.state.defaultData.image} clickcode={null} />
+              :
+              null
           }
         </View>
         { /* 购买须知  */}
@@ -129,14 +151,14 @@ export default class Orderdetail extends Component {
                 <View className='a_three' >{this.state.defaultData.begin_time} - {this.state.defaultData.end_time}</View>
 
                 {
-                   this.state.defaultData.description.length ? (
-                     <View>
-                       <View className='a_four' >使用规则：</View>
-                        {
-                          this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
-                        }
-                     </View>
-                   ) : null
+                  this.state.defaultData.description.length ? (
+                    <View>
+                      <View className='a_four' >使用规则：</View>
+                      {
+                        this.state.defaultData.description ? this.state.defaultData.description.map((item: string, i: number) => <View key={i} className='a_item' > · {item} </View>) : null
+                      }
+                    </View>
+                  ) : null
                 }
                 {/* <View className='a_last'  onClick={handerShowMore}  > { isMore ? '收起更多' : '查看更多' } </View>  */}
               </View>
@@ -226,16 +248,16 @@ export default class Orderdetail extends Component {
         <View className='z_billingInfo' >
 
           <View className='a_buyBox' >
-            <View className='a_one' >使用规则 </View>
+            <View className='a_one' >温馨提示 </View>
             <View className='a_billingInfo' >
-              {/* <View className="flex">
-                <View>适合商品：</View>
+              <View className="flex">
+                {/* <View>适合商品：</View>
                 <View>
                   <View>夏季尾货服装类</View>
                   <View>夏季尾货服装类</View>
                   <View>夏季尾货服装类</View>
-                </View>
-              </View> */}
+                </View> */}
+              </View>
 
               <View className="flex">
                 <View>使用门槛：</View>
@@ -251,22 +273,15 @@ export default class Orderdetail extends Component {
                 </View>
               </View>
 
-              <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 1) ? 'auto' : '4rem' }}>
-
-                {
-                  this.state.defaultData.description.length ? (
-                    <View>
-                      <View>使用规则：</View>
-                    <View>
-                      {
-                        this.state.defaultData.description.map((item, index) => (
-                          <View key={index}>{index + 1}. {item}</View>
-                        ))
-                      }
-                    </View>
-                    </View>
-                  ) : null
-                }
+              <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 2) ? 'auto' : '4rem' }}>
+                <View>使用规则：</View>
+                <View>
+                  {
+                    this.state.defaultData.description.map((item, index) => (
+                      <View key={index}>{index + 1}. {item}</View>
+                    ))
+                  }
+                </View>
               </View>
               {
                 this.state.defaultData.description.length >= 3 ?
@@ -306,7 +321,7 @@ export default class Orderdetail extends Component {
                 <View className="a_imgDes_info1">{this.state.defaultData.store_name}</View>
                 <View className="a_imgDes_info2">人均：{this.state.defaultData.capita}</View>
                 <Text className='a_text'>
-                <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
+                  <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
                 </Text>
               </View>
             </View>
