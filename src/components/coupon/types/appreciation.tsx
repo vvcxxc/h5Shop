@@ -20,7 +20,7 @@ export default class Appreciation extends Component<CouponProp> {
       progress
     } = this.props
     return (
-      <View className="coupon">
+      <View className="coupon"  data-action="jump" data-type={TYPE_APPRECIATION} onClick={onAction}>
         <View className="avatar">
           <Image className="image" src={data.image} />
           <View className="classify">可增值券</View>
@@ -56,7 +56,7 @@ export default class Appreciation extends Component<CouponProp> {
               <View className="process-in" style={"width: " + progress} />
             </View>
           </View>
-          <Button className="buy" data-action="jump" data-type={TYPE_APPRECIATION} onClick={onAction}>立即抢购</Button>
+          <Button className="buy">立即抢购</Button>
         </View>
       </View>
     )

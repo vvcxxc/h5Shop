@@ -48,7 +48,7 @@ export default class CashCoupon extends Component<Props> {
         /> */}
           <View className="item content" style={{ position: "relative" }}>
             <View className="head flex">
-              <View className="label flex center" >
+              <View className="flex center" >
                 <Image src={quan} style={{ height: "100%", width: "40px" }} />
               </View>
               <View style={{ width: "135px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{this.props.sname}</View>

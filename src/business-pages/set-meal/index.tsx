@@ -14,7 +14,7 @@ import isArray = require("lodash/isArray");
 
 export default class SetMeal extends Component {
   config = {
-    navigationBarTitleText: "优惠信息"
+    navigationBarTitleText: "特惠商品"
   };
 
   state = {
