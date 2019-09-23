@@ -81,6 +81,8 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
+            this.toShare();
+
             if (res.code == 200) {
               let { image, images } = res.data;
               let imgList;
@@ -120,8 +122,9 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
-            if (res.code == 200) {
+            this.toShare();
 
+            if (res.code == 200) {
               let { image, images } = res.data;
               let imgList;
               if (image && images) {
@@ -162,14 +165,13 @@ export default class Appre extends Component<Props>{
 
   toShare = () => {
     let url = window.location.href;
-    console.log(url);
-      Taro.request({
-        url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
-        method: 'GET',
-        data: {
-          url
-        }
-      })
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
       .then(res => {
         let { data } = res;
         wx.config({
@@ -182,9 +184,9 @@ export default class Appre extends Component<Props>{
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
-            title: '你有一张'+this.state.data.return_money+'增值券待领取，邀请好友助力还有免费好礼拿！',
-            desc: this.state.data.pay_money+'当'+this.state.data.return_money+'花的秘密，我只告诉你一个！增值成功还有'+this.state.data.gift.price+'元'+this.state.data.gift.title+'免费拿！',
-            link: 'http://api.supplier.tdianyi.com/pages/activity/appreciation/index?id=' +  this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' +  this.$router.params.activity_id,
+            title: '你有一张' + this.state.data.return_money + '增值券待领取，邀请好友助力还有免费好礼拿！',
+            desc: this.state.data.pay_money + '当' + this.state.data.return_money + '花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！',
+            link: 'http://mall.tdianyi.com/pages/activity/appreciation/index?id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
             // link: '/pages/business/index?id=' + this.state.business_list.id,
             imgUrl: this.state.data.preview,
             success: function () {
@@ -195,6 +197,24 @@ export default class Appre extends Component<Props>{
         })
       })
   }
+
+  buttonToShare = () => {
+    wx.ready(() => {
+      console.log('ready');
+      wx.updateAppMessageShareData({
+        title: '你有一张' + this.state.data.return_money + '增值券待领取，邀请好友助力还有免费好礼拿！',
+        desc: this.state.data.pay_money + '当' + this.state.data.return_money + '花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！',
+        link: 'http://mall.tdianyi.com/pages/activity/appreciation/index?id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
+        // link: '/pages/business/index?id=' + this.state.business_list.id,
+        imgUrl: this.state.data.preview,
+        success: function () {
+          //成功后触发
+          console.log("分享成功")
+        }
+      })
+    })
+  }
+
 
   //去图文详情
   toImgList = () => {
@@ -386,7 +406,7 @@ export default class Appre extends Component<Props>{
     return (
       <View className="d_appre" >
 
-        <Button className="group_head_bottom_share" open-type="share" onClick={this.toShare.bind(this)}>
+        <Button className="group_head_bottom_share" open-type="share" onClick={this.buttonToShare.bind(this)}>
           <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
           分享
         </Button >
