@@ -1,0 +1,275 @@
+// .bg_img{
+//     width: 100%;
+//     height: 100vh;
+//     background: url('../../assets/service/bg.png')
+// }
+
+.card_ticket_wrap {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.card_content {
+    width: 85%;
+    height: 60vh;
+    position: absolute;
+    top: 20vh;
+    left: 62px;
+    overflow: auto;
+}
+
+
+.card_ticket {
+    height: 200px;
+    border: 1px solid red;
+    padding-left: 50px;
+    background: linear-gradient(to right, #f73e38 20% , #f97844 70%);
+    border-radius: 20px;
+    display: flex;
+    // margin-top: 120px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    .card_ticket_info {
+        width: 200px;
+        flex: 2;
+        padding: 20px 0;
+        color: #fff;
+        letter-spacing: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .store_name {
+            font-size: 30px;
+            // margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            Text {
+                color: #fff;
+            }
+        }
+        .ticket_price {
+            font-size: 30px;
+            // margin-bottom: 10px;
+            font-weight: 100;
+            Text {
+                font-weight: 100;
+                color: #fff;
+            }
+        }
+        .ticket_date {
+            font-weight: 100;
+            Text {
+                font-weight: 100;
+                color: #fff;
+            }
+        }
+    }
+    .card_ticket_use_btn {
+        flex: 1;
+        position: relative;
+        .use_btn_wrap {
+            position: absolute;
+            top: -60px;
+        }
+    }
+}
+
+.card_ticket_use_btn {
+    .use_btn_wrap {
+        width: 320px;
+        height: 320px;
+        // border: 1px solid #ccc;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+        box-shadow: 5px 5px 50px 50px #f35b31;
+        background: #f97844;
+        display: flex;
+        align-items: center;
+        .btn_status {
+            width: 160px;
+            height: 160px;
+            background-color: #ffd74d;
+            margin-left: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            box-sizing: border-box;
+            color: #ba8010;
+            font-weight: 700;
+            font-size: 30px;
+            .btn_text {
+                text-align: center;
+                Text {
+                    color: #ba8010;
+                    font-weight: 700;
+                    font-size: 30px;
+                }
+            }
+            .btn_arrow {
+                Text {
+                    color: #ba8010;
+                    font-weight: 700;
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}
+
+.card_ticket_isdelivery {
+    height: 200px;
+    padding-left: 50px;
+    background: #e0e0e0;
+    border-radius: 20px;
+    display: flex;
+    // margin-top: 120px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    .card_ticket_info {
+        width: 200px;
+        flex: 2;
+        padding: 20px 0;
+        color: #6f6f6f;
+        letter-spacing: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .store_name {
+            font-size: 30px;
+            // margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            Text {
+                color: #6f6f6f;
+            }
+        }
+        .ticket_price {
+            font-size: 30px;
+            // margin-bottom: 10px;
+            font-weight: 100;
+            Text {
+                font-weight: 100;
+                color: #6f6f6f;
+            }
+        }
+        .ticket_date {
+            font-weight: 100;
+            Text {
+                font-weight: 100;
+                color: #6f6f6f;
+            }
+        }
+    }
+    .card_ticket_use_btn_isdelivery {
+        flex: 1;
+        position: relative;
+        .use_btn_wrap {
+            position: absolute;
+            top: -60px;
+        }
+    }
+}
+
+.card_ticket_use_btn_isdelivery {
+    .use_btn_wrap {
+        width: 320px;
+        height: 320px;
+        // border: 1px solid #ccc;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+        box-shadow: 5px 5px 50px 50px #ccc;
+        background: #e0e0e0;
+        display: flex;
+        align-items: center;
+        .btn_status {
+            width: 160px;
+            height: 160px;
+            background-color: #c5c5c5;
+            margin-left: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            box-sizing: border-box;
+            color:#757575;
+            font-weight: 700;
+            font-size: 30px;
+            .btn_text {
+                text-align: center;
+                Text {
+                    color: #757575;
+                    font-weight: 700;
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}
+
+.modal {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(76, 76, 76, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 100px;
+    box-sizing: border-box;
+    .modal_content {
+        width: 100%;
+        height: 800px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        .qr_code_content {
+            width: 100%;
+            border:8px solid #ffc419;
+            border-radius: 15px;
+            background-color: #fff;
+            padding: 70px 50px;
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            .store_name {
+                color: #f28f37;
+                font-weight: 700;
+                letter-spacing: 5px;
+                text-align: center;
+                // margin-bottom: 30px;
+            }
+            .qr_code {
+                width: 300px;
+                height: 300px;
+            }
+            .qr_code, .order_num {
+                // margin-bottom: 30px;
+            }
+            .gift_step {
+                color: #ccc;
+            }
+        }
+        .close_modal {
+            width: 80px !important;
+            height: 80px !important;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 56px;
+            // font-weight: 700;
+            line-height: 70px !important;
+            text-align: center;
+            border-radius: 50%;
+        }
+    }
+    
+}

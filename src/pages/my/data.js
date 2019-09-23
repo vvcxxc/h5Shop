@@ -25,5 +25,11 @@ export const cells = [
     icon: iconActivity,
     path: "/activity-pages/my-activity/my.activity",
     open_type: "navigate"
-  }
+  },
+  {
+    text: "我的卡券",
+    icon: iconOrder,
+    path: "/pages/mycardticket/index",
+    open_type: "navigate"
+  },
 ]

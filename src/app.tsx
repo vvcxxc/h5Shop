@@ -47,6 +47,7 @@ class App extends Component {
 			'pages/order/index',
 			'pages/merchant/index',
 			'pages/activity/index',
+			'pages/mycardticket/index',
 			'pages/business/index',
 			"pages/activity/pages/detail/detail",
 			"pages/activity/pages/group/group",
