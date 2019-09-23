@@ -14,7 +14,7 @@ import isArray = require("lodash/isArray");
 
 export default class SetMeal extends Component {
   config = {
-    navigationBarTitleText: "优惠信息"
+    navigationBarTitleText: "特惠商品"
   };
 
   state = {
@@ -176,7 +176,7 @@ export default class SetMeal extends Component {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.store.xpoint);
       let latitude = parseFloat(this.state.store.ypoint);
-      let url = window.location;
+      let url = window.location.href;
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',

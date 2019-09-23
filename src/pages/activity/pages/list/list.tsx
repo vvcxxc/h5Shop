@@ -73,6 +73,16 @@ export default class List extends Component {
   /**
    * 获取优惠券
    */
+<<<<<<< HEAD
+  async fetchCoupon(type: number) {
+    const location = await getLocation()
+    console.log(location);
+
+    const locationParams = {
+      xpoint: location.lng || "",
+      ypoint: location.lat || ""
+    }
+=======
   fetchCoupon = async (type: number) => {
     // const location = await getLocation()
     let locationParams;
@@ -86,6 +96,7 @@ export default class List extends Component {
     //   xpoint: location.longitude || "",
     //   ypoint: location.latitude || ""
     // }
+>>>>>>> 9f32fcb699bbe6c8644041c21b5bf593269cb154
 
     console.log(location, "~~~~~~~~~~~~~~~~~")
     const {

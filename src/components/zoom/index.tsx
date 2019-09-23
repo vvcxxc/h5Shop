@@ -32,7 +32,7 @@ export default class Zoom extends Component<Props> {
                 onClick={this.handlerTablChange.bind(this)}
                 style={{ height: "100vh", width: "100vw", position: "fixed", top: "0", background: "rgb(0,0,0,.9)",zIndex:999, display: this.props.showBool ? "block" : "none" }}>
                 <View style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                    <Image src={this.props.src} style={{ width: "100%" }} />
+                    <Image src={this.props.src} style={{ height: "auto",width: "100%" }} />
                 </View>
             </View>
         );

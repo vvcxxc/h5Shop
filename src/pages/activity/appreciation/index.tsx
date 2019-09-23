@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { AtIcon, AtNoticebar } from 'taro-ui';
-import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
+import { View, Image, Swiper, SwiperItem, Button } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
@@ -15,7 +15,7 @@ import './index.scss';
 interface Props {
   id: any;
 }
-
+const share_url = process.env.APPRE_Details_URL
 export default class Appre extends Component<Props>{
   state = {
     ruleMore: false,
@@ -23,6 +23,7 @@ export default class Appre extends Component<Props>{
     imgZoomSrc: '',
     xPoint: 0,
     yPoint: 0,
+    imagesCurrent: 0,
     imagesList: [],
     data: {
       activity_begin_time: "",
@@ -30,6 +31,7 @@ export default class Appre extends Component<Props>{
       activity_time_status: 0,
       address: "",
       begin_time: "",
+      imagesCurrent: 0,
       description: [],
       distances: "",
       end_time: "",
@@ -46,7 +48,7 @@ export default class Appre extends Component<Props>{
       pay_money: "",
       preview: "",
       return_money: "",
-      store_id:0,
+      store_id: 0,
       supplier_id: 0,
       tel: "",
       total_fee: 0,
@@ -54,7 +56,6 @@ export default class Appre extends Component<Props>{
       validity: 0,
       xpoint: "",
       ypoint: "",
-      store_id: ''
     },
     isPostage: true
   };
@@ -80,6 +81,8 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
+            this.toShare();
+
             if (res.code == 200) {
               let { image, images } = res.data;
               let imgList;
@@ -119,6 +122,8 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
+            this.toShare();
+
             if (res.code == 200) {
               let { image, images } = res.data;
               let imgList;
@@ -134,9 +139,7 @@ export default class Appre extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
-                console.log("lalaal", this.state.imagesList)
               });
               Taro.hideLoading()
             } else {
@@ -156,7 +159,52 @@ export default class Appre extends Component<Props>{
           })
       })
     })
+
   };
+
+
+  toShare = () => {
+    let url = window.location.href;
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title:'什么？'+this.state.data.pay_money +'还可以当' + this.state.data.return_money +'花，走过路过不要错过！',
+            desc:this.state.data.location_name+'增值券福利来了！只要邀请'+1+'个好友助力，'+this.state.data.pay_money +'秒变' + this.state.data.return_money +'，感觉能省一个亿！',
+            // title: '你有一张' + this.state.data.return_money + '增值券待领取，邀请好友助力还有免费好礼拿！',
+            // desc: this.state.data.pay_money + '当' + this.state.data.return_money + '花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！',
+            link: share_url+'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
+            // link: '/pages/business/index?id=' + this.state.business_list.id,
+            imgUrl: this.state.data.preview,
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+
+  buttonToShare = () => {
+
+  }
+
+
   //去图文详情
   toImgList = () => {
 
@@ -187,7 +235,7 @@ export default class Appre extends Component<Props>{
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.data.xpoint);
       let latitude = parseFloat(this.state.data.ypoint);
-      let url = window.location;
+      let url = window.location.href;
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
@@ -260,7 +308,7 @@ export default class Appre extends Component<Props>{
       datas = {
         youhui_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage?this.$router.params.gift_id:undefined,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
         type: _type,
@@ -270,7 +318,7 @@ export default class Appre extends Component<Props>{
       datas = {
         youhui_id: this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage?this.$router.params.gift_id:undefined,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         type: _type,  //1 微信 2支付宝
         xcx: 0,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
@@ -346,6 +394,12 @@ export default class Appre extends Component<Props>{
     const { images, description } = this.state.data;
     return (
       <View className="d_appre" >
+
+        <Button className="group_head_bottom_share" open-type="share" onClick={this.buttonToShare.bind(this)}>
+          <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
+          分享
+        </Button >
+
         <View className="appre_head_activityTitle">
           <View className="appre_head_activityTitle_title">{this.state.data.name}</View>
           <View className="appre_head_activityTitle_time">活动时间 : {this.state.data.activity_begin_time}-{this.state.data.activity_end_time}</View>
@@ -353,25 +407,38 @@ export default class Appre extends Component<Props>{
 
         {
           this.state.data.type == 0 ?
-            <Swiper
-              className='test-h'
-              indicatorColor='#999'
-              indicatorActiveColor='#333'
-              circular
-              indicatorDots
-              autoplay>
-              {
-                this.state.imagesList ? this.state.imagesList.map((item, index) => {
-                  return (
-                    <SwiperItem key={item}>
-                      <View className='demo-text' onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}>
-                        <Image className="demo-text-Img" src={item} />
-                      </View>
-                    </SwiperItem>
-                  )
-                }) : null
-              }
-            </Swiper> : null
+            <View
+              onClick={() => {
+                console.log("5555")
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  // console.log(e.detail.current)
+                  this.setState({ imagesCurrent: e.detail.current })
+                }}
+                className='test-h'
+                indicatorColor='#999'
+                indicatorActiveColor='#333'
+                circular={true}
+
+                indicatorDots
+                autoplay>
+                {
+                  this.state.imagesList ? this.state.imagesList.map((item, index) => {
+                    return (
+                      <SwiperItem key={item}>
+                        <View className='demo-text'
+                        //  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}
+                        >
+                          <Image className="demo-text-Img" src={item} />
+                        </View>
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+            </View> : null
         }
 
         <View className="appre_hd" >
