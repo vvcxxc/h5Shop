@@ -15,7 +15,7 @@ import './index.scss';
 interface Props {
   id: any;
 }
-const share_url = process.env.APPRE_Details_URL
+const share_url = process.env.GROUP_Details_URL
 export default class Group extends Component<Props>{
   state = {
     ruleMore: false,
