@@ -681,6 +681,18 @@
   font-size: 30px;
 }
 
+.d_appre .paymoney_box .paymoney_buynow_no {
+  width: 225px;
+  height: 75px;
+  line-height: 75px;
+  float: right;
+  border-radius: 37px;
+  background-color: #9e9e9e;
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+}
+
 .d_appre .share_mask {
   background: rgba(0, 0, 0, 0.7);
   height: 100vh;
