@@ -188,7 +188,7 @@ export default class Appre extends Component<Props>{
             desc:this.state.data.location_name+'增值券福利来了！只要邀请'+1+'个好友助力，'+this.state.data.pay_money +'秒变' + this.state.data.return_money +'，感觉能省一个亿！',
             // title: '你有一张' + this.state.data.return_money + '增值券待领取，邀请好友助力还有免费好礼拿！',
             // desc: this.state.data.pay_money + '当' + this.state.data.return_money + '花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！',
-            link: 'http://mall.tdianyi.com/pages/activity/appreciation/index?id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
+            link: 'http://test.mall.tdianyi.com/pages/activity/appreciation/index?id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
             // link: '/pages/business/index?id=' + this.state.business_list.id,
             imgUrl: this.state.data.preview,
             success: function () {
@@ -202,22 +202,6 @@ export default class Appre extends Component<Props>{
 
   buttonToShare = () => {
 
-    wx.ready(() => {
-      console.log('ready');
-      wx.updateAppMessageShareData({
-        title:'什么？'+this.state.data.pay_money +'还可以当' + this.state.data.return_money +'花，走过路过不要错过！',
-        desc:this.state.data.location_name+'增值券福利来了！只要邀请'+1+'个好友助力，'+this.state.data.pay_money +'秒变' + this.state.data.return_money +'，感觉能省一个亿！',
-        // title: '你有一张' + this.state.data.return_money + '增值券待领取，邀请好友助力还有免费好礼拿！',
-        // desc: this.state.data.pay_money + '当' + this.state.data.return_money + '花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！',
-        link: 'http://mall.tdianyi.com/pages/activity/appreciation/index?id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
-        // link: '/pages/business/index?id=' + this.state.business_list.id,
-        imgUrl: this.state.data.preview,
-        success: function () {
-          //成功后触发
-          console.log("分享成功")
-        }
-      })
-    })
   }
 
 
