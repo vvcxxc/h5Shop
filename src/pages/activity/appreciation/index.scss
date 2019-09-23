@@ -652,7 +652,6 @@
             }
 
         }
-
         .paymoney_buynow {
             width: 225px;
             height: 75px;
@@ -664,6 +663,17 @@
             text-align: center;
             font-size: 30px;
         }
+        .paymoney_buynow_no {
+          width: 225px;
+          height: 75px;
+          line-height: 75px;
+          float: right;
+          border-radius: 37px;
+          background-color: #9e9e9e;
+          color: #fff;
+          text-align: center;
+          font-size: 30px;
+      }
     }
 
 }
