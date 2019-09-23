@@ -83,7 +83,8 @@ export default class PaySuccess extends Component<Props> {
         gift_id: '',
         activity_id: '',
         youhui_type:0,
-        expire_day:''
+        expire_day:'',
+        images:[]
       }
     ],
     cashCouponList: [
@@ -203,7 +204,7 @@ export default class PaySuccess extends Component<Props> {
   }
 
   // componentDidMount() {
-  //     let url = window.location;
+  //     let url = window.location.href;
   //     Taro.request({
   //       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
   //       method: 'GET',
@@ -294,7 +295,7 @@ export default class PaySuccess extends Component<Props> {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.business_list.xpoint);
       let latitude = parseFloat(this.state.business_list.ypoint);
-      let url = window.location;
+      let url = window.location.href;
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
@@ -551,7 +552,7 @@ export default class PaySuccess extends Component<Props> {
                             <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                               <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                             </View>
-                            <Image className="image" src={item.image_url} style={{ marginLeft: "7px" }} />
+                            <Image className="image" src={item.images[0]} style={{ marginLeft: "7px" }} />
                           </View> :
                             <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                               <View className="image" style={{ position: "relative", overflow: "hidden" }}>

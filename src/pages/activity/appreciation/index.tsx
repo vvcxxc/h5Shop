@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { AtIcon, AtNoticebar } from 'taro-ui';
-import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
+import { View, Image, Swiper, SwiperItem, Button } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
@@ -121,6 +121,7 @@ export default class Appre extends Component<Props>{
         })
           .then((res: any) => {
             if (res.code == 200) {
+
               let { image, images } = res.data;
               let imgList;
               if (image && images) {
@@ -135,9 +136,7 @@ export default class Appre extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
-                console.log("lalaal", this.state.imagesList)
               });
               Taro.hideLoading()
             } else {
@@ -157,7 +156,46 @@ export default class Appre extends Component<Props>{
           })
       })
     })
+
   };
+
+
+  toShare = () => {
+    let url = window.location.href;
+    console.log(url);
+      Taro.request({
+        url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+        method: 'GET',
+        data: {
+          url
+        }
+      })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: true,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: '你有一张'+this.state.data.return_money+'增值券待领取，邀请好友助力还有免费好礼拿！',
+            desc: this.state.data.pay_money+'当'+this.state.data.return_money+'花的秘密，我只告诉你一个！增值成功还有'+this.state.data.gift.price+'元'+this.state.data.gift.title+'免费拿！',
+            link: 'http://api.supplier.tdianyi.com/pages/activity/appreciation/index?id=' +  this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' +  this.$router.params.activity_id,
+            // link: '/pages/business/index?id=' + this.state.business_list.id,
+            imgUrl: this.state.data.preview,
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+
   //去图文详情
   toImgList = () => {
 
@@ -188,7 +226,7 @@ export default class Appre extends Component<Props>{
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.data.xpoint);
       let latitude = parseFloat(this.state.data.ypoint);
-      let url = window.location;
+      let url = window.location.href;
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
@@ -347,6 +385,12 @@ export default class Appre extends Component<Props>{
     const { images, description } = this.state.data;
     return (
       <View className="d_appre" >
+
+        <Button className="group_head_bottom_share" open-type="share" onClick={this.toShare.bind(this)}>
+          <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
+          分享
+        </Button >
+
         <View className="appre_head_activityTitle">
           <View className="appre_head_activityTitle_title">{this.state.data.name}</View>
           <View className="appre_head_activityTitle_time">活动时间 : {this.state.data.activity_begin_time}-{this.state.data.activity_end_time}</View>
@@ -360,17 +404,17 @@ export default class Appre extends Component<Props>{
                 this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
               }}>
               <Swiper
-              onChange={(e) => {
-                // console.log(e.detail.current)
-                this.setState({ imagesCurrent: e.detail.current })
-              }}
-              className='test-h'
-              indicatorColor='#999'
-              indicatorActiveColor='#333'
-              circular={true}
+                onChange={(e) => {
+                  // console.log(e.detail.current)
+                  this.setState({ imagesCurrent: e.detail.current })
+                }}
+                className='test-h'
+                indicatorColor='#999'
+                indicatorActiveColor='#333'
+                circular={true}
 
-              indicatorDots
-              autoplay>
+                indicatorDots
+                autoplay>
                 {
                   this.state.imagesList ? this.state.imagesList.map((item, index) => {
                     return (
