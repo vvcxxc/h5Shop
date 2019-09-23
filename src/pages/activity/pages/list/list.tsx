@@ -65,6 +65,7 @@ export default class List extends Component {
    */
   async fetchCoupon(type: number) {
     const location = await getLocation()
+    console.log(location);
 
     const locationParams = {
       xpoint: location.lng || "",
