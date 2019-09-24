@@ -255,7 +255,7 @@ export default class Appreciation extends Component {
     this.handleCalculate(couponinfo, userCouponStatus)
     this.setState({
       basicinfo: data
-    })
+    },()=>{this.share();})
   }
   share = () => {
     const { id = "" } = this.$router.params
