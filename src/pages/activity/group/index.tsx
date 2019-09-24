@@ -353,8 +353,8 @@ export default class Group extends Component<Props>{
             function (res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
-                Taro.switchTab({
-                  url: '/pages/order/index',
+                Taro.navigateTo({
+                  url: '/activity-pages/my-activity/my.activity',
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
@@ -373,8 +373,8 @@ export default class Group extends Component<Props>{
           }, res => {
             if (res.resultCode === "9000") {
               //支付宝成功
-              Taro.switchTab({
-                url: '/pages/order/index',
+              Taro.navigateTo({
+                url: '/activity-pages/my-activity/my.activity',
                 success: function (e) {
                   let page = Taro.getCurrentPages().pop();
                   if (page == undefined || page == null) return;
@@ -479,7 +479,9 @@ export default class Group extends Component<Props>{
               </View>
               <View className="appre_gift_giftinfo" >{this.state.data.gift.title}</View>
               <View className="appre_gift_giftmsgbox" >
-                <View className="appre_gift_giftmsg" >运费{this.state.data.gift.postage}元</View>
+                <View className="appre_gift_giftmsg" >{
+                  this.state.data.gift.mail_mode == 1 ? '免运费' : `运费${this.state.data.gift.postage}元`
+                }</View>
               </View>
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
@@ -626,7 +628,9 @@ export default class Group extends Component<Props>{
             <View className="paymoney_price_num">{this.state.data.participation_money}</View>
             <View className="paymoney_price_oldprice">￥{this.state.data.pay_money}</View>
             {
-              this.state.isPostage ? <View className='paymoney_price_info'> {'+' + this.state.data.gift.postage}</View> : null
+              this.state.isPostage ? <View className='paymoney_price_info'> {
+                this.state.data.gift.mail_mode == 1 ? null :
+                  '+' + this.state.data.gift.postage}</View> : null
             }
           </View>
 

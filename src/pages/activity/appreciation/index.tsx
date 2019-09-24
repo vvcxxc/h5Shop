@@ -35,7 +35,7 @@ export default class Appre extends Component<Props>{
       description: [],
       distances: "",
       end_time: "",
-      gift: { title: "", price: "", postage: "", mail_mode: '' },
+      gift: { title: "", price: "", postage: "", mail_mode: 0 },
       gift_id: 0,
       gift_pic: '',
       id: 0,
@@ -56,10 +56,10 @@ export default class Appre extends Component<Props>{
       validity: 0,
       xpoint: "",
       ypoint: "",
-      dp_count:0
+      dp_count: 0
     },
     isPostage: true,
-    isShare:false
+    isShare: false
   };
 
   componentDidMount = () => {
@@ -123,7 +123,7 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
-           
+
 
             if (res.code == 200) {
               let { image, images } = res.data;
@@ -167,8 +167,8 @@ export default class Appre extends Component<Props>{
 
   toShare = () => {
     let url = window.location.href;
-    let titleMsg=this.state.data.gift_id?'你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！':'什么？'+this.state.data.pay_money +'元还可以当' + this.state.data.return_money +'元花，走过路过不要错过！';
-    let descMsg=this.state.data.gift_id?this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！':this.state.data.location_name+'增值券福利来了！只要邀请'+this.state.data.dp_count+'个好友助力，'+this.state.data.pay_money +'元秒变' + this.state.data.return_money +'元，感觉能省一个亿！';
+    let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
+    let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -188,9 +188,9 @@ export default class Appre extends Component<Props>{
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
-            title:titleMsg,
-            desc:descMsg,
-            link: share_url+'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
             imgUrl: this.state.data.preview,
             success: function () {
               //成功后触发
@@ -202,10 +202,10 @@ export default class Appre extends Component<Props>{
   }
 
   buttonToShare = () => {
-    this.setState({isShare: true});
+    this.setState({ isShare: true });
   }
   closeShare = () => {
-    this.setState({isShare: false});
+    this.setState({ isShare: false });
   }
 
   //去图文详情
@@ -354,8 +354,8 @@ export default class Appre extends Component<Props>{
             function (res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
-                Taro.switchTab({
-                  url: '/pages/order/index',
+                Taro.navigateTo({
+                  url: '/activity-pages/my-activity/my.activity',
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
@@ -374,8 +374,8 @@ export default class Appre extends Component<Props>{
           }, res => {
             if (res.resultCode === "9000") {
               //支付宝成功
-              Taro.switchTab({
-                url: '/pages/order/index',
+              Taro.navigateTo({
+                url: '/activity-pages/my-activity/my.activity',
                 success: function (e) {
                   let page = Taro.getCurrentPages().pop();
                   if (page == undefined || page == null) return;
@@ -480,7 +480,9 @@ export default class Appre extends Component<Props>{
               </View>
               <View className="appre_gift_giftinfo" >{this.state.data.gift.title}</View>
               <View className="appre_gift_giftmsgbox" >
-                <View className="appre_gift_giftmsg" >运费{this.state.data.gift.postage}元</View>
+                <View className="appre_gift_giftmsg" >{
+                  this.state.data.gift.mail_mode == 1 ? '免运费' : `运费${this.state.data.gift.postage}元`
+                }</View>
               </View>
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
@@ -571,7 +573,7 @@ export default class Appre extends Component<Props>{
           </View>
         </View>
         {
-          (this.state.data.gift && this.state.data.gift.mail_mode) == '2' ? (
+          (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
             <View className='choose_postage' onClick={this.chooseGift}>
 
               <View>
@@ -590,20 +592,22 @@ export default class Appre extends Component<Props>{
             <View className="paymoney_price_icon">￥</View>
             <View className="paymoney_price_num">{this.state.data.pay_money}</View>
             {
-              this.state.isPostage ? <View className='paymoney_price_info'> {'+' + this.state.data.gift.postage}</View> : null
+              this.state.isPostage ? <View className='paymoney_price_info'> {
+                this.state.data.gift.mail_mode == 1 ? null :
+                  '+' + this.state.data.gift.postage}</View> : null
             }
 
 
           </View>
           {
-            this.state.data.activity_time_status == 1 ? (
-              <View className="paymoney_buynow_no">暂未开始</View>
-            ) : this.state.data.activity_time_status == 2 ? (
-              <View className="paymoney_buynow" onClick={this.payment.bind(this)}>立即购买</View>
-            ) : this.state.data.activity_time_status == 3 ? (
-              <View className="paymoney_buynow_no">已结束</View>
-              ) : null
-            }
+            this.state.data.activity_time_status == 1 ? (
+              <View className="paymoney_buynow_no">暂未开始</View>
+            ) : this.state.data.activity_time_status == 2 ? (
+              <View className="paymoney_buynow" onClick={this.payment.bind(this)}>立即购买</View>
+            ) : this.state.data.activity_time_status == 3 ? (
+              <View className="paymoney_buynow_no">已结束</View>
+            ) : null
+          }
         </View>
 
         <Zoom
@@ -614,7 +618,7 @@ export default class Appre extends Component<Props>{
           }}
         />
 
-{
+        {
           this.state.isShare == true ? (
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
@@ -624,7 +628,7 @@ export default class Appre extends Component<Props>{
                 {/* <View className='share_text'>
                   一起增值领礼品吧
                 </View> */}
-                <Image src={require('../../../assets/share_arro.png')} className='share_img'/>
+                <Image src={require('../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
           ) : null
