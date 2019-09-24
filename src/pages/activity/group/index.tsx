@@ -62,7 +62,10 @@ export default class Group extends Component<Props>{
     isPostage: true,
     isShare: false
   };
-
+  componentDidShow() {
+    this.toShare();
+  }
+  
   componentDidMount = () => {
     Taro.showLoading({
       title: 'loading',

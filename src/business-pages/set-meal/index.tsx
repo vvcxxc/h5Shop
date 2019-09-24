@@ -80,6 +80,10 @@ export default class SetMeal extends Component {
     }]
   };
 
+  componentDidShow() {
+    this.toShare();
+  }
+  
   componentWillMount() {
     Taro.showLoading({
       title: 'loading',

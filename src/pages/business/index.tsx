@@ -127,6 +127,10 @@ export default class PaySuccess extends Component<Props> {
     keepCollect_bull: false,
     keepCollect_data: "收藏成功"
   };
+  
+  componentDidShow() {
+    this.toShare();
+  }
 
   componentWillMount() {
     Taro.showLoading({

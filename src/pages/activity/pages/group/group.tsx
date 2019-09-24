@@ -50,6 +50,11 @@ export default class Group extends Component {
     base64: "",
     isShare: false
   }
+
+  componentDidShow() {
+    this.share()
+  }
+  
   async componentDidMount() {
     // Taro.showShareMenu()
 

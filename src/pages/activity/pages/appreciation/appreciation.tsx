@@ -63,6 +63,9 @@ export default class Appreciation extends Component {
 
     isFromShare: false
   }
+  componentDidShow() {
+    this.share()
+  }
   async componentWillMount() {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
@@ -259,8 +262,8 @@ export default class Appreciation extends Component {
     let shareInfo = this.state.basicinfo.getTextContent
     this.setState({ isShare: true })
     wx.updateAppMessageShareData({
-      title: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在抢'+this.state.basicinfo.userYonhuiInfo.money+'增值券，快帮我点一下！' : '我正在抢'+this.state.basicinfo.userYonhuiInfo.money+'增值券，就差你的助力了，点一下就好！',
-      desc:this.state.basicinfo.userYonhuiInfo.gift_id ? '我在参加'+this.state.basicinfo.userYonhuiInfo.name+'活动，快来帮我助力一下，买券还送惊喜礼品哦！' : '我在参加'+this.state.basicinfo.userYonhuiInfo.store_name+'增值券抢购活动，就差你的帮忙了，快来帮我增值一下，拜托拜托！', // 分享描述
+      title: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，快帮我点一下！' : '我正在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，就差你的助力了，点一下就好！',
+      desc: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在参加' + this.state.basicinfo.userYonhuiInfo.name + '活动，快来帮我助力一下，买券还送惊喜礼品哦！' : '我在参加' + this.state.basicinfo.userYonhuiInfo.store_name + '增值券抢购活动，就差你的帮忙了，快来帮我增值一下，拜托拜托！', // 分享描述
       link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
       imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
     })

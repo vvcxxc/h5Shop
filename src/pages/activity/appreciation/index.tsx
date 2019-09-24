@@ -61,7 +61,9 @@ export default class Appre extends Component<Props>{
     isPostage: true,
     isShare: false
   };
-
+  componentDidShow() {
+    this.toShare();
+  }
   componentDidMount = () => {
     console.log(this.$router.params);
     Taro.showLoading({

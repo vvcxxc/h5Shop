@@ -82,6 +82,10 @@ export default class TicketBuy extends Component {
     }]
   };
 
+  componentDidShow() {
+    this.toShare();
+  }
+  
   componentWillMount() {
     Taro.showLoading({
       title: 'loading',
