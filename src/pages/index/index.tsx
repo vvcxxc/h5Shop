@@ -53,7 +53,6 @@ export default class Index extends Component<any> {
   componentDidMount() {
     let id = this.$router.params.id;
     let store_id = this.$router.params.store_id
-    console.log(this.$router.params)
     if (id) {
       sessionStorage.setItem('payStore', id)
     }
@@ -450,7 +449,11 @@ export default class Index extends Component<any> {
           url: 'v3/stores/pay_store/' + id,
           data: { xpoint: location.longitude || '', ypoint: location.latitude || '' }
         })
-        this.setState({ hahaData: res.data.store_info, })
+        if(res.code == 200){
+          this.setState({ hahaData: res.data.store_info, })
+        }else{
+          return
+        }
       }
     }
   }
