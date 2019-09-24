@@ -117,9 +117,6 @@ export default class Orderdetail extends Component {
     }, 1000)
   }
 
-
-
-
   render() {
     console.log(this.state.defaultData.source)
     const {defaultData} = this.state
