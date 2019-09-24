@@ -14,7 +14,7 @@ import wx from 'weixin-js-sdk';
 interface Props {
   store_id: any;
 }
-
+const share_url = process.env.BUSINESS_URL
 export default class PaySuccess extends Component<Props> {
   config = {
     navigationBarTitleText: "商家详情",
@@ -82,9 +82,9 @@ export default class PaySuccess extends Component<Props> {
         gift_desc: '',
         gift_id: '',
         activity_id: '',
-        youhui_type:0,
-        expire_day:'',
-        images:[]
+        youhui_type: 0,
+        expire_day: '',
+        images: []
       }
     ],
     cashCouponList: [
@@ -149,6 +149,8 @@ export default class PaySuccess extends Component<Props> {
                 cashCouponList: res.data.store.cashCouponList,
                 exchangeCouponList: res.data.store.exchangeCouponList,
                 keepCollect_bull: res.data.store.Info.collect ? true : false
+              }, () => {
+                this.toShare();
               })
               Taro.hideLoading()
             } else {
@@ -183,6 +185,8 @@ export default class PaySuccess extends Component<Props> {
                 cashCouponList: res.data.store.cashCouponList,
                 exchangeCouponList: res.data.store.exchangeCouponList,
                 keepCollect_bull: res.data.store.Info.collect ? true : false
+              }, () => {
+                this.toShare();
               })
               Taro.hideLoading()
             } else {
@@ -203,41 +207,42 @@ export default class PaySuccess extends Component<Props> {
     })
   }
 
-  // componentDidMount() {
-  //     let url = window.location.href;
-  //     Taro.request({
-  //       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-  //       method: 'GET',
-  //       data: {
-  //         url
-  //       }
-  //     })
-  //       .then(res => {
-  //         let { data } = res;
-  //         wx.config({
-  //           debug: true,
-  //           appId: data.appId,
-  //           timestamp: data.timestamp,
-  //           nonceStr: data.nonceStr,
-  //           signature: data.signature,
-  //           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
-  //         })
-  //         wx.ready(() => {
-  //           wx.updateAppMessageShareData({
-  //             title: '发现一家你喜欢的店铺'+this.state.business_list.name+'，速来围观！',
-  //             desc: '刚刚发现了这家店铺'+this.state.business_list.name+'，活动多多，优惠空前，你绝对喜欢，快点进来看看！',
-  //             // link: 'http://test.api.supplier.tdianyi.com/pages/business/index?id='+this.state.business_list.id,
-  //             link: '/pages/business/index?id='+this.state.business_list.id,
-  //             imgUrl: this.state.business_list.preview,
-  //             success: function () {
-  //               //成功后触发
-  //               console.log("分享成功")
-  //             }
-  //           })
-  //         })
-  //       })
-  // }
-
+  toShare = () => {
+    let url = window.location.href;
+    let titleMsg = '发现一家你喜欢的店铺' + this.state.business_list.name + '，速来围观！';
+    let descMsg = '刚刚发现了这家店铺' + this.state.business_list.name + '，活动多多，优惠空前，你绝对喜欢，快点进来看看！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + this.$router.params.id,
+            imgUrl: this.state.business_list.preview,
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+ 
 
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
@@ -425,7 +430,7 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}  onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
@@ -435,7 +440,7 @@ export default class PaySuccess extends Component<Props> {
                           </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}  onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
@@ -455,7 +460,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.participation_money}</Text>
                           {/* <Text className="count">已拼{item.participation_number}件</Text> */}
                         </View>
-                        <Button className="btn-go"  onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >立刻拼团</Button>
+                        <Button className="btn-go" onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >立刻拼团</Button>
                       </View>
                     </View>
                   </View>
