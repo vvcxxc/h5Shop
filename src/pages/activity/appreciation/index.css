@@ -253,6 +253,7 @@
   vertical-align: bottom;
   font-weight: bold;
   font-size: 40px;
+  line-height: 1;
   float: left;
   text-align: left;
   color: #000;
@@ -383,6 +384,7 @@
   text-align: left;
   font-weight: bold;
   font-size: 40px;
+  line-height: 1;
   font-weight: bold;
   columns: #000;
 }
@@ -472,7 +474,8 @@
   height: 60px;
   text-align: left;
   font-weight: bold;
-  font-size: 38px;
+  font-size: 40px;
+  line-height: 1;
 }
 
 .d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox {
