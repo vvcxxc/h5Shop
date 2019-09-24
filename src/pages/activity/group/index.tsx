@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { AtIcon, AtNoticebar } from 'taro-ui';
-import { View, Image, Swiper, SwiperItem, Button } from "@tarojs/components";
+import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
@@ -65,7 +65,7 @@ export default class Group extends Component<Props>{
   componentDidShow() {
     this.toShare();
   }
-  
+
   componentDidMount = () => {
     Taro.showLoading({
       title: 'loading',
@@ -400,10 +400,11 @@ export default class Group extends Component<Props>{
     return (
       <View className="d_appre" >
 
-        <Button className="group_head_bottom_share" open-type="share" onClick={this.buttonToShare.bind(this)}>
+        <View className="group_head_bottom_share" onClick={this.buttonToShare.bind(this)}>
           <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
           分享
-        </Button>
+        </View >
+
         {
           this.state.imagesList.length > 0 ? <View
             onClick={() => {

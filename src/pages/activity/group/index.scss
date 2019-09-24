@@ -3,7 +3,37 @@
     height: auto;
     padding-bottom: 110px;
 
+    .group_head_bottom_share {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        border: none;
+        box-sizing: border-box;
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        color: #613f04;
+        background: #ffbf13;
+        border-radius: 8px;
+        font-size: 30px;
+        z-index: 3;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        height: 60px;
+        width: 170px;
+        line-height: 1;
 
+        .shareimg {
+            height: 35px;
+            width: 35px;
+            margin-right: 10px;
+        }
+    }
+    
     .appre_head_activityTitle {
         width: 100%;
         min-height: 125px;
