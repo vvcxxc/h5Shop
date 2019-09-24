@@ -149,6 +149,8 @@ export default class PaySuccess extends Component<Props> {
                 cashCouponList: res.data.store.cashCouponList,
                 exchangeCouponList: res.data.store.exchangeCouponList,
                 keepCollect_bull: res.data.store.Info.collect ? true : false
+              }, () => {
+                this.toShare();
               })
               Taro.hideLoading()
             } else {
@@ -183,6 +185,8 @@ export default class PaySuccess extends Component<Props> {
                 cashCouponList: res.data.store.cashCouponList,
                 exchangeCouponList: res.data.store.exchangeCouponList,
                 keepCollect_bull: res.data.store.Info.collect ? true : false
+              }, () => {
+                this.toShare();
               })
               Taro.hideLoading()
             } else {
@@ -238,13 +242,7 @@ export default class PaySuccess extends Component<Props> {
         })
       })
   }
-  buttonToShare = () => {
-    this.setState({ isShare: true });
-  }
-  closeShare = () => {
-    this.setState({ isShare: false });
-  }
-
+ 
 
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
