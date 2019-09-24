@@ -11,6 +11,7 @@ export default class MyCardTicket extends Component {
 
     config: Config = {
         navigationBarTitleText: "我的账单",
+        disableScroll:true
     };
 
     state = {
