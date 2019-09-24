@@ -127,6 +127,10 @@ export default class PaySuccess extends Component<Props> {
     keepCollect_bull: false,
     keepCollect_data: "收藏成功"
   };
+  
+  componentDidShow() {
+    this.toShare();
+  }
 
   componentWillMount() {
     Taro.showLoading({
@@ -233,7 +237,7 @@ export default class PaySuccess extends Component<Props> {
             title: titleMsg,
             desc: descMsg,
             link: share_url + this.$router.params.id,
-            imgUrl: this.state.business_list.preview,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
               console.log("分享成功")
