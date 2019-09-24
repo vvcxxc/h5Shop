@@ -1,5 +1,5 @@
-/**title: 我的卡券 */
-import Taro, { Component } from "@tarojs/taro"
+/**title: 我的账单 */
+import Taro, { Component, Config } from "@tarojs/taro"
 
 import { View, Text, Image, ScrollView } from '@tarojs/components';
 
@@ -9,6 +9,11 @@ import request from "@/services/request";
 
 export default class MyCardTicket extends Component {
 
+    config: Config = {
+        navigationBarTitleText: "我的账单",
+        disableScroll: true,
+    };
+
     state = {
         flag: false,
 
@@ -16,7 +21,9 @@ export default class MyCardTicket extends Component {
 
         orderItem: {},
 
-        page: 1
+        page: 1,
+
+        routeID : null
     }
 
     handleClick = async (id) => {
@@ -41,7 +48,7 @@ export default class MyCardTicket extends Component {
     handleScrollToLower = () => {
         this.setState({
             page: ++this.state.page
-        },() => {
+        }, () => {
             this.getData()
         })
     }
@@ -60,19 +67,24 @@ export default class MyCardTicket extends Component {
         request({
             url: 'api/wap/orderGift/list',
             data: {
-                page: this.state.page
+                page: this.state.page,
+                id: this.state.routeID
             }
         }).then(res => {
             this.setState({
                 list: this.state.list.concat(res.data)
-            },() => {
+            }, () => {
                 Taro.hideLoading()
             })
         })
     }
 
-    componentDidMount() {
-        this.getData()
+    componentDidMount = async () => {
+        await this.setState({
+            routeID: this.$router.params.id
+        },() => {
+            this.getData()
+        })        
     }
 
     render() {
@@ -82,9 +94,9 @@ export default class MyCardTicket extends Component {
             <View className="card_ticket_wrap">
                 {/* <View className="bg_img"></View> */}
                 <Image src={require("../../assets/service/bg.png")} style={{ width: '100%', height: '100vh' }} />
-                <ScrollView 
-                    scrollY 
-                    className="card_content" 
+                <ScrollView
+                    scrollY
+                    className="card_content"
                     onScrollToLower={this.handleScrollToLower.bind(this)}
                     lowerThreshold={30}
                 >
@@ -103,8 +115,14 @@ export default class MyCardTicket extends Component {
                                             <View className="card_ticket_use_btn">
                                                 <View className="use_btn_wrap">
                                                     <View className="btn_status" onClick={this.handleClick.bind(this, item.id)}>
-                                                        <View className="btn_text"><Text>立即使用</Text></View>
-                                                        <View className="btn_arrow"><Text>></Text></View>
+                                                        <View className="btn_text">
+                                                            <Text>立即使用</Text>
+                                                        </View>
+                                                        {/* <View className="btn_arrow"><Text>></Text></View> */}
+                                                        {/* <View className='btn_arrow at-icon at-icon-chevron-right'></View> */}
+                                                        <View>
+                                                            <Image src={require("../../assets/service/arrow.png")} className="arrow_logo" />
+                                                        </View>
                                                     </View>
                                                 </View>
                                             </View>
@@ -127,7 +145,14 @@ export default class MyCardTicket extends Component {
                                         )
                                 }
                             </View>
-                        )) : ''
+                        )) : (
+                                <View className="no_data">
+                                    <View className="imgBox">
+                                        <Image className="logo" src={require("../../assets/service/logo.png")} />
+                                        <View className="_msg">未发现支付账单</View>
+                                    </View>
+                                </View>
+                            )
                     }
                 </ScrollView>
 
@@ -145,7 +170,8 @@ export default class MyCardTicket extends Component {
                                 </View>
                                 <View style={{ flex: 1 }}></View>
                                 <View style={{ flex: 1 }}>
-                                    <View className="close_modal" onClick={this.handleClose.bind(this)}> x </View>
+                                    {/* <View className="close_modal" onClick={this.handleClose.bind(this)}> x </View> */}
+                                    <View className='close_modal at-icon at-icon-close' onClick={this.handleClose.bind(this)}></View>
                                 </View>
                             </View>
                         </View>

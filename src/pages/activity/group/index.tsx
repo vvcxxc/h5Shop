@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { AtIcon, AtNoticebar } from 'taro-ui';
-import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
+import { View, Image, Swiper, SwiperItem, Button } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
@@ -15,10 +15,8 @@ import './index.scss';
 interface Props {
   id: any;
 }
-
+const share_url = process.env.GROUP_Details_URL
 export default class Group extends Component<Props>{
-
-
   state = {
     ruleMore: false,
     imgZoom: false,
@@ -61,9 +59,13 @@ export default class Group extends Component<Props>{
       youhui_name: "",//活动名
       ypoint: ""
     },
-    isPostage: true
+    isPostage: true,
+    isShare: false
   };
-
+  componentDidShow() {
+    this.toShare();
+  }
+  
   componentDidMount = () => {
     Taro.showLoading({
       title: 'loading',
@@ -102,7 +104,7 @@ export default class Group extends Component<Props>{
               }
               console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
-                console.log("lalaal", this.state.imagesList)
+                this.toShare();
               });
               Taro.hideLoading()
             }
@@ -126,6 +128,7 @@ export default class Group extends Component<Props>{
           }
         })
           .then((res: any) => {
+
             if (res.code == 200) {
               let { image, images } = res.data;
               let imgList;
@@ -142,6 +145,7 @@ export default class Group extends Component<Props>{
                 this.setState({ isPostage: false })
               }
               this.setState({ data: res.data, imagesList: imgList }, () => {
+                this.toShare();
               });
               Taro.hideLoading()
             } else {
@@ -161,6 +165,47 @@ export default class Group extends Component<Props>{
     })
   };
 
+  toShare = () => {
+    let url = window.location.href;
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '就差你啦！我在抢' + this.state.data.pay_money + '元套餐，快跟我一起拼吧！';
+    let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+  buttonToShare = () => {
+    this.setState({ isShare: true });
+  }
+  closeShare = () => {
+    this.setState({ isShare: false });
+  }
 
   //去图文详情
   toImgList = () => {
@@ -311,8 +356,8 @@ export default class Group extends Component<Props>{
             function (res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
-                Taro.switchTab({
-                  url: '/pages/order/index',
+                Taro.navigateTo({
+                  url: '/activity-pages/my-activity/my.activity',
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
@@ -331,8 +376,8 @@ export default class Group extends Component<Props>{
           }, res => {
             if (res.resultCode === "9000") {
               //支付宝成功
-              Taro.switchTab({
-                url: '/pages/order/index',
+              Taro.navigateTo({
+                url: '/activity-pages/my-activity/my.activity',
                 success: function (e) {
                   let page = Taro.getCurrentPages().pop();
                   if (page == undefined || page == null) return;
@@ -355,10 +400,13 @@ export default class Group extends Component<Props>{
     return (
       <View className="d_appre" >
 
+        <Button className="group_head_bottom_share" open-type="share" onClick={this.buttonToShare.bind(this)}>
+          <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
+          分享
+        </Button>
         {
           this.state.imagesList.length > 0 ? <View
             onClick={() => {
-              console.log("5555")
               this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
             }}>
             <Swiper
@@ -434,7 +482,9 @@ export default class Group extends Component<Props>{
               </View>
               <View className="appre_gift_giftinfo" >{this.state.data.gift.title}</View>
               <View className="appre_gift_giftmsgbox" >
-                <View className="appre_gift_giftmsg" >运费{this.state.data.gift.postage}元</View>
+                <View className="appre_gift_giftmsg" >{
+                  this.state.data.gift.mail_mode == 1 ? '免运费' : `运费${this.state.data.gift.postage}元`
+                }</View>
               </View>
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
@@ -581,7 +631,9 @@ export default class Group extends Component<Props>{
             <View className="paymoney_price_num">{this.state.data.participation_money}</View>
             <View className="paymoney_price_oldprice">￥{this.state.data.pay_money}</View>
             {
-              this.state.isPostage ? <View className='paymoney_price_info'> {'+' + this.state.data.gift.postage}</View> : null
+              this.state.isPostage ? <View className='paymoney_price_info'> {
+                this.state.data.gift.mail_mode == 1 ? null :
+                  '+' + this.state.data.gift.postage}</View> : null
             }
           </View>
 
@@ -597,7 +649,22 @@ export default class Group extends Component<Props>{
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
-
+        {/* 分享 */}
+        {
+          this.state.isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  快点分享给好友
+                </View>
+                <View className='share_text'>
+                  一起增值领礼品吧
+                </View>
+                <Image src={require('../../../assets/share_arro.png')} className='share_img' />
+              </View>
+            </View>
+          ) : null
+        }
       </View>
     );
   }

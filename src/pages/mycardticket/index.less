@@ -11,10 +11,11 @@
 
 .card_content {
     width: 85%;
-    height: 60vh;
+    height: 70vh;
     position: absolute;
     top: 20vh;
-    left: 62px;
+    // left: 62px;
+    left: 8.5%;
     overflow: auto;
 }
 
@@ -28,7 +29,7 @@
     display: flex;
     // margin-top: 120px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     .card_ticket_info {
         width: 200px;
         flex: 2;
@@ -111,8 +112,12 @@
                 Text {
                     color: #ba8010;
                     font-weight: 700;
-                    font-size: 30px;
+                    font-size: 50px;
                 }
+            }
+            .arrow_logo {
+                width: 22px;
+                height: 22px;
             }
         }
     }
@@ -126,7 +131,7 @@
     display: flex;
     // margin-top: 120px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     .card_ticket_info {
         width: 200px;
         flex: 2;
@@ -264,12 +269,36 @@
             height: 80px !important;
             border: 2px solid #fff;
             color: #fff;
-            font-size: 56px;
+            font-size: 36px;
             // font-weight: 700;
-            line-height: 70px !important;
+            line-height: 80px !important;
             text-align: center;
             border-radius: 50%;
         }
     }
     
 }
+
+
+.no_data {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .imgBox {
+        .logo {
+        width :220px;
+        height :220px;
+        }
+        ._msg {
+            width :100%;
+            font-size :32px;
+            color: #313131;
+            text-align: center;
+            font-size :25px;
+            margin-top: 20px;
+        }    
+    }
+}
+    
+    

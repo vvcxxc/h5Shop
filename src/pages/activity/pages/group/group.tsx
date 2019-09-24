@@ -50,6 +50,11 @@ export default class Group extends Component {
     base64: "",
     isShare: false
   }
+
+  componentDidShow() {
+    this.share()
+  }
+
   async componentDidMount() {
     // Taro.showShareMenu()
 
@@ -226,7 +231,7 @@ export default class Group extends Component {
     this.handleCalculate(data)
     this.setState({
       basicinfo: data
-    })
+    }, () => { this.share(); })
   }
 
   share = () => {
@@ -262,12 +267,12 @@ export default class Group extends Component {
     //     })
     //   })
     // })
-         wx.updateAppMessageShareData({
-          title: info.title, // 分享标题
-          desc: info.desc, // 分享描述
-          link: share_url+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: info.small_img, // 分享图标
-        })
+    wx.updateAppMessageShareData({
+      title: this.state.basicinfo.gift_id ? this.state.basicinfo.participation_money + '元拼团！100%有奖，你还在等什么！' : '就差你啦！我在抢' + this.state.basicinfo.participation_money + '元套餐，快跟我一起拼吧！',
+      desc: this.state.basicinfo.gift_id ? '【仅剩' + (this.state.basicinfo.number - this.state.basicinfo.participation_number) + '个名额】我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，还有惊喜礼品，等你来跟我一起拼！' : '买了不后悔！我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，快来跟我一起完成拼团吧。', // 分享描述
+      link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
+    })
 
   }
   closeShare = () => {
