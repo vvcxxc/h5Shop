@@ -255,12 +255,11 @@ export default class Appreciation extends Component {
     this.handleCalculate(couponinfo, userCouponStatus)
     this.setState({
       basicinfo: data
-    },()=>{this.share();})
+    }, () => { this.share(); })
   }
   share = () => {
     const { id = "" } = this.$router.params
     let shareInfo = this.state.basicinfo.getTextContent
-    this.setState({ isShare: true })
     wx.updateAppMessageShareData({
       title: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，快帮我点一下！' : '我正在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，就差你的助力了，点一下就好！',
       desc: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在参加' + this.state.basicinfo.userYonhuiInfo.name + '活动，快来帮我助力一下，买券还送惊喜礼品哦！' : '我在参加' + this.state.basicinfo.userYonhuiInfo.store_name + '增值券抢购活动，就差你的帮忙了，快来帮我增值一下，拜托拜托！', // 分享描述
@@ -407,7 +406,12 @@ export default class Appreciation extends Component {
                 isInvite && (
                   <Button
                     className="item action-invite"
-                    onClick={this.share}
+                    onClick={
+                      () => {
+                        this.setState({ isShare: true })
+                        this.share();
+                      }
+                    }
                   >
                     邀请好友增值
                   </Button>
@@ -492,11 +496,11 @@ export default class Appreciation extends Component {
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
                 <View className='share_text text_top'>
-                  快点分享给好友
+                  点击分享给好友
                 </View>
-                <View className='share_text'>
+                {/* <View className='share_text'>
                   一起增值领礼品吧
-                </View>
+                </View> */}
                 <Image src={require('../../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
