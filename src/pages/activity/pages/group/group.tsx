@@ -234,10 +234,11 @@ export default class Group extends Component {
     }, () => { this.share(); })
   }
 
+
   share = () => {
     const { id = "" } = this.$router.params
     let info = this.state.basicinfo.share;
-    this.setState({ isShare: true })
+
     // let url = location.href.split('#')[0];
     // Taro.request({
     //   url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
@@ -378,7 +379,12 @@ export default class Group extends Component {
                     <Button
                       className="item invite"
                       openType="share"
-                      onClick={this.share}
+                      onClick={
+                        () => {
+                          this.share();
+                          this.setState({ isShare: true })
+                        }
+                      }
                     >
                       邀请好友参团
                   </Button>
@@ -437,11 +443,11 @@ export default class Group extends Component {
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
                 <View className='share_text text_top'>
-                  快点分享给好友
+                  点击分享给好友
                 </View>
-                <View className='share_text'>
+                {/* <View className='share_text'>
                   一起拼团领礼品吧
-                </View>
+                </View> */}
                 <Image src={require('../../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
