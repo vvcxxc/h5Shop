@@ -12,6 +12,8 @@ import { getLocation } from "@/utils/getInfo"
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
 
+
+const share_url = process.env.TICKETBUY_URL;
 export default class TicketBuy extends Component {
   config = {
     navigationBarTitleText: "优惠信息"
@@ -30,13 +32,13 @@ export default class TicketBuy extends Component {
       collect: "0",
       description: "",
       end_time: "",
-      icon: "h",
-      id: 1311,
+      icon: "",
+      id: 0,
       image: "",
       image_type: 1,
       list_brief: "",
       own: "",
-      label: ['1'],
+      label: [],
       pay_money: "",
       return_money: "",
       yname: "",
@@ -45,7 +47,7 @@ export default class TicketBuy extends Component {
     },
     store: {
       brief: "",
-      id: 717,
+      id: 0,
       open_time: "",
       route: "",
       saddress: "",
@@ -58,7 +60,7 @@ export default class TicketBuy extends Component {
     },
     goods_album: [
       {
-        id: 700,
+        id: 0,
         image_url: ""
       }
     ],
@@ -66,7 +68,7 @@ export default class TicketBuy extends Component {
       begin_time: "",
       brief: "",
       end_time: "",
-      id: 1283,
+      id: 0,
       list_brief: "",
       open_time: "",
       pay_money: "",
@@ -92,7 +94,6 @@ export default class TicketBuy extends Component {
       })
         .then((res: any) => {
           console.log(res);
-          //合并代码后可以打开这个
           if (res.code != 200) {
             Taro.hideLoading()
             Taro.showToast({ title: '信息错误', icon: 'none' })
@@ -106,6 +107,8 @@ export default class TicketBuy extends Component {
             store: res.data.info.store,
             goods_album: res.data.info.goods_album,
             recommend: res.data.recommend.data
+          }, () => {
+            this.toShare();
           })
           Taro.hideLoading()
         }).catch(function (error) {
@@ -116,8 +119,6 @@ export default class TicketBuy extends Component {
             })
           }, 2000)
         });
-
-
     }).catch(err => {
       setTimeout(() => {
         Taro.showToast({ title: '信息错误', icon: 'none' })
@@ -127,6 +128,46 @@ export default class TicketBuy extends Component {
     })
 
   }
+
+  toShare = () => {
+    let url = window.location.href;
+    let titleMsg = '嘘，这里有一张' + this.state.coupon.return_money + '元现金券，悄悄领了，别声张！';
+    let descMsg = this.state.store.sname + '又搞活动啦，是好友我才偷偷告诉你，现金券数量有限，领券要快姿势要帅！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + this.$router.params.id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+
+
+
+
   handleClick = (id, e) => {
     console.log(id)
     Taro.navigateTo({
@@ -244,15 +285,15 @@ export default class TicketBuy extends Component {
                 <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('随时退') !== -1 ? '' : '#fff' }}>随时退</Text>
                 <Text className="tag-text" style={{ marginRight:"0",backgroundColor: this.state.coupon.label.indexOf('免预约') !== -1 ? '' : '#fff' }}>免预约</Text> */}
                 {
-                   this.state.coupon.label.indexOf('可叠加') !== -1 ?
+                  this.state.coupon.label && this.state.coupon.label.indexOf('可叠加') !== -1 ?
                     <Text className="tag-text">可叠加</Text> : null
                 }
                 {
-                   this.state.coupon.label.indexOf('随时退') !== -1 ?
+                  this.state.coupon.label && this.state.coupon.label.indexOf('随时退') !== -1 ?
                     <Text className="tag-text">随时退</Text> : null
                 }
                 {
-                   this.state.coupon.label.indexOf('免预约') !== -1 ?
+                  this.state.coupon.label && this.state.coupon.label.indexOf('免预约') !== -1 ?
                     <Text className="tag-text"  >免预约</Text> : null
                 }
               </View>
@@ -272,9 +313,9 @@ export default class TicketBuy extends Component {
             <AtIcon value="chevron-right" color="#999" size="24px" />
           </View>
           <View className="address-view flex center">
-            <Image className="address-image" onClick = {this.routePlanning.bind(this)} style={{ width: "15px", height: "15px" }} src={AddressImg} />
-            <View className="distance" onClick = {this.routePlanning.bind(this)} >{this.state.store.distance}</View>
-            <View className="text flex-item" onClick = {this.routePlanning.bind(this)} style={{ width: "80%" }}>{this.state.store.saddress}</View>
+            <Image className="address-image" onClick={this.routePlanning.bind(this)} style={{ width: "15px", height: "15px" }} src={AddressImg} />
+            <View className="distance" onClick={this.routePlanning.bind(this)} >{this.state.store.distance}</View>
+            <View className="text flex-item" onClick={this.routePlanning.bind(this)} style={{ width: "80%" }}>{this.state.store.saddress}</View>
             <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
         </View>
@@ -311,8 +352,8 @@ export default class TicketBuy extends Component {
             this.state.recommend.map((item) => (
               <View key={item.id}>
                 {
-                  item.youhui_type == 0 ? <CashCoupon1 _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} yname={item.yname} sname={item.sname}  _image={item.image} expire_day={item.expire_day} />
-                    : <CashCoupon2 _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} yname={item.yname} sname={item.sname}  expire_day={item.expire_day} total_fee={item.total_fee} />
+                  item.youhui_type == 0 ? <CashCoupon1 _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} yname={item.yname} sname={item.sname} _image={item.image} expire_day={item.expire_day} />
+                    : <CashCoupon2 _id={item.id} return_money={item.return_money} pay_money={item.pay_money} youhui_type={item.youhui_type} timer={item.begin_time + "-" + item.end_time} list_brief={item.list_brief} yname={item.yname} sname={item.sname} expire_day={item.expire_day} total_fee={item.total_fee} />
 
                 }
               </View>

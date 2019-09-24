@@ -188,7 +188,7 @@ export default class Group extends Component<Props>{
             title: titleMsg,
             desc: descMsg,
             link: share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
-            imgUrl: this.state.data.preview,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
               console.log("分享成功")
