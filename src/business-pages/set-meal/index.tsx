@@ -76,7 +76,9 @@ export default class SetMeal extends Component {
       yname: "",
       youhui_type: 0,
       expire_day: '',
-      total_fee: ''
+      total_fee: '',
+
+      isFromShare: false
     }]
   };
 
@@ -85,6 +87,12 @@ export default class SetMeal extends Component {
   }
   
   componentWillMount() {
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
     Taro.showLoading({
       title: 'loading',
     })
@@ -261,6 +269,16 @@ export default class SetMeal extends Component {
     }
     e.stopPropagation();
   }
+
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
   render() {
     return (
       <View className="set-meal">
@@ -416,6 +434,15 @@ export default class SetMeal extends Component {
             <View><Button onClick={this.handleClick.bind(this, this.state.coupon.id)} className="btn-buy">立即抢购</Button></View>
           </View>
         </View>
+
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '50px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
+        }
       </View>
     );
   }

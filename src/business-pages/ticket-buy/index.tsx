@@ -79,14 +79,22 @@ export default class TicketBuy extends Component {
       expire_day: '',
       total_fee: '',
       image: ''
-    }]
+    }],
+
+    isFromShare: false
   };
 
   componentDidShow() {
     this.toShare();
   }
-  
+
   componentWillMount() {
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
     Taro.showLoading({
       title: 'loading',
     })
@@ -262,6 +270,16 @@ export default class TicketBuy extends Component {
     }
     e.stopPropagation();
   }
+
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
   render() {
     return (
       <View className="set-meal">
@@ -371,6 +389,15 @@ export default class TicketBuy extends Component {
             <View><Button className="btn-buy" onClick={this.handleClick.bind(this, this.state.coupon.id)} >立即抢购</Button></View>
           </View>
         </View>
+
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '50px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
+        }
       </View>
     );
   }
