@@ -33,6 +33,7 @@ interface State {
   isQrcode: boolean;
   base64: string;
   isShare: boolean;
+  isFromShare: boolean;
 }
 const share_url = process.env.GROUP_URL
 export default class Group extends Component {
@@ -48,7 +49,9 @@ export default class Group extends Component {
     isShowUse: false,
     isQrcode: false,
     base64: "",
-    isShare: false
+    isShare: false,
+
+    isFromShare: false
   }
 
   componentDidShow() {
@@ -57,6 +60,12 @@ export default class Group extends Component {
 
   async componentDidMount() {
     // Taro.showShareMenu()
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
 
     const { id = "" } = this.$router.params
     /**
@@ -280,6 +289,16 @@ export default class Group extends Component {
     this.setState({ isShare: false });
   }
 
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
+
   render() {
     const {
       basicinfo,
@@ -452,6 +471,15 @@ export default class Group extends Component {
               </View>
             </View>
           ) : null
+        }
+
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '0px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
         }
 
       </Block>
