@@ -185,7 +185,7 @@ export default class Appre extends Component<Props>{
         let { data } = res;
         console.log("request:linkMsg",linkMsg);
         wx.config({
-          debug: true,
+          debug: false,
           appId: data.appId,
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
