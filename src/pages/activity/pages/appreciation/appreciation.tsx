@@ -498,9 +498,9 @@ export default class Appreciation extends Component {
                 <View className='share_text text_top'>
                   点击分享给好友
                 </View>
-                {/* <View className='share_text'>
+                <View className='share_text'>
                   一起增值领礼品吧
-                </View> */}
+                </View>
                 <Image src={require('../../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
