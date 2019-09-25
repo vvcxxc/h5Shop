@@ -60,13 +60,21 @@ export default class Group extends Component<Props>{
       ypoint: ""
     },
     isPostage: true,
-    isShare: false
+    isShare: false,
+
+    isFromShare: false
   };
   componentDidShow() {
     this.toShare();
   }
 
   componentDidMount = () => {
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
     Taro.showLoading({
       title: 'loading',
     })
@@ -395,6 +403,15 @@ export default class Group extends Component<Props>{
       })
   }
 
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
   render() {
     const { images, description } = this.state.data;
     return (
@@ -665,6 +682,15 @@ export default class Group extends Component<Props>{
               </View>
             </View>
           ) : null
+        }
+
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '70px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
         }
       </View>
     );
