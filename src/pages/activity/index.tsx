@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import {
   ScrollView, View, Block,
-  Image, Text
+  Image, Text, Switch
 } from '@tarojs/components'
 import { AtIcon, AtActivityIndicator, AtDivider } from 'taro-ui';
 import carousel from "@/static/images/img_carousel.png"
@@ -65,50 +65,20 @@ export default class Activity extends Component {
       title: 'loading',
     })
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
       }, () => {
-        request({
-          url: 'api/wap/zero/index',
-          method: "GET",
-          data: {
-            xpoint: this.state.xPoint,
-            ypoint: this.state.yPoint
-          }
-        })
-          .then((res: any) => {
-            Taro.hideLoading()
-            console.log('668', res);
-            this.setState({ dataList: res.data.recommend.data })
-          })
+        this.searchList('all')
       })
     }).catch(err => {
       this.setState({
         yPoint: '',
         xPoint: ''
       }, () => {
-        request({
-          url: 'api/wap/zero/index',
-          method: "GET",
-          data: {
-            xpoint: this.state.xPoint,
-            ypoint: this.state.yPoint
-          }
-        })
-          .then((res: any) => {
-            Taro.hideLoading()
-            console.log('668', res);
-            this.setState({ dataList: res.data.recommend.data })
-          })
+        this.searchList('all')
       })
     })
-
-
-
-
-
 
     this.setState({
       titleList: [
@@ -125,13 +95,67 @@ export default class Activity extends Component {
     })
   }
 
+
+  searchList = (id) => {
+    Taro.showLoading({
+      title: 'loading',
+    });
+    let url;
+    switch (id) {
+      case 'all': {
+        url = 'api/wap/zero/index'
+        break;
+      }
+      case 'pintuan': {
+        url = 'api/wap/user/getYonhuiActiveGroupList'
+        break;
+      }
+      case 'zengzhi': {
+        url = 'api/wap/user/appreciation/getYouhuiList'
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    request({
+      url: url,
+      method: "GET",
+      data: {
+        xpoint: this.state.xPoint,
+        ypoint: this.state.yPoint
+      }
+    })
+      .then((res: any) => {
+        console.log('request',id,res);
+        Taro.hideLoading()
+        switch (id) {
+          case 'all': {
+            this.setState({ dataList: res.data.recommend.data });
+            break;
+          }
+          case 'zengzhi': {
+            this.setState({ dataList: res.data.youhui.data });
+            break;
+          }
+          default: {
+            this.setState({ dataList: res.data });
+            break;
+          }
+        }
+
+      })
+  }
+
   handlerTablChange(current, id, _this) {
     this.setState({
       current,
       indexGroup: []
+    },()=>{
+      this.searchList(id)
     });
     // 根据current值来获取对应的商店数据然后存到storeList中
-    console.log(current)
+
   }
 
 
@@ -194,7 +218,6 @@ export default class Activity extends Component {
     })
   }
   touchMove(e) {
-    console.log('111')
     let that = this
     let move_p = e.touches[0],//移动时的位置
       deviationX = 0.30,//左右偏移量(超过这个偏移量不执行下拉操作)
@@ -371,7 +394,7 @@ export default class Activity extends Component {
 
 
             {
-              this.state.dataList ? this.state.dataList.map((item:any, index) => {
+              this.state.dataList ? this.state.dataList.map((item: any, index) => {
                 return (
                   <View className="store_item" key={item}>
                     <View className="store_img">
@@ -387,8 +410,10 @@ export default class Activity extends Component {
                       </View>
                       <View className="store_msg">
                         <View className="store_price">
-                          <Text className="store_price_new">￥100</Text>
-                          <Text className="store_price_old">￥300</Text>
+                          <View className="store_price_new">￥{item.pay_money}</View>
+                          {
+                            item.init_money ? <View className="store_price_old">￥{item.init_money}</View> : null
+                          }
                         </View>
                         <View className="store_other_info">
                           <View className="store_any">
