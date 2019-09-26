@@ -69,6 +69,7 @@ export default class Group extends Component<Props>{
   }
 
   componentDidMount = () => {
+    console.log('params:', this.$router.params);
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({
@@ -79,7 +80,6 @@ export default class Group extends Component<Props>{
       title: 'loading',
     })
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
@@ -110,7 +110,6 @@ export default class Group extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
                 this.toShare();
               });
@@ -175,7 +174,7 @@ export default class Group extends Component<Props>{
 
   toShare = () => {
     let url = window.location.href;
-    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '就差你啦！我在抢' + this.state.data.pay_money + '元套餐，快跟我一起拼吧！';
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！':'在吗？现只需' + this.state.data.participation_money + '元疯抢价值 '+ this.state.data.pay_money + '元套餐，快戳' ;
     let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
@@ -315,15 +314,14 @@ export default class Group extends Component<Props>{
       });
     }
     let datas = {}
-    console.log(Taro.getStorageSync("open_id"))
     if (_type == 1) {
       datas = {
-        public_type_id: this.$router.params.id,
+        public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
         activity_id: this.$router.params.activity_id,
         gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
-        type: "5",
+        type: this.$router.params.type,
         xcx: 0,
         number: 1,
       }
@@ -655,12 +653,10 @@ export default class Group extends Component<Props>{
             }
           </View>
 
-
-          <View className="paymoney_buynow" onClick={this.payment.bind(this)}>发起拼团</View>
+          {
+            this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.payment.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.payment.bind(this)}>发起拼团</View>
+          }
         </View>
-
-
-
 
         <Zoom
           src={this.state.imgZoomSrc}
@@ -673,11 +669,11 @@ export default class Group extends Component<Props>{
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
                 <View className='share_text text_top'>
-                  快点分享给好友
+                点击此按钮分享给好友
                 </View>
-                <View className='share_text'>
+                {/* <View className='share_text'>
                   一起增值领礼品吧
-                </View>
+                </View> */}
                 <Image src={require('../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>

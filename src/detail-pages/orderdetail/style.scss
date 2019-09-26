@@ -133,6 +133,10 @@
             position: relative;
 
             .a_imgDes_info1 {
+                width: 500px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
                 font-size: 36px;
                 margin-top: 10px;
                 font-family: PingFang-SC-Bold;
