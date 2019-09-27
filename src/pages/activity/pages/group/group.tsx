@@ -267,7 +267,9 @@ export default class Group extends Component {
       link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
       imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
     })
-
+  }
+  clickShare = () =>{
+    this.setState({isShare: true})
   }
   closeShare = () => {
     this.setState({ isShare: false });
@@ -425,6 +427,7 @@ export default class Group extends Component {
                           <Button
                           className="item invite"
                           openType="share"
+                          onClick={this.clickShare}
                         >
                           邀请好友参团
                         </Button>
