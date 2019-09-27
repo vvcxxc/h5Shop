@@ -69,17 +69,17 @@ export default class CashCoupon extends Component<Props> {
             </View>
           </View>
           <View className="item content" style={{ position: "relative" }}>
-            <View className="heads flex">
+            <View className="heads flex" style={{    alignItems: "center"}}>
             {
                 this.props.bg_img_type == 1 ?
                   <View className="labels flex center" >
-                    <Image src={quan} style={{ height: "100%", width: "40px" }} />
+                    <Image  className="labelimg" src={quan} />
                   </View> :
                   <View className="labels flex center">
-                    <Image src={quan2} style={{ height: "100%", width: "40px" }} />
+                    <Image   className="labelimg" src={quan2}  />
                   </View>
               }
-              <View style={{width:"135px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace: "nowrap",lineHeight:1.4}}>{this.props.sname}</View>
+              <View style={{width:"135px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace: "nowrap",lineHeight:1}}>{this.props.sname}</View>
             </View>
             {/* <View className="date" >{this.props.list_brief}</View> */}
             <View className="info" >{this.props.timer}</View>
