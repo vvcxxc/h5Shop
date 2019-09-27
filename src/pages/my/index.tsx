@@ -62,6 +62,10 @@ export default class NewPage extends Component<Props>{
 
 
   componentDidMount() {
+
+
+
+
     this.handleGetUserinfo()
     request({
       url: 'v3/user/home_index'
@@ -123,7 +127,7 @@ export default class NewPage extends Component<Props>{
           <View className="content">
             {
               this.state.list.map((item:any, index) => {
-                return <View className="list" onClick={this.jumpData.bind(this, item.path)}>
+                return <View className="list_my" onClick={this.jumpData.bind(this, item.path)}>
                   <View className="list_left">
                     <Image src={item.img} />
                     <View className="des">{item.des}</View>
