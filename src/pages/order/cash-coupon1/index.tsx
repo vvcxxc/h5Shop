@@ -70,22 +70,23 @@ export default class CashCoupon extends Component<Props> {
           mode="widthFix"
           src={{this.props.image}}
         /> */}
-        <View className="item content" style={{overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
-          <View className="head flex" style={{background:"#fff"}}>
-            <View className="verification_coupons">核销券</View>
-            <View style={{ color: "#000", borderBottom: "none", overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: 'nowrap',lineHeight:1.4}}>{this.props.sname}</View>
+        <View className="item content" style={{ position: "relative" }}>
+          <View className="head flex" style={{ background: "#fff", alignItems: "center" }}>
+            <View className="labels flex center" >
+              <Image className="labelimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/s3YhfNZ8NH3as4DZ7p45nPiQKdiRKTwi.png" />
+            </View>
+            <View style={{ width: "135px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", verticalAlign: "text-bottom ",lineHeight:1,paddingTop:"3px"}}>{this.props.sname}</View>
           </View>
 
           <View className="date">{this.props.list_brief}</View>
           {this.props.type == 2 ? "" : <View className="info">{this.props.timer}</View>}
           {this.props.type == 2 ? <View className="info">免预约</View> : ""}
           {this.props.bg_img_type == 1 ? <View className="info" style={{ marginTop: "10px" }}>使用日期： {this.props.confirm_time}</View> : ""}
-          {/* {
-            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._logid)}>立即使用</View> : (
-              this.props.type == 2 ? <View className="buymore" onClick={this.buyMore.bind(this, this.props._id)} >再来一单</View> : <View></View>)
-          } */}
+
           {
-            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._logid)}>立即使用</View> : null
+            this.props.type == 1 ? <View className="usenow" onClick={this.useNow.bind(this, this.props._logid)}>
+              <Image className="usenowimg"  src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/yfJ6M8WSptFzZpxYtbyBiJtBXFSsznrH.png" />
+            </View> : null
           }
 
         </View>
