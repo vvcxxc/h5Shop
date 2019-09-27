@@ -124,7 +124,7 @@ export default class NewPage extends Component<Props>{
         </View>
 
         <View className="newPage_content">
-          <View className="content">
+          <View className="content_my">
             {
               this.state.list.map((item:any, index) => {
                 return <View className="list_my" onClick={this.jumpData.bind(this, item.path)}>
