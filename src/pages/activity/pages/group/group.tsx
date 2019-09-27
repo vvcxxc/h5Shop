@@ -387,7 +387,7 @@ export default class Group extends Component {
                       data-action="jump"
                       data-publictypeid={basicinfo.id}
                       data-id={basicinfo.youhui_id}
-                      data-type="55"
+                      data-type="5"
                       onClick={this.handleClick}
                     >
                       我也要发起拼团
