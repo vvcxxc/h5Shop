@@ -503,8 +503,8 @@ export default class Index extends Component<any> {
           </View>
         </View>
         <View className="advert">
-          <Image src={require('../../assets/group.png')} onClick={this.gotoGroup}></Image>
-          <Image src={require('../../assets/appre.png')} onClick={this.gotoAppre}></Image>
+          <Image src={'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/sKsYDHRKBe8QyerFTyzXPGJZAerDyamG.png'} onClick={this.gotoGroup}></Image>
+          <Image src={'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/kBfNBZdeYZdxJN8ty7jMdzAFMYre2XMa.png'} onClick={this.gotoAppre}></Image>
         </View>
         <View className="no_receive" style={{ display: this.state.showGift == 1 ? '' : 'none' }}
         >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
