@@ -66,6 +66,8 @@ export default class MerChantPage extends Component {
           this.requestData(this.state.locationPosition)
         }
       })
+    }else{
+      this.requestData({xpoint: '', ypoint: '', city_id: 1942, pages: 1})
     }
   }
 
@@ -76,8 +78,8 @@ export default class MerChantPage extends Component {
     request({
       url: 'v3/stores',
       data: {
-        xpoint: this.state.locationPosition.xpoint,
-        ypoint: this.state.locationPosition.ypoint,
+        xpoint: this.state.locationPosition.xpoint || '',
+        ypoint: this.state.locationPosition.ypoint || '',
         keyword: search
       },
     })
