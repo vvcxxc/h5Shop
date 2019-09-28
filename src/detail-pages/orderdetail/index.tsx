@@ -198,10 +198,10 @@ export default class Orderdetail extends Component {
               <Text className="a_billingInfo_1" style={{ letterSpacing: '10px' }} >订单号</Text>:
       <Text className="a_billingInfo_2" style={{ marginLeft: '9px' }}>{this.state.defaultData.youhui_sn}</Text>
             </View>
-            <View className='a_billingInfo' >
+            {/* <View className='a_billingInfo' >
               <Text className="a_billingInfo_1" style={{ letterSpacing: '10px' }}  >手机号</Text>:
       <Text className="a_billingInfo_2" style={{ marginLeft: '9px' }}>{this.state.defaultData.tel}</Text>
-            </View>
+            </View> */}
             <View className='a_billingInfo'  >
               <Text className="a_billingInfo_1" style={{ letterSpacing: '22px' }} >总价</Text>:
       <Text className="a_billingInfo_2" style={{ marginLeft: '9px', color: '#ED2424' }} >￥{this.state.defaultData.money}</Text>
