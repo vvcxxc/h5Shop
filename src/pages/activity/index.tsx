@@ -349,7 +349,6 @@ export default class Activity extends Component<any>  {
                 </View>
 
                 <View className="show_data" id="showData">
-
                     {
                         this.state.dataList.length != 0 ? this.state.dataList.map((item: any, index) => {
                             return (
