@@ -1,3 +1,8 @@
+
+@import '../../utils/config.styl'
+page,body 
+  background #fff
+
 .activity
   background-color #f1f1f1;
   //min-height 100vh
@@ -66,7 +71,7 @@
 
 //.tab_navbar
   //height 110px
-  .tab
+  .tab2
       height 110px
       //background: #fff
       width: 100%
@@ -79,6 +84,11 @@
         height 100%
         line-height 110px
         border-bottom 4px solid #f6f6f6
+    .center2
+      align-items center
+      justify-content center
+      flex-direction column
+      display flex
     .active
       .label
         font-size: 37px
@@ -185,6 +195,11 @@
             color #fe7d70
           .store_follow_name
             color #ccc
+            width 90%
+            display inline-block
+            overflow hidden
+            text-overflow ellipsis
+            white-space nowrap
         .store_distance
           .store_distance_num
             color #ccc
