@@ -15,7 +15,6 @@ export default class Activity extends Component<any>  {
     config: Config = {
         navigationBarTitleText: "活动中心",
         enablePullDownRefresh: true,
-        onReachBottomDistance:50
     }
 
     state = {
@@ -77,7 +76,7 @@ export default class Activity extends Component<any>  {
         }
     }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         this.requestTab();
 
         // 获取广告
