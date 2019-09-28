@@ -69,6 +69,7 @@ export default class MyWelfare extends Component {
   handleUserWriteinfo = (e) => {
     const { value, dataset: { type } } = e.currentTarget
     const merge = Object.assign({}, this.state.userReceiveinfo, { [type]: value })
+    // console.log(merge)
     this.setState({
       userReceiveinfo: merge
     })
@@ -107,7 +108,7 @@ export default class MyWelfare extends Component {
     })
   }
   render() {
-    const { list, action, checkGiftinfo } = this.state
+    const { list, action, checkGiftinfo, userReceiveinfo } = this.state
     return (
       <Block>
         <View className="welfare-gift">
@@ -131,6 +132,7 @@ export default class MyWelfare extends Component {
               action === ACTION_GET
                 ? <GiftWriteInfo
                     onAction={this.handleAction}
+                    info={userReceiveinfo}
                     onWrite={this.handleUserWriteinfo}
                     data={checkGiftinfo}
                   />

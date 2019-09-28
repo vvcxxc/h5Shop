@@ -14,7 +14,7 @@ import wx from 'weixin-js-sdk';
 interface Props {
   store_id: any;
 }
-
+const share_url = process.env.BUSINESS_URL
 export default class PaySuccess extends Component<Props> {
   config = {
     navigationBarTitleText: "商家详情",
@@ -82,8 +82,9 @@ export default class PaySuccess extends Component<Props> {
         gift_desc: '',
         gift_id: '',
         activity_id: '',
-        youhui_type:0,
-        expire_day:''
+        youhui_type: 0,
+        expire_day: '',
+        images: []
       }
     ],
     cashCouponList: [
@@ -124,10 +125,22 @@ export default class PaySuccess extends Component<Props> {
     exchangeCouponList_bull: false,
     keepCollect_show: false,
     keepCollect_bull: false,
-    keepCollect_data: "收藏成功"
+    keepCollect_data: "收藏成功",
+
+    isFromShare: false
   };
+  
+  componentDidShow() {
+    this.toShare();
+  }
 
   componentWillMount() {
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
     Taro.showLoading({
       title: 'loading',
     })
@@ -148,6 +161,8 @@ export default class PaySuccess extends Component<Props> {
                 cashCouponList: res.data.store.cashCouponList,
                 exchangeCouponList: res.data.store.exchangeCouponList,
                 keepCollect_bull: res.data.store.Info.collect ? true : false
+              }, () => {
+                this.toShare();
               })
               Taro.hideLoading()
             } else {
@@ -182,6 +197,8 @@ export default class PaySuccess extends Component<Props> {
                 cashCouponList: res.data.store.cashCouponList,
                 exchangeCouponList: res.data.store.exchangeCouponList,
                 keepCollect_bull: res.data.store.Info.collect ? true : false
+              }, () => {
+                this.toShare();
               })
               Taro.hideLoading()
             } else {
@@ -202,47 +219,49 @@ export default class PaySuccess extends Component<Props> {
     })
   }
 
-  // componentDidMount() {
-  //     let url = window.location;
-  //     Taro.request({
-  //       url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-  //       method: 'GET',
-  //       data: {
-  //         url
-  //       }
-  //     })
-  //       .then(res => {
-  //         let { data } = res;
-  //         wx.config({
-  //           debug: true,
-  //           appId: data.appId,
-  //           timestamp: data.timestamp,
-  //           nonceStr: data.nonceStr,
-  //           signature: data.signature,
-  //           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
-  //         })
-  //         wx.ready(() => {
-  //           wx.updateAppMessageShareData({
-  //             title: '发现一家你喜欢的店铺'+this.state.business_list.name+'，速来围观！',
-  //             desc: '刚刚发现了这家店铺'+this.state.business_list.name+'，活动多多，优惠空前，你绝对喜欢，快点进来看看！',
-  //             // link: 'http://test.api.supplier.tdianyi.com/pages/business/index?id='+this.state.business_list.id,
-  //             link: '/pages/business/index?id='+this.state.business_list.id,
-  //             imgUrl: this.state.business_list.preview,
-  //             success: function () {
-  //               //成功后触发
-  //               console.log("分享成功")
-  //             }
-  //           })
-  //         })
-  //       })
-  // }
-
+  toShare = () => {
+    let url = window.location.href;
+    let titleMsg = '发现一家你喜欢的店铺' + this.state.business_list.name + '，速来围观！';
+    let descMsg = '刚刚发现了这家店铺' + this.state.business_list.name + '，活动多多，优惠空前，你绝对喜欢，快点进来看看！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + this.$router.params.id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+ 
 
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
     console.log('zhelia ')
     Taro.navigateTo({
-      url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+      url: '/pages/activity/group/index?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+      // url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   // 去增值活动
@@ -293,7 +312,7 @@ export default class PaySuccess extends Component<Props> {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.business_list.xpoint);
       let latitude = parseFloat(this.state.business_list.ypoint);
-      let url = window.location;
+      let url = window.location.href;
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
@@ -361,6 +380,16 @@ export default class PaySuccess extends Component<Props> {
         })
       })
   }
+
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
   render() {
     return (
       <View className="merchant-details">
@@ -412,7 +441,7 @@ export default class PaySuccess extends Component<Props> {
             <View className="hidden-box" id="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
               {
                 this.state.activity_group.map((item) => (
-                  <View className="group-purchase bcfff _pintuan" key={item.name} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
+                  <View className="group-purchase bcfff _pintuan" key={item.name}>
                     <View style={{ height: "5px" }}></View>
                     <View className="hd">
                       <View className="flex center tuan" style={{ paddingBottom: "10px", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
@@ -423,7 +452,7 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
@@ -433,7 +462,7 @@ export default class PaySuccess extends Component<Props> {
                           </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
@@ -453,7 +482,7 @@ export default class PaySuccess extends Component<Props> {
                           <Text className="money">￥{item.participation_money}</Text>
                           {/* <Text className="count">已拼{item.participation_number}件</Text> */}
                         </View>
-                        <Button className="btn-go" >立刻拼团</Button>
+                        <Button className="btn-go" onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >立刻拼团</Button>
                       </View>
                     </View>
                   </View>
@@ -521,7 +550,7 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.youhui_type == 1 ? (
-                        <View className="image-list" style={{ position: "relative", marginBottom: "5px" }}>
+                        <View className="image-list" style={{ position: "relative", marginBottom: "5px" }} onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                           {
                             item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
                               <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} />
@@ -546,13 +575,13 @@ export default class PaySuccess extends Component<Props> {
                           </View>
                         </View>
                       ) : (
-                          !item.gift_id ? <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                          !item.gift_id ? <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                             <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                               <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                             </View>
-                            <Image className="image" src={item.image_url} style={{ marginLeft: "7px" }} />
+                            <Image className="image" src={item.images[0]} style={{ marginLeft: "7px" }} />
                           </View> :
-                            <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }}>
+                            <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                               <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                                 <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                               </View>
@@ -613,7 +642,7 @@ export default class PaySuccess extends Component<Props> {
                     </View>
                     <View className="right" style={{ position: 'absolute', right: '20PX' }}>
                       <View className="money">￥<Text>{item.pay_money}</Text></View>
-                      <Button className="btn-buy" onClick={this.handleClick4.bind(this, item.id)} >立即购买</Button>
+                      <Button className="btn-buy" >立即购买</Button>
                     </View>
                   </View>
                 ))
@@ -639,7 +668,7 @@ export default class PaySuccess extends Component<Props> {
           this.state.exchangeCouponList.length == 0 ? <View></View> : <View style={{ background: "#fff", paddingTop: "12px" }}>
             <View className="merchant-details__tit" >
               <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/hui.png" />
-              <Text className="fwb">优惠信息</Text>
+              <Text className="fwb">特惠商品</Text>
             </View>
             <View className="hidden-box" style={{ width: "100%", overflow: "hidden", height: this.state.exchangeCouponList_bull ? "auto" : "5.4rem" }}>
               {
@@ -654,7 +683,7 @@ export default class PaySuccess extends Component<Props> {
                           <View className="money" style={{ position: 'absolute', left: '0' }}>￥{item.pay_money}</View>
                         </View>
                       </View>
-                      <Button className="btn-buy" onClick={this.handleClick4.bind(this, item.id)} >立即购买</Button>
+                      <Button className="btn-buy" >立即购买</Button>
                     </View>
                   </View>
                 ))
@@ -720,6 +749,15 @@ export default class PaySuccess extends Component<Props> {
                 }
               </View>
             </View>
+        }
+
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '0px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
         }
 
       </View>

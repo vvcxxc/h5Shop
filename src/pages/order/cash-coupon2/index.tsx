@@ -23,7 +23,7 @@ interface Props {
 //type: 0为空白，1再来一单
 // bg_img_type: 0为灰色，1为蓝色,2为灰色已使用
 
-/**现金优惠券 */
+/**核销券 */
 export default class CashCoupon extends Component<Props> {
   state = {};
 
@@ -69,17 +69,17 @@ export default class CashCoupon extends Component<Props> {
             </View>
           </View>
           <View className="item content" style={{ position: "relative" }}>
-            <View className="heads flex">
+            <View className="heads flex" style={{   background: "transparent",  alignItems: "center"}}>
             {
                 this.props.bg_img_type == 1 ?
                   <View className="labels flex center" >
-                    <Image src={quan} style={{ height: "100%", width: "40px" }} />
+                    <Image  className="labelimg" src={quan} />
                   </View> :
                   <View className="labels flex center">
-                    <Image src={quan2} style={{ height: "100%", width: "40px" }} />
+                    <Image   className="labelimg" src={quan2}  />
                   </View>
               }
-              <View style={{width:"135px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace: "nowrap"}}>{this.props.sname}</View>
+              <View style={{width:"135px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace: "nowrap",height:"100%",display:"inline-block",lineHeight:1,paddingTop:"3px"}}>{this.props.sname}</View>
             </View>
             {/* <View className="date" >{this.props.list_brief}</View> */}
             <View className="info" >{this.props.timer}</View>

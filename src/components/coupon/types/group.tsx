@@ -13,7 +13,7 @@ export default class CouponGroup extends Component<CouponProp> {
   render() {
     const { data, onAction } = this.props
     return (
-      <View className="coupon">
+      <View className="coupon"  data-action="jump" data-type={TYPE_GROUP} onClick={onAction}>
         <View className="avatar">
           <Image className="image" src={data.image} />
           <View className="classify">团购券</View>
@@ -46,7 +46,7 @@ export default class CouponGroup extends Component<CouponProp> {
             <View className="text">已参与{data.participate_number || '0'}</View>
             <View className="group-number">{data.number || '0'}人团</View>
           </View>
-          <Button className="buy" data-action="jump" data-type={TYPE_GROUP} onClick={onAction}>去开团</Button>
+          <Button className="buy">去开团</Button>
         </View>
       </View>
     )

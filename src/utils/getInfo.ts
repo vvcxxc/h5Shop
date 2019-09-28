@@ -117,7 +117,6 @@ export const getOpenid = (code: string): Promise<any> => {
 // }
 export const getLocation = () => {
   let type = getBrowserType();
-  console.log(type, "8989");
   if (type == 'wechat') {
     // return new Promise((resolve) => {
     //   resolve({

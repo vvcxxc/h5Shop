@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro"
 import { Block, Image, Button, View, Text, Input } from "@tarojs/components"
 import "./style.styl"
 
-export default class GiftWriteInfo extends Component<{data: any; onWrite: any; onAction: any}> {
+export default class GiftWriteInfo extends Component<{data: any; onWrite: any; onAction: any; info: any}> {
   static defaultProps = {
     data: null,
     onWrite: null,
@@ -18,7 +18,8 @@ export default class GiftWriteInfo extends Component<{data: any; onWrite: any; o
     onAction(action)
   }
   render() {
-    const { data, onWrite } = this.props
+    const { data, onWrite, info } = this.props
+    console.log(info)
     return (
       <Block>
         <View className="gift-write-info">
@@ -29,9 +30,9 @@ export default class GiftWriteInfo extends Component<{data: any; onWrite: any; o
               <Text className="text">请认真填写您的收货地址</Text>
             </View>
             <View className="area-write">
-              <Input type="text" onInput={onWrite} data-type="receiver_name" value="" placeholder="请输入您的姓名" className="item" />
-              <Input type="text" onInput={onWrite} data-type="receiver_phone" value="" placeholder="请输入您的联系方式" className="item" />
-              <Input type="text" onInput={onWrite} data-type="receiver_address" value="" placeholder="请输入您的详细地址" className="item" />
+              <Input type="text" onInput={onWrite} data-type="receiver_name" value={info.receiver_name} placeholder="请输入您的姓名" className="item" />
+              <Input type="text" onInput={onWrite} data-type="receiver_phone" value={info.receiver_phone} placeholder="请输入您的联系方式" className="item" />
+              <Input type="text" onInput={onWrite} data-type="receiver_address" value={info.receiver_address} placeholder="请输入您的详细地址" className="item" />
             </View>
             <Button className="action" data-action="submit" onClick={this.handleClick}>确认提交</Button>
             <View className="close" data-action="close" onClick={this.handleClick}>

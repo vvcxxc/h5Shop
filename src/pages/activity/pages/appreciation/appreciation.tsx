@@ -36,6 +36,7 @@ type State = {
   isInvite: boolean;
   isGet: boolean;
   isShare: boolean;
+  isFromShare: boolean;
 };
 const share_url = process.env.APPRE_URL
 export default class Appreciation extends Component {
@@ -58,9 +59,20 @@ export default class Appreciation extends Component {
     isInvite: false,
     isAppreciation: false,
     isGet: false,
-    isShare: false
+    isShare: false,
+
+    isFromShare: false
+  }
+  componentDidShow() {
+    this.share()
   }
   async componentWillMount() {
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
     // Taro.showShareMenu()
     const { id = "1095" } = this.$router.params
     /**
@@ -80,7 +92,7 @@ export default class Appreciation extends Component {
   }
 
   onShareAppMessage() {
-    const { getTextContent: { title, small_img: imageUrl  } } = this.state.basicinfo
+    const { getTextContent: { title, small_img: imageUrl } } = this.state.basicinfo
     const { id = "1095" } = this.$router.params
     return {
       title,
@@ -116,9 +128,9 @@ export default class Appreciation extends Component {
   /**
    * 点击动作
    */
-  handleClick =(e)=> {
+  handleClick = (e) => {
     const { action } = e.currentTarget.dataset
-    switch(action) {
+    switch (action) {
       case ACTION_JUMP: {
         const { id, gift_id, activity_id } = this.state.basicinfo.userYonhuiInfo
         this.handleAction(action, {
@@ -144,7 +156,7 @@ export default class Appreciation extends Component {
    * 用户动作集中处理
    */
   handleAction = (action: string, data: any) => {
-    switch(action) {
+    switch (action) {
       case ACTION_APPRECIATION:
         this.fetchAppreciation()
         break
@@ -243,24 +255,32 @@ export default class Appreciation extends Component {
     this.handleCalculate(couponinfo, userCouponStatus)
     this.setState({
       basicinfo: data
-    })
+    }, () => { this.share(); })
   }
   share = () => {
     const { id = "" } = this.$router.params
     let shareInfo = this.state.basicinfo.getTextContent
-    this.setState({isShare: true})
-
-      wx.updateAppMessageShareData({
-        title: shareInfo.title, // 分享标题
-        desc: shareInfo.desc, // 分享描述
-        link: share_url+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: shareInfo.small_img, // 分享图标
-      })
+    wx.updateAppMessageShareData({
+      title: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，快帮我点一下！' : '我正在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，就差你的助力了，点一下就好！',
+      desc: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在参加' + this.state.basicinfo.userYonhuiInfo.name + '活动，快来帮我助力一下，买券还送惊喜礼品哦！' : '我在参加' + this.state.basicinfo.userYonhuiInfo.store_name + '增值券抢购活动，就差你的帮忙了，快来帮我增值一下，拜托拜托！', // 分享描述
+      link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
+    })
 
   }
   closeShare = () => {
-    this.setState({isShare: false});
+    this.setState({ isShare: false });
   }
+
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
   render() {
     const {
       giftBasicInfo,
@@ -294,14 +314,14 @@ export default class Appreciation extends Component {
               buttonstatus ? buttonstatus.isself == 1 ? (
                 <View className="area-title">邀请好友增值</View>
               ) : (
-                <View className="area-title">帮{userinfo.user_name}增值</View>
-              ) : null
+                  <View className="area-title">帮{userinfo.user_name}增值</View>
+                ) : null
             }
 
             <View className="area-panel">
               <View className="user-info">
                 <Image className="icon" src={require('../../../../assets/shop.png')} />
-                <View className="text" style={{fontWeight:600}}>{couponinfo ? couponinfo.store_name : ''}</View>
+                <View className="text" style={{ fontWeight: 600 }}>{couponinfo ? couponinfo.store_name : ''}</View>
               </View>
               {/* 增值券 */}
               {
@@ -316,14 +336,14 @@ export default class Appreciation extends Component {
                     {
                       gift_id ? (
                         <View>
-                            <View style={{display: 'flex', justifyContent: 'space-between'}}>
+                          <View style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <View>
-                              <Image src={couponinfo.image} className='coupon_image'/>
+                              <Image src={couponinfo.image} className='coupon_image' />
                             </View>
                             <View className='gift_image'>
-                              <Image src={cover_image} className='coupon_image' style={{position: 'absolute', top: 0, left: 0}}/>
+                              <Image src={cover_image} className='coupon_image' style={{ position: 'absolute', top: 0, left: 0 }} />
                               <Image src={require('../../../business/border.png')} className='border_image' />
-                              <Image src={require('../../../business/qiu.png')} className='qiu_image'/>
+                              <Image src={require('../../../business/qiu.png')} className='qiu_image' />
                             </View>
                           </View>
                           <View className='coupon_name'>{couponinfo.name}</View>
@@ -331,16 +351,16 @@ export default class Appreciation extends Component {
                         </View>
 
                       ) : (
-                        <View style={{display: 'flex', justifyContent: 'space-between'}}>
-                          <View>
-                            <Image src={couponinfo.image} className='coupon_image'/>
+                          <View style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <View>
+                              <Image src={couponinfo.image} className='coupon_image' />
+                            </View>
+                            <View className='coupon_infos'>
+                              <View className='coupon_name'>{couponinfo.name}</View>
+                              <View>活动时间：{dateTime.activity_begin_time}-{dateTime.activity_end_time}</View>
+                            </View>
                           </View>
-                          <View className='coupon_infos'>
-                            <View className='coupon_name'>{couponinfo.name}</View>
-                            <View>活动时间：{dateTime.activity_begin_time}-{dateTime.activity_end_time}</View>
-                          </View>
-                      </View>
-                      )
+                        )
                     }
                   </View>
                 ) : null : null
@@ -360,14 +380,14 @@ export default class Appreciation extends Component {
             <View className="area-action">
               {
                 isAppreciation
-                ? <Button
+                  ? <Button
                     className="item action-appreaciation"
                     data-action="appreciation"
                     onClick={this.handleClick}
                   >
                     点击增值
                   </Button>
-                : <Button className="item action-appreaciation">
+                  : <Button className="item action-appreaciation">
                     已经增值
                   </Button>
               }
@@ -386,7 +406,12 @@ export default class Appreciation extends Component {
                 isInvite && (
                   <Button
                     className="item action-invite"
-                    onClick={this.share}
+                    onClick={
+                      () => {
+                        this.setState({ isShare: true })
+                        this.share();
+                      }
+                    }
                   >
                     邀请好友增值
                   </Button>
@@ -471,15 +496,23 @@ export default class Appreciation extends Component {
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
                 <View className='share_text text_top'>
-                  快点分享给好友
+                  点击分享给好友
                 </View>
                 <View className='share_text'>
                   一起增值领礼品吧
                 </View>
-                <Image src={require('../../../../assets/share_arro.png')} className='share_img'/>
+                <Image src={require('../../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
           ) : null
+        }
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '0px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
         }
       </Block>
     )

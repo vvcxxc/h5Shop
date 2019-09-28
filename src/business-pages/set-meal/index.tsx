@@ -10,11 +10,11 @@ import AddressImg from '../../assets/address.png'
 import { getLocation } from "@/utils/getInfo"
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
-import isArray = require("lodash/isArray");
 
+const share_url = process.env.SETMEAL_URL;
 export default class SetMeal extends Component {
   config = {
-    navigationBarTitleText: "优惠信息"
+    navigationBarTitleText: "特惠商品"
   };
 
   state = {
@@ -30,13 +30,13 @@ export default class SetMeal extends Component {
       collect: "0",
       description: [],
       end_time: "",
-      icon: "h",
-      id: 1311,
+      icon: "",
+      id: 0,
       image: "",
       image_type: 1,
       list_brief: "",
       own: "",
-      label: ['1'],
+      label: [],
       pay_money: "",
       return_money: "",
       yname: "",
@@ -45,7 +45,7 @@ export default class SetMeal extends Component {
     },
     store: {
       brief: "",
-      id: 717,
+      id: 0,
       open_time: "",
       route: "",
       saddress: "",
@@ -58,7 +58,7 @@ export default class SetMeal extends Component {
     },
     goods_album: [
       {
-        id: 700,
+        id: 0,
         image_url: ""
       }
     ],
@@ -66,7 +66,7 @@ export default class SetMeal extends Component {
       begin_time: "",
       brief: "",
       end_time: "",
-      id: 1283,
+      id: 0,
       image: "",
       list_brief: "",
       open_time: "",
@@ -76,11 +76,23 @@ export default class SetMeal extends Component {
       yname: "",
       youhui_type: 0,
       expire_day: '',
-      total_fee: ''
+      total_fee: '',
+
+      isFromShare: false
     }]
   };
 
+  componentDidShow() {
+    this.toShare();
+  }
+  
   componentWillMount() {
+    let arrs = Taro.getCurrentPages()
+    if (arrs.length <= 1) {
+      this.setState({
+        isFromShare: true
+      })
+    }
     Taro.showLoading({
       title: 'loading',
     })
@@ -107,6 +119,8 @@ export default class SetMeal extends Component {
             store: res.data.info.store,
             goods_album: res.data.info.goods_album,
             recommend: res.data.recommend.data
+          }, () => {
+            this.toShare();
           })
           Taro.hideLoading()
         }).catch(function (error) {
@@ -126,12 +140,44 @@ export default class SetMeal extends Component {
         })
       }, 2000)
     })
-
-
   }
-  componentDidMount() {
 
+  toShare = () => {
+    let url = window.location.href;
+    let titleMsg = this.state.store.sname + '正在派发' + this.state.coupon.return_money + '元兑换券，手慢无，速抢！';
+    let descMsg = '拼手速的时候来了，超值兑换券限量抢购，手慢就没了！速速戳进来一起领取！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + this.$router.params.id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
   }
+
   handleClick = (id, e) => {
     console.log(id)
     Taro.navigateTo({
@@ -176,7 +222,7 @@ export default class SetMeal extends Component {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.store.xpoint);
       let latitude = parseFloat(this.state.store.ypoint);
-      let url = window.location;
+      let url = window.location.href;
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
@@ -223,6 +269,16 @@ export default class SetMeal extends Component {
     }
     e.stopPropagation();
   }
+
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.navigateTo({
+      url: '/'
+    })
+  }
+
   render() {
     return (
       <View className="set-meal">
@@ -271,17 +327,17 @@ export default class SetMeal extends Component {
             <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('随时退') !== -1 ? '' : '#fff' }}>随时退</Text>
             <Text className="tag-text" style={{ backgroundColor: this.state.coupon.label.indexOf('免预约') !== -1 ? '' : '#fff' }}>免预约</Text> */}
             {
-                   this.state.coupon.label.indexOf('可叠加') !== -1 ?
-                    <Text className="tag-text">可叠加</Text> : null
-                }
-                {
-                   this.state.coupon.label.indexOf('随时退') !== -1 ?
-                    <Text className="tag-text">随时退</Text> : null
-                }
-                {
-                   this.state.coupon.label.indexOf('免预约') !== -1 ?
-                    <Text className="tag-text"  >免预约</Text> : null
-                }
+              this.state.coupon.label && this.state.coupon.label.indexOf('可叠加') !== -1 ?
+                <Text className="tag-text">可叠加</Text> : null
+            }
+            {
+              this.state.coupon.label && this.state.coupon.label.indexOf('随时退') !== -1 ?
+                <Text className="tag-text">随时退</Text> : null
+            }
+            {
+              this.state.coupon.label && this.state.coupon.label.indexOf('免预约') !== -1 ?
+                <Text className="tag-text"  >免预约</Text> : null
+            }
           </View>
         </View>
         <View className="shop mt20 pd30 bcff" onClick={this.handleClick2.bind(this, this.state.store.id)}>
@@ -347,7 +403,7 @@ export default class SetMeal extends Component {
               </View>
               {
                 this.state.goods_album.map((item) => (
-                  <Image src={item.image_url} style={{ width: "100%",borderRadius: "8px"}} key={item.id} />
+                  <Image src={item.image_url} style={{ width: "100%", borderRadius: "8px" }} key={item.id} />
                 ))
               }
 
@@ -378,6 +434,15 @@ export default class SetMeal extends Component {
             <View><Button onClick={this.handleClick.bind(this, this.state.coupon.id)} className="btn-buy">立即抢购</Button></View>
           </View>
         </View>
+
+        {/* 去首页 */}
+        {
+          this.state.isFromShare ? (
+            <View style={{ position: 'fixed', bottom: '50px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+            </View>
+          ) : ''
+        }
       </View>
     );
   }

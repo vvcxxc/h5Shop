@@ -60,7 +60,8 @@ export default class List extends Component {
           })
         } else {
           Taro.navigateTo({
-            url: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`
+            url: '/pages/activity/group/index?id=' + id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
+            // url: `/pages/activity/pages/detail/detail?id=${id}&type=${type}&activity_id=${activity_id}&gift_id=${gift_id}`
           })
         }
         break
@@ -72,6 +73,16 @@ export default class List extends Component {
   /**
    * 获取优惠券
    */
+<<<<<<< HEAD
+  async fetchCoupon(type: number) {
+    const location = await getLocation()
+    console.log(location);
+
+    const locationParams = {
+      xpoint: location.lng || "",
+      ypoint: location.lat || ""
+    }
+=======
   fetchCoupon = async (type: number) => {
     // const location = await getLocation()
     let locationParams;
@@ -85,6 +96,7 @@ export default class List extends Component {
     //   xpoint: location.longitude || "",
     //   ypoint: location.latitude || ""
     // }
+>>>>>>> 9f32fcb699bbe6c8644041c21b5bf593269cb154
 
     console.log(location, "~~~~~~~~~~~~~~~~~")
     const {
