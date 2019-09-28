@@ -84,7 +84,7 @@ export default class Activity extends Component<any>  {
     }
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
 
     getLocation().then((res: any) => {
       this.setState({
