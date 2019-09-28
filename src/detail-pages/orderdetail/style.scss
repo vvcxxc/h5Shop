@@ -1,8 +1,17 @@
 .a_head {
     background-color: #F2F2F2;
     padding: 23px 17px;
+    position: relative;
 }
-
+.a_head_content{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    // background: rgba(0,0,0,.7);
+    width:100%;
+    height: 100%;
+}
 .a_buyBox {
     margin-bottom: 13px;
     background-color: #fff;

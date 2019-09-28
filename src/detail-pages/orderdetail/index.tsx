@@ -123,6 +123,7 @@ export default class Orderdetail extends Component {
     return (
       <View className='index' >
         <View className='a_head' >
+        <View className='a_head_content' onClick={(e)=>{e.stopPropagation()}}></View>
           {
             this.state.defaultData.source == 4 ? <CashCoupon3 bg_img_type={this.state.defaultData.status == 1 ? 1 : (this.state.defaultData.status == 2 ? 2 : 0)} init_money={defaultData.init_money} money={defaultData.money} expire_day={defaultData.expire_day} appreciation_money={defaultData.appreciation_money*1 + defaultData.init_money*1} total_fee={defaultData.total_fee} type={defaultData.coupons_type}/> :
             this.state.defaultData.coupons_type == 1 && this.state.defaultData.source != 4
