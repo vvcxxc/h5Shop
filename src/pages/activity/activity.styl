@@ -1,6 +1,6 @@
 
 @import '../../utils/config.styl'
-page,body 
+page,body
   background #fff
 
 .activity
@@ -67,7 +67,7 @@ page,body
 
 .white-space
   height 28px;
-  background #fff;  
+  background #fff;
 
 //.tab_navbar
   //height 110px
@@ -80,6 +80,7 @@ page,body
       overflow-x: auto
       overflow-y: hidden
       padding-left: 16px
+      box-sizing: border-box
       .label
         height 100%
         line-height 110px
@@ -136,9 +137,9 @@ page,body
         right 0;
         bottom 0;
 
-        
 
-.store_item 
+
+.store_item
   display flex
   padding 0 15px
   height 280px
@@ -156,7 +157,7 @@ page,body
     display flex
     flex-direction column
     justify-content space-between
-    .store_desc 
+    .store_desc
       .store_name
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -223,7 +224,7 @@ page,body
     font-weight 700
     font-size 36px
     margin-bottom 10px
-  .nearby_store_item 
+  .nearby_store_item
     display flex
     height 200px
     margin-bottom 15px
@@ -278,4 +279,8 @@ page,body
         background #fff
         color #f16953
         border 1px solid #f16953
-
+//
+// 禁用滚动条
+// ::-webkit-scrollbar{
+//   display:none;
+// }
