@@ -368,7 +368,7 @@ export default class Activity extends Component<any>  {
                                                 }
                                                 {
                                                     item.gift_name ? (
-                                                        <Text className="store_tips_item">{item.gift_name}</Text>
+                                                        <Text className="store_tips_item">送{item.gift_name}</Text>
                                                     ) : ''
                                                 }
                                             </View>
@@ -392,7 +392,7 @@ export default class Activity extends Component<any>  {
                                             <View className="store_other_info">
                                                 <View className="store_any">
                                                     {/* <Text className="store_follow">关注的店 - </Text> */}
-                                                    <Text className="store_follow_name">{item.store_name}</Text>
+                                                    <View className="store_follow_name">{item.store_name}</View>
                                                 </View>
                                                 <View className="store_distance">
                                                     <Text className="store_distance_num">{item.distance}</Text>
