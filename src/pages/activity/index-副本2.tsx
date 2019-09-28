@@ -21,9 +21,7 @@ export default class Activity extends Component {
   }
 
   state = {
-    xPoint: '',
-    yPoint: '',
-    dataList: [],
+
     indexGroup: [],
     tabDistanceTop: 0,
     tabHeight: 0,
@@ -51,12 +49,36 @@ export default class Activity extends Component {
     downText: '下拉刷新',
     start_p: {},
     scrollY: true,
-    dargState: 0//刷新状态 0不做操作 1刷新 -1加载更多
+    dargState: 0,//刷新状态 0不做操作 1刷新 -1加载更多
 
+
+    // 定位
+    yPoint: 0,
+    xPoint: 0,
+    // 数据列表
+    dataList: [],
+    // 分页
+    page: 1,
+    // 用来判断有无数据然后发请求
+    flag: true,
+    // 广告
+    cityId: 1942,
+    need_jump: 0,
+    indexImgId: 0,
+    adLogId: 0,
+    indexImg: ''
   }
 
   componentDidMount = () => {
-    this.requestTab()
+    this.requestTab();
+
+    // 获取广告
+    let data: any = Taro.getStorageSync('router')
+    this.setState({
+      city: data.city_id
+    }, () => {
+      this.getAdvertising()
+    })
   }
 
   // 获取标题列表
@@ -64,19 +86,14 @@ export default class Activity extends Component {
     Taro.showLoading({
       title: 'loading',
     })
+
+
     getLocation().then((res: any) => {
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
       }, () => {
-        this.searchList('all')
-      })
-    }).catch(err => {
-      this.setState({
-        yPoint: '',
-        xPoint: ''
-      }, () => {
-        this.searchList('all')
+        this.getAllData()
       })
     })
 
@@ -85,82 +102,149 @@ export default class Activity extends Component {
         { name: '全部', id: 'all' },
         { name: '拼团', id: 'pintuan' },
         { name: '增值', id: 'zengzhi' },
-        { name: '关注', id: 'guanzhu' },
-        { name: '丽人', id: 'liren' },
-        { name: '餐饮', id: 'canyin' },
-        { name: '休闲', id: 'xiuxian' },
-        { name: '服饰', id: 'fushi' },
-        { name: '体育', id: 'tiyu' },
       ]
     })
-  }
-
-
-  searchList = (id) => {
-    Taro.showLoading({
-      title: 'loading',
-    });
-    let url;
-    switch (id) {
-      case 'all': {
-        url = 'api/wap/zero/index'
-        break;
-      }
-      case 'pintuan': {
-        url = 'api/wap/user/getYonhuiActiveGroupList'
-        break;
-      }
-      case 'zengzhi': {
-        url = 'api/wap/user/appreciation/getYouhuiList'
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-    request({
-      url: url,
-      method: "GET",
-      data: {
-        xpoint: this.state.xPoint,
-        ypoint: this.state.yPoint
-      }
-    })
-      .then((res: any) => {
-        console.log('request',id,res);
-        Taro.hideLoading()
-        switch (id) {
-          case 'all': {
-            this.setState({ dataList: res.data.recommend.data });
-            break;
-          }
-          case 'zengzhi': {
-            this.setState({ dataList: res.data.youhui.data });
-            break;
-          }
-          default: {
-            this.setState({ dataList: res.data });
-            break;
-          }
-        }
-
-      })
   }
 
   handlerTablChange(current, id, _this) {
     this.setState({
       current,
-      indexGroup: []
-    },()=>{
-      this.searchList(id)
+      indexGroup: [],
+      dataList: [],
+      page: 1,
+      flag: true
+    }, async () => {
+      if (current == 0) {
+        this.getAllData()
+      } else if (current == 1) {
+        this.getGroupData()
+      } else if (current == 2) {
+        this.getAppreciationData()
+      }
     });
-    // 根据current值来获取对应的商店数据然后存到storeList中
-
   }
 
 
+  // 获取全部的数据
+  getAllData = () => {
+    Taro.showLoading({
+      title: 'loading'
+    })
+    request({
+      url: 'api/wap/zero/index2',
+      method: 'GET',
+      data: {
+        xpoint: this.state.xPoint,
+        ypoint: this.state.yPoint,
+        page: this.state.page
+      }
+    }).then(async res => {
+      if (res.data.length != 0) {
+        await this.setState({
+          dataList: res.data.concat(this.state.dataList)
+        })
+      } else if (res.data.length == 0) {
+        Taro.showToast({
+          title: '暂无更多数据',
+          icon: 'none'
+        })
+        this.setState({
+          flag: false
+        })
+      }
+      Taro.hideLoading()
+    })
+  }
+
+  // 获取增值的数据
+  getAppreciationData = () => {
+    Taro.showLoading({
+      title: 'loading'
+    })
+    request({
+      url: 'api/wap/user/appreciation/getYouhuiList2',
+      method: 'GET',
+      data: {
+        xpoint: this.state.xPoint,
+        ypoint: this.state.yPoint,
+        page: this.state.page
+      }
+    }).then(async res => {
+      if (res.data.length != 0) {
+        await this.setState({
+          dataList: res.data.concat(this.state.dataList)
+        })
+      } else if (res.data.length === 0) {
+        console.log('getAppreciationData:暂无更多数据')
+        Taro.showToast({
+          title: '暂无更多数据',
+          icon: 'none'
+        })
+        this.setState({
+          flag: false
+        })
+      }
+
+      Taro.hideLoading()
+    })
+  }
+
+  // 获取拼团的数据
+  getGroupData = () => {
+    Taro.showLoading({
+      title: 'loading'
+    })
+    request({
+      url: 'api/wap/user/getYonhuiActiveGroupList',
+      method: 'GET',
+      data: {
+        xpoint: this.state.xPoint,
+        ypoint: this.state.yPoint,
+        page: this.state.page
+      }
+    }).then(async res => {
+      if (res.data.length != 0) {
+        await this.setState({
+          dataList: res.data.concat(this.state.dataList)
+        })
+      } else if (res.data.length == 0) {
+        Taro.showToast({
+          title: '暂无更多数据',
+          icon: 'none'
+        })
+        this.setState({
+          flag: false
+        })
+      }
+      Taro.hideLoading()
+    })
+  }
+
+
+
   onScrollToLower = () => {
-    console.log('aaa')
+    const { current, flag } = this.state;
+    if (current == 0 && flag) {
+      this.setState({
+        page: ++this.state.page
+      }, () => {
+        this.getAllData()
+      })
+
+    } else if (current == 1 && flag) {
+      this.setState({
+        page: ++this.state.page
+      }, () => {
+        this.getGroupData()
+      })
+
+    } else if (current == 2 && flag) {
+      this.setState({
+        page: ++this.state.page
+      }, () => {
+        this.getAppreciationData()
+      })
+    }
   }
 
   onScroll = (e) => {
@@ -313,6 +397,80 @@ export default class Activity extends Component {
 
   }
 
+  // get 广告
+  getAdvertising = () => {
+    console.log('广告')
+    request({
+      url: "v3/ads",
+      method: 'GET',
+      data: {
+        position_id: 2, //位置id
+        city_id: this.state.cityId
+      }
+    })
+      .then((res: any) => {
+        // console.log(res,'res');
+        if (res.code == 200) {
+          this.setState({ indexImg: res.data.pic })
+          this.setState({ indexImgId: res.data.id })
+          this.setState({ adLogId: res.data.adLogId })
+          this.setState({ need_jump: res.data.need_jump })
+        }
+
+      })
+
+  }
+  // 点击广告
+  advertOnclick = () => {
+    if (!this.state.need_jump) return
+    // let store_id = this.$router.params.store_id || sessionStorage.getItem('storeId')
+    let data = {}
+    // if (store_id) {
+    // data = {
+    //   ad_id: this.state.indexImgId, //广告id
+    //   ad_log_id: this.state.adLogId, //广告日志id
+    //   store_id
+    // }
+    // } else {
+    data = {
+      ad_id: this.state.indexImgId, //广告id
+      ad_log_id: this.state.adLogId //广告日志id
+    }
+    // }
+    request({
+      url: 'v3/ads/onclick',
+      data
+    })
+      .then((res: any) => {
+        let define: any = {
+          [1]: '/pages/business/index?id=' + res.data.store_id,//店铺
+          [2]: '/business-pages/ticket-buy/index?id=' + res.data.coupon_id,//现金券
+          [3]: '/business-pages/set-meal/index?id=' + res.data.coupon_id,//兑换券
+          [4]: '/pages/activity/pages/detail/detail?id=' + res.data.activity_id + '&type=1',//拼团
+          [5]: '/pages/activity/pages/detail/detail?id=' + res.data.activity_id + '&type=5'//增值
+        }
+        Taro.navigateTo({
+          url: define[res.data.popularize_type]
+        })
+      })
+  }
+
+  /**
+   * 路由跳转
+   */
+  handleNavigator = (item) => {
+    const { is_share, youhui_id, gift_id, activity_id } = item;
+    if (is_share == 1) {
+      Taro.navigateTo({
+        url: '/pages/activity/appreciation/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
+      })
+    } else {
+      Taro.navigateTo({
+        url: '/pages/activity/group/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+      })
+    }
+  }
+
   render() {
     const scrollTop = 0
     const Threshold = 20
@@ -341,7 +499,7 @@ export default class Activity extends Component {
         // onTouchEnd={this.touchEnd.bind(this)}
         >
           <View className="activity" id="activity">
-            <View className="head" id="head">
+            {/* <View className="head" id="head">
               <View className="search">
                 <View className="flex center container">
                   <View className="long-string" style="margin-right:15px;" />
@@ -351,8 +509,8 @@ export default class Activity extends Component {
 							    </View>
                 </View>
               </View>
-            </View>
-            <Image background-size="cover" src={carousel} className="area-banner" id="a" />
+            </View> */}
+            <Image onClick={this.advertOnclick} background-size="cover" src={this.state.indexImg} className="area-banner" />
           </View>
 
           <View className="white-space" id="whiteSpace"></View>
@@ -374,7 +532,7 @@ export default class Activity extends Component {
 
           <View className="show_data" id="showData">
 
-            <View className="checkBox_bar">
+            {/* <View className="checkBox_bar">
               {
                 this.state.checkBoxList.map(item => (
                   <View className="checkBox_wrap" key={item.id} style={this.state.indexGroup.indexOf(item.id) != -1 ? { border: '1px solid #fe7d70', color: "#fe7d70" } : { border: '1px solid #ccc', color: '#ccc' }} onClick={this.handleSelected.bind(this, item.id)}>
@@ -390,13 +548,13 @@ export default class Activity extends Component {
                   </View>
                 ))
               }
-            </View>
+            </View> */}
 
 
             {
-              this.state.dataList ? this.state.dataList.map((item: any, index) => {
+              this.state.dataList.length != 0 ? this.state.dataList.map((item: any, index) => {
                 return (
-                  <View className="store_item" key={item}>
+                  <View className="store_item" key={item} onClick={this.handleNavigator.bind(this, item)}>
                     <View className="store_img">
                       <Image background-size="cover" src={item.image} className="store_img_show" />
                     </View>
@@ -404,21 +562,38 @@ export default class Activity extends Component {
                       <View className="store_desc">
                         <Text className="store_name">{item.name}</Text>
                         <View className="store_tips">
-                          <Text className="store_tips_item">5人团</Text>
-                          <Text className="store_tips_item">送3000元耳机</Text>
+                          {
+                            item.is_share == 5 ? (
+                              <Text className="store_tips_item">{item.number}人团</Text>
+                            ) : ''
+                          }
+                          {
+                            item.gift_name ? (
+                              <Text className="store_tips_item">{item.gift_name}</Text>
+                            ) : ''
+                          }
                         </View>
                       </View>
                       <View className="store_msg">
                         <View className="store_price">
-                          <View className="store_price_new">￥{item.pay_money}</View>
                           {
-                            item.init_money ? <View className="store_price_old">￥{item.init_money}</View> : null
+                            item.is_share == 5 ? (
+                              <View>
+                                <Text className="store_price_new">￥{item.participation_money}</Text>
+                                <Text className="store_price_old">￥{item.pay_money}</Text>
+                              </View>
+                            ) : (
+                                <View>
+                                  <Text className="store_price_new">￥{item.pay_money}</Text>
+                                  <Text className="store_price_old">￥{item.return_money}</Text>
+                                </View>
+                              )
                           }
                         </View>
                         <View className="store_other_info">
                           <View className="store_any">
-                            <Text className="store_follow">关注的店 - </Text>
-                            <Text className="store_follow_name">{item.supplier_location_name}</Text>
+                            {/* <Text className="store_follow">关注的店 - </Text> */}
+                            <Text className="store_follow_name">{item.store_name}</Text>
                           </View>
                           <View className="store_distance">
                             <Text className="store_distance_num">{item.distance}</Text>
@@ -428,51 +603,26 @@ export default class Activity extends Component {
                     </View>
                   </View>
                 )
-              }) : null
+              }) : (
+                  <View>
+                    <View className="no_store">
+                      <Text>暂时没有活动，看看其他吧</Text>
+                    </View>
+                  </View>
+                )
             }
 
 
-            {/* 
-            <View className="store_item">
-              <View className="store_img">
-                <Image background-size="cover" src={carousel} className="store_img_show" />
-              </View>
-              <View className="store_info">
-                <View className="store_desc">
-                  <Text className="store_name">拼团活动拼团活动拼团活动拼团活动拼团活动拼团活动拼团活动拼团活动</Text>
-                  <View className="store_tips">
-                    <Text className="store_tips_item">5人团</Text>
-                    <Text className="store_tips_item">送3000元耳机</Text>
-                  </View>
-                </View>
-                <View className="store_msg">
-                  <View className="store_price">
-                    <Text className="store_price_new">￥100</Text>
-                    <Text className="store_price_old">￥300</Text>
-                  </View>
-                  <View className="store_other_info">
-                    <View className="store_any">
-                      <Text className="store_follow">关注的店 - </Text>
-                      <Text className="store_follow_name">杨大富的五金店</Text>
-                    </View>
-                    <View className="store_distance">
-                      <Text className="store_distance_num">3.5km</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View> */}
+
           </View>
 
 
-          <AtDivider className="divider">
+          {/* <AtDivider className="divider">
             <Image background-size="cover" src={logo} style={{ width: "150px", height: "50px" }} />
-          </AtDivider>
+          </AtDivider> */}
 
 
-          <View className="no_store">
-            <Text>暂时没有活动，看看其他吧</Text>
-          </View>
+
 
           {/* <View className="nearby_store">
             <View className="search_nearby">搜索附近</View>

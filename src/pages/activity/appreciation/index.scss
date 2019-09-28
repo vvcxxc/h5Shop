@@ -276,6 +276,10 @@
             font-size: 25px;
             text-align: left;
             line-height: 75px;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .appre_gift_giftmsgbox {
