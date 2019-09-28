@@ -260,7 +260,7 @@ export default class PaySuccess extends Component<Props> {
   gotoGroup(_id, gift_id, activity_id) {
     console.log('zhelia ')
     Taro.navigateTo({
-      url: '/pages/activity/group/index?id=' + _id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
+      url: '/pages/activity/group/index?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
       // url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }

@@ -16,6 +16,7 @@ import {
   listenQrcodeForGroup
 } from "@/api"
 import { getLocation } from "@/utils/getInfo"
+import { getTime } from '@/utils/common';
 import { GROUP_AREADY, UNUSED, USED } from "../../data"
 import { ACTION_JUMP, ACTION_USE, ACTION_VIEW, ACTION_CLOSE } from "@/utils/constants"
 import Coupon from "@/components/coupon/coupon"
@@ -34,7 +35,11 @@ interface State {
   base64: string;
   isShare: boolean;
   isFromShare: boolean;
+  isShowStartGroup: boolean;
+  time: any;
 }
+let timer2 = null
+let timer = null;
 const share_url = process.env.GROUP_URL
 export default class Group extends Component {
   config = {
@@ -51,7 +56,12 @@ export default class Group extends Component {
     base64: "",
     isShare: false,
 
-    isFromShare: false
+    isFromShare: false,
+    isShowStartGroup: false,
+    time: {
+      date: '',
+      display: 2
+    }
   }
 
   componentDidShow() {
@@ -77,6 +87,7 @@ export default class Group extends Component {
     })
     await this.fetchBasicinfo(id)
     this.fetchCoupon(location)
+    this.setTime()
   }
 
   // onShareAppMessage() {
@@ -115,14 +126,15 @@ export default class Group extends Component {
           dataId = data.id
         }
         Taro.navigateTo({
-          url: `/pages/activity/pages/detail/detail?id=${dataId || id}&type=${+type === 55 ? 55 : 5}&gift_id=${gift_id}&activity_id=${activity_id}&publictypeid=${dataId || publictypeid}`
+          // url: `/pages/activity/pages/detail/detail?id=${dataId || id}&type=${+type === 55 ? 55 : 5}&gift_id=${gift_id}&activity_id=${activity_id}&publictypeid=${dataId || publictypeid}`
+          url: `/pages/activity/group/index?id=${dataId || id}&type=${+type === 55 ? 55 : 5}&gift_id=${gift_id}&activity_id=${activity_id}&publictypeid=${dataId || publictypeid}`
         })
         break
       }
       case ACTION_VIEW: {
         const { gift_id, activity_id } = this.state.basicinfo
         Taro.navigateTo({
-          url: `/pages/gift/gift?gift_id=${gift_id}&activity_id=${activity_id}`
+          url: `/detail-pages/gift/gift?gift_id=${gift_id}&activity_id=${activity_id}`
         })
         break
       }
@@ -157,10 +169,12 @@ export default class Group extends Component {
     // const isFinish = false
     // const isJoin = true
     // const isShowUse = false
+    const isShowStartGroup = isFinish && !is_group_participation
     this.setState({
       isFinish,
       isJoin,
-      isShowUse
+      isShowUse,
+      isShowStartGroup
     })
   }
 
@@ -247,43 +261,15 @@ export default class Group extends Component {
   share = () => {
     const { id = "" } = this.$router.params
     let info = this.state.basicinfo.share;
-
-    // let url = location.href.split('#')[0];
-    // Taro.request({
-    //   url: 'http://test.api.supplier.tdianyi.com/wechat/getShareSign',
-    //   method: 'GET',
-    //   data: {
-    //     url
-    //   }
-    // }).then(res => {
-    //   console.log(res.data);
-    //   let { data } = res;
-    //   wx.config({
-    //     debug: true,
-    //     appId: data.appId,
-    //     timestamp: data.timestamp,
-    //     nonceStr: data.nonceStr,
-    //     signature: data.signature,
-    //     jsApiList: [
-    //       'updateAppMessageShareData'
-    //     ]
-    //   });
-    //   wx.ready(()=>{
-    //     wx.updateAppMessageShareData({
-    //       title: info.title, // 分享标题
-    //       desc: info.desc, // 分享描述
-    //       link: info.link+id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-    //       imgUrl: info.small_img, // 分享图标
-    //     })
-    //   })
-    // })
     wx.updateAppMessageShareData({
       title: this.state.basicinfo.gift_id ? this.state.basicinfo.participation_money + '元拼团！100%有奖，你还在等什么！' : '就差你啦！我在抢' + this.state.basicinfo.participation_money + '元套餐，快跟我一起拼吧！',
       desc: this.state.basicinfo.gift_id ? '【仅剩' + (this.state.basicinfo.number - this.state.basicinfo.participation_number) + '个名额】我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，还有惊喜礼品，等你来跟我一起拼！' : '买了不后悔！我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，快来跟我一起完成拼团吧。', // 分享描述
       link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
       imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
     })
-
+  }
+  clickShare = () =>{
+    this.setState({isShare: true})
   }
   closeShare = () => {
     this.setState({ isShare: false });
@@ -297,7 +283,33 @@ export default class Group extends Component {
       url: '/'
     })
   }
-
+   /**
+   * 定时
+   */
+  setTime = () => {
+    if(this.state.time.display <= 0){
+      clearTimeout(timer2)
+      return
+    }else{
+      timer2 = setTimeout(()=>{
+       clearTimeout(timer)
+       let time = getTime(this.state.basicinfo.activity_end_time)
+       this.setState({
+         time
+       })
+       this.setTime()
+     },1000)
+    }
+  }
+  toMoreGroup = () => {
+    Taro.navigateTo({
+      url: '/pages/activity/pages/list/list?type=5'
+    })
+  }
+  componentWillUnmount(){
+    clearTimeout(timer)
+    clearTimeout(timer2)
+  }
 
   render() {
     const {
@@ -309,7 +321,8 @@ export default class Group extends Component {
       isJoin,
       isQrcode,
       base64,
-      isShare
+      isShare,
+      isShowStartGroup
     } = this.state
     const surplus = basicinfo.number
       ? basicinfo.number - basicinfo.participation_number
@@ -347,7 +360,7 @@ export default class Group extends Component {
               </View>
               <View className="time">
                 <Text className="text">距离结束时间还剩:</Text>
-                <Text>{basicinfo.expire_time || "00:00:00"}</Text>
+                <Text>{this.state.time.date}</Text>
               </View>
               <ScrollView
                 scrollX
@@ -366,51 +379,89 @@ export default class Group extends Component {
                 </View>
               </ScrollView>
               <View className="group-tips">{groupDesc}</View>
-              <View className="actions">
-                {
-                  isJoin && (
-                    <Button
+              {
+                this.state.time.display > 0 ? (
+                  <View>
+                    {
+                    isShowStartGroup ? (<View className='actions'>
+                      <Button
                       className="item join"
                       data-action="jump"
                       data-publictypeid={basicinfo.id}
                       data-id={basicinfo.youhui_id}
-                      data-type="55"
-                      onClick={this.handleClick.bind(this)}
+                      data-type="5"
+                      onClick={this.handleClick}
                     >
-                      参加拼团
+                      我也要发起拼团
                     </Button>
-                  )
-                }
-                {
-                  isShowUse && (
-                    <Button
-                      className="item used"
-                      data-action="use"
-                      onClick={this.handleClick.bind(this)}
-                    >
-                      去使用
-                  </Button>
-                  )
-                }
-                {
-                  // 未完成就表示可以参团
-                  !isFinish && (
-                    <Button
-                      className="item invite"
-                      openType="share"
-                      onClick={
-                        () => {
-                          this.share();
-                          this.setState({ isShare: true })
-                        }
+                    </View>) : (
+                      <View className="actions">
+                      {
+                        isJoin && (
+                          <Button
+                            className="item join"
+                            data-action="jump"
+                            data-publictypeid={basicinfo.id}
+                            data-id={basicinfo.youhui_id}
+                            data-type="55"
+                            onClick={this.handleClick}
+                          >
+                            参加拼团
+                          </Button>
+                        )
                       }
-                    >
-                      邀请好友参团
+                      {
+                        isShowUse && (
+                          <Button
+                          className="item used"
+                          data-action="use"
+                          onClick={this.handleClick}
+                        >
+                          去使用
+                        </Button>
+                        )
+                      }
+                      {
+                        // 未完成就表示可以参团
+                        !isFinish && (
+                          <Button
+                          className="item invite"
+                          openType="share"
+                          onClick={this.clickShare}
+                        >
+                          邀请好友参团
+                        </Button>
+                        )
+                      }
+                    </View>
+                    )
+                  }
+                  </View>
+                ) : isShowUse && this.state.basicinfo.is_group_participation ? (
+                  (
+                    <View className="actions">
+                    <Button
+                    className="item used"
+                    data-action="use"
+                    onClick={this.handleClick}
+                  >
+                    去使用
                   </Button>
+                  </View>
                   )
-                }
-              </View>
+                ) :(
+                  <View className='actions'>
+                      <Button
+                      className="item used"
+                      onClick={this.toMoreGroup}
+                    >
+                      查看更多拼团送礼
+                    </Button>
+                    </View>
+                )
+              }
             </View>
+
             {
               giftBasicInfo.gift_title &&
               (

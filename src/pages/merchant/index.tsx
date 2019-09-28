@@ -53,9 +53,9 @@ export default class MerChantPage extends Component {
         data:router
       }
       let data: any = this.state.locationPosition
-      data.xpoint = res.data.xpoint
-      data.ypoint = res.data.ypoint
-      data.city_id = res.data.city_id
+      data.xpoint = res.data.xpoint || ''
+      data.ypoint = res.data.ypoint || ''
+      data.city_id = res.data.city_id || 1942
       data.pages = 1
       this.setState({ locationPosition: data }, () => {
         if (this.$router.params.value) {
@@ -66,6 +66,8 @@ export default class MerChantPage extends Component {
           this.requestData(this.state.locationPosition)
         }
       })
+    }else{
+      this.requestData({xpoint: '', ypoint: '', city_id: 1942, pages: 1})
     }
   }
 
@@ -76,8 +78,8 @@ export default class MerChantPage extends Component {
     request({
       url: 'v3/stores',
       data: {
-        xpoint: this.state.locationPosition.xpoint,
-        ypoint: this.state.locationPosition.ypoint,
+        xpoint: this.state.locationPosition.xpoint || '',
+        ypoint: this.state.locationPosition.ypoint || '',
         keyword: search
       },
     })
@@ -235,7 +237,7 @@ export default class MerChantPage extends Component {
   clearClick=()=>{
     this.setState({close:true})
   }
-  
+
   filteronScroll = (scroll) => {
 
   }
@@ -256,7 +258,7 @@ export default class MerChantPage extends Component {
             onChange={this.handlerSearch.bind(this)}
           />
         </View>
-        
+
         <FilterTotal
           onClick={this.titleOnClick.bind(this, 0)}
           onscroll={this.filteronScroll.bind(this)}

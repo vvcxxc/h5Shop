@@ -144,7 +144,7 @@ export default class SetMeal extends Component {
 
   toShare = () => {
     let url = window.location.href;
-    let titleMsg = this.state.store.sname + '正在派发' + this.state.coupon.return_money + '兑换券，手慢无，速抢！';
+    let titleMsg = this.state.store.sname + '正在派发' + this.state.coupon.return_money + '元兑换券，手慢无，速抢！';
     let descMsg = '拼手速的时候来了，超值兑换券限量抢购，手慢就没了！速速戳进来一起领取！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',

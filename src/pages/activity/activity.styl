@@ -1,3 +1,8 @@
+
+@import '../../utils/config.styl'
+page,body
+  background #fff
+
 .activity
   background-color #f1f1f1;
   //min-height 100vh
@@ -62,11 +67,11 @@
 
 .white-space
   height 28px;
-  background #fff;  
+  background #fff;
 
 //.tab_navbar
   //height 110px
-  .tab
+  .tab2
       height 110px
       //background: #fff
       width: 100%
@@ -75,10 +80,16 @@
       overflow-x: auto
       overflow-y: hidden
       padding-left: 16px
+      box-sizing: border-box
       .label
         height 100%
         line-height 110px
         border-bottom 4px solid #f6f6f6
+    .center2
+      align-items center
+      justify-content center
+      flex-direction column
+      display flex
     .active
       .label
         font-size: 37px
@@ -126,9 +137,9 @@
         right 0;
         bottom 0;
 
-        
 
-.store_item 
+
+.store_item
   display flex
   padding 0 15px
   height 280px
@@ -146,7 +157,7 @@
     display flex
     flex-direction column
     justify-content space-between
-    .store_desc 
+    .store_desc
       .store_name
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -167,10 +178,12 @@
       .store_price
         margin-bottom 5px
         .store_price_new
+          display inline-block
           font-size 36px
           font-weight 700
           color #fe7d70
         .store_price_old
+          display inline-block
           font-size 24px
           color #fe7d70
           text-decoration line-through
@@ -183,6 +196,10 @@
             color #fe7d70
           .store_follow_name
             color #ccc
+            width 300px
+            overflow hidden
+            text-overflow ellipsis
+            white-space nowrap
         .store_distance
           .store_distance_num
             color #ccc
@@ -207,7 +224,7 @@
     font-weight 700
     font-size 36px
     margin-bottom 10px
-  .nearby_store_item 
+  .nearby_store_item
     display flex
     height 200px
     margin-bottom 15px
@@ -262,8 +279,8 @@
         background #fff
         color #f16953
         border 1px solid #f16953
-
+//
 // 禁用滚动条
-::-webkit-scrollbar{
-  display:none;
-}
+// ::-webkit-scrollbar{
+//   display:none;
+// }

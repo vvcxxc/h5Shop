@@ -1,0 +1,117 @@
+.newPage {// 新页面
+  height 90vh;
+  width: 100vw;
+  .newPage_head{
+    padding-top 40px
+    height 485px
+    width 100vw;
+    background: url('../../assets/page_head.png') no-repeat;
+    background-size: 100vw 485px;
+    text-align: center;
+  }
+}
+
+.newPage_head{
+  .img_box{
+    .taro-img{
+        height 185px
+        width 185px
+        border-radius: 50%
+        border: 6px solid #FFBEB8;
+      img {
+        height 100%
+      }
+    }
+  }
+  .userName{
+    font-size:35px;
+    font-family:PingFang SC;
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    margin-bottom 26px
+  }
+
+  .giftMoney{
+    display: inline-block;
+    width 176px
+    height 48px
+    background:rgba(249,80,60,1);
+    box-shadow:0px 2px 3px 0px rgba(4,0,0,0.13);
+    border-radius:24px;
+    text-align: center;
+    .white {
+      font-size:22px;
+      font-family:PingFang SC;
+      color:rgba(255,255,255,1);
+      margin-right 5px
+    }
+    .yellow{
+      font-size: 28px
+      font-family:PingFang SC;
+      color: #ffcf28
+    }
+  }
+}
+
+.newPage_content{
+  display: flex;
+  justify-content: center;
+  .content_my {
+      width 654px
+      box-shadow:0px 5px 7px 0px rgba(0, 0, 0, 0.08);
+      border-radius:5px;
+      margin-top -120px
+      background-color: #fff
+    .list_my {
+      display: flex;
+      justify-content: space-between;
+      padding 36px 34px 35px 43px
+      border-bottom:1px solid #ededed;
+      .list_left{
+        display: flex;
+        .des {
+          font-size:30px;
+          font-family:PingFang SC;
+          font-weight:400;
+          color:#313131;
+        }
+        .taro-img{
+          width 41px
+          height 46px
+          margin-right 39px
+        }
+      }
+      .list_right{
+        display: flex
+        align-items: center
+        .back {
+          width 15px
+          height 28px
+          margin-left 16px
+        }
+        .prompt {
+          font-size:20px;
+          font-family:PingFang SC;
+          font-weight:400;
+          color:rgba(153,153,153,1);
+        }
+      }
+    }
+  }
+}
+
+
+.newPage_foot {
+    width: 100vw;
+    position fixed;
+    bottom:150px;
+    font-size:24px;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(255,102,84,1);
+    opacity:0.7;
+    text-align: center
+  .left {
+     color:#999999;
+  }
+}
