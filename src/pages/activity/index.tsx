@@ -92,6 +92,7 @@ export default class Activity extends Component<any>  {
     requestTab = () => {
         Taro.showLoading({
             title: 'loading',
+            mask:true
         })
 
 
@@ -114,6 +115,10 @@ export default class Activity extends Component<any>  {
     }
 
     handlerTablChange(current, id, _this) {
+        Taro.showLoading({
+            title: 'loading',
+            mask:true
+          })
         this.setState({
             current,
             indexGroup: [],
@@ -135,7 +140,8 @@ export default class Activity extends Component<any>  {
     // 获取全部的数据
     getAllData = () => {
         Taro.showLoading({
-            title: 'loading'
+            title: 'loading',
+            mask:true
         })
         request({
             url: 'api/wap/zero/index2',
@@ -166,7 +172,8 @@ export default class Activity extends Component<any>  {
     // 获取增值的数据
     getAppreciationData = () => {
         Taro.showLoading({
-            title: 'loading'
+            title: 'loading',
+            mask:true
         })
         request({
             url: 'api/wap/user/appreciation/getYouhuiList2',
@@ -199,7 +206,8 @@ export default class Activity extends Component<any>  {
     // 获取拼团的数据
     getGroupData = () => {
         Taro.showLoading({
-            title: 'loading'
+            title: 'loading',
+            mask:true
         })
         request({
             url: 'api/wap/user/getYonhuiActiveGroupList',
