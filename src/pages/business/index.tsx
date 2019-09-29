@@ -454,20 +454,20 @@ export default class PaySuccess extends Component<Props> {
                       item.gift_pic == "" || item.gift_pic == null ?
                         <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
-                            {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
-                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
-                              <View style={{ textDecoration: "line-through", height: "100%", fontSize: "16px", color: "rgba(225,225,225,.5)" }}>￥300</View>
-                            </View> */}
+                          <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: 3, padding: "5px 10px 5px 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex",justifyContent:"flex-end" }}>
+                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥{item.participation_money}</View>
+                              <View style={{ textDecoration: "line-through",  fontSize: "14px", color: "rgba(225,225,225,.5)",lineHeight: 1 ,display:"flex",flexDirection:"column",justifyContent:"flex-end",alignItems:"flex-end" }}>￥{item.pay_money}</View>
+                            </View>
                             <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                           </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
                         <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
-                            {/* <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: "3", padding: "5px 10px 0 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex" }}>
-                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥100</View>
-                              <View style={{ textDecoration: "line-through", height: "100%", fontSize: "16px", color: "rgba(225,225,225,.5)" }}>￥300</View>
-                            </View> */}
+                          <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: 3, padding: "5px 10px 5px 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex",justifyContent:"flex-end" }}>
+                              <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥{item.participation_money}</View>
+                              <View style={{ textDecoration: "line-through",  fontSize: "14px", color: "rgba(225,225,225,.5)",lineHeight: 1 ,display:"flex",flexDirection:"column",justifyContent:"flex-end",alignItems:"flex-end" }}>￥{item.pay_money}</View>
+                            </View>
                             <Image src={item.image_url} style={{ width: "100%", height: "100%" }} />
                           </View>                          <View className="image" style={{ position: "relative", display: "flex", background: "red" }}>
                             <Image src={require("./border.png")} style={{ width: "100%", height: "100%", position: 'absolute', top: '0px', left: '0px', zIndex: 2 }} />
