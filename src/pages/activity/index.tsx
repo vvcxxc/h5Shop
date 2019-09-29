@@ -14,7 +14,7 @@ export default class Activity extends Component<any>  {
 
   config: Config = {
     navigationBarTitleText: "活动中心",
-    enablePullDownRefresh: true,
+    // enablePullDownRefresh: true,
   }
 
   state = {
@@ -50,17 +50,18 @@ export default class Activity extends Component<any>  {
     indexImg: ''
   }
 
-  onPullDownRefresh() {
-    console.log('asdkjgfkjadfj')
-  }
 
   componentDidShow() {
-    
+
   }
 
   onReachBottom() {
     console.log('saddasdasd')
     const { current, flag } = this.state;
+    if(!this.state.dataList.length){
+      console.log('禁止触底')
+      return
+    }
     if (current == 0 && flag) {
       this.setState({
         page: ++this.state.page
@@ -85,7 +86,7 @@ export default class Activity extends Component<any>  {
   }
 
   componentWillMount = () => {
-
+    Taro.pageScrollTo({scrollTop: 0})
     getLocation().then((res: any) => {
       this.setState({
         yPoint: res.latitude || '',
@@ -157,6 +158,7 @@ export default class Activity extends Component<any>  {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length == 0) {
+        console.log(1)
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
@@ -189,7 +191,7 @@ export default class Activity extends Component<any>  {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length === 0) {
-        console.log('getAppreciationData:暂无更多数据')
+        console.log(2)
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
@@ -223,6 +225,7 @@ export default class Activity extends Component<any>  {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length == 0) {
+        console.log(3)
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
