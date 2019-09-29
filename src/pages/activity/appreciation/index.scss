@@ -676,7 +676,9 @@
                 color: #ee3131;
                 float: left;
                 line-height: 1;
-
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
             }
 
             .paymoney_price_info {
@@ -686,9 +688,9 @@
                 // float: left;
                 width: 203px;
                 line-height: 1;
-                // display: flex;
-                // flex-direction: column;
-                // justify-content: flex-end;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
             }
 
         }

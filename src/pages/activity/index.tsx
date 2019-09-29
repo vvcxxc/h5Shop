@@ -159,7 +159,8 @@ export default class Activity extends Component<any>  {
       } else if (res.data.length == 0) {
         Taro.showToast({
           title: '暂无更多数据',
-          icon: 'none'
+          icon: 'none',
+          duration:2000
         })
         this.setState({
           flag: false
@@ -191,7 +192,8 @@ export default class Activity extends Component<any>  {
         console.log('getAppreciationData:暂无更多数据')
         Taro.showToast({
           title: '暂无更多数据',
-          icon: 'none'
+          icon: 'none',
+          duration:2000
         })
         this.setState({
           flag: false
@@ -223,7 +225,8 @@ export default class Activity extends Component<any>  {
       } else if (res.data.length == 0) {
         Taro.showToast({
           title: '暂无更多数据',
-          icon: 'none'
+          icon: 'none',
+          duration:2000
         })
         this.setState({
           flag: false
@@ -374,7 +377,7 @@ export default class Activity extends Component<any>  {
                         }
                         {
                           item.gift_name ? (
-                            <Text className="store_tips_item">送{item.gift_name}</Text>
+                            <View className="store_tips_item">送{item.gift_name}</View>
                           ) : ''
                         }
                       </View>
