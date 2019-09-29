@@ -107,7 +107,6 @@ export default class Orderdetail extends Component {
           this.setState({ isApply: !this.state.isApply }, () => {
             Taro.showToast({ title: '退款失败', icon: 'none' })
           })
-
         }
       }).catch(() => {
         this.setState({ isApply: !this.state.isApply }, () => {
