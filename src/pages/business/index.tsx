@@ -731,21 +731,21 @@ export default class PaySuccess extends Component<Props> {
                             <Text className="tag-text" style={{ backgroundColor: item.label.indexOf('现金券') !== -1 ? '#fde8e5' : '#fff' }}>现金券</Text> */}
                             {
                               item.label.indexOf('免费礼品') !== -1 ?
-                                <Text className="tag-text">
+                                <View className="tag-text">
                                   <Image className="tag-textImg" src="http://oss.tdianyi.com/front/GcMRM4HjnkyGnkws5FAJT4hRwiMRFDRd.png" />
-                                </Text> : null
+                                </View> : null
                             }
                             {
                               item.label.indexOf('优秀商家') !== -1 ?
-                                <Text className="tag-text">
+                                <View className="tag-text">
                                   <Image className="tag-textImg" src="http://oss.tdianyi.com/front/pssNMjtQWPMsmdFj4JiX6MWYReFc4GGT.png" />
-                                </Text> : null
+                                </View> : null
                             }
                             {
                               item.label.indexOf('现金券') !== -1 ?
-                                <Text className="tag-text">
+                                <View className="tag-text">
                                   <Image className="tag-textImg" src="http://oss.tdianyi.com/front/Yi2sdtYnQ4axMaN6BMbbGCDW5iwK37wE.png" />
-                                </Text> : null
+                                </View> : null
                             }
                           </View>
                         </View>
