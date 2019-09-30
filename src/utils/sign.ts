@@ -17,7 +17,7 @@ export const Login = () => {
     }
 
     // Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1Njk2NjEyMTYsImV4cCI6MTU2OTk2MTIxNiwibmJmIjoxNTY5NjYxMjE2LCJqdGkiOiJHVGZVTVBBeUxvMHV5RVdoIiwic3ViIjo1MzQ1LCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.d6hWN0pmSpIBm0DaVxKLi3pTb-EtDQRhPPp-0E5jwnY')
-    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vcmVsZWFzZS5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1Njk3MjEwOTksImV4cCI6MTU3MDAyMTA5OSwibmJmIjoxNTY5NzIxMDk5LCJqdGkiOiJUajk0aXZiMzdaMGhRaXduIiwic3ViIjo2ODg2LCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.3JpMSKwZee4m3jplz0vMLBiR9JUKiCW5yWk4k8S89wU')
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vcmVsZWFzZS5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1Njk4MTAwNTYsImV4cCI6MTU3MDExMDA1NiwibmJmIjoxNTY5ODEwMDU2LCJqdGkiOiJudFRnc1Z1eEo0RmJGNXNjIiwic3ViIjo2ODQwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.wMt_kFQh1TP8Qs6Gk8i7XnplBZ_tBeoII-NI5im3QDk')
     // request({
 		// 	url: 'api/wap/testLogin'
 		// }).then((res: any) => {
