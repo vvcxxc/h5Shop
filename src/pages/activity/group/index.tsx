@@ -174,7 +174,7 @@ export default class Group extends Component<Props>{
 
   toShare = () => {
     let url = window.location.href;
-    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！':'在吗？现只需' + this.state.data.participation_money + '元疯抢价值 '+ this.state.data.pay_money + '元套餐，快戳' ;
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
     let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
@@ -348,8 +348,9 @@ export default class Group extends Component<Props>{
     })
       .then((res: any) => {
         Taro.hideLoading();
+        let order_id = res.data.order_id;
         if (_type == 1) {
-          //微信
+          //微信支付
           window.WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
             "appId": res.data.appId,
@@ -360,10 +361,16 @@ export default class Group extends Component<Props>{
             "paySign": res.data.paySign
           },
             function (res) {
+               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //微信成功
+                 //查询用户最后一次购买的拼团活动id
+                 request({
+                  url: 'v1/youhui/getUserLastYouhuiId',
+                  method: "GET"
+                }).then((res: any) => {
+                  //得到拼团活动id并跳转活动详情
                 Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id='+this.$router.params.id,
+                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
                   // url: '/activity-pages/my-activity/my.activity',
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
@@ -371,29 +378,36 @@ export default class Group extends Component<Props>{
                     page.onShow();
                   }
                 })
+              })
               } else {
-                //微信失败
+                //微信支付失败
               }
             }
           );
         } else if (_type == 2) {
-          //支付宝
+          //支付宝支付
           window.AlipayJSBridge.call('tradePay', {
             tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
           }, res => {
+            //支付宝支付成功
             if (res.resultCode === "9000") {
-              //支付宝成功
-              Taro.navigateTo({
-                url: '/activity-pages/my-activity/my.activity',
-                success: function (e) {
-                  let page = Taro.getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onShow();
-
-                }
+              //查询用户最后一次购买的活动id
+              request({
+                url: 'v1/youhui/getUserLastYouhuiGroupId',
+                method: "GET"
+              }).then((res: any) => {
+                //得到活动id并跳转活动详情
+                Taro.navigateTo({
+                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                  success: function (e) {
+                    let page = Taro.getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onShow();
+                  }
+                })
               })
             } else {
-              //支付宝失败
+              //支付宝支付失败
             }
           })
         } else {
@@ -670,7 +684,7 @@ export default class Group extends Component<Props>{
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
                 <View className='share_text text_top'>
-                点击此按钮分享给好友
+                  点击此按钮分享给好友
                 </View>
                 {/* <View className='share_text'>
                   一起增值领礼品吧
