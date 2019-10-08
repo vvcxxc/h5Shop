@@ -375,7 +375,8 @@ export default class Appre extends Component<Props>{
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
                 Taro.navigateTo({
-                  url: '/activity-pages/my-activity/my.activity',
+                  url: '/pages/activity/pages/appreciation/appreciation?id='+this.$router.params.id,
+                  // url: '/activity-pages/my-activity/my.activity',
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
