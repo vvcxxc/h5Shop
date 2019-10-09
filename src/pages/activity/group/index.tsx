@@ -61,8 +61,8 @@ export default class Group extends Component<Props>{
     },
     isPostage: true,
     isShare: false,
-
-    isFromShare: false
+    isFromShare: false,
+    groupListShow: false
   };
   componentDidShow() {
     this.toShare();
@@ -361,24 +361,24 @@ export default class Group extends Component<Props>{
             "paySign": res.data.paySign
           },
             function (res) {
-               //微信支付成功
+              //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                 //查询用户最后一次购买的拼团活动id
-                 request({
+                //查询用户最后一次购买的拼团活动id
+                request({
                   url: 'v1/youhui/getUserLastYouhuiId',
                   method: "GET"
                 }).then((res: any) => {
                   //得到拼团活动id并跳转活动详情
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
-                  // url: '/activity-pages/my-activity/my.activity',
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
-                  }
+                  Taro.navigateTo({
+                    url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                    // url: '/activity-pages/my-activity/my.activity',
+                    success: function (e) {
+                      let page = Taro.getCurrentPages().pop();
+                      if (page == undefined || page == null) return;
+                      page.onShow();
+                    }
+                  })
                 })
-              })
               } else {
                 //微信支付失败
               }
@@ -429,6 +429,40 @@ export default class Group extends Component<Props>{
     const { images, description } = this.state.data;
     return (
       <View className="d_appre" >
+
+        {
+          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }}>
+            <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
+              <View className="d_appre_groupList_box_title">正在拼团</View>
+              <View className="d_appre_groupList_box_slideBox">
+                <View className="d_appre_groupList_box_slideBox_content" >
+                  <View className="group_list0" >
+                    <View className="group_list_img0" >
+                      <Image className="listImg0" src={this.state.data.preview} />
+                    </View>
+                    <View className="group_list_name0" >杨大富</View>
+                    <View className="group_list_timesbox0" >
+                      <View className="group_list_lack0" >
+                        <View className="group_list_lackredblack10" >还差</View>
+                        <View className="group_list_lackred0" >1人</View>
+                        <View className="group_list_lackredblack20" >拼成</View>
+                      </View>
+                      <View className="group_list_times0" >23.50.30</View>
+                    </View>
+                    <View className="group_list_btnbox0" >
+                      <View className="group_list_btn0" >立即参团</View>
+                    </View>
+                  </View>
+
+                </View>
+              </View>
+              <View className="group_list_toast" >上滑查看更多</View>
+            </View>
+            <View className="group_list_closebtn" >
+              <AtIcon value='close-circle' size="30px" color='#fff'></AtIcon>
+            </View>
+          </View> : null
+        }
 
         <View className="group_head_bottom_share" onClick={this.buttonToShare.bind(this)}>
           <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
@@ -530,10 +564,10 @@ export default class Group extends Component<Props>{
         </View>
 
 
-        {/* <View className="group_num" >
+        <View className="group_num" >
           <View className="group_num_titlebox" >
             <View className="group_num_title" >4人正在拼</View>
-            <View className="group_num_now" >正在拼团</View>
+            <View className="group_num_now" onClick={()=>this.setState({groupListShow:true}) }>查看更多</View>
           </View>
           <View className="group_listbox" >
             <View className="group_list" >
@@ -571,7 +605,7 @@ export default class Group extends Component<Props>{
               </View>
             </View>
           </View>
-        </View> */}
+        </View>
 
 
         <View className="appre_rule" >
