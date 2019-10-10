@@ -334,7 +334,6 @@ export default class Group extends Component<Props>{
         xcx: 0,
         number: 1,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
-
       }
     }
     //请求支付属性
