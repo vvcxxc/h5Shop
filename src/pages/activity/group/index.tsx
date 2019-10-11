@@ -61,8 +61,8 @@ export default class Group extends Component<Props>{
     },
     isPostage: true,
     isShare: false,
-
-    isFromShare: false
+    isFromShare: false,
+    groupListShow: false
   };
   componentDidShow() {
     this.toShare();
@@ -174,7 +174,7 @@ export default class Group extends Component<Props>{
 
   toShare = () => {
     let url = window.location.href;
-    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！':'在吗？现只需' + this.state.data.participation_money + '元疯抢价值 '+ this.state.data.pay_money + '元套餐，快戳' ;
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
     let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
@@ -334,7 +334,6 @@ export default class Group extends Component<Props>{
         xcx: 0,
         number: 1,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
-
       }
     }
     //请求支付属性
@@ -348,8 +347,9 @@ export default class Group extends Component<Props>{
     })
       .then((res: any) => {
         Taro.hideLoading();
+        let order_id = res.data.order_id;
         if (_type == 1) {
-          //微信
+          //微信支付
           window.WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
             "appId": res.data.appId,
@@ -360,39 +360,53 @@ export default class Group extends Component<Props>{
             "paySign": res.data.paySign
           },
             function (res) {
+              //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //微信成功
+                //查询用户最后一次购买的拼团活动id
+                request({
+                  url: 'v1/youhui/getUserLastYouhuiId',
+                  method: "GET"
+                }).then((res: any) => {
+                  //得到拼团活动id并跳转活动详情
+                  Taro.navigateTo({
+                    url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                    // url: '/activity-pages/my-activity/my.activity',
+                    success: function (e) {
+                      let page = Taro.getCurrentPages().pop();
+                      if (page == undefined || page == null) return;
+                      page.onShow();
+                    }
+                  })
+                })
+              } else {
+                //微信支付失败
+              }
+            }
+          );
+        } else if (_type == 2) {
+          //支付宝支付
+          window.AlipayJSBridge.call('tradePay', {
+            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+          }, res => {
+            //支付宝支付成功
+            if (res.resultCode === "9000") {
+              //查询用户最后一次购买的活动id
+              request({
+                url: 'v1/youhui/getUserLastYouhuiGroupId',
+                method: "GET"
+              }).then((res: any) => {
+                //得到活动id并跳转活动详情
                 Taro.navigateTo({
-                  url: '/activity-pages/my-activity/my.activity',
+                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
                     page.onShow();
                   }
                 })
-              } else {
-                //微信失败
-              }
-            }
-          );
-        } else if (_type == 2) {
-          //支付宝
-          window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-          }, res => {
-            if (res.resultCode === "9000") {
-              //支付宝成功
-              Taro.navigateTo({
-                url: '/activity-pages/my-activity/my.activity',
-                success: function (e) {
-                  let page = Taro.getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onShow();
-
-                }
               })
             } else {
-              //支付宝失败
+              //支付宝支付失败
             }
           })
         } else {
@@ -414,6 +428,40 @@ export default class Group extends Component<Props>{
     const { images, description } = this.state.data;
     return (
       <View className="d_appre" >
+
+        {
+          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }}>
+            <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
+              <View className="d_appre_groupList_box_title">正在拼团</View>
+              <View className="d_appre_groupList_box_slideBox">
+                <View className="d_appre_groupList_box_slideBox_content" >
+                  <View className="group_list0" >
+                    <View className="group_list_img0" >
+                      <Image className="listImg0" src={this.state.data.preview} />
+                    </View>
+                    <View className="group_list_name0" >杨大富</View>
+                    <View className="group_list_timesbox0" >
+                      <View className="group_list_lack0" >
+                        <View className="group_list_lackredblack10" >还差</View>
+                        <View className="group_list_lackred0" >1人</View>
+                        <View className="group_list_lackredblack20" >拼成</View>
+                      </View>
+                      <View className="group_list_times0" >23.50.30</View>
+                    </View>
+                    <View className="group_list_btnbox0" >
+                      <View className="group_list_btn0" >立即参团</View>
+                    </View>
+                  </View>
+
+                </View>
+              </View>
+              <View className="group_list_toast" >上滑查看更多</View>
+            </View>
+            <View className="group_list_closebtn" >
+              <AtIcon value='close-circle' size="30px" color='#fff'></AtIcon>
+            </View>
+          </View> : null
+        }
 
         <View className="group_head_bottom_share" onClick={this.buttonToShare.bind(this)}>
           <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
@@ -515,10 +563,10 @@ export default class Group extends Component<Props>{
         </View>
 
 
-        {/* <View className="group_num" >
+        <View className="group_num" >
           <View className="group_num_titlebox" >
             <View className="group_num_title" >4人正在拼</View>
-            <View className="group_num_now" >正在拼团</View>
+            <View className="group_num_now" onClick={()=>this.setState({groupListShow:true}) }>查看更多</View>
           </View>
           <View className="group_listbox" >
             <View className="group_list" >
@@ -556,7 +604,7 @@ export default class Group extends Component<Props>{
               </View>
             </View>
           </View>
-        </View> */}
+        </View>
 
 
         <View className="appre_rule" >
@@ -669,7 +717,7 @@ export default class Group extends Component<Props>{
             <View className='share_mask' onClick={this.closeShare}>
               <View className='share_box'>
                 <View className='share_text text_top'>
-                点击此按钮分享给好友
+                  点击此按钮分享给好友
                 </View>
                 {/* <View className='share_text'>
                   一起增值领礼品吧

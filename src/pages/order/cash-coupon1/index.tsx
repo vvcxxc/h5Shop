@@ -65,17 +65,13 @@ export default class CashCoupon extends Component<Props> {
         <View className="secondary flex center" >
           <Image src={this.props._image} style={{ width: "100%", height: "100%" }} />
         </View>
-        {/* <Image
-          className="middle-bg"
-          mode="widthFix"
-          src={{this.props.image}}
-        /> */}
+
         <View className="item content" style={{ position: "relative" }}>
-          <View className="head flex" style={{ background: "transparent", alignItems: "center" }}>
+          <View className="head2 flex" style={{ background: "transparent", alignItems: "center" }}>
             <View className="labels flex center" >
               <Image className="labelimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/s3YhfNZ8NH3as4DZ7p45nPiQKdiRKTwi.png" />
             </View>
-            <View style={{ width: "135px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", height: "100%",display:"inline-block",lineHeight:1,paddingTop:"3px"}}>{this.props.sname}</View>
+            <View style={{ width: "135px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", height: "100%",display:"inline-block",lineHeight:1}}>{this.props.sname}</View>
           </View>
 
           <View className="date">{this.props.list_brief}</View>

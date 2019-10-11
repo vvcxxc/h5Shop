@@ -37,8 +37,8 @@ export default class CashCoupon extends Component<Props> {
           src={{this.props.image}}
         /> */}
         <View className="item content">
-          <View className="head flex">
-            <View className="label flex center"  style={{color:"#000",borderBottom:"none"}}>{this.props.sname}</View>
+          <View className="head2 flex">
+            <View className="flex center"  style={{color:"#000",borderBottom:"none"}}>{this.props.sname}</View>
           </View>
           <View className="date">{this.props.list_brief}</View>
           <View className="info">购买后{this.props.expire_day}日内有效</View>
