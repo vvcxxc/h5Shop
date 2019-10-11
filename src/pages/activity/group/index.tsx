@@ -504,9 +504,9 @@ export default class Group extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //查询用户最后一次购买的拼团活动id
+                //查询用户最后一次购买的参团活动id
                 request({
-                  url: 'v1/youhui/getUserLastYouhuiId',
+                  url: 'v1/youhui/getUserLastParticipateId',
                   method: "GET"
                 }).then((res: any) => {
                   //得到拼团活动id并跳转活动详情

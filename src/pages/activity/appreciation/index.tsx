@@ -439,12 +439,10 @@ export default class Appre extends Component<Props>{
           this.state.data.type == 0 && this.state.data.images.length > 0 ?
             <View
               onClick={() => {
-                console.log("5555")
                 this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
               }}>
               <Swiper
                 onChange={(e) => {
-                  // console.log(e.detail.current)
                   this.setState({ imagesCurrent: e.detail.current })
                 }}
                 className='test-h'
