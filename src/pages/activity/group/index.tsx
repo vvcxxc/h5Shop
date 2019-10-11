@@ -24,7 +24,6 @@ export default class Group extends Component<Props>{
     xPoint: 0,
     yPoint: 0,
     imagesCurrent: 0,
-    imagesList: [],
     data: {
       activity_begin_time: "",
       activity_end_time: "",
@@ -59,6 +58,25 @@ export default class Group extends Component<Props>{
       youhui_name: "",//活动名
       ypoint: ""
     },
+    data2: {
+      current_page: 1,
+      data: [
+        {
+          avatar: "",
+          id: 0,
+          number: 0,
+          participation_number: 0,
+          real_name: "",
+        }
+      ],
+      from: 1,
+      last_page: 1,
+      next_page_url: null,
+      per_page: 1,
+      prev_page_url: null,
+      to: 1,
+      total: 1,
+    },
     isPostage: true,
     isShare: false,
     isFromShare: false,
@@ -85,6 +103,16 @@ export default class Group extends Component<Props>{
         xPoint: res.longitude || ''
       }, () => {
         request({
+          url: 'api/wap/user/getGroupbuyings',
+          method: "GET",
+          data: {
+            group_info_id: this.$router.params.id,
+          }
+        })
+          .then((res: any) => {
+            this.setState({ data2: res.data })
+          });
+        request({
           url: 'api/wap/user/getGroupYouhuiInfo',
           method: "GET",
           data: {
@@ -96,13 +124,6 @@ export default class Group extends Component<Props>{
         })
           .then((res: any) => {
             if (res.code == 200) {
-              let { image, images } = res.data;
-              let imgList;
-              if (image && images) {
-                imgList = new Array(image).concat(images);
-              } else {
-                imgList = [];
-              }
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -110,7 +131,7 @@ export default class Group extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              this.setState({ data: res.data, imagesList: imgList }, () => {
+              this.setState({ data: res.data }, () => {
                 this.toShare();
               });
               Taro.hideLoading()
@@ -125,6 +146,16 @@ export default class Group extends Component<Props>{
         xPoint: ''
       }, () => {
         request({
+          url: 'api/wap/user/getGroupbuyings',
+          method: "GET",
+          data: {
+            group_info_id: this.$router.params.id,
+          }
+        })
+          .then((res: any) => {
+            this.setState({ data2: res.data })
+          });
+        request({
           url: 'api/wap/user/getGroupYouhuiInfo',
           method: "GET",
           data: {
@@ -137,13 +168,6 @@ export default class Group extends Component<Props>{
           .then((res: any) => {
 
             if (res.code == 200) {
-              let { image, images } = res.data;
-              let imgList;
-              if (image && images) {
-                imgList = new Array(image).concat(images);
-              } else {
-                imgList = [];
-              }
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -151,7 +175,7 @@ export default class Group extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              this.setState({ data: res.data, imagesList: imgList }, () => {
+              this.setState({ data: res.data }, () => {
                 this.toShare();
               });
               Taro.hideLoading()
@@ -327,10 +351,128 @@ export default class Group extends Component<Props>{
       }
     } else {
       datas = {
-        public_type_id: this.$router.params.id,
+        public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
         activity_id: this.$router.params.activity_id,
         gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
-        type: "5",
+        type: this.$router.params.type,
+        xcx: 0,
+        number: 1,
+        alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
+      }
+    }
+    //请求支付属性
+    request({
+      url: 'payCentre/toWxPay',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(datas)
+    })
+      .then((res: any) => {
+        Taro.hideLoading();
+        let order_id = res.data.order_id;
+        if (_type == 1) {
+          //微信支付
+          window.WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+            "appId": res.data.appId,
+            "timeStamp": res.data.timeStamp,
+            "nonceStr": res.data.nonceStr,
+            "package": res.data.package,
+            "signType": res.data.signType,
+            "paySign": res.data.paySign
+          },
+            function (res) {
+              //微信支付成功
+              if (res.err_msg == "get_brand_wcpay_request:ok") {
+                //查询用户最后一次购买的拼团活动id
+                request({
+                  url: 'v1/youhui/getUserLastYouhuiId',
+                  method: "GET"
+                }).then((res: any) => {
+                  //得到拼团活动id并跳转活动详情
+                  Taro.navigateTo({
+                    url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                    // url: '/activity-pages/my-activity/my.activity',
+                    success: function (e) {
+                      let page = Taro.getCurrentPages().pop();
+                      if (page == undefined || page == null) return;
+                      page.onShow();
+                    }
+                  })
+                })
+              } else {
+                //微信支付失败
+              }
+            }
+          );
+        } else if (_type == 2) {
+          //支付宝支付
+          window.AlipayJSBridge.call('tradePay', {
+            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+          }, res => {
+            //支付宝支付成功
+            if (res.resultCode === "9000") {
+              //查询用户最后一次购买的活动id
+              request({
+                url: 'v1/youhui/getUserLastYouhuiGroupId',
+                method: "GET"
+              }).then((res: any) => {
+                //得到活动id并跳转活动详情
+                Taro.navigateTo({
+                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                  success: function (e) {
+                    let page = Taro.getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onShow();
+                  }
+                })
+              })
+            } else {
+              //支付宝支付失败
+            }
+          })
+        } else {
+          console.log(_type)
+        }
+      })
+  }
+
+  payment2(_groupid, e) {
+    Taro.showLoading({
+      title: 'loading',
+    })
+    let _type;
+    let browserType = getBrowserType();
+    if (browserType == 'wechat') {
+      _type = 1;
+    } else if (browserType == 'alipay') {
+      _type = 2;
+    } else {
+      Taro.showToast({
+        title: "支付出错",
+        icon: "none"
+      });
+    }
+    let datas = {}
+    if (_type == 1) {
+      datas = {
+        public_type_id: _groupid,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
+        open_id: Cookie.get(process.env.OPEN_ID),
+        unionid: Cookie.get(process.env.UNION_ID),
+        type: 55,
+        xcx: 0,
+        number: 1,
+      }
+    } else {
+      datas = {
+        public_type_id: _groupid,
+        activity_id: this.$router.params.activity_id,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
+        type: 55,
         xcx: 0,
         number: 1,
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
@@ -428,34 +570,42 @@ export default class Group extends Component<Props>{
     const { images, description } = this.state.data;
     return (
       <View className="d_appre" >
-
         {
           this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }}>
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
                 <View className="d_appre_groupList_box_slideBox_content" >
-                  <View className="group_list0" >
-                    <View className="group_list_img0" >
-                      <Image className="listImg0" src={this.state.data.preview} />
-                    </View>
-                    <View className="group_list_name0" >杨大富</View>
-                    <View className="group_list_timesbox0" >
-                      <View className="group_list_lack0" >
-                        <View className="group_list_lackredblack10" >还差</View>
-                        <View className="group_list_lackred0" >1人</View>
-                        <View className="group_list_lackredblack20" >拼成</View>
-                      </View>
-                      <View className="group_list_times0" >23.50.30</View>
-                    </View>
-                    <View className="group_list_btnbox0" >
-                      <View className="group_list_btn0" >立即参团</View>
-                    </View>
-                  </View>
+
+                  {
+                    this.state.data2.data.map((item) => {
+                      return (
+                        <View className="group_list0" >
+                          <View className="group_list_img0" >
+                            <Image className="listImg0" src={item.avatar} />
+                          </View>
+                          <View className="group_list_name0" >{item.real_name}</View>
+                          <View className="group_list_timesbox0" >
+                            <View className="group_list_lack0" >
+                              <View className="group_list_lackredblack10" >还差</View>
+                              <View className="group_list_lackred0" >{item.number}人</View>
+                              <View className="group_list_lackredblack20" >拼成</View>
+                            </View>
+                            <View className="group_list_times0" >23.50.30</View>
+                          </View>
+                          <View className="group_list_btnbox0" >
+                            <View className="group_list_btn0" onClick={this.payment2.bind(this, item.id)} >立即参团</View>
+                          </View>
+                        </View>
+                      )
+                    })
+                  }
 
                 </View>
               </View>
-              <View className="group_list_toast" >上滑查看更多</View>
+              {
+                this.state.data2.data && this.state.data2.data.length > 5 ? <View className="group_list_toast" >上滑查看更多</View> : null
+              }
             </View>
             <View className="group_list_closebtn" >
               <AtIcon value='close-circle' size="30px" color='#fff'></AtIcon>
@@ -469,9 +619,9 @@ export default class Group extends Component<Props>{
         </View >
 
         {
-          this.state.imagesList.length > 0 ? <View
+          this.state.data.images.length > 0 ? <View
             onClick={() => {
-              this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
+              this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
             }}>
             <Swiper
               onChange={(e) => {
@@ -486,12 +636,10 @@ export default class Group extends Component<Props>{
               indicatorDots
               autoplay>
               {
-                this.state.imagesList ? this.state.imagesList.map((item, index) => {
+                this.state.data.images ? this.state.data.images.map((item, index) => {
                   return (
                     <SwiperItem key={item} >
-                      <View className='demo-text'
-                      //  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}
-                      >
+                      <View className='demo-text'>
                         <Image className="demo-text-Img" src={item} />
                       </View>
                     </SwiperItem>
@@ -563,50 +711,52 @@ export default class Group extends Component<Props>{
         </View>
 
 
-        <View className="group_num" >
-          <View className="group_num_titlebox" >
-            <View className="group_num_title" >4人正在拼</View>
-            <View className="group_num_now" onClick={()=>this.setState({groupListShow:true}) }>查看更多</View>
-          </View>
-          <View className="group_listbox" >
-            <View className="group_list" >
-              <View className="group_list_img" >
-                <Image className="listImg" src={this.state.data.preview} />
-              </View>
-              <View className="group_list_name" >杨大富</View>
-              <View className="group_list_btnbox" >
-                <View className="group_list_btn" >立即参团</View>
-              </View>
-              <View className="group_list_timesbox" >
-                <View className="group_list_lack" >
-                  <View className="group_list_lackredblack1" >还差</View>
-                  <View className="group_list_lackred" >1人</View>
-                  <View className="group_list_lackredblack2" >拼成</View>
-                </View>
-                <View className="group_list_times" >23.50.30</View>
-              </View>
+        {
+          this.state.data2.data && this.state.data2.data.length > 0 ? <View className="group_num" >
+            <View className="group_num_titlebox" >
+              <View className="group_num_title" >{this.state.data2.total}人正在拼</View>
+              <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>
             </View>
-            <View className="group_list" >
-              <View className="group_list_img" >
-                <Image className="listImg" src={this.state.data.preview} />
-              </View>
-              <View className="group_list_name" >杨大富</View>
-              <View className="group_list_btnbox" >
-                <View className="group_list_btn" >立即参团</View>
-              </View>
-              <View className="group_list_timesbox" >
-                <View className="group_list_lack" >
-                  <View className="group_list_lackredblack1" >还差</View>
-                  <View className="group_list_lackred" >1人</View>
-                  <View className="group_list_lackredblack2" >拼成</View>
+            <View className="group_listbox" >
+              <View className="group_list" >
+                <View className="group_list_img" >
+                  <Image className="listImg" src={this.state.data2.data[0].avatar} />
                 </View>
-                <View className="group_list_times" >23.50.30</View>
+                <View className="group_list_name" >{this.state.data2.data[0].real_name}</View>
+                <View className="group_list_btnbox" >
+                  <View className="group_list_btn" onClick={this.payment2.bind(this, this.state.data2.data[0].id)} >立即参团</View>
+                </View>
+                <View className="group_list_timesbox" >
+                  <View className="group_list_lack" >
+                    <View className="group_list_lackredblack1" >还差</View>
+                    <View className="group_list_lackred" >{this.state.data2.data[0].number}人</View>
+                    <View className="group_list_lackredblack2" >拼成</View>
+                  </View>
+                  <View className="group_list_times" >23.50.30</View>
+                </View>
               </View>
+              {
+                this.state.data2.data.length > 1 ? <View className="group_list" >
+                  <View className="group_list_img" >
+                    <Image className="listImg" src={this.state.data2.data[1].avatar} />
+                  </View>
+                  <View className="group_list_name" >{this.state.data2.data[1].real_name}</View>
+                  <View className="group_list_btnbox" >
+                    <View className="group_list_btn" onClick={this.payment2.bind(this, this.state.data2.data[1].id)} >立即参团</View>
+                  </View>
+                  <View className="group_list_timesbox" >
+                    <View className="group_list_lack" >
+                      <View className="group_list_lackredblack1" >还差</View>
+                      <View className="group_list_lackred" >{this.state.data2.data[1].number}人</View>
+                      <View className="group_list_lackredblack2" >拼成</View>
+                    </View>
+                    <View className="group_list_times" >23.50.30</View>
+                  </View>
+                </View> : null
+              }
             </View>
-          </View>
-        </View>
-
-
+          </View> : null
+        }
         <View className="appre_rule" >
           <View className="appre_rule_title" >使用规则</View>
           <View className="appre_rule_time" >
