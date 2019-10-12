@@ -809,7 +809,9 @@ export default class Group extends Component<Props>{
           this.state.data2.data && this.state.data2.data.length > 0 ? <View className="group_num" >
             <View className="group_num_titlebox" >
               <View className="group_num_title" >{this.state.data2.total}人正在拼</View>
-              <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>
+              {
+                this.state.data2.data && this.state.data2.data.length > 2 ? <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>:null
+              }
             </View>
             <View className="group_listbox" >
 
