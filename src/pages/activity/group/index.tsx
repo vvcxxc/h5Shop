@@ -654,12 +654,12 @@ export default class Group extends Component<Props>{
                 this.setState({ imagesCurrent: e.detail.current })
               }}
               className='test-h'
-              vertical
+              indicatorColor='#999'
+              indicatorActiveColor='#333'
               circular={true}
               indicatorDots
-              autoplay
-              interval={3000}
-              >
+              autoplay>
+            >
               {
                 this.state.data.images ? this.state.data.images.map((item, index) => {
                   return (
@@ -725,7 +725,7 @@ export default class Group extends Component<Props>{
               </View>
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
-                  mode="widthFix"
+                  mde="widthFix"
                   onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift.cover_image }) }}
                   src={this.state.data.gift.cover_image} />
               </View>
