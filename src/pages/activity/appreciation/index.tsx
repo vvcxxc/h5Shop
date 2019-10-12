@@ -24,7 +24,6 @@ export default class Appre extends Component<Props>{
     xPoint: 0,
     yPoint: 0,
     imagesCurrent: 0,
-    imagesList: [],
     data: {
       activity_begin_time: "",
       activity_end_time: "",
@@ -94,13 +93,6 @@ export default class Appre extends Component<Props>{
         })
           .then((res: any) => {
             if (res.code == 200) {
-              let { image, images } = res.data;
-              let imgList;
-              if (image && images) {
-                imgList = new Array(image).concat(images);
-              } else {
-                imgList = [];
-              }
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -108,7 +100,7 @@ export default class Appre extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              this.setState({ data: res.data, imagesList: imgList }, () => {
+              this.setState({ data: res.data }, () => {
                 this.toShare();
               });
               Taro.hideLoading()
@@ -136,13 +128,6 @@ export default class Appre extends Component<Props>{
 
 
             if (res.code == 200) {
-              let { image, images } = res.data;
-              let imgList;
-              if (image && images) {
-                imgList = new Array(image).concat(images);
-              } else {
-                imgList = [];
-              }
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -150,7 +135,7 @@ export default class Appre extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              this.setState({ data: res.data, imagesList: imgList }, () => {
+              this.setState({ data: res.data }, () => {
                 this.toShare();
               });
               Taro.hideLoading()
@@ -451,15 +436,13 @@ export default class Appre extends Component<Props>{
         </View>
 
         {
-          this.state.data.type == 0 ?
+          this.state.data.type == 0 && this.state.data.images.length > 0 ?
             <View
               onClick={() => {
-                console.log("5555")
-                this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
               }}>
               <Swiper
                 onChange={(e) => {
-                  // console.log(e.detail.current)
                   this.setState({ imagesCurrent: e.detail.current })
                 }}
                 className='test-h'
@@ -470,12 +453,10 @@ export default class Appre extends Component<Props>{
                 indicatorDots
                 autoplay>
                 {
-                  this.state.imagesList ? this.state.imagesList.map((item, index) => {
+                  this.state.data.images ? this.state.data.images.map((item, index) => {
                     return (
                       <SwiperItem key={item}>
-                        <View className='demo-text'
-                        //  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}
-                        >
+                        <View className='demo-text'>
                           <Image className="demo-text-Img" src={item} />
                         </View>
                       </SwiperItem>
