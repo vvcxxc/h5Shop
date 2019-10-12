@@ -725,7 +725,7 @@ export default class Group extends Component<Props>{
               </View>
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
-                  mde="widthFix"
+                  mode="widthFix"
                   onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift.cover_image }) }}
                   src={this.state.data.gift.cover_image} />
               </View>
@@ -748,7 +748,7 @@ export default class Group extends Component<Props>{
                 className='test-h'
                 vertical
                 autoplay
-                circular
+                circular={true}
                 interval={3000}
               >
 
