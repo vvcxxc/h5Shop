@@ -639,7 +639,6 @@ export default class Group extends Component<Props>{
     //计算出小时数  
     var leave1 = temp_Time % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数  
     var hours = Math.floor(leave1 / (3600 * 1000))
-    console.log('小时', days, hours)
     //计算相差分钟数  
     var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数  
     var minutes = Math.floor(leave2 / (60 * 1000))
@@ -727,7 +726,7 @@ export default class Group extends Component<Props>{
               indicatorActiveColor='#333'
               circular={true}
               indicatorDots
-              autoplay>
+              autoplay
               >
               {
                 this.state.data.images ? this.state.data.images.map((item, index) => {
