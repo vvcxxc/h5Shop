@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon, AtNoticebar } from 'taro-ui';
+import { AtIcon, AtNoticebar,AtCountdown} from 'taro-ui';
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
@@ -81,7 +81,8 @@ export default class Group extends Component<Props>{
     isPostage: true,
     isShare: false,
     isFromShare: false,
-    groupListShow: false
+    groupListShow: false,
+    differ_time: []
   };
   componentDidShow() {
     this.toShare();
@@ -135,6 +136,7 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.tempTime();
               });
               Taro.hideLoading()
             }
@@ -169,8 +171,8 @@ export default class Group extends Component<Props>{
           }
         })
           .then((res: any) => {
-
             if (res.code == 200) {
+              
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -180,6 +182,7 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.tempTime();
               });
               Taro.hideLoading()
             } else {
@@ -591,6 +594,25 @@ export default class Group extends Component<Props>{
     })
   }
 
+  tempTime = () => {
+    let temp_Time = new Date(this.state.data.end_time).getTime() - new Date().getTime();   //时间差的毫秒数        
+    //计算出相差天数  
+    var days = Math.floor(temp_Time / (24 * 3600 * 1000))
+    //计算出小时数  
+    var leave1 = temp_Time % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数  
+    var hours = Math.floor(leave1 / (3600 * 1000)) 
+    console.log('小时', days, hours)
+    //计算相差分钟数  
+    var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数  
+    var minutes = Math.floor(leave2 / (60 * 1000))
+    //计算相差秒数  
+    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数  
+    var seconds = Math.round(leave3 / 1000)
+    var differ_time = [days,hours, minutes, seconds]
+    this.setState({ differ_time: differ_time });
+  }
+
+
   render() {
     const { images, description } = this.state.data;
     return (
@@ -616,7 +638,16 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackred0" >{item.number}人</View>
                               <View className="group_list_lackredblack20" >拼成</View>
                             </View>
-                            <View className="group_list_times0" >23.50.30</View>
+                            <View className="group_list_times0" >
+                            <AtCountdown
+                              isShowDay={true}
+                              format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                              day={this.state.differ_time[0]}
+                              hours={this.state.differ_time[1]}
+                              minutes={this.state.differ_time[2]}
+                              seconds={this.state.differ_time[3]}
+                            />
+                            </View>
                           </View>
                           <View className="group_list_btnbox0" >
                             <View className="group_list_btn0" onClick={this.payment2.bind(this, item.id)} >立即参团</View>
@@ -770,7 +801,14 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackred" >{item[0].number - item[0].participation_number}人</View>
                               <View className="group_list_lackredblack2" >拼成</View>
                             </View>
-                            <View className="group_list_times" >23:50:30</View>
+                            <View className="group_list_times" ><AtCountdown
+                              isShowDay={true}
+                              format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                              day={this.state.differ_time[0]}
+                              hours={this.state.differ_time[1]}
+                              minutes={this.state.differ_time[2]}
+                              seconds={this.state.differ_time[3]}
+                            /></View>
                           </View>
                         </View>
                         {
@@ -788,7 +826,14 @@ export default class Group extends Component<Props>{
                                 <View className="group_list_lackred" >{item[1].number - item[1].participation_number}人</View>
                                 <View className="group_list_lackredblack2" >拼成</View>
                               </View>
-                              <View className="group_list_times" >23:50:30</View>
+                              <View className="group_list_times" ><AtCountdown
+                              isShowDay={true}
+                              format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                              day={this.state.differ_time[0]}
+                              hours={this.state.differ_time[1]}
+                              minutes={this.state.differ_time[2]}
+                              seconds={this.state.differ_time[3]}
+                            /></View>
                             </View>
                           </View> : null
                         }

@@ -117,6 +117,17 @@
                                 height: 40px;
                                 color: #666666;
                                 text-align: right;
+    
+                                .at-countdown__time-box {
+                                    color: #666666;
+                                    font-size: 25px;
+                                    font-family:sans-serif;
+                                }
+                                .at-countdown__separator{
+                                    color: #666666;
+                                    font-size: 20px;
+                                    padding: 0 2px;
+                                }
                             }
                         }
 
@@ -628,6 +639,17 @@
                             height: 40px;
                             color: #666666;
                             text-align: right;
+
+                            .at-countdown__time-box {
+                                color: #666666;
+                                font-size: 25px;
+                                font-family:sans-serif;
+                            }
+                            .at-countdown__separator{
+                                color: #666666;
+                                font-size: 20px;
+                                padding: 0 2px;
+                            }
                         }
 
                     }
