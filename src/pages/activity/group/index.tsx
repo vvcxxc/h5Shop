@@ -350,6 +350,8 @@ export default class Group extends Component<Props>{
 
 
   payment() {
+    let tempid=this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id;
+    console.log(tempid);
     Taro.showLoading({
       title: 'loading',
     })
@@ -414,9 +416,8 @@ export default class Group extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id;
                 Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id=' + _tempid,
+                  url: '/pages/activity/pages/group/group?id=' + tempid,
                   // url: '/activity-pages/my-activity/my.activity',
                   success: function (e) {
                     let page = Taro.getCurrentPages().pop();
@@ -452,9 +453,8 @@ export default class Group extends Component<Props>{
           }, res => {
             //支付宝支付成功
             if (res.resultCode === "9000") {
-              let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id;
               Taro.navigateTo({
-                url: '/pages/activity/pages/group/group?id=' + _tempid,
+                url: '/pages/activity/pages/group/group?id=' + tempid,
                 // url: '/activity-pages/my-activity/my.activity',
                 success: function (e) {
                   let page = Taro.getCurrentPages().pop();
