@@ -15,7 +15,8 @@ import './index.scss';
 interface Props {
   id: any;
 }
-const share_url = process.env.APPRE_Details_URL
+const share_url = process.env.APPRE_Details_URL;
+let interval;
 export default class Appre extends Component<Props>{
   state = {
     ruleMore: false,
@@ -64,6 +65,9 @@ export default class Appre extends Component<Props>{
   };
   componentDidShow() {
     this.toShare();
+  }
+  componentWillUnmount() {
+    clearInterval(interval);
   }
   componentDidMount = () => {
     let arrs = Taro.getCurrentPages()
@@ -332,8 +336,6 @@ export default class Appre extends Component<Props>{
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
       }
     }
-
-
     //请求支付属性
     request({
       url: 'v1/youhui/wxXcxuWechatPay',
@@ -359,21 +361,32 @@ export default class Appre extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //查询用户最后一次购买的增值活动id
-                request({
-                  url: 'v1/youhui/getUserLastYouhuiId',
-                  method: "GET"
-                }).then((res: any) => {
-                  //得到增值活动id并跳转活动详情
-                  Taro.navigateTo({
-                    url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                    success: function (e) {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
+
+                Taro.showLoading({
+                  title: 'loading',
+                });
+                interval = setInterval(function () {
+                  //查询用户最后一次购买的增值活动id
+                  request({
+                    url: 'v1/youhui/getUserLastYouhuiId',
+                    method: "GET"
+                  }).then((res: any) => {
+                    if (res.code == 200) {
+                      clearInterval(interval);
+                      Taro.hideLoading();
+                      //得到增值活动id并跳转活动详情
+                      Taro.navigateTo({
+                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                        success: function (e) {
+                          let page = Taro.getCurrentPages().pop();
+                          if (page == undefined || page == null) return;
+                          page.onShow();
+                        }
+                      })
                     }
                   })
-                })
+                }, 200);
+
               } else {
                 //微信支付失败
               }
@@ -386,21 +399,30 @@ export default class Appre extends Component<Props>{
           }, res => {
             //支付宝支付成功
             if (res.resultCode === "9000") {
-              //查询用户最后一次购买的活动id
-              request({
-                url: 'v1/youhui/getUserLastYouhuiId',
-                method: "GET"
-              }).then((res: any) => {
-                //得到活动id并跳转活动详情
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
+              Taro.showLoading({
+                title: 'loading',
+              });
+              interval = setInterval(function () {
+                //查询用户最后一次购买的增值活动id
+                request({
+                  url: 'v1/youhui/getUserLastYouhuiId',
+                  method: "GET"
+                }).then((res: any) => {
+                  if (res.code == 200) {
+                    clearInterval(interval);
+                    Taro.hideLoading();
+                    //得到增值活动id并跳转活动详情
+                    Taro.navigateTo({
+                      url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                      success: function (e) {
+                        let page = Taro.getCurrentPages().pop();
+                        if (page == undefined || page == null) return;
+                        page.onShow();
+                      }
+                    })
                   }
                 })
-              })
+              }, 200);
             } else {
               //支付宝支付失败
             }

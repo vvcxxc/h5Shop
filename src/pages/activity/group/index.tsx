@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon, AtNoticebar } from 'taro-ui';
+import { AtIcon, AtNoticebar, AtCountdown } from 'taro-ui';
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
@@ -81,7 +81,8 @@ export default class Group extends Component<Props>{
     isPostage: true,
     isShare: false,
     isFromShare: false,
-    groupListShow: false
+    groupListShow: false,
+    differ_time: []
   };
   componentDidShow() {
     this.toShare();
@@ -135,6 +136,7 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.tempTime();
               });
               Taro.hideLoading()
             }
@@ -169,8 +171,8 @@ export default class Group extends Component<Props>{
           }
         })
           .then((res: any) => {
-
             if (res.code == 200) {
+
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -180,6 +182,7 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.tempTime();
               });
               Taro.hideLoading()
             } else {
@@ -411,22 +414,32 @@ export default class Group extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //查询用户最后一次购买的拼团活动id
-                request({
-                  url: 'v1/youhui/getUserLastYouhuiGroupId',
-                  method: "GET"
-                }).then((res: any) => {
-                  //得到拼团活动id并跳转活动详情
-                  Taro.navigateTo({
-                    url: '/pages/activity/pages/group/group?id=' + res.data.id,
-                    // url: '/activity-pages/my-activity/my.activity',
-                    success: function (e) {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
-                    }
-                  })
+                let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id;
+                Taro.navigateTo({
+                  url: '/pages/activity/pages/group/group?id=' + _tempid,
+                  // url: '/activity-pages/my-activity/my.activity',
+                  success: function (e) {
+                    let page = Taro.getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onShow();
+                  }
                 })
+                // //查询用户最后一次购买的拼团活动id
+                // request({
+                //   url: 'v1/youhui/getUserLastYouhuiGroupId',
+                //   method: "GET"
+                // }).then((res: any) => {
+                //   //得到拼团活动id并跳转活动详情
+                //   Taro.navigateTo({
+                //     url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                //     // url: '/activity-pages/my-activity/my.activity',
+                //     success: function (e) {
+                //       let page = Taro.getCurrentPages().pop();
+                //       if (page == undefined || page == null) return;
+                //       page.onShow();
+                //     }
+                //   })
+                // })
               } else {
                 //微信支付失败
               }
@@ -439,21 +452,31 @@ export default class Group extends Component<Props>{
           }, res => {
             //支付宝支付成功
             if (res.resultCode === "9000") {
-              //查询用户最后一次购买的活动id
-              request({
-                url: 'v1/youhui/getUserLastYouhuiGroupId',
-                method: "GET"
-              }).then((res: any) => {
-                //得到活动id并跳转活动详情
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
-                  }
-                })
+              let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id;
+              Taro.navigateTo({
+                url: '/pages/activity/pages/group/group?id=' + _tempid,
+                // url: '/activity-pages/my-activity/my.activity',
+                success: function (e) {
+                  let page = Taro.getCurrentPages().pop();
+                  if (page == undefined || page == null) return;
+                  page.onShow();
+                }
               })
+              // //查询用户最后一次购买的活动id
+              // request({
+              //   url: 'v1/youhui/getUserLastYouhuiGroupId',
+              //   method: "GET"
+              // }).then((res: any) => {
+              //   //得到活动id并跳转活动详情
+              //   Taro.navigateTo({
+              //     url: '/pages/activity/pages/group/group?id=' + res.data.id,
+              //     success: function (e) {
+              //       let page = Taro.getCurrentPages().pop();
+              //       if (page == undefined || page == null) return;
+              //       page.onShow();
+              //     }
+              //   })
+              // })
             } else {
               //支付宝支付失败
             }
@@ -529,22 +552,31 @@ export default class Group extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //查询用户最后一次购买的参团活动id
-                request({
-                  url: 'v1/youhui/getUserLastParticipateId',
-                  method: "GET"
-                }).then((res: any) => {
-                  //得到拼团活动id并跳转活动详情
-                  Taro.navigateTo({
-                    url: '/pages/activity/pages/group/group?id=' + res.data.id,
-                    // url: '/activity-pages/my-activity/my.activity',
-                    success: function (e) {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
-                    }
-                  })
+                Taro.navigateTo({
+                  url: '/pages/activity/pages/group/group?id=' + _groupid,
+                  // url: '/activity-pages/my-activity/my.activity',
+                  success: function (e) {
+                    let page = Taro.getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onShow();
+                  }
                 })
+                // //查询用户最后一次购买的参团活动id
+                // request({
+                //   url: 'v1/youhui/getUserLastParticipateId',
+                //   method: "GET"
+                // }).then((res: any) => {
+                //   //得到拼团活动id并跳转活动详情
+                //   Taro.navigateTo({
+                //     url: '/pages/activity/pages/group/group?id=' + res.data.id,
+                //     // url: '/activity-pages/my-activity/my.activity',
+                //     success: function (e) {
+                //       let page = Taro.getCurrentPages().pop();
+                //       if (page == undefined || page == null) return;
+                //       page.onShow();
+                //     }
+                //   })
+                // })
               } else {
                 //微信支付失败
               }
@@ -557,21 +589,30 @@ export default class Group extends Component<Props>{
           }, res => {
             //支付宝支付成功
             if (res.resultCode === "9000") {
-              //查询用户最后一次购买的活动id
-              request({
-                url: 'v1/youhui/getUserLastParticipateId',
-                method: "GET"
-              }).then((res: any) => {
-                //得到活动id并跳转活动详情
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id=' + res.data.id,
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
-                  }
-                })
+              Taro.navigateTo({
+                url: '/pages/activity/pages/group/group?id=' + _groupid,
+                // url: '/activity-pages/my-activity/my.activity',
+                success: function (e) {
+                  let page = Taro.getCurrentPages().pop();
+                  if (page == undefined || page == null) return;
+                  page.onShow();
+                }
               })
+              // //查询用户最后一次购买的活动id
+              // request({
+              //   url: 'v1/youhui/getUserLastParticipateId',
+              //   method: "GET"
+              // }).then((res: any) => {
+              //   //得到活动id并跳转活动详情
+              //   Taro.navigateTo({
+              //     url: '/pages/activity/pages/group/group?id=' + res.data.id,
+              //     success: function (e) {
+              //       let page = Taro.getCurrentPages().pop();
+              //       if (page == undefined || page == null) return;
+              //       page.onShow();
+              //     }
+              //   })
+              // })
             } else {
               //支付宝支付失败
             }
@@ -590,6 +631,24 @@ export default class Group extends Component<Props>{
       url: '/'
     })
   }
+
+  tempTime = () => {
+    let temp_Time = new Date(this.state.data.end_time).getTime() - new Date().getTime();   //时间差的毫秒数        
+    //计算出相差天数  
+    var days = Math.floor(temp_Time / (24 * 3600 * 1000))
+    //计算出小时数  
+    var leave1 = temp_Time % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数  
+    var hours = Math.floor(leave1 / (3600 * 1000))
+    //计算相差分钟数  
+    var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数  
+    var minutes = Math.floor(leave2 / (60 * 1000))
+    //计算相差秒数  
+    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数  
+    var seconds = Math.round(leave3 / 1000)
+    var differ_time = [days, hours, minutes, seconds]
+    this.setState({ differ_time: differ_time });
+  }
+
 
   render() {
     const { images, description } = this.state.data;
@@ -616,7 +675,16 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackred0" >{item.number}人</View>
                               <View className="group_list_lackredblack20" >拼成</View>
                             </View>
-                            <View className="group_list_times0" >23.50.30</View>
+                            <View className="group_list_times0" >
+                              <AtCountdown
+                                isShowDay={true}
+                                format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                                day={this.state.differ_time[0]}
+                                hours={this.state.differ_time[1]}
+                                minutes={this.state.differ_time[2]}
+                                seconds={this.state.differ_time[3]}
+                              />
+                            </View>
                           </View>
                           <View className="group_list_btnbox0" >
                             <View className="group_list_btn0" onClick={this.payment2.bind(this, item.id)} >立即参团</View>
@@ -658,8 +726,8 @@ export default class Group extends Component<Props>{
               indicatorActiveColor='#333'
               circular={true}
               indicatorDots
-              autoplay>
-            >
+              autoplay
+              >
               {
                 this.state.data.images ? this.state.data.images.map((item, index) => {
                   return (
@@ -740,7 +808,9 @@ export default class Group extends Component<Props>{
           this.state.data2.data && this.state.data2.data.length > 0 ? <View className="group_num" >
             <View className="group_num_titlebox" >
               <View className="group_num_title" >{this.state.data2.total}人正在拼</View>
-              <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>
+              {
+                this.state.data2.data && this.state.data2.data.length > 2 ? <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>:null
+              }
             </View>
             <View className="group_listbox" >
 
@@ -770,7 +840,14 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackred" >{item[0].number - item[0].participation_number}人</View>
                               <View className="group_list_lackredblack2" >拼成</View>
                             </View>
-                            <View className="group_list_times" >23:50:30</View>
+                            <View className="group_list_times" ><AtCountdown
+                              isShowDay={true}
+                              format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                              day={this.state.differ_time[0]}
+                              hours={this.state.differ_time[1]}
+                              minutes={this.state.differ_time[2]}
+                              seconds={this.state.differ_time[3]}
+                            /></View>
                           </View>
                         </View>
                         {
@@ -788,7 +865,14 @@ export default class Group extends Component<Props>{
                                 <View className="group_list_lackred" >{item[1].number - item[1].participation_number}人</View>
                                 <View className="group_list_lackredblack2" >拼成</View>
                               </View>
-                              <View className="group_list_times" >23:50:30</View>
+                              <View className="group_list_times" ><AtCountdown
+                                isShowDay={true}
+                                format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                                day={this.state.differ_time[0]}
+                                hours={this.state.differ_time[1]}
+                                minutes={this.state.differ_time[2]}
+                                seconds={this.state.differ_time[3]}
+                              /></View>
                             </View>
                           </View> : null
                         }
@@ -924,7 +1008,7 @@ export default class Group extends Component<Props>{
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '70px', right: '0px',zIndex:3 }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '70px', right: '0px', zIndex: 3 }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
