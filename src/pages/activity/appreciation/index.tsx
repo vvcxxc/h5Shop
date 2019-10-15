@@ -346,12 +346,12 @@ export default class Appre extends Component<Props>{
       data: JSON.stringify(datas)
     })
       .then((res: any) => {
-        let order_sn = res.data.order_id;
+        let order_sn = res.data.channel_order_sn;
         Taro.hideLoading();
         if (_type == 1) {
           //微信支付
           window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
+            'getBrandWCPayRequest', { 
             "appId": res.data.appId,
             "timeStamp": res.data.timeStamp,
             "nonceStr": res.data.nonceStr,
