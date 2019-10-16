@@ -346,11 +346,12 @@ export default class Appre extends Component<Props>{
       data: JSON.stringify(datas)
     })
       .then((res: any) => {
+        let order_sn = res.data.channel_order_sn;
         Taro.hideLoading();
         if (_type == 1) {
           //微信支付
           window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
+            'getBrandWCPayRequest', { 
             "appId": res.data.appId,
             "timeStamp": res.data.timeStamp,
             "nonceStr": res.data.nonceStr,
@@ -361,7 +362,6 @@ export default class Appre extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-
                 Taro.showLoading({
                   title: 'loading',
                 });
@@ -369,7 +369,8 @@ export default class Appre extends Component<Props>{
                   //查询用户最后一次购买的增值活动id
                   request({
                     url: 'v1/youhui/getUserLastYouhuiId',
-                    method: "GET"
+                    method: "GET",
+                    data: { order_sn: order_sn }
                   }).then((res: any) => {
                     if (res.code == 200) {
                       clearInterval(interval);
@@ -385,7 +386,7 @@ export default class Appre extends Component<Props>{
                       })
                     }
                   })
-                }, 200);
+                }, 500);
 
               } else {
                 //微信支付失败
@@ -406,7 +407,8 @@ export default class Appre extends Component<Props>{
                 //查询用户最后一次购买的增值活动id
                 request({
                   url: 'v1/youhui/getUserLastYouhuiId',
-                  method: "GET"
+                  method: "GET",
+                  data: { order_sn: order_sn }
                 }).then((res: any) => {
                   if (res.code == 200) {
                     clearInterval(interval);
@@ -422,7 +424,7 @@ export default class Appre extends Component<Props>{
                     })
                   }
                 })
-              }, 200);
+              }, 500);
             } else {
               //支付宝支付失败
             }
