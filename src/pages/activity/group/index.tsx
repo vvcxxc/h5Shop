@@ -67,6 +67,7 @@ export default class Group extends Component<Props>{
           number: 0,
           participation_number: 0,
           real_name: "",
+          activity_end_time:''
         }
       ],
       page: 1,
@@ -697,7 +698,7 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackredblack20" >拼成</View>
                             </View>
                             <View className="group_list_times0" >
-                              <TimeUp itemtime={this.state.data.activity_end_time} />
+                              <TimeUp itemtime={item.activity_end_time} />
                             </View>
                           </View>
                           <View className="group_list_btnbox0" >
@@ -861,7 +862,7 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackredblack2" >拼成</View>
                             </View>
                             <View className="group_list_times" >
-                              <TimeUp itemtime={this.state.data.activity_end_time} />
+                              <TimeUp itemtime={item[0].activity_end_time} />
                             </View>
                           </View>
                         </View>
@@ -881,7 +882,7 @@ export default class Group extends Component<Props>{
                                 <View className="group_list_lackredblack2" >拼成</View>
                               </View>
                               <View className="group_list_times" >
-                                <TimeUp itemtime={this.state.data.activity_end_time} />
+                                <TimeUp itemtime={item[1].activity_end_time} />
                               </View>
                             </View>
                           </View> : null
