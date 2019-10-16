@@ -45,7 +45,8 @@
 
                 .d_appre_groupList_box_slideBox_content {
                     width: 100%;
-                    height: 100%;
+                    // height: 100%;
+                    height: 700px;
 
                     .group_list0 {
                         height: 145px;
@@ -117,13 +118,14 @@
                                 height: 40px;
                                 color: #666666;
                                 text-align: right;
-    
+
                                 .at-countdown__time-box {
                                     color: #666666;
                                     font-size: 25px;
-                                    font-family:sans-serif;
+                                    font-family: sans-serif;
                                 }
-                                .at-countdown__separator{
+
+                                .at-countdown__separator {
                                     color: #666666;
                                     font-size: 20px;
                                     padding: 0 2px;
@@ -643,9 +645,10 @@
                             .at-countdown__time-box {
                                 color: #666666;
                                 font-size: 25px;
-                                font-family:sans-serif;
+                                font-family: sans-serif;
                             }
-                            .at-countdown__separator{
+
+                            .at-countdown__separator {
                                 color: #666666;
                                 font-size: 20px;
                                 padding: 0 2px;
@@ -890,6 +893,7 @@
         line-height: 55px;
         padding-left: 55px;
         z-index: 3;
+
         .choose {
             width: 32px;
             height: 32px;
@@ -930,6 +934,7 @@
         box-sizing: border-box;
         padding: 20px 28px;
         z-index: 3;
+
         .paymoney_price {
             width: 450px;
             height: 55px;
