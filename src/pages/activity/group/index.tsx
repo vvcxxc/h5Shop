@@ -83,6 +83,16 @@ export default class Group extends Component<Props>{
   componentDidShow() {
     this.toShare();
   }
+  
+  componentWillUnmount() {
+    console.log('清除计时器');
+    // clearTimeout(timer);
+    var end = setTimeout(function () { }, 1);
+    var start = (end - 100) > 0 ? end - 100 : 0;
+    for (var i = start; i <= end; i++) {
+      clearTimeout(i);
+    }
+  }
 
   componentDidMount = () => {
     console.log('params:', this.$router.params);
