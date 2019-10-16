@@ -25,11 +25,11 @@ export default class TimeUp extends Component<Props>{
         this.setTime();
     }
     componentWillUnmount() {
-        console.log('清除计时器');
-        var end = setTimeout(function () { }, 1);
-        var start = (end - 100) > 0 ? end - 100 : 0;
-        for (var i = start; i <= end; i++) {
-            clearTimeout(i);
+        // console.log('清除计时器');
+        // var end = setTimeout(function () { }, 1);
+        // var start = (end - 100) > 0 ? end - 100 : 0;
+        // for (var i = start; i <= end; i++) {
+        //     clearTimeout(i);
         }
     }
     /**
