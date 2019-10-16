@@ -817,35 +817,37 @@ export default class Group extends Component<Props>{
                 this.state.data2.data && this.state.data2.data.length > 2 ? <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View> : null
               }
             </View>
-            <View className="group_listbox" >
+          </View> : null
+        }
 
-              {/* <Swiper
-                className='test-h'
-                indicatorColor='#999'
-                indicatorActiveColor='#333'
-                indicatorDots
-                vertical
-                circular
-                interval={2000}
-                skipHiddenItemLayout={true}
-                displayMultipleItems={2}
-                autoplay>
-                {
-                  this.state.data2.data && this.state.data2.data.length > 0 ? this.state.data2.data.map((item: any, index) => {
-                    return (
-                      <SwiperItem key={item}>
+
+        {
+          this.state.data.images.length > 0 ? <View>
+            <Swiper
+              className='diu'
+              vertical
+              interval={3000}
+              circular={true}
+              skipHiddenItemLayout={true}
+              autoplay
+            >
+              {
+                this.state.data2.data && this.state.data2.data.length > 0 ? this.state.newGroupList.map((item: any, index) => {
+                  return (
+                    <SwiperItem>
+                      <View >
                         <View className="group_list" >
                           <View className="group_list_img" >
-                            <Image className="listImg" src={item.avatar} />
+                            <Image className="listImg" src={item[0].avatar} />
                           </View>
-                          <View className="group_list_name" >{item.real_name}</View>
+                          <View className="group_list_name" >{item[0].real_name}</View>
                           <View className="group_list_btnbox" >
-                            <View className="group_list_btn" onClick={this.payment2.bind(this, item.id)} >立即参团</View>
+                            <View className="group_list_btn" onClick={this.payment2.bind(this, item[0].id)} >立即参团</View>
                           </View>
                           <View className="group_list_timesbox" >
                             <View className="group_list_lack" >
                               <View className="group_list_lackredblack1" >还差</View>
-                              <View className="group_list_lackred" >{item.number - item.participation_number}人</View>
+                              <View className="group_list_lackred" >{item[0].number - item[0].participation_number}人</View>
                               <View className="group_list_lackredblack2" >拼成</View>
                             </View>
                             <View className="group_list_times" >
@@ -853,73 +855,40 @@ export default class Group extends Component<Props>{
                             </View>
                           </View>
                         </View>
-                      </SwiperItem>
-                    )
-                  }) : null
-                }
-              </Swiper> */}
-
-              <Swiper
-                className='test-h'
-                vertical
-                autoplay
-                circular={true}
-                interval={3000}
-              >
-                {
-                  this.state.data2.data && this.state.data2.data.length > 0 ? this.state.newGroupList.map((item: any, index) => {
-                    return (
-                      <SwiperItem>
-                        <View >
-                          <View className="group_list" >
+                        {
+                          item[1] ? <View className="group_list" >
                             <View className="group_list_img" >
-                              <Image className="listImg" src={item[0].avatar} />
+                              <Image className="listImg" src={item[1].avatar} />
                             </View>
-                            <View className="group_list_name" >{item[0].real_name}</View>
+                            <View className="group_list_name" >{item[1].real_name}</View>
                             <View className="group_list_btnbox" >
-                              <View className="group_list_btn" onClick={this.payment2.bind(this, item[0].id)} >立即参团</View>
+                              <View className="group_list_btn" onClick={this.payment2.bind(this, item[1].id)} >立即参团</View>
                             </View>
                             <View className="group_list_timesbox" >
                               <View className="group_list_lack" >
                                 <View className="group_list_lackredblack1" >还差</View>
-                                <View className="group_list_lackred" >{item[0].number - item[0].participation_number}人</View>
+                                <View className="group_list_lackred" >{item[1].number - item[1].participation_number}人</View>
                                 <View className="group_list_lackredblack2" >拼成</View>
                               </View>
                               <View className="group_list_times" >
                                 <TimeUp itemtime={this.state.data.activity_end_time} />
                               </View>
                             </View>
-                          </View>
-                          {
-                            item[1] ? <View className="group_list" >
-                              <View className="group_list_img" >
-                                <Image className="listImg" src={item[1].avatar} />
-                              </View>
-                              <View className="group_list_name" >{item[1].real_name}</View>
-                              <View className="group_list_btnbox" >
-                                <View className="group_list_btn" onClick={this.payment2.bind(this, item[1].id)} >立即参团</View>
-                              </View>
-                              <View className="group_list_timesbox" >
-                                <View className="group_list_lack" >
-                                  <View className="group_list_lackredblack1" >还差</View>
-                                  <View className="group_list_lackred" >{item[1].number - item[1].participation_number}人</View>
-                                  <View className="group_list_lackredblack2" >拼成</View>
-                                </View>
-                                <View className="group_list_times" >
-                                  <TimeUp itemtime={this.state.data.activity_end_time} />
-                                </View>
-                              </View>
-                            </View> : null
-                          }
-                        </View>
-                      </SwiperItem>
-                    )
-                  }) : null
-                }
-              </Swiper>
-            </View>
+                          </View> : null
+                        }
+                      </View>
+                    </SwiperItem>
+                  )
+                }) : null
+              }
+            </Swiper>
           </View> : null
         }
+
+
+
+
+
         <View className="appre_rule" >
           <View className="appre_rule_title" >使用规则</View>
           <View className="appre_rule_time" >
