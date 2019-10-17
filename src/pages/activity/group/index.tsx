@@ -67,7 +67,7 @@ export default class Group extends Component<Props>{
           number: 0,
           participation_number: 0,
           real_name: "",
-          activity_end_time:''
+          activity_end_time: ''
         }
       ],
       page: 1,
@@ -84,7 +84,7 @@ export default class Group extends Component<Props>{
   componentDidShow() {
     this.toShare();
   }
-  
+
   componentWillUnmount() {
     console.log('清除计时器');
     // clearTimeout(timer);
@@ -833,7 +833,7 @@ export default class Group extends Component<Props>{
 
 
         {
-          this.state.data.images.length > 0 ? <View>
+          this.state.data2.data && this.state.data2.data.length > 0 ? <View>
             <Swiper
               className='diu'
               vertical
@@ -841,6 +841,7 @@ export default class Group extends Component<Props>{
               circular
               skipHiddenItemLayout={false}
               autoplay
+              easingFunction={'linear'}
             >
               {
                 this.state.data2.data && this.state.data2.data.length > 0 ? this.state.newGroupList.map((item: any, index) => {
