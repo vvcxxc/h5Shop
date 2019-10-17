@@ -839,7 +839,7 @@ export default class Group extends Component<Props>{
               vertical
               interval={3000}
               circular
-              skipHiddenItemLayout={true}
+              skipHiddenItemLayout={false}
               autoplay
             >
               {
