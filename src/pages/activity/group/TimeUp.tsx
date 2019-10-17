@@ -30,7 +30,7 @@ export default class TimeUp extends Component<Props>{
         // var start = (end - 100) > 0 ? end - 100 : 0;
         // for (var i = start; i <= end; i++) {
         //     clearTimeout(i);
-        }
+        // }
     }
     /**
        * 定时
