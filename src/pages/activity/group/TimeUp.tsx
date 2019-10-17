@@ -18,12 +18,12 @@ export default class TimeUp extends Component<Props>{
     componentDidMount() {
         this.setTime();
     }
-    componentDidShow() {
-        this.setTime();
-    }
-    componentWillReceiveProps(props, nextprops) {
-        this.setTime();
-    }
+    // componentDidShow() {
+        // this.setTime();
+    // }
+    // componentWillReceiveProps(props, nextprops) {
+    //     this.setTime();
+    // }
     componentWillUnmount() {
         // console.log('清除计时器');
         // var end = setTimeout(function () { }, 1);
