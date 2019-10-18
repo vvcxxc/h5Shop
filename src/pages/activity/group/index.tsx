@@ -70,7 +70,8 @@ export default class Group extends Component<Props>{
     isShare: false,
     isFromShare: false,
     groupListShow: false,
-    groupListPages: 1
+    groupListPages: 1,
+    currentPage: 0
   };
   componentDidShow() {
     this.toShare();
@@ -830,9 +831,21 @@ export default class Group extends Component<Props>{
               vertical
               interval={3000}
               circular
-              skipHiddenItemLayout={false}
+              skipHiddenItemLayout={true}
               autoplay
-              easingFunction={'linear'}
+              easingFunction={'easeOutCubic'}
+              // indicatorColor='#999'
+              // indicatorActiveColor='#333'
+              // indicatorDots
+              onChange={(e) => {
+                this.setState({ currentPage: this.state.currentPage })
+                // console.log(e.detail.current, Math.ceil(this.state.data2.data.length / 2) - 1);
+                if (e.detail.current == Math.ceil(this.state.data2.data.length / 2) - 2) {
+                  // console.log(e.detail.current);
+                  e.detail.current = 0;
+                }
+              }}
+              current={this.state.currentPage}
             >
               {
                 this.state.newGroupList.map((item: any, index) => {
