@@ -60,16 +60,7 @@ export default class Group extends Component<Props>{
       ypoint: ""
     },
     data2: {
-      data: [
-        {
-          avatar: "",
-          id: 0,
-          number: 0,
-          participation_number: 0,
-          real_name: "",
-          activity_end_time: ''
-        }
-      ],
+      data: [],
       page: 1,
       pageRow: 2,
       total: 0,
@@ -844,7 +835,7 @@ export default class Group extends Component<Props>{
               easingFunction={'linear'}
             >
               {
-                this.state.data2.data && this.state.data2.data.length > 0 ? this.state.newGroupList.map((item: any, index) => {
+                this.state.newGroupList.map((item: any, index) => {
                   return (
                     <SwiperItem>
                       <View >
@@ -891,7 +882,7 @@ export default class Group extends Component<Props>{
                       </View>
                     </SwiperItem>
                   )
-                }) : null
+                })
               }
             </Swiper>
           </View> : null
