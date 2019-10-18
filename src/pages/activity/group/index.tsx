@@ -664,7 +664,7 @@ export default class Group extends Component<Props>{
     return (
       <View className="d_appre" >
         {
-          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }} onTouchMove={(e) => { e.stopPropagation() }}>
+          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }} onTouchMove={(e) => { e.preventDefault(); e.stopPropagation() }}>
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
