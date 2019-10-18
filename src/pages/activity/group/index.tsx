@@ -207,7 +207,9 @@ export default class Group extends Component<Props>{
   addListen = () => {
     let groupListShow = this.state.groupListShow;
     document.addEventListener('touchmove', function (event) { 　　 //监听滚动事件
-      if (groupListShow && event.target.className == 'd_appre_groupList') {
+      // console.log(event.target.className)
+      if ( event.target.className == 'd_appre_groupList') {
+        // console.log('diu', event.target.className)
         event.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
       }
 
