@@ -156,6 +156,10 @@
                 .d_appre_groupList_box_slideBox_content::-webkit-scrollbar {
                     display: none;
                 }
+
+                .d_appre_groupList_box_slideBox_content::-o-scrollbar {
+                    display: none;
+                }
             }
 
             .group_list_toast {
