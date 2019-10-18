@@ -79,8 +79,8 @@ export default class Group extends Component<Props>{
   }
 
   componentWillUnmount() {
+    document.removeEventListener('touchmove', () => { });
     console.log('清除计时器');
-    // clearTimeout(timer);
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
     for (var i = start; i <= end; i++) {
@@ -205,10 +205,9 @@ export default class Group extends Component<Props>{
   };
 
   addListen = () => {
-    let groupListShow = this.state.groupListShow;
     document.addEventListener('touchmove', function (event) { 　　 //监听滚动事件
       // console.log(event.target.className)
-      if ( event.target.className == 'd_appre_groupList') {
+      if (event.target.className == 'd_appre_groupList') {
         // console.log('diu', event.target.className)
         event.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
       }
