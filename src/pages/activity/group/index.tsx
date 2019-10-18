@@ -75,6 +75,7 @@ export default class Group extends Component<Props>{
   };
   componentDidShow() {
     this.toShare();
+    this.addListen();
   }
 
   componentWillUnmount() {
@@ -136,6 +137,8 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.addListen();
+
               });
               Taro.hideLoading()
             }
@@ -172,7 +175,6 @@ export default class Group extends Component<Props>{
         })
           .then((res: any) => {
             if (res.code == 200) {
-
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -182,6 +184,7 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.addListen();
               });
               Taro.hideLoading()
             } else {
@@ -200,6 +203,16 @@ export default class Group extends Component<Props>{
       })
     })
   };
+
+  addListen = () => {
+    let groupListShow = this.state.groupListShow;
+    document.addEventListener('touchmove', function (event) { 　　 //监听滚动事件
+      if (groupListShow && event.target.className == 'd_appre_groupList') {
+        event.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+      }
+
+    }, { passive: false });
+  }
 
   toShare = () => {
     let url = window.location.href;
@@ -664,7 +677,9 @@ export default class Group extends Component<Props>{
     return (
       <View className="d_appre" >
         {
-          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }} onTouchMove={(e) => { e.preventDefault(); e.stopPropagation() }}>
+          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }}
+          //  onTouchMove={(e) => { e.preventDefault(); e.stopPropagation() }}
+          >
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
