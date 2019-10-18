@@ -710,7 +710,7 @@ export default class Group extends Component<Props>{
               } */}
             </View>
             <View className="group_list_closebtn" >
-              <AtIcon value='close-circle' size="30px" color='#fff'></AtIcon>
+              <AtIcon value='close-circle' size="28px" color='#fff'></AtIcon>
             </View>
           </View> : null
         }
