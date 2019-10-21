@@ -26,7 +26,7 @@ export default class Orderdetail extends Component {
       image: '',//优惠券图片
       begin_time: 0,//起始时间
       end_time: 0,//使用结束时间
-      coupons_type: 0,//优惠券类型 0兑换券 1现金券
+      coupons_type: 2,//优惠券类型 0兑换券 1现金券
       confirm_time: 0,//确认使用时间
       description: [],//使用规则
       pay_money: 0,//实际购买价格
