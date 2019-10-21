@@ -15,7 +15,8 @@ import './index.scss';
 interface Props {
   id: any;
 }
-const share_url = process.env.APPRE_Details_URL
+const share_url = process.env.APPRE_Details_URL;
+let interval;
 export default class Appre extends Component<Props>{
   state = {
     ruleMore: false,
@@ -24,7 +25,6 @@ export default class Appre extends Component<Props>{
     xPoint: 0,
     yPoint: 0,
     imagesCurrent: 0,
-    imagesList: [],
     data: {
       activity_begin_time: "",
       activity_end_time: "",
@@ -66,6 +66,9 @@ export default class Appre extends Component<Props>{
   componentDidShow() {
     this.toShare();
   }
+  componentWillUnmount() {
+    clearInterval(interval);
+  }
   componentDidMount = () => {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
@@ -94,13 +97,6 @@ export default class Appre extends Component<Props>{
         })
           .then((res: any) => {
             if (res.code == 200) {
-              let { image, images } = res.data;
-              let imgList;
-              if (image && images) {
-                imgList = new Array(image).concat(images);
-              } else {
-                imgList = [];
-              }
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -108,7 +104,7 @@ export default class Appre extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              this.setState({ data: res.data, imagesList: imgList }, () => {
+              this.setState({ data: res.data }, () => {
                 this.toShare();
               });
               Taro.hideLoading()
@@ -136,13 +132,6 @@ export default class Appre extends Component<Props>{
 
 
             if (res.code == 200) {
-              let { image, images } = res.data;
-              let imgList;
-              if (image && images) {
-                imgList = new Array(image).concat(images);
-              } else {
-                imgList = [];
-              }
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -150,7 +139,7 @@ export default class Appre extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
-              this.setState({ data: res.data, imagesList: imgList }, () => {
+              this.setState({ data: res.data }, () => {
                 this.toShare();
               });
               Taro.hideLoading()
@@ -347,8 +336,6 @@ export default class Appre extends Component<Props>{
         alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
       }
     }
-
-
     //请求支付属性
     request({
       url: 'v1/youhui/wxXcxuWechatPay',
@@ -359,11 +346,12 @@ export default class Appre extends Component<Props>{
       data: JSON.stringify(datas)
     })
       .then((res: any) => {
+        let order_sn = res.data.channel_order_sn;
         Taro.hideLoading();
         if (_type == 1) {
           //微信支付
           window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
+            'getBrandWCPayRequest', { 
             "appId": res.data.appId,
             "timeStamp": res.data.timeStamp,
             "nonceStr": res.data.nonceStr,
@@ -374,21 +362,32 @@ export default class Appre extends Component<Props>{
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //查询用户最后一次购买的增值活动id
-                request({
-                  url: 'v1/youhui/getUserLastYouhuiId',
-                  method: "GET"
-                }).then((res: any) => {
-                  //得到增值活动id并跳转活动详情
-                  Taro.navigateTo({
-                    url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                    success: function (e) {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
+                Taro.showLoading({
+                  title: 'loading',
+                });
+                interval = setInterval(function () {
+                  //查询用户最后一次购买的增值活动id
+                  request({
+                    url: 'v1/youhui/getUserLastYouhuiId',
+                    method: "GET",
+                    data: { order_sn: order_sn }
+                  }).then((res: any) => {
+                    if (res.code == 200) {
+                      clearInterval(interval);
+                      Taro.hideLoading();
+                      //得到增值活动id并跳转活动详情
+                      Taro.navigateTo({
+                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                        success: function (e) {
+                          let page = Taro.getCurrentPages().pop();
+                          if (page == undefined || page == null) return;
+                          page.onShow();
+                        }
+                      })
                     }
                   })
-                })
+                }, 500);
+
               } else {
                 //微信支付失败
               }
@@ -401,21 +400,31 @@ export default class Appre extends Component<Props>{
           }, res => {
             //支付宝支付成功
             if (res.resultCode === "9000") {
-              //查询用户最后一次购买的活动id
-              request({
-                url: 'v1/youhui/getUserLastYouhuiId',
-                method: "GET"
-              }).then((res: any) => {
-                //得到活动id并跳转活动详情
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
+              Taro.showLoading({
+                title: 'loading',
+              });
+              interval = setInterval(function () {
+                //查询用户最后一次购买的增值活动id
+                request({
+                  url: 'v1/youhui/getUserLastYouhuiId',
+                  method: "GET",
+                  data: { order_sn: order_sn }
+                }).then((res: any) => {
+                  if (res.code == 200) {
+                    clearInterval(interval);
+                    Taro.hideLoading();
+                    //得到增值活动id并跳转活动详情
+                    Taro.navigateTo({
+                      url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                      success: function (e) {
+                        let page = Taro.getCurrentPages().pop();
+                        if (page == undefined || page == null) return;
+                        page.onShow();
+                      }
+                    })
                   }
                 })
-              })
+              }, 500);
             } else {
               //支付宝支付失败
             }
@@ -451,15 +460,13 @@ export default class Appre extends Component<Props>{
         </View>
 
         {
-          this.state.data.type == 0 ?
+          this.state.data.type == 0 && this.state.data.images.length > 0 ?
             <View
               onClick={() => {
-                console.log("5555")
-                this.setState({ imgZoom: true, imgZoomSrc: this.state.imagesList[this.state.imagesCurrent] })
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
               }}>
               <Swiper
                 onChange={(e) => {
-                  // console.log(e.detail.current)
                   this.setState({ imagesCurrent: e.detail.current })
                 }}
                 className='test-h'
@@ -470,12 +477,10 @@ export default class Appre extends Component<Props>{
                 indicatorDots
                 autoplay>
                 {
-                  this.state.imagesList ? this.state.imagesList.map((item, index) => {
+                  this.state.data.images ? this.state.data.images.map((item, index) => {
                     return (
                       <SwiperItem key={item}>
-                        <View className='demo-text'
-                        //  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: item }) }}
-                        >
+                        <View className='demo-text'>
                           <Image className="demo-text-Img" src={item} />
                         </View>
                       </SwiperItem>

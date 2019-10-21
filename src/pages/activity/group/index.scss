@@ -4,15 +4,16 @@
     padding-bottom: 110px;
     background: #ededed;
 
-    .d_appre_groupList{
+    .d_appre_groupList {
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,.7);
+        background: rgba(0, 0, 0, .7);
         position: fixed;
         top: 0;
         left: 0;
         z-index: 4;
-        .d_appre_groupList_box{
+
+        .d_appre_groupList_box {
             position: fixed;
             left: 50%;
             top: 50%;
@@ -23,50 +24,59 @@
             margin-top: -470px;
             border-radius: 16px;
             overflow: hidden;
-            .d_appre_groupList_box_title{
+
+            .d_appre_groupList_box_title {
                 width: 100%;
                 height: 125px;
                 color: #ffffff;
                 line-height: 133px;
                 font-size: 40px;
                 font-weight: bold;
-                background: linear-gradient(90deg,#FC6631,#FD9083,#FF6654);
+                background: linear-gradient(90deg, #FC6631, #FD9083, #FF6654);
                 text-align: center;
             }
-            .d_appre_groupList_box_slideBox{
+
+            .d_appre_groupList_box_slideBox {
                 width: 100%;
                 height: 725px;
-                padding: 0 24px;
+                padding: 0;
                 box-sizing: border-box;
                 overflow: scroll;
-                .d_appre_groupList_box_slideBox_content{
+
+                .d_appre_groupList_box_slideBox_content {
                     width: 100%;
-                    height: 100%;
+                    // height: 100%;
+                    height: 700px;
+                    overflow-x: hidden;
+
+
                     .group_list0 {
                         height: 145px;
                         width: 100%;
-                        padding: 30px 0 20px 0;
+                        padding: 30px 24px 20px 24px;
                         border-bottom: 1px solid #ededed;
                         box-sizing: border-box;
                         display: flex;
                         flex-direction: row;
                         align-items: center;
+                        justify-content: space-between;
+
                         .group_list_img0 {
                             height: 80px;
                             width: 80px;
                             border-radius: 40px;
                             overflow: hidden;
                             margin-right: 20px;
-    
+
                             .listImg0 {
                                 width: 100%;
                                 height: 100%;
                             }
                         }
-    
+
                         .group_list_name0 {
                             height: 80px;
-                            width: 150px;
+                            width: 130px;
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
@@ -74,7 +84,7 @@
                             text-overflow: ellipsis;
                             white-space: nowrap;
                         }
-    
+
                         .group_list_timesbox0 {
                             height: 100%;
                             display: flex;
@@ -82,54 +92,77 @@
                             justify-content: flex-end;
                             margin-right: 20px;
                             font-size: 30px;
-    
+
                             .group_list_lack0 {
                                 height: 50px;
                                 color: #313131;
                                 display: flex;
                                 flex-direction: row;
-    
+
                                 .group_list_lackredblack10 {
                                     width: 65px;
                                     text-align: right;
                                 }
-    
+
                                 .group_list_lackred0 {
                                     flex: 2;
                                     color: #ff8576;
                                     text-align: right;
                                 }
-    
+
                                 .group_list_lackredblack20 {
                                     width: 65px;
                                     text-align: right;
                                 }
                             }
+
                             .group_list_times0 {
                                 height: 40px;
                                 color: #666666;
                                 text-align: right;
+
+                                .at-countdown__time-box {
+                                    color: #666666;
+                                    font-size: 25px;
+                                    font-family: sans-serif;
+                                }
+
+                                .at-countdown__separator {
+                                    color: #666666;
+                                    font-size: 20px;
+                                    padding: 0 2px;
+                                }
                             }
                         }
+
                         .group_list_btnbox0 {
                             height: 100%;
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
-    
+
                             .group_list_btn0 {
                                 font-size: 30px;
-                                padding: 15px;
+                                padding: 12px;
                                 background: linear-gradient(90deg, #FE7450, #FF2614);
                                 border-radius: 8px;
                                 color: #fff;
-    
+
                             }
                         }
                     }
                 }
+
+                .d_appre_groupList_box_slideBox_content::-webkit-scrollbar {
+                    display: none;
+                }
+
+                .d_appre_groupList_box_slideBox_content::-o-scrollbar {
+                    display: none;
+                }
             }
-            .group_list_toast{
+
+            .group_list_toast {
                 margin-top: 25px;
                 height: 25px;
                 color: #d0d0d0;
@@ -137,17 +170,18 @@
                 font-size: 25px;
             }
         }
-        .group_list_closebtn{
+
+        .group_list_closebtn {
             position: fixed;
             width: 70px;
             height: 70px;
-            top: 92%;
+            top: 93.5%;
             left: 50%;
             margin-left: -35px;
         }
     }
-    
-    
+
+
 
     .group_head_bottom_share {
         margin-left: 0;
@@ -179,7 +213,7 @@
             margin-right: 10px;
         }
     }
-    
+
     .appre_head_activityTitle {
         width: 100%;
         min-height: 125px;
@@ -496,7 +530,7 @@
     .group_num {
         padding: 20px 24px 0 24px;
         background: #fff;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
 
         .group_num_titlebox {
             height: 40px;
@@ -524,103 +558,121 @@
                 color: #ff7a6b;
             }
         }
+    }
 
-        .group_listbox {
+
+
+    .diu {
+        width: 100%;
+        height: 260px;
+        background: #fff;
+        padding: 0 24px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+
+        .group_list {
+            height: 130px;
             width: 100%;
-            height: auto;
+            padding: 30px 0 20px 0;
+            border-bottom: 1px solid #ededed;
+            box-sizing: border-box;
 
-            .group_list {
-                height: 130px;
-                width: 100%;
-                padding: 30px 0 20px 0;
-                border-bottom: 1px solid #ededed;
-                box-sizing: border-box;
+            .group_list_img {
+                height: 80px;
+                width: 80px;
+                border-radius: 40px;
+                float: left;
+                overflow: hidden;
+                margin-right: 20px;
 
-                .group_list_img {
-                    height: 80px;
-                    width: 80px;
-                    border-radius: 40px;
-                    float: left;
-                    overflow: hidden;
-                    margin-right: 20px;
-
-                    .listImg {
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
-
-                .group_list_name {
-                    height: 80px;
-                    width: 200px;
-                    float: left;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                }
-
-                .group_list_btnbox {
+                .listImg {
+                    width: 100%;
                     height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-end;
-                    float: right;
-
-                    .group_list_btn {
-                        font-size: 30px;
-                        padding: 15px;
-                        background: linear-gradient(90deg, #FE7450, #FF2614);
-                        border-radius: 8px;
-                        color: #fff;
-
-                    }
                 }
+            }
 
-                .group_list_timesbox {
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-end;
-                    margin-right: 20px;
-                    float: right;
+            .group_list_name {
+                height: 80px;
+                width: 200px;
+                float: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .group_list_btnbox {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                float: right;
+
+                .group_list_btn {
                     font-size: 30px;
-
-                    .group_list_lack {
-                        height: 50px;
-                        // width: 160px;
-                        color: #313131;
-                        display: flex;
-                        flex-direction: row;
-
-                        .group_list_lackredblack1 {
-                            width: 65px;
-                            text-align: right;
-                        }
-
-                        .group_list_lackred {
-                            flex: 2;
-                            color: #ff8576;
-                            text-align: right;
-                        }
-
-                        .group_list_lackredblack2 {
-                            width: 65px;
-                            text-align: right;
-                        }
-                    }
-
-                    .group_list_times {
-                        height: 40px;
-                        color: #666666;
-                        text-align: right;
-                    }
+                    padding: 15px;
+                    background: linear-gradient(90deg, #FE7450, #FF2614);
+                    border-radius: 8px;
+                    color: #fff;
 
                 }
             }
 
-        }
+            .group_list_timesbox {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                margin-right: 20px;
+                float: right;
+                font-size: 30px;
 
+                .group_list_lack {
+                    height: 50px;
+                    // width: 160px;
+                    color: #313131;
+                    display: flex;
+                    flex-direction: row;
+
+                    .group_list_lackredblack1 {
+                        width: 65px;
+                        text-align: right;
+                    }
+
+                    .group_list_lackred {
+                        flex: 2;
+                        color: #ff8576;
+                        text-align: right;
+                    }
+
+                    .group_list_lackredblack2 {
+                        width: 65px;
+                        text-align: right;
+                    }
+                }
+
+                .group_list_times {
+                    height: 40px;
+                    color: #666666;
+                    text-align: right;
+
+                    .at-countdown__time-box {
+                        color: #666666;
+                        font-size: 25px;
+                        font-family: sans-serif;
+                    }
+
+                    .at-countdown__separator {
+                        color: #666666;
+                        font-size: 20px;
+                        padding: 0 2px;
+                    }
+                }
+
+            }
+        }
     }
+
+
 
     .appre_rule {
         background: #fff;
@@ -852,6 +904,7 @@
         padding: 10px 0;
         line-height: 55px;
         padding-left: 55px;
+        z-index: 3;
 
         .choose {
             width: 32px;
@@ -892,6 +945,7 @@
         border-top: 1px solid #eee;
         box-sizing: border-box;
         padding: 20px 28px;
+        z-index: 3;
 
         .paymoney_price {
             width: 450px;
