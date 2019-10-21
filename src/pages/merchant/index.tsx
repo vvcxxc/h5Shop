@@ -270,7 +270,7 @@ export default class MerChantPage extends Component {
               this.state.stores.map((item2: any, index: any) => {
                 return <View className="new_box">
                   <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px' }} onClick={this.handleClick.bind(this, item2.id)}>
-                  <View className="box_title" style={{ borderBottom: item2.activity_num ? '0.5px solid #eeeeee' : 'none',  paddingBottom:  item2.activity_num ? '12px' : 'none'}}>
+                  <View className="box_title" style={{ borderBottom: item2.activity_num ? '0.5px solid #eeeeee' : 'none',   paddingBottom:item2.activity_num ? '6px' : 'none'}}>
                       <View className="title_l">
                         <Image src={item2.preview} />
                       </View>
