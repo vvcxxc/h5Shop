@@ -134,13 +134,15 @@ export default class NewPage extends Component<Props>{
             {
               this.state.list.map((item: any, index) => {
                 return <View className="list_my" onClick={this.jumpData.bind(this, item.path)}>
-                  <View className="list_left">
-                    <Image src={item.img} />
-                    <View className="des">{item.des}</View>
-                  </View>
-                  <View className="list_right">
-                    <Text className="prompt">{item.prompt}</Text>
-                    <Image src={require('../../assets/right_arro.png')} className='back' />
+                  <View className="list_content">
+                    <View className="list_left">
+                      <Image src={item.img} />
+                      <View className="des">{item.des}</View>
+                    </View>
+                    <View className="list_right">
+                      <Text className="prompt">{item.prompt}</Text>
+                      <Image src={require('../../assets/right_arro.png')} className='back' />
+                    </View>
                   </View>
                 </View>
               })
