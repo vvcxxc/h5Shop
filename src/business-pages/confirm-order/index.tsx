@@ -143,7 +143,8 @@ export default class ConfirmOrder extends Component {
               }
             }
           );
-        } else if (_type == 2) {
+        } 
+        else if (_type == 2) {
           //支付宝
           window.AlipayJSBridge.call('tradePay', {
             tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
