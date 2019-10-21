@@ -16,6 +16,7 @@ export default class ConfirmOrder extends Component {
   };
 
   state = {
+    tempNum: 0,
     amount: 1,
     pay_success: false,
     coupon: {
@@ -41,6 +42,8 @@ export default class ConfirmOrder extends Component {
         this.setState({
           coupon: res.data.info.coupon,
           store: res.data.info.store
+        },()=>{
+          this.accMul();
         })
         Taro.hideLoading()
 
@@ -52,13 +55,17 @@ export default class ConfirmOrder extends Component {
   }
   cutnum() {
     if (this.state.amount > 1) {
-      this.setState({ amount: Number(this.state.amount) - 1 })
+      this.setState({ amount: Number(this.state.amount) - 1 }, () => {
+        this.accMul();
+      })
     }
 
   }
   addnum() {
     if (this.state.amount < 10) {
-      this.setState({ amount: Number(this.state.amount) + 1 })
+      this.setState({ amount: Number(this.state.amount) + 1 }, () => {
+        this.accMul();
+      })
     }
   }
   payMoney() {
@@ -165,6 +172,20 @@ export default class ConfirmOrder extends Component {
       })
   }
 
+  accMul = () => {
+    let arg1 = this.state.coupon.pay_money;
+    let arg2 = this.state.amount;
+    var m = 0, s1 = arg1.toString(),
+      s2 = arg2.toString();
+    try {
+      m += s1.split(".")[1].length
+    } catch (e) { }
+    try {
+      m += s2.split(".")[1].length
+    } catch (e) { }
+    let tempNum = Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+    this.setState({ tempNum: tempNum })
+  }
 
   render() {
     return (
@@ -197,7 +218,7 @@ export default class ConfirmOrder extends Component {
           <View className="flex center">
             <View className="item label">金额</View>
             <View className="price">
-              {this.state.coupon.pay_money * this.state.amount}元
+            ￥{this.state.tempNum}
             </View>
           </View>
         </View>
@@ -205,7 +226,7 @@ export default class ConfirmOrder extends Component {
           <View className="submit-btn flex center"
             onClick={this.payMoney.bind(this)}
           >
-            ￥ {this.state.coupon.pay_money * this.state.amount} 去支付
+            ￥{this.state.tempNum} 去支付
           </View>
         </View>
       </View>
