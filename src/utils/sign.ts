@@ -16,7 +16,7 @@ export const Login = () => {
       return
     }
 
-    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NzEyNzQ0MzUsImV4cCI6MTU3MTU3NDQzNSwibmJmIjoxNTcxMjc0NDM1LCJqdGkiOiI0ZXNFOEptQzc0TE1zanRwIiwic3ViIjo2ODQwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.nVYMCchZjgnTnOfsXbP1iYQF-J9HBx_z1bhFKwJQTVY')
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NzEzMDI4NDQsImV4cCI6MTU3MTYwMjg0NCwibmJmIjoxNTcxMzAyODQ0LCJqdGkiOiJvb21QSHBDVDBqcHc0bVhwIiwic3ViIjo1MzQ1LCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.5N6luYylO1sbGtXR2rfBJYhIW8H72ynTeifQZHfAxuw')
     // request({
 		// 	url: 'api/wap/testLogin'
 		// }).then((res: any) => {
