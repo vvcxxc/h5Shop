@@ -38,7 +38,7 @@ export default class VersionOne extends Component<Props> {
   telescopicBox = (index: number, e) => {
     this.setState({ telescopic: !this.state.telescopic }, () => {
       let data: any = this.props.list
-      this.state.telescopic ? data.height = 'auto' : data.height = '3.2rem'
+      this.state.telescopic ? data.height = 'auto' : data.height = '2.2rem'
       this.setState({ storeList: data })
     })
     e.stopPropagation();
@@ -90,7 +90,7 @@ export default class VersionOne extends Component<Props> {
               position: 'relative',
               height:
                 !that.height ?
-                  that.activity_num > 2 ? '3.2rem' : 'auto' : that.height,
+                  that.activity_num > 2 ? '2.2rem' : 'auto' : that.height,
               marginBottom: that.activity_num >= 1 ? '-0.001rem' : '15px',
               overflow: 'hidden',
             }}
