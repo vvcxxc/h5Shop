@@ -60,16 +60,7 @@ export default class Group extends Component<Props>{
       ypoint: ""
     },
     data2: {
-      data: [
-        {
-          avatar: "",
-          id: 0,
-          number: 0,
-          participation_number: 0,
-          real_name: "",
-          activity_end_time:''
-        }
-      ],
+      data: [],
       page: 1,
       pageRow: 2,
       total: 0,
@@ -79,15 +70,17 @@ export default class Group extends Component<Props>{
     isShare: false,
     isFromShare: false,
     groupListShow: false,
-    groupListPages: 1
+    groupListPages: 1,
+    currentPage: 0
   };
   componentDidShow() {
     this.toShare();
+    this.addListen();
   }
-  
+
   componentWillUnmount() {
+    document.removeEventListener('touchmove', () => { });
     console.log('清除计时器');
-    // clearTimeout(timer);
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
     for (var i = start; i <= end; i++) {
@@ -144,6 +137,8 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.addListen();
+
               });
               Taro.hideLoading()
             }
@@ -180,7 +175,6 @@ export default class Group extends Component<Props>{
         })
           .then((res: any) => {
             if (res.code == 200) {
-
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
                   this.setState({ isPostage: true })
@@ -190,6 +184,7 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
+                this.addListen();
               });
               Taro.hideLoading()
             } else {
@@ -208,6 +203,17 @@ export default class Group extends Component<Props>{
       })
     })
   };
+
+  addListen = () => {
+    document.addEventListener('touchmove', function (event) { 　　 //监听滚动事件
+      // console.log(event.target.className)
+      if (event.target.className == 'd_appre_groupList') {
+        // console.log('diu', event.target.className)
+        event.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+      }
+
+    }, { passive: false });
+  }
 
   toShare = () => {
     let url = window.location.href;
@@ -672,7 +678,9 @@ export default class Group extends Component<Props>{
     return (
       <View className="d_appre" >
         {
-          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }} onTouchMove={(e) => { e.stopPropagation() }}>
+          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }}
+          //  onTouchMove={(e) => { e.preventDefault(); e.stopPropagation() }}
+          >
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
@@ -718,7 +726,7 @@ export default class Group extends Component<Props>{
               } */}
             </View>
             <View className="group_list_closebtn" >
-              <AtIcon value='close-circle' size="30px" color='#fff'></AtIcon>
+              <AtIcon value='close-circle' size="28px" color='#fff'></AtIcon>
             </View>
           </View> : null
         }
@@ -833,17 +841,30 @@ export default class Group extends Component<Props>{
 
 
         {
-          this.state.data.images.length > 0 ? <View>
+          this.state.data2.data && this.state.data2.data.length > 0 ? <View>
             <Swiper
               className='diu'
               vertical
               interval={3000}
               circular
-              skipHiddenItemLayout={false}
+              skipHiddenItemLayout={true}
               autoplay
+              easingFunction={'easeOutCubic'}
+              // indicatorColor='#999'
+              // indicatorActiveColor='#333'
+              // indicatorDots
+              onChange={(e) => {
+                this.setState({ currentPage: this.state.currentPage })
+                // console.log(e.detail.current, Math.ceil(this.state.data2.data.length / 2) - 1);
+                if (e.detail.current == Math.ceil(this.state.data2.data.length / 2) - 2) {
+                  // console.log(e.detail.current);
+                  e.detail.current = 0;
+                }
+              }}
+              current={this.state.currentPage}
             >
               {
-                this.state.data2.data && this.state.data2.data.length > 0 ? this.state.newGroupList.map((item: any, index) => {
+                this.state.newGroupList.map((item: any, index) => {
                   return (
                     <SwiperItem>
                       <View >
@@ -890,7 +911,7 @@ export default class Group extends Component<Props>{
                       </View>
                     </SwiperItem>
                   )
-                }) : null
+                })
               }
             </Swiper>
           </View> : null

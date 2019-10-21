@@ -39,7 +39,7 @@
             .d_appre_groupList_box_slideBox {
                 width: 100%;
                 height: 725px;
-                padding: 0 24px;
+                padding: 0;
                 box-sizing: border-box;
                 overflow: scroll;
 
@@ -47,11 +47,13 @@
                     width: 100%;
                     // height: 100%;
                     height: 700px;
+                    overflow-x: hidden;
+
 
                     .group_list0 {
                         height: 145px;
                         width: 100%;
-                        padding: 30px 0 20px 0;
+                        padding: 30px 24px 20px 24px;
                         border-bottom: 1px solid #ededed;
                         box-sizing: border-box;
                         display: flex;
@@ -150,6 +152,14 @@
                         }
                     }
                 }
+
+                .d_appre_groupList_box_slideBox_content::-webkit-scrollbar {
+                    display: none;
+                }
+
+                .d_appre_groupList_box_slideBox_content::-o-scrollbar {
+                    display: none;
+                }
             }
 
             .group_list_toast {
@@ -165,7 +175,7 @@
             position: fixed;
             width: 70px;
             height: 70px;
-            top: 92%;
+            top: 93.5%;
             left: 50%;
             margin-left: -35px;
         }
