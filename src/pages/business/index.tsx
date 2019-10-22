@@ -709,8 +709,8 @@ export default class PaySuccess extends Component<Props> {
         {
           this.state.recommend.length == 0 ? "" :
             <View className="recommend-view bcfff">
-              <View className="merchant-details__tit">
-                <Text className="fwb" style={{ left: "0" }}>附近推荐</Text>
+              <View className="merchant-details__tit" style={{ paddingLeft: "0" }} >
+                <Text className="fwb" >附近推荐</Text>
               </View>
               <View className="recommend-cells">
                 {
