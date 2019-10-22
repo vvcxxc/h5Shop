@@ -57,6 +57,6 @@
 }
 
 .at-search-bar::after {
-  border: none;
+  border: none !important;
 }
 /*# sourceMappingURL=app.css.map */

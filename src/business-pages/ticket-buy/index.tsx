@@ -351,7 +351,36 @@ export default class TicketBuy extends Component {
             </View>
           </View>
         </View>
-        <View className="shop mt20 pd30 bcff" onClick={this.handleClick2.bind(this, this.state.store.id)}>
+        <View className="set_Meal_store">
+          <View className="setMeal_store_box" onClick={this.handleClick2.bind(this, this.state.store.id)}>
+            <View className="setMeal_store_title">适用店铺</View>
+            <View className="setMeal_store_storebox">
+              <View className="setMeal_store_Image">
+                <Image className="setMeal_store_img" src={this.state.store.shop_door_header_img} />
+              </View>
+              <View className="setMeal_store_msg">
+                <View className="setMeal_store_name">{this.state.store.sname}</View>
+                {/* <View className="setMeal_store_price">人均：￥222</View> */}
+              </View>
+              <View className="setMeal_store_icon">
+                <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
+              </View>
+            </View>
+            <View className="setMeal_store_addressbox">
+              <View className="setMeal_store_distance" onClick={this.routePlanning.bind(this)}>
+                <View className="setMeal_store_distance_Image" >
+                  <Image className="setMeal_store_distance_AddressImg" src={AddressImg} />
+                </View>
+                <View className="setMeal_store_distance_info" >{this.state.store.distance}</View>
+              </View>
+              <View className="setMeal_store_address" onClick={this.routePlanning.bind(this)}>{this.state.store.saddress}</View>
+              <View className="setMeal_store_mobile" onClick={this.makePhoneCall.bind(this)}>
+                <Image className="setMeal_store_MobileImg" src={MobileImg} />
+              </View>
+            </View>
+          </View>
+        </View>
+        {/* <View className="shop mt20 pd30 bcff" onClick={this.handleClick2.bind(this, this.state.store.id)}>
           <View className="set-meal__tit">
             <Text className="fwb">适用店铺</Text>
           </View>
@@ -359,7 +388,6 @@ export default class TicketBuy extends Component {
             <Image className="image" src={this.state.store.shop_door_header_img} />
             <View className="item">
               <View className="tit">{this.state.store.sname}</View>
-              {/* <View className="money">人均：￥222.00</View> */}
             </View>
             <AtIcon value="chevron-right" color="#999" size="24px" />
           </View>
@@ -369,7 +397,7 @@ export default class TicketBuy extends Component {
             <View className="text flex-item" onClick={this.routePlanning.bind(this)} style={{ width: "80%" }}>{this.state.store.saddress}</View>
             <Image className="mobile-image" style={{ width: "15px", height: "15px" }} src={MobileImg} onClick={this.makePhoneCall.bind(this)} />
           </View>
-        </View>
+        </View> */}
         {/* <View className="remark mt20 pd30 bcff">
           <View className="set-meal__tit">
             <Text className="fwb">购买须知</Text>

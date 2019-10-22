@@ -989,7 +989,7 @@ export default class Group extends Component<Props>{
         </View>
         {
           (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
-            <View className='choose_postage' onClick={this.chooseGift}>
+            <View className='choosePostage' onClick={this.chooseGift}>
 
               <View>
                 {
