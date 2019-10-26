@@ -30,9 +30,6 @@ class PagePicker extends Component {
             this.setState({ selectorChecked: nextProps.firstMsg })
         }
     }
-
-
-
     componentDidMount() {
         shen = []
         shi = []
@@ -40,13 +37,9 @@ class PagePicker extends Component {
         shenid = ''
         shiid = ''
         quid = ''
-        request({
-            url: 'v3/district',
-            method: "GET",
-            data: { model_type: 1 }
-        })
-            .then((res) => {
-                // 省
+
+        if (Taro.getStorage({ key: 'cityList' })) {
+            Taro.getStorage({ key: 'cityList' }).then((res) => {
                 res.data.map(item => {
                     shen.push(item.value);
                 })
@@ -64,8 +57,61 @@ class PagePicker extends Component {
                 this.setState({ dataList: res.data, selector: tempselector, selectorid: tempselectorid }, () => {
                     console.log(tempselectorid)
                 })
+            }).catch((err) => {
+                request({
+                    url: 'v3/district',
+                    method: "GET",
+                    data: { model_type: 1 }
+                })
+                    .then((res) => {
+                        res.data.map(item => {
+                            shen.push(item.value);
+                        })
+                        res.data[0].children.map(item => {
+                            shi.push(item.value);
+                        })
+                        res.data[0].children[0].children.map(item => {
+                            qu.push(item.value);
+                        })
+                        shenid = res.data[0].id;
+                        shiid = res.data[0].children[0].id;
+                        quid = res.data[0].children[0].children[0].id;
+                        let tempselectorid = [shenid, shiid, quid];
+                        let tempselector = [shen, shi, qu];
+                        this.setState({ dataList: res.data, selector: tempselector, selectorid: tempselectorid }, () => {
+                            console.log(tempselectorid)
+                        })
+                    })
             })
+
+        } else {
+            request({
+                url: 'v3/district',
+                method: "GET",
+                data: { model_type: 1 }
+            })
+                .then((res) => {
+                    res.data.map(item => {
+                        shen.push(item.value);
+                    })
+                    res.data[0].children.map(item => {
+                        shi.push(item.value);
+                    })
+                    res.data[0].children[0].children.map(item => {
+                        qu.push(item.value);
+                    })
+                    shenid = res.data[0].id;
+                    shiid = res.data[0].children[0].id;
+                    quid = res.data[0].children[0].children[0].id;
+                    let tempselectorid = [shenid, shiid, quid];
+                    let tempselector = [shen, shi, qu];
+                    this.setState({ dataList: res.data, selector: tempselector, selectorid: tempselectorid }, () => {
+                        console.log(tempselectorid)
+                    })
+                })
+        }
     }
+
     onTabChange = () => {
         let tempselectorid = this.state.selectorid;
         let { shenindex, shiindex, quindex } = this.state;
