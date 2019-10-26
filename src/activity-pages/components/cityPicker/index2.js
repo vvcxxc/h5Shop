@@ -40,6 +40,7 @@ class PagePicker extends Component {
 
         if (Taro.getStorage({ key: 'cityList' })) {
             Taro.getStorage({ key: 'cityList' }).then((res) => {
+                console.log('success')
                 res.data.map(item => {
                     shen.push(item.value);
                 })
@@ -58,6 +59,7 @@ class PagePicker extends Component {
                     console.log(tempselectorid)
                 })
             }).catch((err) => {
+                console.log('fail')
                 request({
                     url: 'v3/district',
                     method: "GET",

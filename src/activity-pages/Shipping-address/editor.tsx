@@ -37,9 +37,9 @@ export default class EditorAddress extends Component {
             })
     }
 
-    componentWillUnmount() {
-        Taro.removeStorage({ key: 'cityList' })
-    }
+    // componentWillUnmount() {
+    //     Taro.removeStorage({ key: 'cityList' })
+    // }
 
     componentDidMount() {
         console.log(this.$router.params);

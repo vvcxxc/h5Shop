@@ -35,6 +35,10 @@ export default class ShippingAddress extends Component<Props> {
 
   };
 
+  componentWillUnmount() {
+    Taro.removeStorage({ key: 'cityList' })
+  }
+
   componentDidMount() {
     Taro.showLoading({
       title: ""
