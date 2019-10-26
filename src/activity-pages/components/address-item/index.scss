@@ -1,0 +1,80 @@
+.address-box {
+
+  height: auto;
+  width: 100%;
+  padding: 41px 44px 46px 34px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #e1e1e1;
+  align-items: center;
+
+
+  .address-msgBox {
+    height: auto;
+
+    .address-msgBox_userBox {
+      font-size: 35px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 520px;
+      height: 70px;
+      color: #686868;
+
+      .address-msgBox_box1 {
+        width: 400px;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .address-msgBox_userBox_name {
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .address-msgBox_userBox_choose {
+        background: #fddfdb;
+        color: #fa705e;
+        font-size: 25px;
+        text-align: center;
+        width: 93px;
+        height: 38px;
+        line-height: 38px;
+        border-radius: 8px;
+      }
+    }
+
+
+
+    .address-msgBox_address {
+      width: 520px;
+      height: auto;
+      font-size: 25px;
+      color: #313131;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // white-space: nowrap;
+    }
+  }
+
+  .address-changeIcon_img_box {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .address-changeIcon_img {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
