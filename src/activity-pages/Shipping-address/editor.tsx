@@ -57,7 +57,7 @@ export default class EditorAddress extends Component {
                         nameValue: res.data.name,
                         phoneValue: res.data.mobile,
                         cityValue: tempCityValue,
-                        TextareaValue: res.data.address,
+                        TextareaValue: res.data.detail,
                         chooseMove: res.data.is_default ? true : false,
                         tempCityInfo: tempCityInfo
                     })
