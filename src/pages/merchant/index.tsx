@@ -14,6 +14,7 @@ export default class MerChantPage extends Component {
     // enablePullDownRefresh: fa
   };
 
+  
   state = {
     search: '',
     stores: [],
