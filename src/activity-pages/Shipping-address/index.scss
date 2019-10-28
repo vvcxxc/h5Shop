@@ -21,11 +21,114 @@
     }
   }
 
+  .address-chooseThis {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    background: #fff;
+
+    .address-chooseimg-box {
+      flex: 15%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .address-chooseimg {
+        height: 35px;
+        width: 34px;
+      }
+    }
+
+    .address-box0 {
+      overflow: hidden;
+      height: auto;
+      flex: 85%;
+      padding: 41px 44px 46px 0;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+
+      .address-msgBox {
+        height: auto;
+
+        .address-msgBox_userBox0 {
+          font-size: 35px;
+          font-weight: bold;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 510px;
+          height: 70px;
+          color: #686868;
+
+          .address-msgBox_box01 {
+            width: 380px;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .address-msgBox_userBox_name {
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .address-msgBox_userBox_choose {
+            background: #fddfdb;
+            color: #fa705e;
+            font-size: 25px;
+            text-align: center;
+            width: 93px;
+            height: 38px;
+            line-height: 38px;
+            border-radius: 8px;
+          }
+        }
+
+        .address-msgBox_address0 {
+          width: 510px;
+          height: auto;
+          font-size: 25px;
+          color: #313131;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+        }
+      }
+
+      .address-changeIcon_img_box0 {
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .address-changeIcon_img0 {
+          width: 35px;
+          height: 35px;
+        }
+      }
+    }
+  }
+
   .address-box_content {
     background: #fff;
     height: auto;
     width: 100%;
-    padding: 0 25px;
+    padding: 0 25px 25px;
     box-sizing: border-box;
 
 
@@ -57,7 +160,7 @@
           color: #686868;
 
           .address-msgBox_box1 {
-            width: 400px;
+            width: 415px;
             height: 100%;
             display: flex;
             flex-direction: row;
@@ -66,7 +169,7 @@
           }
 
           .address-msgBox_userBox_name {
-            max-width: 180px;
+            max-width: 170px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -306,10 +409,11 @@
         box-sizing: border-box;
         border: none;
       }
+
       .editor-box_input2:focus {
         outline: none;
-        outline-offset:unset;
-    }
+        outline-offset: unset;
+      }
 
     }
 
