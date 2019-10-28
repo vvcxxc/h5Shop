@@ -44,12 +44,16 @@ export default class EditorAddress extends Component {
     componentDidMount() {
         console.log(this.$router.params);
         if (this.$router.params.type == "editorItem") {
+            Taro.showLoading({
+                title: ""
+            });
             let tempid = this.$router.params.editorId;
             request({
                 url: 'v3/address/' + tempid,
                 method: "GET",
             })
                 .then((res: any) => {
+                    Taro.hideLoading();
                     let tempCityInfo = res.data.province + '-' + res.data.city + '-' + res.data.district;
                     console.log(tempCityInfo)
                     let tempCityValue = [res.data.province_id, res.data.city_id, res.data.district_id];
