@@ -92,28 +92,6 @@ export default class ShippingAddress extends Component<Props> {
             <Image className="noAddress_img" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/ZAtsKCjGrhhsrf7C7Z4dMhwpFJDY2t3f.png" />
           </View> : null
         }
-        {/* <Image className="address-chooseimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/tX8YdWMcGPYZMdJGdCjTtRPD3WsP7szh.png" /> */}
-        {/* <View className="address-chooseThis">
-          <View className="address-chooseimg-box">
-            <Image className="address-chooseimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/jCzizjY4Fjna5HdneGSccWChTtA4DThf.png" />
-          </View>
-          <View className="address-box0">
-            <View className="address-msgBox">
-              <View className="address-msgBox_userBox0">
-                <View className="address-msgBox_box01">
-                  <View className="address-msgBox_userBox_name">杨大富的五金店 </View>
-                  <View className="address-msgBox_userBox_phone">13546987455</View>
-                </View>
-                <View className="address-msgBox_userBox_choose">默认 </View>
-              </View>
-              <View className="address-msgBox_address0">广东省广州市海珠区广东省广州市海珠区海珠创意园10栋402</View>
-            </View>
-            <View className="address-changeIcon_img_box0" >
-              <Image className="address-changeIcon_img0" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nYFTGYptxHKZwWDCiJHRy5BniRkkDQJQ.png" />
-            </View>
-          </View>
-        </View> */}
-
         <View className="address-box_content">
           {
             this.state.myAddressList && this.state.myAddressList.length > 0 ? this.state.myAddressList.map((item: any, index: any) => {
@@ -131,19 +109,6 @@ export default class ShippingAddress extends Component<Props> {
               )
             }) : null
           }
-          {/* <View className="address-box">
-            <View className="address-msgBox">
-              <View className="address-msgBox_userBox">
-                <View className="address-msgBox_box1">
-                  <View className="address-msgBox_userBox_name">杨大富 </View>
-                  <View className="address-msgBox_userBox_phone">13546987455</View>
-                </View>
-                <View className="address-msgBox_userBox_choose">默认 </View>
-              </View>
-              <View className="address-msgBox_address">555IG还干哈UI大股东dsfsdgf但是感觉都是佛广东省佛贵司为啥sdfgi的花费更多s对符合规定dfihi快速丢失啥快递不上课</View>
-            </View>
-            <Image className="address-changeIcon_img" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nYFTGYptxHKZwWDCiJHRy5BniRkkDQJQ.png" />
-          </View> */}
         </View>
         <View className="bottom_btn_box">
           <View className="bottom_btn_submit" onClick={this.goToEditor.bind(this)} >添加新地址</View>

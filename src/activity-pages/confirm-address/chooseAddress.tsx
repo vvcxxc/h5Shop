@@ -36,7 +36,7 @@ export default class ChooseAddress extends Component {
                 this.setState({ myAddressList: res.data })
             })
     }
-   
+
     componentDidShow() {
         Taro.showLoading({
             title: ""
@@ -66,8 +66,8 @@ export default class ChooseAddress extends Component {
     //保存
     chosoeCurrent = (index, _id, e) => {
         this.setState({ currentAddress: index, currentId: _id }, () => {
-            Taro.showToast({ title: '选择地址成功', icon: 'none',mask:true });
-           
+            Taro.showToast({ title: '选择地址成功', icon: 'none', mask: true });
+
         })
     }
 
@@ -75,6 +75,11 @@ export default class ChooseAddress extends Component {
         return (
 
             <View className="choose-shipping-address">
+                {
+                    this.state.myAddressList.length == 0 ? <View className="Shipping-noAddress_box">
+                        <Image className="noAddress_img" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/ZAtsKCjGrhhsrf7C7Z4dMhwpFJDY2t3f.png" />
+                    </View> : null
+                }
                 <View className="Shipping-address-content">
 
                     {
