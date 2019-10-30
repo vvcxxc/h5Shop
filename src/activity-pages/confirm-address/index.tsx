@@ -17,7 +17,7 @@ export default class confirmAddress extends Component {
         contentboxShow: false,
         giftChoice: true,
         coinsChoice: false,
-        activity_type: 2
+        activity_type: 1
     };
 
 
@@ -132,8 +132,7 @@ export default class confirmAddress extends Component {
                                                 })
                                             }
                                         })
-                                    }, 500);
-
+                                    }, 500);S
                                 } else {
                                     //微信支付失败
                                 }
@@ -454,7 +453,7 @@ export default class confirmAddress extends Component {
                             </View>
                             <View className="group-msgbox-content-BOX">
                                 <View className="group-msgbox-content-imgbox">
-                                    <Image className="group-msgbox-content-img" src="http://oss.tdianyi.com/front/B445jBjXwBdFyST6SEF4kPefkF34E2H6.png" mode="widthFix" />
+                                    <Image className="group-msgbox-content-img" src="http://oss.tdianyi.com/front/B445jBjXwBdFyST6SEF4kPefkF34E2H6.png" />
                                 </View>
                                 <View className="group-msgbox-content-msgbox">
                                     <View className="group-msgbox-content-name">活动活动活动活动活动活动活动活动活动活动活动活动活动活动活动活动活动</View>
