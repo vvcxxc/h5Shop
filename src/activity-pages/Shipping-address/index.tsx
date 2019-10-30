@@ -85,7 +85,6 @@ export default class ShippingAddress extends Component<Props> {
 
   render() {
     return (
-
       <View className="Shipping-address">
         {
           this.state.myAddressList.length == 0 ? <View className="Shipping-noAddress_box">
