@@ -92,8 +92,9 @@ class App extends Component {
 					"my-welfare/pages/gift/welfare.gift",
 					'offline/order',
 					'Shipping-address/index',
-					'Shipping-address/editor'
-
+					'Shipping-address/editor',
+					'confirm-address/index',
+					'confirm-address/chooseAddress'
 				]
 			}
 		],

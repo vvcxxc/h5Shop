@@ -76,8 +76,11 @@ export default class ShippingAddress extends Component<Props> {
 
   goToEditor = () => {
     Taro.navigateTo({
-      url: '/activity-pages/Shipping-address/editor?type=addItem'
+      url: '/activity-pages/confirm-address/index'
     })
+    // Taro.navigateTo({
+    //   url: '/activity-pages/Shipping-address/editor?type=addItem'
+    // })
   }
 
   render() {

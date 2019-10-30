@@ -1,0 +1,720 @@
+.confirm-address {
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 120px;
+    box-sizing: border-box;
+
+    .no-address-contentbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .7);
+        height: 100vh;
+        width: 100%;
+        z-index: 10;
+
+        .tips-box {
+            width: 646px;
+            height: 320px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -161px;
+            margin-left: -323px;
+            background: #fff;
+
+            .tips-box-info {
+                width: 100%;
+                height: 220px;
+                line-height: 220px;
+                font-size: 33px;
+                text-align: center;
+                border-bottom: 1px solid #f3f3f3;
+                box-sizing: border-box;
+            }
+
+            .tips-box-bottomBox {
+                width: 100%;
+                height: 100px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .tips-box-bottomBox_cancle {
+                    flex: 50%;
+                    height: 100px;
+                    line-height: 100px;
+                    text-align: center;
+                    color: #ff6654;
+                    font-size: 26px;
+                    border-right: 1px solid #f3f3f3;
+                    box-sizing: border-box;
+                }
+
+                .tips-box-bottomBox_go {
+                    flex: 50%;
+                    height: 100px;
+                    line-height: 100px;
+                    text-align: center;
+                    color: #ff6654;
+                    font-size: 26px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+
+
+
+
+    .no-address-box {
+        height: 100px;
+        line-height: 100px;
+        width: 100%;
+        margin-bottom: 24px;
+        font-size: 30px;
+        background: #fff;
+        padding-right: 70px;
+        box-sizing: border-box;
+        text-align: center;
+        position: relative;
+
+        .no-address-msgbox {
+            width: 70px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 5px;
+            top: 0;
+        }
+
+    }
+
+
+    .address-msgbox {
+        height: auto;
+        width: 100%;
+        margin-bottom: 24px;
+        background: #fff;
+        padding-right: 70px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+
+
+        .address-msgbox-left {
+            min-height: 150px;
+            height: auto;
+            width: 100%;
+            padding: 39px 24px;
+            box-sizing: border-box;
+
+            .address-name-msgbox {
+                width: 100%;
+                height: 60px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .address-name-msgbox-info {
+                    width: 500px;
+                    padding-left: 150px;
+                    box-sizing: border-box;
+                    position: relative;
+
+                    .address-name-msgbox-key {
+                        width: 140px;
+                        text-align: justify;
+                        // text-align-last:justify;
+                        position: absolute;
+                        left: 0;
+                        color: #666666;
+                    }
+
+                    .address-name-msgbox-key:after {
+                        content: '';
+                        width: 100%;
+                        display: inline-block;
+                    }
+
+                    .address-name-msgbox-value-box {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .address-msgBox_userBox_name {
+                            max-width: 180px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            margin-right: 20px;
+                        }
+                    }
+                }
+
+                .address-msgBox_userBox_choose {
+                    background: #fddfdb;
+                    color: #fa705e;
+                    font-size: 25px;
+                    text-align: center;
+                    width: 93px;
+                    height: 38px;
+                    line-height: 38px;
+                    border-radius: 8px;
+                }
+
+            }
+
+            .address-addressInfo-msgbox {
+                width: 100%;
+                height: auto;
+                padding-left: 150px;
+                box-sizing: border-box;
+                position: relative;
+
+                .address-address-msgbox-key {
+                    width: 140px;
+                    text-align: justify;
+                    // text-align-last:justify;
+                    position: absolute;
+                    left: 0;
+                    color: #666666;
+                }
+
+                .address-address-msgbox-key:after {
+                    content: '';
+                    width: 100%;
+                    display: inline-block;
+                }
+
+                .address-address-item {
+                    text-align: left;
+                    color: #313131;
+                }
+            }
+        }
+
+        .address-msgbox-icon {
+            width: 70px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            margin-top: -17px;
+        }
+
+    }
+
+
+    .group-msgbox {
+        width: 100%;
+        height: auto;
+        background: #fff;
+
+        .group-msgbox-title-BOX {
+            height: 105px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+
+            .group-titlebox {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                padding-left: 20px;
+                box-sizing: border-box;
+
+                .group-titlebox-storeicon {
+                    height: 32px;
+                    width: 32px;
+                    margin-right: 15px;
+                }
+
+                .group_storename {
+                    font-size: 32px;
+                    font-weight: bold;
+                }
+            }
+
+            .group-msgbox-icon {
+                width: 70px;
+                height: 105px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 5px;
+                top: 0;
+            }
+        }
+
+        .group-msgbox-content-BOX {
+            height: auto;
+            width: 100%;
+            padding: 0 22px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            border-bottom: 2px solid #f6f6f6;
+
+            .group-msgbox-content-imgbox {
+                flex: 50%;
+                height: auto;
+                border-radius: 8px;
+                overflow: hidden;
+
+                .group-msgbox-content-img {
+                    width: 100%;
+                    display: unset;
+                }
+            }
+
+            .group-msgbox-content-msgbox {
+                flex: 50%;
+                height: auto;
+                padding: 22px 38px;
+                box-sizing: border-box;
+
+                .group-msgbox-content-name {
+                    margin-bottom: 50px;
+                    width: 100%;
+                    height: 80px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                    -webkit-box-orient: vertical;
+                }
+            }
+
+            .group-msgbox-label-box {
+                width: 100%;
+
+                .group-msgbox-label {
+                    background: #fddfdb;
+                    color: #fa705e;
+                    padding: 2px 8px;
+                    font-size: 25px;
+                    text-align: center;
+                    height: 38px;
+                    line-height: 38px;
+                    border-radius: 8px;
+                    float: left;
+                    margin-right: 15px;
+                }
+            }
+        }
+    }
+
+    .appre-msgbox {
+        width: 100%;
+        height: auto;
+        background: #fff;
+
+        .appre-msgbox-title-BOX {
+            height: 105px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+
+            .appre-titlebox {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                padding-left: 20px;
+                box-sizing: border-box;
+
+                .appre-titlebox-storeicon {
+                    height: 32px;
+                    width: 32px;
+                    margin-right: 15px;
+                }
+
+                .appre_storename {
+                    font-size: 32px;
+                    font-weight: bold;
+                }
+            }
+
+            .appre-msgbox-icon {
+                width: 70px;
+                height: 105px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 5px;
+                top: 0;
+            }
+        }
+
+        .appre-msgbox-content-BOX {
+            width: 100%;
+            height: 200px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            .appre-msgbox-yellowBox {
+                width: 673px;
+                height: 184px;
+                background: url('http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/Ka4AQ8GwFdYAP6Ai5Z7EaH2bXxCYKfbD.png');
+                background-size: 100%;
+                background-repeat: no-repeat;
+
+                .appre-msgbox-yellowBox_left {
+                    width: 231px;
+                    height: 184px;
+                    float: left;
+                    padding: 20px 0 20px 20px;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    .appre-msgbox-yellowBox_left_money {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: flex-end;
+                        margin-bottom: 12px;
+
+                        .appre-msgbox-yellowBox_left_money_icon {
+                            line-height: 1;
+                            font-size: 25px;
+                            color: #ee3131;
+                        }
+
+                        .appre-msgbox-yellowBox_left_money_num {
+                            line-height: 1;
+                            font-size: 35px;
+                            color: #ee3131;
+                            font-weight: bold;
+                        }
+                    }
+
+                    .appre-msgbox-yellowBox_left_info {
+                        color: #fe604e;
+                        font-size: 18px;
+                        padding: 5px 12px;
+                        border-radius: 8px;
+                        background: #fde8e5;
+                    }
+                }
+
+                .appre-msgbox-yellowBox_middle {
+                    width: 231px;
+                    height: 184px;
+                    float: left;
+                    padding: 20px 0 20px 20px;
+                    box-sizing: border-box;
+
+                    .appre-msgbox-yellowBox_appre_name {
+                        margin-bottom: 12px;
+                        width: 100%;
+                        height: 70px;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+                        -webkit-box-orient: vertical;
+                        font-size: 24px;
+                        line-height: 1.5;
+                    }
+
+                    .appre-msgbox-yellowBox_appre_label_box {
+                        width: 100%;
+
+                        .appre-msgbox-yellowBox_appre_label {
+                            color: #fe604e;
+                            font-size: 16px;
+                            padding: 5px 8px;
+                            border-radius: 8px;
+                            background: #fde8e5;
+                            margin-right: 8px;
+                            margin-bottom: 5px;
+                            float: left;
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+    .gift-msgbox {
+        width: 100%;
+        height: auto;
+        background: #fff;
+        padding: 0 22px;
+        box-sizing: border-box;
+
+        .gift-msgbox-giftinfo-box {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .gift-msgbox-giftinfo-chooseimg-box {
+                height: 145px;
+                flex: 112;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .gift-msgbox-giftinfo-chooseimg {
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+
+            .gift-msgbox-giftinfo-giftimg-box {
+                flex: 257;
+
+                .gift-image-list {
+                    box-sizing: border-box;
+                    width: 100%;
+                    height: 100%;
+                    padding: 35px 0 24px;
+
+                    .gift-image-content {
+                        position: relative;
+                        display: flex;
+                        background: red;
+                        height: 145px;
+                        width: 260px;
+
+                        .gift-img1 {
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            top: 0px;
+                            left: 0px;
+                            z-index: 2;
+                        }
+
+                        .gift-img2 {
+                            position: absolute;
+                            top: -10px;
+                            left: 50%;
+                            margin-left: -20px;
+                            width: 40px;
+                            height: 40px;
+                            z-index: 3;
+                        }
+
+                        .gift-img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+
+            .gift-msgbox-giftinfo-giftmsg-box {
+                height: auto;
+                flex: 340;
+                margin-left: 40px;
+                box-sizing: border-box;
+                padding-top: 20px;
+
+                .gift-msgbox-giftinfo-title {
+                    height: 40px;
+                    width: 90%;
+                    line-height: 1;
+                    font-size: 30px;
+                    font-weight: bold;
+                }
+
+                .gift-msgbox-giftinfo-name {
+                    width: 90%;
+                    font-size: 26px;
+                    line-height: 1.2;
+                }
+
+                .gift-msgbox-label-box {
+                    width: 90%;
+                    margin-top: 22px;
+
+                    .gift-msgbox-label {
+                        background: #fddfdb;
+                        color: #fa705e;
+                        padding: 2px 8px;
+                        font-size: 20px;
+                        text-align: center;
+                        height: 38px;
+                        line-height: 38px;
+                        border-radius: 8px;
+                        float: left;
+                        margin-right: 15px;
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
+
+        .gift-msgbox-giftcoins-box {
+            width: 100%;
+            height: 132px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-top: 1px solid #eaeaea;
+            box-sizing: border-box;
+
+            .gift-msgbox-giftcoins-chooseimg-box1 {
+                height: 145px;
+                flex: 112;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .gift-msgbox-giftcoins-chooseimg {
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+
+            .gift-msgbox-giftcoins-chooseimg-box2 {
+                flex: 597;
+                padding-left: 30px;
+                box-sizing: border-box;
+
+                .gift-msgbox-giftcoins-label {
+                    color: #ff9791;
+                    font-size: 30px;
+                    padding: 8px 12px;
+                    line-height: 1;
+                    border-radius: 8px;
+                    border: 1px solid #ff6654;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    .yellow-info {
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        background: #ffefc5;
+        color: #666666;
+    }
+
+
+
+
+
+    .paymoney_box {
+        height: 115px;
+        position: fixed;
+        z-index: 10;
+        bottom: 0;
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #eee;
+        box-sizing: border-box;
+        padding: 20px 28px;
+
+        .paymoney_price {
+            width: 450px;
+            height: 55px;
+            float: left;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 15px;
+
+
+            .paymoney_price_icon {
+                font-size: 30px;
+                float: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                color: #ee3131;
+            }
+
+            .paymoney_price_num {
+                font-size: 50px;
+                color: #ee3131;
+                float: left;
+                line-height: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
+
+            .paymoney_price_info {
+                margin-left: 15px;
+                font-size: 50px;
+                color: #ee3131;
+                // float: left;
+                width: 203px;
+                line-height: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
+
+        }
+
+        .paymoney_buynow {
+            width: 225px;
+            height: 75px;
+            line-height: 75px;
+            float: right;
+            border-radius: 37.5px;
+            background: linear-gradient(90deg, #FE7450, #FF2614);
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .paymoney_buynow_no {
+            width: 225px;
+            height: 75px;
+            line-height: 75px;
+            float: right;
+            border-radius: 37.5px;
+            background: #9e9e9e;
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+        }
+    }
+}

@@ -43,7 +43,7 @@ export default class EditorAddress extends Component {
 
     componentDidMount() {
         console.log(this.$router.params);
-        if (this.$router.params.type == "editorItem") {
+        if (this.$router.params.type == "editorItem" || this.$router.params.type == "useItemChange") {
             Taro.showLoading({
                 title: ""
             });
@@ -312,13 +312,16 @@ export default class EditorAddress extends Component {
                             ></View>
                         </View>
                     </View>
+                    {/* 1：editorItem:编辑地址，2：addItem：添加地址，3、4：useItem、useItemChange:隔壁chooseAddress过来的,保存使用地址 */}
                     {
                         this.$router.params.type == "editorItem" ? <View className="bottom_btn_box_z2">
                             <View className="bottom_btn_submit_z2" onClick={this.changeAddressItem.bind(this)}>保存</View>
                             <View className="bottom_btn_dele_z2" onClick={() => { this.setState({ z3show: true }) }}>删除地址</View>
+                        </View> : (this.$router.params.type == "addItem" ? <View className="bottom_btn_box_z2">
+                            <View className="bottom_btn_submit_z2" onClick={this.handleSubmit.bind(this)}>添加新地址</View>
                         </View> : <View className="bottom_btn_box_z2">
-                                <View className="bottom_btn_submit_z2" onClick={this.handleSubmit.bind(this)}>添加新地址</View>
-                            </View>
+                                <View className="bottom_btn_submit_z2">保存并使用 </View>
+                            </View>)
                     }
                 </View>
                 {/* 第三层：第二层的遮罩,层级5 */}
