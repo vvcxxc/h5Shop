@@ -129,8 +129,6 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
-
-
             if (res.code == 200) {
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
