@@ -34,6 +34,7 @@ export default function request(options: Options) {
       success (res){
         const { statusCode, data } = res;
         switch (statusCode) {
+
           case SERVER_ERROR:
             Taro.showToast({
               title: 'server error :d',
@@ -43,12 +44,14 @@ export default function request(options: Options) {
           case FETCH_OK:
             return resolve(res.data)
           case FETCH_BAD:
+              console.log(FETCH_BAD)
             Taro.showToast({
               title: data.message || "bad request",
               icon: "none"
             })
             break
           case NOT_SIGN:
+              console.log('没有登录')
               Login();
             return reject(new Error('--- no Sign ---'))
           case NOT_FIND:
