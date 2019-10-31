@@ -51,6 +51,7 @@ export default class Index extends Component<any> {
 
 
   componentDidMount() {
+    console.log('构建')
     let id = this.$router.params.id;
     let store_id = this.$router.params.store_id
     if (id) {
@@ -280,7 +281,7 @@ export default class Index extends Component<any> {
       this.requestHomeList({ ...this.state.meta })
     })
     let data = this.state.meta
-    data.pages = data.pages + 1
+    data.pages = data.pages + 1 || 1
     this.setState({ meta: data })
   }
 

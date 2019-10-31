@@ -67,7 +67,7 @@ export default class MyCardTicket extends Component {
             url: 'api/wap/orderGift/list',
             data: {
                 page: this.state.page,
-                id: this.state.routeID
+                id: this.state.routeID || 0
             }
         }).then(res => {
             this.setState({
@@ -83,7 +83,7 @@ export default class MyCardTicket extends Component {
             routeID: this.$router.params.id
         },() => {
             this.getData()
-        })        
+        })
     }
 
     render() {
@@ -180,4 +180,4 @@ export default class MyCardTicket extends Component {
 
         )
     }
-} 
+}
