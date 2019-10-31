@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { AtIcon } from "taro-ui"
-import { View, Text, Picker } from '@tarojs/components'
+import { View, Text, Picker, Input } from '@tarojs/components'
 import request from '../../../services/request'
 import './index.scss'
 
