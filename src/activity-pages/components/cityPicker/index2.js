@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { AtIcon } from "taro-ui"
-import { View, Text, Picker, Input } from '@tarojs/components'
+import { View, Text, Picker } from '@tarojs/components'
 import request from '../../../services/request'
 import './index.scss'
 
@@ -15,9 +15,10 @@ let quid = ''
 class PagePicker extends Component {
     state = {
         dataList: [],
-        shenindex: '0',
-        shiindex: '0',
-        quindex: '0',
+        shenindex: 0,
+        shiindex: 0,
+        quindex: 0,
+        columnIndex: [0, 0, 0],
         selectorid: [shenid, shiid, quid],
         selector: [shen, shi, qu],
         selectorChecked: '',
@@ -30,6 +31,9 @@ class PagePicker extends Component {
             this.setState({ selectorChecked: nextProps.firstMsg })
         }
     }
+
+
+
     componentDidMount() {
         shen = []
         shi = []
@@ -43,7 +47,7 @@ class PagePicker extends Component {
         if (Taro.getStorage({ key: 'cityList' })) {
             Taro.getStorage({ key: 'cityList' }).then((res) => {
                 Taro.hideLoading();
-                console.log('success')
+                console.log('yyy', res.data)
                 res.data.map(item => {
                     shen.push(item.value);
                 })
@@ -59,10 +63,9 @@ class PagePicker extends Component {
                 let tempselectorid = [shenid, shiid, quid];
                 let tempselector = [shen, shi, qu];
                 this.setState({ dataList: res.data, selector: tempselector, selectorid: tempselectorid }, () => {
-                    console.log(tempselectorid)
+                    console.log(tempselectorid, tempselector)
                 })
             }).catch((err) => {
-                console.log('fail')
                 request({
                     url: 'v3/district',
                     method: "GET",
@@ -85,7 +88,7 @@ class PagePicker extends Component {
                         let tempselectorid = [shenid, shiid, quid];
                         let tempselector = [shen, shi, qu];
                         this.setState({ dataList: res.data, selector: tempselector, selectorid: tempselectorid }, () => {
-                            console.log(tempselectorid)
+                            console.log(tempselectorid, tempselector)
                         })
                     }).catch((err) => {
                         Taro.hideLoading();
@@ -115,7 +118,7 @@ class PagePicker extends Component {
                     let tempselectorid = [shenid, shiid, quid];
                     let tempselector = [shen, shi, qu];
                     this.setState({ dataList: res.data, selector: tempselector, selectorid: tempselectorid }, () => {
-                        console.log(tempselectorid)
+                        console.log(tempselectorid, tempselector)
                     })
                 }).catch((err) => {
                     Taro.hideLoading();
@@ -123,6 +126,7 @@ class PagePicker extends Component {
                 })
         }
     }
+
 
     onTabChange = () => {
         let tempselectorid = this.state.selectorid;
@@ -146,24 +150,24 @@ class PagePicker extends Component {
             //省id
             shenid = this.state.dataList[index1].id;
             this.state.dataList[index1].children.map(item => {
+                console.log('市：', item.value);
                 shi.push(item.value);
             });
             //市id归零
             shiid = this.state.dataList[index1].children[0].id;
             this.state.dataList[index1].children[0].children.map(item => {
+                console.log('区：', item.value);
                 qu.push(item.value);
             });
             //区id归零
             quid = this.state.dataList[index1].children[0].children[0].id;
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
-            this.setState({ selector: tempselector, selectorid: tempselectorid, shenindex: index1, havechange: true }, () => {
-                // console.log(tempselectorid);
+            this.setState({ selector: tempselector, selectorid: tempselectorid, shenindex: index1, shiindex: 0, quindex: 0, havechange: true }, () => {
                 this.onTabChange();
             })
         }
         else if (e.detail.column == 1) {
-
             qu = [];
             //index2为第二列的第n个，市下标
             let index1 = this.state.shenindex;
@@ -173,13 +177,14 @@ class PagePicker extends Component {
             //市id
             shiid = this.state.dataList[index1].children[index2].id;
             this.state.dataList[index1].children[index2].children.map(item => {
+                console.log('区：', item.value);
                 qu.push(item.value);
             });
             //区id归零
             quid = this.state.dataList[index1].children[index2].children[0].id;
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
-            this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, havechange: true }, () => {
+            this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
                 // console.log(tempselectorid);
                 this.onTabChange();
             })
@@ -201,7 +206,7 @@ class PagePicker extends Component {
 
     render() {
         return (
-            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} >
+            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={[this.state.shenindex, this.state.shiindex, this.state.quindex]}>
                 <View className="editor-box">
                     <View className="editor-box_left">所在区域:</View>
                     <Input className="editor-box_input" value={this.state.selectorChecked.toString()} disabled />
