@@ -1,6 +1,11 @@
-.weui-picker__action{
-color: #FE7450 !important;
+.weui-picker__hd{
+  justify-content: space-between !important;
+  flex-direction: row;
+  display: flex;
 }
+.weui-picker__action{
+  color: #FE7450 !important;
+  }
 .editor-box {
     height: 100px;
     width: 100%;
