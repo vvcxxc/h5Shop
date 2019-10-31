@@ -149,6 +149,7 @@ class PagePicker extends Component {
             let index1 = e.detail.value;
             //省id
             shenid = this.state.dataList[index1].id;
+            console.log('省：', this.state.dataList[index1].value);
             this.state.dataList[index1].children.map(item => {
                 console.log('市：', item.value);
                 shi.push(item.value);
