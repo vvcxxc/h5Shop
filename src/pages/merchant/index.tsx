@@ -85,6 +85,16 @@ export default class MerChantPage extends Component {
       },
     })
       .then((res: any) => {
+        if (res.data.store_info.data.length < 1) {
+          this.setState({ 
+            no_value:true
+           })
+        } else {
+          this.setState({ 
+            no_value:false
+           })
+
+        }
         this.setState({ stores: res.data.store_info.data })
         Taro.hideLoading()
       });
