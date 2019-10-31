@@ -6,7 +6,7 @@ import {
   NOT_FIND,
   NOT_SIGN
 } from "@/utils/constants";
-import {Login} from '@/utils/sign';
+import { Login } from '@/utils/sign';
 import Cookie from 'js-cookie';
 // import {Cookie} from '@/utils/cookie';
 // import { toMiniProgramSign } from "@/utils/sign";
@@ -31,7 +31,7 @@ export default function request(options: Options) {
     // options.fail = (res) => reject(res);
     Taro.request({
       ...options,
-      success (res){
+      success(res) {
         const { statusCode, data } = res;
         console.log(res)
         switch (statusCode) {
@@ -45,22 +45,56 @@ export default function request(options: Options) {
           case FETCH_OK:
             return resolve(res.data)
           case FETCH_BAD:
-              console.log(FETCH_BAD)
+            console.log(FETCH_BAD)
             Taro.showToast({
               title: data.message || "bad request",
               icon: "none"
             })
             break
           case NOT_SIGN:
-              console.log('没有登录')
-              Login();
+            console.log('没有登录')
+            Login();
             return reject(new Error('--- no Sign ---'))
           case NOT_FIND:
-              Taro.showToast({
-                title: "not find",
-                icon: "none"
-              })
-              break
+            Taro.showToast({
+              title: "not find",
+              icon: "none"
+            })
+            break
+          default:
+            Taro.showToast({
+              title: "unknow error",
+              icon: "none"
+            })
+            break
+        }
+      },
+      fail(err) {
+        const { statusCode, data } = err;
+        switch (statusCode) {
+          case SERVER_ERROR:
+            Taro.showToast({
+              title: 'server error :d',
+              icon: 'none'
+            })
+            break
+          case FETCH_BAD:
+            console.log(FETCH_BAD)
+            Taro.showToast({
+              title: data.message || "bad request",
+              icon: "none"
+            })
+            break
+          case NOT_SIGN:
+            console.log('没有登录')
+            Login();
+            return reject(new Error('--- no Sign ---'))
+          case NOT_FIND:
+            Taro.showToast({
+              title: "not find",
+              icon: "none"
+            })
+            break
           default:
             Taro.showToast({
               title: "unknow error",
