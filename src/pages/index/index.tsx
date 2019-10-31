@@ -51,6 +51,7 @@ export default class Index extends Component<any> {
 
 
   componentDidMount() {
+    console.log('构建')
     let id = this.$router.params.id;
     let store_id = this.$router.params.store_id
     if (id) {
