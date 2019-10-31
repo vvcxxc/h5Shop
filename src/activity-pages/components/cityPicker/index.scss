@@ -1,0 +1,96 @@
+.weui-picker__action{
+color: #FE7450 !important;
+}
+.editor-box {
+    height: 100px;
+    width: 100%;
+    border-bottom: 1px #f2f2f2 solid;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .editor-box_left {
+      width: 125px;
+      height: 100px;
+      line-height: 100px;
+      float: left;
+      text-align: justify;
+      // text-align-last:justify;
+      margin-right: 24px;
+      font-size: 25px;
+    }
+
+    .editor-box_left:after {
+      content: '';
+      width: 100%;
+      display: inline-block;
+    }
+
+    .editor-box_input {
+      width: 500px;
+      height: 100px;
+      line-height: 100px;
+      float: right;
+      text-align: right;
+    }
+
+    .editor-box_right {
+      width: 40px;
+      height: 100px;
+      line-height: 100px;
+      float: right;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .editor-box_icon {
+        font-size: 30px;
+        height: 100px;
+        line-height: 100px;
+        color: #666666
+      }
+    }
+
+    .choose_msg_box {
+      height: 100px;
+      width: 450px;
+      float: left;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+
+      .choose_msg_msgTitle {
+        padding-right: 24px;
+      }
+
+      .choose_msg_msgInfo {
+        font-size: 21px;
+        color: #999999
+      }
+    }
+
+    .choose_btn_box {
+      width: 120px;
+      height: 54px;
+      border: solid 2px #cccccc;
+      border-radius: 26px;
+      float: right;
+      padding: 5px 8px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .choose_btn_item {
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        background: #cccccc;
+      }
+    }
+
+  }

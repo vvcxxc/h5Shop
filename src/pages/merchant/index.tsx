@@ -27,7 +27,8 @@ export default class MerChantPage extends Component {
     sort_id: null,
     show_bottom: false,
     close: false,
-    hidden_filteron:false
+    hidden_filteron: false,
+    no_value:false //新增 显示搜索无结果的背景图
   };
 
   constructor(props) {
@@ -84,6 +85,16 @@ export default class MerChantPage extends Component {
       },
     })
       .then((res: any) => {
+        if (res.data.store_info.data.length < 1) {
+          this.setState({ 
+            no_value:true
+           })
+        } else {
+          this.setState({ 
+            no_value:false
+           })
+
+        }
         this.setState({ stores: res.data.store_info.data })
         Taro.hideLoading()
       });
@@ -148,10 +159,18 @@ export default class MerChantPage extends Component {
       data: define
     })
       .then((res: any) => {
+        // if (res.data.store_info.data)麒麟
         if (res.data.store_info.data.length < 1) {
-          this.setState({ show_bottom: true })
+          this.setState({
+            show_bottom: true,
+            no_value:true
+          })
+
         } else {
-          this.setState({ show_bottom: false })
+          this.setState({
+            show_bottom: false,
+            no_value: false
+          })
         }
         if (index === 1) {
           this.setState({ stores: [...this.state.stores, ...res.data.store_info.data], storeHeadImg: res.data.banner });
@@ -248,6 +267,7 @@ export default class MerChantPage extends Component {
   }
 
   render() {
+    const { no_value } = this.state
     return (
       <View >
         <View onClick={this.hiddenFilteron}>
@@ -263,9 +283,19 @@ export default class MerChantPage extends Component {
           onClick={this.titleOnClick.bind(this, 0)}
           onscroll={this.filteronScroll.bind(this)}
           hidden={this.state.hidden_filteron}
-        />
+        />{
+          no_value ? <View className="no_value">
+            <View>
+              <Image src={require('../../assets/no_value.png')} />
+              <View className="no_value_foot">
+                暂无搜索内容
+          </View>
+            </View>
+          </View>:null
+        }
+
         <View className="merchant-list" style="background-color:#fff;">
-          <View style={{ minHeight: '100vh', height: 'auto', background: '#ededed'}} onClick={this.clearClick}>
+          <View style={{ minHeight: no_value ?'0vh': '100vh', height: 'auto', background: '#ededed'}} onClick={this.clearClick}>
             {
               this.state.stores.map((item2: any, index: any) => {
                 return <View className="new_box">
@@ -323,7 +353,6 @@ export default class MerChantPage extends Component {
                         style={{
                           display: item2.activity ? item2.activity.group ? '' : 'none' : 'none',
                           justifyContent: 'space-between',
-                          // borderBottom: item2.activity_num === 1 ? 'none' : '0.5px solid #eeeeee'
                         }}
                       >
 

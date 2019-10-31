@@ -50,12 +50,13 @@ export default class NewPage extends Component<Props>{
         prompt: '有正在进行的拼团活动',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/r55CxTJ4AAkmZFHRESeFs2GAFDCJnW5Z.png',
         path: "/activity-pages/my-activity/my.activity",
+      },
+      {
+        des: '我的收货地址',
+        prompt: '',
+        img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png',
+        path: "/activity-pages/Shipping-address/index",
       }
-      // {
-      //   des: '我的收货地址',
-      //   prompt: null,
-      //   img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png'
-      // }
     ]
   }
 

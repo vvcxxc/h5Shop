@@ -1,5 +1,5 @@
 import Taro, { PureComponent, Component } from '@tarojs/taro';
-import { View, Image } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { AtIcon } from 'taro-ui'
 import request from '../../services/request';
 import './index.scss';
@@ -14,7 +14,14 @@ export default class filterTotal extends Component<Props> {
   state = {
     page_bottom: false,
     titleClick: 0,//点击的索引
-    selectData1: [{ name: '', id: '', type: '', choose: false, icon: '' }],
+    // selectData1: [{ name: '', id: '', type: '', choose: false, icon: '' }],
+    selectData1: [
+      {
+        id: 0,
+        label: "全部",
+        name: "全部"
+      }
+    ],
     selectData2: [{ name: '', id: '', type: '', choose: false, icon: '' }],
     selectData3: [{ name: '', id: '', type: '', choose: false, icon: '' }],
     listClick: 333,
@@ -174,7 +181,12 @@ export default class filterTotal extends Component<Props> {
     })
       .then((res: any) => {
 
-        this.setState({ selectData1: res.data })
+        // this.setState({ selectData1: res.data })
+        this.setState({
+          selectData1: this.state.selectData1.concat(res.data)
+        }, () => {
+          console.log(this.state)
+        })
       })
   }
 
@@ -222,34 +234,19 @@ export default class filterTotal extends Component<Props> {
         <View className="title" catchtouchmove="true">
           <View className={this.state.click1 % 2 === 0 || this.state.red1 ? 'line linRed' : " line linWat"}
             onClick={this.titleClick1(1)} >
-            {this.state.name1 ? this.state.name1 : '美食'}
-            <Image
-              className="title__select_img"
-              src={
-                this.state.click1 % 2 === 0 ? require('../../assets/jiao_top2.png') : require('../../assets/jiao_bottom.png')}
-            />
-            {/* <AtIcon value={this.state.click1 % 2 === 0 ? 'chevron-up' : 'chevron-down'} size='12' */}
-            {/* color={this.state.click1 % 2 === 0 || this.state.red1 ? '#fe7b70' : '#666666'}></AtIcon> */}
+            {this.state.name1 ? this.state.name1 : '分类'}
+            <AtIcon value={this.state.click1 % 2 === 0 ? 'chevron-up' : 'chevron-down'} size='12'
+              color={this.state.click1 % 2 === 0 || this.state.red1 ? '#fe7b70' : '#666666'}></AtIcon>
           </View>
           <View className={this.state.click2 % 2 === 0 || this.state.red2 ? 'line linRed' : " line linWat"} onClick={this.titleClick2(2)}>
             {this.state.name2 ? this.state.name2 : '附近'}
-            <Image
-              className="title__select_img"
-              src={
-                this.state.click2 % 2 === 0 ? require('../../assets/jiao_top2.png') : require('../../assets/jiao_bottom.png')}
-            />
-            {/* <AtIcon value={this.state.click2 % 2 === 0 ? 'chevron-up' : 'chevron-down'} size='12' */}
-              {/* color={this.state.click2 % 2 === 0 || this.state.red2 ? '#fe7b70' : '#666666'}></AtIcon> */}
+            <AtIcon value={this.state.click2 % 2 === 0 ? 'chevron-up' : 'chevron-down'} size='12'
+              color={this.state.click2 % 2 === 0 || this.state.red2 ? '#fe7b70' : '#666666'}></AtIcon>
           </View>
           <View className={this.state.click3 % 2 === 0 || this.state.red3 ? 'line linRed' : " line linWat"} onClick={this.titleClick3(3)}>
             {this.state.name3 ? this.state.name3 : '智能排序'}
-            <Image
-              className="title__select_img"
-              src={
-                this.state.click3 % 2 === 0 ? require('../../assets/jiao_top2.png') : require('../../assets/jiao_bottom.png')}
-            />
-            {/* <AtIcon value={this.state.click3 % 2 === 0 ? 'chevron-up' : 'chevron-down'} size='12'
-              color={this.state.click3 % 2 === 0 || this.state.red3 ? '#fe7b70' : '#666666'}></AtIcon> */}
+            <AtIcon value={this.state.click3 % 2 === 0 ? 'chevron-up' : 'chevron-down'} size='12'
+              color={this.state.click3 % 2 === 0 || this.state.red3 ? '#fe7b70' : '#666666'}></AtIcon>
           </View>
         </View>
         <View

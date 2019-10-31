@@ -129,8 +129,6 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
-
-
             if (res.code == 200) {
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
@@ -684,7 +682,7 @@ export default class Appre extends Component<Props>{
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '70px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '50%', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''

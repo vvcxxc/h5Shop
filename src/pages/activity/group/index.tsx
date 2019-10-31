@@ -75,11 +75,9 @@ export default class Group extends Component<Props>{
   };
   componentDidShow() {
     this.toShare();
-    this.addListen();
   }
 
   componentWillUnmount() {
-    document.removeEventListener('touchmove', () => { });
     console.log('清除计时器');
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
@@ -137,8 +135,6 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
-                this.addListen();
-
               });
               Taro.hideLoading()
             }
@@ -184,7 +180,6 @@ export default class Group extends Component<Props>{
               }
               this.setState({ data: res.data }, () => {
                 this.toShare();
-                this.addListen();
               });
               Taro.hideLoading()
             } else {
@@ -204,16 +199,6 @@ export default class Group extends Component<Props>{
     })
   };
 
-  addListen = () => {
-    document.addEventListener('touchmove', function (event) { 　　 //监听滚动事件
-      // console.log(event.target.className)
-      if (event.target.className == 'd_appre_groupList') {
-        // console.log('diu', event.target.className)
-        event.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
-      }
-
-    }, { passive: false });
-  }
 
   toShare = () => {
     let url = window.location.href;
@@ -678,10 +663,8 @@ export default class Group extends Component<Props>{
     return (
       <View className="d_appre" >
         {
-          this.state.groupListShow ? <View className="d_appre_groupList" onClick={() => { this.setState({ groupListShow: false }) }}
-          //  onTouchMove={(e) => { e.preventDefault(); e.stopPropagation() }}
-          >
-            <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }}>
+          this.state.groupListShow ? <View className="d_appre_groupList" onClick={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }} onTouchMove={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }}>
+            <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation(); }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
                 {/* <View className="d_appre_groupList_box_slideBox_content" > */}
@@ -692,7 +675,7 @@ export default class Group extends Component<Props>{
                   onScrollToLower={this.addGroupList}
                 >
                   {
-                    this.state.data2.data.map((item) => {
+                    this.state.data2.data.map((item: any) => {
                       return (
                         <View className="group_list0" >
                           <View className="group_list_img0" >
@@ -1046,7 +1029,7 @@ export default class Group extends Component<Props>{
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '70px', right: '0px', zIndex: 3 }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '50%', right: '0px', zIndex: 3 }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''

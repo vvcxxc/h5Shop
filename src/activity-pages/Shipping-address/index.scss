@@ -1,0 +1,527 @@
+.Shipping-address {
+  min-height: 100vh;
+  height: auto;
+  width: 100%;
+  padding-bottom: 150px;
+
+  .Shipping-noAddress_box {
+    width: 400px;
+    height: 400px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .noAddress_img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .address-chooseThis {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    background: #fff;
+
+    .address-chooseimg-box {
+      flex: 15%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .address-chooseimg {
+        height: 35px;
+        width: 34px;
+      }
+    }
+
+    .address-box0 {
+      overflow: hidden;
+      height: auto;
+      flex: 85%;
+      padding: 41px 44px 46px 0;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+
+      .address-msgBox {
+        height: auto;
+
+        .address-msgBox_userBox0 {
+          font-size: 35px;
+          font-weight: bold;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 510px;
+          height: 70px;
+          color: #686868;
+
+          .address-msgBox_box01 {
+            width: 380px;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .address-msgBox_userBox_name {
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .address-msgBox_userBox_choose {
+            background: #fddfdb;
+            color: #fa705e;
+            font-size: 25px;
+            text-align: center;
+            width: 93px;
+            height: 38px;
+            line-height: 38px;
+            border-radius: 8px;
+          }
+        }
+
+        .address-msgBox_address0 {
+          width: 510px;
+          height: auto;
+          font-size: 25px;
+          color: #313131;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+        }
+      }
+
+      .address-changeIcon_img_box0 {
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .address-changeIcon_img0 {
+          width: 35px;
+          height: 35px;
+        }
+      }
+    }
+  }
+
+  .address-box_content {
+    background: #fff;
+    height: auto;
+    width: 100%;
+    padding: 0 25px 25px;
+    box-sizing: border-box;
+
+
+    .address-box {
+
+      height: auto;
+      width: 100%;
+      padding: 41px 44px 46px 34px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-bottom: 1px solid #e1e1e1;
+      align-items: center;
+
+
+      .address-msgBox {
+        height: auto;
+
+        .address-msgBox_userBox {
+          font-size: 35px;
+          font-weight: bold;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 520px;
+          height: 70px;
+          color: #686868;
+
+          .address-msgBox_box1 {
+            width: 415px;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .address-msgBox_userBox_name {
+            max-width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .address-msgBox_userBox_choose {
+            background: #fddfdb;
+            color: #fa705e;
+            font-size: 25px;
+            text-align: center;
+            width: 93px;
+            height: 38px;
+            line-height: 38px;
+            border-radius: 8px;
+          }
+        }
+
+
+
+        .address-msgBox_address {
+          width: 520px;
+          height: auto;
+          font-size: 25px;
+          color: #313131;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+        }
+      }
+
+      .address-changeIcon_img_box {
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .address-changeIcon_img {
+          width: 35px;
+          height: 35px;
+        }
+      }
+    }
+  }
+
+  .bottom_btn_box {
+    height: 164px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    padding: 33px;
+    box-sizing: border-box;
+    background: #fff;
+    border-top: 1px solid #f2f2f2;
+    -moz-box-shadow: 2px -2px 5px #f2f2f2;
+    -webkit-box-shadow: 2px -2px 5px #f2f2f2;
+    box-shadow: 2px -2px 5px #f2f2f2;
+
+    .bottom_btn_submit {
+      width: 100%;
+      height: 98px;
+      background: linear-gradient(90deg, #FE7450, #FF2614);
+      border-radius: 12px;
+      line-height: 98px;
+      text-align: center;
+      font-size: 35px;
+      color: #fff;
+    }
+  }
+
+
+  .toast_box {
+    width: 408px;
+    height: 288px;
+    position: fixed;
+    z-index: 7;
+    left: 50%;
+    top: 50%;
+    margin-left: -204px;
+    margin-top: -144px;
+    background: rgba(0, 0, 0, .7);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .toast_box_info {
+      color: #fff;
+      margin-top: 10px;
+      font-size: 36px;
+      ;
+    }
+  }
+
+
+
+  .content-editor {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    // z-index: 3;
+    padding: 0 24px;
+    box-sizing: border-box;
+    background: #fff;
+
+    .editor-box {
+      height: 100px;
+      width: 100%;
+      border-bottom: 1px #f2f2f2 solid;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .editor-box_left {
+        width: 125px;
+        height: 100px;
+        line-height: 100px;
+        float: left;
+        text-align: justify;
+        // text-align-last:justify;
+        margin-right: 24px;
+        font-size: 25px;
+      }
+
+      .editor-box_left:after {
+        content: '';
+        width: 100%;
+        display: inline-block;
+      }
+
+      .editor-box_input {
+        width: 500px;
+        height: 100px;
+        line-height: 100px;
+        float: left;
+      }
+
+      .editor-box_right {
+        width: 40px;
+        height: 100px;
+        line-height: 100px;
+        float: right;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .editor-box_icon {
+          font-size: 30px;
+          height: 100px;
+          line-height: 100px;
+          color: #666666
+        }
+      }
+
+      .choose_msg_box {
+        height: 100px;
+        width: 450px;
+        float: left;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        .choose_msg_msgTitle {
+          padding-right: 24px;
+        }
+
+        .choose_msg_msgInfo {
+          font-size: 21px;
+          color: #999999
+        }
+      }
+
+      .choose_btn_box {
+        width: 120px;
+        height: 54px;
+        border: solid 2px #cccccc;
+        border-radius: 26px;
+        float: right;
+        padding: 5px 8px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .choose_btn_item {
+          height: 40px;
+          width: 40px;
+          border-radius: 20px;
+          background: #cccccc;
+        }
+      }
+
+    }
+
+    .editor-box2 {
+      height: 170px;
+      width: 100%;
+      border-bottom: 1px #f2f2f2 solid;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-bottom: 5px;
+
+      .editor-box_left2 {
+        width: 125px;
+        height: 170px;
+        line-height: 100px;
+        float: left;
+        text-align: justify;
+        // text-align-last:justify;
+        margin-right: 24px;
+        font-size: 25px;
+      }
+
+      .editor-box_left2:after {
+        content: '';
+        width: 100%;
+        display: inline-block;
+      }
+
+      .editor-box_input2 {
+        width: 500px;
+        min-height: 170px;
+        line-height: 1.2;
+        float: left;
+        padding: 35px 0 10px;
+        box-sizing: border-box;
+        border: none;
+      }
+
+      .editor-box_input2:focus {
+        outline: none;
+        outline-offset: unset;
+      }
+
+    }
+
+    .bottom_btn_box_z2 {
+      height: auto;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 33px;
+      box-sizing: border-box;
+
+      .bottom_btn_submit_z2 {
+        width: 100%;
+        height: 98px;
+        background: linear-gradient(90deg, #FE7450, #FF2614);
+        border-radius: 12px;
+        line-height: 98px;
+        text-align: center;
+        font-size: 35px;
+        color: #fff;
+      }
+
+      .bottom_btn_dele_z2 {
+        width: 100%;
+        height: 98px;
+        border: 2px solid #FE7450;
+        border-radius: 12px;
+        line-height: 98px;
+        text-align: center;
+        font-size: 35px;
+        color: #FE7450;
+        background: #fff;
+        margin-top: 30px;
+      }
+    }
+  }
+
+
+  .z2Mask_z3 {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    padding: 0 24px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, .7);
+
+    .Mask_msgBox {
+      width: 646px;
+      height: 322px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -323px;
+      margin-top: -161px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      .Mask_msgBox_info {
+        flex: 11;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        border-bottom: solid 1px #f5f5f5;
+        box-sizing: border-box;
+      }
+
+      .Mask_msgBox_btnBox {
+        flex: 5;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        .Mask_msgBox_cancel {
+          flex: 50%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-right: solid 1px #f5f5f5;
+          box-sizing: border-box;
+          font-size: 26px;
+          color: #FE7450;
+        }
+
+        .Mask_msgBox_submit {
+          flex: 50%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 26px;
+          color: #FE7450;
+        }
+      }
+    }
+  }
+
+
+
+
+}

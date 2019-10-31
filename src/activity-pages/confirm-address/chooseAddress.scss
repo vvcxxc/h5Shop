@@ -1,0 +1,164 @@
+.choose-shipping-address {
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    padding-bottom: 200px;
+
+    .Shipping-noAddress_box {
+        width: 400px;
+        height: 400px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        margin-left: -200px;
+        margin-top: -200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .noAddress_img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .Shipping-address-content {
+        height: auto;
+        width: 100%;
+        padding: 0 24px 24px;
+        box-sizing: border-box;
+        background: #fff;
+
+        .address-chooseThis {
+            height: auto;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid #e1e1e1;
+
+            .address-chooseimg-box {
+                flex: 15%;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .address-chooseimg {
+                    height: 35px;
+                    width: 34px;
+                }
+            }
+
+            .address-box0 {
+                overflow: hidden;
+                height: auto;
+                flex: 85%;
+                padding: 41px 25px 46px 0;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+
+                .address-msgBox {
+                    height: auto;
+
+                    .address-msgBox_userBox0 {
+                        font-size: 35px;
+                        font-weight: bold;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 510px;
+                        height: 70px;
+                        color: #686868;
+
+                        .address-msgBox_box01 {
+                            width: 380px;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+
+                        .address-msgBox_userBox_name {
+                            max-width: 180px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+
+                        .address-msgBox_userBox_choose {
+                            background: #fddfdb;
+                            color: #fa705e;
+                            font-size: 25px;
+                            text-align: center;
+                            width: 93px;
+                            height: 38px;
+                            line-height: 38px;
+                            border-radius: 8px;
+                        }
+                    }
+
+                    .address-msgBox_address0 {
+                        width: 510px;
+                        height: auto;
+                        font-size: 25px;
+                        color: #313131;
+                        // overflow: hidden;
+                        // text-overflow: ellipsis;
+                        // white-space: nowrap;
+                    }
+                }
+
+                .address-changeIcon_img_box0 {
+                    height: 100px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    .address-changeIcon_img0 {
+                        width: 35px;
+                        height: 35px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .choose-bottom_btn_box {
+        height: 164px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        padding: 33px;
+        box-sizing: border-box;
+        background: #fff;
+        border-top: 1px solid #f2f2f2;
+        -moz-box-shadow: 2px -2px 5px #f2f2f2;
+        -webkit-box-shadow: 2px -2px 5px #f2f2f2;
+        box-shadow: 2px -2px 5px #f2f2f2;
+
+        .bottom_btn_submit {
+            width: 100%;
+            height: 98px;
+            background: linear-gradient(90deg, #FE7450, #FF2614);
+            border-radius: 12px;
+            line-height: 98px;
+            text-align: center;
+            font-size: 35px;
+            color: #fff;
+        }
+    }
+
+}
