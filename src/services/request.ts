@@ -70,9 +70,9 @@ export default function request(options: Options) {
         }
       },
       fail(err) {
-        const { statusCode, data } = err;
+        const { status, data } = err;
         console.log(err)
-        switch (statusCode) {
+        switch (status) {
           case SERVER_ERROR:
             Taro.showToast({
               title: 'server error :d',
