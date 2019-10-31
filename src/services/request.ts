@@ -33,6 +33,7 @@ export default function request(options: Options) {
       ...options,
       success (res){
         const { statusCode, data } = res;
+        console.log(res)
         switch (statusCode) {
 
           case SERVER_ERROR:
