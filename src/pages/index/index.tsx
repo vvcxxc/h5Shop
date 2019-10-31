@@ -280,7 +280,7 @@ export default class Index extends Component<any> {
       this.requestHomeList({ ...this.state.meta })
     })
     let data = this.state.meta
-    data.pages = data.pages + 1
+    data.pages = data.pages + 1 || 1
     this.setState({ meta: data })
   }
 

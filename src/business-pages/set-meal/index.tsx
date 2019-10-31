@@ -102,7 +102,7 @@ export default class SetMeal extends Component {
       let xPoint = res.longitude;
       let yPoint = res.latitude;
       request({
-        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint, ypoint: yPoint }
+        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint ||'', ypoint: yPoint || '' }
       })
         .then((res: any) => {
           console.log(res);
@@ -137,7 +137,7 @@ export default class SetMeal extends Component {
         xPoint: ''
       }, () => {
         request({
-          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint, ypoint: yPoint }
+          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
         })
           .then((res: any) => {
             console.log(res);

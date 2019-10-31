@@ -44,7 +44,7 @@ export const getTime = time => {
     let hour = Math.floor((display / 3600) % 24);
     let minute = Math.floor((display / 60) % 60);
     let second = Math.floor(display % 60);
-    date = `${day}天${hour}：${minute}：${second}`
+    date = `${day}天${hour}:${minute}:${second}`
   } else {
     date = '已过期'
   }
