@@ -53,7 +53,7 @@ export default class NewPage extends Component<Props>{
       }, {
         des: '我的奖品',
         prompt: '',
-        img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/BjNjHfJ2FstMaB4PjNbCChCS6D2FDJb5.png',
+        img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/PJKENfrpGkTT8y8j5A3rK4c6AcsTEPrY.png',
         path: "/activity-pages/my-prize/pages/gift/welfare.gift"
       },
       // {
