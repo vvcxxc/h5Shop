@@ -30,9 +30,9 @@ export default class GiftItem extends Component<{ data: any; onAction: any }> {
             <Text className="item brief">{data.user_name}</Text>
             <Text className="item remark">{data.exceed_at}</Text>
           </View>
-          <View className="actions">
-            <View className="item">
-             <Button className="item view" data-action="view" onClick={this.handleClick}>查看二维码</Button>
+          <View className="actions" >
+            <View className="item" >
+             <Button className="item view" data-action="view" onClick={this.handleClick} style={{background:'linear-gradient(90deg,#FE7450,#FF2614)',color:"#fff"}} >查看二维码</Button>
             </View>
           </View>
         </View>
