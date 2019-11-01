@@ -15,7 +15,7 @@ interface UserReceiveinfo {
 }
 export default class MyWelfare extends Component {
   config = {
-    navigationBarTitleText: "我的礼品"
+    navigationBarTitleText: "我的奖品"
   }
   state: { list: any; userReceiveinfo: UserReceiveinfo; action: string; checkGiftinfo: any } = {
     action: "",
