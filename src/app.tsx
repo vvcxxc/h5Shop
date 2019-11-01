@@ -91,7 +91,8 @@ class App extends Component {
 				pages: [
 					'my-activity/my.activity',
 					"my-welfare/pages/gift/welfare.gift",
-					'offline/order'
+					'offline/order',
+					"my-prize/pages/gift/welfare.gift",
 
 				]
 			}
