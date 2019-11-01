@@ -16,10 +16,15 @@ export default class GiftView extends Component<{ data: any; onAction: any }> {
       title: ""
     });
     const { data } = this.props
-    for(var key in data){
-      delete data.avatar;
-      }
-    let codeData = JSON.stringify(data);
+    let tempData: any = {};
+    tempData.exceed_at = data.exceed_at;
+    tempData.id = data.id;
+    tempData.prize_id = data.prize_id;
+    tempData.prize_name = data.prize_name;
+    tempData.sign = data.sign;
+    tempData.status = data.status;
+    tempData.user_name = data.user_name;
+    let codeData = JSON.stringify(tempData);
     console.log(codeData);
     QRCode.toDataURL(codeData)
       .then((url: any) => {

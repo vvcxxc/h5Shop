@@ -17,6 +17,7 @@ export default class GiftItem extends Component<{ data: any; onAction: any }> {
     onAction(action, data)
   }
   render() {
+    console.log('111',this.props);
     const { data } = this.props
     return (
       <Block>
