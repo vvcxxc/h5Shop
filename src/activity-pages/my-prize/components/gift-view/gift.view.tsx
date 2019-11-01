@@ -24,6 +24,7 @@ export default class GiftView extends Component<{ data: any; onAction: any }> {
     tempData.sign = data.sign;
     tempData.status = data.status;
     tempData.user_name = data.user_name;
+    tempData.verificationType == "Prize";
     let codeData = JSON.stringify(tempData);
     console.log(codeData);
     QRCode.toDataURL(codeData)
