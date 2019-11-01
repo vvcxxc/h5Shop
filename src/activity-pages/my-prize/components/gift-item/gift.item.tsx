@@ -24,7 +24,7 @@ export default class GiftItem extends Component<{ data: any; onAction: any }> {
         <View className="gift-item">
           {
             data.status == 1 ? <View className="description_status"> 未使用</View> : (
-              data.status == 2 ? <View className="description_status"> 已使用</View> : (
+              data.status == 2 ? <View className="description_status"> 已核销</View> : (
                 data.status == 3 ? <View className="description_status"> 已过期</View> : null
               )
             )
