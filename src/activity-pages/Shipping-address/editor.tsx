@@ -287,7 +287,7 @@ export default class EditorAddress extends Component {
                         </View>
                     </View> */}
                     {/* <Citypicker getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker> */}
-                    <Citypicker Division=" - " getCity={this.cityEnd.bind(this)}></Citypicker>
+                    <Citypicker Division=" - " getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker>
                     <View className="editor-box2">
                         <View className="editor-box_left2">详细地址:</View>
                         <Textarea

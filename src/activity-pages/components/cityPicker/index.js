@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { AtIcon } from "taro-ui"
-import { View, Text, Picker } from '@tarojs/components'
+import { View, Text, Picker,Input } from '@tarojs/components'
 import dataCity from "./dataCity"
 import './index.scss'
 let shen = []
@@ -18,21 +18,23 @@ for (let is in dataCity[340100]) {
 dataCity[86].map(item => {
     shen.push(item.address)
 })
-// 当前省
-let indexsheng = '340000'
-// 当前市
-let indexshi = '340100'
+// // 当前省
+// let indexsheng = '440000'
+// // 当前市
+// let indexshi = '440100'
 
 class PagePicker extends Component {
 
     state = {
         selector: [shen, shi, qu],
         selectorChecked: '',
+        havechange: false
     }
 
     onChange = e => {
 
         this.setState({
+            havechange: true,
             selectorChecked: this.state.selector[0][e.detail.value[0]] + this.props.Division + this.state.selector[1][e.detail.value[1]] + this.props.Division + this.state.selector[2][e.detail.value[2]]
         }, () => {
             this.props.getCity(this.state.selectorChecked.toString());
@@ -85,6 +87,13 @@ class PagePicker extends Component {
             })
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.firstMsg && nextProps.firstMsg != "" && this.state.havechange == false) {
+            this.setState({ selectorChecked: nextProps.firstMsg })
+        }
+    }
+
     componentDidMount() {
         this.props.getCity(this.state.selectorChecked.toString());
     }
