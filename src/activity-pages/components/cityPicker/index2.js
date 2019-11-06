@@ -31,6 +31,12 @@ class PagePicker extends Component {
     }
 
     componentDidMount() {
+        shen = [];
+        shi = [];
+        qu = [];
+        shenid = '';
+        shiid = '';
+        quid = '';
         dataCity.cityData.map(item => {
             shen.push(item.value);
         })
