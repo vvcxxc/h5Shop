@@ -17,7 +17,7 @@ class PagePicker extends Component {
         shiindex: 0,
         quindex: 0,
         selectorid: [shenid, shiid, quid],
-        selector: [shen, shi, qu,[]],
+        selector: [shen, shi, qu],
         selectorChecked: '',
         havechange: false
     }
