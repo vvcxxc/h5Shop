@@ -4,13 +4,12 @@ import { View, Text, Picker, Input } from '@tarojs/components'
 import request from '../../../services/request'
 import './index.scss'
 import dataCity from "./dataCity2"
-let shen = []
-let shi = []
-let qu = []
-let shenid = ''
-let shiid = ''
-let quid = ''
-
+let shen = [];
+let shi = [];
+let qu = [];
+let shenid = '';
+let shiid = '';
+let quid = '';
 
 class PagePicker extends Component {
     state = {
@@ -18,11 +17,10 @@ class PagePicker extends Component {
         shiindex: 0,
         quindex: 0,
         selectorid: [shenid, shiid, quid],
-        selector: [shen, shi, qu],
+        selector: [shen, shi, qu,[]],
         selectorChecked: '',
         havechange: false
     }
-
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.firstMsg && nextProps.firstMsg != "" && this.state.havechange == false) {
@@ -69,7 +67,6 @@ class PagePicker extends Component {
         })
     }
     onColumnChange = e => {
-        console.log(e)
         //第一列下标0
         if (e.detail.column == 0) {
             shi = [];
@@ -79,14 +76,14 @@ class PagePicker extends Component {
             //省id
             shenid = dataCity.cityData[index1].id;
             console.log('省：', dataCity.cityData[index1].value);
+            console.log('市：', dataCity.cityData[index1].children[0].value);
+            console.log('区：', dataCity.cityData[index1].children[0].children[0].value);
             dataCity.cityData[index1].children.map(item => {
-                console.log('市：', item.value);
                 shi.push(item.value);
             });
             //市id归零
             shiid = dataCity.cityData[index1].children[0].id;
             dataCity.cityData[index1].children[0].children.map(item => {
-                console.log('区：', item.value);
                 qu.push(item.value);
             });
             //区id归零
@@ -106,8 +103,10 @@ class PagePicker extends Component {
             shenid = this.state.selectorid[0];
             //市id
             shiid = dataCity.cityData[index1].children[index2].id;
+            console.log('省：', dataCity.cityData[index1].value);
+            console.log('市：', dataCity.cityData[index1].children[index2].value);
+            console.log('区：', dataCity.cityData[index1].children[index2].children[0].value);
             dataCity.cityData[index1].children[index2].children.map(item => {
-                console.log('区：', item.value);
                 qu.push(item.value);
             });
             //区id归零
@@ -115,7 +114,6 @@ class PagePicker extends Component {
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
             this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
-                // console.log(tempselectorid);
                 this.onTabChange();
             })
         } else if (e.detail.column == 2) {
@@ -126,9 +124,11 @@ class PagePicker extends Component {
             shenid = this.state.selectorid[0];
             shiid = this.state.selectorid[1];
             quid = dataCity.cityData[index1].children[index2].children[index3].id;
+            console.log('省：', dataCity.cityData[index1].value);
+            console.log('市：', dataCity.cityData[index1].children[index2].value);
+            console.log('区：', dataCity.cityData[index1].children[index2].children[index3].value);
             let tempselectorid = [shenid, shiid, quid];
             this.setState({ selectorid: tempselectorid, quindex: index3, havechange: true }, () => {
-                // console.log(tempselectorid);
                 this.onTabChange();
             })
         }
