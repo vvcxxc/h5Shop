@@ -28,10 +28,10 @@ class PagePicker extends Component {
         }
     }
     componentWillMount() {
-        console.log('componentWillMount')
-        window.addEventListener('touchstart', (e) => { console.log('start',e); e.preventDafault(); }, { passive: false });
-        window.addEventListener('touchmove', (e) => { console.log('move',e); e.preventDafault(); }, { passive: false });
-        window.addEventListener('touchend', (e) => { console.log('end',e); e.preventDafault(); }, { passive: false });
+        console.log('componentWillMount3')
+        window.addEventListener('touchstart', (e) => { console.log('start',e); e.preventDefault(); }, { passive: false });
+        window.addEventListener('touchmove', (e) => { console.log('move',e); e.preventDefault(); }, { passive: false });
+        window.addEventListener('touchend', (e) => { console.log('end',e); e.preventDefault(); }, { passive: false });
 
     }
     componentDidMount() {
