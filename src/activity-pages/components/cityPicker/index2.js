@@ -27,12 +27,15 @@ class PagePicker extends Component {
             this.setState({ selectorChecked: nextProps.firstMsg })
         }
     }
-
-    componentDidMount() {
+    componentWillMount() {
+        console.log('componentWillMount')
         window.addEventListener('touchmove', (e) => {
             console.log(e)
             e.preventDafault();
         }, { passive: false });
+    }
+    componentDidMount() {
+
         shen = [];
         shi = [];
         qu = [];
