@@ -19,7 +19,8 @@ class PagePicker extends Component {
         selectorid: [shenid, shiid, quid],
         selector: [shen, shi, qu],
         selectorChecked: '',
-        havechange: false
+        havechange: false,
+        selectorindex: [0, 0, 0]
     }
 
     componentWillReceiveProps(nextProps) {
@@ -113,6 +114,7 @@ class PagePicker extends Component {
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
             this.setState({ selector: tempselector, selectorid: tempselectorid, shenindex: index1, shiindex: 0, quindex: 0, havechange: true }, () => {
+                this.setState({ selectorindex: [index1, 0, 0] })
                 this.onTabChange();
             })
         }
@@ -136,6 +138,7 @@ class PagePicker extends Component {
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
             this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
+                this.setState({ selectorindex: [index1, index2, 0] })
                 this.onTabChange();
             })
         }
@@ -152,6 +155,7 @@ class PagePicker extends Component {
             console.log('区：', dataCity.cityData[index1].children[index2].children[index3].value);
             let tempselectorid = [shenid, shiid, quid];
             this.setState({ selectorid: tempselectorid, quindex: index3, havechange: true }, () => {
+                this.setState({ selectorindex: [index1, index2, index3] })
                 this.onTabChange();
             })
         }
@@ -159,7 +163,7 @@ class PagePicker extends Component {
 
     render() {
         return (
-            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={[this.state.shenindex, this.state.shiindex, this.state.quindex]}>
+            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectorindex}>
                 <View className="editor-box">
                     <View className="editor-box_left">所在区域:</View>
                     <View className="editor-box_input">{this.state.selectorChecked.toString()}</View>
