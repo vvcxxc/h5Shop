@@ -28,8 +28,11 @@ class PagePicker extends Component {
         }
     }
     componentWillMount() {
-        console.log('componentWillMount3');
-        window.addEventListener('touchmove', (e) => { console.log(e); e.preventDafault(); }, { passive: false });
+        console.log('componentWillMount')
+        window.addEventListener('touchstart', (e) => { console.log('start',e); e.preventDafault(); }, { passive: false });
+        window.addEventListener('touchmove', (e) => { console.log('move',e); e.preventDafault(); }, { passive: false });
+        window.addEventListener('touchend', (e) => { console.log('end',e); e.preventDafault(); }, { passive: false });
+
     }
     componentDidMount() {
 
@@ -71,82 +74,72 @@ class PagePicker extends Component {
         })
     }
     onColumnChange = e => {
-        console.log('round4',e);
-        e.addEventListener(
-            'touchmove',
-            () => {
-
-
-                //第一列下标0
-                if (e.detail.column == 0) {
-                    shi = [];
-                    qu = [];
-                    //index1为第一列的第n个,省下标
-                    let index1 = e.detail.value;
-                    //省id
-                    shenid = dataCity.cityData[index1].id;
-                    console.log('省：', dataCity.cityData[index1].value);
-                    console.log('市：', dataCity.cityData[index1].children[0].value);
-                    console.log('区：', dataCity.cityData[index1].children[0].children[0].value);
-                    dataCity.cityData[index1].children.map(item => {
-                        shi.push(item.value);
-                    });
-                    //市id归零
-                    shiid = dataCity.cityData[index1].children[0].id;
-                    dataCity.cityData[index1].children[0].children.map(item => {
-                        qu.push(item.value);
-                    });
-                    //区id归零
-                    quid = dataCity.cityData[index1].children[0].children[0].id;
-                    let tempselectorid = [shenid, shiid, quid];
-                    let tempselector = [shen, shi, qu];
-                    this.setState({ selector: tempselector, selectorid: tempselectorid, shenindex: index1, shiindex: 0, quindex: 0, havechange: true }, () => {
-                        this.onTabChange();
-                    })
-                }
-                else if (e.detail.column == 1) {
-                    qu = [];
-                    //index2为第二列的第n个，市下标
-                    let index1 = this.state.shenindex;
-                    let index2 = e.detail.value;
-                    //省id
-                    shenid = this.state.selectorid[0];
-                    //市id
-                    shiid = dataCity.cityData[index1].children[index2].id;
-                    console.log('省：', dataCity.cityData[index1].value);
-                    console.log('市：', dataCity.cityData[index1].children[index2].value);
-                    console.log('区：', dataCity.cityData[index1].children[index2].children[0].value);
-                    dataCity.cityData[index1].children[index2].children.map(item => {
-                        qu.push(item.value);
-                    });
-                    //区id归零
-                    quid = dataCity.cityData[index1].children[index2].children[0].id;
-                    let tempselectorid = [shenid, shiid, quid];
-                    let tempselector = [shen, shi, qu];
-                    this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
-                        this.onTabChange();
-                    })
-                }
-                else if (e.detail.column == 2) {
-                    let index1 = this.state.shenindex;
-                    let index2 = this.state.shiindex;
-                    //index3为第三列的第n个，区下标
-                    let index3 = e.detail.value;
-                    shenid = this.state.selectorid[0];
-                    shiid = this.state.selectorid[1];
-                    quid = dataCity.cityData[index1].children[index2].children[index3].id;
-                    console.log('省：', dataCity.cityData[index1].value);
-                    console.log('市：', dataCity.cityData[index1].children[index2].value);
-                    console.log('区：', dataCity.cityData[index1].children[index2].children[index3].value);
-                    let tempselectorid = [shenid, shiid, quid];
-                    this.setState({ selectorid: tempselectorid, quindex: index3, havechange: true }, () => {
-                        this.onTabChange();
-                    })
-                }
-
-            },
-            { passive: false }
-        );
+        //第一列下标0
+        if (e.detail.column == 0) {
+            shi = [];
+            qu = [];
+            //index1为第一列的第n个,省下标
+            let index1 = e.detail.value;
+            //省id
+            shenid = dataCity.cityData[index1].id;
+            console.log('省：', dataCity.cityData[index1].value);
+            console.log('市：', dataCity.cityData[index1].children[0].value);
+            console.log('区：', dataCity.cityData[index1].children[0].children[0].value);
+            dataCity.cityData[index1].children.map(item => {
+                shi.push(item.value);
+            });
+            //市id归零
+            shiid = dataCity.cityData[index1].children[0].id;
+            dataCity.cityData[index1].children[0].children.map(item => {
+                qu.push(item.value);
+            });
+            //区id归零
+            quid = dataCity.cityData[index1].children[0].children[0].id;
+            let tempselectorid = [shenid, shiid, quid];
+            let tempselector = [shen, shi, qu];
+            this.setState({ selector: tempselector, selectorid: tempselectorid, shenindex: index1, shiindex: 0, quindex: 0, havechange: true }, () => {
+                this.onTabChange();
+            })
+        }
+        else if (e.detail.column == 1) {
+            qu = [];
+            //index2为第二列的第n个，市下标
+            let index1 = this.state.shenindex;
+            let index2 = e.detail.value;
+            //省id
+            shenid = this.state.selectorid[0];
+            //市id
+            shiid = dataCity.cityData[index1].children[index2].id;
+            console.log('省：', dataCity.cityData[index1].value);
+            console.log('市：', dataCity.cityData[index1].children[index2].value);
+            console.log('区：', dataCity.cityData[index1].children[index2].children[0].value);
+            dataCity.cityData[index1].children[index2].children.map(item => {
+                qu.push(item.value);
+            });
+            //区id归零
+            quid = dataCity.cityData[index1].children[index2].children[0].id;
+            let tempselectorid = [shenid, shiid, quid];
+            let tempselector = [shen, shi, qu];
+            this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
+                this.onTabChange();
+            })
+        }
+        else if (e.detail.column == 2) {
+            let index1 = this.state.shenindex;
+            let index2 = this.state.shiindex;
+            //index3为第三列的第n个，区下标
+            let index3 = e.detail.value;
+            shenid = this.state.selectorid[0];
+            shiid = this.state.selectorid[1];
+            quid = dataCity.cityData[index1].children[index2].children[index3].id;
+            console.log('省：', dataCity.cityData[index1].value);
+            console.log('市：', dataCity.cityData[index1].children[index2].value);
+            console.log('区：', dataCity.cityData[index1].children[index2].children[index3].value);
+            let tempselectorid = [shenid, shiid, quid];
+            this.setState({ selectorid: tempselectorid, quindex: index3, havechange: true }, () => {
+                this.onTabChange();
+            })
+        }
     }
 
     render() {
