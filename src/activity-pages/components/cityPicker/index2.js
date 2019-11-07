@@ -29,6 +29,7 @@ class PagePicker extends Component {
     }
 
     componentDidMount() {
+        window.addEventListener('touchmove', func, { passive: false });
         shen = [];
         shi = [];
         qu = [];
