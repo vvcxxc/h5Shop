@@ -28,18 +28,22 @@ class PagePicker extends Component {
         }
     }
     componentWillMount() {
-        console.log('componentWillMount3')
+        console.log('componentWillMount4')
         window.addEventListener('touchstart', (e) => {
             console.log('start', e.target);
-            // e.preventDefault();
+            if (e.target.className == 'weui-picker__mask') {
+                e.preventDefault();
+            }
         }, { passive: false });
-        window.addEventListener('touchmove', (e) => { 
-            console.log('move', e.target);
-        //  e.preventDefault();
-         }, { passive: false });
+        window.addEventListener('touchmove', (e) => {
+            if (e.target.className == 'weui-picker__mask') {
+                e.preventDefault();
+            }
+        }, { passive: false });
         window.addEventListener('touchend', (e) => {
-            console.log('end', e.target);
-            // e.preventDefault();
+            if (e.target.className == 'weui-picker__mask') {
+                e.preventDefault();
+            }
         }, { passive: false });
 
     }
