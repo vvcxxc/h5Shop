@@ -29,7 +29,10 @@ class PagePicker extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener('touchmove', (e) => { e.preventDafault(); }, { passive: false });
+        window.addEventListener('touchmove', (e) => {
+            console.log(e)
+            e.preventDafault();
+        }, { passive: false });
         shen = [];
         shi = [];
         qu = [];
