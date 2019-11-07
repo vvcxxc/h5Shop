@@ -96,6 +96,7 @@ class App extends Component {
 					'Shipping-address/editor',
 					'confirm-address/index',
 					'confirm-address/chooseAddress'
+
 				]
 			}
 		],
