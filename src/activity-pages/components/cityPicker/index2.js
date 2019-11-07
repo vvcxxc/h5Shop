@@ -73,7 +73,7 @@ class PagePicker extends Component {
     onColumnChange = e => {
         console.log('round4',e);
         e.addEventListener(
-            'touchstart',
+            'touchmove',
             () => {
 
 
