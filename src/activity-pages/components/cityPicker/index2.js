@@ -29,7 +29,7 @@ class PagePicker extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener('touchmove', ()=>{}, { passive: false });
+        window.addEventListener('touchmove', () => { event.preventDafault(); }, { passive: false });
         shen = [];
         shi = [];
         qu = [];
@@ -117,7 +117,7 @@ class PagePicker extends Component {
             this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
                 this.onTabChange();
             })
-        } 
+        }
         else if (e.detail.column == 2) {
             let index1 = this.state.shenindex;
             let index2 = this.state.shiindex;
