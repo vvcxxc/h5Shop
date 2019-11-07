@@ -30,18 +30,20 @@ class PagePicker extends Component {
     componentWillMount() {
         console.log('componentWillMount4')
         window.addEventListener('touchstart', (e) => {
-            console.log('start', e.target);
             if (e.target.className == 'weui-picker__mask') {
+                console.log('start', e.target);
                 e.preventDefault();
             }
         }, { passive: false });
         window.addEventListener('touchmove', (e) => {
             if (e.target.className == 'weui-picker__mask') {
+                console.log('move', e.target);
                 e.preventDefault();
             }
         }, { passive: false });
         window.addEventListener('touchend', (e) => {
             if (e.target.className == 'weui-picker__mask') {
+                console.log('end', e.target);
                 e.preventDefault();
             }
         }, { passive: false });
