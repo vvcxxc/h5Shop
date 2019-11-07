@@ -29,9 +29,18 @@ class PagePicker extends Component {
     }
     componentWillMount() {
         console.log('componentWillMount3')
-        window.addEventListener('touchstart', (e) => { console.log('start',e); e.preventDefault(); }, { passive: false });
-        window.addEventListener('touchmove', (e) => { console.log('move',e); e.preventDefault(); }, { passive: false });
-        window.addEventListener('touchend', (e) => { console.log('end',e); e.preventDefault(); }, { passive: false });
+        window.addEventListener('touchstart', (e) => {
+            console.log('start', e.target);
+            // e.preventDefault();
+        }, { passive: false });
+        window.addEventListener('touchmove', (e) => { 
+            console.log('move', e.target);
+        //  e.preventDefault();
+         }, { passive: false });
+        window.addEventListener('touchend', (e) => {
+            console.log('end', e.target);
+            // e.preventDefault();
+        }, { passive: false });
 
     }
     componentDidMount() {
