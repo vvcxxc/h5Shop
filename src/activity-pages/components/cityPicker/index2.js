@@ -116,7 +116,8 @@ class PagePicker extends Component {
             this.setState({ selector: tempselector, selectorid: tempselectorid, shiindex: index2, quindex: 0, havechange: true }, () => {
                 this.onTabChange();
             })
-        } else if (e.detail.column == 2) {
+        } 
+        else if (e.detail.column == 2) {
             let index1 = this.state.shenindex;
             let index2 = this.state.shiindex;
             //index3为第三列的第n个，区下标
