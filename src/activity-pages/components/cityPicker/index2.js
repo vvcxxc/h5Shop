@@ -28,8 +28,7 @@ class PagePicker extends Component {
         }
     }
     componentWillMount() {
-        console.log('componentWillMount2');
-        window.addEventListener('touchstart', (e) => { console.log(e); e.preventDafault(); }, { passive: false });
+        console.log('componentWillMount3');
         window.addEventListener('touchmove', (e) => { console.log(e); e.preventDafault(); }, { passive: false });
     }
     componentDidMount() {
