@@ -259,14 +259,14 @@ export default class Orderdetail extends Component {
               <View className="flex">
                 <View className="a_billingInfo_1">使用门槛</View>：
                 <View>
-                  <View>满200元可用</View>
+                  <View>满{this.state.defaultData.total_fee}元可用</View>
                 </View>
               </View>
 
               <View className="flex">
                 <View className="a_billingInfo_1">券有效期</View>：
                 <View>
-                  <View>领券日起7天有效</View>
+                  <View>领券日起{this.state.defaultData.expire_day}天有效</View>
                 </View>
               </View>
 
