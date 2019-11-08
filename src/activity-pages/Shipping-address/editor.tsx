@@ -24,25 +24,9 @@ export default class EditorAddress extends Component {
         toastShow: false,
         toastInfo: '',
         tempCityInfo: '',
-        // actionsheetShow: false
-        actionsheetShow: true
+        actionsheetShow: false,
     };
 
-
-    // componentWillMount() {
-    //     request({
-    //         url: 'v3/district',
-    //         method: "GET",
-    //         data: { model_type: 1 }
-    //     })
-    //         .then((res: any) => {
-    //             Taro.setStorage({ key: 'cityList', data: res.data })
-    //         })
-    // }
-
-    // componentWillUnmount() {
-    //     Taro.removeStorage({ key: 'cityList' })
-    // }
 
     componentDidMount() {
         console.log(this.$router.params);
@@ -81,9 +65,9 @@ export default class EditorAddress extends Component {
         this.setState({ phoneValue: e.detail.value })
     }
     // 所在区域
-    cityEnd = (cityItem) => {
-        console.log(cityItem)
-        this.setState({ cityValue: cityItem })
+    cityEnd = (query) => {
+        console.log(query)
+        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
     }
     //详细地址
     onHandelChangeAddress = (e) => {
@@ -279,7 +263,7 @@ export default class EditorAddress extends Component {
                     </View>
                     <View className="editor-box" onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }} >
                         <View className="editor-box_left">所在区域:</View>
-                        <View className="editor-box_input0" >广东省-广州市-海珠区</View>
+                        <View className="editor-box_input0" >{this.state.tempCityInfo}</View>
                         <View className="editor-box_right">
                             <AtIcon className="editor-box_icon" value='chevron-right' color='#f2f2f2' />
                         </View>
@@ -340,7 +324,7 @@ export default class EditorAddress extends Component {
 
                 <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
                     <View className="AtActionSheetBox">
-                        <CitySelecter />
+                        <CitySelecter getCity={this.cityEnd} onclose={()=>{this.setState({actionsheetShow:false})}}/>
                     </View>
                 </AtActionSheet>
 
