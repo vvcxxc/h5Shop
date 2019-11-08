@@ -64,7 +64,6 @@ export default class EditorAddress extends Component {
     }
     // 所在区域
     cityEnd = (query) => {
-        console.log('diu',query)
         this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
     }
     //详细地址
