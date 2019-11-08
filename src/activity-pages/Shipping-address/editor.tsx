@@ -5,8 +5,6 @@ import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 // import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
-// import Citypicker from "../components/cityPicker/index"
-// import Citypicker from "../components/cityPicker/index2"
 import CitySelecter from "../components/citySelecter/index"
 export default class EditorAddress extends Component {
     config = {
@@ -66,7 +64,7 @@ export default class EditorAddress extends Component {
     }
     // 所在区域
     cityEnd = (query) => {
-        console.log(query)
+        console.log('diu',query)
         this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
     }
     //详细地址
@@ -268,8 +266,6 @@ export default class EditorAddress extends Component {
                             <AtIcon className="editor-box_icon" value='chevron-right' color='#f2f2f2' />
                         </View>
                     </View>
-                    {/* <Citypicker getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker> */}
-                    {/* <Citypicker Division=" - " getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker> */}
                     <View className="editor-box2">
                         <View className="editor-box_left2">详细地址:</View>
                         <Textarea

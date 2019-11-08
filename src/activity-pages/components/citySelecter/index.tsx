@@ -50,7 +50,7 @@ export default class CitySelecter extends Component<Props> {
     }
 
     onTabChange = () => {
-        let tempselectorid = [this.state.shenindex, this.state.shiindex, this.state.quindex];
+        let tempselectorid = [this.state.shenid, this.state.shiid, this.state.quid];
         let query = { tempselectorid, selectorChecked: this.state.selectorChecked }
         this.props.getCity && this.props.getCity(query);
     }
@@ -164,8 +164,6 @@ export default class CitySelecter extends Component<Props> {
                 quid: quid,
                 selectorChecked: shenvalue + '-' + shivalue + '-' + quvalue,
             }, () => {
-                console.log(this.state.selectorChecked)
-                console.log(this.state.shenid, this.state.shiid, this.state.quid);
                 this.onTabChange();
             })
         }
