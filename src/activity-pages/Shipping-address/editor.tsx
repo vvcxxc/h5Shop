@@ -1,13 +1,13 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon, AtToast } from "taro-ui"
+import { AtIcon, AtToast, AtActionSheet, AtActionSheetItem } from "taro-ui"
 import { View, Input, Textarea } from "@tarojs/components";
 import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
-import AddressItem from '../components/address-item/index'
+// import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
 // import Citypicker from "../components/cityPicker/index"
-import Citypicker from "../components/cityPicker/index2"
-
+// import Citypicker from "../components/cityPicker/index2"
+import CitySelecter from "../components/citySelecter/index"
 export default class EditorAddress extends Component {
     config = {
         navigationBarTitleText: "我的收货地址"
@@ -23,7 +23,9 @@ export default class EditorAddress extends Component {
         z3show: false,
         toastShow: false,
         toastInfo: '',
-        tempCityInfo: ''
+        tempCityInfo: '',
+        // actionsheetShow: false
+        actionsheetShow: true
     };
 
 
@@ -86,10 +88,6 @@ export default class EditorAddress extends Component {
     //详细地址
     onHandelChangeAddress = (e) => {
         this.setState({ TextareaValue: e.detail.value })
-    }
-    //选择默认
-    onChangeDefaultAddress = () => {
-        this.setState({ chooseMove: !this.state.chooseMove })
     }
 
     handleSubmit = (e) => {
@@ -279,14 +277,14 @@ export default class EditorAddress extends Component {
                             onInput={this.onHandelChangePhone.bind(this)}
                         />
                     </View>
-                    {/* <View className="editor-box">
+                    <View className="editor-box" onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }} >
                         <View className="editor-box_left">所在区域:</View>
-                        <Input className="editor-box_input"  disabled />
+                        <View className="editor-box_input0" >广东省-广州市-海珠区</View>
                         <View className="editor-box_right">
                             <AtIcon className="editor-box_icon" value='chevron-right' color='#f2f2f2' />
                         </View>
-                    </View> */}
-                    <Citypicker getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker>
+                    </View>
+                    {/* <Citypicker getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker> */}
                     {/* <Citypicker Division=" - " getCity={this.cityEnd.bind(this)} firstMsg={this.state.tempCityInfo} ></Citypicker> */}
                     <View className="editor-box2">
                         <View className="editor-box_left2">详细地址:</View>
@@ -303,7 +301,7 @@ export default class EditorAddress extends Component {
 
                         </View>
                         <View className="choose_btn_box"
-                            onClick={this.onChangeDefaultAddress}
+                            onClick={(e) => { this.setState({ chooseMove: !this.state.chooseMove }); e.stopPropagation(); }}
                             style={{
                                 justifyContent: this.state.chooseMove ? 'flex-end' : 'flex-start',
                                 border: this.state.chooseMove ? 'solid 2px #FE7450' : 'solid 2px #cccccc'
@@ -318,7 +316,7 @@ export default class EditorAddress extends Component {
                     {
                         this.$router.params.type == "editorItem" ? <View className="bottom_btn_box_z2">
                             <View className="bottom_btn_submit_z2" onClick={this.changeAddressItem.bind(this)}>保存</View>
-                            <View className="bottom_btn_dele_z2" onClick={() => { this.setState({ z3show: true }) }}>删除地址</View>
+                            <View className="bottom_btn_dele_z2" onClick={(e) => { this.setState({ z3show: true }); e.stopPropagation(); }}>删除地址</View>
                         </View> : (this.$router.params.type == "addItem" ? <View className="bottom_btn_box_z2">
                             <View className="bottom_btn_submit_z2" onClick={this.handleSubmit.bind(this)}>添加新地址</View>
                         </View> : <View className="bottom_btn_box_z2">
@@ -338,6 +336,14 @@ export default class EditorAddress extends Component {
                         </View>
                     </View> : null
                 }
+
+
+                <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
+                    <View className="AtActionSheetBox">
+                        <CitySelecter />
+                    </View>
+                </AtActionSheet>
+
             </View>
         );
     }
