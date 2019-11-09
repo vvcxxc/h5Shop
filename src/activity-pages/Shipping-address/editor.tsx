@@ -23,6 +23,7 @@ export default class EditorAddress extends Component {
         toastInfo: '',
         tempCityInfo: '',
         actionsheetShow: false,
+        inputFocus: false
     };
 
 
@@ -226,6 +227,12 @@ export default class EditorAddress extends Component {
                 })
         }
     }
+    inputItemFocus = (e) => {
+        this.setState({ inputFocus: true })
+    }
+    inputItemBlue = (e) => {
+        this.setState({ inputFocus: false })
+    }
 
     render() {
         return (
@@ -248,6 +255,8 @@ export default class EditorAddress extends Component {
                             placeholder="请填写收件人姓名"
                             value={this.state.nameValue}
                             onInput={this.onHandelChangeName.bind(this)}
+                            onFocus={this.inputItemFocus.bind(this)}
+                            onBlur={this.inputItemBlue.bind(this)}
                         />
                     </View>
                     <View className="editor-box">
@@ -256,6 +265,8 @@ export default class EditorAddress extends Component {
                             placeholder="请填写收件人电话"
                             value={this.state.phoneValue}
                             onInput={this.onHandelChangePhone.bind(this)}
+                            onFocus={this.inputItemFocus.bind(this)}
+                            onBlur={this.inputItemBlue.bind(this)}
                         />
                     </View>
                     <View className="editor-box" onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }} >
@@ -271,7 +282,10 @@ export default class EditorAddress extends Component {
                             className="editor-box_input2"
                             value={this.state.TextareaValue}
                             onInput={this.onHandelChangeAddress.bind(this)}
-                            placeholder="请填写详细地址，如街道、门牌、小区等" />
+                            placeholder="请填写详细地址，如街道、门牌、小区等"
+                            onFocus={this.inputItemFocus.bind(this)}
+                            onBlur={this.inputItemBlue.bind(this)}
+                        />
                     </View>
                     <View className="editor-box">
                         <View className="choose_msg_box">
@@ -293,7 +307,7 @@ export default class EditorAddress extends Component {
                     </View>
                     {/* 1：editorItem:编辑地址，2：addItem：添加地址，3、4：useItem、useItemChange:隔壁chooseAddress过来的,保存使用地址 */}
                     {
-                        this.$router.params.type == "editorItem" ? <View className="bottom_btn_box_z2">
+                        this.$router.params.type == "editorItem" ? <View className="bottom_btn_box_z2" style={{ display: this.state.inputFocus && this.state.inputFocus == true ? 'none' : 'unset' }}>
                             <View className="bottom_btn_submit_z2" onClick={this.changeAddressItem.bind(this)}>保存</View>
                             <View className="bottom_btn_dele_z2" onClick={(e) => { this.setState({ z3show: true }); e.stopPropagation(); }}>删除地址</View>
                         </View> : (this.$router.params.type == "addItem" ? <View className="bottom_btn_box_z2">
@@ -319,7 +333,7 @@ export default class EditorAddress extends Component {
 
                 <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
                     <View className="AtActionSheetBox">
-                        <CitySelecter getCity={this.cityEnd} onclose={()=>{this.setState({actionsheetShow:false})}}/>
+                        <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                     </View>
                 </AtActionSheet>
 
