@@ -52,22 +52,17 @@ export default class NewPage extends Component<Props>{
         path: "/activity-pages/my-activity/my.activity",
       },
       {
+        des: '我的奖品',
+        prompt: '',
+        img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/iYK4YnfmBrNP8tZGWHeQNpRTHFj5ajyr.png',
+        path: "/activity-pages/my-prize/pages/gift/welfare.gift"
+      },
+      {
         des: '我的收货地址',
         prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png',
         path: "/activity-pages/Shipping-address/index",
-      // },
-      // {
-      //   des: '我的奖品',
-      //   prompt: '',
-      //   img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/iYK4YnfmBrNP8tZGWHeQNpRTHFj5ajyr.png',
-      //   path: "/activity-pages/my-prize/pages/gift/welfare.gift"
-      // },
-      // {
-      //   des: '我的收货地址',
-      //   prompt: null,
-      //   img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png'
-      // }
+      }
     ]
   }
 
