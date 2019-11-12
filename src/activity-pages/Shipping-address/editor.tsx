@@ -127,7 +127,7 @@ export default class EditorAddress extends Component {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
                     console.log(res)
-                }).catch(() => {
+                }).catch((err) => {
                     Taro.hideLoading();
                     Taro.showToast({ title: '请求失败', icon: 'none' })
                 })
@@ -157,7 +157,7 @@ export default class EditorAddress extends Component {
                     Taro.showToast({ title: res.message, icon: 'none' })
                 }
                 console.log(res)
-            }).catch(() => {
+            }).catch((err) => {
                 Taro.hideLoading();
                 Taro.showToast({ title: '请求失败', icon: 'none' })
             })
@@ -220,7 +220,7 @@ export default class EditorAddress extends Component {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
                     console.log(res)
-                }).catch(() => {
+                }).catch((err) => {
                     Taro.hideLoading();
                     Taro.showToast({ title: '请求失败', icon: 'none' })
                 })
