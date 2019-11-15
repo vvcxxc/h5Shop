@@ -31,8 +31,9 @@ export default function request(options: Options) {
     // options.fail = (res) => reject(res);
 
     Taro.showToast({
-      title: "test:" + options.url,
-      icon: "none"
+      title: "test1:" + options.url,
+      icon: "none",
+      duration:5000
     })
 
 
@@ -44,10 +45,15 @@ export default function request(options: Options) {
 
 
         Taro.showToast({
-          title: "test:" + res.statusCode+','+res.data,
-          icon: "none"
+          title: "test2:" + res.statusCode,
+          icon: "none",
+          duration:5000
         })
-
+        Taro.showToast({
+          title: "test3:" +res.data,
+          icon: "none",
+          duration:5000
+        })
 
         // console.log(res)
         switch (statusCode) {
