@@ -29,13 +29,10 @@ export default function request(options: Options) {
     /**统一请求 */
     // options.success = (res) => resolve(res.data.data);
     // options.fail = (res) => reject(res);
-
-    console.log('options', options)
     Taro.request({
       ...options,
       success(res) {
         const { statusCode, data } = res;
-        console.log('res', statusCode, data)
         // console.log(res)
         switch (statusCode) {
 
@@ -74,7 +71,6 @@ export default function request(options: Options) {
       },
       fail(err) {
         const { status, data } = err;
-        console.log('err', status, data)
         console.log(err)
         switch (status) {
           case SERVER_ERROR:
