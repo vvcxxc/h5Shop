@@ -29,10 +29,26 @@ export default function request(options: Options) {
     /**统一请求 */
     // options.success = (res) => resolve(res.data.data);
     // options.fail = (res) => reject(res);
+
+    Taro.showToast({
+      title: "test:" + options.url,
+      icon: "none"
+    })
+
+
     Taro.request({
       ...options,
       success(res) {
         const { statusCode, data } = res;
+
+
+
+        Taro.showToast({
+          title: "test:" + res.statusCode+','+res.data,
+          icon: "none"
+        })
+
+
         // console.log(res)
         switch (statusCode) {
 
@@ -63,7 +79,7 @@ export default function request(options: Options) {
             break
           default:
             Taro.showToast({
-              title: "unknow error00",
+              title: "unknow error",
               icon: "none"
             })
             break
@@ -98,7 +114,7 @@ export default function request(options: Options) {
             break
           default:
             Taro.showToast({
-              title: "unknow error22",
+              title: "unknow error",
               icon: "none"
             })
             break

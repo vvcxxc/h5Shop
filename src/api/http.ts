@@ -74,7 +74,7 @@ const http = (params: Params): Promise<any> => {
             break
           default:
             Taro.showToast({
-              title: "unknow error33",
+              title: "unknow error",
               icon: "none"
             })
             break
