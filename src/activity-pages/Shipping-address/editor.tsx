@@ -79,7 +79,7 @@ export default class EditorAddress extends Component {
             })
             return;
         }
-        if (!phoneValue) {
+        if (!phoneValue || !(/^1[3456789]\d{9}$/.test(phoneValue))) {
             this.setState({ toastShow: true, toastInfo: '请输入正确的手机号码' }, () => {
                 setTimeout(() => { this.setState({ toastInfo: '', toastShow: false }) }, 1000)
             })
@@ -237,7 +237,7 @@ export default class EditorAddress extends Component {
             })
             return;
         }
-        if (!phoneValue) {
+        if (!phoneValue || !(/^1[3456789]\d{9}$/.test(phoneValue))) {
             this.setState({ toastShow: true, toastInfo: '请输入正确的手机号码' }, () => {
                 setTimeout(() => { this.setState({ toastInfo: '', toastShow: false }) }, 1000)
             })
@@ -288,14 +288,14 @@ export default class EditorAddress extends Component {
                         Taro.showToast({ title: '收货地址添加成功', icon: 'none' });
                         let adderssId;
                         if (this.$router.params.type == 'useItemChange') {
-                            adderssId=this.$router.params.editorId;
+                            adderssId = this.$router.params.editorId;
                         } else {
-                           adderssId=res.data.data.id;
+                            adderssId = res.data.data.id;
                         }
                         setTimeout(() => {
                             if (this.$router.params.activityType == '55') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' +adderssId
+                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId
                                 })
                             } else {
                                 Taro.navigateTo({
