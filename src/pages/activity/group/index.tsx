@@ -76,14 +76,16 @@ export default class Group extends Component<Props>{
   componentDidShow() {
     this.toShare();
   }
-
-  componentWillUnmount() {
+  clearTimeOut = () => {
     console.log('清除计时器');
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
     for (var i = start; i <= end; i++) {
       clearTimeout(i);
     }
+  }
+  componentWillUnmount() {
+    this.clearTimeOut();
   }
 
   componentDidMount = () => {
@@ -266,12 +268,14 @@ export default class Group extends Component<Props>{
 
   //去图文详情
   toImgList = () => {
+    this.clearTimeOut();
     Taro.navigateTo({
       url: '/detail-pages/gift/gift?gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
     })
   }
   //去商店
   handleClick2 = (e) => {
+    this.clearTimeOut();
     Taro.navigateTo({
       // url: '/detail-pages/business/index?id=' + _id
       url: '/pages/business/index?id=' + this.state.data.id
@@ -627,6 +631,7 @@ export default class Group extends Component<Props>{
    * 回首页
    */
   handleGoHome = () => {
+    this.clearTimeOut();
     Taro.navigateTo({
       url: '/'
     })
@@ -656,7 +661,28 @@ export default class Group extends Component<Props>{
       return;
     }
   }
+  goToaConfirm = (e) => {
+    this.clearTimeOut();
+    if (this.$router.params.type == '5') {
+      //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+      Taro.navigateTo({
+        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+      })
+    } else if (this.$router.params.type == '55') {
+      //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
+      Taro.navigateTo({
+        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.state.data.youhui_id + '&groupId=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+      })
+    }
 
+  }
+  goToaConfirmAddGroup = (_id, e) => {
+    this.clearTimeOut();
+    //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
+    Taro.navigateTo({
+      url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
+    })
+  }
 
   render() {
     const { images, description } = this.state.data;
@@ -693,7 +719,7 @@ export default class Group extends Component<Props>{
                             </View>
                           </View>
                           <View className="group_list_btnbox0" >
-                            <View className="group_list_btn0" onClick={this.payment2.bind(this, item.id)} >立即参团</View>
+                            <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
                           </View>
                         </View>
                       )
@@ -857,7 +883,7 @@ export default class Group extends Component<Props>{
                           </View>
                           <View className="group_list_name" >{item[0].real_name}</View>
                           <View className="group_list_btnbox" >
-                            <View className="group_list_btn" onClick={this.payment2.bind(this, item[0].id)} >立即参团</View>
+                            <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
                           </View>
                           <View className="group_list_timesbox" >
                             <View className="group_list_lack" >
@@ -877,7 +903,7 @@ export default class Group extends Component<Props>{
                             </View>
                             <View className="group_list_name" >{item[1].real_name}</View>
                             <View className="group_list_btnbox" >
-                              <View className="group_list_btn" onClick={this.payment2.bind(this, item[1].id)} >立即参团</View>
+                              <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)} >立即参团</View>
                             </View>
                             <View className="group_list_timesbox" >
                               <View className="group_list_lack" >
@@ -999,7 +1025,7 @@ export default class Group extends Component<Props>{
           </View>
 
           {
-            this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.payment.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.payment.bind(this)}>发起拼团</View>
+            this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>发起拼团</View>
           }
         </View>
 

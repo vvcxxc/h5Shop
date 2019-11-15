@@ -349,7 +349,7 @@ export default class Appre extends Component<Props>{
         if (_type == 1) {
           //微信支付
           window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', { 
+            'getBrandWCPayRequest', {
             "appId": res.data.appId,
             "timeStamp": res.data.timeStamp,
             "nonceStr": res.data.nonceStr,
@@ -431,6 +431,12 @@ export default class Appre extends Component<Props>{
           console.log(_type)
         }
       })
+  }
+
+  goToaConfirm = (e) => {
+    Taro.navigateTo({
+      url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
+    })
   }
 
   /**
@@ -617,7 +623,7 @@ export default class Appre extends Component<Props>{
             </View>
           </View>
         </View>
-        {
+        {/* {
           (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
             <View className='choosePostage' onClick={this.chooseGift}>
 
@@ -631,7 +637,7 @@ export default class Appre extends Component<Props>{
                 <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
               </View>
             </View>) : null
-        }
+        } */}
         <View className="paymoney_box">
           <View className="paymoney_price">
             <View className="paymoney_price_icon">￥</View>
@@ -648,7 +654,7 @@ export default class Appre extends Component<Props>{
             this.state.data.activity_time_status == 1 ? (
               <View className="paymoney_buynow_no">暂未开始</View>
             ) : this.state.data.activity_time_status == 2 ? (
-              <View className="paymoney_buynow" onClick={this.payment.bind(this)}>立即购买</View>
+              <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>立即购买</View>
             ) : this.state.data.activity_time_status == 3 ? (
               <View className="paymoney_buynow_no">已结束</View>
             ) : null
