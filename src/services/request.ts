@@ -63,7 +63,7 @@ export default function request(options: Options) {
             break
           default:
             Taro.showToast({
-              title: "unknow error",
+              title: "unknow error00",
               icon: "none"
             })
             break
@@ -98,7 +98,7 @@ export default function request(options: Options) {
             break
           default:
             Taro.showToast({
-              title: "unknow error",
+              title: "unknow error22",
               icon: "none"
             })
             break
