@@ -262,7 +262,6 @@ export default class EditorAddress extends Component {
             });
             let method, url;
             if (this.$router.params.type == 'useItemChange') {
-                console.log('44445')
                 method = 'put';
                 url = 'v3/address/' + this.$router.params.editorId;
             } else {
