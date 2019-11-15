@@ -150,6 +150,9 @@ export default class confirmAddress extends Component {
         if (this.state.giftChoice == true) {
             this.setState({ giftChoice: false })
         } else {
+            if ((!this.state.data.address || !this.state.data.address.detail) && this.state.data.youhui.gift_id) {
+                Taro.showToast({ title: '请添加收货地址后再提交', icon: 'none' })
+            }
             this.setState({ giftChoice: true, coinsChoice: false })
         }
     }
@@ -678,7 +681,7 @@ export default class confirmAddress extends Component {
                             <View className="group-msgbox-title-BOX">
                                 <View className="group-titlebox">
                                     <Image className="group-titlebox-storeicon" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/scSRkZHXxSj3z5jjaKWGzEPCX2cK524K.png" />
-                                    <View className="group_storename">{this.$router.params.storeName}</View>
+                                    <View className="group_storename">{decodeURIComponent(this.$router.params.storeName)}</View>
                                 </View>
                                 <View className="group-msgbox-icon">
                                     {/* <AtIcon className="msg_icon" value='chevron-right' color='#b5b5b5' size='30' /> */}
