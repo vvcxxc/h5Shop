@@ -30,31 +30,12 @@ export default function request(options: Options) {
     // options.success = (res) => resolve(res.data.data);
     // options.fail = (res) => reject(res);
 
-    Taro.showToast({
-      title: "test1:" + options.url,
-      icon: "none",
-      duration:5000
-    })
-
-
+    console.log('options', options)
     Taro.request({
       ...options,
       success(res) {
         const { statusCode, data } = res;
-
-
-
-        Taro.showToast({
-          title: "test2:" + res.statusCode,
-          icon: "none",
-          duration:5000
-        })
-        Taro.showToast({
-          title: "test3:" +res.data,
-          icon: "none",
-          duration:5000
-        })
-
+        console.log('res', statusCode, data)
         // console.log(res)
         switch (statusCode) {
 
