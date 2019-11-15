@@ -11,6 +11,7 @@ import "../src/styles/weui.scss"
 import './app.styl';
 import 'taro-ui/dist/style/index.scss';
 import request from './services/request';
+import Vconsole from 'vconsole'
 
 
 
@@ -153,6 +154,7 @@ class App extends Component {
 			]
 		}
 	};
+	const vConsole = new Vconsole()
 
 	defineApp: {
 		define: '22'
