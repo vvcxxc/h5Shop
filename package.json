@@ -48,6 +48,7 @@
     "js-cookie": "^2.2.1",
     "nerv-devtools": "^1.5.3",
     "nervjs": "^1.5.3",
+    "qrcode": "^1.4.4",
     "redux": "4.0.4",
     "redux-thunk": "^2.3.0",
     "taro-ui": "^2.2.4",
