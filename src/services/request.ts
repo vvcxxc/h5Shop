@@ -74,6 +74,7 @@ export default function request(options: Options) {
       },
       fail(err) {
         const { status, data } = err;
+        console.log('err', status, data)
         console.log(err)
         switch (status) {
           case SERVER_ERROR:
