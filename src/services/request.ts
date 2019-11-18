@@ -106,6 +106,5 @@ export default function request(options: Options) {
       }
     });
   });
-
 }
 
