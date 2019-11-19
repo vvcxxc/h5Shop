@@ -55,7 +55,7 @@ export default class Group extends Component<Props>{
       route: "",
       succeed_participate_number: 0,
       supplier_id: 0,
-      team_set_end_time:'',
+      team_set_end_time: '',
       tel: "",
       xpoint: '',
       youhui_id: 0,//活动id
@@ -798,7 +798,7 @@ export default class Group extends Component<Props>{
           <View className="group_head_bottom" style={{ borderBottom: "none" }}>
             {this.state.data.gift ? <View className="group_head_bottom_gift">送{this.state.data.gift.title}</View> : null}
             <View className="group_head_bottom_list">{this.state.data.number}人团</View>
-      <View className="group_head_bottom_list">{this.state.data.team_set_end_time}小时</View>
+            <View className="group_head_bottom_list">{this.state.data.team_set_end_time}小时</View>
           </View>
 
           {/* <View className="group_msg" >
@@ -858,27 +858,22 @@ export default class Group extends Component<Props>{
             </View>
           </View> : null
         }
-
         {
           this.state.data2.data && this.state.data2.data.length > 0 ? <View>
             <Swiper
               className='diu'
               vertical
-              interval={3000}
-              circular
+              interval={5000}
+              // circular
               skipHiddenItemLayout={true}
               autoplay
-              easingFunction={'easeOutCubic'}
-              // indicatorColor='#999'
-              // indicatorActiveColor='#333'
-              // indicatorDots
               onChange={(e) => {
-                this.setState({ currentPage: this.state.currentPage })
-                // console.log(e.detail.current, Math.ceil(this.state.data2.data.length / 2) - 1);
-                if (e.detail.current == Math.ceil(this.state.data2.data.length / 2) - 2) {
-                  // console.log(e.detail.current);
-                  e.detail.current = 0;
+                let current = e.detail.current;
+                if (e.detail.current == 0 || e.detail.current == Math.ceil(this.state.data2.data.length / 2) - 2 || e.detail.current == Math.ceil((Number(this.state.data2.data.length) + 1) / 2) - 2) {
+                  console.log(11)
+                  current = 0;
                 }
+                this.setState({ currentPage: current })
               }}
               current={this.state.currentPage}
             >
@@ -951,7 +946,7 @@ export default class Group extends Component<Props>{
           </View>
           <View className="appre_rule_time" >
             <View className="appre_rule_time_key" >时间限制:</View>
-      <View className="appre_rule_time_data" >{this.state.data.team_set_end_time}小时内</View>
+            <View className="appre_rule_time_data" >{this.state.data.team_set_end_time}小时内</View>
           </View>
           {
             (description) ?
