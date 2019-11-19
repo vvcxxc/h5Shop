@@ -1,0 +1,104 @@
+.at-tabs--vertical .at-tabs__header{
+    width: 0;
+    overflow: hidden;
+}
+.group_list {
+    height: 130px;
+    width: 100%;
+    padding: 30px 24px 20px 0;
+    border-bottom: 1px solid #ededed;
+    box-sizing: border-box;
+
+    .group_list_img {
+        height: 80px;
+        width: 80px;
+        border-radius: 40px;
+        float: left;
+        overflow: hidden;
+        margin-right: 20px;
+
+        .listImg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .group_list_name {
+        height: 80px;
+        width: 200px;
+        float: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .group_list_btnbox {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        float: right;
+
+        .group_list_btn {
+            font-size: 30px;
+            padding: 15px;
+            background: linear-gradient(90deg, #FE7450, #FF2614);
+            border-radius: 8px;
+            color: #fff;
+
+        }
+    }
+
+    .group_list_timesbox {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-right: 20px;
+        float: right;
+        font-size: 30px;
+
+        .group_list_lack {
+            height: 50px;
+            // width: 160px;
+            color: #313131;
+            display: flex;
+            flex-direction: row;
+
+            .group_list_lackredblack1 {
+                width: 65px;
+                text-align: right;
+            }
+
+            .group_list_lackred {
+                flex: 2;
+                color: #ff8576;
+                text-align: right;
+            }
+
+            .group_list_lackredblack2 {
+                width: 65px;
+                text-align: right;
+            }
+        }
+
+        .group_list_times {
+            height: 40px;
+            color: #666666;
+            text-align: right;
+
+            .at-countdown__time-box {
+                color: #666666;
+                font-size: 25px;
+                font-family: sans-serif;
+            }
+
+            .at-countdown__separator {
+                color: #666666;
+                font-size: 20px;
+                padding: 0 2px;
+            }
+        }
+
+    }
+}

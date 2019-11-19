@@ -13,6 +13,7 @@ import Zoom from '../../../components/zoom/index';
 import './index.scss';
 import { getTime } from '@/utils/common';
 import dayjs from 'dayjs'
+import Scrolltab from './scrollTab';
 
 interface Props {
   id: any;
@@ -77,6 +78,7 @@ export default class Group extends Component<Props>{
     currentPage: 0
   };
   componentDidShow() {
+    console.log('页面componentDidShow')
     this.toShare();
   }
   clearTimeOut = () => {
@@ -86,6 +88,9 @@ export default class Group extends Component<Props>{
     for (var i = start; i <= end; i++) {
       clearTimeout(i);
     }
+  }
+  componentWillReceiveProps(){
+    console.log('componentWillReceiveProps')
   }
   componentWillUnmount() {
     this.clearTimeOut();
@@ -860,84 +865,11 @@ export default class Group extends Component<Props>{
         }
         {
           this.state.data2.data && this.state.data2.data.length > 0 ? <View>
-            <Swiper
-              className='diu'
-              vertical
-              interval={5000}
-              // circular
-              skipHiddenItemLayout={true}
-              autoplay
-              onChange={(e) => {
-                let current = e.detail.current;
-                if (e.detail.current == 0 || e.detail.current == Math.ceil(this.state.data2.data.length / 2) - 2 || e.detail.current == Math.ceil((Number(this.state.data2.data.length) + 1) / 2) - 2) {
-                  console.log(11)
-                  current = 0;
-                }
-                this.setState({ currentPage: current })
-              }}
-              current={this.state.currentPage}
-            >
-              {
-                this.state.newGroupList.map((item: any, index) => {
-                  return (
-                    <SwiperItem>
-                      <View >
-                        <View className="group_list" >
-                          <View className="group_list_img" >
-                            <Image className="listImg" src={item[0].avatar} />
-                          </View>
-                          <View className="group_list_name" >{item[0].real_name}</View>
-                          <View className="group_list_btnbox" >
-                            <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
-                          </View>
-                          <View className="group_list_timesbox" >
-                            <View className="group_list_lack" >
-                              <View className="group_list_lackredblack1" >还差</View>
-                              <View className="group_list_lackred" >{item[0].number - item[0].participation_number}人</View>
-                              <View className="group_list_lackredblack2" >拼成</View>
-                            </View>
-                            <View className="group_list_times" >
-                              剩余{
-                                ((new Date(item[0].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
-                              } 小时
-                              {/* <TimeUp itemtime={item[0].activity_end_time} /> */}
-                            </View>
-                          </View>
-                        </View>
-                        {
-                          item[1] ? <View className="group_list" >
-                            <View className="group_list_img" >
-                              <Image className="listImg" src={item[1].avatar} />
-                            </View>
-                            <View className="group_list_name" >{item[1].real_name}</View>
-                            <View className="group_list_btnbox" >
-                              <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)} >立即参团</View>
-                            </View>
-                            <View className="group_list_timesbox" >
-                              <View className="group_list_lack" >
-                                <View className="group_list_lackredblack1" >还差</View>
-                                <View className="group_list_lackred" >{item[1].number - item[1].participation_number}人</View>
-                                <View className="group_list_lackredblack2" >拼成</View>
-                              </View>
-                              <View className="group_list_times" >
-                                剩余{
-                                  ((new Date(item[1].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
-                                } 小时
-                                {/* <TimeUp itemtime={item[1].activity_end_time} /> */}
-                              </View>
-                            </View>
-                          </View> : null
-                        }
-                      </View>
-                    </SwiperItem>
-                  )
-                })
-              }
-            </Swiper>
+            <View className='diu'>
+               <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name}/>
+            </View>
           </View> : null
         }
-
-
         <View className="appre_rule" >
           <View className="appre_rule_title" >使用规则</View>
           <View className="appre_rule_time" >

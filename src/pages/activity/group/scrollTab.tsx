@@ -1,0 +1,140 @@
+import Taro, { Component } from "@tarojs/taro";
+import { AtTabs, AtTabsPane } from 'taro-ui'
+import { View, Image, Swiper, SwiperItem, ScrollView } from "@tarojs/components";
+import './scrollTab.scss';
+import TimeUp from './TimeUp';
+
+interface Props {
+    tabList: Array<any>;
+    storeName?: any;
+}
+let timer;
+export default class Scrolltab extends Component<Props>{
+
+    componentDidMount() {
+        console.log('componentDidMount')
+        timer = setInterval(() => {
+            let tempPage = this.state.current == this.props.tabList.length - 1 ? 0 : this.state.current + 1;
+            this.setState({ current: tempPage })
+        }, 5000)
+    }
+    componentWillMount(){
+        console.log('componentWillMount')
+    }
+    componentDidShow() {
+        console.log('componentDidShow')
+        clearInterval(timer);
+        this.setState({current:0})
+        timer = setInterval(() => {
+            let tempPage = this.state.current == this.props.tabList.length - 1 ? 0 : this.state.current + 1;
+            this.setState({ current: tempPage })
+        }, 5000)
+    }
+    componentWillUnmount() {
+        console.log('componentWillUnmount')
+        clearInterval(timer);
+    }
+    componentDidHide(){
+        console.log('componentDidHide')
+    }
+    state = {
+        current: 0,
+        Ypoint: 0
+    }
+    handleClick(value) {
+        this.setState({
+            current: value
+        })
+    }
+    goToaConfirmAddGroup = (_id, e) => {
+        clearInterval(timer);
+        //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
+        Taro.navigateTo({
+            url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.props.storeName)
+        })
+    }
+    touchStart = (e) => {
+        // console.log(e.changedTouches[0].clientY)
+        this.setState({ Ypoint: e.changedTouches[0].clientY })
+    }
+    touchMove = (e) => {
+        // console.log(e.changedTouches[0].clientY)
+        if (e.changedTouches[0].clientY > this.state.Ypoint) {
+            this.setState({ current: this.state.current - 1 })
+        } else if (this.state.current < this.props.tabList.length - 1) {
+            this.setState({ current: this.state.current + 1 })
+        }
+    }
+    render() {
+        return (
+            <div className="scrolltab" onTouchStart={this.touchStart.bind(this)} onTouchMove={this.touchMove.bind(this)}>
+                <AtTabs
+                    current={this.state.current}
+                    scroll
+                    height='200px'
+                    tabDirection='vertical'
+                    tabList={[]}
+                    onClick={() => { }}>
+                    {
+                        this.props.tabList.map((item: any, index) => {
+                            return (
+                                <AtTabsPane tabDirection='vertical' current={this.state.current} index={index}>
+                                    <View >
+                                        <View className="group_list" >
+                                            <View className="group_list_img" >
+                                                <Image className="listImg" src={item[0].avatar} />
+                                            </View>
+                                            <View className="group_list_name" >{item[0].real_name}</View>
+                                            <View className="group_list_btnbox" >
+                                                <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                                            </View>
+                                            <View className="group_list_timesbox" >
+                                                <View className="group_list_lack" >
+                                                    <View className="group_list_lackredblack1" >还差</View>
+                                                    <View className="group_list_lackred" >{item[0].number - item[0].participation_number}人</View>
+                                                    <View className="group_list_lackredblack2" >拼成</View>
+                                                </View>
+                                                <View className="group_list_times" >
+                                                    {/* 剩余{
+                                                        ((new Date(item[0].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
+                                                    } 小时 */}
+                                                    <TimeUp itemtime={item[0].activity_end_time} />
+                                                </View>
+                                            </View>
+                                        </View>
+                                        {
+                                            item[1] ? <View className="group_list" >
+                                                <View className="group_list_img" >
+                                                    <Image className="listImg" src={item[1].avatar} />
+                                                </View>
+                                                <View className="group_list_name" >{item[1].real_name}</View>
+                                                <View className="group_list_btnbox" >
+                                                    <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >立即参团</View>
+                                                </View>
+                                                <View className="group_list_timesbox" >
+                                                    <View className="group_list_lack" >
+                                                        <View className="group_list_lackredblack1" >还差</View>
+                                                        <View className="group_list_lackred" >{item[1].number - item[1].participation_number}人</View>
+                                                        <View className="group_list_lackredblack2" >拼成</View>
+                                                    </View>
+                                                    <View className="group_list_times" >
+                                                        {/* 剩余{
+                                                            ((new Date(item[1].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
+                                                        } 小时 */}
+                                                        <TimeUp itemtime={item[1].activity_end_time} />
+                                                    </View>
+                                                </View>
+                                            </View> : null
+                                        }
+                                    </View>
+                                </AtTabsPane>
+
+                            )
+                        })
+                    }
+
+                </AtTabs>
+            </div>
+        );
+    }
+}
