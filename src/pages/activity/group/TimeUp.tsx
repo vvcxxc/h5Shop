@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { getTime } from '@/utils/common';
-import dayjs from 'dayjs'
+
 interface Props {
     itemtime: any
 }
@@ -43,9 +43,7 @@ export default class TimeUp extends Component<Props>{
         } else {
             timer = setTimeout(() => {
                 clearTimeout(timer);
-                let times = dayjs(this.props.itemtime).endOf('day')
-                let time = getTime(new Date(times.$d).getTime() / 1000);
-                // console.log(new Date(this.props.itemtime).getTime() / 1000)
+                let time = getTime(new Date(this.props.itemtime).getTime() / 1000);
                 this.setState({
                     time
                 })

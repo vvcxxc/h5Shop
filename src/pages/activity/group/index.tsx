@@ -11,6 +11,8 @@ import AddressImg from '../../../assets/address.png';
 import MobileImg from '../../../assets/dianhua.png';
 import Zoom from '../../../components/zoom/index';
 import './index.scss';
+import { getTime } from '@/utils/common';
+import dayjs from 'dayjs'
 
 interface Props {
   id: any;
@@ -53,6 +55,7 @@ export default class Group extends Component<Props>{
       route: "",
       succeed_participate_number: 0,
       supplier_id: 0,
+      team_set_end_time:'',
       tel: "",
       xpoint: '',
       youhui_id: 0,//活动id
@@ -684,6 +687,16 @@ export default class Group extends Component<Props>{
     })
   }
 
+  setTime = (_time, e) => {
+    console.log('settime')
+    let timer = setInterval(() => {
+      let times = dayjs(_time).endOf('day')
+      let time = getTime(new Date(times.$d).getTime() / 1000);
+      if (time.display <= 0) { clearInterval(timer); this.setState({ date: '已结束' }); return } else {
+        this.setState({ date: time.date })
+      }
+    }, 1000)
+  }
   render() {
     const { images, description } = this.state.data;
     return (
@@ -785,7 +798,7 @@ export default class Group extends Component<Props>{
           <View className="group_head_bottom" style={{ borderBottom: "none" }}>
             {this.state.data.gift ? <View className="group_head_bottom_gift">送{this.state.data.gift.title}</View> : null}
             <View className="group_head_bottom_list">{this.state.data.number}人团</View>
-            {/* <View className="group_head_bottom_list">24小时</View> */}
+      <View className="group_head_bottom_list">{this.state.data.team_set_end_time}小时</View>
           </View>
 
           {/* <View className="group_msg" >
@@ -841,13 +854,10 @@ export default class Group extends Component<Props>{
           this.state.data2.data && this.state.data2.data.length > 0 ? <View className="group_num" >
             <View className="group_num_titlebox" >
               <View className="group_num_title" >{this.state.data2.total}人正在拼</View>
-              {
-                this.state.data2.data && this.state.data2.data.length > 2 ? <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View> : null
-              }
+              <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>
             </View>
           </View> : null
         }
-
 
         {
           this.state.data2.data && this.state.data2.data.length > 0 ? <View>
@@ -892,7 +902,10 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackredblack2" >拼成</View>
                             </View>
                             <View className="group_list_times" >
-                              <TimeUp itemtime={item[0].activity_end_time} />
+                              剩余{
+                                ((new Date(item[0].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
+                              } 小时
+                              {/* <TimeUp itemtime={item[0].activity_end_time} /> */}
                             </View>
                           </View>
                         </View>
@@ -912,7 +925,10 @@ export default class Group extends Component<Props>{
                                 <View className="group_list_lackredblack2" >拼成</View>
                               </View>
                               <View className="group_list_times" >
-                                <TimeUp itemtime={item[1].activity_end_time} />
+                                剩余{
+                                  ((new Date(item[1].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
+                                } 小时
+                                {/* <TimeUp itemtime={item[1].activity_end_time} /> */}
                               </View>
                             </View>
                           </View> : null
@@ -927,19 +943,16 @@ export default class Group extends Component<Props>{
         }
 
 
-
-
-
         <View className="appre_rule" >
           <View className="appre_rule_title" >使用规则</View>
           <View className="appre_rule_time" >
             <View className="appre_rule_time_key" >拼团人数:</View>
             <View className="appre_rule_time_data" >{this.state.data.number}人团</View>
           </View>
-          {/* <View className="appre_rule_time" >
+          <View className="appre_rule_time" >
             <View className="appre_rule_time_key" >时间限制:</View>
-            <View className="appre_rule_time_data" >24小时内</View>
-          </View> */}
+      <View className="appre_rule_time_data" >{this.state.data.team_set_end_time}小时内</View>
+          </View>
           {
             (description) ?
               <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "2.5rem") }}>
