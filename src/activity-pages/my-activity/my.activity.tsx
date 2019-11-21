@@ -7,6 +7,7 @@ import ActivityAppreciation from "./components/order.component"
 import ActivityGroup from "./types/activity.group"
 import Tab from "@/activity-pages/components/tab/tab"
 import "./style.styl"
+import TuxedoInformation from "./components/Tuxedo_information"
 
 interface MyActivityProp {
   current?: number;
@@ -103,11 +104,13 @@ export default class MyActivity extends Component<MyActivityProp> {
                           onAction={this.handleAction}
                         />
                       </View>
-                    : <ActivityGroup
-                        key={index}
-                        data={item}
-                        onAction={this.handleAction}
-                      />
+                    : 
+                    <TuxedoInformation/>
+                    // <ActivityGroup
+                    //     key={index}
+                    //     data={item}
+                    //     onAction={this.handleAction}
+                    //   />
                 })
               }
             </View>
