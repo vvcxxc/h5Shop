@@ -95,24 +95,20 @@ export default class MyActivity extends Component<MyActivityProp> {
           <ScrollView scrollY className="container-wrapper">
             <View className="container">
               {
-                list.map((item, index) => {
-                  return current === 0
-                    ? <View className="activity-appreciation">
+                current == 0 && list.map((item, index) => {
+                  return <View className="activity-appreciation">
                         <ActivityAppreciation
                           key={index}
                           data={item}
                           onAction={this.handleAction}
                         />
                       </View>
-                    : 
-                    <TuxedoInformation/>
-                    // <ActivityGroup
-                    //     key={index}
-                    //     data={item}
-                    //     onAction={this.handleAction}
-                    //   />
                 })
               }
+              {
+                current === 1?<TuxedoInformation/>:null
+              }
+             
             </View>
           </ScrollView>
         </View>
