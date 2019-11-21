@@ -12,17 +12,13 @@ let timer;
 export default class Scrolltab extends Component<Props>{
 
     componentDidMount() {
-        console.log('componentDidMount')
         timer = setInterval(() => {
             let tempPage = this.state.current == this.props.tabList.length - 1 ? 0 : this.state.current + 1;
             this.setState({ current: tempPage })
         }, 5000)
     }
-    componentWillMount(){
-        console.log('componentWillMount')
-    }
+ 
     componentDidShow() {
-        console.log('componentDidShow')
         clearInterval(timer);
         this.setState({current:0})
         timer = setInterval(() => {
@@ -31,11 +27,7 @@ export default class Scrolltab extends Component<Props>{
         }, 5000)
     }
     componentWillUnmount() {
-        console.log('componentWillUnmount')
         clearInterval(timer);
-    }
-    componentDidHide(){
-        console.log('componentDidHide')
     }
     state = {
         current: 0,
