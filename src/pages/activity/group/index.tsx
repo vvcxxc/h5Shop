@@ -733,7 +733,7 @@ export default class Group extends Component<Props>{
                               <View className="group_list_lackredblack20" >拼成</View>
                             </View>
                             <View className="group_list_times0" >
-                              <TimeUp itemtime={item.activity_end_time} />
+                              <TimeUp itemtime={item.end_at} />
                             </View>
                           </View>
                           <View className="group_list_btnbox0" >

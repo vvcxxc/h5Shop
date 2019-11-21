@@ -90,7 +90,7 @@ export default class Scrolltab extends Component<Props>{
                                                     {/* 剩余{
                                                         ((new Date(item[0].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
                                                     } 小时 */}
-                                                    <TimeUp itemtime={item[0].activity_end_time} />
+                                                    <TimeUp itemtime={item[0].end_at} />
                                                 </View>
                                             </View>
                                         </View>
@@ -113,7 +113,7 @@ export default class Scrolltab extends Component<Props>{
                                                         {/* 剩余{
                                                             ((new Date(item[1].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
                                                         } 小时 */}
-                                                        <TimeUp itemtime={item[1].activity_end_time} />
+                                                        <TimeUp itemtime={item[1].end_at} />
                                                     </View>
                                                 </View>
                                             </View> : null
