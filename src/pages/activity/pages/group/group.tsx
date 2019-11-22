@@ -22,7 +22,7 @@ import { ACTION_JUMP, ACTION_USE, ACTION_VIEW, ACTION_CLOSE } from "@/utils/cons
 import Coupon from "@/components/coupon/coupon"
 import Qrcode from "@/components/qrcode/qrcode"
 import wx from 'weixin-js-sdk';
-
+import dayjs from 'dayjs'
 
 interface State {
   basicinfo: any;
@@ -236,9 +236,11 @@ export default class Group extends Component {
       gift_id
     }
     const { data } = await getGiftinfo(params)
-    this.setState({
-      giftBasicInfo: data
-    })
+    if(data){
+      this.setState({
+        giftBasicInfo: data
+      })
+    }
   }
 
   /**
@@ -249,6 +251,7 @@ export default class Group extends Component {
       group_id: id
     }
     const { data } = await getCouponinforForGroup(params)
+    console.log(data)
     const { gift_id = "", activity_id = "" } = data
     this.fetchGiftinfo(gift_id, activity_id)
     this.handleCalculate(data)
@@ -287,13 +290,14 @@ export default class Group extends Component {
    * 定时
    */
   setTime = () => {
+    let times = dayjs(this.state.basicinfo.end_at).unix()
     if(this.state.time.display <= 0){
       clearTimeout(timer2)
       return
     }else{
       timer2 = setTimeout(()=>{
        clearTimeout(timer)
-       let time = getTime(this.state.basicinfo.activity_end_time)
+       let time = getTime(times)
        this.setState({
          time
        })
