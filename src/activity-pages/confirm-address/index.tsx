@@ -204,6 +204,7 @@ export default class confirmAddress extends Component {
         } else {
             Taro.showToast({ title: "网页类型出错", icon: "none" });
         }
+        let that = this;
         if (this.$router.params.activityType == '1') {
             //1增值activityType == '1'
             if (_type == 1) {
@@ -594,11 +595,12 @@ export default class confirmAddress extends Component {
                             "paySign": res.data.paySign
                         },
                             function (res) {
-                                console.log('参团微信支付成功',res, this.$router.params.groupId)
+                              console.log('参团微信支付成功', that.$router.params.groupId)
+                              console.log('res',res)
                                 //微信支付成功
                                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                                     Taro.navigateTo({
-                                        url: '/pages/activity/pages/group/group?id=' + this.$router.params.groupId,
+                                        url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
                                         // url: '/activity-pages/my-activity/my.activity',
                                         success: function (e) {
                                             let page = Taro.getCurrentPages().pop();
@@ -619,7 +621,7 @@ export default class confirmAddress extends Component {
                             //支付宝支付成功
                             if (res.resultCode === "9000") {
                                 Taro.navigateTo({
-                                    url: '/pages/activity/pages/group/group?id=' + this.$router.params.groupId,
+                                    url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
                                     // url: '/activity-pages/my-activity/my.activity',
                                     success: function (e) {
                                         let page = Taro.getCurrentPages().pop();
