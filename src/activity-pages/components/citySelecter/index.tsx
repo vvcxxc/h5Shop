@@ -4,6 +4,7 @@ import { View, Input, Textarea } from "@tarojs/components";
 import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 import dataCity from "./dataCity2"
+import iNoBounce from 'inobounce/inobounce';
 
 interface Props {
     getCity: (any) => any;
@@ -29,6 +30,11 @@ export default class CitySelecter extends Component<Props> {
 
 
     componentDidMount() {
+        let u = navigator.userAgent
+        if (u.indexOf('iPhone') > -1) {
+            console.log('iNoBounce',iNoBounce)
+            iNoBounce.enable()
+        }
         let shen: Array<any> = [];
         dataCity.cityData.map((item: any) => {
             shen.push(item);

@@ -6,6 +6,9 @@ import "taro-ui/dist/style/components/toast.scss";
 // import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
 import CitySelecter from "../components/citySelecter/index"
+import iNoBounce from 'inobounce/inobounce';
+
+
 export default class EditorAddress extends Component {
     config = {
         navigationBarTitleText: "我的收货地址"
@@ -27,6 +30,13 @@ export default class EditorAddress extends Component {
 
 
     componentDidMount() {
+
+        let u = navigator.userAgent
+        if (u.indexOf('iPhone') > -1) {
+            console.log('iNoBounce',iNoBounce)
+            iNoBounce.enable()
+        }
+
         console.log(this.$router.params);
         if (this.$router.params.type == "editorItem" || this.$router.params.type == "useItemChange") {
             Taro.showLoading({
