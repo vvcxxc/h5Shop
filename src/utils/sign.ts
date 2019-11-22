@@ -16,7 +16,7 @@ export const Login = () => {
       return
     }
 
-    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NzQzODk1NDksImV4cCI6MTU3NDM5NTU0OSwibmJmIjoxNTc0Mzg5NTQ5LCJqdGkiOiJLT3lGQ0N6UDZJUWhyaEJPIiwic3ViIjo2ODQwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.iXy1fi1N4Hno4gcgwEgMGezn7ZmjfszpqhPeXbfAgic')
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NzQ0MDMxNzgsImV4cCI6MTU3NDc2MzE3OCwibmJmIjoxNTc0NDAzMTc4LCJqdGkiOiJWV2tMY090UXhLM1o5VGE0Iiwic3ViIjo2ODQwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.M0QRJNB9KEe0u6TUEpaqL4FEZqTdlo04sKvuFrMs1ic')
 
   }else{
     if (type == 'wechat'){
