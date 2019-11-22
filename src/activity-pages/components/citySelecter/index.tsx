@@ -188,6 +188,16 @@ export default class CitySelecter extends Component<Props> {
                         }
                     </View>
                     <View className="city-background-box">
+                        {/* <View className="city-notice">
+                            {
+                                this.state.currentIndex == 0 ? <View className="city-notice-info"> 选择省/区域</View> : (
+                                    this.state.currentIndex == 1 ? <View className="city-notice-info"> 选择市</View> :
+                                        <View className="city-notice-info"> 选择区</View>
+                                )
+                            }
+
+                        </View> */}
+                        <View className="city-selecter-box-select-msgBox">
                         <View className="city-notice">
                             {
                                 this.state.currentIndex == 0 ? <View className="city-notice-info"> 选择省/区域</View> : (
@@ -197,7 +207,6 @@ export default class CitySelecter extends Component<Props> {
                             }
 
                         </View>
-                        <View className="city-selecter-box-select-msgBox">
                             {
                                 this.state.dataList.map((item: any, index: any) => {
                                     return (

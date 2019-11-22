@@ -3,7 +3,7 @@
     height: 100%;
 
     .city-selecter-title-box {
-        height: 12%;
+        height:8%;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -89,14 +89,31 @@
         }
 
         .city-selecter-box-select-msgBox {
-            height: 84%;
+            height: 100%;
             width: 100%;
             overflow-y: scroll;
             overflow-x: hidden;
 
+            .city-notice {
+                height: 10%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-items: flex-start;
+    
+                .city-notice-info {
+                    line-height: 1;
+                    font-size: 30px;
+                    color: #999999;
+                    text-align: left;
+                }
+    
+            }
+
             .map-info {
                 height: 105px;
-                width: 100%;
+                width: 90%;
                 text-align: left;
                 font-weight: bold;
                 font-size: 30px;
