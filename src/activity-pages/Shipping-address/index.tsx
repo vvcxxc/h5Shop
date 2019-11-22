@@ -5,6 +5,7 @@ import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
+import iNoBounce from '@/utils/inobouce';
 
 interface Props {
   store_id: any;

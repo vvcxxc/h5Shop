@@ -6,7 +6,7 @@ import "taro-ui/dist/style/components/toast.scss";
 // import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
 import CitySelecter from "../components/citySelecter/index"
-import iNoBounce from 'inobounce/inobounce';
+import iNoBounce from '@/utils/inobouce';
 
 
 export default class EditorAddress extends Component {
