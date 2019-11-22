@@ -56,7 +56,6 @@ export default class Activity extends Component<any>  {
   }
 
   onReachBottom() {
-    console.log('saddasdasd')
     const { current, flag } = this.state;
     if(!this.state.dataList.length){
       console.log('禁止触底')
