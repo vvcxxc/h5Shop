@@ -6,6 +6,7 @@ import TimeUp from '../../../../pages/activity/group/TimeUp'
 import wx from 'weixin-js-sdk';
 import QRCode from 'qrcode'
 import { AtCurtain, AtButton } from 'taro-ui'
+import { Block, View, Image, Text, Button } from "@tarojs/components"
 
 interface Props {
   // list: any
@@ -34,23 +35,22 @@ export default class TuxedoInformation extends Component<Props> {
   }
 
   // 未开团人数头像显示
-  for_data = (list: Array<string>, length: number) => {
+  for_data = (list: Array<string>, length: number,people:number) => {
     let total: any = []
     list.map((item2: any, index2: number) => {
-      total.push(<div
+      total.push(<View
         className={index2 == 0 ? '' : 'tuxedo_people'} style={{ zIndex: 6 - index2 }}>
-        <div className="user_head">
-          <img src={item2} alt="" />
-        </div>
-        {index2 == 0 ? <span>团长</span> : null}
-      </div>)
+        <View className="user_head">
+          <Image src={item2} />
+        </View>
+        {index2 == 0 ? <Text>团长</Text> : null}
+      </View>)
     })
-
-    for (let i = 0; i < length; i++) {
+     for (let i = 0; i < length; i++) {
       total.push(
-        <div className="no_user_head " style={{ zIndex: 5 - length - i }}>
-          <img src={require('../../../../assets/problem.png')} alt="" />
-        </div>
+        <View className="no_user_head " style={{ zIndex: 4 - people-i }}>
+          <Image src={require('../../../../assets/problem.png')}/>
+        </View>
       )
     }
     if (total.length >= 5) total.length = 5
@@ -106,24 +106,24 @@ export default class TuxedoInformation extends Component<Props> {
   render() {
     const { listData } = this.state
     return (
-      <div className="tuxedo_box">
+      <View id="tuxedo_box">
         {
           listData.map((item: any, index: number) => {
-            return <div className="message" >
-              <div className="tuxedo_title" onClick={this.shopDetails.bind(this, item.location_id)}>
-                <img src={require('../../../../assets/shop_head.png')} alt="" />
-                <div className="title_right" >{item.supplier_name}
-                </div>
-              </div>
-              <div className="tuxedo_content" onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
-                <div className="message_left">
-                  <img src={item.image} alt="" />
-                </div>
-                <div className="message_right">
-                  <div className="full_name">
-                    <span>{item.name}</span>
-                  </div>
-                  <div className="residue_time">
+            return <View className="message" >
+              <View className="tuxedo_title" onClick={this.shopDetails.bind(this, item.location_id)}>
+                <Image src={require('../../../../assets/shop_head.png')}  />
+                <View className="title_right" >{item.supplier_name}
+                </View>
+              </View>
+              <View className="tuxedo_content" onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
+                <View className="message_left">
+                  <Image src={item.image}  />
+                </View>
+                <View className="message_right">
+                  <View className="full_name">
+                    <Text>{item.name}</Text>
+                  </View>
+                  <View className="residue_time">
                     {
                       item.end_at == '' &&
                         item.number !==
@@ -132,7 +132,7 @@ export default class TuxedoInformation extends Component<Props> {
                         item.number !==
                         item.participation_number && new Date(item.end_at).getTime()
                         <= new Date().getTime()
-                        ? <span className="failure">拼团失败</span> : null
+                        ? <Text className="failure">拼团失败</Text> : null
                     }
                     {
                       item.end_at == '' &&
@@ -141,72 +141,72 @@ export default class TuxedoInformation extends Component<Props> {
                         ||
                         item.number ==
                         item.participation_number && new Date(item.end_at).getTime()
-                        <= new Date().getTime() ? <span>拼团成功</span> : null
+                        <= new Date().getTime() ? <Text>拼团成功</Text> : null
                     }
 
                     {
                       item.number !==
                         item.participation_number && new Date(item.end_at).getTime()
-                        > new Date().getTime() ? <span>剩余时间</span> : null
+                        > new Date().getTime() ? <Text>剩余时间</Text> : null
                     }
                     {
                       item.number !==
                         item.participation_number && new Date(item.end_at).getTime()
-                        > new Date().getTime() ? <TimeUp itemtime={item.active_end_time} /> : null
+                        > new Date().getTime() ? <TimeUp itemtime={item.end_at} /> : null
                     }
-                  </div>
-                  <div className="group">
-                    <div className="group_left">
-                      <img src={item.cover_image} alt="" />
-                    </div>
-                    <div className="group_right">
-                      <div className="original_price">原价：￥{item.pay_money}</div>
-                      <div className="group_price">
-                        <span>拼团价：</span>
-                        <span>￥{item.participation_money}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="foot">
-                <div className="left">
+                  </View>
+                  <View className="group">
+                    <View className="group_left">
+                      <Image src={item.cover_image}  />
+                    </View>
+                    <View className="group_right">
+                      <View className="original_price">原价：￥{item.pay_money}</View>
+                      <View className="group_price">
+                        <Text>拼团价：</Text>
+                        <Text>￥{item.participation_money}</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View className="foot">
+                <View className="left">
                   {
-                    this.for_data(item.head_list, item.number)
+                    this.for_data(item.head_list, item.number - item.participation_number, item.participation_number)
                   }
-                </div>
-                <div className="right">
+                </View>
+                <View className="right">
                   {
                     item.number !==
                       item.participation_number && new Date(item.end_at).getTime()
-                      > new Date().getTime() ? <div className="invite" onClick={this.routerShare.bind(this,item.id)}>邀好友参团</div> : null
+                      > new Date().getTime() ? <View className="invite" onClick={this.routerShare.bind(this,item.id)}>邀好友参团</View> : null
                   }
 
                   {
                     item.number ==
                       item.participation_number &&
                       new Date(item.youhui_end_time).getTime()
-                      > new Date().getTime() ? <div className="userCoupon" onClick={this.userCard.bind(this,item.qr_code)}>使用卡券</div> : null
+                      > new Date().getTime() ? <View className="userCoupon" onClick={this.userCard.bind(this,item.qr_code)}>使用卡券</View> : null
                   }
 
 
                   {
                     item.end_at == '' || item.number == item.participation_number
                       && new Date(item.youhui_end_time).getTime()
-                      <= new Date().getTime() ? <div className="userCoupon">已过期</div> : null
+                      <= new Date().getTime() ? <View className="userCoupon">已过期</View> : null
                   }
 
                   {
                     new Date(item.youhui_end_time).getTime() > new Date().getTime() &&
                       (item.number !== item.participation_number ||
                         new Date(item.end_at).getTime() >= new Date().getTime())
-                      ? <div className="userCoupon"
-                        onClick={this.againGroup.bind(this,item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</div> : null
+                      ? <View className="userCoupon"
+                        onClick={this.againGroup.bind(this,item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   }
 
-                </div>
-              </div>
-            </div>
+                </View>
+              </View>
+            </View>
           })
         }
 
@@ -214,15 +214,15 @@ export default class TuxedoInformation extends Component<Props> {
           isOpened={this.state.isOpened}
           onClose={this.onClose.bind(this)}
         >
-          <div >
-            <div className="user_prompt">商家扫码/输码验证即可消费</div>
-            <img
+          <View >
+            <View className="user_prompt">商家扫码/输码验证即可消费</View>
+            <Image
               src={this.state.codeImg}
             />
-          </div>
+          </View>
         </AtCurtain>
 
-      </div>
+      </View>
     )
   }
 }
