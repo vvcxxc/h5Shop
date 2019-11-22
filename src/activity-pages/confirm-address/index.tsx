@@ -502,10 +502,13 @@ export default class confirmAddress extends Component {
                 })
 
         } else if (this.$router.params.activityType == '55') {
+          console.log('参团')
             //参团activityType == '55'
             if (_type == 1) {
+              console.log('参团--微信浏览器')
                 //参团--微信浏览器
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
+                  console.log('参团--微信浏览器--有选礼品')
                     //参团--微信浏览器--有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -518,6 +521,7 @@ export default class confirmAddress extends Component {
                         number: 1,
                     }
                 } else {
+                  console.log('参团--微信浏览器--没有选礼品')
                     //参团--微信浏览器--没有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -532,6 +536,7 @@ export default class confirmAddress extends Component {
             } else {
                 //参团--支付宝浏览器
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
+                  console.log('参团--支付宝浏览器--有选礼品')
                     //参团--支付宝浏览器--有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -544,6 +549,7 @@ export default class confirmAddress extends Component {
                     }
                 } else {
                     //参团--支付宝浏览器--没有选礼品
+                    console.log('参团--支付宝浏览器--没有选礼品')
                     datas = {
                         public_type_id: this.$router.params.groupId,
                         activity_id: this.state.data.youhui.activity_id,
@@ -554,6 +560,7 @@ export default class confirmAddress extends Component {
                     }
                 }
             }
+            console.log('请求支付属性',datas)
             //请求支付属性
             request({
                 url: 'payCentre/toWxPay',
@@ -577,6 +584,7 @@ export default class confirmAddress extends Component {
                             "paySign": res.data.paySign
                         },
                             function (res) {
+                              console.log('参团微信支付成功', this.$router.params.groupId)
                                 //微信支付成功
                                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                                     Taro.navigateTo({
