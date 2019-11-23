@@ -257,7 +257,6 @@ export default class confirmAddress extends Component {
                 }
             }
             //请求支付属性
-            console.log('增值请求支付属性', datas)
             request({
                 url: 'v1/youhui/wxXcxuWechatPay',
                 method: "POST",
@@ -282,7 +281,6 @@ export default class confirmAddress extends Component {
                         },
                             function (res) {
                                 //微信支付成功
-                                console.log('微信支付成功', res)
                                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                                     Taro.showLoading({
                                         title: 'loading',
@@ -408,7 +406,6 @@ export default class confirmAddress extends Component {
                 }
             }
             //请求支付属性
-            console.log('开团请求支付属性', datas)
             request({
                 url: 'payCentre/toWxPay',
                 method: "POST",
@@ -418,7 +415,6 @@ export default class confirmAddress extends Component {
                 data: JSON.stringify(datas)
             })
                 .then((res: any) => {
-                    console.log('res,接着微信支付', res)
                     Taro.hideLoading();
                     let order_sn = res.channel_order_sn;//比增值少一层data
                     if (_type == 1) {
@@ -516,8 +512,6 @@ export default class confirmAddress extends Component {
                 //参团--微信浏览器
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
                     console.log('参团--微信浏览器--有选礼品')
-                    console.log('open_id:', Cookie.get(process.env.OPEN_ID))
-                    console.log('unionid:', Cookie.get(process.env.UNION_ID))
                     //参团--微信浏览器--有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -531,8 +525,6 @@ export default class confirmAddress extends Component {
                     }
                 } else {
                     console.log('参团--微信浏览器--没有选礼品')
-                    console.log('open_id:', Cookie.get(process.env.OPEN_ID))
-                    console.log('unionid:', Cookie.get(process.env.UNION_ID))
                     //参团--微信浏览器--没有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -571,7 +563,6 @@ export default class confirmAddress extends Component {
                     }
                 }
             }
-            console.log('请求支付属性', datas)
             //请求支付属性
             request({
                 url: 'payCentre/toWxPay',
@@ -585,7 +576,6 @@ export default class confirmAddress extends Component {
                     Taro.hideLoading();
                     if (_type == 1) {
                         //微信支付
-                        console.log('开始微信支付',res)
                         window.WeixinJSBridge.invoke(
                             'getBrandWCPayRequest', {
                             "appId": res.data.appId,
@@ -596,8 +586,6 @@ export default class confirmAddress extends Component {
                             "paySign": res.data.paySign
                         },
                             function (res) {
-                              console.log('参团微信支付成功', that.$router.params.groupId)
-                              console.log('res',res)
                                 //微信支付成功
                                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                                     Taro.navigateTo({
