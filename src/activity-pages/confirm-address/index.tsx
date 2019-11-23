@@ -43,7 +43,8 @@ export default class confirmAddress extends Component {
                 total_fee: 0,
                 youhuiHour: '',
                 participation_number: 0
-            }
+            },
+            team_set_end_time:''
         }
     };
 
@@ -715,7 +716,7 @@ export default class confirmAddress extends Component {
                                     <View className="group-msgbox-content-name">{this.state.data.youhui.name}</View>
                                     <View className="group-msgbox-label-box">
                                         <View className="group-msgbox-label">{this.state.data.youhui.participation_number}人团</View>
-                                        <View className="group-msgbox-label">{this.state.data.youhui.youhuiHour}小时</View>
+                                        <View className="group-msgbox-label">{this.state.data.team_set_end_time}小时</View>
                                     </View>
                                 </View>
                             </View>

@@ -36,6 +36,7 @@ export default class ShippingAddress extends Component<Props> {
 
   };
 
+
   componentWillUnmount() {
     Taro.removeStorage({ key: 'cityList' })
   }
@@ -55,6 +56,12 @@ export default class ShippingAddress extends Component<Props> {
   }
 
   componentDidShow() {
+    let u = navigator.userAgent
+    if (u.indexOf('iPhone') > -1) {
+        console.log('iNoBounce',iNoBounce)
+        iNoBounce.enable()
+    }
+
     Taro.showLoading({
       title: ""
     });
