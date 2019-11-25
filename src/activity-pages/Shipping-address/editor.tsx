@@ -25,7 +25,7 @@ export default class EditorAddress extends Component {
         toastShow: false,
         toastInfo: '',
         tempCityInfo: '',
-        actionsheetShow: true,
+        actionsheetShow: false,
     };
 
     componentDidShow() {
