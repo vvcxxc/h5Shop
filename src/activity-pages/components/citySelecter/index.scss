@@ -2,9 +2,11 @@
     width: 100%;
     height: 100%;
     overflow: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     position: relative;
-    padding-top: 315px;
+    padding-top: 215px;
+
     padding-left: 24px;
     box-sizing: border-box;
 
@@ -12,7 +14,8 @@
         position: fixed;
         top: 25vh;
         left: 0;
-        height: 315px;
+        // height: 315px;
+        height: 215px;
         width: 100%;
         background: #fff;
         z-index: 6;
@@ -93,6 +96,24 @@
                 text-align: left;
             }
 
+        }
+
+    }
+
+    .city-notice {
+        height: 110px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-items: flex-start;
+        padding-left: 24px;
+
+        .city-notice-info {
+            line-height: 1;
+            font-size: 30px;
+            color: #999999;
+            text-align: left;
         }
 
     }

@@ -7,10 +7,18 @@
     img {
       height: 350px;
     }
-    .user_prompt{
-      color: #fff;
-      margin-bottom: 20px;
+    .user_prompt_box{
+      .user_prompt{
+        color: #fff;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .taro-img {
+        height: auto;
+        width: 400px;
+      }
     }
+    
     .at-curtain{
       background-color:rgba(0, 0, 0, 0.7) !important
     }
@@ -204,7 +212,7 @@
     padding-right: 22px;
     display: flex;
     align-items: center;
-    .invite {
+    div {
       width:150px;
       height:52px;
       display: flex;
@@ -213,25 +221,20 @@
       font-size:24px;
       font-family:Source Han Sans CN;
       font-weight:400;
-      color:rgba(255,255,255,1);
       border-radius:5px;
-      background:linear-gradient(-150deg,#ff2514,#fe7651);
       margin-left: 21px;
     }
-    .userCoupon {
-      margin-left: 15px;
-      width:150px;
-      height:52px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size:24px;
-      font-family:Source Han Sans CN;
-      font-weight:400;
+    .invite{
       color:rgba(255,255,255,1);
-      border-radius:5px;
+      background:linear-gradient(-150deg,#ff2514,#fe7651);
+    }
+    .userCoupon{
+      color:rgba(255,255,255,1);
       background:linear-gradient(-150deg,#ffb413,#ff6003)
     }
-
+    .invalid{
+      color:#ccc;
+      background-color: #666;
+    }
   }
 }

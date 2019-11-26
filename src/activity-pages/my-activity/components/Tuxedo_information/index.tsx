@@ -22,16 +22,25 @@ export default class TuxedoInformation extends Component<Props> {
 
   }
 
-  componentDidMount() {
-    request({
+  componentDidMount = async () => {
+    this.clearTimeOut()
+    await request({
       url: 'api/wap/user/getMeGroupList',
       method: "GET"
     })
       .then((res: any) => {
-        const { data, code } = res
-        if (code !== 200) return
-        this.setState({ listData: res.data })
+        if (res.code === 200) {
+          this.setState({ listData: res.data })
+        }
       })
+  }
+  clearTimeOut = () => {
+    console.log('清除计时器');
+    var end = setTimeout(function () { }, 1);
+    var start = (end - 100) > 0 ? end - 100 : 0;
+    for (var i = start; i <= end; i++) {
+      clearTimeout(i);
+    }
   }
 
   // 未开团人数头像显示
@@ -125,29 +134,23 @@ export default class TuxedoInformation extends Component<Props> {
                   </View>
                   <View className="residue_time">
                     {
-                      item.end_at == '' &&
-                        item.number !==
-                        item.participation_number
-                        ||
-                        item.number !==
-                        item.participation_number && new Date(item.end_at).getTime()
-                        <= new Date().getTime()
-                        ? <Text className="failure">拼团失败</Text> : null
+                      // item.number //参与总人数
+                      // item.participation_number //实际参与人数
+                      //item.end_at //开团结束时间 团的过期时间
+
                     }
                     {
-                      item.end_at == '' &&
-                        item.number ==
-                        item.participation_number
-                        ||
-                        item.number ==
-                        item.participation_number && new Date(item.end_at).getTime()
-                        <= new Date().getTime() ? <Text>拼团成功</Text> : null
+                      item.end_at == '' && item.number !== item.participation_number || item.number !== item.participation_number && new Date(item.end_at).getTime()
+                        <= new Date().getTime() ? <View className="failure">拼团失败</View> : null
+                    }
+                    {
+                      item.number === item.participation_number ? <View>拼团成功</View> : null
                     }
 
                     {
                       item.number !==
                         item.participation_number && new Date(item.end_at).getTime()
-                        > new Date().getTime() ? <Text>剩余时间</Text> : null
+                        > new Date().getTime() ? <View>剩余时间</View> : null
                     }
                     {
                       item.number !==
@@ -188,22 +191,20 @@ export default class TuxedoInformation extends Component<Props> {
                       new Date(item.youhui_end_time).getTime()
                       > new Date().getTime() ? <View className="userCoupon" onClick={this.userCard.bind(this, item.qr_code)}>使用卡券</View> : null
                   }
-
-
                   {
                     item.end_at == '' || item.number == item.participation_number
                       && new Date(item.youhui_end_time).getTime()
-                      <= new Date().getTime() ? <View className="userCoupon">卡券已过期</View> : null
+                      <= new Date().getTime() ? <View className="invalid" onClick={this.userCard.bind(this, item.qr_code)}>卡券已过期</View> : null
                   }
 
                   {
+                    new Date(item.active_end_time).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
+
+                  }
+                  {
                     // 活动未成团 ， 且在有效期内， 应只显示邀好友参团 
-                    item.number === item.participation_number //人数相等
-                      &&
-                      new Date(item.active_end_time).getTime() > new Date().getTime()//活动时间大于当前时间
-                      ?
-                      <View className="userCoupon"
-                        onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
+                    item.number === item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() ? <View className="userCoupon"
+                      onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   }
 
                 </View>
@@ -216,7 +217,7 @@ export default class TuxedoInformation extends Component<Props> {
           isOpened={this.state.isOpened}
           onClose={this.onClose.bind(this)}
         >
-          <View >
+          <View className="user_prompt_box">
             <View className="user_prompt">商家扫码/输码验证即可消费</View>
             <Image
               src={this.state.codeImg}
