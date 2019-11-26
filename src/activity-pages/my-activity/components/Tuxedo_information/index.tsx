@@ -194,7 +194,7 @@ export default class TuxedoInformation extends Component<Props> {
                   {
                     item.end_at == '' || item.number == item.participation_number
                       && new Date(item.youhui_end_time).getTime()
-                      <= new Date().getTime() ? <View className="invalid" onClick={this.userCard.bind(this, item.qr_code)}>卡券已过期</View> : null
+                      <= new Date().getTime() ? <View className="invalid">卡券已过期</View> : null
                   }
 
                   {
