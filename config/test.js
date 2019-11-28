@@ -3,7 +3,7 @@ module.exports = {
     NODE_ENV: '"test"',
     // BASIC_API: '"https://api.tdianyi.com/"',
     UNION_ID: '"unionid"',
-    BASIC_API: '"http://test.api.tdianyi.com/"',
+    // BASIC_API: '"http://test.api.tdianyi.com/"',
     // OPEN_ID: '"test_open_id"',
     // TOKEN: '"test_token_auth"',
     // ALIPAY_USER_ID:'"test_alipay_user_id"',
