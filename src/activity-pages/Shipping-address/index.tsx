@@ -75,7 +75,6 @@ export default class ShippingAddress extends Component<Props> {
       })
   }
 
-
   editorAddress = (query: any) => {
     Taro.navigateTo({
       url: '/activity-pages/Shipping-address/editor?type=editorItem&editorId=' + query

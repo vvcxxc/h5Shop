@@ -29,7 +29,6 @@ export default class CitySelecter extends Component<Props> {
 
 
     componentDidMount() {
-        console.log('更新构建')
         let shen: Array<any> = [];
         dataCity.cityData.map((item: any) => {
             shen.push(item);
