@@ -208,8 +208,7 @@ export default class TuxedoInformation extends Component<Props> {
                   } */}
                   {
 
-                    item.number > item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() && new Date(item.end_at).getTime()
-                      > new Date().getTime() ? <View className="userCoupon"
+                    item.number > item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() && new Date(item.end_at).getTime() < new Date().getTime() ? <View className="userCoupon"
                         onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   }
 
