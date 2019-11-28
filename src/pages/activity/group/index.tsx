@@ -75,7 +75,8 @@ export default class Group extends Component<Props>{
     isFromShare: false,
     groupListShow: false,
     groupListPages: 1,
-    currentPage: 0
+    currentPage: 0,
+    allowGroup: ''
   };
   componentDidShow() {
     console.log('页面componentDidShow')
@@ -143,6 +144,11 @@ export default class Group extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
+
+              let new_time = new Date().getTime()//ql
+              new Date(res.data.activity_end_time).getTime() < new_time ? this.setState({ allowGroup: '已结束' }) : null
+              new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
+
               this.setState({ data: res.data }, () => {
                 this.toShare();
               });
@@ -974,8 +980,17 @@ export default class Group extends Component<Props>{
             }
           </View>
 
+
           {
-            this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>发起拼团</View>
+            this.state.allowGroup ?
+              <View className="paymoney_buynow" id="prohibit">
+                {this.state.allowGroup}
+              </View> :
+              <View className="paymoney_buynow" id="allow" onClick={this.goToaConfirm.bind(this)}>
+                {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}
+              </View>
+
+            // this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>发起拼团</View>
           }
         </View>
 
