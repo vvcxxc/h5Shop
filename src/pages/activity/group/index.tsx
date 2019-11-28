@@ -530,7 +530,7 @@ export default class Group extends Component<Props>{
       })
   }
 
-  payment2(_groupid, e) {
+  payment2(_groupid) {
     Taro.showLoading({
       title: 'loading',
     })
@@ -670,26 +670,33 @@ export default class Group extends Component<Props>{
     }
   }
   goToaConfirm = (e) => {
-    this.clearTimeOut();
-    if (this.$router.params.type == '5') {
-      //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
-      Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
-      })
-    } else if (this.$router.params.type == '55') {
-      //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
-      Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.state.data.youhui_id + '&groupId=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
-      })
+    if (this.state.data.gift_id) {
+      this.clearTimeOut();
+      if (this.$router.params.type == '5') {
+        //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+        Taro.navigateTo({
+          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+        })
+      } else if (this.$router.params.type == '55') {
+        //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
+        Taro.navigateTo({
+          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.state.data.youhui_id + '&groupId=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+        })
+      }
+    } else {
+      this.payment();
     }
-
   }
   goToaConfirmAddGroup = (_id, e) => {
-    this.clearTimeOut();
-    //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
-    Taro.navigateTo({
-      url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
-    })
+    if (this.state.data.gift_id) {
+      this.clearTimeOut();
+      //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
+      Taro.navigateTo({
+        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
+      })
+    } else {
+      this.payment2(_id);
+    }
   }
 
   setTime = (_time, e) => {
