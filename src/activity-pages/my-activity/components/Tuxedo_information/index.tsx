@@ -201,10 +201,16 @@ export default class TuxedoInformation extends Component<Props> {
                     new Date(item.active_end_time).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
 
                   }
-                  {
+                  {/* {
                     // 活动未成团 ， 且在有效期内， 应只显示邀好友参团 
                     item.number === item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() ? <View className="userCoupon"
                       onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
+                  } */}
+                  {
+
+                    item.number > item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() && new Date(item.end_at).getTime()
+                      > new Date().getTime() ? <View className="userCoupon"
+                        onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   }
 
                 </View>
