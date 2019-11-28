@@ -17,10 +17,10 @@ export default class Scrolltab extends Component<Props>{
             this.setState({ current: tempPage })
         }, 5000)
     }
- 
+
     componentDidShow() {
         clearInterval(timer);
-        this.setState({current:0})
+        this.setState({ current: 0 })
         timer = setInterval(() => {
             let tempPage = this.state.current == this.props.tabList.length - 1 ? 0 : this.state.current + 1;
             this.setState({ current: tempPage })
@@ -78,7 +78,10 @@ export default class Scrolltab extends Component<Props>{
                                             </View>
                                             <View className="group_list_name" >{item[0].real_name}</View>
                                             <View className="group_list_btnbox" >
-                                                <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                                                {
+                                                    item[1].is_team ? <View className="group_list_btn" style={{ background: '#666666' }}  >已经参团</View> :
+                                                        <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                                                }
                                             </View>
                                             <View className="group_list_timesbox" >
                                                 <View className="group_list_lack" >
@@ -101,7 +104,10 @@ export default class Scrolltab extends Component<Props>{
                                                 </View>
                                                 <View className="group_list_name" >{item[1].real_name}</View>
                                                 <View className="group_list_btnbox" >
-                                                    <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >立即参团</View>
+                                                    {
+                                                        item[1].is_team ? <View className="group_list_btn" style={{ background: '#666666' }} >已经参团</View> :
+                                                            <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >立即参团</View>
+                                                    }
                                                 </View>
                                                 <View className="group_list_timesbox" >
                                                     <View className="group_list_lack" >

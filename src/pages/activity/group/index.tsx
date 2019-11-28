@@ -89,7 +89,7 @@ export default class Group extends Component<Props>{
       clearTimeout(i);
     }
   }
-  componentWillReceiveProps(){
+  componentWillReceiveProps() {
     console.log('componentWillReceiveProps')
   }
   componentWillUnmount() {
@@ -737,7 +737,10 @@ export default class Group extends Component<Props>{
                             </View>
                           </View>
                           <View className="group_list_btnbox0" >
-                            <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
+                            {
+                              item.is_team ? <View className="group_list_btn0" style={{ background: '#666666' }} >已经参团</View>
+                                : <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
+                            }
                           </View>
                         </View>
                       )
@@ -866,7 +869,7 @@ export default class Group extends Component<Props>{
         {
           this.state.data2.data && this.state.data2.data.length > 0 ? <View>
             <View className='diu'>
-               <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name}/>
+              <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name} />
             </View>
           </View> : null
         }
