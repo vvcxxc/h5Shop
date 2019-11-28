@@ -5,6 +5,7 @@ import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
+import iNoBounce from '@/utils/inobouce';
 
 interface Props {
   store_id: any;
@@ -35,6 +36,7 @@ export default class ShippingAddress extends Component<Props> {
 
   };
 
+
   componentWillUnmount() {
     Taro.removeStorage({ key: 'cityList' })
   }
@@ -54,6 +56,12 @@ export default class ShippingAddress extends Component<Props> {
   }
 
   componentDidShow() {
+    let u = navigator.userAgent
+    if (u.indexOf('iPhone') > -1) {
+        console.log('iNoBounce',iNoBounce)
+        iNoBounce.enable()
+    }
+
     Taro.showLoading({
       title: ""
     });

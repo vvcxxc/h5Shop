@@ -43,7 +43,8 @@ export default class confirmAddress extends Component {
                 total_fee: 0,
                 youhuiHour: '',
                 participation_number: 0
-            }
+            },
+            team_set_end_time:''
         }
     };
 
@@ -92,60 +93,60 @@ export default class confirmAddress extends Component {
 
         }
     }
-    componentDidMount() {
-        console.log(this.$router.params);
-        Taro.showLoading({
-            title: ""
-        });
-        let data;
-        if (this.$router.params.address_id) {
-            data = { youhui_id: this.$router.params.id, address_id: this.$router.params.address_id }
-        } else {
-            data = { youhui_id: this.$router.params.id }
-        }
-        if (this.$router.params.activityType == '1') {
-            request({
-                url: 'api/wap/user/appreciation/appreciationOrderInfo',
-                method: "GET",
-                data: data
-            }).then((res: any) => {
-                if (res.code == 200) {
-                    Taro.hideLoading();
-                    this.setState({ data: res.data })
-                } else {
-                    Taro.hideLoading();
-                    Taro.showToast({ title: '加载失败', icon: 'none' })
-                }
+    // componentDidMount() {
+    //     console.log(this.$router.params);
+    //     Taro.showLoading({
+    //         title: ""
+    //     });
+    //     let data;
+    //     if (this.$router.params.address_id) {
+    //         data = { youhui_id: this.$router.params.id, address_id: this.$router.params.address_id }
+    //     } else {
+    //         data = { youhui_id: this.$router.params.id }
+    //     }
+    //     if (this.$router.params.activityType == '1') {
+    //         request({
+    //             url: 'api/wap/user/appreciation/appreciationOrderInfo',
+    //             method: "GET",
+    //             data: data
+    //         }).then((res: any) => {
+    //             if (res.code == 200) {
+    //                 Taro.hideLoading();
+    //                 this.setState({ data: res.data })
+    //             } else {
+    //                 Taro.hideLoading();
+    //                 Taro.showToast({ title: '加载失败', icon: 'none' })
+    //             }
 
-            }).catch((err) => {
-                Taro.hideLoading();
-                console.log(err);
-                Taro.showToast({ title: '加载失败', icon: 'none' })
-            })
+    //         }).catch((err) => {
+    //             Taro.hideLoading();
+    //             console.log(err);
+    //             Taro.showToast({ title: '加载失败', icon: 'none' })
+    //         })
 
-        } else {
-            request({
-                url: 'api/wap/user/groupOrderInfo',
-                method: "GET",
-                data: data
-            }).then((res: any) => {
-                if (res.code == 200) {
-                    Taro.hideLoading();
-                    console.log(res)
-                    this.setState({ data: res.data })
-                } else {
-                    Taro.hideLoading();
-                    Taro.showToast({ title: '加载失败', icon: 'none' })
-                }
+    //     } else {
+    //         request({
+    //             url: 'api/wap/user/groupOrderInfo',
+    //             method: "GET",
+    //             data: data
+    //         }).then((res: any) => {
+    //             if (res.code == 200) {
+    //                 Taro.hideLoading();
+    //                 console.log(res)
+    //                 this.setState({ data: res.data })
+    //             } else {
+    //                 Taro.hideLoading();
+    //                 Taro.showToast({ title: '加载失败', icon: 'none' })
+    //             }
 
-            }).catch((err) => {
-                Taro.hideLoading();
-                console.log(err);
-                Taro.showToast({ title: '加载失败', icon: 'none' })
-            })
+    //         }).catch((err) => {
+    //             Taro.hideLoading();
+    //             console.log(err);
+    //             Taro.showToast({ title: '加载失败', icon: 'none' })
+    //         })
 
-        }
-    }
+    //     }
+    // }
     clickGift = (e) => {
         if (this.state.giftChoice == true) {
             this.setState({ giftChoice: false })
@@ -204,10 +205,12 @@ export default class confirmAddress extends Component {
         } else {
             Taro.showToast({ title: "网页类型出错", icon: "none" });
         }
+        let that = this;
         if (this.$router.params.activityType == '1') {
             //1增值activityType == '1'
             if (_type == 1) {
                 //增值--微信浏览器
+                console.log('增值--微信浏览器')
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
                     //增值--微信浏览器--有选礼品
                     datas = {
@@ -502,10 +505,13 @@ export default class confirmAddress extends Component {
                 })
 
         } else if (this.$router.params.activityType == '55') {
+            console.log('参团')
             //参团activityType == '55'
             if (_type == 1) {
+                console.log('参团--微信浏览器')
                 //参团--微信浏览器
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
+                    console.log('参团--微信浏览器--有选礼品')
                     //参团--微信浏览器--有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -518,6 +524,7 @@ export default class confirmAddress extends Component {
                         number: 1,
                     }
                 } else {
+                    console.log('参团--微信浏览器--没有选礼品')
                     //参团--微信浏览器--没有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -532,6 +539,7 @@ export default class confirmAddress extends Component {
             } else {
                 //参团--支付宝浏览器
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
+                    console.log('参团--支付宝浏览器--有选礼品')
                     //参团--支付宝浏览器--有选礼品
                     datas = {
                         public_type_id: this.$router.params.groupId,
@@ -544,6 +552,7 @@ export default class confirmAddress extends Component {
                     }
                 } else {
                     //参团--支付宝浏览器--没有选礼品
+                    console.log('参团--支付宝浏览器--没有选礼品')
                     datas = {
                         public_type_id: this.$router.params.groupId,
                         activity_id: this.state.data.youhui.activity_id,
@@ -580,7 +589,7 @@ export default class confirmAddress extends Component {
                                 //微信支付成功
                                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                                     Taro.navigateTo({
-                                        url: '/pages/activity/pages/group/group?id=' + this.$router.params.groupId,
+                                        url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
                                         // url: '/activity-pages/my-activity/my.activity',
                                         success: function (e) {
                                             let page = Taro.getCurrentPages().pop();
@@ -601,7 +610,7 @@ export default class confirmAddress extends Component {
                             //支付宝支付成功
                             if (res.resultCode === "9000") {
                                 Taro.navigateTo({
-                                    url: '/pages/activity/pages/group/group?id=' + this.$router.params.groupId,
+                                    url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
                                     // url: '/activity-pages/my-activity/my.activity',
                                     success: function (e) {
                                         let page = Taro.getCurrentPages().pop();
@@ -695,7 +704,7 @@ export default class confirmAddress extends Component {
                                     <View className="group-msgbox-content-name">{this.state.data.youhui.name}</View>
                                     <View className="group-msgbox-label-box">
                                         <View className="group-msgbox-label">{this.state.data.youhui.participation_number}人团</View>
-                                        <View className="group-msgbox-label">{this.state.data.youhui.youhuiHour}小时</View>
+                                        <View className="group-msgbox-label">{this.state.data.team_set_end_time}小时</View>
                                     </View>
                                 </View>
                             </View>

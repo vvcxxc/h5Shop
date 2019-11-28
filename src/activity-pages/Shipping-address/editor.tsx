@@ -1,11 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon, AtToast, AtActionSheet, AtActionSheetItem } from "taro-ui"
+import { AtIcon, AtToast, AtActionSheet } from "taro-ui"
 import { View, Input, Textarea } from "@tarojs/components";
 import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 // import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
 import CitySelecter from "../components/citySelecter/index"
+import iNoBounce from '@/utils/inobouce';
+
+
 export default class EditorAddress extends Component {
     config = {
         navigationBarTitleText: "我的收货地址"
@@ -24,6 +27,14 @@ export default class EditorAddress extends Component {
         tempCityInfo: '',
         actionsheetShow: false,
     };
+
+    componentDidShow() {
+        let u = navigator.userAgent
+        if (u.indexOf('iPhone') > -1) {
+            console.log('iNoBounce', iNoBounce)
+            iNoBounce.enable()
+        }
+    }
 
 
     componentDidMount() {
@@ -326,8 +337,7 @@ export default class EditorAddress extends Component {
                     </View> : null
                 }
 
-
-                <View className="content-editor" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation() }} >
+                <View className="content-editor" onClick={(e) => { e.stopPropagation() }} >
                     <View className="editor-box">
                         <View className="editor-box_left">收件人:</View>
                         <Input className="editor-box_input"
@@ -377,7 +387,6 @@ export default class EditorAddress extends Component {
                             ></View>
                         </View>
                     </View>
-                    {/* 1：editorItem:编辑地址，2：addItem：添加地址，3、4：useItem、useItemChange:隔壁chooseAddress过来的,保存使用地址 */}
                     {
                         this.$router.params.type == "editorItem" ? <View className="bottom_btn_box_z2">
                             <View className="bottom_btn_submit_z2" onClick={this.changeAddressItem.bind(this)}>保存</View>
@@ -403,11 +412,20 @@ export default class EditorAddress extends Component {
                 }
 
 
-                <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
+                {/* <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
                     <View className="AtActionSheetBox">
                         <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                     </View>
-                </AtActionSheet>
+                </AtActionSheet> */}
+                
+                {
+                    this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
+                        <View className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
+                            <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
+                        </View>
+                    </View> : null
+
+                }
 
             </View>
         );

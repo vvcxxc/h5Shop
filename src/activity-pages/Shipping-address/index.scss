@@ -1,11 +1,7 @@
 .Shipping-address {
-  min-height: 100vh;
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  padding-bottom: 150px;
-  position: fixed;
-  top: 0;
-  left: 0;
+  // padding-bottom: 150px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 
@@ -134,7 +130,7 @@
     background: #fff;
     height: auto;
     width: 100%;
-    padding: 0 25px 25px;
+    padding: 0 25px 180px;
     box-sizing: border-box;
 
 
@@ -277,10 +273,10 @@
 
   .content-editor {
     width: 100%;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
+    height: 100%;
+    // position: fixed;
+    // left: 0;
+    // top: 0;
     // z-index: 3;
     padding: 0 24px;
     box-sizing: border-box;
@@ -542,14 +538,44 @@
     background: unset;
   }
 
-  .AtActionSheetBox {
+  .AtActionSheetBox-content {
+
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw;
-    height: 75vh;
-    background: #fff;
-    box-sizing: border-box;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    height: 100vh;
+    background: rgba(0, 0, 0, .7);
+    z-index: 2;
+
+
+    
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: flex-end;
+
+    .AtActionSheetBox {
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+      height: 75vh;
+      background: #fff;
+      box-sizing: border-box;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 
+}
 
+.action_sheet_show {
+  height: 75vh;
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
