@@ -20,8 +20,8 @@ export default class TicketBuy extends Component {
   };
 
   state = {
-    yPoint: 0,
-    xPoint: 0,
+    yPoint: '',
+    xPoint: '',
     keepCollect_data: "",
     //表面收藏
     keepCollect_bull: false,
@@ -132,41 +132,36 @@ export default class TicketBuy extends Component {
           }, 2000)
         });
     }).catch(err => {
-      this.setState({
-        yPoint: '',
-        xPoint: ''
-      }, () => {
-        request({
-          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
-        })
-          .then((res: any) => {
-            console.log(res);
-            if (res.code != 200) {
-              Taro.hideLoading()
-              Taro.showToast({ title: '信息错误', icon: 'none' })
-              setTimeout(() => {
-                Taro.navigateBack({
-                })
-              }, 2000)
-            }
-            this.setState({
-              coupon: res.data.info.coupon,
-              store: res.data.info.store,
-              goods_album: res.data.info.goods_album,
-              recommend: res.data.recommend.data
-            }, () => {
-              this.toShare();
-            })
+      request({
+        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
+      })
+        .then((res: any) => {
+          console.log(res);
+          if (res.code != 200) {
             Taro.hideLoading()
-          }).catch(function (error) {
-            Taro.hideLoading()
-            Taro.showToast({ title: '数据请求失败', icon: 'none' })
+            Taro.showToast({ title: '信息错误', icon: 'none' })
             setTimeout(() => {
               Taro.navigateBack({
               })
             }, 2000)
-          });
-      })
+          }
+          this.setState({
+            coupon: res.data.info.coupon,
+            store: res.data.info.store,
+            goods_album: res.data.info.goods_album,
+            recommend: res.data.recommend.data
+          }, () => {
+            this.toShare();
+          })
+          Taro.hideLoading()
+        }).catch(function (error) {
+          Taro.hideLoading()
+          Taro.showToast({ title: '数据请求失败', icon: 'none' })
+          setTimeout(() => {
+            Taro.navigateBack({
+            })
+          }, 2000)
+        });
     })
   }
 

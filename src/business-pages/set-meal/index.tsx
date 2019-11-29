@@ -18,8 +18,8 @@ export default class SetMeal extends Component {
   };
 
   state = {
-    yPoint: 0,
-    xPoint: 0,
+    yPoint: '',
+    xPoint: '',
     keepCollect_data: "",
     //表面收藏
     keepCollect_bull: false,
@@ -132,12 +132,8 @@ export default class SetMeal extends Component {
           }, 2000)
         });
     }).catch(err => {
-      this.setState({
-        yPoint: '',
-        xPoint: ''
-      }, () => {
         request({
-          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
+          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
         })
           .then((res: any) => {
             console.log(res);
@@ -166,7 +162,6 @@ export default class SetMeal extends Component {
               })
             }, 2000)
           });
-      })
     })
   }
 
