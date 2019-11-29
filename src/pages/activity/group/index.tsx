@@ -751,7 +751,7 @@ export default class Group extends Component<Props>{
                           </View>
                           <View className="group_list_btnbox0" >
                             {
-                              item.is_team ? <View className="group_list_btn0" style={{ background: '#666666' }} >已经参团</View>
+                              item.is_team ? <View className="group_list_btn0" style={{ background: '#999999' }} >您已参团</View>
                                 : <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
                             }
                           </View>
