@@ -109,7 +109,7 @@ export default class PaySuccess extends Component<Props> {
         begin_time: "",
         brief: "",
         end_time: "",
-        id: 1590,
+        id: 0,
         image: "",
         list_brief: "",
         name: "",
@@ -150,8 +150,10 @@ export default class PaySuccess extends Component<Props> {
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
       }, () => {
+        console.log('坐标:', this.state.xPoint, this.state.yPoint)
         request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
           .then((res: any) => {
+            console.log('res',res)
             if (res.code == 200) {
               that.setState({
                 business_list: res.data.store.Info,
@@ -182,12 +184,14 @@ export default class PaySuccess extends Component<Props> {
           })
       })
     }).catch(err => {
+      console.log('获取坐标失败')
       this.setState({
         yPoint: '',
         xPoint: ''
       }, () => {
         request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
           .then((res: any) => {
+            console.log('res',res)
             if (res.code == 200) {
               that.setState({
                 business_list: res.data.store.Info,
@@ -248,7 +252,7 @@ export default class PaySuccess extends Component<Props> {
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
-              console.log("分享成功")
+              // console.log("分享成功")
             }
           })
         })
@@ -258,7 +262,6 @@ export default class PaySuccess extends Component<Props> {
 
   //去拼团活动
   gotoGroup(_id, gift_id, activity_id) {
-    console.log('zhelia ')
     Taro.navigateTo({
       url: '/pages/activity/group/index?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
       // url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
@@ -266,10 +269,8 @@ export default class PaySuccess extends Component<Props> {
   }
   // 去增值活动
   gotoAppreciation(_id, gift_id, activity_id) {
-    console.log('增值')
     Taro.navigateTo({
       url: '/pages/activity/appreciation/index?id=' + _id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
-      // url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   //现金券详情
@@ -437,11 +438,11 @@ export default class PaySuccess extends Component<Props> {
               <Image className="iconImg" src="https://tmwl-supplier.oss-cn-shenzhen.aliyuncs.com/static/ping.png" />
               <Text className="fwb" >拼团送豪礼</Text>
             </View>
-            <View className="hidden-box" id="hidden-box" style={{background:"#fff",width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
+            <View className="hidden-box" id="hidden-box" style={{ background: "#fff", width: "100%", overflow: "hidden", height: this.state.activity_group_bull ? "auto" : "9rem" }}>
               {
                 this.state.activity_group.map((item) => (
                   <View className="group-purchase _pintuan" key={item.name}>
-                    <View style={{ height: "5px",background:"#fff"}}></View>
+                    <View style={{ height: "5px", background: "#fff" }}></View>
                     <View className="hd">
                       <View className="flex center tuan" style={{ paddingBottom: "10px" }}>
                         <View className="item desc">{item.name}</View>
