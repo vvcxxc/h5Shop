@@ -25,8 +25,8 @@ export default class Group extends Component<Props>{
     ruleMore: false,
     imgZoom: false,
     imgZoomSrc: '',
-    xPoint: 0,
-    yPoint: 0,
+    xPoint: '',
+    yPoint: '',
     imagesCurrent: 0,
     data: {
       activity_begin_time: "",
