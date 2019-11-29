@@ -9,6 +9,7 @@ interface Props {
     storeName?: any;
 }
 let timer;
+let timeout;
 export default class Scrolltab extends Component<Props>{
 
     componentDidMount() {
@@ -50,12 +51,15 @@ export default class Scrolltab extends Component<Props>{
         this.setState({ Ypoint: e.changedTouches[0].clientY })
     }
     touchMove = (e) => {
-        // console.log(e.changedTouches[0].clientY)
-        if (e.changedTouches[0].clientY > this.state.Ypoint) {
-            this.setState({ current: this.state.current - 1 })
-        } else if (this.state.current < this.props.tabList.length - 1) {
-            this.setState({ current: this.state.current + 1 })
-        }
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            // console.log(e.changedTouches[0].clientY)
+            if (e.changedTouches[0].clientY > this.state.Ypoint) {
+                this.setState({ current: this.state.current - 1 })
+            } else if (this.state.current < this.props.tabList.length - 1) {
+                this.setState({ current: this.state.current + 1 })
+            }
+        }, 3000);
     }
     render() {
         return (
