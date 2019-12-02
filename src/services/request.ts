@@ -33,7 +33,6 @@ export default function request(options: Options) {
       ...options,
       success(res) {
         const { statusCode, data } = res;
-        // console.log(res)
         switch (statusCode) {
 
           case SERVER_ERROR:
@@ -71,7 +70,8 @@ export default function request(options: Options) {
       },
       fail(err) {
         const { status, data } = err;
-        console.log(err)
+        console.log(41234123)
+        console.log(status)
         switch (status) {
           case SERVER_ERROR:
             Taro.showToast({
