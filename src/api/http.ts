@@ -81,8 +81,40 @@ const http = (params: Params): Promise<any> => {
         }
       },
       fail(error) {
-        console.log(error)
-        Taro.hideLoading();
+        const { status, data } = error;
+        console.log(41234123)
+        console.log(status)
+        switch (status) {
+          case SERVER_ERROR:
+            Taro.showToast({
+              title: 'server error :d',
+              icon: 'none'
+            })
+            break
+          case FETCH_BAD:
+            console.log(FETCH_BAD)
+            Taro.showToast({
+              title: data.message || "bad request",
+              icon: "none"
+            })
+            break
+          case NOT_SIGN:
+            console.log('没有登录')
+            Login();
+            return reject(new Error('--- no Sign ---'))
+          case NOT_FIND:
+            Taro.showToast({
+              title: "not find",
+              icon: "none"
+            })
+            break
+          default:
+            Taro.showToast({
+              title: "unknow error",
+              icon: "none"
+            })
+            break
+        }
       }
     })
   })
