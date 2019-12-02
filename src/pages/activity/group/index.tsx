@@ -433,7 +433,7 @@ export default class Group extends Component<Props>{
               function (res) {
                 //微信支付成功
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  if (_temptype == 5) {
+                  if (_temptype == '5') {
                     //开团要得到开团活动id再跳转活动详情
                     Taro.showLoading({
                       title: 'loading',
@@ -460,7 +460,7 @@ export default class Group extends Component<Props>{
                         }
                       })
                     }, 1000);
-                  } else if (_temptype == 55) {
+                  } else if (_temptype ==' 55') {
                     Taro.navigateTo({
                       url: '/pages/activity/pages/group/group?id=' + _tempid,
                       success: () => {
@@ -486,7 +486,7 @@ export default class Group extends Component<Props>{
             }, res => {
               //支付宝支付成功
               if (res.resultCode === "9000") {
-                if (_temptype == 5) {
+                if (_temptype == '5') {
                   //开团要得到开团活动id再跳转活动详情
                   Taro.showLoading({
                     title: 'loading',
@@ -513,7 +513,7 @@ export default class Group extends Component<Props>{
                       }
                     })
                   }, 1000);
-                } else if (_temptype == 55) {
+                } else if (_temptype == '55') {
                   Taro.navigateTo({
                     url: '/pages/activity/pages/group/group?id=' + _tempid,
                     success: () => {
@@ -724,7 +724,7 @@ export default class Group extends Component<Props>{
     }, 1000)
   }
   render() {
-    const { images, description } = this.state.data;
+    const { description } = this.state.data;
     return (
       <View className="d_appre" >
         {
