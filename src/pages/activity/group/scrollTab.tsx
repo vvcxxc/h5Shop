@@ -83,7 +83,7 @@ export default class Scrolltab extends Component<Props>{
                                             <View className="group_list_name" >{item[0].real_name}</View>
                                             <View className="group_list_btnbox" >
                                                 {
-                                                    item[1].is_team ? <View className="group_list_btn" style={{ background: '#999999' }}  >您已参团</View> :
+                                                    item[0].is_team ? <View className="group_list_btn" style={{ background: '#999999' }}  >您已参团</View> :
                                                         <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
                                                 }
                                             </View>
@@ -94,9 +94,6 @@ export default class Scrolltab extends Component<Props>{
                                                     <View className="group_list_lackredblack2" >拼成</View>
                                                 </View>
                                                 <View className="group_list_times" >
-                                                    {/* 剩余{
-                                                        ((new Date(item[0].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
-                                                    } 小时 */}
                                                     <TimeUp itemtime={item[0].end_at} />
                                                 </View>
                                             </View>
@@ -109,7 +106,7 @@ export default class Scrolltab extends Component<Props>{
                                                 <View className="group_list_name" >{item[1].real_name}</View>
                                                 <View className="group_list_btnbox" >
                                                     {
-                                                        item[1].is_team ? <View className="group_list_btn" style={{ background: '#999999' }} >您已参团</View> :
+                                                        item[1]&&item[1].is_team ? <View className="group_list_btn" style={{ background: '#999999' }} >您已参团</View> :
                                                             <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >立即参团</View>
                                                     }
                                                 </View>
@@ -120,9 +117,6 @@ export default class Scrolltab extends Component<Props>{
                                                         <View className="group_list_lackredblack2" >拼成</View>
                                                     </View>
                                                     <View className="group_list_times" >
-                                                        {/* 剩余{
-                                                            ((new Date(item[1].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
-                                                        } 小时 */}
                                                         <TimeUp itemtime={item[1].end_at} />
                                                     </View>
                                                 </View>
