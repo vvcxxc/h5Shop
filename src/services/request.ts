@@ -88,7 +88,7 @@ export default function request(options: Options) {
             break
           case NOT_SIGN:
             console.log('没有登录')
-            // Login();
+            Login();
             return reject(new Error('--- no Sign ---'))
           case NOT_FIND:
             Taro.showToast({
