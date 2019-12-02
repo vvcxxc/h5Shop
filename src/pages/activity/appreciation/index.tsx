@@ -344,22 +344,62 @@ export default class Appre extends Component<Props>{
       data: JSON.stringify(datas)
     })
       .then((res: any) => {
-        let order_sn = res.data.channel_order_sn;
         Taro.hideLoading();
-        if (_type == 1) {
-          //微信支付
-          window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-            "appId": res.data.appId,
-            "timeStamp": res.data.timeStamp,
-            "nonceStr": res.data.nonceStr,
-            "package": res.data.package,
-            "signType": res.data.signType,
-            "paySign": res.data.paySign
-          },
-            function (res) {
-              //微信支付成功
-              if (res.err_msg == "get_brand_wcpay_request:ok") {
+        if (res.code == 200) {
+          let order_sn = res.data.channel_order_sn;
+
+          if (_type == 1) {
+            //微信支付
+            window.WeixinJSBridge.invoke(
+              'getBrandWCPayRequest', {
+              "appId": res.data.appId,
+              "timeStamp": res.data.timeStamp,
+              "nonceStr": res.data.nonceStr,
+              "package": res.data.package,
+              "signType": res.data.signType,
+              "paySign": res.data.paySign
+            },
+              function (res) {
+                //微信支付成功
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  Taro.showLoading({
+                    title: 'loading',
+                  });
+                  interval = setInterval(function () {
+                    //查询用户最后一次购买的增值活动id
+                    request({
+                      url: 'v1/youhui/getUserLastYouhuiId',
+                      method: "GET",
+                      data: { order_sn: order_sn }
+                    }).then((res: any) => {
+                      if (res.code == 200) {
+                        clearInterval(interval);
+                        Taro.hideLoading();
+                        //得到增值活动id并跳转活动详情
+                        Taro.navigateTo({
+                          url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                          success: function (e) {
+                            let page = Taro.getCurrentPages().pop();
+                            if (page == undefined || page == null) return;
+                            page.onShow();
+                          }
+                        })
+                      }
+                    })
+                  }, 500);
+
+                } else {
+                  //微信支付失败
+                }
+              }
+            );
+          } else if (_type == 2) {
+            //支付宝支付
+            window.AlipayJSBridge.call('tradePay', {
+              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+            }, res => {
+              //支付宝支付成功
+              if (res.resultCode === "9000") {
                 Taro.showLoading({
                   title: 'loading',
                 });
@@ -385,50 +425,15 @@ export default class Appre extends Component<Props>{
                     }
                   })
                 }, 500);
-
               } else {
-                //微信支付失败
+                //支付宝支付失败
               }
-            }
-          );
-        } else if (_type == 2) {
-          //支付宝支付
-          window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-          }, res => {
-            //支付宝支付成功
-            if (res.resultCode === "9000") {
-              Taro.showLoading({
-                title: 'loading',
-              });
-              interval = setInterval(function () {
-                //查询用户最后一次购买的增值活动id
-                request({
-                  url: 'v1/youhui/getUserLastYouhuiId',
-                  method: "GET",
-                  data: { order_sn: order_sn }
-                }).then((res: any) => {
-                  if (res.code == 200) {
-                    clearInterval(interval);
-                    Taro.hideLoading();
-                    //得到增值活动id并跳转活动详情
-                    Taro.navigateTo({
-                      url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                      success: function (e) {
-                        let page = Taro.getCurrentPages().pop();
-                        if (page == undefined || page == null) return;
-                        page.onShow();
-                      }
-                    })
-                  }
-                })
-              }, 500);
-            } else {
-              //支付宝支付失败
-            }
-          })
+            })
+          } else {
+            console.log(_type)
+          }
         } else {
-          console.log(_type)
+          Taro.showToast({ title: res.message, icon: 'none' })
         }
       })
   }
