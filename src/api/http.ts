@@ -19,9 +19,9 @@ interface Params {
 const token_name = process.env.TOKEN;
 console.log(Cookie.get(token_name))
 let token = Cookie.get(token_name):
-if( token == undefined ){
-  token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NjI2NzQxNTksImV4cCI6MTU2Mjk3NDE1OSwibmJmIjoxNTYyNjc0MTU5LCJqdGkiOiJoSzZtcmJXem83TEt5c0FOIiwic3ViIjozMDE0LCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.f65y-zLVG4BK3fBqtCKTA3o1kDVO4oK0F1-04daVa1E'
-}
+// if( token == undefined ){
+//   token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NjI2NzQxNTksImV4cCI6MTU2Mjk3NDE1OSwibmJmIjoxNTYyNjc0MTU5LCJqdGkiOiJoSzZtcmJXem83TEt5c0FOIiwic3ViIjozMDE0LCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.f65y-zLVG4BK3fBqtCKTA3o1kDVO4oK0F1-04daVa1E'
+// }
 const http = (params: Params): Promise<any> => {
   const {
     url,
@@ -81,9 +81,7 @@ const http = (params: Params): Promise<any> => {
         }
       },
       fail(error) {
-        const { status, data } = error;
-        console.log(41234123)
-        console.log(status)
+        const {status} = error
         switch (status) {
           case SERVER_ERROR:
             Taro.showToast({
