@@ -4,7 +4,7 @@ import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import "taro-ui/dist/style/components/tabs.scss";
 import CashCoupon1 from "./cash-coupon1/index";
 import CashCoupon2 from "./cash-coupon2/index";
-import "./index.styl";
+import "./index.scss";
 import request from "../../services/request";
 
 export default class Order extends Component {
@@ -264,7 +264,6 @@ export default class Order extends Component {
               this.setState({ lengthbull4: false });
             }
           });
-
           Taro.hideLoading();
         })
         .catch(() => {
@@ -273,7 +272,7 @@ export default class Order extends Component {
     }
   }
 
-  handleClick0(value) {
+  handleClick0(value, e) {
     this.setState({
       current: value
     }, () => {
@@ -321,23 +320,23 @@ export default class Order extends Component {
   }
 
   render() {
-    const tabList = [{ title: '未使用' }, { title: '已使用' }, { title: '已过期' }, { title: '已退款' }]
     return (
       <View className="orders flex column"  >
 
-        {this.state._codeshow ?
-          <View className="code_show" onClick={() => { this.setState({ _codeshow: false,_codeimg:'',_codeinfo:'' }) }} onTouchMove={() => { this.setState({ _codeshow: false ,_codeimg:'',_codeinfo:''}) }} >
-            <View className="code_background">
-              <View className="codeBox" >
-                <View className="codeBox_info">商家扫码/输码验证即可消费</View>
-                <View className="codeBox_img">
-                  <Image className="code_img" src={this.state._codeimg} />
+        {
+          this.state._codeshow ?
+            <View className="code_show" onClick={() => { this.setState({ _codeshow: false, _codeimg: '', _codeinfo: '' }) }} onTouchMove={() => { this.setState({ _codeshow: false, _codeimg: '', _codeinfo: '' }) }} >
+              <View className="code_background">
+                <View className="codeBox" >
+                  <View className="codeBox_info">商家扫码/输码验证即可消费</View>
+                  <View className="codeBox_img">
+                    <Image className="code_img" src={this.state._codeimg} />
+                  </View>
+                  <View className="codeBox_msg">{this.state._codeinfo}</View>
                 </View>
-                <View className="codeBox_msg">{this.state._codeinfo}</View>
               </View>
             </View>
-          </View>
-          : ""
+            : ""
         }
 
         <View>
@@ -375,64 +374,96 @@ export default class Order extends Component {
           }
         </View>
 
-        <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick0.bind(this)} >
-          <AtTabsPane current={this.state.current} index={0} >
-            <View className="tiket_box">
-              {
-                this.state.coupon1.map((item) => (
-                  item.coupons_type == "1" ? <View key={item.coupons_log_id}>
-                    <CashCoupon2 bg_img_type={1} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
-                  </View> : <View key={item.coupons_log_id}>
-                      <CashCoupon1 bg_img_type={0} type={1} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={this.showcode} />
-                    </View>
-                ))
-              }
 
+        <View className="atTabs">
+          <View className="atTabsTitle" onClick={this.handleClick0.bind(this, 0)}>
+            <View className="atTabsContent" style={{ borderBottom: this.state.current == 0 ? '2px solid #ee3131' : 'none', color: this.state.current == 0 ? '#fa4e38' : '#313131' }}>
+              <View className="title">
+                未使用
+              </View>
             </View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
-            <View className="tiket_box">
-              {
-                this.state.coupon2.map((item) => (
-                  item.coupons_type == "1" ? <View key={item.coupons_log_id}>
-                    <CashCoupon2 bg_img_type={2} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
-                  </View> : <View key={item.coupons_log_id}>
-                      <CashCoupon1 bg_img_type={1} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={null} />
-                    </View>
-                ))
-              }
+          </View>
+          <View className="atTabsTitle" onClick={this.handleClick0.bind(this, 1)}>
+            <View className="atTabsContent" style={{ borderBottom: this.state.current == 1 ? '2px solid #ee3131' : 'none', color: this.state.current == 1 ? '#fa4e38' : '#313131' }}>
+              <View className="title">
+                已使用
+              </View>
+            </View>
+          </View>
+          <View className="atTabsTitle" onClick={this.handleClick0.bind(this, 2)}>
+            <View className="atTabsContent" style={{ borderBottom: this.state.current == 2 ? '2px solid #ee3131' : 'none', color: this.state.current == 2 ? '#fa4e38' : '#313131' }}>
+              <View className="title">
+                已过期
+              </View>
+            </View>
+          </View>
+          <View className="atTabsTitle" onClick={this.handleClick0.bind(this, 3)}>
+            <View className="atTabsContent" style={{ borderBottom: this.state.current == 3 ? '2px solid #ee3131' : 'none', color: this.state.current == 3 ? '#fa4e38' : '#313131' }}>
+              <View className="title">
+                已退款
+              </View>
+            </View>
+          </View>
+        </View>
 
-            </View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={2}>
-            <View className="tiket_box">
-              {
-                this.state.coupon3.map((item) => (
-                  item.coupons_type == "1" ? <View key={item.coupons_log_id}>
-                    <CashCoupon2 bg_img_type={0} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
-                  </View> : <View key={item.coupons_log_id}>
-                      <CashCoupon1 bg_img_type={0} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={null} />
-                    </View>
-                ))
-              }
+        {
+          (this.state.current == 0 && this.state.coupon1.length > 0) ? <View className="tiket_box">
+            {
+              this.state.coupon1.map((item) => (
+                item.coupons_type == "1" ? <View key={item.coupons_log_id}>
+                  <CashCoupon2 bg_img_type={1} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
+                </View> : <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={0} type={1} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={this.showcode} />
+                  </View>
+              ))
+            }
 
-            </View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={3}>
-            <View className="tiket_box">
-              {
-                this.state.coupon4.map((item) => (
-                  item.coupons_type == "1" ? <View key={item.coupons_log_id}>
-                    <CashCoupon2 bg_img_type={1} type={1} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
-                  </View> : <View key={item.coupons_log_id}>
-                      <CashCoupon1 bg_img_type={0} type={2} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={null} />
-                    </View>
-                ))
-              }
+          </View> : null
+        }
+        {
+          (this.state.current == 1 && this.state.coupon2.length > 0) ? <View className="tiket_box">
+            {
+              this.state.coupon2.map((item) => (
+                item.coupons_type == "1" ? <View key={item.coupons_log_id}>
+                  <CashCoupon2 bg_img_type={2} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
+                </View> : <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={1} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={null} />
+                  </View>
+              ))
+            }
+          </View> : null
 
-            </View>
-          </AtTabsPane>
-        </AtTabs>
+        }
+        {
+          (this.state.current == 2 && this.state.coupon3.length > 0) ? <View className="tiket_box">
+            {
+              this.state.coupon3.map((item) => (
+                item.coupons_type == "1" ? <View key={item.coupons_log_id}>
+                  <CashCoupon2 bg_img_type={0} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
+                </View> : <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={0} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={null} />
+                  </View>
+              ))
+            }
+
+          </View> : null
+        }
+        {
+          (this.state.current == 3 && this.state.coupon4.length > 0) ? <View className="tiket_box">
+            {
+              this.state.coupon4.map((item) => (
+                item.coupons_type == "1" ? <View key={item.coupons_log_id}>
+                  <CashCoupon2 bg_img_type={1} type={1} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
+                </View> : <View key={item.coupons_log_id}>
+                    <CashCoupon1 bg_img_type={0} type={2} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={null} />
+                  </View>
+              ))
+            }
+
+          </View> : null
+
+        }
+
       </View>
     );
   }
