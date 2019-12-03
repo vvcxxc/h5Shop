@@ -218,6 +218,7 @@
         }
       }
     }
+
     .border_content:last-child {
       border-bottom: none;
     }
@@ -540,6 +541,15 @@
 
   .at-action-sheet__container {
     background: unset;
+  }
+
+  .AtActionSheetBox {
+    width: 100vw;
+    height: 75vh;
+    background: #fff;
+    box-sizing: border-box;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
 
   .AtActionSheetBox-content {
