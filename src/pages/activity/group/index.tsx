@@ -79,7 +79,6 @@ export default class Group extends Component<Props>{
     allowGroup: ''
   };
   componentDidShow() {
-    console.log('页面componentDidShow')
     this.toShare();
   }
   clearTimeOut = () => {
@@ -90,15 +89,12 @@ export default class Group extends Component<Props>{
       clearTimeout(i);
     }
   }
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps')
-  }
+
   componentWillUnmount() {
     this.clearTimeOut();
   }
 
   componentDidMount = () => {
-    console.log('params:', this.$router.params);
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({
@@ -713,16 +709,6 @@ export default class Group extends Component<Props>{
     }
   }
 
-  setTime = (_time, e) => {
-    console.log('settime')
-    let timer = setInterval(() => {
-      let times = dayjs(_time).endOf('day')
-      let time = getTime(new Date(times.$d).getTime() / 1000);
-      if (time.display <= 0) { clearInterval(timer); this.setState({ date: '已结束' }); return } else {
-        this.setState({ date: time.date })
-      }
-    }, 1000)
-  }
   render() {
     const { description } = this.state.data;
     return (
@@ -793,7 +779,6 @@ export default class Group extends Component<Props>{
             }}>
             <Swiper
               onChange={(e) => {
-                // console.log(e.detail.current)
                 this.setState({ imagesCurrent: e.detail.current })
               }}
               className='test-h'

@@ -76,12 +76,10 @@ export default class Appre extends Component<Props>{
         isFromShare: true
       })
     }
-    console.log(this.$router.params);
     Taro.showLoading({
       title: 'loading',
     })
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
@@ -167,8 +165,6 @@ export default class Appre extends Component<Props>{
     let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
     let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
     let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id;
-    console.log("let:linkMsg", linkMsg);
-
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -178,7 +174,6 @@ export default class Appre extends Component<Props>{
     })
       .then(res => {
         let { data } = res;
-        console.log("request:linkMsg", linkMsg);
         wx.config({
           debug: false,
           appId: data.appId,
@@ -193,7 +188,6 @@ export default class Appre extends Component<Props>{
           ]
         })
         wx.ready(() => {
-          console.log("ready:linkMsg", linkMsg);
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
@@ -201,7 +195,6 @@ export default class Appre extends Component<Props>{
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
-              console.log("分享成功")
             }
           })
         })
@@ -313,7 +306,6 @@ export default class Appre extends Component<Props>{
       });
     }
     let datas = {}
-    console.log(Taro.getStorageSync("open_id"))
     if (_type == 1) {
       datas = {
         youhui_id: this.$router.params.id,

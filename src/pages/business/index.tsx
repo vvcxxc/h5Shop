@@ -167,7 +167,6 @@ export default class PaySuccess extends Component<Props> {
   requestData = () => {
     request({ url: 'v3/stores/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint } })
       .then((res: any) => {
-        console.log('res', res)
         if (res.code == 200) {
           this.setState({
             business_list: res.data.store.Info,
@@ -227,7 +226,6 @@ export default class PaySuccess extends Component<Props> {
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
-              // console.log("分享成功")
             }
           })
         })
