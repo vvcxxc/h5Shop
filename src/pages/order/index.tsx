@@ -106,7 +106,6 @@ export default class Order extends Component {
 
   // 滚动
   onPageScroll(e) {
-    console.log('123')
     this.setState({
       scrollTop: e.scrollTop
     })
@@ -154,7 +153,6 @@ export default class Order extends Component {
   }
   // 触底
   onReachBottom() {
-    console.log(123)
     this.state.current == 0 ? this.getData1() : (
       this.state.current == 1 ? this.getData2() : (
         this.state.current == 2 ? this.getData3() : (
@@ -162,7 +160,6 @@ export default class Order extends Component {
   }
 
   getData1() {
-    console.log(this.state.lengthbull1)
     if (this.state.lengthbull1) {
       Taro.showLoading({
         title: "loading",
@@ -177,7 +174,6 @@ export default class Order extends Component {
       })
         .then((res: any) => {
           let temp = this.state.coupon1.concat(res.data);
-          console.log(temp.length)
           this.setState({ coupon: temp, coupon1: temp, page1: this.state.page1 + 1 }, () => {
             if (this.state.page1 > res.last_page) {
               this.setState({ lengthbull1: false });
@@ -290,7 +286,6 @@ export default class Order extends Component {
   }
 
   showcode(_id) {
-    // console.log("爸爸" + _id);
     Taro.showLoading({
       title: 'loading',
       mask: true
@@ -300,7 +295,6 @@ export default class Order extends Component {
       data: { coupons_log_id: _id, xpoint: '', ypoint: '' }
     })
       .then((res: any) => {
-        console.log(res.data.youhui_sn);
         this.setState({ _codeinfo: res.data.youhui_sn });
       })
     request({
@@ -308,7 +302,6 @@ export default class Order extends Component {
       data: { coupons_log_id: _id },
     })
       .then((res: any) => {
-        // console.log(res);
         this.setState({ _codeimg: res.data });
       })
     this.setState({ _codeshow: true }, () => {
