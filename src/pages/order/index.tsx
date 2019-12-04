@@ -179,7 +179,6 @@ export default class Order extends Component {
               this.setState({ lengthbull1: false });
             }
           });
-
           Taro.hideLoading();
         })
     }
@@ -329,7 +328,7 @@ export default class Order extends Component {
                 </View>
               </View>
             </View>
-            : ""
+            : null
         }
 
         <View>
@@ -362,7 +361,7 @@ export default class Order extends Component {
                     <Image className="logo" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/h4jNAQHbyK8Xx6zra3fBEHwBtAepmhCz.png"} />
                   </View>
                   <View className="_msg">您还没有已退款的订单哦</View>
-                </View> : "")
+                </View> : null)
                 ))
           }
         </View>
@@ -410,7 +409,6 @@ export default class Order extends Component {
                   </View>
               ))
             }
-
           </View> : null
         }
         {
@@ -425,7 +423,6 @@ export default class Order extends Component {
               ))
             }
           </View> : null
-
         }
         {
           (this.state.current == 2 && this.state.coupon3.length > 0) ? <View className="tiket_box">
@@ -438,7 +435,6 @@ export default class Order extends Component {
                   </View>
               ))
             }
-
           </View> : null
         }
         {
@@ -452,11 +448,9 @@ export default class Order extends Component {
                   </View>
               ))
             }
-
           </View> : null
 
         }
-
       </View>
     );
   }

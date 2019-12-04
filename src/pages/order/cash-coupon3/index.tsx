@@ -20,9 +20,7 @@ export default class CashCoupon3 extends Component<Props> {
 
   }
   render (){
-    console.log(this.props)
     const percent = (this.props.appreciation_money *1)/(this.props.money *1) * 100
-    console.log(this.props.type)
     return (
       <View className='cash_coupon3'>
         {
