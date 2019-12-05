@@ -70,7 +70,6 @@ export default function request(options: Options) {
       },
       fail(err) {
         const { status, data } = err;
-        console.log(41234123)
         console.log(status)
         switch (status) {
           case SERVER_ERROR:
