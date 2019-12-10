@@ -82,7 +82,7 @@ export default function request(options: Options) {
           case FETCH_BAD:
             console.log(FETCH_BAD)
             Taro.showToast({
-              title: data.message  || "bad request",
+              title: "bad request",
               icon: "none"
             })
             break
