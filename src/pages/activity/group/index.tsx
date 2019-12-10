@@ -949,7 +949,7 @@ export default class Group extends Component<Props>{
             </View>
           </View>
         </View>
-        {
+        {/* {
           (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
             <View className='choosePostage' onClick={this.chooseGift}>
 
@@ -963,7 +963,7 @@ export default class Group extends Component<Props>{
                 <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
               </View>
             </View>) : null
-        }
+        } */}
 
         <View className="paymoney_box">
           <View className="paymoney_price">
