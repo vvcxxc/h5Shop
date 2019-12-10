@@ -237,7 +237,6 @@ export default class PaySuccess extends Component<Props> {
   gotoGroup = (_id, gift_id, activity_id) => {
     Taro.navigateTo({
       url: '/pages/activity/group/index?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
-      // url: '/pages/activity/pages/detail/detail?id=' + _id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
     })
   }
   // 去增值活动
@@ -678,8 +677,6 @@ export default class PaySuccess extends Component<Props> {
             }
           </View>
         }
-
-
         {
           this.state.recommend.length == 0 ? "" :
             <View className="recommend-view bcfff">
