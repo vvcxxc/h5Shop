@@ -69,6 +69,7 @@ export default function request(options: Options) {
         }
       },
       fail(err) {
+        console.log('requestErr',err)
         const { status, data, message } = err;
         console.log(status)
         switch (status) {
