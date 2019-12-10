@@ -412,20 +412,19 @@ export default class EditorAddress extends Component {
                 }
 
 
-                {/* <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
+                <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
                     <View className="AtActionSheetBox">
                         <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                     </View>
-                </AtActionSheet> */}
+                </AtActionSheet>
                 
-                {
+                {/* {
                     this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
                         <View className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
                             <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                         </View>
                     </View> : null
-
-                }
+                } */}
 
             </View>
         );

@@ -218,6 +218,7 @@
         }
       }
     }
+
     .border_content:last-child {
       border-bottom: none;
     }
@@ -235,9 +236,6 @@
     box-sizing: border-box;
     background: #fff;
     border-top: 1px solid #f2f2f2;
-    -moz-box-shadow: 2px -2px 5px #f2f2f2;
-    -webkit-box-shadow: 2px -2px 5px #f2f2f2;
-    box-shadow: 2px -2px 5px #f2f2f2;
 
     .bottom_btn_submit {
       width: 100%;
@@ -543,6 +541,15 @@
 
   .at-action-sheet__container {
     background: unset;
+  }
+
+  .AtActionSheetBox {
+    width: 100vw;
+    height: 75vh;
+    background: #fff;
+    box-sizing: border-box;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
 
   .AtActionSheetBox-content {

@@ -44,7 +44,7 @@ export default class confirmAddress extends Component {
                 youhuiHour: '',
                 participation_number: 0
             },
-            team_set_end_time:''
+            team_set_end_time: ''
         }
     };
 
@@ -266,22 +266,61 @@ export default class confirmAddress extends Component {
                 data: JSON.stringify(datas)
             })
                 .then((res: any) => {
-                    let order_sn = res.data.channel_order_sn;
                     Taro.hideLoading();
-                    if (_type == 1) {
-                        //微信支付
-                        window.WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest', {
-                            "appId": res.data.appId,
-                            "timeStamp": res.data.timeStamp,
-                            "nonceStr": res.data.nonceStr,
-                            "package": res.data.package,
-                            "signType": res.data.signType,
-                            "paySign": res.data.paySign
-                        },
-                            function (res) {
-                                //微信支付成功
-                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    if (res.code == 200) {
+                        let order_sn = res.data.channel_order_sn;
+
+                        if (_type == 1) {
+                            //微信支付
+                            window.WeixinJSBridge.invoke(
+                                'getBrandWCPayRequest', {
+                                "appId": res.data.appId,
+                                "timeStamp": res.data.timeStamp,
+                                "nonceStr": res.data.nonceStr,
+                                "package": res.data.package,
+                                "signType": res.data.signType,
+                                "paySign": res.data.paySign
+                            },
+                                function (res) {
+                                    //微信支付成功
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        Taro.showLoading({
+                                            title: 'loading',
+                                        });
+                                        interval = setInterval(function () {
+                                            //查询用户最后一次购买的增值活动id
+                                            request({
+                                                url: 'v1/youhui/getUserLastYouhuiId',
+                                                method: "GET",
+                                                data: { order_sn: order_sn }
+                                            }).then((res: any) => {
+                                                if (res.code == 200) {
+                                                    clearInterval(interval);
+                                                    Taro.hideLoading();
+                                                    //得到增值活动id并跳转活动详情
+                                                    Taro.navigateTo({
+                                                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                                                        success: function (e) {
+                                                            let page = Taro.getCurrentPages().pop();
+                                                            if (page == undefined || page == null) return;
+                                                            page.onShow();
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }, 500); 
+                                    } else {
+                                        //微信支付失败
+                                    }
+                                }
+                            );
+                        } else if (_type == 2) {
+                            //支付宝支付
+                            window.AlipayJSBridge.call('tradePay', {
+                                tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+                            }, res => {
+                                //支付宝支付成功
+                                if (res.resultCode === "9000") {
                                     Taro.showLoading({
                                         title: 'loading',
                                     });
@@ -306,52 +345,19 @@ export default class confirmAddress extends Component {
                                                 })
                                             }
                                         })
-                                    }, 500); S
+                                    }, 500);
                                 } else {
-                                    //微信支付失败
+                                    //支付宝支付失败
                                 }
-                            }
-                        );
-                    } else if (_type == 2) {
-                        //支付宝支付
-                        window.AlipayJSBridge.call('tradePay', {
-                            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-                        }, res => {
-                            //支付宝支付成功
-                            if (res.resultCode === "9000") {
-                                Taro.showLoading({
-                                    title: 'loading',
-                                });
-                                interval = setInterval(function () {
-                                    //查询用户最后一次购买的增值活动id
-                                    request({
-                                        url: 'v1/youhui/getUserLastYouhuiId',
-                                        method: "GET",
-                                        data: { order_sn: order_sn }
-                                    }).then((res: any) => {
-                                        if (res.code == 200) {
-                                            clearInterval(interval);
-                                            Taro.hideLoading();
-                                            //得到增值活动id并跳转活动详情
-                                            Taro.navigateTo({
-                                                url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                                                success: function (e) {
-                                                    let page = Taro.getCurrentPages().pop();
-                                                    if (page == undefined || page == null) return;
-                                                    page.onShow();
-                                                }
-                                            })
-                                        }
-                                    })
-                                }, 500);
-                            } else {
-                                //支付宝支付失败
-                            }
-                        })
+                            })
+                        } else {
+                            console.log('不知道啥子支付类型', _type)
+                        }
                     } else {
-                        console.log('不知道啥子支付类型', _type)
+                        Taro.showToast({ title: res.message, icon: 'none' })
                     }
                 })
+
         } else if (this.$router.params.activityType == '5') {
             //开团activityType == '5'
             if (_type == 1) {
@@ -416,21 +422,60 @@ export default class confirmAddress extends Component {
             })
                 .then((res: any) => {
                     Taro.hideLoading();
-                    let order_sn = res.channel_order_sn;//比增值少一层data
-                    if (_type == 1) {
-                        //微信支付
-                        window.WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest', {
-                            "appId": res.data.appId,
-                            "timeStamp": res.data.timeStamp,
-                            "nonceStr": res.data.nonceStr,
-                            "package": res.data.package,
-                            "signType": res.data.signType,
-                            "paySign": res.data.paySign
-                        },
-                            function (res) {
-                                //微信支付成功
-                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    if (res.code == 200) {
+                        let order_sn = res.channel_order_sn;//比增值少一层data
+                        if (_type == 1) {
+                            //微信支付
+                            window.WeixinJSBridge.invoke(
+                                'getBrandWCPayRequest', {
+                                "appId": res.data.appId,
+                                "timeStamp": res.data.timeStamp,
+                                "nonceStr": res.data.nonceStr,
+                                "package": res.data.package,
+                                "signType": res.data.signType,
+                                "paySign": res.data.paySign
+                            },
+                                function (res) {
+                                    //微信支付成功
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        //开团要得到开团活动id再跳转活动详情
+                                        Taro.showLoading({
+                                            title: 'loading',
+                                            mask: true
+                                        });
+                                        interval = setInterval(() => {
+                                            request({
+                                                url: 'api/wap/user/getUserYouhuiGroupId',
+                                                method: "GET",
+                                                data: { order_sn: order_sn }
+                                            }).then((res: any) => {
+                                                if (res.code == 200) {
+                                                    clearInterval(interval);
+                                                    Taro.hideLoading();
+                                                    let resGroupid = res.data.id;
+                                                    Taro.navigateTo({
+                                                        url: '/pages/activity/pages/group/group?id=' + resGroupid,
+                                                        success: () => {
+                                                            var page = Taro.getCurrentPages().pop();
+                                                            if (page == undefined || page == null) return;
+                                                            page.onLoad();
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }, 1000);
+                                    } else {
+                                        //微信支付失败
+                                    }
+                                }
+                            );
+                        } else if (_type == 2) {
+                            //支付宝支付
+                            window.AlipayJSBridge.call('tradePay', {
+                                tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+                            }, res => {
+                                //支付宝支付成功
+                                if (res.resultCode === "9000") {
                                     //开团要得到开团活动id再跳转活动详情
                                     Taro.showLoading({
                                         title: 'loading',
@@ -458,52 +503,16 @@ export default class confirmAddress extends Component {
                                         })
                                     }, 1000);
                                 } else {
-                                    //微信支付失败
+                                    //支付宝支付失败
                                 }
-                            }
-                        );
-                    } else if (_type == 2) {
-                        //支付宝支付
-                        window.AlipayJSBridge.call('tradePay', {
-                            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-                        }, res => {
-                            //支付宝支付成功
-                            if (res.resultCode === "9000") {
-                                //开团要得到开团活动id再跳转活动详情
-                                Taro.showLoading({
-                                    title: 'loading',
-                                    mask: true
-                                });
-                                interval = setInterval(() => {
-                                    request({
-                                        url: 'api/wap/user/getUserYouhuiGroupId',
-                                        method: "GET",
-                                        data: { order_sn: order_sn }
-                                    }).then((res: any) => {
-                                        if (res.code == 200) {
-                                            clearInterval(interval);
-                                            Taro.hideLoading();
-                                            let resGroupid = res.data.id;
-                                            Taro.navigateTo({
-                                                url: '/pages/activity/pages/group/group?id=' + resGroupid,
-                                                success: () => {
-                                                    var page = Taro.getCurrentPages().pop();
-                                                    if (page == undefined || page == null) return;
-                                                    page.onLoad();
-                                                }
-                                            })
-                                        }
-                                    })
-                                }, 1000);
-                            } else {
-                                //支付宝支付失败
-                            }
-                        })
+                            })
+                        } else {
+                            console.log('不知道啥子支付类型', _type)
+                        }
                     } else {
-                        console.log('不知道啥子支付类型', _type)
+                        Taro.showToast({ title: res.message, icon: 'none' })
                     }
                 })
-
         } else if (this.$router.params.activityType == '55') {
             console.log('参团')
             //参团activityType == '55'
@@ -574,20 +583,42 @@ export default class confirmAddress extends Component {
             })
                 .then((res: any) => {
                     Taro.hideLoading();
-                    if (_type == 1) {
-                        //微信支付
-                        window.WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest', {
-                            "appId": res.data.appId,
-                            "timeStamp": res.data.timeStamp,
-                            "nonceStr": res.data.nonceStr,
-                            "package": res.data.package,
-                            "signType": res.data.signType,
-                            "paySign": res.data.paySign
-                        },
-                            function (res) {
-                                //微信支付成功
-                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    if (res.code == 200) {
+                        if (_type == 1) {
+                            //微信支付
+                            window.WeixinJSBridge.invoke(
+                                'getBrandWCPayRequest', {
+                                "appId": res.data.appId,
+                                "timeStamp": res.data.timeStamp,
+                                "nonceStr": res.data.nonceStr,
+                                "package": res.data.package,
+                                "signType": res.data.signType,
+                                "paySign": res.data.paySign
+                            },
+                                function (res) {
+                                    //微信支付成功
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        Taro.navigateTo({
+                                            url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
+                                            // url: '/activity-pages/my-activity/my.activity',
+                                            success: function (e) {
+                                                let page = Taro.getCurrentPages().pop();
+                                                if (page == undefined || page == null) return;
+                                                page.onShow();
+                                            }
+                                        })
+                                    } else {
+                                        //微信支付失败
+                                    }
+                                }
+                            );
+                        } else if (_type == 2) {
+                            //支付宝支付
+                            window.AlipayJSBridge.call('tradePay', {
+                                tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+                            }, res => {
+                                //支付宝支付成功
+                                if (res.resultCode === "9000") {
                                     Taro.navigateTo({
                                         url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
                                         // url: '/activity-pages/my-activity/my.activity',
@@ -598,32 +629,14 @@ export default class confirmAddress extends Component {
                                         }
                                     })
                                 } else {
-                                    //微信支付失败
+                                    //支付宝支付失败
                                 }
-                            }
-                        );
-                    } else if (_type == 2) {
-                        //支付宝支付
-                        window.AlipayJSBridge.call('tradePay', {
-                            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-                        }, res => {
-                            //支付宝支付成功
-                            if (res.resultCode === "9000") {
-                                Taro.navigateTo({
-                                    url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
-                                    // url: '/activity-pages/my-activity/my.activity',
-                                    success: function (e) {
-                                        let page = Taro.getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onShow();
-                                    }
-                                })
-                            } else {
-                                //支付宝支付失败
-                            }
-                        })
+                            })
+                        } else {
+                            console.log(_type)
+                        }
                     } else {
-                        console.log(_type)
+                        Taro.showToast({ title: res.message, icon: 'none' })
                     }
                 })
         } else {
