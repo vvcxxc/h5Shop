@@ -70,7 +70,7 @@ export default function request(options: Options) {
       },
       fail(err) {
         console.log('requestErr',err)
-        const { status, data, message } = err;
+        const { status, data } = err;
         console.log(status)
         switch (status) {
           case SERVER_ERROR:
@@ -82,7 +82,7 @@ export default function request(options: Options) {
           case FETCH_BAD:
             console.log(FETCH_BAD)
             Taro.showToast({
-              title: data.message || message || "bad request",
+              title: data.message  || "bad request",
               icon: "none"
             })
             break

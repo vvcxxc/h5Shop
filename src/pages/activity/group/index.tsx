@@ -534,7 +534,7 @@ export default class Group extends Component<Props>{
           Taro.showToast({ title: res.message, icon: 'none' })
         }
       }).catch(err => {
-        console.log('test', err)
+        Taro.hideLoading();
       })
   }
 
@@ -645,7 +645,7 @@ export default class Group extends Component<Props>{
           Taro.showToast({ title: res.message, icon: 'none' })
         }
       }).catch(err => {
-        console.log('test', err)
+        Taro.hideLoading();
       })
   }
 

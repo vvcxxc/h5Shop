@@ -308,7 +308,7 @@ export default class confirmAddress extends Component {
                                                     })
                                                 }
                                             })
-                                        }, 500); 
+                                        }, 500);
                                     } else {
                                         //微信支付失败
                                     }
@@ -356,6 +356,8 @@ export default class confirmAddress extends Component {
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
+                }).catch(err => {
+                    Taro.hideLoading();
                 })
 
         } else if (this.$router.params.activityType == '5') {
@@ -512,6 +514,8 @@ export default class confirmAddress extends Component {
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
+                }).catch(err => {
+                    Taro.hideLoading();
                 })
         } else if (this.$router.params.activityType == '55') {
             console.log('参团')
@@ -638,6 +642,8 @@ export default class confirmAddress extends Component {
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
+                }).catch(err => {
+                    Taro.hideLoading();
                 })
         } else {
             console.log('不知道啥子活动类型')

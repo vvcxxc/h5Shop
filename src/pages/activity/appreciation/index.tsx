@@ -427,6 +427,8 @@ export default class Appre extends Component<Props>{
         } else {
           Taro.showToast({ title: res.message, icon: 'none' })
         }
+      }).catch(err => {
+        Taro.hideLoading();
       })
   }
 
