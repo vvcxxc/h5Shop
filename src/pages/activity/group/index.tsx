@@ -456,7 +456,7 @@ export default class Group extends Component<Props>{
                         }
                       })
                     }, 1000);
-                  } else if (_temptype ==' 55') {
+                  } else if (_temptype == ' 55') {
                     Taro.navigateTo({
                       url: '/pages/activity/pages/group/group?id=' + _tempid,
                       success: () => {
@@ -533,6 +533,8 @@ export default class Group extends Component<Props>{
         } else {
           Taro.showToast({ title: res.message, icon: 'none' })
         }
+      }).catch(err => {
+        console.log('test', err)
       })
   }
 
@@ -642,6 +644,8 @@ export default class Group extends Component<Props>{
         } else {
           Taro.showToast({ title: res.message, icon: 'none' })
         }
+      }).catch(err => {
+        console.log('test', err)
       })
   }
 
