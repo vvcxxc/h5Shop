@@ -83,6 +83,7 @@ export default class EditorAddress extends Component {
     }
 
     handleSubmit = (e) => {
+        Taro.pageScrollTo({ scrollTop: 0 });
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
             this.setState({ toastShow: true, toastInfo: '请输入收件人' }, () => {
@@ -146,6 +147,7 @@ export default class EditorAddress extends Component {
     }
 
     deleAddressItem = (e) => {
+        Taro.pageScrollTo({ scrollTop: 0 });
         let tempid = this.$router.params.editorId;
         Taro.showLoading({
             title: ""
@@ -175,6 +177,7 @@ export default class EditorAddress extends Component {
     }
 
     changeAddressItem = (e) => {
+        Taro.pageScrollTo({ scrollTop: 0 });
         let tempid = this.$router.params.editorId;
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
@@ -240,7 +243,7 @@ export default class EditorAddress extends Component {
 
 
     saveAndUse = () => {
-        console.log(111)
+        Taro.pageScrollTo({ scrollTop: 0 });
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
             this.setState({ toastShow: true, toastInfo: '请输入收件人' }, () => {
