@@ -7,6 +7,7 @@ import request from '../../services/request'
 import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
 import Cookie from 'js-cookie';
+import iNoBounce from '@/utils/inobouce';
 
 export default class confirmAddress extends Component {
     config = {
