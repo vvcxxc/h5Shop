@@ -142,7 +142,7 @@ export default class Group extends Component<Props>{
               }
 
               let new_time = new Date().getTime()//ql
-              new Date(res.data.activity_end_time).getTime() < new_time ? this.setState({ allowGroup: '已结束' }) : null
+              new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
               new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
 
               this.setState({ data: res.data }, () => {
