@@ -50,7 +50,7 @@ export default class confirmAddress extends Component {
 
     componentDidShow() {
         console.log(this.$router.params);
-        window.scrollTo(0,0);
+        Taro.pageScrollTo({scrollTop: 0})
         let data;
         if (this.$router.params.address_id) {
             data = { youhui_id: this.$router.params.id, address_id: this.$router.params.address_id }
