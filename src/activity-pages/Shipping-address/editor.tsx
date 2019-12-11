@@ -305,11 +305,21 @@ export default class EditorAddress extends Component {
                         setTimeout(() => {
                             if (this.$router.params.activityType == '55') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId
+                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId,
+                                    success: function (e) {
+                                        let page = Taro.getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
                                 })
                             } else {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId
+                                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId,
+                                    success: function (e) {
+                                        let page = Taro.getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
                                 })
                             }
                         }, 1500)
@@ -417,7 +427,7 @@ export default class EditorAddress extends Component {
                         <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                     </View>
                 </AtActionSheet>
-                
+
                 {/* {
                     this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
                         <View className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>

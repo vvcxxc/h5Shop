@@ -50,8 +50,8 @@ export default class ChooseAddress extends Component {
                 this.setState({ myAddressList: res.data })
             })
     }
-     //有地址，编辑后使用
-     editorAddress = (_id: any) => {
+    //有地址，编辑后使用
+    editorAddress = (_id: any) => {
         if (this.$router.params.activityType == '55') {
             Taro.navigateTo({
                 url: '/activity-pages/Shipping-address/editor?type=useItemChange&activityType=55&editorId=' + _id + '&goodsId=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName
@@ -82,11 +82,21 @@ export default class ChooseAddress extends Component {
             setTimeout(() => {
                 if (this.$router.params.activityType == '55') {
                     Taro.navigateTo({
-                        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id
+                        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id,
+                         success: function (e) {
+                            let page = Taro.getCurrentPages().pop();
+                            if (page == undefined || page == null) return;
+                            page.onShow();
+                        }
                     })
                 } else {
                     Taro.navigateTo({
-                        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id
+                        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id, 
+                        success: function (e) {
+                            let page = Taro.getCurrentPages().pop();
+                            if (page == undefined || page == null) return;
+                            page.onShow();
+                        }
                     })
                 }
             }, 1500);
