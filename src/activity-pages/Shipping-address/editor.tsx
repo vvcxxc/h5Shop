@@ -339,7 +339,7 @@ export default class EditorAddress extends Component {
 
     render() {
         return (
-            <View className="Shipping-address">
+            <View className="Shipping-address" onClick={() => { Taro.pageScrollTo({ scrollTop: 0 }); }}>
 
                 {
                     this.state.toastShow ? <View className="toast_box">
