@@ -377,7 +377,9 @@ export default class EditorAddress extends Component {
                             className="editor-box_input2"
                             value={this.state.TextareaValue}
                             onInput={this.onHandelChangeAddress.bind(this)}
-                            placeholder="请填写详细地址，如街道、门牌、小区等" />
+                            placeholder="请填写详细地址，如街道、门牌、小区等"
+                            onBlur={() => { Taro.pageScrollTo({ scrollTop: 0 }) }}
+                        />
                     </View>
                     <View className="editor-box">
                         <View className="choose_msg_box">
