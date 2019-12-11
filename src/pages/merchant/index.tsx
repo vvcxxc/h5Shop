@@ -60,7 +60,6 @@ export default class MerChantPage extends Component {
       data.pages = 1
       this.setState({ locationPosition: data }, () => {
         if (this.$router.params.value) {
-          console.log('走这里：' + this.$router.params.value)
           this.setState({ search: this.$router.params.value })
           this.requestSearch(this.$router.params.value)//路由渲染
         } else {
@@ -283,19 +282,10 @@ export default class MerChantPage extends Component {
           onClick={this.titleOnClick.bind(this, 0)}
           onscroll={this.filteronScroll.bind(this)}
           hidden={this.state.hidden_filteron}
-        />{
-          no_value ? <View className="no_value">
-            <View>
-              <Image src={require('../../assets/no_value.png')} />
-              <View className="no_value_foot">
-                暂无搜索内容
-          </View>
-            </View>
-          </View>:null
-        }
+        />
 
         <View className="merchant-list" style="background-color:#fff;">
-          <View style={{ minHeight: no_value ?'0vh': '100vh', height: 'auto', background: '#ededed'}} onClick={this.clearClick}>
+          <View style={{ minHeight: no_value && !this.state.stores.length ?'0vh': '100vh', height: 'auto', background: '#ededed'}} onClick={this.clearClick}>
             {
               this.state.stores.map((item2: any, index: any) => {
                 return <View className="new_box">
@@ -455,6 +445,15 @@ export default class MerChantPage extends Component {
           </View>
 
         </View>
+
+        {
+          no_value && !this.state.stores.length ? <View className="no_value">
+            <View>
+              <Image src={require('../../assets/no_value.png')} />
+              <View className="no_value_foot">暂无搜索内容</View>
+            </View>
+          </View> : null
+        }
       </View>
     );
   }
