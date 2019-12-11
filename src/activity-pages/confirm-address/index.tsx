@@ -50,8 +50,13 @@ export default class confirmAddress extends Component {
     };
 
     componentDidShow() {
+        let u = navigator.userAgent
+        if (u.indexOf('iPhone') > -1) {
+            console.log('iNoBounce', iNoBounce)
+            iNoBounce.enable()
+        }
         console.log(this.$router.params);
-        Taro.pageScrollTo({scrollTop: 0})
+        Taro.pageScrollTo({ scrollTop: 0 })
         let data;
         if (this.$router.params.address_id) {
             data = { youhui_id: this.$router.params.id, address_id: this.$router.params.address_id }
