@@ -218,7 +218,6 @@ export default class Group extends Component<Props>{
     let url: any;
     if (isIos) {
       url = sessionStorage.getItem('url');
-      alert(url)
     } else {
       url = location.href;
     }
@@ -234,7 +233,7 @@ export default class Group extends Component<Props>{
       .then(res => {
         let { data } = res;
         wx.config({
-          debug: true,
+          debug: false,
           appId: data.appId,
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
