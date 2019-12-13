@@ -187,6 +187,7 @@ export default class Appre extends Component<Props>{
             'onMenuShareTimeline'//旧的接口，即将废弃
           ]
         })
+        console.log(linkMsg)
         wx.ready(() => {
           wx.updateAppMessageShareData({
             title: titleMsg,
