@@ -73,9 +73,12 @@ const config = {
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
     devServer: {
-      host: '0.0.0.0',
+      host: 'localhost',
       inline: true,
       port: 8090,
+    },
+    router: {
+      mode: 'browser' // 或者是 'browser'
     },
     output: {
       filename: 'js/[name].[hash:8].js',

@@ -161,7 +161,13 @@ class App extends Component {
 		define: '22'
 	}
 	componentDidShow() {
-	}
+  }
+  componentDidMount() {
+    let url = sessionStorage.getItem('url')
+    if(!url){
+      sessionStorage.setItem('url',window.location.href)
+    }
+  }
 	componentDidHide() { }
 	componentDidCatchError() { }
 	// 在 App 类中的 render() 函数没有实际作用
