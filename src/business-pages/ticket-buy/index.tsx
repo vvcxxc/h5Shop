@@ -171,7 +171,14 @@ export default class TicketBuy extends Component {
   }
 
   toShare = () => {
-    let url = window.location.href;
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
     let titleMsg = '嘘，这里有一张' + this.state.coupon.return_money + '元现金券，悄悄领了，别声张！';
     let descMsg = this.state.store.sname + '又搞活动啦，是好友我才偷偷告诉你，现金券数量有限，领券要快姿势要帅！';
     Taro.request({
@@ -252,7 +259,14 @@ export default class TicketBuy extends Component {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.store.xpoint);
       let latitude = parseFloat(this.state.store.ypoint);
-      let url = window.location.href;
+      let userAgent = navigator.userAgent;
+      let isIos = userAgent.indexOf('iPhone') > -1;
+      let url: any;
+      if (isIos) {
+        url = sessionStorage.getItem('url');
+      } else {
+        url = location.href;
+      }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
