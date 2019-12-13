@@ -218,6 +218,7 @@ export default class Group extends Component<Props>{
     let url: any;
     if (isIos) {
       url = sessionStorage.getItem('url');
+      alert(url)
     } else {
       url = location.href;
     }

@@ -163,10 +163,7 @@ class App extends Component {
 	componentDidShow() {
   }
   componentDidMount() {
-    let url = sessionStorage.getItem('url')
-    if(!url){
-      sessionStorage.setItem('url',window.location.href)
-    }
+     sessionStorage.setItem('url',window.location.href)
   }
 	componentDidHide() { }
 	componentDidCatchError() { }
