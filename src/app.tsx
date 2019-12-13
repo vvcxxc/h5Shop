@@ -162,9 +162,15 @@ class App extends Component {
 	}
 	componentDidShow() {
   }
+<<<<<<< HEAD
   componentDidMount() {
      sessionStorage.setItem('url',window.location.href)
   }
+=======
+  componentDidMount() {
+     sessionStorage.setItem('url',window.location.href)
+  }
+>>>>>>> c14caea42559dcdd39ece784d90ea1a865cb1c5b
 	componentDidHide() { }
 	componentDidCatchError() { }
 	// 在 App 类中的 render() 函数没有实际作用
