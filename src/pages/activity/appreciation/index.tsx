@@ -194,12 +194,11 @@ export default class Appre extends Component<Props>{
             'onMenuShareTimeline'//旧的接口，即将废弃
           ]
         })
-        console.log(linkMsg.split('#')[0] + '##' + linkMsg.split('#')[1])
         wx.ready(() => {
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: linkMsg.split('#')[0] + '#' + linkMsg.split('#')[1],
+            link: linkMsg,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发

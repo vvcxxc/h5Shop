@@ -46,8 +46,8 @@ class App extends Component {
 			'pages/index/index',
 			'pages/index/search/index',
 			'pages/my/index',
-      'pages/order/index',
-      'pages/mycardticket/index',
+			'pages/order/index',
+			'pages/mycardticket/index',
 			'pages/merchant/index',
 			'pages/activity/index',
 			'pages/mycardticket/index',
@@ -161,16 +161,10 @@ class App extends Component {
 		define: '22'
 	}
 	componentDidShow() {
-  }
-<<<<<<< HEAD
-  componentDidMount() {
-     sessionStorage.setItem('url',window.location.href)
-  }
-=======
-  componentDidMount() {
-     sessionStorage.setItem('url',window.location.href)
-  }
->>>>>>> c14caea42559dcdd39ece784d90ea1a865cb1c5b
+	}
+	componentDidMount() {
+		sessionStorage.setItem('url', window.location.href)
+	}
 	componentDidHide() { }
 	componentDidCatchError() { }
 	// 在 App 类中的 render() 函数没有实际作用
