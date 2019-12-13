@@ -198,7 +198,14 @@ export default class PaySuccess extends Component<Props> {
 
 
   toShare = () => {
-    let url = window.location.href;
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
     let titleMsg = '发现一家你喜欢的店铺' + this.state.business_list.name + '，速来围观！';
     let descMsg = '刚刚发现了这家店铺' + this.state.business_list.name + '，活动多多，优惠空前，你绝对喜欢，快点进来看看！';
     Taro.request({
@@ -285,7 +292,14 @@ export default class PaySuccess extends Component<Props> {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.business_list.xpoint);
       let latitude = parseFloat(this.state.business_list.ypoint);
-      let url = window.location.href;
+      let userAgent = navigator.userAgent;
+      let isIos = userAgent.indexOf('iPhone') > -1;
+      let url: any;
+      if (isIos) {
+        url = sessionStorage.getItem('url');
+      } else {
+        url = location.href;
+      }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',

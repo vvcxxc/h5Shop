@@ -182,7 +182,14 @@ export default class DetailAppreciation extends Component{
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.data.xpoint);
       let latitude = parseFloat(this.state.data.ypoint);
-      let url = window.location.href;
+      let userAgent = navigator.userAgent;
+      let isIos = userAgent.indexOf('iPhone') > -1;
+      let url: any;
+      if (isIos) {
+        url = sessionStorage.getItem('url');
+      } else {
+        url = location.href;
+      }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',

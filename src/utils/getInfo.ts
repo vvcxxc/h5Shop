@@ -124,7 +124,14 @@ export const getLocation = () => {
     //     "longitude" : 212
     //   })
     // })
-    let url = location.href.split('#')[0];
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
