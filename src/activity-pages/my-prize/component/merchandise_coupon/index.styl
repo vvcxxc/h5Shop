@@ -1,0 +1,68 @@
+.merchandise_coupon{
+  margin-bottom 20px
+  .merchandise_coupon_box{
+    width:715px;
+    height:205px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url('../..../../../../../assets/merchandise_coupon.png');
+    background-repeat: no-repeat;
+    background-size:15.2rem;
+    ul {
+      list-style none;
+    }
+    //有手机图片显示 52px   立即使用 33px   已使用 已过期46px
+  }
+
+   .coupon_left{
+     padding 0px 0px 0px 27px; 
+     li:nth-child(1) {
+      margin-bottom 10px
+      font-size:30px;
+      font-family:PingFang SC;
+      font-weight:bold;
+      color:rgba(94,50,28,1);
+      line-height:31px;
+     }
+     li{
+      font-size:24px;
+      font-family:PingFang SC;
+      font-weight:bold;
+      color:rgba(200,157,115,1);
+      line-height:30px;
+     }
+    }
+    .coupon_right{
+      padding-right 32px
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .coupon_img{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin-bottom 10px;
+          img {
+          width:106px;
+          height:106px;
+          border-radius:10px;
+        }
+      }
+      .user_button{
+        width:142px;
+        height:52px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size:26px;
+        line-height 26px
+        font-family:PingFang SC;
+        font-weight:bold;
+        color:rgba(255,255,255,1);
+        background:rgba(254,110,35,1);
+        border-radius:26px;
+      }
+    }
+
+}
