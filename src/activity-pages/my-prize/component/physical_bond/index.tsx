@@ -8,7 +8,8 @@ export default function PhysicalBond(params: any) {
       </div>
       <div className="detail_info">
         <div className="shop_name">
-          <span>{params.list.prize_name }</span>
+          <span>{params.list.prize_name}</span>
+          {/* 89898 */}
           {
             {
               1: <span >未使用</span>,
@@ -16,6 +17,7 @@ export default function PhysicalBond(params: any) {
               3: <span >已过期</span>,
             }[params.list.status]
           }
+          
         </div>
         <div>领取地点:{params.list.store_name}</div>
         <div>领取时间:{params.list.created_at}</div>
