@@ -115,7 +115,7 @@ class MyPrize extends Component {
           onClose={() => { this.setState({ isOpened: false})}}
         >
           <View className="user_prompt_box">
-            <View className="user_prompt">请前往 <span>领取地址</span> 扫码领取</View>
+            <View className="user_prompt">请前往 <Text>领取地址</Text> 扫码领取</View>
             <Image
               src={this.state.codeImg}
             />
