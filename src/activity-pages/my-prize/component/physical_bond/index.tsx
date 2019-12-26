@@ -25,7 +25,7 @@ export default function PhysicalBond(params: any) {
           <span>地址:{params.list.address}</span>
           {
             params.list.status == 1 ?
-              <span className="allow_use" onClick={() => { this.props.onChange(params.list.prize_id)}}> 查看二维码</span> :
+              <span className="allow_use" onClick={() => { this.props.onChange(params.list.id)}}> 查看二维码</span> :
               <span className="refuse_use"> 查看二维码</span>
           }
         </div>
