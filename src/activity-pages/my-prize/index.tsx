@@ -81,7 +81,7 @@ class MyPrize extends Component {
 
   //使用卡券
   userCard = (data) => {
-    QRCode.toDataURL(JSON.stringify({ id: data}))
+    QRCode.toDataURL(JSON.stringify({ id: data ,verificationType:"Prize"}))
       .then((url: any) => {
         Taro.hideLoading();
         this.setState({ codeImg: url, isOpened: true })
