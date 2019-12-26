@@ -45,21 +45,32 @@ class MyPrize extends Component {
     ],
     codeImg: '',
     isOpened: false,
-
+    physical_page:1,
+    merchandise_page: 1,
+    closeLoading:false
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    this.getListData()
+  }
+
+  getListData = () => {//得到列表数据
+    const { physical_page } = this.state
     request({
       url: 'v3/Lotterys/user_activity_prize',
       method: "GET",
       data: {
-
+        page:physical_page
       }
     })
       .then((res: any) => {
         const { data, code } = res
         if (code == 200) {
-          this.setState({ physical_bond: data })
+          Taro.hideLoading()
+          this.setState({
+            physical_bond: physical_page > 1 ? [...this.state.physical_bond, ...data] : data,
+            closeLoading: data.length? false :true
+          })
         }
       })
   }
@@ -79,6 +90,15 @@ class MyPrize extends Component {
         Taro.hideLoading();
         Taro.showToast({ title: '获取二维码失败', icon: 'none' })
       })
+  }
+
+  //触底函数
+  onReachBottom() {
+    const { closeLoading, physical_page } = this.state
+    if (closeLoading) return
+    Taro.showLoading()
+    this.setState({ physical_page: physical_page + 1 }, () => { this.getListData() })
+    
   }
 
   render() {
