@@ -11,12 +11,12 @@ export const Login = () => {
   let from = window.location.href
   let type = getBrowserType();
   if(process.env.NODE_ENV == 'development'){
-    if(Cookie.get('test_token_auth')){
-      console.log('已登录')
-      return
-    }
+    // if(Cookie.get('test_token_auth')){
+    //   console.log('已登录')
+    //   return
+    // }
 
-    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1NzYyMDI5MDcsImV4cCI6MTU3NjU2MjkwNywibmJmIjoxNTc2MjAyOTA3LCJqdGkiOiIwREVDMnNvWWMxak5raGk4Iiwic3ViIjo3NTcwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.aUsM2qnqFbDyj2Ni82Sfdvo9-pY5mfugjBefTpobQW4')
+    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLnRkaWFueWkuY29tL3dlY2hhdC93eG9hdXRoIiwiaWF0IjoxNTc3NTgxOTg4LCJleHAiOjE1Nzc5NDE5ODgsIm5iZiI6MTU3NzU4MTk4OCwianRpIjoiQlZGZHRVS1lLRzUwU2kwdiIsInN1YiI6MzA4OTUsInBydiI6ImY2YjcxNTQ5ZGI4YzJjNDJiNzU4MjdhYTQ0ZjAyYjdlZTUyOWQyNGQifQ.LC4bp05UdrJJZ2_rDwzluDSnv4G3TmBC-0iEGhGiUZQ')
     // request({
 		// 	url: 'api/wap/testLogin'
 		// }).then((res: any) => {

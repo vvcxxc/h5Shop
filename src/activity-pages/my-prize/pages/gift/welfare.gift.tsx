@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro"
-import { Block, View } from "@tarojs/components"
+import { Block, View, Image } from "@tarojs/components"
 import { getUserGift, addUserReceiveinfo } from "@/api"
 import GiftItem from "../../components/gift-item/gift.item"
 import GiftView from "../../components/gift-view/gift.view"
@@ -87,28 +87,52 @@ export default class MyWelfare extends Component {
   }
   render() {
     const { list, action } = this.state
+    // const noData = (
+
+    // )
     return (
       <Block>
-        <View className="welfare-gift">
-          <View className="container">
-            {!list && <NoData />}
-            {
-              list && <GiftItem
-                key={0}
-                data={list}
-                onAction={this.handleAction}
-              />
-            }
-          </View>
-          {
-            action ?
-              <GiftView
-                onAction={this.handleAction}
-                data={list}
-              />
-              : null
-          }
-        </View>
+
+        {
+          list ? (
+            <View className="welfare-gift">
+              <View className="container">
+                {
+                  list && <GiftItem
+                    key={0}
+                    data={list}
+                    onAction={this.handleAction}
+                  />
+                }
+              </View>
+              {
+                action ?
+                  <GiftView
+                    onAction={this.handleAction}
+                    data={list}
+                  />
+                  : null
+              }
+            </View>
+          ) : (
+              <View className='no_data' >
+                <View className='no_box'>
+                  <View className='no_data_image'>
+                    <Image src={require('./gift.png')} />
+                  </View>
+                  <View className='no_data_zhanwei'></View>
+                  <View>
+                    您还没有抽中奖品哦！
+                  </View>
+                </View>
+
+              </View>
+            )
+        }
+
+
+
+
       </Block>
     )
   }
