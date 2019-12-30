@@ -43,6 +43,7 @@ export default class MyWelfare extends Component {
         this.setState({
           action: ""
         })
+        this.fetchGift()
         break
       case ACTION_GET:
         this.setState({
