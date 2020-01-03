@@ -10,6 +10,9 @@
     height:167px;
     border-radius:10px;
     overflow hidden;
+    display: flex;
+    align-items: center;
+    justify-content :center;
     img {
       height: 100%;
     }
@@ -19,6 +22,7 @@
     padding-left: 24px;
     box-sizing: border-box;
     flex: 2;
+    position: relative;
     .shop_name{
       display: flex;
       line-height 30px;
@@ -39,19 +43,13 @@
       color:rgba(200,157,115,1);
      }
      .location{
+       position:absolute;
+       bottom: 0;
+       right :0;
        display: flex;
-       justify-content: space-between;
+       justify-content: flex-end;
        align-items: center;
-       span:nth-child(1){
-          width 289px;
-          overflow : hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          /* autoprefixer: ignore next */
-          -webkit-box-orient: vertical;
-       }
-       span:nth-child(2){
+       span{
           width:164px;
           height:52px;
           display: flex;
