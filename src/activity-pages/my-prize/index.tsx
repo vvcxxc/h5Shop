@@ -14,48 +14,46 @@ class MyPrize extends Component {
     list: [1, 2, 3, 3, 3, 3, 3, 3, 5],
     physical_bond: [//实物券
     ],
-    merchandise_coupon: [//商家券
-      {
-        img: 'https://img14.360buyimg.com/n7/jfs/t1/27385/12/12617/203546/5c98ca37Eff3ca839/b32de2a2d04984c7.jpg',
-        name: 'HU植物护理洗护套装AWEI',
-        shop_name: '洛溪店',
-        time: '有效期:2018.07-2018.09',
-        type: 1, //根据type值判断  1 立即使用  2已使用 3 已过期 
-      },
-      {
-        img: 'https://img14.360buyimg.com/n7/jfs/t1/27385/12/12617/203546/5c98ca37Eff3ca839/b32de2a2d04984c7.jpg',
-        shop_name: '洛溪店',
-        name: 'HU植物护理洗护套装AWEI',
-        time: '有效期:2018.07-2018.09',
-        type: 2,
-        des: '到店扫码支付时抵用',//描述
-        user_astrict: '急速退/免预约/全部商品可用',//使用限制
-        money: '2'
-      },
-      {
-        img: 'https://img14.360buyimg.com/n7/jfs/t1/27385/12/12617/203546/5c98ca37Eff3ca839/b32de2a2d04984c7.jpg',
-        shop_name: '洛溪店',
-        name: 'HU植物护理洗护套装AWEI',
-        time: '有效期:2018.07-2018.09',
-        type: 3,
-        des: '到店扫码支付时抵用',//描述
-        user_astrict: '急速退/免预约/全部商品可用',//使用限制
-        money: '2'
-      }
-    ],
+    merchandise_coupon: [],
     codeImg: '',
     isOpened: false,
-    physical_page:1,
+    physical_page: 1,
+    
     merchandise_page: 1,
-    closeLoading:false
+    closeLoading: false,
+    merchandiseLoading:false
   }
 
   componentWillMount() {
-    this.getListData()
+    
+    this.getShopData()
   }
 
-  getListData = () => {//得到列表数据
-    const { physical_page } = this.state
+  getShopData = () => {//得到商家列表数据
+    const { physical_page, merchandise_page } = this.state
+    request({
+      url: 'v3/youhuiLogs',
+      method: "GET",
+      data: {
+        page: merchandise_page
+      }
+    })
+      .then((res: any) => {
+        const { data, code } = res
+        let meta = data.data
+        if (code == 200) {
+          Taro.hideLoading()
+          this.setState({
+            merchandise_coupon: merchandise_page > 1 ? [...this.state.merchandise_coupon, ...meta] : meta,
+             merchandiseLoading: meta.length ? false : true
+          })
+        }
+
+      })
+  }
+
+  getListData = () => {//得到实物列表数据
+    const { physical_page, merchandise_page } = this.state
     request({
       url: 'v3/Lotterys/user_activity_prize',
       method: "GET",
@@ -94,11 +92,18 @@ class MyPrize extends Component {
 
   //触底函数
   onReachBottom() {
-    const { closeLoading, physical_page } = this.state
-    if (closeLoading) return
-    Taro.showLoading()
-    this.setState({ physical_page: physical_page + 1 }, () => { this.getListData() })
-    
+    const { closeLoading, physical_page, index, merchandise_page, merchandiseLoading} = this.state
+    if (index) {
+      if (closeLoading) return
+      Taro.showLoading()
+      this.setState({ physical_page: physical_page + 1 }, () => { this.getListData() })
+    } else {
+      if (merchandiseLoading) return
+      Taro.showLoading()
+      console.log(1.1);
+      
+      this.setState({ merchandise_page: merchandise_page + 1 }, () => { this.getShopData() })
+    }
   }
 
   render() {
@@ -116,15 +121,14 @@ class MyPrize extends Component {
           </div>
         </header>
         <main className="list_data">
-          {/* <InputValue></InputValue> */}
           {
             index !== 0 && physical_bond.map((value) => {
               return <PhysicalBond list={value} onChange={this.userCard} />
             })
           }
           {
-            index === 0 && merchandise_coupon.map((item) => {
-              return <MerchandiseCoupon list={item} />
+            index === 0 &&   merchandise_coupon.map((item) => {
+              return <MerchandiseCoupon list={item} onChange={this.userCard} />
             })
           }
 
