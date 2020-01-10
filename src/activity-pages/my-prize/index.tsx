@@ -75,6 +75,16 @@ class MyPrize extends Component {
 
   tabClick = (index: number) => {
     this.setState({ index })
+    switch (index) {
+      case 0:
+        this.getShopData()
+        break;
+      case 1:
+        this.getListData()
+        break;
+      default:
+        break;
+    }
   }
 
   //使用卡券
@@ -100,8 +110,6 @@ class MyPrize extends Component {
     } else {
       if (merchandiseLoading) return
       Taro.showLoading()
-      console.log(1.1);
-      
       this.setState({ merchandise_page: merchandise_page + 1 }, () => { this.getShopData() })
     }
   }
