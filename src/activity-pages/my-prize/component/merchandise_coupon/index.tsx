@@ -32,11 +32,13 @@ export default function PhysicalBond(params: any) {
             <li className="threshold"><span>满{list.total_fee}可用</span></li>
            
           </ul>
+          {/* -9.6rem已经过期  -4.8rem已经使用*/}
         </div> : <div className='merchandise_coupon_box'
             style={{ 
-              backgroundPositionY: list.expire_time < new Date().getTime() / 1000 ? '-9.6rem'
-                : ['0rem', '-4.8rem'][list.status - 1]
-           }}>
+              backgroundPositionY: list.status == 2 ? '-4.8rem' : (
+                dayjs(list.expire_date).unix() < dayjs().unix()? '-9.6rem':'0rem'
+              )
+            }}>
             <ul className="coupon_left">
               <li ><span>{['兑换券', '现金券'][list.youhui_type]}</span>{list.shop_name}</li>
               <li>{list.name}</li>
