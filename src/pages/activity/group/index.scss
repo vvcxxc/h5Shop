@@ -1,8 +1,12 @@
 .d_appre {
     width: 100%;
-    height: auto;
+    height: 100%;
     padding-bottom: 110px;
     background: #ededed;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: scroll;
 
     .d_appre_groupList {
         width: 100%;
@@ -569,6 +573,7 @@
         padding: 0 24px;
         box-sizing: border-box;
         margin-bottom: 20px;
+        overflow: hidden;
 
         .group_list {
             height: 130px;
@@ -764,7 +769,7 @@
         height: 315px;
         background: #f4f4f4;
         border: none;
-        margin-bottom: 100px;
+        margin-bottom: 220px;
 
         .setMeal_store_box {
             width: 100%;
@@ -895,7 +900,7 @@
         }
     }
 
-    .choose_postage {
+    .choosePostage {
         height: 55px;
         background: #fff;
         position: fixed;
@@ -904,7 +909,6 @@
         padding: 10px 0;
         line-height: 55px;
         padding-left: 55px;
-        z-index: 3;
 
         .choose {
             width: 32px;
@@ -1006,10 +1010,19 @@
             line-height: 75px;
             float: right;
             border-radius: 37.5px;
-            background: linear-gradient(90deg, #FE7450, #FF2614);
+            // background: linear-gradient(90deg, #FE7450, #FF2614);
             color: #fff;
             text-align: center;
             font-size: 30px;
+        }
+
+        #prohibit {
+            background-color: #ccc;
+            color: #fff;
+        }
+
+        #allow {
+            background: linear-gradient(90deg, #FE7450, #FF2614);
         }
 
         .paymoney_groupnow {

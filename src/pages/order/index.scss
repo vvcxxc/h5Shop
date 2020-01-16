@@ -1,0 +1,172 @@
+.orders {
+    min-height: 100vh ;
+    height: auto;
+    position: relative;
+
+
+    .code_show {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 4;
+        background: rgba(0, 0, 0, .7);
+
+        .code_background {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            z-index: 4;
+        }
+
+        .codeBox {
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -250px;
+            background: #fff;
+            z-index: 5;
+
+            .codeBox_info {
+                position: absolute;
+                width: 400px;
+                height: 40px;
+                left: 50%;
+                top: 5%;
+                font-size: 25px;
+                font-weight: bold;
+                margin-left: -200px;
+                text-align: center;
+            }
+
+            .codeBox_img {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                left: 50%;
+                top: 20%;
+                margin-left: -150px;
+                background: #cccccc;
+
+                .code_img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .codeBox_msg {
+                position: absolute;
+                width: 400px;
+                height: 40px;
+                left: 50%;
+                top: 85%;
+                font-size: 35px;
+                margin-left: -200px;
+                text-align: center;
+            }
+        }
+    }
+
+    .msgBox {
+        position: absolute;
+        width: 14rem;
+        height: 10rem;
+        left: 50%;
+        top: 50%;
+        margin-left: -7rem;
+        margin-top: -5rem;
+        z-index: 5;
+
+        .imgBox {
+            position: absolute;
+            width: 5rem;
+            height: 5rem;
+            left: 50%;
+            top: 0;
+            margin-left: -2.5rem;
+
+            .logo {
+                width: 100%;
+                height: 100%;
+            }
+
+        }
+
+        ._msg {
+            position: absolute;
+            top: 65%;
+            width: 100%;
+            font-size: 28px;
+            color: #313131;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .toHome {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            width: 8rem;
+            margin-left: -4rem;
+            font-size: 32px;
+            height: 2rem;
+            text-align: center;
+            line-height: 3;
+            border: 2px solid #999999;
+            color: #666666;
+            // background: linear-gradient(to bottom , #cccccc, #ffffff);
+            border-radius: .25rem;
+        }
+    }
+
+    .atTabs {
+        height: 90px;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        z-index: 2;
+        background: #fff;
+
+        .atTabsTitle {
+            height: 100%;
+            flex: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .atTabsContent {
+                height: 100%;
+                width: 95px;
+                box-sizing: border-box;
+                font-size: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .title {
+                    width: 100%;
+                    text-align: center;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+
+    .tiket_box {
+        width: 100vw;
+        height: auto;
+        min-height:100vh ;
+        background: #f4f4f4;
+        padding-top: 100px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+}

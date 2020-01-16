@@ -9,6 +9,8 @@ import logo from "@/assets/logo.png";
 import "./activity.styl"
 import { getLocation } from "@/utils/getInfo";
 import request from '../../services/request';
+import iNoBounce from '@/utils/inobouce';
+
 
 export default class Activity extends Component<any>  {
 
@@ -50,13 +52,21 @@ export default class Activity extends Component<any>  {
     indexImg: ''
   }
 
-
   componentDidShow() {
+    console.log('global',iNoBounce)
+    // let u = navigator.userAgent
+    // if (u.indexOf('iPhone') > -1) {
+    //     console.log('iNoBounce',iNoBounce)
+    //     iNoBounce.enable()
+    // }
+  }
 
+  componentDidMount() {
+
+    
   }
 
   onReachBottom() {
-    console.log('saddasdasd')
     const { current, flag } = this.state;
     if(!this.state.dataList.length){
       console.log('禁止触底')

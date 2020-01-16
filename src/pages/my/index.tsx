@@ -50,17 +50,19 @@ export default class NewPage extends Component<Props>{
         prompt: '有正在进行的拼团活动',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/r55CxTJ4AAkmZFHRESeFs2GAFDCJnW5Z.png',
         path: "/activity-pages/my-activity/my.activity",
-      }, {
+      },
+      {
         des: '我的奖品',
         prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/iYK4YnfmBrNP8tZGWHeQNpRTHFj5ajyr.png',
-        path: "/activity-pages/my-prize/pages/gift/welfare.gift"
+        path: "/activity-pages/my-prize/index"
       },
-      // {
-      //   des: '我的收货地址',
-      //   prompt: null,
-      //   img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png'
-      // }
+      {
+        des: '我的收货地址',
+        prompt: '',
+        img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png',
+        path: "/activity-pages/Shipping-address/index",
+      }
     ]
   }
 
@@ -136,13 +138,15 @@ export default class NewPage extends Component<Props>{
             {
               this.state.list.map((item: any, index) => {
                 return <View className="list_my" onClick={this.jumpData.bind(this, item.path)}>
-                  <View className="list_left">
-                    <Image src={item.img} />
-                    <View className="des">{item.des}</View>
-                  </View>
-                  <View className="list_right">
-                    <Text className="prompt">{item.prompt}</Text>
-                    <Image src={require('../../assets/right_arro.png')} className='back' />
+                  <View className="list_content">
+                    <View className="list_left">
+                      <Image src={item.img} />
+                      <View className="des">{item.des}</View>
+                    </View>
+                    <View className="list_right">
+                      <Text className="prompt">{item.prompt}</Text>
+                      <Image src={require('../../assets/right_arro.png')} className='back' />
+                    </View>
                   </View>
                 </View>
               })

@@ -1,0 +1,242 @@
+
+#tuxedo_box{
+  padding: 0px  30px 50px 30px;
+  .at-curtain__body{
+    display: flex;
+    justify-content: center;
+    img {
+      height: 350px;
+    }
+    .user_prompt_box{
+      .user_prompt{
+        color: #fff;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .taro-img {
+        height: auto;
+        width: 400px;
+      }
+    }
+    
+    .at-curtain{
+      background-color:rgba(0, 0, 0, 0.7) !important
+    }
+    
+  }
+  .tuxedo_content {
+    display: flex;
+    border-bottom: 1px solid rgba(229,229,229,1);;
+    padding: 20px;
+    background-color: #fff;
+    border-radius:20px 20px 0px 0px;
+  }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 32px;
+    padding-left: 23px;
+    background-color: #fff;
+    border-radius: 0px 0px 20px 20px;
+  }
+  .tuxedo_title {
+    display: flex;
+    align-items: center;
+    height: 26px;
+    margin-top: 31px;
+    margin-bottom: 19px;
+    padding-left: 20px;
+  }
+}//顶层盒子
+
+.tuxedo_title {//子层盒子
+  .title_right{
+    font-size:25px;
+    font-family:Source Han Sans CN;
+    font-weight:400;
+    color:rgba(90,90,90,1);
+  }
+  .taro-img{
+    height: 25px;
+    width: 25px;
+    margin-right: 12px;
+    img {
+      height: 100%;
+    }
+  }
+
+}
+
+  .message   {
+    .message_left{
+      flex: 1;
+      .taro-img{
+        width:180px;
+        height:177px;
+        border-radius:10px;
+        overflow: hidden;
+        margin-right: 19px;
+        img {
+          height: 100%;
+        }
+      }
+    }
+
+    .message_right {
+      flex: 2.62;
+      .taro-img{
+        margin-top: 17px;
+        width:141px;
+        height:88px;
+        border-radius:5px;
+        img {
+          height: 100%;
+        }
+      }
+      .full_name{
+        font-size:32px;
+        line-height: 1;
+        font-family:Source Han Sans CN;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+      }
+      .residue_time{
+        display: flex;
+        font-size:24px;
+        font-family:Source Han Sans CN;
+        font-weight:400;
+        color:#FB4E44;
+        margin-bottom: 2px;
+        Text {
+          color:rgba(153,153,153,1);
+          margin-right: 5px;
+        }
+        .failure{
+          color:#EE3131
+        }
+      }
+      .group{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+     
+    }
+
+  }
+
+.group_right{
+  .original_price{
+    font-size:22px;
+    font-family:Source Han Sans CN;
+    font-weight:400;
+    color:rgba(160,160,160,1);
+    text-decoration: line-through;
+    line-height: 1;
+    text-align: right;
+  }
+  .group_price{
+    margin-top: 22px;
+    line-height: 1;
+    display: flex;
+    align-items: flex-end;
+  }
+  .group_price :nth-child(1){
+    font-size:24px;
+    font-family:Source Han Sans CN;
+    font-weight:400;
+    color:rgba(238,49,49,1);
+  }
+  .group_price :nth-child(2){
+    font-size:44px;
+    font-family:Source Han Sans CN;
+    font-weight:500;
+    color:rgba(238,49,49,1);
+  }
+  
+}
+
+.foot {
+  .left {
+    display: flex;
+    align-items: center;
+    .tuxedo_people{
+      margin-left: -15px;
+    }
+
+    .user_head{
+      height: 64px;
+      width: 64px;
+      overflow: hidden;
+      .taro-img{
+        height: 62px;
+        width: 62px;
+        border-radius: 50%;
+        img{
+          height: 100%;
+        }
+      }
+    }
+     .no_user_head{
+      height: 78px;
+      width: 78px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-left: -20px;
+      .taro-img{
+        height: 78px;
+        width: 78px;
+        border-radius: 50%;
+        img{
+          height: 100%;
+        }
+      }
+    }
+  }
+  span {
+    position: absolute;
+    padding: 4px 9px;
+    line-height: 1;
+    bottom: 20px;
+    left:28px;
+    background:linear-gradient(-150deg,#ff2514,#fe7651);
+    border-radius:5px;
+    font-size:16px;
+    font-family:Source Han Sans CN;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+  }
+  .right {
+    padding-right: 22px;
+    display: flex;
+    align-items: center;
+    div {
+      width:150px;
+      height:52px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size:24px;
+      font-family:Source Han Sans CN;
+      font-weight:400;
+      border-radius:5px;
+      margin-left: 21px;
+    }
+    .invite{
+      color:rgba(255,255,255,1);
+      background:linear-gradient(-150deg,#ff2514,#fe7651);
+    }
+    .userCoupon{
+      color:rgba(255,255,255,1);
+      background:linear-gradient(-150deg,#ffb413,#ff6003)
+    }
+    .invalid{
+      // color:#ccc;
+      // background-color: #666;
+      color: #fff;
+      background: #ccc;
+    }
+  }
+}

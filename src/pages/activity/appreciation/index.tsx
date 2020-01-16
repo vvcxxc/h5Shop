@@ -22,8 +22,8 @@ export default class Appre extends Component<Props>{
     ruleMore: false,
     imgZoom: false,
     imgZoomSrc: '',
-    xPoint: 0,
-    yPoint: 0,
+    xPoint: '',
+    yPoint: '',
     imagesCurrent: 0,
     data: {
       activity_begin_time: "",
@@ -76,12 +76,10 @@ export default class Appre extends Component<Props>{
         isFromShare: true
       })
     }
-    console.log(this.$router.params);
     Taro.showLoading({
       title: 'loading',
     })
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
@@ -129,8 +127,6 @@ export default class Appre extends Component<Props>{
           }
         })
           .then((res: any) => {
-
-
             if (res.code == 200) {
               if (res.data.gift_id) {
                 if (res.data.gift.mail_mode == 2) {
@@ -176,8 +172,6 @@ export default class Appre extends Component<Props>{
     let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
     let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
     let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id;
-    console.log("let:linkMsg", linkMsg);
-
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -187,7 +181,6 @@ export default class Appre extends Component<Props>{
     })
       .then(res => {
         let { data } = res;
-        console.log("request:linkMsg", linkMsg);
         wx.config({
           debug: false,
           appId: data.appId,
@@ -202,7 +195,6 @@ export default class Appre extends Component<Props>{
           ]
         })
         wx.ready(() => {
-          console.log("ready:linkMsg", linkMsg);
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
@@ -210,7 +202,6 @@ export default class Appre extends Component<Props>{
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
-              console.log("分享成功")
             }
           })
         })
@@ -329,7 +320,6 @@ export default class Appre extends Component<Props>{
       });
     }
     let datas = {}
-    console.log(Taro.getStorageSync("open_id"))
     if (_type == 1) {
       datas = {
         youhui_id: this.$router.params.id,
@@ -360,22 +350,62 @@ export default class Appre extends Component<Props>{
       data: JSON.stringify(datas)
     })
       .then((res: any) => {
-        let order_sn = res.data.channel_order_sn;
         Taro.hideLoading();
-        if (_type == 1) {
-          //微信支付
-          window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-            "appId": res.data.appId,
-            "timeStamp": res.data.timeStamp,
-            "nonceStr": res.data.nonceStr,
-            "package": res.data.package,
-            "signType": res.data.signType,
-            "paySign": res.data.paySign
-          },
-            function (res) {
-              //微信支付成功
-              if (res.err_msg == "get_brand_wcpay_request:ok") {
+        if (res.code == 200) {
+          let order_sn = res.data.channel_order_sn;
+
+          if (_type == 1) {
+            //微信支付
+            window.WeixinJSBridge.invoke(
+              'getBrandWCPayRequest', {
+              "appId": res.data.appId,
+              "timeStamp": res.data.timeStamp,
+              "nonceStr": res.data.nonceStr,
+              "package": res.data.package,
+              "signType": res.data.signType,
+              "paySign": res.data.paySign
+            },
+              function (res) {
+                //微信支付成功
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  Taro.showLoading({
+                    title: 'loading',
+                  });
+                  interval = setInterval(function () {
+                    //查询用户最后一次购买的增值活动id
+                    request({
+                      url: 'v1/youhui/getUserLastYouhuiId',
+                      method: "GET",
+                      data: { order_sn: order_sn }
+                    }).then((res: any) => {
+                      if (res.code == 200) {
+                        clearInterval(interval);
+                        Taro.hideLoading();
+                        //得到增值活动id并跳转活动详情
+                        Taro.navigateTo({
+                          url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                          success: function (e) {
+                            let page = Taro.getCurrentPages().pop();
+                            if (page == undefined || page == null) return;
+                            page.onShow();
+                          }
+                        })
+                      }
+                    })
+                  }, 500);
+
+                } else {
+                  //微信支付失败
+                }
+              }
+            );
+          } else if (_type == 2) {
+            //支付宝支付
+            window.AlipayJSBridge.call('tradePay', {
+              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+            }, res => {
+              //支付宝支付成功
+              if (res.resultCode === "9000") {
                 Taro.showLoading({
                   title: 'loading',
                 });
@@ -401,52 +431,30 @@ export default class Appre extends Component<Props>{
                     }
                   })
                 }, 500);
-
               } else {
-                //微信支付失败
+                //支付宝支付失败
               }
-            }
-          );
-        } else if (_type == 2) {
-          //支付宝支付
-          window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-          }, res => {
-            //支付宝支付成功
-            if (res.resultCode === "9000") {
-              Taro.showLoading({
-                title: 'loading',
-              });
-              interval = setInterval(function () {
-                //查询用户最后一次购买的增值活动id
-                request({
-                  url: 'v1/youhui/getUserLastYouhuiId',
-                  method: "GET",
-                  data: { order_sn: order_sn }
-                }).then((res: any) => {
-                  if (res.code == 200) {
-                    clearInterval(interval);
-                    Taro.hideLoading();
-                    //得到增值活动id并跳转活动详情
-                    Taro.navigateTo({
-                      url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                      success: function (e) {
-                        let page = Taro.getCurrentPages().pop();
-                        if (page == undefined || page == null) return;
-                        page.onShow();
-                      }
-                    })
-                  }
-                })
-              }, 500);
-            } else {
-              //支付宝支付失败
-            }
-          })
+            })
+          } else {
+            console.log(_type)
+          }
         } else {
-          console.log(_type)
+          Taro.showToast({ title: res.message, icon: 'none' })
         }
+      }).catch(err => {
+        Taro.hideLoading();
       })
+  }
+
+  goToaConfirm = (e) => {
+    if (this.state.data.gift_id) {
+      Taro.navigateTo({
+        url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
+      })
+    } else {
+      this.payment()
+    }
+
   }
 
   /**
@@ -633,9 +641,9 @@ export default class Appre extends Component<Props>{
             </View>
           </View>
         </View>
-        {
+        {/* {
           (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
-            <View className='choose_postage' onClick={this.chooseGift}>
+            <View className='choosePostage' onClick={this.chooseGift}>
 
               <View>
                 {
@@ -647,7 +655,7 @@ export default class Appre extends Component<Props>{
                 <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
               </View>
             </View>) : null
-        }
+        } */}
         <View className="paymoney_box">
           <View className="paymoney_price">
             <View className="paymoney_price_icon">￥</View>
@@ -664,7 +672,7 @@ export default class Appre extends Component<Props>{
             this.state.data.activity_time_status == 1 ? (
               <View className="paymoney_buynow_no">暂未开始</View>
             ) : this.state.data.activity_time_status == 2 ? (
-              <View className="paymoney_buynow" onClick={this.payment.bind(this)}>立即购买</View>
+              <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>立即购买</View>
             ) : this.state.data.activity_time_status == 3 ? (
               <View className="paymoney_buynow_no">已结束</View>
             ) : null
@@ -698,7 +706,7 @@ export default class Appre extends Component<Props>{
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '70px', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '50%', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
