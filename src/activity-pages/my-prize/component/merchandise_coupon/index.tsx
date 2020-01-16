@@ -13,7 +13,9 @@ export default function PhysicalBond(params: any) {
             :['0rem', '-4.8rem'][list.status - 1]
         }}>
           <ul className="coupon_left">
-            <li ><span>{['兑换券', '现金券'][list.youhui_type]}</span>{list.shop_name}</li>
+            <li ><span>{['兑换券', '现金券'][list.youhui_type]}</span>
+              { list.shop_name}
+            </li>
             <li>有效期至:{list.expire_date}</li>
             <li>到店扫码支付时抵用</li>
             {
@@ -36,7 +38,7 @@ export default function PhysicalBond(params: any) {
                 : ['0rem', '-4.8rem'][list.status - 1]
            }}>
             <ul className="coupon_left">
-              <li ><span>{['兑换券', '现金券'][list.youhui_type]}</span>{list.name}</li>
+              <li ><span>{['兑换券', '现金券'][list.youhui_type]}</span>{list.shop_name}</li>
               <li>{list.name}</li>
               <li>有效期至:{list.expire_date}</li>
             </ul>
@@ -44,7 +46,7 @@ export default function PhysicalBond(params: any) {
               <li className="coupon_img">
                 <img src={list.icon} alt="" />
               </li>
-              <li className="user_button" onClick={() => { this.props.onChange(params.list.id) }}>立即使用</li>
+              <li className="user_button" onClick={() => { this.props.onChange(params.list.youhui_sn,true) }}>立即使用</li>
             </ul>
           </div>
       }
