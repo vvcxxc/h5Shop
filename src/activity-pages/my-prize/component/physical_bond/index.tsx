@@ -18,9 +18,9 @@ export default function PhysicalBond(params: any) {
           }
 
         </div>
-        <div>领取地点:{params.list.store_name}</div>
+        {/* <div>领取地点:{params.list.store_name}</div> */}
         <div>领取时间:{params.list.created_at}</div>
-        <div>地址:{params.list.address}</div>
+        {/* <div>地址:{params.list.address}</div> */}
         <div className="location">
           {
             params.list.status == 1 ?
