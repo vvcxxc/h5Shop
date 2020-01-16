@@ -84,13 +84,13 @@ const config = {
       filename: 'js/[name].[hash:8].js',
       chunkFilename: 'js/[name].[chunkhash:8].js'
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        // 类似 webpackOptions.output里面的配置 可以忽略
-        filename: '[name].css',
-        chunkFilename: '[id].css',
-      }),
-    ],
+    // plugins: [
+    //   new MiniCssExtractPlugin({
+    //     // 类似 webpackOptions.output里面的配置 可以忽略
+    //     filename: '[name].css',
+    //     chunkFilename: '[id].css',
+    //   }),
+    // ],
     //   plugins: [
     //     new ExtractTextPlugin({
     //         filename: './[name]/style_[contenthash:8].css'
