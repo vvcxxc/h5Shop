@@ -69,6 +69,7 @@ const config = {
     }
   },
   h5: {
+    enableExtract: true,
     publicPath: "/",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
@@ -83,6 +84,10 @@ const config = {
     output: {
       filename: 'js/[name].[hash:8].js',
       chunkFilename: 'js/[name].[chunkhash:8].js'
+    },
+    miniCssExtractPluginOption: {
+      filename: 'js/[name].[hash:8].css',
+      chunkFilename: 'js/[name].[chunkhash:8].css'
     },
     plugins: [
       new MiniCssExtractPlugin({
