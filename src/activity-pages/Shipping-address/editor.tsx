@@ -36,6 +36,31 @@ export default class EditorAddress extends Component {
         }
     }
 
+    handleShowCity() {
+        this.setState({
+            actionsheetShow: true
+        }, () => {
+            let el = document.getElementById('AtActionSheetBox');
+            console.log(el)
+            if (el) {
+                el.style.transform = "translate(0,-75vh)";
+                el.style.transition = "all .8s";
+            }
+        })
+    }
+    handleCloseCity() {
+        let el = document.getElementById('AtActionSheetBox');
+        if (el) {
+            el.style.transform = "translate(0,75vh)";
+            el.style.transition = "all .8s";
+            setTimeout(() => {
+                this.setState({
+                    actionsheetShow: false
+                })
+            }, 200)
+        }
+    }
+
 
     componentDidMount() {
         console.log(this.$router.params);
@@ -75,7 +100,8 @@ export default class EditorAddress extends Component {
     }
     // 所在区域
     cityEnd = (query) => {
-        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
+        // this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
+        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked })
     }
     //详细地址
     onHandelChangeAddress = (e) => {
@@ -367,7 +393,7 @@ export default class EditorAddress extends Component {
                             onInput={this.onHandelChangePhone.bind(this)}
                         />
                     </View>
-                    <View className="editor-box" onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }} >
+                    <View className="editor-box" onClick={this.handleShowCity.bind(this)} >
                         <View className="editor-box_left">所在区域:</View>
                         <View className="editor-box_input0" >{this.state.tempCityInfo}</View>
                         <View className="editor-box_right">
