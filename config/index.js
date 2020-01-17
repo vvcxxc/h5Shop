@@ -86,8 +86,8 @@ const config = {
       chunkFilename: 'js/[name].[chunkhash:8].js'
     },
     miniCssExtractPluginOption: {
-      filename: 'js/[name].[hash:8].css',
-      chunkFilename: 'js/[name].[chunkhash:8].css'
+      filename: 'css/[name].[hash:8].css',
+      chunkFilename: 'css/[name].[chunkhash:8].css'
     },
     // plugins: [
     //   new MiniCssExtractPlugin({
