@@ -25,7 +25,7 @@ export default class EditorAddress extends Component {
         toastShow: false,
         toastInfo: '',
         tempCityInfo: '',
-        actionsheetShow: true,
+        actionsheetShow: false,
     };
 
     componentDidShow() {
@@ -33,6 +33,31 @@ export default class EditorAddress extends Component {
         if (u.indexOf('iPhone') > -1) {
             console.log('iNoBounce', iNoBounce)
             iNoBounce.enable()
+        }
+    }
+
+    handleShowCity() {
+        this.setState({
+            actionsheetShow: true
+        }, () => {
+            let el = document.getElementById('AtActionSheetBox');
+            console.log(el)
+            if (el) {
+                el.style.transform = "translate(0,-75vh)";
+                el.style.transition = "all .8s";
+            }
+        })
+    }
+    handleCloseCity() {
+        let el = document.getElementById('AtActionSheetBox');
+        if (el) {
+            el.style.transform = "translate(0,75vh)";
+            el.style.transition = "all .8s";
+            setTimeout(() => {
+                this.setState({
+                    actionsheetShow: false
+                })
+            }, 200)
         }
     }
 
@@ -75,7 +100,8 @@ export default class EditorAddress extends Component {
     }
     // 所在区域
     cityEnd = (query) => {
-        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
+        // this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
+        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked })
     }
     //详细地址
     onHandelChangeAddress = (e) => {
@@ -354,7 +380,7 @@ export default class EditorAddress extends Component {
                             onInput={this.onHandelChangePhone.bind(this)}
                         />
                     </View>
-                    <View className="editor-box" onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }} >
+                    <View className="editor-box" onClick={this.handleShowCity.bind(this)} >
                         <View className="editor-box_left">所在区域:</View>
                         <View className="editor-box_input0" >{this.state.tempCityInfo}</View>
                         <View className="editor-box_right">
@@ -411,17 +437,10 @@ export default class EditorAddress extends Component {
                     </View> : null
                 }
 
-
-                {/* <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
-                    <View className="AtActionSheetBox">
-                        <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
-                    </View>
-                </AtActionSheet> */}
-                
                 {
-                    this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
-                        <View className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
-                            <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
+                    this.state.actionsheetShow ? <View className="AtActionSheetBox-content" onClick={this.handleCloseCity.bind(this)}>
+                        <View id="AtActionSheetBox" className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
+                            <CitySelecter getCity={this.cityEnd} onclose={this.handleCloseCity.bind(this)} />
                         </View>
                     </View> : null
 

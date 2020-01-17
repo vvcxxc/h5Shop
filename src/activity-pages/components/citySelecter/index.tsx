@@ -186,7 +186,7 @@ export default class CitySelecter extends Component<Props> {
     render() {
         return (
             <View className="city-selecter">
-                <View className="city-selecter-fixed" >
+                <View className="city-selecter-fixed" id="city-selecter-fixed">
                     <View className="city-selecter-title-box">
                         <View className="city-selecter-title">所在地区</View>
                         <View className="at-icon at-icon-close" onClick={this.oncloseItem}></View>

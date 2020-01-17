@@ -4,7 +4,7 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     position: relative;
-    padding-top: 315px;
+    // padding-top: 25vh;
     padding-left: 24px;
     box-sizing: border-box;
 
@@ -12,7 +12,7 @@
         position: fixed;
         top: 25vh;
         left: 0;
-        height: 315px;
+        height: 25vh;
         width: 100%;
         background: #fff;
         z-index: 6;
