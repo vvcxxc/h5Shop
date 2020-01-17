@@ -75,7 +75,6 @@ export default class ShippingAddress extends Component<Props> {
       })
   }
 
-
   editorAddress = (query: any) => {
     Taro.navigateTo({
       url: '/activity-pages/Shipping-address/editor?type=editorItem&editorId=' + query
@@ -103,7 +102,7 @@ export default class ShippingAddress extends Component<Props> {
           {
             this.state.myAddressList && this.state.myAddressList.length > 0 ? this.state.myAddressList.map((item: any, index: any) => {
               return (
-                <View key={item.id}>
+                <View key={item.id} className="border_content">
                   <AddressItem
                     itemId={item.id}
                     userName={item.name}

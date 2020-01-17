@@ -9,6 +9,7 @@ interface Props {
     storeName?: any;
 }
 let timer;
+let timeout;
 export default class Scrolltab extends Component<Props>{
 
     componentDidMount() {
@@ -17,10 +18,10 @@ export default class Scrolltab extends Component<Props>{
             this.setState({ current: tempPage })
         }, 5000)
     }
- 
+
     componentDidShow() {
         clearInterval(timer);
-        this.setState({current:0})
+        this.setState({ current: 0 })
         timer = setInterval(() => {
             let tempPage = this.state.current == this.props.tabList.length - 1 ? 0 : this.state.current + 1;
             this.setState({ current: tempPage })
@@ -50,12 +51,15 @@ export default class Scrolltab extends Component<Props>{
         this.setState({ Ypoint: e.changedTouches[0].clientY })
     }
     touchMove = (e) => {
-        // console.log(e.changedTouches[0].clientY)
-        if (e.changedTouches[0].clientY > this.state.Ypoint) {
-            this.setState({ current: this.state.current - 1 })
-        } else if (this.state.current < this.props.tabList.length - 1) {
-            this.setState({ current: this.state.current + 1 })
-        }
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            // console.log(e.changedTouches[0].clientY)
+            if (e.changedTouches[0].clientY > this.state.Ypoint) {
+                this.setState({ current: this.state.current - 1 })
+            } else if (this.state.current < this.props.tabList.length - 1) {
+                this.setState({ current: this.state.current + 1 })
+            }
+        }, 3000);
     }
     render() {
         return (
@@ -78,7 +82,10 @@ export default class Scrolltab extends Component<Props>{
                                             </View>
                                             <View className="group_list_name" >{item[0].real_name}</View>
                                             <View className="group_list_btnbox" >
-                                                <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                                                {
+                                                    item[0].is_team ? <View className="group_list_btn" style={{ background: '#999999' }}  >您已参团</View> :
+                                                        <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                                                }
                                             </View>
                                             <View className="group_list_timesbox" >
                                                 <View className="group_list_lack" >
@@ -87,9 +94,6 @@ export default class Scrolltab extends Component<Props>{
                                                     <View className="group_list_lackredblack2" >拼成</View>
                                                 </View>
                                                 <View className="group_list_times" >
-                                                    {/* 剩余{
-                                                        ((new Date(item[0].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
-                                                    } 小时 */}
                                                     <TimeUp itemtime={item[0].end_at} />
                                                 </View>
                                             </View>
@@ -101,7 +105,10 @@ export default class Scrolltab extends Component<Props>{
                                                 </View>
                                                 <View className="group_list_name" >{item[1].real_name}</View>
                                                 <View className="group_list_btnbox" >
-                                                    <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >立即参团</View>
+                                                    {
+                                                        item[1]&&item[1].is_team ? <View className="group_list_btn" style={{ background: '#999999' }} >您已参团</View> :
+                                                            <View className="group_list_btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >立即参团</View>
+                                                    }
                                                 </View>
                                                 <View className="group_list_timesbox" >
                                                     <View className="group_list_lack" >
@@ -110,9 +117,6 @@ export default class Scrolltab extends Component<Props>{
                                                         <View className="group_list_lackredblack2" >拼成</View>
                                                     </View>
                                                     <View className="group_list_times" >
-                                                        {/* 剩余{
-                                                            ((new Date(item[1].end_at).getTime() - new Date().getTime()) / (3600 * 1000)).toFixed(1)
-                                                        } 小时 */}
                                                         <TimeUp itemtime={item[1].end_at} />
                                                     </View>
                                                 </View>

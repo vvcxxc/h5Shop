@@ -1,0 +1,76 @@
+.physical_bond{
+  margin-bottom 20px
+  padding 28px 17px;
+  display: flex;
+  align-items: center;
+  border-radius:15px;
+  background:rgba(255,255,255,1);
+  .practical_img {
+    width:167px;
+    height:167px;
+    border-radius:10px;
+    overflow hidden;
+    display: flex;
+    align-items: center;
+    justify-content :center;
+    img {
+      height: 100%;
+    }
+  }
+  .detail_info{
+    height:167px;
+    padding-left: 24px;
+    box-sizing: border-box;
+    flex: 2;
+    position: relative;
+    .shop_name{
+      display: flex;
+      line-height 30px;
+      justify-content: space-between;
+      margin-bottom 9px;
+      span {
+        font-size:30px;
+        font-family:PingFang;
+        font-weight:bold;
+        color:rgba(94,50,28,1);
+      }
+    }
+    div {
+      font-size:24px;
+      line-height 32px;
+      font-family:PingFang SC;
+      font-weight:bold;
+      color:rgba(200,157,115,1);
+     }
+     .location{
+       position:absolute;
+       bottom: 0;
+       right :0;
+       display: flex;
+       justify-content: flex-end;
+       align-items: center;
+       span{
+          width:164px;
+          height:52px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size:26px;
+          font-family:PingFang;
+          border-radius:26px;
+       }
+
+       .allow_use {
+         color:rgba(255,255,255,1);
+          background:rgba(254,110,35,1);
+         
+        }
+        .refuse_use {
+          color:rgba(254,110,35,1)
+         border:2px solid rgba(254,110,35,1);
+        }
+     
+    }
+  }
+  
+}

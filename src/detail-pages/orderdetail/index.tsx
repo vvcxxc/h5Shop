@@ -266,7 +266,7 @@ export default class Orderdetail extends Component {
               <View className="flex">
                 <View className="a_billingInfo_1">券有效期</View>：
                 <View>
-                  <View>领券日起{this.state.defaultData.expire_day}天有效</View>
+              <View>领券日起{this.state.defaultData.expire_day}天有效</View>
                 </View>
               </View>
 

@@ -55,7 +55,7 @@ export default class NewPage extends Component<Props>{
         des: '我的奖品',
         prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/iYK4YnfmBrNP8tZGWHeQNpRTHFj5ajyr.png',
-        path: "/activity-pages/my-prize/pages/gift/welfare.gift"
+        path: "/activity-pages/my-prize/index"
       },
       {
         des: '我的收货地址',

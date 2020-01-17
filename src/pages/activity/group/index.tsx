@@ -25,8 +25,8 @@ export default class Group extends Component<Props>{
     ruleMore: false,
     imgZoom: false,
     imgZoomSrc: '',
-    xPoint: 0,
-    yPoint: 0,
+    xPoint: '',
+    yPoint: '',
     imagesCurrent: 0,
     data: {
       activity_begin_time: "",
@@ -75,10 +75,10 @@ export default class Group extends Component<Props>{
     isFromShare: false,
     groupListShow: false,
     groupListPages: 1,
-    currentPage: 0
+    currentPage: 0,
+    allowGroup: ''
   };
   componentDidShow() {
-    console.log('页面componentDidShow')
     this.toShare();
   }
   clearTimeOut = () => {
@@ -89,15 +89,12 @@ export default class Group extends Component<Props>{
       clearTimeout(i);
     }
   }
-  componentWillReceiveProps(){
-    console.log('componentWillReceiveProps')
-  }
+
   componentWillUnmount() {
     this.clearTimeOut();
   }
 
   componentDidMount = () => {
-    console.log('params:', this.$router.params);
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({
@@ -143,6 +140,11 @@ export default class Group extends Component<Props>{
               } else {
                 this.setState({ isPostage: false })
               }
+
+              let new_time = new Date().getTime()//ql
+              new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
+              new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
+
               this.setState({ data: res.data }, () => {
                 this.toShare();
               });
@@ -211,7 +213,14 @@ export default class Group extends Component<Props>{
 
 
   toShare = () => {
-    let url = window.location.href;
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
     let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
     let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
     Taro.request({
@@ -306,7 +315,14 @@ export default class Group extends Component<Props>{
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.data.xpoint);
       let latitude = parseFloat(this.state.data.ypoint);
-      let url = window.location.href;
+      let userAgent = navigator.userAgent;
+      let isIos = userAgent.indexOf('iPhone') > -1;
+      let url: any;
+      if (isIos) {
+        url = sessionStorage.getItem('url');
+      } else {
+        url = location.href;
+      }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
@@ -411,22 +427,76 @@ export default class Group extends Component<Props>{
     })
       .then((res: any) => {
         Taro.hideLoading();
-        let order_sn = res.channel_order_sn;//比增值少一层data
-        if (_type == 1) {
-          //微信支付
-          window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-            "appId": res.data.appId,
-            "timeStamp": res.data.timeStamp,
-            "nonceStr": res.data.nonceStr,
-            "package": res.data.package,
-            "signType": res.data.signType,
-            "paySign": res.data.paySign
-          },
-            function (res) {
-              //微信支付成功
-              if (res.err_msg == "get_brand_wcpay_request:ok") {
-                if (_temptype == 5) {
+        if (res.code == 200) {
+          let order_sn = res.channel_order_sn;//比增值少一层data
+          if (_type == 1) {
+            //微信支付
+            window.WeixinJSBridge.invoke(
+              'getBrandWCPayRequest', {
+              "appId": res.data.appId,
+              "timeStamp": res.data.timeStamp,
+              "nonceStr": res.data.nonceStr,
+              "package": res.data.package,
+              "signType": res.data.signType,
+              "paySign": res.data.paySign
+            },
+              function (res) {
+                //微信支付成功
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  if (_temptype == '5') {
+                    //开团要得到开团活动id再跳转活动详情
+                    Taro.showLoading({
+                      title: 'loading',
+                      mask: true
+                    });
+                    interval = setInterval(() => {
+                      request({
+                        url: 'api/wap/user/getUserYouhuiGroupId',
+                        method: "GET",
+                        data: { order_sn: order_sn }
+                      }).then((res: any) => {
+                        if (res.code == 200) {
+                          clearInterval(interval);
+                          Taro.hideLoading();
+                          let resGroupid = res.data.id;
+                          Taro.navigateTo({
+                            url: '/pages/activity/pages/group/group?id=' + resGroupid,
+                            success: () => {
+                              var page = Taro.getCurrentPages().pop();
+                              if (page == undefined || page == null) return;
+                              page.onLoad();
+                            }
+                          })
+                        }
+                      })
+                    }, 1000);
+                  } else if (_temptype == ' 55') {
+                    Taro.navigateTo({
+                      url: '/pages/activity/pages/group/group?id=' + _tempid,
+                      success: () => {
+                        var page = Taro.getCurrentPages().pop();
+                        if (page == undefined || page == null) return;
+                        page.onLoad();
+                      }
+                    })
+                  } else {
+                    console.log('类型出错');
+                    return;
+                  }
+
+                } else {
+                  //微信支付失败
+                }
+              }
+            );
+          } else if (_type == 2) {
+            //支付宝支付
+            window.AlipayJSBridge.call('tradePay', {
+              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+            }, res => {
+              //支付宝支付成功
+              if (res.resultCode === "9000") {
+                if (_temptype == '5') {
                   //开团要得到开团活动id再跳转活动详情
                   Taro.showLoading({
                     title: 'loading',
@@ -453,7 +523,7 @@ export default class Group extends Component<Props>{
                       }
                     })
                   }, 1000);
-                } else if (_temptype == 55) {
+                } else if (_temptype == '55') {
                   Taro.navigateTo({
                     url: '/pages/activity/pages/group/group?id=' + _tempid,
                     success: () => {
@@ -468,69 +538,21 @@ export default class Group extends Component<Props>{
                 }
 
               } else {
-                //微信支付失败
+                //支付宝支付失败
               }
-            }
-          );
-        } else if (_type == 2) {
-          //支付宝支付
-          window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-          }, res => {
-            //支付宝支付成功
-            if (res.resultCode === "9000") {
-              if (_temptype == 5) {
-                //开团要得到开团活动id再跳转活动详情
-                Taro.showLoading({
-                  title: 'loading',
-                  mask: true
-                });
-                interval = setInterval(() => {
-                  request({
-                    url: 'api/wap/user/getUserYouhuiGroupId',
-                    method: "GET",
-                    data: { order_sn: order_sn }
-                  }).then((res: any) => {
-                    if (res.code == 200) {
-                      clearInterval(interval);
-                      Taro.hideLoading();
-                      let resGroupid = res.data.id;
-                      Taro.navigateTo({
-                        url: '/pages/activity/pages/group/group?id=' + resGroupid,
-                        success: () => {
-                          var page = Taro.getCurrentPages().pop();
-                          if (page == undefined || page == null) return;
-                          page.onLoad();
-                        }
-                      })
-                    }
-                  })
-                }, 1000);
-              } else if (_temptype == 55) {
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id=' + _tempid,
-                  success: () => {
-                    var page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onLoad();
-                  }
-                })
-              } else {
-                console.log('类型出错');
-                return;
-              }
-
-            } else {
-              //支付宝支付失败
-            }
-          })
+            })
+          } else {
+            console.log(_type)
+          }
         } else {
-          console.log(_type)
+          Taro.showToast({ title: res.message, icon: 'none' })
         }
+      }).catch(err => {
+        Taro.hideLoading();
       })
   }
 
-  payment2(_groupid, e) {
+  payment2(_groupid) {
     Taro.showLoading({
       title: 'loading',
     })
@@ -580,21 +602,43 @@ export default class Group extends Component<Props>{
     })
       .then((res: any) => {
         Taro.hideLoading();
-        let order_id = res.data.order_id;
-        if (_type == 1) {
-          //微信支付
-          window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-            "appId": res.data.appId,
-            "timeStamp": res.data.timeStamp,
-            "nonceStr": res.data.nonceStr,
-            "package": res.data.package,
-            "signType": res.data.signType,
-            "paySign": res.data.paySign
-          },
-            function (res) {
-              //微信支付成功
-              if (res.err_msg == "get_brand_wcpay_request:ok") {
+        if (res.code == 200) {
+          let order_id = res.data.order_id;
+          if (_type == 1) {
+            //微信支付
+            window.WeixinJSBridge.invoke(
+              'getBrandWCPayRequest', {
+              "appId": res.data.appId,
+              "timeStamp": res.data.timeStamp,
+              "nonceStr": res.data.nonceStr,
+              "package": res.data.package,
+              "signType": res.data.signType,
+              "paySign": res.data.paySign
+            },
+              function (res) {
+                //微信支付成功
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  Taro.navigateTo({
+                    url: '/pages/activity/pages/group/group?id=' + _groupid,
+                    // url: '/activity-pages/my-activity/my.activity',
+                    success: function (e) {
+                      let page = Taro.getCurrentPages().pop();
+                      if (page == undefined || page == null) return;
+                      page.onShow();
+                    }
+                  })
+                } else {
+                  //微信支付失败
+                }
+              }
+            );
+          } else if (_type == 2) {
+            //支付宝支付
+            window.AlipayJSBridge.call('tradePay', {
+              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+            }, res => {
+              //支付宝支付成功
+              if (res.resultCode === "9000") {
                 Taro.navigateTo({
                   url: '/pages/activity/pages/group/group?id=' + _groupid,
                   // url: '/activity-pages/my-activity/my.activity',
@@ -605,33 +649,17 @@ export default class Group extends Component<Props>{
                   }
                 })
               } else {
-                //微信支付失败
+                //支付宝支付失败
               }
-            }
-          );
-        } else if (_type == 2) {
-          //支付宝支付
-          window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-          }, res => {
-            //支付宝支付成功
-            if (res.resultCode === "9000") {
-              Taro.navigateTo({
-                url: '/pages/activity/pages/group/group?id=' + _groupid,
-                // url: '/activity-pages/my-activity/my.activity',
-                success: function (e) {
-                  let page = Taro.getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onShow();
-                }
-              })
-            } else {
-              //支付宝支付失败
-            }
-          })
+            })
+          } else {
+            console.log(_type)
+          }
         } else {
-          console.log(_type)
+          Taro.showToast({ title: res.message, icon: 'none' })
         }
+      }).catch(err => {
+        Taro.hideLoading();
       })
   }
 
@@ -670,40 +698,37 @@ export default class Group extends Component<Props>{
     }
   }
   goToaConfirm = (e) => {
-    this.clearTimeOut();
-    if (this.$router.params.type == '5') {
-      //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
-      Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
-      })
-    } else if (this.$router.params.type == '55') {
-      //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
-      Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.state.data.youhui_id + '&groupId=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
-      })
+    if (this.state.data.gift_id) {
+      this.clearTimeOut();
+      if (this.$router.params.type == '5') {
+        //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+        Taro.navigateTo({
+          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+        })
+      } else if (this.$router.params.type == '55') {
+        //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
+        Taro.navigateTo({
+          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.state.data.youhui_id + '&groupId=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+        })
+      }
+    } else {
+      this.payment();
     }
-
   }
   goToaConfirmAddGroup = (_id, e) => {
-    this.clearTimeOut();
-    //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
-    Taro.navigateTo({
-      url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
-    })
+    if (this.state.data.gift_id) {
+      this.clearTimeOut();
+      //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
+      Taro.navigateTo({
+        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
+      })
+    } else {
+      this.payment2(_id);
+    }
   }
 
-  setTime = (_time, e) => {
-    console.log('settime')
-    let timer = setInterval(() => {
-      let times = dayjs(_time).endOf('day')
-      let time = getTime(new Date(times.$d).getTime() / 1000);
-      if (time.display <= 0) { clearInterval(timer); this.setState({ date: '已结束' }); return } else {
-        this.setState({ date: time.date })
-      }
-    }, 1000)
-  }
   render() {
-    const { images, description } = this.state.data;
+    const { description } = this.state.data;
     return (
       <View className="d_appre" >
         {
@@ -737,7 +762,10 @@ export default class Group extends Component<Props>{
                             </View>
                           </View>
                           <View className="group_list_btnbox0" >
-                            <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
+                            {
+                              item.is_team ? <View className="group_list_btn0" style={{ background: '#999999' }} >您已参团</View>
+                                : <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
+                            }
                           </View>
                         </View>
                       )
@@ -769,7 +797,6 @@ export default class Group extends Component<Props>{
             }}>
             <Swiper
               onChange={(e) => {
-                // console.log(e.detail.current)
                 this.setState({ imagesCurrent: e.detail.current })
               }}
               className='test-h'
@@ -866,7 +893,7 @@ export default class Group extends Component<Props>{
         {
           this.state.data2.data && this.state.data2.data.length > 0 ? <View>
             <View className='diu'>
-               <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name}/>
+              <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name} />
             </View>
           </View> : null
         }
@@ -936,7 +963,7 @@ export default class Group extends Component<Props>{
             </View>
           </View>
         </View>
-        {
+        {/* {
           (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
             <View className='choosePostage' onClick={this.chooseGift}>
 
@@ -950,7 +977,7 @@ export default class Group extends Component<Props>{
                 <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
               </View>
             </View>) : null
-        }
+        } */}
 
         <View className="paymoney_box">
           <View className="paymoney_price">
@@ -964,8 +991,17 @@ export default class Group extends Component<Props>{
             }
           </View>
 
+
           {
-            this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>发起拼团</View>
+            this.state.allowGroup ?
+              <View className="paymoney_buynow" id="prohibit">
+                {this.state.allowGroup}
+              </View> :
+              <View className="paymoney_buynow" id="allow" onClick={this.goToaConfirm.bind(this)}>
+                {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}
+              </View>
+
+            // this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>发起拼团</View>
           }
         </View>
 

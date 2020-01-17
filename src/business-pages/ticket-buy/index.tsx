@@ -20,8 +20,8 @@ export default class TicketBuy extends Component {
   };
 
   state = {
-    yPoint: 0,
-    xPoint: 0,
+    yPoint: '',
+    xPoint: '',
     keepCollect_data: "",
     //表面收藏
     keepCollect_bull: false,
@@ -132,46 +132,48 @@ export default class TicketBuy extends Component {
           }, 2000)
         });
     }).catch(err => {
-      this.setState({
-        yPoint: '',
-        xPoint: ''
-      }, () => {
-        request({
-          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
-        })
-          .then((res: any) => {
-            console.log(res);
-            if (res.code != 200) {
-              Taro.hideLoading()
-              Taro.showToast({ title: '信息错误', icon: 'none' })
-              setTimeout(() => {
-                Taro.navigateBack({
-                })
-              }, 2000)
-            }
-            this.setState({
-              coupon: res.data.info.coupon,
-              store: res.data.info.store,
-              goods_album: res.data.info.goods_album,
-              recommend: res.data.recommend.data
-            }, () => {
-              this.toShare();
-            })
+      request({
+        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
+      })
+        .then((res: any) => {
+          console.log(res);
+          if (res.code != 200) {
             Taro.hideLoading()
-          }).catch(function (error) {
-            Taro.hideLoading()
-            Taro.showToast({ title: '数据请求失败', icon: 'none' })
+            Taro.showToast({ title: '信息错误', icon: 'none' })
             setTimeout(() => {
               Taro.navigateBack({
               })
             }, 2000)
-          });
-      })
+          }
+          this.setState({
+            coupon: res.data.info.coupon,
+            store: res.data.info.store,
+            goods_album: res.data.info.goods_album,
+            recommend: res.data.recommend.data
+          }, () => {
+            this.toShare();
+          })
+          Taro.hideLoading()
+        }).catch(function (error) {
+          Taro.hideLoading()
+          Taro.showToast({ title: '数据请求失败', icon: 'none' })
+          setTimeout(() => {
+            Taro.navigateBack({
+            })
+          }, 2000)
+        });
     })
   }
 
   toShare = () => {
-    let url = window.location.href;
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
     let titleMsg = '嘘，这里有一张' + this.state.coupon.return_money + '元现金券，悄悄领了，别声张！';
     let descMsg = this.state.store.sname + '又搞活动啦，是好友我才偷偷告诉你，现金券数量有限，领券要快姿势要帅！';
     Taro.request({
@@ -252,7 +254,14 @@ export default class TicketBuy extends Component {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.store.xpoint);
       let latitude = parseFloat(this.state.store.ypoint);
-      let url = window.location.href;
+      let userAgent = navigator.userAgent;
+      let isIos = userAgent.indexOf('iPhone') > -1;
+      let url: any;
+      if (isIos) {
+        url = sessionStorage.getItem('url');
+      } else {
+        url = location.href;
+      }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',

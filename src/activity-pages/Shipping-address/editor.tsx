@@ -109,6 +109,7 @@ export default class EditorAddress extends Component {
     }
 
     handleSubmit = (e) => {
+        Taro.pageScrollTo({ scrollTop: 0 });
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
             this.setState({ toastShow: true, toastInfo: '请输入收件人' }, () => {
@@ -172,6 +173,7 @@ export default class EditorAddress extends Component {
     }
 
     deleAddressItem = (e) => {
+        Taro.pageScrollTo({ scrollTop: 0 });
         let tempid = this.$router.params.editorId;
         Taro.showLoading({
             title: ""
@@ -201,6 +203,7 @@ export default class EditorAddress extends Component {
     }
 
     changeAddressItem = (e) => {
+        Taro.pageScrollTo({ scrollTop: 0 });
         let tempid = this.$router.params.editorId;
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
@@ -266,7 +269,7 @@ export default class EditorAddress extends Component {
 
 
     saveAndUse = () => {
-        console.log(111)
+        Taro.pageScrollTo({ scrollTop: 0 });
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
             this.setState({ toastShow: true, toastInfo: '请输入收件人' }, () => {
@@ -331,11 +334,21 @@ export default class EditorAddress extends Component {
                         setTimeout(() => {
                             if (this.$router.params.activityType == '55') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId
+                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId,
+                                    success: function (e) {
+                                        let page = Taro.getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
                                 })
                             } else {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId
+                                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId,
+                                    success: function (e) {
+                                        let page = Taro.getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
                                 })
                             }
                         }, 1500)
@@ -352,7 +365,7 @@ export default class EditorAddress extends Component {
 
     render() {
         return (
-            <View className="Shipping-address">
+            <View className="Shipping-address" onClick={() => { Taro.pageScrollTo({ scrollTop: 0 }); }}>
 
                 {
                     this.state.toastShow ? <View className="toast_box">
@@ -393,7 +406,9 @@ export default class EditorAddress extends Component {
                             className="editor-box_input2"
                             value={this.state.TextareaValue}
                             onInput={this.onHandelChangeAddress.bind(this)}
-                            placeholder="请填写详细地址，如街道、门牌、小区等" />
+                            placeholder="请填写详细地址，如街道、门牌、小区等"
+                            onBlur={() => { window.scrollTo(0, 0); Taro.pageScrollTo({ scrollTop: 0 }) }}
+                        />
                     </View>
                     <View className="editor-box">
                         <View className="choose_msg_box">
@@ -437,14 +452,20 @@ export default class EditorAddress extends Component {
                     </View> : null
                 }
 
-                {
-                    this.state.actionsheetShow ? <View className="AtActionSheetBox-content" onClick={this.handleCloseCity.bind(this)}>
-                        <View id="AtActionSheetBox" className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
-                            <CitySelecter getCity={this.cityEnd} onclose={this.handleCloseCity.bind(this)} />
+
+                <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
+                    <View className="AtActionSheetBox">
+                        <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
+                    </View>
+                </AtActionSheet>
+
+                {/* {
+                    this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
+                        <View className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
+                            <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                         </View>
                     </View> : null
-
-                }
+                } */}
 
             </View>
         );

@@ -4,8 +4,7 @@ import { View, Input, Textarea } from "@tarojs/components";
 import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 import dataCity from "./dataCity2"
-import iNoBounce from '@/utils/inobouce';
-import Citys from './citys'
+
 interface Props {
     getCity: (any) => any;
     onclose: () => any;
@@ -28,21 +27,8 @@ export default class CitySelecter extends Component<Props> {
         selectorChecked: '',
     };
 
-    componentDidShow() {
-        let u = navigator.userAgent
-        if (u.indexOf('iPhone') > -1) {
-            console.log('iNoBounce', iNoBounce)
-            iNoBounce.enable()
-        }
-    }
-
 
     componentDidMount() {
-        // let u = navigator.userAgent
-        // if (u.indexOf('iPhone') > -1) {
-        //     console.log('iNoBounce',iNoBounce)
-        //     iNoBounce.enable()
-        // }
         let shen: Array<any> = [];
         dataCity.cityData.map((item: any) => {
             shen.push(item);
@@ -117,7 +103,7 @@ export default class CitySelecter extends Component<Props> {
         }
     }
 
-    onSelectItem = (index: number) => {
+    onSelectItem = (index: number, e: any) => {
         if (this.state.currentIndex == 0) {
             let index1 = index;
             let shi: Array<any> = [];
@@ -186,11 +172,11 @@ export default class CitySelecter extends Component<Props> {
     render() {
         return (
             <View className="city-selecter">
-                <View className="city-selecter-fixed" id="city-selecter-fixed">
-                    <View className="city-selecter-title-box">
-                        <View className="city-selecter-title">所在地区</View>
-                        <View className="at-icon at-icon-close" onClick={this.oncloseItem}></View>
-                    </View>
+                <View className="city-selecter-title-box">
+                    <View className="city-selecter-title">所在地区</View>
+                    <View className="at-icon at-icon-close" onClick={this.oncloseItem}></View>
+                </View>
+                <View className="city-selecter-box">
                     <View className="city-selecter-box-selectInfo">
 
                         <View className="city-selecter-shentitle" onClick={this.onColumnChange.bind(this, 0)}>{this.state.shenvalue}</View>
@@ -201,26 +187,28 @@ export default class CitySelecter extends Component<Props> {
                             this.state.currentIndex == 2 ? <View className="city-selecter-qutitle"  >{this.state.quvalue}</View> : null
                         }
                     </View>
-                    <View className="city-notice">
-                        {
-                            this.state.currentIndex == 0 ? <View className="city-notice-info"> 选择省/区域</View> : (
-                                this.state.currentIndex == 1 ? <View className="city-notice-info"> 选择市</View> :
-                                    <View className="city-notice-info"> 选择区</View>
-                            )
-                        }
+                    <View className="city-background-box">
+                        <View className="city-notice">
+                            {
+                                this.state.currentIndex == 0 ? <View className="city-notice-info"> 选择省/区域</View> : (
+                                    this.state.currentIndex == 1 ? <View className="city-notice-info"> 选择市</View> :
+                                        <View className="city-notice-info"> 选择区</View>
+                                )
+                            }
 
+                        </View>
+                        <View className="city-selecter-box-select-msgBox">
+                            {
+                                this.state.dataList.map((item: any, index: any) => {
+                                    return (
+                                        <View className="map-info" key={item.id} onClick={this.onSelectItem.bind(this, index)}>{item.value}</View>
+                                    )
+                                })
+                            }
+
+                        </View>
                     </View>
                 </View>
-
-
-                {
-                    this.state.dataList.map((item: any, index: any) => {
-                        return (
-                            <View className="map-info" key={item.id} onClick={this.onSelectItem.bind(this, index)}>{item.value}</View>
-                        )
-                    })
-                }
-
             </View>
         );
     }

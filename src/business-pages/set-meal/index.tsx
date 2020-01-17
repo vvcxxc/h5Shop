@@ -18,8 +18,8 @@ export default class SetMeal extends Component {
   };
 
   state = {
-    yPoint: 0,
-    xPoint: 0,
+    yPoint: '',
+    xPoint: '',
     keepCollect_data: "",
     //表面收藏
     keepCollect_bull: false,
@@ -102,7 +102,7 @@ export default class SetMeal extends Component {
       let xPoint = res.longitude;
       let yPoint = res.latitude;
       request({
-        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint ||'', ypoint: yPoint || '' }
+        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint || '', ypoint: yPoint || '' }
       })
         .then((res: any) => {
           console.log(res);
@@ -132,12 +132,8 @@ export default class SetMeal extends Component {
           }, 2000)
         });
     }).catch(err => {
-      this.setState({
-        yPoint: '',
-        xPoint: ''
-      }, () => {
         request({
-          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: this.state.xPoint, ypoint: this.state.yPoint }
+          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
         })
           .then((res: any) => {
             console.log(res);
@@ -166,12 +162,18 @@ export default class SetMeal extends Component {
               })
             }, 2000)
           });
-      })
     })
   }
 
   toShare = () => {
-    let url = window.location.href;
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
     let titleMsg = this.state.store.sname + '正在派发' + this.state.coupon.return_money + '元兑换券，手慢无，速抢！';
     let descMsg = '拼手速的时候来了，超值兑换券限量抢购，手慢就没了！速速戳进来一起领取！';
     Taro.request({
@@ -250,7 +252,14 @@ export default class SetMeal extends Component {
     if (browserType == 'wechat') {
       let longitude = parseFloat(this.state.store.xpoint);
       let latitude = parseFloat(this.state.store.ypoint);
-      let url = window.location.href;
+      let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
