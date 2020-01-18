@@ -73,11 +73,11 @@ const config = {
     publicPath: "/",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
-    // devServer: {
-    //   host: 'http://192.168.2.139',
-    //   inline: true,
-    //   port: 8090,
-    // },
+    devServer: {
+      // host: 'http://192.168.2.139',
+      inline: true,
+      port: 8090,
+    },
     router: {
       mode: 'browser' // 或者是 'browser'
     },
