@@ -295,7 +295,7 @@ export default class Index extends Component<any> {
   handleActivityClick = () => { };
 
   // 跳转 搜索商家列表页面
-  handleSearch = () => Taro.navigateTo({ url: './search/index' });
+  handleSearch = () => Taro.navigateTo({ url: '/pages/index/search/index' });
   // 跳转 搜素城市页面
   showSelectCity = () => {
 
