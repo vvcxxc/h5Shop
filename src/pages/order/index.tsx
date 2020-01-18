@@ -397,12 +397,11 @@ export default class Order extends Component {
             </View>
           </View>
         </View>
-
         {
           (this.state.current == 0 && this.state.coupon1.length > 0) ? <View className="tiket_box">
             {
               this.state.coupon1.map((item) => (
-                item.coupons_type == "1" ? <View key={item.coupons_log_id}>
+                item.coupons_type == 1 ? <View key={item.coupons_log_id}>
                   <CashCoupon2 bg_img_type={1} type={0} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} _total_fee={item.total_fee} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} expiration={item.expiration} />
                 </View> : <View key={item.coupons_log_id}>
                     <CashCoupon1 bg_img_type={0} type={1} _id={item.coupons_id} _logid={item.coupons_log_id} confirm_time={item.confirm_time} return_money={item.money} youhui_type={item.coupons_type} timer={item.create_time + " - " + item.expiration} sname={item.suppliername} list_brief={item.coupons_name} _image={item.image} clickcode={this.showcode} />

@@ -50,6 +50,7 @@ export default class CashCoupon extends Component<Props> {
     e.stopPropagation();
   }
   render() {
+    console.log(412312)
     return (
       <View
         className="cash-coupon flex active"
