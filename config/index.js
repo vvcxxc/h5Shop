@@ -74,7 +74,7 @@ const config = {
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
     devServer: {
-      host: 'localhost',
+      // host: 'localhost',
       inline: true,
       port: 8090,
     },
