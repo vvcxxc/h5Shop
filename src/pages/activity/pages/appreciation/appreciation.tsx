@@ -64,7 +64,7 @@ export default class Appreciation extends Component {
     isFromShare: false
   }
   componentDidShow() {
-    this.share()
+
   }
   async componentWillMount() {
     let arrs = Taro.getCurrentPages()
@@ -89,6 +89,7 @@ export default class Appreciation extends Component {
     await this.fetchBasicinfo(id)
     this.fetchParticipator(id)
     this.fetchCoupon(location)
+    this.share()
   }
 
   onShareAppMessage() {
