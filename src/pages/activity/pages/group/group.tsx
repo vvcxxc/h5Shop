@@ -65,7 +65,7 @@ export default class Group extends Component {
   }
 
   componentDidShow() {
-    this.share()
+
   }
 
   async componentDidMount() {
@@ -88,6 +88,7 @@ export default class Group extends Component {
     await this.fetchBasicinfo(id)
     this.fetchCoupon(location)
     this.setTime()
+    this.share()
   }
 
   // onShareAppMessage() {
