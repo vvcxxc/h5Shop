@@ -450,9 +450,9 @@ export default class Index extends Component<any> {
           url: 'v3/stores/pay_store/' + id,
           data: { xpoint: location.longitude || '', ypoint: location.latitude || '' }
         })
-        if(res.code == 200){
+        if (res.code == 200) {
           this.setState({ hahaData: res.data.store_info, })
-        }else{
+        } else {
           return
         }
       }
@@ -538,7 +538,7 @@ export default class Index extends Component<any> {
         {
           this.state.storeList.map((item2: any, index: any) => {
             return <View className="new_box">
-              <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px' }} onClick={this.handleClick.bind(this, item2.id)}>
+              <View className="box" style={{ paddingBottom: item2.activity ? '' : '4px', cursor: 'pointer' }} onClick={this.handleClick.bind(this, item2.id)}>
                 <View className="box_title">
                   <View className="title_l">
                     <Image src={item2.preview} />
