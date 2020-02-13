@@ -170,7 +170,7 @@ class App extends Component {
 			]
 		}
 	};
-	// const vConsole = new Vconsole()
+	const vConsole = new Vconsole()
 
 	defineApp: {
 		define: '22'
