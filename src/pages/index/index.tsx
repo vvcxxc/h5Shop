@@ -318,6 +318,7 @@ export default class Index extends Component<any> {
 
 
   handleClick = (_id, e) => {
+    console.log('test跳转', _id, e)
     Taro.navigateTo({
       url: '/pages/business/index?id=' + _id
     })
