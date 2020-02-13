@@ -19,7 +19,7 @@ export default class TimeUp extends Component<Props>{
         this.setTime();
     }
     // componentDidShow() {
-        // this.setTime();
+    // this.setTime();
     // }
     // componentWillReceiveProps(props, nextprops) {
     //     this.setTime();
@@ -44,7 +44,7 @@ export default class TimeUp extends Component<Props>{
         } else {
             timer = setTimeout(() => {
                 clearTimeout(timer);
-                let time = getTime(new Date(this.props.itemtime).getTime() / 1000);
+                let time = getTime(new Date(this.props.itemtime.replace(/-/g, "/")).getTime() / 1000);
                 this.setState({
                     time
                 })
