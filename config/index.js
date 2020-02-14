@@ -85,10 +85,10 @@ const config = {
       filename: 'js/[name].[hash:8].js',
       chunkFilename: 'js/[name].[chunkhash:8].js'
     },
-    miniCssExtractPluginOption: {
-      filename: 'css/[name].[hash:8].css',
-      chunkFilename: 'css/[name].[chunkhash:8].css'
-    },
+    // miniCssExtractPluginOption: {
+    //   filename: 'css/[name].[hash:8].css',
+    //   chunkFilename: 'css/[name].[chunkhash:8].css'
+    // },
     // plugins: [
     //   new MiniCssExtractPlugin({
     //     // 类似 webpackOptions.output里面的配置 可以忽略
