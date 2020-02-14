@@ -171,6 +171,7 @@ export default class Group extends Component {
     // const isJoin = true
     // const isShowUse = false
     const isShowStartGroup = isFinish && !is_group_participation
+    console.log(is_group_participation,'222')
     this.setState({
       isFinish,
       isJoin,
@@ -187,7 +188,8 @@ export default class Group extends Component {
       basicinfo: { youhui_log_id }
     } = this.state
     const { status } = await listenQrcodeForGroup({ youhui_log_id })
-    if (+status === USED) {
+    console.log(status,'二维码status')
+    if (status === USED) {
       this.setState({
         isQrcode: false
       })
