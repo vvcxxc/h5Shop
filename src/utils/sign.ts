@@ -26,7 +26,7 @@ export const Login = () => {
       }
       url = encodeURIComponent(url);
       let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
-      return window.location.href = urls;
+      // return window.location.href = urls;
     }else{
       let url = BASIC_API +"ali/getZfbUserInfo";
       from = encodeURIComponent(from);
