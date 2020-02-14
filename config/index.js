@@ -69,7 +69,7 @@ const config = {
     }
   },
   h5: {
-    enableExtract: false,
+    enableExtract: true,
     publicPath: "/",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
@@ -85,17 +85,22 @@ const config = {
       filename: 'js/[name].[hash:8].js',
       chunkFilename: 'js/[name].[chunkhash:8].js'
     },
-    // miniCssExtractPluginOption: {
-    //   filename: 'css/[name].[hash:8].css',
-    //   chunkFilename: 'css/[name].[chunkhash:8].css'
-    // },
-    plugins: [
-      new MiniCssExtractPlugin({
-        // 类似 webpackOptions.output里面的配置 可以忽略
-        filename: '[name].css',
-        chunkFilename: '[id].css',
-      }),
-    ],
+    miniCssExtractPluginOption: {
+      filename: 'css/[name].[hash:8].css',
+      chunkFilename: 'css/[name].[chunkhash:8].css'
+    },
+    // plugins: [
+    //   new MiniCssExtractPlugin({
+    //     // 类似 webpackOptions.output里面的配置 可以忽略
+    //     filename: '[name].css',
+    //     chunkFilename: '[id].css',
+    //   }),
+    // ],
+    //   plugins: [
+    //     new ExtractTextPlugin({
+    //         filename: './[name]/style_[contenthash:8].css'
+    //     })
+    // ],
     module: {
       postcss: {
         autoprefixer: {
@@ -105,13 +110,13 @@ const config = {
           }
         },
         // css modules 功能开关与相关配置
-        cssModules: {
-          enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
-          config: {
-            namingPattern: 'module', // 转换模式，取值为 global/module，下文详细说明
-            generateScopedName: '[name]__[local]___[hash:base64:5]'
-          }
-        }
+        // cssModules: {
+        //   enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
+        //   config: {
+        //     namingPattern: 'module', // 转换模式，取值为 global/module，下文详细说明
+        //     generateScopedName: '[name]__[local]___[hash:base64:5]'
+        //   }
+        // }
       },
       rules: [{
         test: /\.scss$/,
