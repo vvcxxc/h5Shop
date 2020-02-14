@@ -9,6 +9,10 @@ const LOGIN_URL = process.env.LOGIN_URL
  */
 export const Login = () => {
   let from = window.location.href
+  if(from.indexOf('&from') > -1){
+    let arr = from.split('&from')
+    from = arr[0]
+  }
   let type = getBrowserType();
   if(process.env.NODE_ENV == 'development'){
     Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1ODE2NDM2MTksImV4cCI6MTU4MjAwMzYxOSwibmJmIjoxNTgxNjQzNjE5LCJqdGkiOiI3Vk5hS2Z6SjFZM0pBSGNpIiwic3ViIjo3NTcwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.9lGhiqZFVUCBEggZxhwTVaY_HDmPqPVZ-5ybk8Sd6nU')
