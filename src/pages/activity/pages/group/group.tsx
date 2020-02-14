@@ -265,12 +265,42 @@ export default class Group extends Component {
   share = () => {
     const { id = "" } = this.$router.params
     let info = this.state.basicinfo.share;
-    wx.updateAppMessageShareData({
-      title: this.state.basicinfo.gift_id ? this.state.basicinfo.participation_money + '元拼团！100%有奖，你还在等什么！' : '就差你啦！我在抢' + this.state.basicinfo.participation_money + '元套餐，快跟我一起拼吧！',
-      desc: this.state.basicinfo.gift_id ? '【仅剩' + (this.state.basicinfo.number - this.state.basicinfo.participation_number) + '个名额】我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，还有惊喜礼品，等你来跟我一起拼！' : '买了不后悔！我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，快来跟我一起完成拼团吧。', // 分享描述
-      link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    }).then(res => {
+      let { data } = res;
+      wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+          'updateAppMessageShareData'
+        ]
+      });
+      wx.ready(() => {
+        wx.updateAppMessageShareData({
+          title: this.state.basicinfo.gift_id ? this.state.basicinfo.participation_money + '元拼团！100%有奖，你还在等什么！' : '就差你啦！我在抢' + this.state.basicinfo.participation_money + '元套餐，快跟我一起拼吧！',
+          desc: this.state.basicinfo.gift_id ? '【仅剩' + (this.state.basicinfo.number - this.state.basicinfo.participation_number) + '个名额】我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，还有惊喜礼品，等你来跟我一起拼！' : '买了不后悔！我' + this.state.basicinfo.participation_money + '元拼了' + this.state.basicinfo.pay_money + '元超值套餐，快来跟我一起完成拼团吧。', // 分享描述
+          link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
+        })
+      })
     })
+
   }
   clickShare = () =>{
     this.setState({isShare: true})

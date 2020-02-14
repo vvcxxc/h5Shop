@@ -260,13 +260,44 @@ export default class Appreciation extends Component {
   }
   share = () => {
     const { id = "" } = this.$router.params
-    let shareInfo = this.state.basicinfo.getTextContent
-    wx.updateAppMessageShareData({
-      title: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，快帮我点一下！' : '我正在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，就差你的助力了，点一下就好！',
-      desc: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在参加' + this.state.basicinfo.userYonhuiInfo.name + '活动，快来帮我助力一下，买券还送惊喜礼品哦！' : '我在参加' + this.state.basicinfo.userYonhuiInfo.store_name + '增值券抢购活动，就差你的帮忙了，快来帮我增值一下，拜托拜托！', // 分享描述
-      link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    }).then(res => {
+      let { data } = res;
+      wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+          'updateAppMessageShareData'
+        ]
+      });
+      wx.ready(() => {
+        let shareInfo = this.state.basicinfo.getTextContent
+        wx.updateAppMessageShareData({
+          title: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，快帮我点一下！' : '我正在抢' + this.state.basicinfo.userYonhuiInfo.money + '增值券，就差你的助力了，点一下就好！',
+          desc: this.state.basicinfo.userYonhuiInfo.gift_id ? '我在参加' + this.state.basicinfo.userYonhuiInfo.name + '活动，快来帮我助力一下，买券还送惊喜礼品哦！' : '我在参加' + this.state.basicinfo.userYonhuiInfo.store_name + '增值券抢购活动，就差你的帮忙了，快来帮我增值一下，拜托拜托！', // 分享描述
+          link: share_url + id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0', // 分享图标
+        })
+      })
     })
+
+
 
   }
   closeShare = () => {
