@@ -69,7 +69,7 @@ const config = {
     }
   },
   h5: {
-    enableExtract: true,
+    enableExtract: false,
     publicPath: "/",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
