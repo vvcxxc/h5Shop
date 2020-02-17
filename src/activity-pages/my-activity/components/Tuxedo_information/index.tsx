@@ -186,7 +186,7 @@ export default class TuxedoInformation extends Component<Props> {
                   }
 
                   {
-                    item.number ==
+                    item.qr_code != '' && item.number ==
                       item.participation_number &&
                       new Date(item.youhui_end_time).getTime()
                       > new Date().getTime() ? <View className="userCoupon" onClick={this.userCard.bind(this, item.qr_code)}>使用卡券</View> : null
