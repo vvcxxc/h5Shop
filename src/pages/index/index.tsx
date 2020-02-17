@@ -511,7 +511,7 @@ export default class Index extends Component<any> {
         >你还有未领取的礼品 去<Text style="color:#FF6654" onClick={this.routerGift}>“我的礼品”</Text> 看看
         </View>
 
-        {
+        {/* {
           this.state.hahaData.name ? (
             <View className="receive_box">
               <View className="receive">已领取</View>
@@ -519,7 +519,7 @@ export default class Index extends Component<any> {
 获取更多优惠信息</View>
             </View>
           ) : null
-        }
+        } */}
         <VersionOne list={this.state.hahaData} />
         <View className="tab flex" style="background-color:#f6f6f6 ;white-space: nowrap; overflow-x:scroll;overflow-y: hidden; padding-left: 16px">
           {this.state.titleList.map((item: any, index) => (
