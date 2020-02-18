@@ -23,6 +23,7 @@ export default class TuxedoInformation extends Component<Props> {
   }
 
   componentDidMount = async () => {
+    console.log('test1')
     this.clearTimeOut()
     await request({
       url: 'api/wap/user/getMeGroupList',
