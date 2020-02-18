@@ -140,7 +140,7 @@ export default class TuxedoInformation extends Component<Props> {
 
                     }
                     {
-                      item.end_at == '' && item.number !== item.participation_number || item.number !== item.participation_number && new Date(item.end_at.replace(/\,/g,"-")).getTime()
+                      item.end_at == '' && item.number !== item.participation_number || item.number !== item.participation_number && new Date(item.end_at).getTime()
                         <= new Date().getTime() ? <View className="failure">拼团失败</View> : null
                     }
                     {
@@ -149,12 +149,12 @@ export default class TuxedoInformation extends Component<Props> {
 
                     {
                       item.number !==
-                        item.participation_number && new Date(item.end_at.replace(/\,/g,"-")).getTime()
+                        item.participation_number && new Date(item.end_at).getTime()
                         > new Date().getTime() ? <View>剩余时间</View> : null
                     }
                     {
                       item.number !==
-                        item.participation_number && new Date(item.end_at.replace(/\,/g,"-")).getTime()
+                        item.participation_number && new Date(item.end_at).getTime()
                         > new Date().getTime() ? <TimeUp itemtime={item.end_at} /> : null
                     }
                   </View>
@@ -181,34 +181,34 @@ export default class TuxedoInformation extends Component<Props> {
                 <View className="right">
                   {
                     item.number !==
-                      item.participation_number && new Date(item.end_at.replace(/\,/g,"-")).getTime()
+                      item.participation_number && new Date(item.end_at).getTime()
                       > new Date().getTime() ? <View className="invite" onClick={this.routerShare.bind(this, item.id)}>邀好友参团</View> : null
                   }
 
                   {
                     item.qr_code != '' && item.number ==
                       item.participation_number &&
-                      new Date(item.youhui_end_time.replace(/\,/g,"-")).getTime()
+                      new Date(item.youhui_end_time).getTime()
                       > new Date().getTime() ? <View className="userCoupon" onClick={this.userCard.bind(this, item.qr_code)}>使用卡券</View> : null
                   }
                   {
                     item.qr_code == '' && item.number == item.participation_number ? <View className="userCoupon">已使用</View> : item.end_at == '' || item.number == item.participation_number
-                      && new Date(item.youhui_end_time ).getTime()
+                      && new Date(item.youhui_end_time).getTime()
                       <= new Date().getTime() ? <View className="invalid">卡券已过期</View> : null
                   }
 
                   {
-                    new Date(item.active_end_time.replace(/\,/g,"-")).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
+                    new Date(item.active_end_time).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
 
                   }
                   {/* {
                     // 活动未成团 ， 且在有效期内， 应只显示邀好友参团 
-                    item.number === item.participation_number && new Date(item.active_end_time.replace(/\,/g,"-")).getTime() > new Date().getTime() ? <View className="userCoupon"
+                    item.number === item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() ? <View className="userCoupon"
                       onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   } */}
                   {
 
-                    item.number > item.participation_number && new Date(item.active_end_time.replace(/\,/g,"-")).getTime() > new Date().getTime() && new Date(item.end_at.replace(/\,/g,"-")).getTime() < new Date().getTime() ? <View className="userCoupon"
+                    item.number > item.participation_number && new Date(item.active_end_time).getTime() > new Date().getTime() && new Date(item.end_at).getTime() < new Date().getTime() ? <View className="userCoupon"
                         onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   }
 
