@@ -23,7 +23,7 @@ export default class TuxedoInformation extends Component<Props> {
   }
 
   componentDidMount = async () => {
-    console.log('test22')
+    console.log('test3')
     this.clearTimeOut()
     await request({
       url: 'api/wap/user/getMeGroupList',
@@ -141,7 +141,7 @@ export default class TuxedoInformation extends Component<Props> {
 
                     }
                     {
-                      item.end_at == '' && item.number !== item.participation_number || item.number !== item.participation_number && new Date(item.end_at.replace(/\,/g, "-")).getTime()
+                      item.end_at == '' && item.number !== item.participation_number || item.number !== item.participation_number && new Date(item.end_at.replace(/-/g, "/")).getTime()
                         <= new Date().getTime() ? <View className="failure">拼团失败</View> : null
                     }
                     {
@@ -150,12 +150,12 @@ export default class TuxedoInformation extends Component<Props> {
 
                     {
                       item.number !==
-                        item.participation_number && new Date(item.end_at.replace(/\,/g, "-")).getTime()
+                        item.participation_number && new Date(item.end_at.replace(/-/g, "/")).getTime()
                         > new Date().getTime() ? <View>剩余时间</View> : null
                     }
                     {
                       item.number !==
-                        item.participation_number && new Date(item.end_at.replace(/\,/g, "-")).getTime()
+                        item.participation_number && new Date(item.end_at.replace(/-/g, "/")).getTime()
                         > new Date().getTime() ? <TimeUp itemtime={item.end_at} /> : null
                     }
                   </View>
@@ -182,14 +182,14 @@ export default class TuxedoInformation extends Component<Props> {
                 <View className="right">
                   {
                     item.number !==
-                      item.participation_number && new Date(item.end_at.replace(/\,/g, "-")).getTime()
+                      item.participation_number && new Date(item.end_at.replace(/-/g, "/")).getTime()
                       > new Date().getTime() ? <View className="invite" onClick={this.routerShare.bind(this, item.id)}>邀好友参团</View> : null
                   }
 
                   {
                     item.qr_code != '' && item.number ==
                       item.participation_number &&
-                      new Date(item.youhui_end_time.replace(/\,/g, "-")).getTime()
+                      new Date(item.youhui_end_time.replace(/-/g, "/")).getTime()
                       > new Date().getTime() ? <View className="userCoupon" onClick={this.userCard.bind(this, item.qr_code)}>使用卡券</View> : null
                   }
                   {
@@ -199,7 +199,7 @@ export default class TuxedoInformation extends Component<Props> {
                   }
 
                   {
-                    new Date(item.active_end_time.replace(/\,/g, "-")).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
+                    new Date(item.active_end_time.replace(/-/g, "/")).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
 
                   }
                   {/* {
@@ -209,7 +209,7 @@ export default class TuxedoInformation extends Component<Props> {
                   } */}
                   {
 
-                    item.number > item.participation_number && new Date(item.active_end_time.replace(/\,/g, "-")).getTime() > new Date().getTime() && new Date(item.end_at.replace(/\,/g, "-")).getTime() < new Date().getTime() ? <View className="userCoupon"
+                    item.number > item.participation_number && new Date(item.active_end_time.replace(/-/g, "/")).getTime() > new Date().getTime() && new Date(item.end_at.replace(/-/g, "/")).getTime() < new Date().getTime() ? <View className="userCoupon"
                       onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
                   }
 
