@@ -14,7 +14,7 @@ export default class Activity extends Component<any>  {
 
   config: Config = {
     navigationBarTitleText: "活动中心",
-    enablePullDownRefresh: true,
+    // enablePullDownRefresh: true,
   }
 
   state = {

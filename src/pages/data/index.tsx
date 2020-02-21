@@ -52,7 +52,7 @@ class Data extends Component {
 
   config: Config = {
     navigationBarTitleText: '数据',
-    enablePullDownRefresh: true,
+    // enablePullDownRefresh: true,
     backgroundTextStyle: "dark",
   }
 

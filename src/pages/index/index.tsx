@@ -16,7 +16,7 @@ export default class Index extends Component<any> {
 	 */
   config: Config = {
     navigationBarTitleText: '小熊敬礼',
-    enablePullDownRefresh: true,
+    // enablePullDownRefresh: true,
   };
 
   state = {
