@@ -18,7 +18,7 @@ const share_url = process.env.BUSINESS_URL
 export default class PaySuccess extends Component<Props> {
   config = {
     navigationBarTitleText: "商家详情",
-    // enablePullDownRefresh: false
+    enablePullDownRefresh: false
   };
 
 

@@ -10,7 +10,7 @@ import request from "../../services/request";
 export default class Order extends Component {
   config: Config = {
     navigationBarTitleText: "我的订单",
-    // enablePullDownRefresh: false,
+    enablePullDownRefresh: false,
 
   };
   constructor(props) {

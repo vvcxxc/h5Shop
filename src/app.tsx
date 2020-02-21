@@ -125,7 +125,7 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '小熊敬礼',
       navigationBarTextStyle: 'black',
-      // enablePullDownRefresh: false, //启用下拉刷新
+      enablePullDownRefresh: false, //启用下拉刷新
       onReachBottomDistance: 50 //距离底部多少px时触发上拉加载事件
     },
     permission: {

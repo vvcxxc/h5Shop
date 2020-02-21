@@ -55,7 +55,7 @@ interface Counter {
 class Counter extends Component {
   config: Config = {
     navigationBarTitleText: '计数',
-    // enablePullDownRefresh: true,
+    enablePullDownRefresh: true,
     backgroundTextStyle: "dark",
   }
 
