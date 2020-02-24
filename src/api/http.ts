@@ -80,9 +80,13 @@ const http = (params: Params): Promise<any> => {
             break
         }
       },
-      fail(error) {
-        const {status} = error;
-        switch (status) {
+      async fail(err) {
+        let aa = err.json()
+        let a = await Promise.resolve(aa)
+        // a.then(function (result) { console.log(result,123123) })
+        console.log(a, 123123)
+        const { code, message } = a;
+        switch (code) {
           case SERVER_ERROR:
             Taro.showToast({
               title: 'server error :d',
@@ -92,7 +96,7 @@ const http = (params: Params): Promise<any> => {
           case FETCH_BAD:
             console.log(FETCH_BAD)
             Taro.showToast({
-              title: data.message || "bad request",
+              title: message,
               icon: "none"
             })
             break

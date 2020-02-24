@@ -67,11 +67,13 @@ export default function request(options: Options) {
             break
         }
       },
-      fail(err) {
-        console.log('requestErr',err)
-        const { status, data } = err;
-        console.log(status)
-        switch (status) {
+      async fail(err) {
+        let aa = err.json()
+        let a = await Promise.resolve(aa)
+        // a.then(function (result) { console.log(result,123123) })
+        console.log(a, 123123)
+        const { code, message } = a;
+        switch (code) {
           case SERVER_ERROR:
             Taro.showToast({
               title: 'server error :d',
@@ -81,7 +83,7 @@ export default function request(options: Options) {
           case FETCH_BAD:
             console.log(FETCH_BAD)
             Taro.showToast({
-              title: "bad request",
+              title: message,
               icon: "none"
             })
             break
