@@ -470,7 +470,7 @@ export default class Group extends Component<Props>{
                         }
                       })
                     }, 1000);
-                  } else if (_temptype == ' 55') {
+                  } else if (_temptype == '55') {
                     Taro.navigateTo({
                       url: '/pages/activity/pages/group/group?id=' + _tempid,
                       success: () => {
