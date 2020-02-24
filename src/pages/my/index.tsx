@@ -119,6 +119,13 @@ export default class NewPage extends Component<Props>{
       url: data
     })
   }
+
+  setPersonal = () => {
+    Taro.navigateTo({
+      url: '/activity-pages/personal/index'
+    })
+  }
+  
   render() {
     return (
       <View className='newPage'>
@@ -127,6 +134,9 @@ export default class NewPage extends Component<Props>{
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
+          <View className='setPersonalInfoBox' onClick={this.setPersonal.bind(this)} >
+            <View className='setPersonalInfo' >一键设置头像</View>
+          </View>
           {/* <View className='giftMoney'>
             <Text className='white'>礼品币</Text>
             <Text className='yellow'>27</Text>

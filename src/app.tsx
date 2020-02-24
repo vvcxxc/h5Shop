@@ -48,7 +48,7 @@ const dva = dvaCore.createApp({
   }
 });
 const store = dva.getStore();
-if(process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5') {
+if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5') {
   const vConsole = new Vconsole()
 }
 class App extends Component {
@@ -116,7 +116,11 @@ class App extends Component {
           'Shipping-address/index',
           'Shipping-address/editor',
           'confirm-address/index',
-          'confirm-address/chooseAddress'
+          'confirm-address/chooseAddress',
+          'personal/index',
+          'personal/personalInformation/index',
+          'personal/phoneInformation/index',
+          'personal/phoneInformation/changePhoneNumber',
         ]
       }
     ],
@@ -176,25 +180,25 @@ class App extends Component {
 
 
 
-defineApp: {
-  define: '22'
-}
-componentDidShow() {
-}
-componentDidMount() {
-  sessionStorage.setItem('url', window.location.href)
-}
-componentDidHide() { }
-componentDidCatchError() { }
-// 在 App 类中的 render() 函数没有实际作用
-// 请勿修改此函数
-render() {
-  return (
-    <Provider store={store}>
-      <Index />
-    </Provider>
-  );
-}
+  defineApp: {
+    define: '22'
+  }
+  componentDidShow() {
+  }
+  componentDidMount() {
+    sessionStorage.setItem('url', window.location.href)
+  }
+  componentDidHide() { }
+  componentDidCatchError() { }
+  // 在 App 类中的 render() 函数没有实际作用
+  // 请勿修改此函数
+  render() {
+    return (
+      <Provider store={store}>
+        <Index />
+      </Provider>
+    );
+  }
 }
 
 Taro.render(<App />, document.getElementById('app'));

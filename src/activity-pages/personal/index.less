@@ -1,0 +1,60 @@
+.personal {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    background: #F6F6F6;
+
+    .setInfoBox {
+        background: #fff;
+        padding: 0 40px;
+        box-sizing: border-box;
+
+        .setItem {
+            height: 152px;
+            width: 100%;
+            border-bottom: 1px solid #E2E2E2;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .itemLeft {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+
+                .leftTitle {
+                    height: 30px;
+                    font-size: 30px;
+                    font-family: PingFang SC;
+                    font-weight: 500;
+                    color: rgba(0, 0, 0, 1);
+                    line-height: 1;
+                    margin-bottom: 15px;
+                }
+
+                .leftInfo {
+                    height: 26px;
+                    font-size: 26px;
+                    font-family: PingFang SC;
+                    font-weight: 500;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                }
+            }
+
+            .itemRight {
+                width: 30px;
+                height: 30px;
+                background: url('http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/K3Hf5jyFBFHK4b6mdMSpBnfbmKSACcWW.png');
+                background-size: 100%;
+                background-repeat: no-repeat;
+            }
+        }
+
+        .setItem:last-child {
+            border-bottom: none;
+        }
+    }
+}
