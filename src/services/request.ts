@@ -34,7 +34,6 @@ export default function request(options: Options) {
       success(res) {
         const { statusCode, data } = res;
         switch (statusCode) {
-
           case SERVER_ERROR:
             Taro.showToast({
               title: 'server error :d',
