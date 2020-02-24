@@ -81,7 +81,7 @@ const http = (params: Params): Promise<any> => {
         }
       },
       fail(error) {
-        const {status} = error
+        const {status} = error;
         switch (status) {
           case SERVER_ERROR:
             Taro.showToast({
