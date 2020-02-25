@@ -6,6 +6,7 @@ import request from '@/services/request'
 import "./index.less"
 import { url } from "inspector"
 import CitySelecter from "../../components/citySelecter/index"
+import Citypicker  from "../../components/citySelecter/index2.js"
 
 export default class PersonalInformation extends Component {
 
@@ -38,6 +39,10 @@ export default class PersonalInformation extends Component {
     cityEnd = (query) => {
         console.log(query)
         this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
+    }
+    getCity(region) {
+        // 参数region为选择的省市区
+        console.log('2:',region);
     }
 
     render() {
@@ -84,14 +89,17 @@ export default class PersonalInformation extends Component {
                     </Picker>
 
 
-                    <View className='informationItem' onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }}>
+                    {/* <View className='informationItem' onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }}>
                         <View className='itemLeft'>地区</View>
                         <View className='itemRight'>
                             <View className='itemWords'>{this.state.tempCityInfo}</View>
                             <View className='itemIcon'></View>
                         </View>
-                    </View>
+                    </View> */}
+                    <Citypicker Division=" - " getCity={this.getCity.bind(this)}></Citypicker>
+
                 </View>
+
 
                 {
                     this.state.maskShow ? <View className='personalInformationMask'>
