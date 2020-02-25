@@ -99,6 +99,7 @@ export default class Orderdetail extends Component {
         Taro.hideLoading();
         if (res.message == '退款成功！') {
           Taro.showToast({ title: '退款成功！' })
+          this.setState({isApply: !this.state.isApply})
           Taro.navigateTo({
             url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
           })
