@@ -378,6 +378,7 @@ export default class Group extends Component<Props>{
   payment() {
     let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
     let _temptype = this.$router.params.type;
+    console.log(_temptype,'_temptype',_tempid,'_tempid')
     Taro.showLoading({
       title: 'loading',
     })
@@ -470,7 +471,7 @@ export default class Group extends Component<Props>{
                         }
                       })
                     }, 1000);
-                  } else if (_temptype == ' 55') {
+                  } else if (_temptype == '55') {
                     Taro.navigateTo({
                       url: '/pages/activity/pages/group/group?id=' + _tempid,
                       success: () => {
