@@ -470,7 +470,7 @@ export default class Group extends Component<Props>{
                         }
                       })
                     }, 1000);
-                  } else if (_temptype == '55') {
+                  } else if (_temptype == ' 55') {
                     Taro.navigateTo({
                       url: '/pages/activity/pages/group/group?id=' + _tempid,
                       success: () => {
@@ -716,6 +716,7 @@ export default class Group extends Component<Props>{
     }
   }
   goToaConfirmAddGroup = (_id, e) => {
+    console.log('gift？', this.state.data.gift_id)
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
@@ -893,7 +894,7 @@ export default class Group extends Component<Props>{
         {
           this.state.data2.data && this.state.data2.data.length > 0 ? <View>
             <View className='diu'>
-              <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name} />
+              <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name} isPostage={this.state.isPostage} gift_id={this.state.data.gift_id} />
             </View>
           </View> : null
         }
