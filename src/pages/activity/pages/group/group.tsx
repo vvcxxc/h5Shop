@@ -395,10 +395,10 @@ export default class Group extends Component {
                   </View>
                 </View>
               </View>
-              <View className="time">
-                <Text className="text">距离结束时间还剩:</Text>
-                <Text>{this.state.time.date}</Text>
-              </View>
+            { !isFinish ? <View className="time">
+              <Text className="text">距离结束时间还剩:</Text>
+              <Text>{this.state.time.date}</Text>
+            </View> : null}
               <ScrollView
                 scrollX
                 style="margin-top: 25px; height: 50px; white-space: nowrap;"
