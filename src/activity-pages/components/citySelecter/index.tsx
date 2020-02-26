@@ -3,8 +3,8 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Input, Textarea } from "@tarojs/components";
 import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
-import dataCity from "./dataCity2"
-
+// import dataCity from "./dataCity2"
+import dataCity from "./dataCity"
 interface Props {
     getCity: (any) => any;
     onclose: () => any;

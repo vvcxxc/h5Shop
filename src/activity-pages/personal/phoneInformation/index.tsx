@@ -5,6 +5,7 @@ import request from '@/services/request'
 import "./index.less"
 import { url } from "inspector"
 import { AtIcon } from 'taro-ui'
+import request from '../../../services/request'
 
 export default class PhoneInformation extends Component {
 
@@ -13,7 +14,10 @@ export default class PhoneInformation extends Component {
     }
     state = {
         tipsType: 1,
-        tipsShow: false
+        tipsShow: false,
+        wait: 60,
+        is_ok: true,
+        phone: ''
 
     }
     cancleBtn = () => {
@@ -28,6 +32,51 @@ export default class PhoneInformation extends Component {
             url: '/activity-pages/personal/phoneInformation/changePhoneNumber'
         })
     }
+    /**
+         * 获取验证码
+         */
+    getCode = () => {
+        const { phone } = this.state;
+        if (!(/^1[3456789]\d{9}$/.test(phone))) {
+            Taro.showToast({ title: '请输入11位有效手机号', duration: 1500 })
+            return;
+        }
+        let wait = 60;
+        if (phone) {
+            let _this = this;
+            function resend() {
+                if (wait == 0) {
+                    _this.setState({ is_ok: true });
+                    clearInterval(timer)
+                } else {
+                    wait--;
+                    _this.setState({ is_ok: false, wait });
+                    clearInterval();
+                }
+            }
+            resend();
+            let timer = setInterval(() => {
+                resend()
+            }, 1000);
+            request({
+                url: 'verifyCode',
+                method: "POST",
+                data: { phone }
+            })
+                .then((res: any) => {
+                    if (res.code == 200) {
+                        Taro.showToast({ title: res.message, duration: 1500 })
+                    } else {
+                        _this.setState({ is_ok: true });
+
+                        clearInterval(timer);
+                        Taro.showToast({ title: res.message, duration: 1500 })
+                    }
+                })
+        } else {
+            Taro.showToast({ title: '请输入手机号', duration: 1500 })
+        }
+    }
     render() {
         return (
             <View className='phoneInformation'>
@@ -40,6 +89,13 @@ export default class PhoneInformation extends Component {
                     <View className='inputBox'>
                         <Input className='phoneInformationInput' type="text" maxLength={6} />
                         <View className='phoneInformationBtn'> 获取验证码</View>
+                        {
+                            this.state.is_ok ? (
+                                <View className='phoneInformationBtn' onClick={this.getCode.bind(this)}> 获取验证码</View>
+                            ) : (
+                                    <View className='phoneInformationBtn' > {this.state.wait}s后重新获取</View>
+                                )
+                        }
                     </View>
                     <View className='btnBox' onClick={this.sumbit.bind(this)}>确认</View>
                 </View>
