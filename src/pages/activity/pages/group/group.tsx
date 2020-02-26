@@ -37,6 +37,7 @@ interface State {
   isFromShare: boolean;
   isShowStartGroup: boolean;
   time: any;
+  groupDesc: string
 }
 let timer2 = null
 let timer = null;
@@ -55,13 +56,14 @@ export default class Group extends Component {
     isQrcode: false,
     base64: "",
     isShare: false,
-
+    groupDesc: '',
     isFromShare: false,
     isShowStartGroup: false,
     time: {
       date: '',
       display: 2
-    }
+    },
+
   }
 
   componentDidShow() {
@@ -89,6 +91,8 @@ export default class Group extends Component {
     this.fetchCoupon(location)
     this.setTime()
     this.share()
+    let res = this.groupDesc()
+    this.setState({groupDesc: res})
   }
 
   // onShareAppMessage() {
@@ -187,9 +191,9 @@ export default class Group extends Component {
     const {
       basicinfo: { youhui_log_id }
     } = this.state
-    const { status } = await listenQrcodeForGroup({ youhui_log_id })
-    console.log(status, '二维码status')
-    if (status === USED) {
+    const { data } = await listenQrcodeForGroup({ youhui_log_id })
+    console.log(data.status, '二维码status')
+    if (data.status === USED) {
       this.setState({
         isQrcode: false
       })
@@ -206,12 +210,17 @@ export default class Group extends Component {
    */
   async fetchQrcode(): Promise<void> {
     const { youhui_log_id } = this.state.basicinfo
-    const { data } = await getQrcode({ youhui_log_id })
-    this.setState({
-      isQrcode: true,
-      base64: data
-    })
-    this.fetchListenQrcode()
+    const { data,code } = await getQrcode({ youhui_log_id })
+    if(code == 0){
+      Taro.showToast({title: '卡券已核销使用'})
+    }else{
+      this.setState({
+        isQrcode: true,
+        base64: data
+      })
+      this.fetchListenQrcode()
+    }
+
   }
 
   /**
@@ -348,6 +357,44 @@ export default class Group extends Component {
     clearTimeout(timer2)
   }
 
+  groupDesc = () => {
+    if (this.state.time.display > 0) {
+      // 活动未结束
+      if (this.state.isFinish) {
+        // 活动完成
+        return "拼团已经完成, 感谢您的参与!"
+      } else {
+        // 活动未完成
+        if (this.state.basicinfo.is_group_participation) {
+          // 参与
+          const surplus = this.state.basicinfo.number
+            ? this.state.basicinfo.number - this.state.basicinfo.participation_number
+            : 0
+          return `还差${surplus}人成团`
+        } else {
+          // 未参与
+          const surplus = this.state.basicinfo.number
+            ? this.state.basicinfo.number - this.state.basicinfo.participation_number
+            : 0
+          return `仅剩${surplus}个名额`
+        }
+      }
+    } else {
+      // 活动结束
+      if (this.state.isFinish) {
+        // 活动完成
+        return "拼团已经完成, 感谢您的参与!"
+      } else {
+        // 活动未完成
+        if (this.state.basicinfo.is_group_participation) {
+          return '拼团失败，金额已返还至账户'
+        } else {
+          return '本拼团已结束，可前往查看更多拼团活动'
+        }
+      }
+    }
+  }
+
   render() {
     const {
       basicinfo,
@@ -359,14 +406,17 @@ export default class Group extends Component {
       isQrcode,
       base64,
       isShare,
-      isShowStartGroup
+      isShowStartGroup,
+      groupDesc
     } = this.state
+    console.log(isFinish, '123')
     const surplus = basicinfo.number
       ? basicinfo.number - basicinfo.participation_number
       : 0
-    const groupDesc = this.state.time.display > 0 ? isFinish
-      ? "拼团已经完成, 感谢您的参与!"
-      : `还差${surplus}人成团` : this.state.basicinfo.is_group_participation ? '拼团失败，金额已返还至账户' : '活动已结束，更多活动正在进行中'
+    // const groupDesc = this.state.time.display > 0 ? isFinish
+    //   ? "拼团已经完成, 感谢您的参与!"
+    //   : `还差${surplus}人成团` : this.state.basicinfo.is_group_participation ? '拼团失败，金额已返还至账户' : '本拼团已结束，可前往查看更多拼团活动'
+    // const groupDesc = this.state.time.display > 0 ? isFinish ? "拼团已经完成, 感谢您的参与!" : `还差${surplus}人成团`  : '本拼团已结束，可前往查看更多拼团活动'
     return (
       <Block>
         <View className="group" style="background-image: url(http://tmwl-resources.tdianyi.com/miniProgram/MiMaQuan/img_group.png)">
@@ -395,10 +445,10 @@ export default class Group extends Component {
                   </View>
                 </View>
               </View>
-            { !isFinish ? <View className="time">
-              <Text className="text">距离结束时间还剩:</Text>
-              <Text>{this.state.time.date}</Text>
-            </View> : null}
+              {!isFinish ? <View className="time">
+                <Text className="text">距离结束时间还剩:</Text>
+                <Text>{this.state.time.date}</Text>
+              </View> : null}
               <ScrollView
                 scrollX
                 style="margin-top: 25px; height: 50px; white-space: nowrap;"
