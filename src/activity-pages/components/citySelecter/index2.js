@@ -24,13 +24,13 @@ class PagePicker extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('888', this.props)
         if (nextProps.firstMsg && nextProps.firstMsg != "" && this.state.havechange == false) {
             this.setState({ selectorChecked: nextProps.firstMsg })
         }
     }
 
     componentDidMount() {
-        if (this.props.tempCityInfo) { this.setState({ selectorChecked: this.props.tempCityInfo }) }
         shen = [];
         shi = [];
         qu = [];
@@ -141,7 +141,7 @@ class PagePicker extends Component {
                 <View className='informationItem' style={{ borderBottom: this.props.border ? '0.02133rem #f2f2f2 solid' : 'none', fontSize: this.props.border ? '0.53333rem' : 'Inherited' }} >
                     <View className='itemLeft' style={{ fontSize: this.props.border ? '0.53333rem' : 'Inherited' }}>地区:</View>
                     <View className='itemRight'>
-                        <View className='itemWords'>{this.state.selectorChecked.toString()}</View>
+                        <View className='itemWords'>{this.state.selectorChecked ? this.state.selectorChecked.toString() : this.props.tempCityInfo}</View>
                         <View className='itemIcon'></View>
                     </View>
                 </View>
