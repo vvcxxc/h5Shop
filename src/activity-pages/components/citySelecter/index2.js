@@ -139,7 +139,7 @@ class PagePicker extends Component {
         return (
             <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} >
                 <View className='informationItem' style={{ borderBottom: this.props.border ? '0.02133rem #f2f2f2 solid' : 'none', fontSize: this.props.border ? '0.53333rem' : 'Inherited' }} >
-                    <View className='itemLeft' >地区</View>
+                    <View className='itemLeft' style={{ fontSize: this.props.border ? '0.53333rem' : 'Inherited' }}>地区</View>
                     <View className='itemRight'>
                         <View className='itemWords'>{this.state.selectorChecked.toString()}</View>
                         <View className='itemIcon'></View>
