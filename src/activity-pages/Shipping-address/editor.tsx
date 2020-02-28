@@ -5,7 +5,7 @@ import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 // import AddressItem from '../components/address-item/index'
 import request from '../../services/request'
-import CitySelecter from "../components/citySelecter/index"
+import CitySelecter from "../components/citySelecter/index2.js"
 import iNoBounce from '@/utils/inobouce';
 
 
@@ -100,8 +100,8 @@ export default class EditorAddress extends Component {
     }
     // 所在区域
     cityEnd = (query) => {
-        // this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
-        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked })
+        this.setState({ cityValue: query })
+        // this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked })
     }
     //详细地址
     onHandelChangeAddress = (e) => {
@@ -283,12 +283,12 @@ export default class EditorAddress extends Component {
             })
             return;
         }
-        if (cityValue.length == 0) {
-            this.setState({ toastInfo: '请选择地区', toastShow: true }, () => {
-                setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
-            })
-            return;
-        }
+        // if (cityValue.length == 0) {
+        //     this.setState({ toastInfo: '请选择地区', toastShow: true }, () => {
+        //         setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
+        //     })
+        //     return;
+        // }
         if (!TextareaValue) {
             this.setState({ toastInfo: '请输入详细地址', toastShow: true }, () => {
                 setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
@@ -393,13 +393,13 @@ export default class EditorAddress extends Component {
                             onInput={this.onHandelChangePhone.bind(this)}
                         />
                     </View>
-                    <View className="editor-box" onClick={this.handleShowCity.bind(this)} >
-                        <View className="editor-box_left">所在区域:</View>
+                    {/* <View className="editor-box_left">所在区域:</View>
                         <View className="editor-box_input0" >{this.state.tempCityInfo}</View>
                         <View className="editor-box_right">
                             <AtIcon className="editor-box_icon" value='chevron-right' color='#f2f2f2' />
-                        </View>
-                    </View>
+                        </View> */}
+                    <CitySelecter getCity={this.cityEnd} border={true} />
+
                     <View className="editor-box2">
                         <View className="editor-box_left2">详细地址:</View>
                         <Textarea
@@ -453,11 +453,11 @@ export default class EditorAddress extends Component {
                 }
 
 
-                <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
+                {/* <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
                     <View className="AtActionSheetBox">
                         <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
                     </View>
-                </AtActionSheet>
+                </AtActionSheet> */}
 
                 {/* {
                     this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
