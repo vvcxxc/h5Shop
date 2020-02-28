@@ -401,7 +401,7 @@ export default class EditorAddress extends Component {
                         </View> 
                          </View> 
                         */}
-                    <CitySelecter getCity={this.cityEnd} border={true} />
+                    <CitySelecter getCity={this.cityEnd} border={true} tempCityInfo={this.state.tempCityInfo} />
 
                     <View className="editor-box2">
                         <View className="editor-box_left2">详细地址:</View>
