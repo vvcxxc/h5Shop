@@ -29,7 +29,7 @@ export default class TicketBuy extends Component {
       begin_time: "",
       brief: "",
       //真正的收藏
-      collect: "0",
+      collect: "",
       description: "",
       end_time: "",
       icon: "",
@@ -97,6 +97,7 @@ export default class TicketBuy extends Component {
     }
     Taro.showLoading({
       title: 'loading',
+      mask:true
     })
     getLocation().then((res: any) => {
       let xPoint = res.longitude;

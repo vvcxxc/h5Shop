@@ -95,6 +95,7 @@ export default class SetMeal extends Component {
     }
     Taro.showLoading({
       title: 'loading',
+      mask: true
     })
     // console.log(this.$router.params)
     getLocation().then((res: any) => {
@@ -103,6 +104,37 @@ export default class SetMeal extends Component {
       let yPoint = res.latitude;
       request({
         url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint || '', ypoint: yPoint || '' }
+      })
+        .then((res: any) => {
+          console.log(res);
+          if (res.code != 200) {
+            Taro.hideLoading()
+            Taro.showToast({ title: '信息错误', icon: 'none' })
+            setTimeout(() => {
+              Taro.navigateBack({
+              })
+            }, 2000)
+          }
+          this.setState({
+            coupon: res.data.info.coupon,
+            store: res.data.info.store,
+            goods_album: res.data.info.goods_album,
+            recommend: res.data.recommend.data
+          }, () => {
+            this.toShare();
+          })
+          Taro.hideLoading();
+        }).catch(function (error) {
+          Taro.hideLoading();
+          Taro.showToast({ title: '数据请求失败', icon: 'none' })
+          setTimeout(() => {
+            Taro.navigateBack({
+            })
+          }, 2000)
+        });
+    }).catch(err => {
+      request({
+        url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
       })
         .then((res: any) => {
           console.log(res);
@@ -131,37 +163,6 @@ export default class SetMeal extends Component {
             })
           }, 2000)
         });
-    }).catch(err => {
-        request({
-          url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
-        })
-          .then((res: any) => {
-            console.log(res);
-            if (res.code != 200) {
-              Taro.hideLoading()
-              Taro.showToast({ title: '信息错误', icon: 'none' })
-              setTimeout(() => {
-                Taro.navigateBack({
-                })
-              }, 2000)
-            }
-            this.setState({
-              coupon: res.data.info.coupon,
-              store: res.data.info.store,
-              goods_album: res.data.info.goods_album,
-              recommend: res.data.recommend.data
-            }, () => {
-              this.toShare();
-            })
-            Taro.hideLoading()
-          }).catch(function (error) {
-            Taro.hideLoading()
-            Taro.showToast({ title: '数据请求失败', icon: 'none' })
-            setTimeout(() => {
-              Taro.navigateBack({
-              })
-            }, 2000)
-          });
     })
   }
 
@@ -253,13 +254,13 @@ export default class SetMeal extends Component {
       let longitude = parseFloat(this.state.store.xpoint);
       let latitude = parseFloat(this.state.store.ypoint);
       let userAgent = navigator.userAgent;
-    let isIos = userAgent.indexOf('iPhone') > -1;
-    let url: any;
-    if (isIos) {
-      url = sessionStorage.getItem('url');
-    } else {
-      url = location.href;
-    }
+      let isIos = userAgent.indexOf('iPhone') > -1;
+      let url: any;
+      if (isIos) {
+        url = sessionStorage.getItem('url');
+      } else {
+        url = location.href;
+      }
       Taro.request({
         url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
         method: 'GET',
