@@ -63,9 +63,8 @@ class PagePicker extends Component {
         let shiName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].value;
         let quName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].children[Number(quindex)].value;
         let selectorChecked = shenName + '-' + shiName + '-' + quName;
-        this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName }, () => {
-            this.props.getCity && this.props.getCity(tempselectorid)
-        })
+        this.props.getCity && this.props.getCity(tempselectorid);
+        this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
     }
     onColumnChange = e => {
         //第一列下标0

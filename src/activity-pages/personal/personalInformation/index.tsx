@@ -6,7 +6,7 @@ import request from '@/services/request'
 import "./index.less"
 import { url } from "inspector"
 import CitySelecter from "../../components/citySelecter/index"
-import Citypicker  from "../../components/citySelecter/index2.js"
+import Citypicker from "../../components/citySelecter/index2.js"
 
 export default class PersonalInformation extends Component {
 
@@ -20,9 +20,11 @@ export default class PersonalInformation extends Component {
         dateSel: '',
         actionsheetShow: false,
         tempCityInfo: '',
-        maskShow: false
+        maskShow: false,
+        name: ''
     }
-    componentDidMount() { }
+    componentDidMount() {
+    }
     onSexChange = e => {
         this.setState({
             selectorNum: e.detail.value,
@@ -37,12 +39,13 @@ export default class PersonalInformation extends Component {
     }
     // 所在区域
     cityEnd = (query) => {
-        console.log(query)
         this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
     }
-    getCity(region) {
-        // 参数region为选择的省市区
-        console.log('2:',region);
+    getCityArea(query) {
+        console.log('父亲:', query);
+    }
+    changeName = (e: any) => {
+        this.setState({ name: e.detail.value })
     }
 
     render() {
@@ -96,7 +99,7 @@ export default class PersonalInformation extends Component {
                             <View className='itemIcon'></View>
                         </View>
                     </View> */}
-                    <Citypicker Division=" - " getCity={this.getCity.bind(this)}></Citypicker>
+                    <Citypicker Division=" - " getCity={this.getCityArea}></Citypicker>
 
                 </View>
 
@@ -111,7 +114,7 @@ export default class PersonalInformation extends Component {
                             </View>
                             <View className='pickerBox'>
                                 <View className='inputBox'>
-                                    <Input className='pickerInput' />
+                                    <Input className='pickerInput' onInput={this.changeName.bind(this)} />
                                 </View>
                             </View>
                         </View>

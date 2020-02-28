@@ -59,7 +59,8 @@ export default class PhoneInformation extends Component {
                 resend()
             }, 1000);
             request({
-                url: 'verifyCode',
+                url:'',
+                // url: 'verifyCode',
                 method: "POST",
                 data: { phone }
             })
