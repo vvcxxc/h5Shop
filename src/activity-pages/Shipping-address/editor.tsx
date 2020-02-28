@@ -393,12 +393,15 @@ export default class EditorAddress extends Component {
                             onInput={this.onHandelChangePhone.bind(this)}
                         />
                     </View>
-                    
-                    {/* <View className="editor-box_left">所在区域:</View>
+
+                    {/* <View className="editor-box">
+                    <View className="editor-box_left">所在区域:</View>
                         <View className="editor-box_input0" >{this.state.tempCityInfo}</View>
                         <View className="editor-box_right">
                             <AtIcon className="editor-box_icon" value='chevron-right' color='#f2f2f2' />
-                        </View> */}
+                        </View> 
+                         </View> 
+                        */}
                     <CitySelecter getCity={this.cityEnd} border={true} />
 
                     <View className="editor-box2">
