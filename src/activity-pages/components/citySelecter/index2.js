@@ -55,7 +55,6 @@ class PagePicker extends Component {
         })
     }
 
-
     onTabChange = () => {
         let tempselectorid = this.state.selectorid;
         let { shenindex, shiindex, quindex } = this.state;
