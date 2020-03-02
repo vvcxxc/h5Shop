@@ -3,7 +3,7 @@ import { AtIcon } from "taro-ui"
 import { View, Text, Picker, Input } from '@tarojs/components'
 import request from '../../../services/request'
 import './index.scss'
-import dataCity from "./dataCity2"
+import dataCity from "./dataCity"
 let shen = [];
 let shi = [];
 let qu = [];
