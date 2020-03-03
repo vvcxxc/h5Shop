@@ -143,6 +143,7 @@ export default class PaySuccess extends Component<Props> {
     }
     Taro.showLoading({
       title: 'loading',
+      mask:true
     })
     let that = this;
     getLocation().then((res: any) => {
@@ -151,7 +152,6 @@ export default class PaySuccess extends Component<Props> {
         xPoint: res.longitude || ''
       }, () => {
         this.requestData();
-
       })
     }).catch(err => {
       this.setState({

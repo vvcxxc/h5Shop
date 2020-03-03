@@ -318,6 +318,7 @@ export default class Appre extends Component<Props>{
         title: "支付出错",
         icon: "none"
       });
+      return;
     }
     let datas = {}
     if (_type == 1) {
@@ -395,7 +396,11 @@ export default class Appre extends Component<Props>{
                   }, 500);
 
                 } else {
-                  //微信支付失败
+                  //微信支付失败 
+                  Taro.showToast({
+                    title: "支付出错",
+                    icon: "none"
+                  });
                 }
               }
             );
@@ -433,6 +438,10 @@ export default class Appre extends Component<Props>{
                 }, 500);
               } else {
                 //支付宝支付失败
+                Taro.showToast({
+                  title: "支付出错",
+                  icon: "none"
+                });
               }
             })
           } else {

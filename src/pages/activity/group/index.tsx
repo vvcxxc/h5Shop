@@ -378,7 +378,6 @@ export default class Group extends Component<Props>{
   payment() {
     let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
     let _temptype = this.$router.params.type;
-    console.log(_temptype,'_temptype',_tempid,'_tempid')
     Taro.showLoading({
       title: 'loading',
     })
@@ -399,7 +398,6 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
         type: this.$router.params.type,
@@ -410,7 +408,6 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         type: this.$router.params.type,
         xcx: 0,
         number: 1,
@@ -574,7 +571,6 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: _groupid,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
         type: 55,
@@ -585,7 +581,6 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: _groupid,
         activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         type: 55,
         xcx: 0,
         number: 1,
@@ -717,7 +712,6 @@ export default class Group extends Component<Props>{
     }
   }
   goToaConfirmAddGroup = (_id, e) => {
-    console.log('gift？', this.state.data.gift_id)
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
