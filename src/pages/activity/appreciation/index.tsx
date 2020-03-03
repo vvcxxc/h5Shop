@@ -63,13 +63,11 @@ export default class Appre extends Component<Props>{
 
     isFromShare: false
   };
-  componentDidShow() {
-    this.toShare();
-  }
+
   componentWillUnmount() {
     clearInterval(interval);
   }
-  componentDidMount = () => {
+  componentDidShow() {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({

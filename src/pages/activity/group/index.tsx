@@ -78,9 +78,7 @@ export default class Group extends Component<Props>{
     currentPage: 0,
     allowGroup: ''
   };
-  componentDidShow() {
-    this.toShare();
-  }
+
   clearTimeOut = () => {
     console.log('清除计时器');
     var end = setTimeout(function () { }, 1);
@@ -94,7 +92,7 @@ export default class Group extends Component<Props>{
     this.clearTimeOut();
   }
 
-  componentDidMount = () => {
+  componentDidShow() {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({
