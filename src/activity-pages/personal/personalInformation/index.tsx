@@ -14,40 +14,91 @@ export default class PersonalInformation extends Component {
         navigationBarTitleText: "修改我的信息"
     }
     state = {
+        avatar: '',
         selector: ['男', '女'],
         selectorNum: 0,
         selectorChecked: '男',
         dateSel: '',
-        actionsheetShow: false,
-        tempCityInfo: '',
         maskShow: false,
-        name: ''
+        name: '',
+        sumbitName: '',
+        cityIndex: []
     }
     componentDidMount() {
+        Taro.showLoading();
+        request({
+            url: 'v1/user/user/user_info',
+            method: "GET",
+        })
+            .then((res: any) => {
+                Taro.hideLoading();
+                let { status_code, data } = res;
+                if (status_code == 200) {
+                    this.setState({
+                        avatar: data.avatar,
+                        name: data.user_name
+
+                        // ?????
+                    })
+                } else {
+                    Taro.showToast({ title: '加载失败', icon: 'none' })
+                }
+
+            }).catch(err => {
+                Taro.hideLoading();
+                Taro.showToast({ title: '加载失败', icon: 'none' })
+            })
     }
     onSexChange = e => {
         this.setState({
             selectorNum: e.detail.value,
             selectorChecked: this.state.selector[e.detail.value]
-        })
+        }, () => { this.sumbitInfo() })
     }
     onDateChange = (e: any) => {
         console.log(e.detail.value)
         this.setState({
             dateSel: e.detail.value
-        })
-    }
-    // 所在区域
-    cityEnd = (query) => {
-        this.setState({ cityValue: query.tempselectorid, tempCityInfo: query.selectorChecked, actionsheetShow: false })
+        }, () => { this.sumbitInfo() })
     }
     getCityArea(query) {
-        console.log('父亲:', query);
+        this.setState({ cityIndex: query }, () => { this.sumbitInfo() })
     }
     changeName = (e: any) => {
         this.setState({ name: e.detail.value })
     }
+    sumbitName = (e: any) => {
+        this.setState({ sumbitName: this.state.name }, () => { this.sumbitInfo() })
+    }
+    sumbitInfo = () => {
+        Taro.showLoading();
+        request({
+            url: 'v1/user/user/upload_user_detail',
+            method: "GET",
+            data: {
+                byear: this.state.dateSel.split('-')[0],
+                bmonth: this.state.dateSel.split('-')[1],
+                bday: this.state.dateSel.split('-')[2],
+                sex: this.state.selectorChecked == '男' ? 1 : 2,
+                province_id: this.state.cityIndex[0],
+                city_id: this.state.cityIndex[1],
+                district_id: this.state.cityIndex[2],
+            }
+        })
+            .then((res: any) => {
+                Taro.hideLoading();
+                console.log(res)
+                if (res.status_code == 200) {
+                    Taro.showToast({ title: '修改成功', icon: 'none' })
+                } else {
+                    Taro.showToast({ title: '修改失败', icon: 'none' })
+                }
+            }).catch(err => {
+                Taro.hideLoading();
+                Taro.showToast({ title: '修改失败', icon: 'none' })
+            })
 
+    }
     render() {
         return (
             <View className='personalInformation'>
@@ -57,7 +108,9 @@ export default class PersonalInformation extends Component {
                     <View className='informationItem'>
                         <View className='itemLeft'>头像</View>
                         <View className='itemRight'>
-                            <View className='itemImage'></View>
+                            <View className='itemImage'>
+                                <Image className='userImage' src={this.state.avatar} />
+                            </View>
                             <View className='itemIcon'> </View>
                         </View>
                     </View>
@@ -90,16 +143,7 @@ export default class PersonalInformation extends Component {
                             </View>
                         </View>
                     </Picker>
-
-
-                    {/* <View className='informationItem' onClick={(e) => { this.setState({ actionsheetShow: true }); e.stopPropagation(); }}>
-                        <View className='itemLeft'>地区</View>
-                        <View className='itemRight'>
-                            <View className='itemWords'>{this.state.tempCityInfo}</View>
-                            <View className='itemIcon'></View>
-                        </View>
-                    </View> */}
-                    <Citypicker Division=" - " getCity={this.getCityArea}></Citypicker>
+                    <Citypicker Division=" - " getCity={this.getCityArea} sumbit={true}></Citypicker>
 
                 </View>
 
@@ -120,12 +164,6 @@ export default class PersonalInformation extends Component {
                         </View>
                     </View> : null
                 }
-
-                <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
-                    <View className="AtActionSheetBox">
-                        <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
-                    </View>
-                </AtActionSheet>
             </View>
         )
     }

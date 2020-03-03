@@ -20,6 +20,28 @@ export default class PhoneInformation extends Component {
         phone: ''
 
     }
+    componentDidMount() {
+        Taro.showLoading();
+        request({
+            url: 'v1/user/user/user_info',
+            method: "GET",
+        })
+            .then((res: any) => {
+                Taro.hideLoading();
+                let { status_code, data } = res;
+                if (status_code == 200) {
+                    this.setState({
+                        phone: data.phone,
+                    })
+                } else {
+                    Taro.showToast({ title: '加载失败', icon: 'none' })
+                }
+            }).catch(err => {
+                Taro.hideLoading();
+                Taro.showToast({ title: '加载失败', icon: 'none' })
+            })
+    }
+
     cancleBtn = () => {
         this.setState({ tipsShow: false })
     }
@@ -37,10 +59,6 @@ export default class PhoneInformation extends Component {
          */
     getCode = () => {
         const { phone } = this.state;
-        if (!(/^1[3456789]\d{9}$/.test(phone))) {
-            Taro.showToast({ title: '请输入11位有效手机号', duration: 1500 })
-            return;
-        }
         let wait = 60;
         if (phone) {
             let _this = this;
@@ -59,8 +77,7 @@ export default class PhoneInformation extends Component {
                 resend()
             }, 1000);
             request({
-                url:'',
-                // url: 'verifyCode',
+                url: 'v1/user/auth/verifyCode',
                 method: "POST",
                 data: { phone }
             })
@@ -75,7 +92,7 @@ export default class PhoneInformation extends Component {
                     }
                 })
         } else {
-            Taro.showToast({ title: '请输入手机号', duration: 1500 })
+            Taro.showToast({ title: '记录手机号有误', duration: 1500 })
         }
     }
     render() {
