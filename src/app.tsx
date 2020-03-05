@@ -121,7 +121,6 @@ class App extends Component {
           'personal/index',
           'personal/personalInformation/index',
           'personal/phoneInformation/index',
-          'personal/phoneInformation/changePhoneNumber',
         ]
       }
     ],
