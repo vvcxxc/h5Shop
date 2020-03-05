@@ -1,4 +1,5 @@
 import http from "./http"
+import userHttp from "@/services/userRequest"
 
 interface location {
   xpoint: number;
@@ -262,4 +263,26 @@ export const getOrderQrcode = (id) =>
 		data: {
 			id:id
 		}
-	})
+  })
+  
+/* 
+获取短信验证码
+*/
+export const getShortNote = (data) => {
+  return userHttp({
+    url: 'v1/user/auth/verifyCode',
+    method: "POST",
+    data
+  })
+}
+
+/* 
+   手机号登录
+  */
+export const loginPhone = (data) => {
+  return userHttp({
+    url: 'v1/user/auth/login',
+    method: "PUT",
+    data
+  })
+}

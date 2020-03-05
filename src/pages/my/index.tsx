@@ -1,16 +1,10 @@
 import Taro, { Component, Config } from "@tarojs/taro"
-// import { View } from "@tarojs/components";
-import { Block, View, Image, Text, Navigator } from "@tarojs/components"
+import { View, Image, Text } from "@tarojs/components"
 import request from '@/services/request'
+import LandingBounced from '@/components/landing_bounced'
 import "./index.styl"
 
 type Props = any
-
-interface Cell {
-  text: string;
-  icon: string;
-  path: string;
-}
 
 interface State {
   cells: any;
@@ -18,7 +12,8 @@ interface State {
   user_img: string;
   data: string,
   list: Object[],
-  userData: Object
+  userData: Object,
+  showBounced:boolean
 }
 
 export default class NewPage extends Component<Props>{
@@ -63,7 +58,8 @@ export default class NewPage extends Component<Props>{
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png',
         path: "/activity-pages/Shipping-address/index",
       }
-    ]
+    ],
+    showBounced: false//登录弹框
   }
 
 
@@ -115,11 +111,16 @@ export default class NewPage extends Component<Props>{
 
   // 跳转路径
   jumpData = (data: string) => {
-    Taro.navigateTo({
-      url: data
-    })
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (phone_status) {
+      Taro.navigateTo({ url: data })
+      return
+    }
+    this.setState({ showBounced:true})
+    
   }
   render() {
+    const { showBounced } = this.state
     return (
       <View className='newPage'>
         <View className='newPage_head'>
@@ -157,6 +158,11 @@ export default class NewPage extends Component<Props>{
         {/* <View className="newPage_foot">
           客服电话：10101010 <Text className='left'>（服务时间：9：00~20：00）</Text>
         </View> */}
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
       </View>
     )
   }
