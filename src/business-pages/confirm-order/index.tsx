@@ -31,8 +31,7 @@ export default class ConfirmOrder extends Component {
       id: "",
       sname: ""
     },
-    pay_bull: false,
-    pay_data: "支付成功"
+
   };
   componentWillMount() {
 
@@ -42,7 +41,7 @@ export default class ConfirmOrder extends Component {
         this.setState({
           coupon: res.data.info.coupon,
           store: res.data.info.store
-        },()=>{
+        }, () => {
           this.accMul();
         })
         Taro.hideLoading()
@@ -120,16 +119,18 @@ export default class ConfirmOrder extends Component {
           //微信
           window.WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
-              "appId": res.data.appId,
-              "timeStamp": res.data.timeStamp,
-              "nonceStr": res.data.nonceStr,
-              "package": res.data.package,
-              "signType": res.data.signType,
-              "paySign": res.data.paySign
-            },
+            "appId": res.data.appId,
+            "timeStamp": res.data.timeStamp,
+            "nonceStr": res.data.nonceStr,
+            "package": res.data.package,
+            "signType": res.data.signType,
+            "paySign": res.data.paySign
+          },
             function (res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
+                Taro.showToast({ title: '支付成功', icon: 'none' })
+
                 Taro.switchTab({
                   url: '/pages/order/index',
                   success: function (e) {
@@ -139,11 +140,11 @@ export default class ConfirmOrder extends Component {
                   }
                 })
               } else {
-                //微信失败
+                Taro.showToast({ title: '支付失败', icon: 'none' })
               }
             }
           );
-        } 
+        }
         else if (_type == 2) {
           //支付宝
           window.AlipayJSBridge.call('tradePay', {
@@ -153,6 +154,8 @@ export default class ConfirmOrder extends Component {
             // bizContext:""                           // 非必传，默认为H5启动选项(safePayContext)
           }, res => {
             if (res.resultCode === "9000") {
+              Taro.showToast({ title: '支付成功', icon: 'none' })
+
               //支付宝成功
               Taro.switchTab({
                 url: '/pages/order/index',
@@ -164,7 +167,7 @@ export default class ConfirmOrder extends Component {
                 }
               })
             } else {
-              //支付宝失败
+              Taro.showToast({ title: '支付失败', icon: 'none' })
             }
           })
         } else {
@@ -191,10 +194,6 @@ export default class ConfirmOrder extends Component {
   render() {
     return (
       <View className="confirm-order" >
-        {
-
-          this.state.pay_bull ? <AtToast isOpened text={this.state.pay_data} duration={2000} ></AtToast> : ""
-        }
         <View className="content">
           <View className="flex center">
             <View className="item label">{this.state.store.sname}{this.state.coupon.yname}</View>
@@ -219,7 +218,7 @@ export default class ConfirmOrder extends Component {
           <View className="flex center">
             <View className="item label">金额</View>
             <View className="price">
-            ￥{this.state.tempNum}
+              ￥{this.state.tempNum}
             </View>
           </View>
         </View>

@@ -164,6 +164,8 @@ export default class CitySelecter extends Component<Props> {
                 quid: quid,
                 selectorChecked: shenvalue + '-' + shivalue + '-' + quvalue,
             }, () => {
+                console.log(this.state.selectorChecked)
+                console.log(this.state.shenid, this.state.shiid, this.state.quid);
                 this.onTabChange();
             })
         }

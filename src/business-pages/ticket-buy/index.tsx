@@ -10,6 +10,7 @@ import AddressImg from '../../assets/address.png'
 import request from '../../services/request'
 import { getLocation } from "@/utils/getInfo"
 import { getBrowserType } from "@/utils/common";
+import LandingBounced from '@/components/landing_bounced'//登录弹框
 import wx from 'weixin-js-sdk';
 
 
@@ -29,7 +30,7 @@ export default class TicketBuy extends Component {
       begin_time: "",
       brief: "",
       //真正的收藏
-      collect: "0",
+      collect: "",
       description: "",
       end_time: "",
       icon: "",
@@ -81,7 +82,8 @@ export default class TicketBuy extends Component {
       image: ''
     }],
 
-    isFromShare: false
+    isFromShare: false,
+    showBounced: false
   };
 
   componentDidShow() {
@@ -97,6 +99,7 @@ export default class TicketBuy extends Component {
     }
     Taro.showLoading({
       title: 'loading',
+      mask:true
     })
     getLocation().then((res: any) => {
       let xPoint = res.longitude;
@@ -212,7 +215,12 @@ export default class TicketBuy extends Component {
 
 
   handleClick = (id, e) => {
-    console.log(id)
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (!phone_status) {
+      this.setState({ showBounced: true })
+      return
+    }
+
     Taro.navigateTo({
       url: '../../business-pages/confirm-order/index?id=' + id
     })
@@ -319,8 +327,14 @@ export default class TicketBuy extends Component {
   }
 
   render() {
+    const { showBounced } = this.state
     return (
       <View className="set-meal">
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
         {
           this.state.keepCollect_bull ?
             <AtToast isOpened text={this.state.keepCollect_data} duration={2000} ></AtToast> : ""

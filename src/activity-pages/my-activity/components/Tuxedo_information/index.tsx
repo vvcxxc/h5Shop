@@ -1,29 +1,22 @@
 import Taro, { Component } from "@tarojs/taro"
-import request from '../../../../services/request'
-import "./index.less"
-import { spawn } from "child_process"
 import TimeUp from '../../../../pages/activity/group/TimeUp'
-import wx from 'weixin-js-sdk';
 import QRCode from 'qrcode'
-import { AtCurtain, AtButton } from 'taro-ui'
-import { Block, View, Image, Text, Button } from "@tarojs/components"
+import { AtCurtain } from 'taro-ui'
+import { View, Image, Text } from "@tarojs/components"
+import SpellGroupHead from "../spellGroupHead"
+import request from '../../../../services/request'
 
-interface Props {
-  // list: any
-}
-const share_url = process.env.GROUP_URL;
+import "./index.less"
 
-export default class TuxedoInformation extends Component<Props> {
+export default class TuxedoInformation extends Component<any> {
 
   state = {
     listData: [],
     codeImg: '',
-    isOpened: false,
-
+    isOpened: false
   }
 
   componentDidMount = async () => {
-    console.log('test3')
     this.clearTimeOut()
     await request({
       url: 'api/wap/user/getMeGroupList',
@@ -35,36 +28,13 @@ export default class TuxedoInformation extends Component<Props> {
         }
       })
   }
+
   clearTimeOut = () => {
-    console.log('清除计时器');
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
     for (var i = start; i <= end; i++) {
       clearTimeout(i);
     }
-  }
-
-  // 未开团人数头像显示
-  for_data = (list: Array<string>, length: number, people: number) => {
-    let total: any = []
-    list.map((item2: any, index2: number) => {
-      total.push(<View
-        className={index2 == 0 ? '' : 'tuxedo_people'} style={{ zIndex: 6 - index2 }}>
-        <View className="user_head">
-          <Image src={item2} />
-        </View>
-        {index2 == 0 ? <Text>团长</Text> : null}
-      </View>)
-    })
-    for (let i = 0; i < length; i++) {
-      total.push(
-        <View className="no_user_head " style={{ zIndex: 4 - people - i }}>
-          <Image src={require('../../../../assets/problem.png')} />
-        </View>
-      )
-    }
-    if (total.length >= 5) total.length = 5
-    return total
   }
 
   againGroup = (youhui_id, gift_id, activity_id) => {
@@ -100,19 +70,6 @@ export default class TuxedoInformation extends Component<Props> {
       })
   }
 
-  handleChange() {
-    this.setState({
-      isOpened: true
-    })
-  }
-  onClose() {
-    this.setState({
-      isOpened: false
-    })
-  }
-
-
-
   render() {
     const { listData } = this.state
     return (
@@ -134,12 +91,6 @@ export default class TuxedoInformation extends Component<Props> {
                     <Text>{item.name}</Text>
                   </View>
                   <View className="residue_time">
-                    {
-                      // item.number //参与总人数
-                      // item.participation_number //实际参与人数
-                      //item.end_at //开团结束时间 团的过期时间
-
-                    }
                     {
                       item.end_at == '' && item.number !== item.participation_number || item.number !== item.participation_number && new Date(item.end_at.replace(/-/g, "/")).getTime()
                         <= new Date().getTime() ? <View className="failure">拼团失败</View> : null
@@ -175,9 +126,11 @@ export default class TuxedoInformation extends Component<Props> {
               </View>
               <View className="foot">
                 <View className="left">
-                  {
-                    this.for_data(item.head_list, item.number - item.participation_number, item.participation_number)
-                  }
+                  <SpellGroupHead
+                    data={item.head_list}
+                    peopleNeed={item.number}//需要的总人数参团
+                    hasJoined={item.participation_number}//已有的参与人数
+                  />
                 </View>
                 <View className="right">
                   {
@@ -202,11 +155,6 @@ export default class TuxedoInformation extends Component<Props> {
                     new Date(item.active_end_time.replace(/-/g, "/")).getTime() < new Date().getTime() ? <View className="invalid">活动已过期</View> : null
 
                   }
-                  {/* {
-                    // 活动未成团 ， 且在有效期内， 应只显示邀好友参团 
-                    item.number === item.participation_number && new Date(item.active_end_time.replace(/\,/g,"-")).getTime() > new Date().getTime() ? <View className="userCoupon"
-                      onClick={this.againGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>再次拼团</View> : null
-                  } */}
                   {
 
                     item.number > item.participation_number && new Date(item.active_end_time.replace(/-/g, "/")).getTime() > new Date().getTime() && new Date(item.end_at.replace(/-/g, "/")).getTime() < new Date().getTime() ? <View className="userCoupon"
@@ -221,7 +169,7 @@ export default class TuxedoInformation extends Component<Props> {
 
         <AtCurtain
           isOpened={this.state.isOpened}
-          onClose={this.onClose.bind(this)}
+          onClose={()=> {this.setState({  isOpened: false })} }
         >
           <View className="user_prompt_box">
             <View className="user_prompt">商家扫码/输码验证即可消费</View>

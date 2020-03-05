@@ -3,7 +3,7 @@ import { AtIcon } from "taro-ui"
 import { View, Text, Picker, Input } from '@tarojs/components'
 import request from '../../../services/request'
 import './index.scss'
-import dataCity from "./dataCity2"
+import dataCity from "./dataCity"
 let shen = [];
 let shi = [];
 let qu = [];
@@ -140,11 +140,11 @@ class PagePicker extends Component {
 
     render() {
         return (
-            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} onChange={this.sumbitChange}>
-                <View className='informationItem' >
-                    <View className='itemLeft'>地区</View>
+            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} >
+                <View className='informationItem' style={{ borderBottom: this.props.border ? '0.02133rem #f2f2f2 solid' : 'none', fontSize: this.props.border ? '0.53333rem' : 'Inherited' }} >
+                    <View className='itemLeft' style={{ fontSize: this.props.border ? '0.53333rem' : 'Inherited' }}>地区:</View>
                     <View className='itemRight'>
-                        <View className='itemWords'>{this.state.selectorChecked.toString()}</View>
+                        <View className='itemWords'>{this.state.selectorChecked ? this.state.selectorChecked.toString() : (this.props.tempCityInfo ? this.props.tempCityInfo : '')}</View>
                         <View className='itemIcon'></View>
                     </View>
                 </View>
