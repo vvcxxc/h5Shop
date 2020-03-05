@@ -20,11 +20,11 @@ export const Login = () => {
   }else{
     if (type == 'wechat'){
       console.log(from,'from')
-      // let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
-      let url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
+      let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
+      // let url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
       if(process.env.NODE_ENV == 'test'){
-        // url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
-        url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
+        url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
+        // url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
       }
       url = encodeURIComponent(url);
       let urls = 'http://test.wxauth.tdianyi.com/index_xcx.html?appid=wxfe816c3a5440ce7a&redirect_uri='+url+'&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
