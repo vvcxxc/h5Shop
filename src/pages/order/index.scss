@@ -1,5 +1,5 @@
 .orders {
-    min-height: 100vh ;
+    min-height: 100vh;
     height: auto;
     position: relative;
 
@@ -160,7 +160,7 @@
     .tiket_box {
         width: 100vw;
         height: auto;
-        min-height:100vh ;
+        min-height: 100vh;
         background: #f4f4f4;
         padding-top: 100px;
         box-sizing: border-box;
@@ -169,4 +169,35 @@
         align-items: center;
     }
 
+}
+
+.no_data_img {
+    height: 180px;
+    width: 180px;
+}
+
+.no_data {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .two {
+        margin-top: 40px;
+        font-size: 26px;
+        color: #999999;
+    }
+
+    .three {
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 65px;
+        width: 247px;
+        font-size: 28px;
+        color: #fff;
+        border-radius: 8px;
+        background-color: #FF7264;
+    }
 }
