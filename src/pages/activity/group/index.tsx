@@ -702,7 +702,7 @@ export default class Group extends Component<Props>{
       } else if (this.$router.params.type == '55') {
         //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
         Taro.navigateTo({
-          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.state.data.youhui_id + '&groupId=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       }
     } else {
@@ -712,7 +712,7 @@ export default class Group extends Component<Props>{
   goToaConfirmAddGroup = (_id, e) => {
     if (this.state.data.gift_id) {
       this.clearTimeOut();
-      //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
+      //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
       Taro.navigateTo({
         url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
       })
@@ -957,22 +957,6 @@ export default class Group extends Component<Props>{
             </View>
           </View>
         </View>
-        {/* {
-          (this.state.data.gift && this.state.data.gift.mail_mode == 2) ? (
-            <View className='choosePostage' onClick={this.chooseGift}>
-
-              <View>
-                {
-                  this.state.isPostage ? <Image src={require('../../../assets/choose.png')} className='choose' /> : <Image src={require('../../../assets/nochoose.png')} className='choose' />
-                }
-              </View>
-              （邮费 {this.state.data.gift.postage}元）
-          <View className='lbmsg' >
-                <AtNoticebar marquee> {this.state.data.gift.title}</AtNoticebar>
-              </View>
-            </View>) : null
-        } */}
-
         <View className="paymoney_box">
           <View className="paymoney_price">
             <View className="paymoney_price_icon">￥</View>
@@ -984,8 +968,6 @@ export default class Group extends Component<Props>{
                   '+' + this.state.data.gift.postage}</View> : null
             }
           </View>
-
-
           {
             this.state.allowGroup ?
               <View className="paymoney_buynow" id="prohibit">
@@ -994,8 +976,6 @@ export default class Group extends Component<Props>{
               <View className="paymoney_buynow" id="allow" onClick={this.goToaConfirm.bind(this)}>
                 {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}
               </View>
-
-            // this.$router.params.type == "55" ? <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>参加拼团</View> : <View className="paymoney_buynow" onClick={this.goToaConfirm.bind(this)}>发起拼团</View>
           }
         </View>
 
@@ -1012,16 +992,11 @@ export default class Group extends Component<Props>{
                 <View className='share_text text_top'>
                   点击此按钮分享给好友
                 </View>
-                {/* <View className='share_text'>
-                  一起增值领礼品吧
-                </View> */}
                 <Image src={require('../../../assets/share_arro.png')} className='share_img' />
               </View>
             </View>
           ) : null
         }
-
-
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
