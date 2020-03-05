@@ -4,7 +4,6 @@ import { getTime } from '@/utils/common';
 interface Props {
     itemtime: any
 }
-
 export default class TimeUp extends Component<Props>{
 
     state = {
@@ -18,23 +17,7 @@ export default class TimeUp extends Component<Props>{
     componentDidMount() {
         this.setTime();
     }
-    // componentDidShow() {
-    // this.setTime();
-    // }
-    // componentWillReceiveProps(props, nextprops) {
-    //     this.setTime();
-    // }
-    componentWillUnmount() {
-        // console.log('清除计时器');
-        // var end = setTimeout(function () { }, 1);
-        // var start = (end - 100) > 0 ? end - 100 : 0;
-        // for (var i = start; i <= end; i++) {
-        //     clearTimeout(i);
-        // }
-    }
-    /**
-       * 定时
-       */
+    /** 定时 */
     setTime = () => {
         // console.log('计时器')
         let timer;
@@ -50,10 +33,8 @@ export default class TimeUp extends Component<Props>{
                 })
                 this.setTime()
             }, 1000);
-            // console.log('timer', timer)
         }
     }
-
 
     render() {
         return (
