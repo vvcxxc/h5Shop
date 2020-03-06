@@ -40,7 +40,7 @@ export const Login = () => {
       // 新版授权
       let url = process.env.ALIPAY_LOGIN_URL + '?code_id=227&from='+ from
       url = encodeURIComponent(url);
-      let urls = 'http://test.wxauth.tdianyi.com/ali.html?app_id=2017101609332756&redirect_uri='+url+'&scope=auth_user&state=STATE'
+      let urls = 'http://test.wxauth.tdianyi.com/ali.html?appid=2017101609332756&redirect_uri='+url+'&scope=auth_user&state=STATE'
       return window.location.href = urls;
     }
   // }
