@@ -31,10 +31,17 @@ export const Login = () => {
       let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
       return window.location.href = urls;
     }else{
-      let url = BASIC_API +"ali/getZfbUserInfo";
-      from = encodeURIComponent(from);
+      // let url = BASIC_API +"ali/getZfbUserInfo"; // 后台接口
+      from = encodeURIComponent(from); // 当前页面
+      // url = encodeURIComponent(url);
+
+      // window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=227&url='+url;
+
+      // 新版授权
+      let url = process.env.ALIPAY_LOGIN_URL + '?code_id=227&from='+ from
       url = encodeURIComponent(url);
-      window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=227&url='+url;
+      let urls = 'http://test.wxauth.tdianyi.com/ali.html?appid=2017111509949310&redirect_uri='+url+'&scope=auth_user&state=STATE'
+      return window.location.href = urls;
     }
   }
 
