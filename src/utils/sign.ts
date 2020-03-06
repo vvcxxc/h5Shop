@@ -14,10 +14,10 @@ export const Login = () => {
     from = arr[0]
   }
   let type = getBrowserType();
-  if(process.env.NODE_ENV == 'development'){
-    Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1ODMzNzYzMzIsImV4cCI6MTU4MzczNjMzMiwibmJmIjoxNTgzMzc2MzMyLCJqdGkiOiIxU1p3MzRsQkliTWR1ZHl0Iiwic3ViIjo2ODQwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.aVAAYJRH5wZNagPDad9NPIBWY4iWhRPHxXyoi7Iesrk')
+  // if(process.env.NODE_ENV == 'development'){
+  //   Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC5hcGkudGRpYW55aS5jb20vd2VjaGF0L3d4b2F1dGgiLCJpYXQiOjE1ODMzNzYzMzIsImV4cCI6MTU4MzczNjMzMiwibmJmIjoxNTgzMzc2MzMyLCJqdGkiOiIxU1p3MzRsQkliTWR1ZHl0Iiwic3ViIjo2ODQwLCJwcnYiOiJmNmI3MTU0OWRiOGMyYzQyYjc1ODI3YWE0NGYwMmI3ZWU1MjlkMjRkIn0.aVAAYJRH5wZNagPDad9NPIBWY4iWhRPHxXyoi7Iesrk')
 
-  }else{
+  // }else{
     if (type == 'wechat'){
       console.log(from,'from')
       // let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
@@ -40,9 +40,9 @@ export const Login = () => {
       // 新版授权
       let url = process.env.ALIPAY_LOGIN_URL + '?code_id=227&from='+ from
       url = encodeURIComponent(url);
-      let urls = 'http://test.wxauth.tdianyi.com/ali.html?appid=2016091200492078&redirect_uri='+url+'&scope=auth_user&state=STATE'
+      let urls = 'http://test.wxauth.tdianyi.com/ali.html?appid=2018080960968490&redirect_uri='+url+'&scope=auth_user&state=STATE'
       return window.location.href = urls;
     }
-  }
+  // }
 
 }
