@@ -2,7 +2,8 @@ import Taro, { Component, Config } from "@tarojs/taro"
 import { Block, View,Text } from "@tarojs/components"
 import { AtInput, AtButton } from 'taro-ui'
 
-import { getShortNote, loginPhone} from '@/api/index'
+import { getShortNote, loginPhone, loginMerge } from '@/api/index'
+import MergePrompt from './merge_prompt'
 import "./index.styl"
 
 export default class LoginPage extends Component<any>{
@@ -19,7 +20,8 @@ export default class LoginPage extends Component<any>{
 
 
     time: 60,
-    showTime:false
+    showTime: false,
+    prompt:false
   }
 
   componentDidMount() {
@@ -65,39 +67,79 @@ export default class LoginPage extends Component<any>{
       })
   }
 
-  //确定登录
-  sureLogin = () => {
-    const { phoneNumber, validationNumber } = this.state
-    loginPhone({
-      phone: phoneNumber,
-      verify_code: validationNumber
+//确定登录
+sureLogin = () => {
+  const { phoneNumber, validationNumber } = this.state
+  loginPhone({
+    phone: phoneNumber,
+    verify_code: validationNumber
+  })
+    .then(({ status_code, data }) => {
+      if (status_code == 200) {
+        switch (data.status) {
+          case 'binded'://成功登录
+          case 'bindsuccess':
+            Taro.setStorageSync('phone_status', data.status)
+            Taro.showToast({ title: '登录成功', duration: 2000, })
+            setTimeout(() => {
+              let page = Taro.getCurrentPages()
+              if (page.length > 1) {
+                Taro.navigateBack({
+                  delta: 2
+                })
+              }
+            }, 2000)
+            break;
+          case 'need_merge'://需要合并
+            this.setState({ prompt: true })
+            break;
+          default://其它情况
+            console.log('其他错误')
+            break;
+        }//end switch
+      }//end if
     })
-      .then(({ status_code, data }) => {
-        let status = data.status
-        if (status_code == 200) {
-          Taro.setStorageSync('phone_status', status )
+}
 
-          Taro.showToast({
-            title: '登录成功',
-            duration: 2000,
-          })
-          setTimeout(() => {
-            let page = Taro.getCurrentPages()
-            if (page.length > 1) {
-              Taro.navigateBack({
-                delta: 2
-              })
-            }
-          }, 2000)
-        }
+// 确定合并手机
+sureMerge = () => {
+  const { phoneNumber, validationNumber } = this.state
+  loginMerge({
+    mobile: phoneNumber,
+    verify_code: validationNumber,
+    type: 'wx'
+  })
+    .then(({ status_code, data }) => {
+      this.setState({ prompt: false })
+      if (status_code == 200) {
+        Taro.setStorageSync('phone_status', 'binded')
+        Taro.showToast({ title: '同步成功', duration: 2000, })
+        setTimeout(() => {
+          let page = Taro.getCurrentPages()
+          if (page.length > 1) {
+            Taro.navigateBack({
+              delta: 2
+            })
+          }
+        }, 2000)
+      } else {
+        Taro.showToast({ title: '同步失败', duration: 2000, })
+      }
+    })
+}
 
-      })
-  }
 
   render() {
-    const { time } = this.state
+    const { time, prompt } = this.state
     return (
       <View className='loginPage'>
+        {
+          prompt ? <MergePrompt
+            cancel={() => this.setState({ prompt: false })}
+            confirm={() => this.sureMerge()}
+          />:null
+        }
+        
         <View className='loginPage_head'>
           <View className="input_phone">
             <AtInput
