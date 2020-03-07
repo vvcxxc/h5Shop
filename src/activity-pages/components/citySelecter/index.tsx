@@ -5,7 +5,6 @@ import "./index.scss";
 import "taro-ui/dist/style/components/toast.scss";
 // import dataCity from "./dataCity2"
 import dataCity from "./dataCity"
-
 interface Props {
     getCity: (any) => any;
     onclose: () => any;

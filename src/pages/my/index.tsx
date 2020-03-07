@@ -2,6 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro"
 import { View, Image, Text } from "@tarojs/components"
 import request from '@/services/request'
 import LandingBounced from '@/components/landing_bounced'
+import {getUserInfo} from '@/utils/getInfo';
 import "./index.styl"
 
 type Props = any
@@ -13,7 +14,7 @@ interface State {
   data: string,
   list: Object[],
   userData: Object,
-  showBounced:boolean
+  showBounced: boolean
 }
 
 export default class NewPage extends Component<Props>{
@@ -80,7 +81,7 @@ export default class NewPage extends Component<Props>{
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
       myData[2].prompt = res.data.activity_msg
-      this.setState({list: myData })
+      this.setState({ list: myData })
     })
   }
 
@@ -110,17 +111,35 @@ export default class NewPage extends Component<Props>{
       return
     }
     this.setState({ showBounced: true })
+<<<<<<< HEAD
     
+=======
+>>>>>>> 5134d5408e749f9ff8cd9d160e5d6f1f835eb0c4
   }
+
+  setPersonalInfo = () => {
+    Taro.navigateTo({
+      url: '/activity-pages/personal/index'
+    })
+  }
+
   render() {
     const { showBounced } = this.state
     return (
       <View className='newPage'>
+        <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
         <View className='newPage_head'>
           <View className="img_box">
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
+          <View className='setPersonalInfoBox'  onClick={getUserInfo}  >
+            <View className='setPersonalInfo' >一键设置头像</View>
+          </View>
+          {/* <View className='giftMoney'>
+            <Text className='white'>礼品币</Text>
+            <Text className='yellow'>27</Text>
+          </View> */}
         </View>
 
         <View className="newPage_content">
