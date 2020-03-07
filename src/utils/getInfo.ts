@@ -171,9 +171,9 @@ export const getUserInfo = () => {
   }
   let type = getBrowserType();
   if (type == 'wechat'){
-    let url = USER_API + 'v1/user/auth/auth_h5?code_id=0&from='+from
+    let url = USER_API + 'get_wx_user_info?code_id=0&from='+from
     url = encodeURIComponent(url);
-    let urls = AUTH_LOGIN_URL + 'index_xcx.html?appid=wxfe816c3a5440ce7a&redirect_uri='+url+'&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
+    let urls = AUTH_LOGIN_URL + 'index_xcx.html?appid=wxfe816c3a5440ce7a&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&connect_redirect=1&state=STATE&state=STATE';
     return window.location.href = urls;
   }else{
     from = encodeURIComponent(from); // 当前页面
