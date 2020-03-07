@@ -210,7 +210,7 @@ export default class SetMeal extends Component {
 
   handleClick = (id, e) => {
     let phone_status = Taro.getStorageSync('phone_status')
-    if (phone_status) {
+    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
       Taro.navigateTo({
         url: '../../business-pages/confirm-order/index?id=' + id
       })

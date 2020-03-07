@@ -63,7 +63,7 @@ export default class Appre extends Component<Props>{
     isShare: false,
 
     isFromShare: false,
-    showBounced:false
+    showBounced: false
   };
 
   componentWillUnmount() {
@@ -457,19 +457,17 @@ export default class Appre extends Component<Props>{
 
   goToaConfirm = (e) => {
     let phone_status = Taro.getStorageSync('phone_status')
-    if (!phone_status) {
-      this.setState({ showBounced: true })
+    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
+      if (this.state.data.gift_id) {
+        Taro.navigateTo({
+          url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
+        })
+      } else {
+        this.payment()
+      }
       return
     }
-
-    if (this.state.data.gift_id) {
-      Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
-      })
-    } else {
-      this.payment()
-    }
-
+    this.setState({ showBounced: true })
   }
 
   /**

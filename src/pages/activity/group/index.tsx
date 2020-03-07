@@ -691,9 +691,8 @@ export default class Group extends Component<Props>{
   }
 
   goToaConfirm = (e) => {
-
     let phone_status = Taro.getStorageSync('phone_status')
-    if (!phone_status) {
+    if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
       this.setState({ showBounced: true })
       return
     }
@@ -711,11 +710,17 @@ export default class Group extends Component<Props>{
           url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       }
-    } else {
-      this.payment();
+      return
     }
+    this.setState({ showBounced: true })
   }
   goToaConfirmAddGroup = (_id, e) => {
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
+      this.setState({ showBounced: true })
+      return
+    }
+
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
