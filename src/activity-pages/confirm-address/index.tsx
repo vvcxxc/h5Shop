@@ -204,7 +204,7 @@ export default class confirmAddress extends Component {
             this.setState({ showBounced: true })
             return
         }
-
+        
         if ((!this.state.data.address || !this.state.data.address.detail) && this.state.data.youhui.gift_id && this.state.giftChoice) {
             this.setState({ contentboxShow: true })
             return;
