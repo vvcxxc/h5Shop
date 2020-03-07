@@ -111,10 +111,6 @@ export default class NewPage extends Component<Props>{
       return
     }
     this.setState({ showBounced: true })
-<<<<<<< HEAD
-    
-=======
->>>>>>> 5134d5408e749f9ff8cd9d160e5d6f1f835eb0c4
   }
 
   setPersonalInfo = () => {
