@@ -14,6 +14,7 @@ import './index.scss';
 import { getTime } from '@/utils/common';
 import dayjs from 'dayjs'
 import Scrolltab from './scrollTab';
+import LandingBounced from '@/components/landing_bounced'//登录弹框
 
 interface Props {
   id: any;
@@ -76,11 +77,12 @@ export default class Group extends Component<Props>{
     groupListShow: false,
     groupListPages: 1,
     currentPage: 0,
-    allowGroup: ''
+    allowGroup: '',
+
+    showBounced: false//登录弹框
   };
 
   clearTimeOut = () => {
-    console.log('清除计时器');
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
     for (var i = start; i <= end; i++) {
@@ -689,6 +691,12 @@ export default class Group extends Component<Props>{
   }
 
   goToaConfirm = (e) => {
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
+      this.setState({ showBounced: true })
+      return
+    }
+    
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       if (this.$router.params.type == '5') {
@@ -702,11 +710,17 @@ export default class Group extends Component<Props>{
           url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       }
-    } else {
-      this.payment();
+      return
     }
+    this.setState({ showBounced: true })
   }
   goToaConfirmAddGroup = (_id, e) => {
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
+      this.setState({ showBounced: true })
+      return
+    }
+
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
@@ -720,8 +734,16 @@ export default class Group extends Component<Props>{
 
   render() {
     const { description } = this.state.data;
+    const { showBounced } = this.state
     return (
       <View className="d_appre" >
+
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
+        
         {
           this.state.groupListShow ? <View className="d_appre_groupList" onClick={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }} onTouchMove={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }}>
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation(); }}>
