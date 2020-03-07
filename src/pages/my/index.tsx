@@ -2,6 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro"
 import { View, Image, Text } from "@tarojs/components"
 import request from '@/services/request'
 import LandingBounced from '@/components/landing_bounced'
+import {getUserInfo} from '@/utils/getInfo';
 import "./index.styl"
 
 type Props = any
@@ -117,7 +118,7 @@ export default class NewPage extends Component<Props>{
       url: '/activity-pages/personal/index'
     })
   }
-  
+
   render() {
     const { showBounced } = this.state
     return (
@@ -127,7 +128,7 @@ export default class NewPage extends Component<Props>{
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
-          <View className='setPersonalInfoBox' onClick={this.setPersonal.bind(this)} >
+          <View className='setPersonalInfoBox' onClick={getUserInfo} >
             <View className='setPersonalInfo' >一键设置头像</View>
           </View>
           {/* <View className='giftMoney'>
