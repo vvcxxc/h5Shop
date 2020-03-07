@@ -30,6 +30,7 @@ class PagePicker extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props)
         shen = [];
         shi = [];
         qu = [];
@@ -53,18 +54,18 @@ class PagePicker extends Component {
         this.setState({ selector: tempselector, selectorid: tempselectorid })
     }
     //滑动即改变
-    onTabChange = () => {
-        let tempselectorid = this.state.selectorid;
-        let { shenindex, shiindex, quindex } = this.state;
-        let shenName = dataCity.cityData[Number(shenindex)].value;
-        let shiName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].value;
-        let quName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].children[Number(quindex)].value;
-        let selectorChecked = shenName + '-' + shiName + '-' + quName;
-        if (this.props.getCity && !this.props.sumbit) {
-            this.props.getCity(tempselectorid);
-            this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
-        }
-    }
+    // onTabChange = () => {
+    //     let tempselectorid = this.state.selectorid;
+    //     let { shenindex, shiindex, quindex } = this.state;
+    //     let shenName = dataCity.cityData[Number(shenindex)].value;
+    //     let shiName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].value;
+    //     let quName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].children[Number(quindex)].value;
+    //     let selectorChecked = shenName + '-' + shiName + '-' + quName;
+    //     if (this.props.getCity && !this.props.sumbit) {
+    //         this.props.getCity(tempselectorid);
+    //         this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
+    //     }
+    // }
     //按确定才改变
     sumbitChange = () => {
         let tempselectorid = this.state.selectorid;
@@ -73,10 +74,11 @@ class PagePicker extends Component {
         let shiName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].value;
         let quName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].children[Number(quindex)].value;
         let selectorChecked = shenName + '-' + shiName + '-' + quName;
-        if (this.props.getCity && this.props.sumbit) {
-            this.props.getCity(tempselectorid);
-            this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
-        }
+        // if (this.props.getCity && this.props.sumbit) {
+        let query = { tempselectorid, quName: quName, selectorChecked: shenName + '-' + shiName + '-' + quName }
+        this.props.getCity(query);
+        this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
+        // }
     }
     onColumnChange = e => {
         //第一列下标0
@@ -140,7 +142,7 @@ class PagePicker extends Component {
 
     render() {
         return (
-            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} >
+            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} onChange={this.sumbitChange}>
                 <View className='informationItem' style={{ borderBottom: this.props.border ? '0.02133rem #f2f2f2 solid' : 'none', fontSize: this.props.border ? '0.53333rem' : 'Inherited' }} >
                     <View className='itemLeft' style={{ fontSize: this.props.border ? '0.53333rem' : 'Inherited' }}>地区:</View>
                     <View className='itemRight'>

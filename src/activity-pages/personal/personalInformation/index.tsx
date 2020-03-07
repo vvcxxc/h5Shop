@@ -51,8 +51,8 @@ export default class PersonalInformation extends Component {
                         selectorChecked: data.sex == 1 ? '男' : (data.sex == 2 ? '女' : '无'),
                         cityIndex: [data.province_id, data.city_id, data.district_id],
                         quName: data.address_detail,
-                        address: data.address
-                    }, () => { console.log(this.state) })
+                        address: data.province + '-' + data.city + '-' + data.address_detail,
+                    })
                 } else {
                     Taro.showToast({ title: message, icon: 'none' })
                 }
@@ -62,29 +62,36 @@ export default class PersonalInformation extends Component {
             })
     }
     onSexChange = e => {
+        console.log(this.state.selectorNum)
         this.setState({
             selectorNum: e.detail.value,
-            selectorChecked: this.state.selector[e.detail.value]
-        }, () => { this.sumbitInfo() })
+            selectorChecked: this.state.selector[e.detail.value],
+            sex: e.detail.value == 0 ? 1 : 2
+        }, () => {
+            console.log(this.state.selectorNum)
+            this.sumbitInfo()
+        })
     }
     onDateChange = (e: any) => {
         this.setState({
-            dateSel: e.detail.value
+            dateSel: e.detail.value,
+            byear: Number(e.detail.value.split("-")[0]),
+            bmonth: Number(e.detail.value.split("-")[1]),
+            bday: Number(e.detail.value.split("-")[2])
         }, () => { this.sumbitInfo() })
     }
-    getCityArea(query) {
-        this.setState({ cityIndex: query.tempselectorid, }, () => { this.sumbitInfo() })
+    getCityArea = (query) => {
+        console.log(query);
+        console.log('query');
+        this.setState({ cityIndex: query.tempselectorid, quName: query.quName, address: query.selectorChecked }, () => { console.log('query2'); this.sumbitInfo() })
     }
     changeName = (e: any) => {
         this.setState({ name: e.detail.value })
-        console.log('changeName')
     }
     sumbitName = (e: any) => {
-        this.setState({ sumbitName: this.state.name }, () => { this.sumbitInfo() })
-        console.log('sumbitName')
+        this.setState({ sumbitName: this.state.name, maskShow: false }, () => { this.changeNameInfo() })
     }
     sumbitInfo = () => {
-        console.log('sumbitInfo')
         Taro.showLoading();
         userRequest({
             url: 'v1/user/user/upload_user_detail',
@@ -101,7 +108,6 @@ export default class PersonalInformation extends Component {
         })
             .then((res: any) => {
                 Taro.hideLoading();
-                console.log(res)
                 if (res.status_code == 200) {
                     Taro.showToast({ title: '修改成功', icon: 'none' })
                 } else {
@@ -111,7 +117,28 @@ export default class PersonalInformation extends Component {
                 Taro.hideLoading();
                 Taro.showToast({ title: '修改失败', icon: 'none' })
             })
-
+    }
+    changeNameInfo = () => {
+        Taro.showLoading();
+        userRequest({
+            url: 'v1/user/user/upload_user_info',
+            method: "PUT",
+            data: {
+                head: this.state.avatar,
+                name: this.state.name
+            }
+        })
+            .then((res: any) => {
+                Taro.hideLoading();
+                if (res.status_code == 200) {
+                    Taro.showToast({ title: '修改成功', icon: 'none' })
+                } else {
+                    Taro.showToast({ title: '修改失败', icon: 'none' })
+                }
+            }).catch(err => {
+                Taro.hideLoading();
+                Taro.showToast({ title: '修改失败', icon: 'none' })
+            })
     }
     render() {
         return (
@@ -154,7 +181,11 @@ export default class PersonalInformation extends Component {
                             </View>
                         </View>
                     </Picker>
-                    <Citypicker Division=" - " getCity={this.getCityArea} sumbit={true} tempCityInfo={this.state.address}></Citypicker>
+                    {
+                        this.state.address ? <Citypicker Division=" - " getCity={this.getCityArea} tempCityInfo={this.state.address}></Citypicker>
+                            :
+                            <Citypicker Division=" - " getCity={this.getCityArea}  ></Citypicker>
+                    }
                 </View>
 
 
