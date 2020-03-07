@@ -76,8 +76,7 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
-                    this.setState({ is_ok: true })
-                    Taro.showToast({ title: '请求失败', icon: 'none' })
+                    this.setState({ is_ok: true, tipsShow: true, tipsInfo: '验证码错误', })
                 })
         } else if (this.state.phone && !this.state._code) {
             Taro.showToast({ title: '请输入验证码', icon: 'none' })

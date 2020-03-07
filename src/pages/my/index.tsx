@@ -14,7 +14,7 @@ interface State {
   data: string,
   list: Object[],
   userData: Object,
-  showBounced:boolean
+  showBounced: boolean
 }
 
 export default class NewPage extends Component<Props>{
@@ -81,7 +81,7 @@ export default class NewPage extends Component<Props>{
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
       myData[2].prompt = res.data.activity_msg
-      this.setState({list: myData })
+      this.setState({ list: myData })
     })
   }
 
@@ -110,10 +110,10 @@ export default class NewPage extends Component<Props>{
       Taro.navigateTo({ url: data })
       return
     }
-    this.setState({ showBounced:true})
+    this.setState({ showBounced: true })
   }
 
-  setPersonal = () => {
+  setPersonalInfo = () => {
     Taro.navigateTo({
       url: '/activity-pages/personal/index'
     })
@@ -123,12 +123,13 @@ export default class NewPage extends Component<Props>{
     const { showBounced } = this.state
     return (
       <View className='newPage'>
+        <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
         <View className='newPage_head'>
           <View className="img_box">
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
-          <View className='setPersonalInfoBox' onClick={getUserInfo} >
+          <View className='setPersonalInfoBox'  onClick={getUserInfo}  >
             <View className='setPersonalInfo' >一键设置头像</View>
           </View>
           {/* <View className='giftMoney'>
