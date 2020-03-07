@@ -68,7 +68,7 @@ export default class LoginPage extends Component<any>{
   }
 
 //确定登录
-sureLogin = () => {
+  sureLogin = () => {
   const { phoneNumber, validationNumber } = this.state
   loginPhone({
     phone: phoneNumber,
@@ -85,7 +85,7 @@ sureLogin = () => {
               let page = Taro.getCurrentPages()
               if (page.length > 1) {
                 Taro.navigateBack({
-                  delta: 2
+                  delta: 1
                 })
               }
             }, 2000)
@@ -118,7 +118,7 @@ sureMerge = () => {
           let page = Taro.getCurrentPages()
           if (page.length > 1) {
             Taro.navigateBack({
-              delta: 2
+              delta: 1
             })
           }
         }, 2000)

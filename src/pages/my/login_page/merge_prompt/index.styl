@@ -14,9 +14,7 @@
       margin-bottom 100px
       display: flex;
       flex-direction: column;
-      // justify-content: center;
-      // align-content: center;
-      align-items: center;
+      align-items: flex-start;
       width:598px;
       height:549px;
       list-style none;
@@ -25,18 +23,25 @@
       li {
         margin: 0px 53px 22px 53px
         font-size:30px;
-        // line-height 32px;
         line-height 1
         font-family:PingFang SC;
         color:rgba(153,153,153,1);
       }
       li:nth-child(1){
+        width 492px;
+        text-align: center;
         margin-bottom 49px
         padding-top 60px
         font-size:32px;
         font-family:PingFang SC;
         font-weight:bold;
         color:rgba(1,1,1,1);
+      }
+      li:nth-child(3){
+        line-height 1.2
+      }
+      li:nth-child(4){
+        line-height 1.2
       }
       li:nth-child(5){
         margin-top 51px
@@ -49,6 +54,7 @@
           font-family:PingFang SC;
           color:rgba(153,153,153,1);
           line-height 76px;
+          font-weight: 200px !important;
           text-align: center;
           border-radius: 38px
         }
