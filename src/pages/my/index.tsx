@@ -80,14 +80,7 @@ export default class NewPage extends Component<Props>{
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
       myData[2].prompt = res.data.activity_msg
-      this.setState({
-        list: myData
-      })
-      // console.log(res,'res')
-      // this.setState({
-      //   user_img: res.data.avatar
-      // })
-
+      this.setState({list: myData })
     })
   }
 
@@ -112,12 +105,11 @@ export default class NewPage extends Component<Props>{
   // 跳转路径
   jumpData = (data: string) => {
     let phone_status = Taro.getStorageSync('phone_status')
-    if (phone_status) {
+    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
       Taro.navigateTo({ url: data })
       return
     }
     this.setState({ showBounced:true})
-    
   }
   render() {
     const { showBounced } = this.state
@@ -128,10 +120,6 @@ export default class NewPage extends Component<Props>{
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
-          {/* <View className='giftMoney'>
-            <Text className='white'>礼品币</Text>
-            <Text className='yellow'>27</Text>
-          </View> */}
         </View>
 
         <View className="newPage_content">
@@ -154,10 +142,6 @@ export default class NewPage extends Component<Props>{
             }
           </View>
         </View>
-
-        {/* <View className="newPage_foot">
-          客服电话：10101010 <Text className='left'>（服务时间：9：00~20：00）</Text>
-        </View> */}
         {
           showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
             this.setState({ showBounced: false })

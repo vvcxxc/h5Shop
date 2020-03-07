@@ -216,14 +216,13 @@ export default class TicketBuy extends Component {
 
   handleClick = (id, e) => {
     let phone_status = Taro.getStorageSync('phone_status')
-    if (!phone_status) {
-      this.setState({ showBounced: true })
+    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
+      Taro.navigateTo({
+        url: '../../business-pages/confirm-order/index?id=' + id
+      })
       return
     }
-
-    Taro.navigateTo({
-      url: '../../business-pages/confirm-order/index?id=' + id
-    })
+    this.setState({ showBounced: true })
   }
   handleClick2 = (_id, e) => {
     Taro.navigateTo({

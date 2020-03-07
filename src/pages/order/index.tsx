@@ -47,15 +47,17 @@ export default class Order extends Component {
 
   componentDidMount() {
     let phone_status = Taro.getStorageSync('phone_status')
-    if (!phone_status) {
-      this.setState({ no_phone_status: true })
+    
+    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
+      Taro.showLoading({
+        title: "loading",
+        mask: true
+      });
+      this.getData1()
       return
     }
-    Taro.showLoading({
-      title: "loading",
-      mask: true
-    });
-    this.getData1()
+    this.setState({ no_phone_status: true })
+    
   }
 
   // 滚动

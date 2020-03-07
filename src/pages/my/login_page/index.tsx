@@ -52,8 +52,7 @@ export default class LoginPage extends Component<any>{
   //发送短信
   sendShortNote = () => {
     const { phoneNumber } = this.state
-    let format = /^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/;
-    if (!format.test(phoneNumber)) {
+    if (!/^1[346789]\d{9}$/.test(phoneNumber)) {
       Taro.showToast({ title: '手机号格式有误', icon: 'none' })
       return
     }
@@ -74,8 +73,10 @@ export default class LoginPage extends Component<any>{
       verify_code: validationNumber
     })
       .then(({ status_code, data }) => {
+        let status = data.status
         if (status_code == 200) {
-          Taro.setStorageSync('phone_status', data.status)
+          Taro.setStorageSync('phone_status', status )
+
           Taro.showToast({
             title: '登录成功',
             duration: 2000,
