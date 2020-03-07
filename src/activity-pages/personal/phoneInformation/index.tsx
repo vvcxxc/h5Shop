@@ -36,7 +36,7 @@ export default class PhoneInformation extends Component {
                 let { status_code, data, message } = res;
                 if (status_code == 200) {
                     this.setState({
-                        phone: data.phone
+                        // phone: data.phone
                     })
                 } else {
                     this.setState({ tipsShow: true, tipsInfo: message })
@@ -71,6 +71,8 @@ export default class PhoneInformation extends Component {
                     let { status_code, data, message } = res;
                     if (status_code != 200) {
                         this.setState({ is_ok: true, tipsShow: true, tipsInfo: message, })
+                    } else {
+                        this.setState({ is_ok: true, changeSuccess: true })
                     }
                 }).catch(err => {
                     Taro.hideLoading();
@@ -108,7 +110,7 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
-                    this.setState({ tipsShow: true, tipsInfo: '请求失败' })
+                    this.setState({ tipsShow: true, tipsInfo: '请求失败', is_ok: true })
                 })
         } else {
             this.setState({ tipsShow: true, tipsInfo: '请输入新手机号和验证码' })
@@ -145,6 +147,9 @@ export default class PhoneInformation extends Component {
                     if (res.status_code != 200) {
                         _this.setState({ is_ok: true, tipsShow: true, tipsInfo: res.message });
                     }
+                })
+                .catch(err => {
+                    _this.setState({ tipsShow: true, tipsInfo: '请求失败', is_ok: true })
                 })
         } else {
             this.setState({ tipsShow: true, tipsInfo: '手机号有误' })
