@@ -10,6 +10,7 @@ import share from '../../../assets/share.png';
 import AddressImg from '../../../assets/address.png';
 import MobileImg from '../../../assets/dianhua.png';
 import Zoom from '../../../components/zoom/index';
+import LandingBounced from '@/components/landing_bounced'//登录弹框
 import './index.scss';
 
 interface Props {
@@ -61,7 +62,8 @@ export default class Appre extends Component<Props>{
     isPostage: true,
     isShare: false,
 
-    isFromShare: false
+    isFromShare: false,
+    showBounced:false
   };
 
   componentWillUnmount() {
@@ -454,6 +456,12 @@ export default class Appre extends Component<Props>{
   }
 
   goToaConfirm = (e) => {
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (!phone_status) {
+      this.setState({ showBounced: true })
+      return
+    }
+
     if (this.state.data.gift_id) {
       Taro.navigateTo({
         url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
@@ -475,8 +483,15 @@ export default class Appre extends Component<Props>{
 
   render() {
     const { images, description } = this.state.data;
+    const { showBounced } = this.state
     return (
       <View className="d_appre" >
+
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
 
         <View className="group_head_bottom_share" onClick={this.buttonToShare.bind(this)}>
           <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />

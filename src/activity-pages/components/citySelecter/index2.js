@@ -24,13 +24,13 @@ class PagePicker extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('888', this.props)
         if (nextProps.firstMsg && nextProps.firstMsg != "" && this.state.havechange == false) {
             this.setState({ selectorChecked: nextProps.firstMsg })
         }
     }
 
     componentDidMount() {
+        console.log(this.props)
         shen = [];
         shi = [];
         qu = [];
@@ -51,20 +51,34 @@ class PagePicker extends Component {
         quid = dataCity.cityData[0].children[0].children[0].id;
         let tempselectorid = [shenid, shiid, quid];
         let tempselector = [shen, shi, qu];
-        this.setState({ selector: tempselector, selectorid: tempselectorid }, () => {
-            console.log(tempselectorid, tempselector)
-        })
+        this.setState({ selector: tempselector, selectorid: tempselectorid })
     }
-
-    onTabChange = () => {
+    //滑动即改变
+    // onTabChange = () => {
+    //     let tempselectorid = this.state.selectorid;
+    //     let { shenindex, shiindex, quindex } = this.state;
+    //     let shenName = dataCity.cityData[Number(shenindex)].value;
+    //     let shiName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].value;
+    //     let quName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].children[Number(quindex)].value;
+    //     let selectorChecked = shenName + '-' + shiName + '-' + quName;
+    //     if (this.props.getCity && !this.props.sumbit) {
+    //         this.props.getCity(tempselectorid);
+    //         this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
+    //     }
+    // }
+    //按确定才改变
+    sumbitChange = () => {
         let tempselectorid = this.state.selectorid;
         let { shenindex, shiindex, quindex } = this.state;
         let shenName = dataCity.cityData[Number(shenindex)].value;
         let shiName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].value;
         let quName = dataCity.cityData[Number(shenindex)].children[Number(shiindex)].children[Number(quindex)].value;
         let selectorChecked = shenName + '-' + shiName + '-' + quName;
-        this.props.getCity && this.props.getCity(tempselectorid);
+        // if (this.props.getCity && this.props.sumbit) {
+        let query = { tempselectorid, quName: quName, selectorChecked: shenName + '-' + shiName + '-' + quName }
+        this.props.getCity(query);
         this.setState({ selectorChecked: shenName + '-' + shiName + '-' + quName })
+        // }
     }
     onColumnChange = e => {
         //第一列下标0
@@ -75,9 +89,6 @@ class PagePicker extends Component {
             let index1 = e.detail.value;
             //省id
             shenid = dataCity.cityData[index1].id;
-            console.log('省：', dataCity.cityData[index1].value);
-            console.log('市：', dataCity.cityData[index1].children[0].value);
-            console.log('区：', dataCity.cityData[index1].children[0].children[0].value);
             dataCity.cityData[index1].children.map(item => {
                 shi.push(item.value);
             });
@@ -92,7 +103,7 @@ class PagePicker extends Component {
             let tempselector = [shen, shi, qu];
             this.setState({ selectIndex: [index1, 0, 0], shenindex: index1, shiindex: 0, quindex: 0, selector: tempselector, selectorid: tempselectorid, havechange: true }, () => {
                 console.log(this.state.shenindex, this.state.shiindex, this.state.quindex, 'shiindex')
-                this.onTabChange();
+                // this.onTabChange();
             })
         }
         else if (e.detail.column == 1) {
@@ -104,9 +115,6 @@ class PagePicker extends Component {
             shenid = this.state.selectorid[0];
             //市id
             shiid = dataCity.cityData[index1].children[index2].id;
-            console.log('省：', dataCity.cityData[index1].value);
-            console.log('市：', dataCity.cityData[index1].children[index2].value);
-            console.log('区：', dataCity.cityData[index1].children[index2].children[0].value);
             dataCity.cityData[index1].children[index2].children.map(item => {
                 qu.push(item.value);
             });
@@ -115,7 +123,7 @@ class PagePicker extends Component {
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
             this.setState({ selectIndex: [index1, index2, 0], shiindex: index2, quindex: 0, selector: tempselector, selectorid: tempselectorid, havechange: true }, () => {
-                this.onTabChange();
+                // this.onTabChange();
             })
         } else if (e.detail.column == 2) {
             let index1 = this.state.shenindex;
@@ -125,19 +133,16 @@ class PagePicker extends Component {
             shenid = this.state.selectorid[0];
             shiid = this.state.selectorid[1];
             quid = dataCity.cityData[index1].children[index2].children[index3].id;
-            console.log('省：', dataCity.cityData[index1].value);
-            console.log('市：', dataCity.cityData[index1].children[index2].value);
-            console.log('区：', dataCity.cityData[index1].children[index2].children[index3].value);
             let tempselectorid = [shenid, shiid, quid];
             this.setState({ selectIndex: [index1, index2, index3], quindex: index3, selectorid: tempselectorid, havechange: true }, () => {
-                this.onTabChange();
+                // this.onTabChange();
             })
         }
     }
 
     render() {
         return (
-            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} >
+            <Picker mode='multiSelector' range={this.state.selector} onColumnChange={this.onColumnChange} value={this.state.selectIndex} onChange={this.sumbitChange}>
                 <View className='informationItem' style={{ borderBottom: this.props.border ? '0.02133rem #f2f2f2 solid' : 'none', fontSize: this.props.border ? '0.53333rem' : 'Inherited' }} >
                     <View className='itemLeft' style={{ fontSize: this.props.border ? '0.53333rem' : 'Inherited' }}>地区:</View>
                     <View className='itemRight'>
