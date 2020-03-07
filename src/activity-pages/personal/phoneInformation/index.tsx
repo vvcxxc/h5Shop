@@ -21,9 +21,10 @@ export default class PhoneInformation extends Component {
         changeStep: false,//第二层输入新手机页面
         newPhone: '',//新手机号
         new_code: '',//新验证码,
-        changeSuccess: false//修改成功
+        changeSuccess: false,//修改成功
+        successType: false//成功类型false验证成功true换绑成功
     }
-    //changeSuccess==false&&changeStep==false第一层初始=>验证旧手机=>changeSuccess==false&&changeStep==true第二层=>验证新手机=>changeSuccess==true&&changeStep==false第一层成功
+    //changeSuccess==false&&changeStep==false第一层初始=>验证旧手机=>changeSuccess==true&&changeStep==false第一层成功1=>changeSuccess==false&&changeStep==true第二层=>验证新手机=>changeSuccess==true&&changeStep==false第一层成功2
     componentDidMount() {
         Taro.showLoading({ title: 'loading', mask: true });
         userRequest({
@@ -68,9 +69,7 @@ export default class PhoneInformation extends Component {
                 .then((res: any) => {
                     Taro.hideLoading();
                     let { status_code, data, message } = res;
-                    if (status_code == 200) {
-                        this.setState({ tipsShow: true, tipsInfo: '验证成功', is_ok: true, changeStep: true })
-                    } else {
+                    if (status_code != 200) {
                         this.setState({ is_ok: true, tipsShow: true, tipsInfo: message, })
                     }
                 }).catch(err => {
@@ -99,7 +98,7 @@ export default class PhoneInformation extends Component {
                     Taro.hideLoading();
                     let { status_code, message } = res;
                     if (status_code == 200) {
-                        this.setState({ tipsShow: true, tipsInfo: '更改成功', is_ok: true, changeStep: false, changeSuccess: true })
+                        this.setState({ is_ok: true, changeStep: false })
                     } else if (status_code == 400) {
                         this.setState({ tipsShow: true, tipsInfo: '请求出错' })
                     }
@@ -120,15 +119,13 @@ export default class PhoneInformation extends Component {
          */
     changeTimeout = () => {
         if (this.state.is_ok = false) {
-            let wait = 60;
             let _this = this;
             let timer = setTimeout(() => {
                 clearTimeout(timer)
-                if (wait == 0) {
-                    _this.setState({ is_ok: true });
+                if (this.state.wait == 0) {
+                    _this.setState({ is_ok: true, wait: 60 });
                 } else {
-                    wait--;
-                    _this.setState({ wait });
+                    _this.setState({ wait: this.state.wait - 1 });
                     this.changeTimeout()
                 }
             }, 1000);
@@ -138,18 +135,15 @@ export default class PhoneInformation extends Component {
         let phone = type == 1 ? this.state.phone : this.state.newPhone;
         if (phone) {
             let _this = this;
-            this.setState({ is_ok: false }, () => { this.changeTimeout() });
+            this.setState({ is_ok: false, wait: 60 }, () => { this.changeTimeout() });
             userRequest({
                 url: 'v1/user/auth/verifyCode',
                 method: "POST",
                 data: { phone }
             })
                 .then((res: any) => {
-                    if (res.status_code == 200) {
-                        this.setState({ tipsShow: true, tipsInfo: res.message })
-                    } else {
-                        _this.setState({ is_ok: true });
-                        this.setState({ tipsShow: true, tipsInfo: res.message })
+                    if (res.status_code != 200) {
+                        _this.setState({ is_ok: true, tipsShow: true, tipsInfo: res.message });
                     }
                 })
         } else {
@@ -183,15 +177,25 @@ export default class PhoneInformation extends Component {
                                 }
                             </View>
                             <View className='btnBox' onClick={this.checkOldPhone.bind(this)}>确认</View>
-                        </View> :
-                        <View className='phoneInformationBox'>
-                            <View className='imageBox'>
-                                <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
-                            </View>
-                            <View className='msgBox'>换绑成功</View>
-                            <View className='infoBox'>点击确认后将返回个人中心</View>
-                            <View className='btnBox' onClick={this.goToMy.bind(this)}>确认</View>
-                        </View>
+                        </View> : (
+                            !this.state.successType ? <View className='phoneInformationBox'>
+                                <View className='imageBox'>
+                                    <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
+                                </View>
+                                <View className='msgBox'>验证成功</View>
+                                <View className='infoBox'>您可以直接输入要更换的手机号码</View>
+                                <View className='btnBox' onClick={() => { this.setState({ changeStep: true, successType: true }) }}>确认</View>
+                            </View> :
+                                <View className='phoneInformationBox'>
+                                    <View className='imageBox'>
+                                        <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
+                                    </View>
+                                    <View className='msgBox'>换绑成功</View>
+                                    <View className='infoBox'>点击确认后将返回个人中心</View>
+                                    <View className='btnBox' onClick={this.goToMy.bind(this)}>确认</View>
+                                </View>
+                        )
+
                 }
                 {
                     this.state.changeStep ? <View className='changePhonePage'>
@@ -216,7 +220,6 @@ export default class PhoneInformation extends Component {
                         <View className='submitBtn' onClick={this.changeNewPhone.bind(this)}>提交</View>
                     </View> : null
                 }
-
 
                 {
                     this.state.tipsShow ?
