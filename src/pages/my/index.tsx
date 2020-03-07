@@ -109,7 +109,8 @@ export default class NewPage extends Component<Props>{
       Taro.navigateTo({ url: data })
       return
     }
-    this.setState({ showBounced:true})
+    this.setState({ showBounced: true })
+    
   }
   render() {
     const { showBounced } = this.state
