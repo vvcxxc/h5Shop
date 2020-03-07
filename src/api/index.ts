@@ -286,3 +286,14 @@ export const loginPhone = (data) => {
     data
   })
 }
+
+/* 
+  h5确定同步合并手机号
+*/
+export const loginMerge = (data) => {
+  return userHttp({
+    url: 'v1/user/user/merge_user',
+    method: "PUT",
+    data
+  })
+}
