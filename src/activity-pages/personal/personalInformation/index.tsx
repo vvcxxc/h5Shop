@@ -81,9 +81,7 @@ export default class PersonalInformation extends Component {
         }, () => { this.sumbitInfo() })
     }
     getCityArea = (query) => {
-        console.log(query);
-        console.log('query');
-        this.setState({ cityIndex: query.tempselectorid, quName: query.quName, address: query.selectorChecked }, () => { console.log('query2'); this.sumbitInfo() })
+        this.setState({ cityIndex: query.tempselectorid, quName: query.quName, address: query.selectorChecked }, () => { this.sumbitInfo() })
     }
     changeName = (e: any) => {
         this.setState({ name: e.detail.value })
