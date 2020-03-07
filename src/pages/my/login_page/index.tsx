@@ -151,7 +151,7 @@ sureMerge = () => {
               onChange={this.handleChange.bind(this,'phoneNumber')}
             />
             {
-              !this.state.showTime ? <Text onClick={this.sendShortNote}>获取验证码</Text> : <Text>{time}</Text>
+              !this.state.showTime ? <Text onClick={this.sendShortNote}>获取验证码</Text> : <Text>{time}s后重新获取</Text>
             }
           </View>
           

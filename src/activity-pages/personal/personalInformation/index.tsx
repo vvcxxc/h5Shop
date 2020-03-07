@@ -199,7 +199,7 @@ export default class PersonalInformation extends Component {
                             </View>
                             <View className='pickerBox'>
                                 <View className='inputBox'>
-                                    <Input className='pickerInput' onInput={this.changeName.bind(this)} />
+                                    <Input className='pickerInput' onInput={this.changeName.bind(this)} placeholder={'请输入昵称'} />
                                 </View>
                             </View>
                         </View>
