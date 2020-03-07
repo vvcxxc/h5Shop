@@ -103,7 +103,7 @@ class PagePicker extends Component {
             let tempselector = [shen, shi, qu];
             this.setState({ selectIndex: [index1, 0, 0], shenindex: index1, shiindex: 0, quindex: 0, selector: tempselector, selectorid: tempselectorid, havechange: true }, () => {
                 console.log(this.state.shenindex, this.state.shiindex, this.state.quindex, 'shiindex')
-                this.onTabChange();
+                // this.onTabChange();
             })
         }
         else if (e.detail.column == 1) {
@@ -123,7 +123,7 @@ class PagePicker extends Component {
             let tempselectorid = [shenid, shiid, quid];
             let tempselector = [shen, shi, qu];
             this.setState({ selectIndex: [index1, index2, 0], shiindex: index2, quindex: 0, selector: tempselector, selectorid: tempselectorid, havechange: true }, () => {
-                this.onTabChange();
+                // this.onTabChange();
             })
         } else if (e.detail.column == 2) {
             let index1 = this.state.shenindex;
@@ -135,7 +135,7 @@ class PagePicker extends Component {
             quid = dataCity.cityData[index1].children[index2].children[index3].id;
             let tempselectorid = [shenid, shiid, quid];
             this.setState({ selectIndex: [index1, index2, index3], quindex: index3, selectorid: tempselectorid, havechange: true }, () => {
-                this.onTabChange();
+                // this.onTabChange();
             })
         }
     }
