@@ -13,7 +13,7 @@ module.exports = {
     // OPEN_ID: '"open_id"',
     // TOKEN: '"token_auth"',
     ALIPAY_USER_ID: '"alipay_user_id"',
-    ALIPAY_LOGIN_URL: '"http://test.usercenter.tdianyi.com/"',
+    AUTH_LOGIN_URL: '"http://test.wxauth.tdianyi.com/"',
     GROUP_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/group/group?id="',
     APPRE_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/appreciation/appreciation?id="',
     APPRE_Details_URL: '"http://test.mall.tdianyi.com/pages/activity/appreciation/index?"',
