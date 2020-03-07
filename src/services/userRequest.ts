@@ -67,8 +67,9 @@ export default function request(options: Options) {
       async fail(err) {
         let aa = err.json()
         let a = await Promise.resolve(aa)
-        const { code, message } = a;
-        switch (code) {
+        const { status_code, message } = a;
+
+        switch (status_code) {
           case SERVER_ERROR:
             Taro.showToast({
               title: 'server error :d',
@@ -80,6 +81,7 @@ export default function request(options: Options) {
               title: message,
               icon: "none"
             })
+            return reject(a)
             break
           case NOT_SIGN:
             Login();

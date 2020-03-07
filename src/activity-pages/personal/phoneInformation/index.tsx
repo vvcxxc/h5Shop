@@ -149,10 +149,10 @@ export default class PhoneInformation extends Component {
                     }
                 })
                 .catch(err => {
-                    _this.setState({ tipsShow: true, tipsInfo: '请求失败', is_ok: true })
+                    _this.setState({ is_ok: true, tipsShow: true, tipsInfo: '请求失败' })
                 })
         } else {
-            this.setState({ tipsShow: true, tipsInfo: '手机号有误' })
+            type == 2 && this.setState({ tipsShow: true, tipsInfo: '请输入手机号' })
         }
     }
     goToMy = () => {
@@ -172,7 +172,7 @@ export default class PhoneInformation extends Component {
                             <View className='msgBox'> 您当前绑定的手机号码:{this.state.phone}</View>
                             <View className='infoBox'> 为了您的账户安全，请输入验证码</View>
                             <View className='inputBox'>
-                                <Input className='phoneInformationInput' type="text" onInput={this.handleCode.bind(this, '_code')} placeholder='请输入验证码'/>
+                                <Input className='phoneInformationInput' type="text" onInput={this.handleCode.bind(this, '_code')} placeholder='请输入验证码' />
                                 {
                                     this.state.is_ok ? (
                                         <View className='phoneInformationBtn' onClick={this.getCode.bind(this, 1)}> 获取验证码</View>
