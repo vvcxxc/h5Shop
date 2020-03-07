@@ -8,6 +8,7 @@ import { getBrowserType } from "@/utils/common";
 import wx from 'weixin-js-sdk';
 import Cookie from 'js-cookie';
 import iNoBounce from '@/utils/inobouce';
+import LandingBounced from '@/components/landing_bounced'//登录弹框
 
 export default class confirmAddress extends Component {
     config = {
@@ -15,6 +16,7 @@ export default class confirmAddress extends Component {
     };
 
     state = {
+        showBounced: false,//登录弹框
         contentboxShow: false,
         giftChoice: true,
         coinsChoice: false,
@@ -197,6 +199,13 @@ export default class confirmAddress extends Component {
     }
 
     payment = () => {
+        let phone_status = Taro.getStorageSync('phone_status')
+        if (phone_status != 'binded' && phone_status != 'bindsuccess') {
+            this.setState({ showBounced: true })
+            return
+        }
+        
+
         if ((!this.state.data.address || !this.state.data.address.detail) && this.state.data.youhui.gift_id && this.state.giftChoice) {
             this.setState({ contentboxShow: true })
             return;
@@ -659,8 +668,14 @@ export default class confirmAddress extends Component {
     }
 
     render() {
+        const { showBounced } = this.state
         return (
             <View className="confirm-address">
+                {
+                    showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+                        this.setState({ showBounced: false })
+                    }} /> : null
+                }
                 {
                     this.state.contentboxShow ? <View className="no-address-contentbox">
                         <View className="tips-box">
