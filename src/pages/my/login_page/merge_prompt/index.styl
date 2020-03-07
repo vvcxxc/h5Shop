@@ -1,5 +1,4 @@
-.landing_bounced {
-  
+.merge_prompt {
     position: fixed;
     z-index: 100;
     top: 0;
@@ -11,47 +10,36 @@
     align-items: center;
     background:rgba(0, 0, 0, 0.6);
     ul {
-      
       padding 0;
       margin-bottom 100px
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-content: center;
+      // justify-content: center;
+      // align-content: center;
       align-items: center;
       width:598px;
-      height:540px;
+      height:549px;
       list-style none;
       background:rgba(255,255,255,1);
       border-radius:10px;
-      .taro-img {
-        width 155px;
-        height 204px;
+      li {
+        margin: 0px 53px 22px 53px
+        font-size:30px;
+        // line-height 32px;
+        line-height 1
+        font-family:PingFang SC;
+        color:rgba(153,153,153,1);
       }
-      img {
-        width 155px;
-        height 204px;
+      li:nth-child(1){
+        margin-bottom 49px
+        padding-top 60px
+        font-size:32px;
+        font-family:PingFang SC;
+        font-weight:bold;
+        color:rgba(1,1,1,1);
       }
-       li:nth-child(1){
-         margin-bottom 19px
-         line-height 1
-         font-size:32px;
-         font-family:PingFang SC;
-         font-weight:bold;
-         color:rgba(1,1,1,1);
-       }
-        li:nth-child(2){
-          margin-bottom 29px
-          line-height 1
-          font-size:32px;
-          font-family:PingFang SC;
-          font-weight:500;
-          color:rgba(153,153,153,1);
-       }
-
-
-      li:nth-child(4){
-        margin-top 40px
+      li:nth-child(5){
+        margin-top 51px
         display: flex;
         span {
           display: inline-block;
@@ -59,9 +47,10 @@
           height:76px;
           font-size:30px;
           font-family:PingFang SC;
-          line-height 76px
+          color:rgba(153,153,153,1);
+          line-height 76px;
           text-align: center;
-          border-radius:38px;
+          border-radius: 38px
         }
         span:nth-child(1){
           margin-right 20px
