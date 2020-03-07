@@ -659,14 +659,10 @@ export default class Group extends Component<Props>{
       })
   }
 
-  /**
-   * 回首页
-   */
+  /**回首页 */
   handleGoHome = () => {
     this.clearTimeOut();
-    Taro.navigateTo({
-      url: '/'
-    })
+    Taro.navigateTo({ url: '/' })
   }
 
   addGroupList = () => {
@@ -693,6 +689,7 @@ export default class Group extends Component<Props>{
       return;
     }
   }
+
   goToaConfirm = (e) => {
     let phone_status = Taro.getStorageSync('phone_status')
     if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
@@ -752,7 +749,6 @@ export default class Group extends Component<Props>{
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation(); }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
-                {/* <View className="d_appre_groupList_box_slideBox_content" > */}
                 <ScrollView
                   className='d_appre_groupList_box_slideBox_content'
                   scrollY
@@ -789,12 +785,8 @@ export default class Group extends Component<Props>{
                   }
 
                 </ScrollView>
-                {/* </View> */}
               </View>
               <View className="group_list_toast" >上滑查看更多</View>
-              {/* {
-                this.state.data2.data && this.state.data2.data.length > 5 ? <View className="group_list_toast" >上滑查看更多</View> : null
-              } */}
             </View>
             <View className="group_list_closebtn" >
               <AtIcon value='close-circle' size="28px" color='#fff'></AtIcon>
@@ -836,7 +828,6 @@ export default class Group extends Component<Props>{
             </Swiper>
           </View> : null
         }
-
         <View className="coupon_box_title">
           <View className="group_coupon_title" >{this.state.data.youhui_name}</View>
           <View className="group_rule_time" >
@@ -848,7 +839,6 @@ export default class Group extends Component<Props>{
             <View className="group_head_bottom_list">{this.state.data.number}人团</View>
             <View className="group_head_bottom_list">{this.state.data.team_set_end_time}小时</View>
           </View>
-
           {/* <View className="group_msg" >
             <View className="group_msg_titlebox" >商品详情</View>
             <View className="group_msgBox" >
@@ -869,9 +859,7 @@ export default class Group extends Component<Props>{
               </View>
             </View>
           </View> */}
-
         </View>
-
         {
           this.state.data.gift_id ?
             <View className="appre_gift" >
@@ -924,23 +912,22 @@ export default class Group extends Component<Props>{
             <View className="appre_rule_time_data" >{this.state.data.team_set_end_time}小时内</View>
           </View>
           {
-            (description) ?
+            description.length > 0 ?
               <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "2.5rem") }}>
                 <View className="appre_rule_list_key" >详情描述:</View>
                 <View className="appre_rule_list_data" >
                   {
-                    (description) ? description.map((item) => {
+                    description.map((item) => {
                       return (
                         <View className="appre_rule_list_msg" >. {item}</View>
                       )
-                    }) : null
+                    })
                   }
                 </View>
-
               </View> : null
           }
           {
-            (description && description.length > 3) ?
+            description && description.length > 3 ?
               <View className="appre_rule_list_more" onClick={() => { this.setState({ ruleMore: !this.state.ruleMore }) }}>
                 {this.state.ruleMore ? "收回" : "查看更多"}
                 {
@@ -1000,7 +987,6 @@ export default class Group extends Component<Props>{
               </View>
           }
         </View>
-
         <Zoom
           src={this.state.imgZoomSrc}
           showBool={this.state.imgZoom}
