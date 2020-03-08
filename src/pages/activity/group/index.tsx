@@ -9,7 +9,6 @@ import Cookie from 'js-cookie';
 import { getLocation } from "@/utils/getInfo";
 import AddressImg from '../../../assets/address.png';
 import MobileImg from '../../../assets/dianhua.png';
-import Zoom from '../../../components/zoom/index';
 import './index.scss';
 import { getTime } from '@/utils/common';
 import dayjs from 'dayjs'
@@ -24,8 +23,6 @@ let interval;
 export default class Group extends Component<Props>{
   state = {
     ruleMore: false,
-    imgZoom: false,
-    imgZoomSrc: '',
     xPoint: '',
     yPoint: '',
     imagesCurrent: 0,
@@ -696,7 +693,7 @@ export default class Group extends Component<Props>{
       this.setState({ showBounced: true })
       return
     }
-    
+
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       if (this.$router.params.type == '5') {
@@ -743,7 +740,7 @@ export default class Group extends Component<Props>{
             this.setState({ showBounced: false })
           }} /> : null
         }
-        
+
         {
           this.state.groupListShow ? <View className="d_appre_groupList" onClick={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }} onTouchMove={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }}>
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation(); }}>
@@ -799,10 +796,7 @@ export default class Group extends Component<Props>{
         </View >
 
         {
-          this.state.data.images.length > 0 ? <View
-            onClick={() => {
-              this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
-            }}>
+          this.state.data.images.length > 0 ? <View>
             <Swiper
               onChange={(e) => {
                 this.setState({ imagesCurrent: e.detail.current })
@@ -876,7 +870,6 @@ export default class Group extends Component<Props>{
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
                   mode="widthFix"
-                  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift.cover_image }) }}
                   src={this.state.data.gift.cover_image} />
               </View>
             </View> : null
@@ -987,11 +980,7 @@ export default class Group extends Component<Props>{
               </View>
           }
         </View>
-        <Zoom
-          src={this.state.imgZoomSrc}
-          showBool={this.state.imgZoom}
-          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
-        />
+
         {/* 分享 */}
         {
           this.state.isShare == true ? (

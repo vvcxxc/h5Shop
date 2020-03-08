@@ -9,7 +9,6 @@ import { getLocation } from "@/utils/getInfo";
 import share from '../../../assets/share.png';
 import AddressImg from '../../../assets/address.png';
 import MobileImg from '../../../assets/dianhua.png';
-import Zoom from '../../../components/zoom/index';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import './index.scss';
 
@@ -21,8 +20,6 @@ let interval;
 export default class Appre extends Component<Props>{
   state = {
     ruleMore: false,
-    imgZoom: false,
-    imgZoomSrc: '',
     xPoint: '',
     yPoint: '',
     imagesCurrent: 0,
@@ -503,10 +500,7 @@ export default class Appre extends Component<Props>{
 
         {
           this.state.data.type == 0 && this.state.data.images.length > 0 ?
-            <View
-              onClick={() => {
-                this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
-              }}>
+            <View>
               <Swiper
                 onChange={(e) => {
                   this.setState({ imagesCurrent: e.detail.current })
@@ -574,9 +568,7 @@ export default class Appre extends Component<Props>{
                 }</View>
               </View>
               <View className="appre_gift_giftlist" >
-                <Image className="appre_gift_giftlistImg"
-                  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift_pic }) }}
-                  src={this.state.data.gift_pic} />
+                <Image className="appre_gift_giftlistImg" src={this.state.data.gift_pic} />
               </View>
             </View> : null
         }
@@ -698,14 +690,6 @@ export default class Appre extends Component<Props>{
             ) : null
           }
         </View>
-
-        <Zoom
-          src={this.state.imgZoomSrc}
-          showBool={this.state.imgZoom}
-          onChange={() => {
-            this.setState({ imgZoom: false })
-          }}
-        />
 
         {
           this.state.isShare == true ? (
