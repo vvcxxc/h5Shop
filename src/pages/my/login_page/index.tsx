@@ -82,6 +82,7 @@ export default class LoginPage extends Component<any>{
           case 'binded'://成功登录
           case 'bindsuccess':
             Taro.setStorageSync('phone_status', data.status)
+            Cookie.set(TOKEN, data.token)
             Taro.showToast({
               title: '登录成功', duration: 2000, success: () => {
                 setTimeout(() => {
@@ -101,7 +102,15 @@ export default class LoginPage extends Component<any>{
           case 'merge_success'://自动合并成功
             Taro.setStorageSync('phone_status', 'binded')
             Cookie.set(TOKEN, data.token)
-            Taro.showToast({ title: '登录成功', duration: 2000, })
+            Taro.showToast({
+              title: '登录成功', duration: 2000, success: () => {
+                setTimeout(() => {
+                  Taro.navigateBack({
+                    delta: 1
+                  })
+                }, 1000);
+              }
+            })
             break;
           default://其它情况
             console.log('其他错误')
@@ -135,7 +144,7 @@ sureMerge = () => {
           }
         })
       } else {
-        Taro.showToast({ title: '同步失败', duration: 2000, })
+        Taro.showToast({ title: '同步失败', duration: 2000 })
       }
     })
 }
