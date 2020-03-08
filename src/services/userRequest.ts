@@ -46,6 +46,7 @@ export default function request(options: Options) {
               title: data.message || "bad request",
               icon: "none"
             })
+            return reject(res)
             break
           case NOT_SIGN:
             Login();
