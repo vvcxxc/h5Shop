@@ -120,16 +120,13 @@ export default class PhoneInformation extends Component {
          * 获取验证码
          */
     changeTimeout = () => {
-        console.log('22')
         if (this.state.is_ok == false) {
             let _this = this;
             let timer = setTimeout(() => {
-                console.log('33')
                 clearTimeout(timer)
                 if (this.state.wait == 0) {
                     _this.setState({ is_ok: true, wait: 60 });
                 } else {
-                    console.log('444')
                     _this.setState({ wait: this.state.wait - 1 });
                     this.changeTimeout()
                 }
