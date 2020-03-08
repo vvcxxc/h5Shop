@@ -7,11 +7,6 @@ import MergePrompt from './merge_prompt'
 import "./index.styl"
 
 export default class LoginPage extends Component<any>{
-
-  config: Config = {
-    navigationBarTitleText: "登录"
-  }
-
   state = {
     data: '',
     value: '',
