@@ -2,12 +2,13 @@ import Taro, { Component, Config } from "@tarojs/taro"
 import { View, Image, Text } from "@tarojs/components"
 import request from '@/services/request'
 import LandingBounced from '@/components/landing_bounced'
-import {getUserInfo} from '@/utils/getInfo';
+import { getUserInfo } from '@/utils/getInfo';
 import "./index.styl"
 
 type Props = any
 
 interface State {
+  settingShow: Boolean;
   cells: any;
   userInfo: any;
   user_img: string;
@@ -24,6 +25,7 @@ export default class NewPage extends Component<Props>{
   }
 
   state: State = {
+    settingShow: false,
     cells: {},
     userInfo: {},
     userData: {},
@@ -66,6 +68,10 @@ export default class NewPage extends Component<Props>{
 
 
   componentDidMount() {
+    let phone_status = Taro.getStorageSync('phone_status')
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
+      this.setState({ settingShow: true })
+    } else { this.setState({ settingShow: false }) }
     this.handleGetUserinfo()
     request({
       url: 'v3/user/home_index'
@@ -123,13 +129,17 @@ export default class NewPage extends Component<Props>{
     const { showBounced } = this.state
     return (
       <View className='newPage'>
-        <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
+        {
+          this.state.settingShow ?
+            <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
+            : null
+        }
         <View className='newPage_head'>
           <View className="img_box">
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
-          <View className='setPersonalInfoBox'  onClick={getUserInfo}  >
+          <View className='setPersonalInfoBox' onClick={getUserInfo}  >
             <View className='setPersonalInfo' >一键设置头像</View>
           </View>
           {/* <View className='giftMoney'>
