@@ -5,6 +5,7 @@ import { AtInput, AtButton } from 'taro-ui'
 import { getShortNote, loginPhone, loginMerge } from '@/api/index'
 import MergePrompt from './merge_prompt'
 import Cookie from 'js-cookie'
+import { getBrowserType } from '../../../utils/common';
 import "./index.styl"
 
 const TOKEN = process.env.TOKEN
@@ -67,10 +68,12 @@ export default class LoginPage extends Component<any>{
 
 //确定登录
   sureLogin = () => {
-  const { phoneNumber, validationNumber } = this.state
+    const { phoneNumber, validationNumber } = this.state
+    let type = getBrowserType() == 'wechat' ? 'ali' : 'wx'
   loginPhone({
     phone: phoneNumber,
-    verify_code: validationNumber
+    verify_code: validationNumber,
+    from: type
   })
     .then(({ status_code, data }) => {
       // 状态 binded已绑定的  bind_success绑定成功 merge_fail合并失败   merge_success合并成功有token和用户信息  need_merge: 需要用户同意合并
@@ -96,6 +99,7 @@ export default class LoginPage extends Component<any>{
             Taro.showToast({ title: '登录失败', duration: 2000, })
             break;
           case 'merge_success'://自动合并成功
+            Taro.setStorageSync('phone_status', 'binded')
             Cookie.set(TOKEN, data.token)
             Taro.showToast({ title: '登录成功', duration: 2000, })
             break;
