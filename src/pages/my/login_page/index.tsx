@@ -120,6 +120,7 @@ sureMerge = () => {
       if (status_code == 200) {
         Taro.setStorageSync('phone_status', 'binded')
         Taro.showToast({ title: '同步成功', duration: 2000, })
+        Cookie.set(TOKEN, data.token)
         setTimeout(() => {
           let page = Taro.getCurrentPages()
           if (page.length > 1) {
