@@ -82,7 +82,6 @@ export default class LoginPage extends Component<any>{
           case 'binded'://成功登录
           case 'bindsuccess':
             Taro.setStorageSync('phone_status', data.status)
-            Cookie.set(TOKEN, data.token)
             Taro.showToast({
               title: '登录成功', duration: 2000, success: () => {
                 setTimeout(() => {
