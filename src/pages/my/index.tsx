@@ -143,7 +143,7 @@ export default class NewPage extends Component<Props>{
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
           {
-            this.state.emptyAvatar == 'N' && this.state.settingShow ? <View className='setPersonalInfoBox' onClick={getUserInfo}  >
+            this.state.emptyAvatar == 'Y' && this.state.settingShow ? <View className='setPersonalInfoBox' onClick={getUserInfo}  >
               <View className='setPersonalInfo' >一键设置头像</View>
             </View> : null
           }
