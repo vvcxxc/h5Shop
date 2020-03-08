@@ -19,7 +19,7 @@ export default function SpellGroupHead(params: any) {
       {
         imglist.map((item: string, _: number) => {
           return (
-            _ > 5 || _ > peopleNeed ? null:
+            _ > 5 || _ >= peopleNeed ? null:
               <View className='smallBox' style={{ zIndex: 5 - _ }}>
                 <View className={_ ? 'participants' : 'open_group'} >
                   <Image src={item} />
