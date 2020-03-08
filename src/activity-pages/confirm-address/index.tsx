@@ -793,7 +793,9 @@ export default class confirmAddress extends Component {
                                 <View className="gift-msgbox-giftinfo-name">{this.state.data.youhui.gift_name}</View>
                                 <View className="gift-msgbox-label-box">
                                     <View className="gift-msgbox-label">价值{this.state.data.youhui.gift_price}元</View>
-                                    <View className="gift-msgbox-label">运费{this.state.data.youhui.postage}元</View>
+                                    {
+                                        this.state.data.youhui.postage ? <View className="gift-msgbox-label">运费{this.state.data.youhui.postage}元</View> : null
+                                    }
                                 </View>
                             </View>
                         </View>
@@ -825,7 +827,7 @@ export default class confirmAddress extends Component {
                         <View className="paymoney_price_icon">￥</View>
                         <View className="paymoney_price_num">{this.state.data.youhui.pay_money}</View>
                         {
-                            this.state.data.youhui.gift_id && this.state.giftChoice ? <View className='paymoney_price_info'>+{this.state.data.youhui.postage}</View> : null
+                            this.state.data.youhui.gift_id && this.state.giftChoice && this.state.data.youhui.postage ? <View className='paymoney_price_info'>+{this.state.data.youhui.postage}</View> : null
                         }
                     </View>
                     <View className="paymoney_buynow" onClick={this.payment.bind(this)} >立即购买</View>
