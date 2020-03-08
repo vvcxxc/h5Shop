@@ -4,7 +4,10 @@ import { AtInput, AtButton } from 'taro-ui'
 
 import { getShortNote, loginPhone, loginMerge } from '@/api/index'
 import MergePrompt from './merge_prompt'
+import Cookie from 'js-cookie'
 import "./index.styl"
+
+const TOKEN = process.env.TOKEN
 
 export default class LoginPage extends Component<any>{
   state = {
@@ -70,6 +73,7 @@ export default class LoginPage extends Component<any>{
     verify_code: validationNumber
   })
     .then(({ status_code, data }) => {
+      // 状态 binded已绑定的  bind_success绑定成功 merge_fail合并失败   merge_success合并成功有token和用户信息  need_merge: 需要用户同意合并
       if (status_code == 200) {
         switch (data.status) {
           case 'binded'://成功登录
@@ -87,6 +91,13 @@ export default class LoginPage extends Component<any>{
             break;
           case 'need_merge'://需要合并
             this.setState({ prompt: true })
+            break;
+          case 'merge_fail'://自动合并失败
+            Taro.showToast({ title: '登录失败', duration: 2000, })
+            break;
+          case 'merge_success'://自动合并成功
+            Cookie.set(TOKEN, data.token)
+            Taro.showToast({ title: '登录成功', duration: 2000, })
             break;
           default://其它情况
             console.log('其他错误')
