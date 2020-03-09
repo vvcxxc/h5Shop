@@ -78,6 +78,7 @@ export default class LoginPage extends Component<any>{
       verify_code: validationNumber,
       from: type
     }).then(({ status_code,data }) => {
+      console.log(5234234)
         if (status_code == 200) {
           switch (data.status) {//成功登录
             case "binded":
