@@ -18,7 +18,7 @@ export default class PhoneInformation extends Component {
         is_ok: true,//是否可以发送
         phone: '',//旧手机号
         _code: '',//输入验证码
-        changeStep: false,//第二层输入新手机页面
+        changeStep: true,//第二层输入新手机页面
         newPhone: '',//新手机号
         new_code: '',//新验证码,
         changeSuccess: false,//修改成功
