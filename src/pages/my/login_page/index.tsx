@@ -4,7 +4,11 @@ import { AtInput, AtButton } from 'taro-ui'
 
 import { getShortNote, loginPhone, loginMerge } from '@/api/index'
 import MergePrompt from './merge_prompt'
+import Cookie from 'js-cookie'
+import { getBrowserType } from '../../../utils/common';
 import "./index.styl"
+
+const TOKEN = process.env.TOKEN
 
 export default class LoginPage extends Component<any>{
   state = {
@@ -64,29 +68,48 @@ export default class LoginPage extends Component<any>{
 
 //确定登录
   sureLogin = () => {
-  const { phoneNumber, validationNumber } = this.state
+    const { phoneNumber, validationNumber } = this.state
+    let type = getBrowserType() == 'wechat' ? 'ali' : 'wx'
   loginPhone({
     phone: phoneNumber,
-    verify_code: validationNumber
+    verify_code: validationNumber,
+    from: type
   })
     .then(({ status_code, data }) => {
+      // 状态 binded已绑定的  bind_success绑定成功 merge_fail合并失败   merge_success合并成功有token和用户信息  need_merge: 需要用户同意合并
       if (status_code == 200) {
         switch (data.status) {
           case 'binded'://成功登录
           case 'bindsuccess':
             Taro.setStorageSync('phone_status', data.status)
-            Taro.showToast({ title: '登录成功', duration: 2000, })
-            setTimeout(() => {
-              let page = Taro.getCurrentPages()
-              if (page.length > 1) {
-                Taro.navigateBack({
-                  delta: 1
-                })
+            Taro.showToast({
+              title: '登录成功', duration: 2000, success: () => {
+                setTimeout(() => {
+                  Taro.navigateBack({
+                    delta: 1
+                  })
+                }, 1000);
               }
-            }, 2000)
+            })
             break;
           case 'need_merge'://需要合并
             this.setState({ prompt: true })
+            break;
+          case 'merge_fail'://自动合并失败
+            Taro.showToast({ title: '登录失败', duration: 2000, })
+            break;
+          case 'merge_success'://自动合并成功
+            Taro.setStorageSync('phone_status', 'binded')
+            Cookie.set(TOKEN, data.token)
+            Taro.showToast({
+              title: '登录成功', duration: 2000, success: () => {
+                setTimeout(() => {
+                  Taro.navigateBack({
+                    delta: 1
+                  })
+                }, 1000);
+              }
+            })
             break;
           default://其它情况
             console.log('其他错误')
@@ -108,17 +131,18 @@ sureMerge = () => {
       this.setState({ prompt: false })
       if (status_code == 200) {
         Taro.setStorageSync('phone_status', 'binded')
-        Taro.showToast({ title: '同步成功', duration: 2000, })
-        setTimeout(() => {
-          let page = Taro.getCurrentPages()
-          if (page.length > 1) {
-            Taro.navigateBack({
-              delta: 1
-            })
+        Cookie.set(TOKEN, data.token)
+        Taro.showToast({
+          title: '同步成功', duration: 2000, success: () => {
+            setTimeout(() => {
+              Taro.navigateBack({
+                delta: 1
+              })
+            }, 1000);
           }
-        }, 2000)
+        })
       } else {
-        Taro.showToast({ title: '同步失败', duration: 2000, })
+        Taro.showToast({ title: '同步失败', duration: 2000 })
       }
     })
 }

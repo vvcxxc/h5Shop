@@ -8,6 +8,7 @@ import "./index.styl"
 type Props = any
 
 interface State {
+  emptyAvatar: String,
   settingShow: Boolean;
   cells: any;
   userInfo: any;
@@ -25,6 +26,7 @@ export default class NewPage extends Component<Props>{
   }
 
   state: State = {
+    emptyAvatar: 'N',
     settingShow: false,
     cells: {},
     userInfo: {},
@@ -81,7 +83,8 @@ export default class NewPage extends Component<Props>{
         userData: {
           head_img: res.data.avatar,
           user_name: res.data.user_name
-        }
+        },
+        emptyAvatar: res.data.emptyAvatar
       })
       let myData: any = this.state.list
       myData[0].prompt = res.data.order_msg
@@ -139,9 +142,12 @@ export default class NewPage extends Component<Props>{
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
-          <View className='setPersonalInfoBox' onClick={getUserInfo}  >
-            <View className='setPersonalInfo' >一键设置头像</View>
-          </View>
+          {
+            this.state.emptyAvatar == 'Y' && this.state.settingShow ? <View className='setPersonalInfoBox' onClick={getUserInfo}  >
+              <View className='setPersonalInfo' >一键设置头像</View>
+            </View> : null
+          }
+
           {/* <View className='giftMoney'>
             <Text className='white'>礼品币</Text>
             <Text className='yellow'>27</Text>
