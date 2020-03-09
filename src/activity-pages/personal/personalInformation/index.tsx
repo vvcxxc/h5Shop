@@ -30,7 +30,8 @@ export default class PersonalInformation extends Component {
         sumbitName: '',
         cityIndex: []
     }
-    componentDidMount() {
+    componentDidMount() { this.getUserInfo() }
+    getUserInfo = () => {
         Taro.showLoading();
         userRequest({
             url: 'v1/user/user/user_info',
@@ -109,11 +110,13 @@ export default class PersonalInformation extends Component {
                 if (res.status_code == 200) {
                     Taro.showToast({ title: '修改成功', icon: 'none' })
                 } else {
-                    Taro.showToast({ title: '修改失败', icon: 'none' })
+                    Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
+                    this.getUserInfo();
                 }
             }).catch(err => {
                 Taro.hideLoading();
-                Taro.showToast({ title: '修改失败', icon: 'none' })
+                Taro.showToast({ title: err.message || '修改失败', icon: 'none' })
+                this.getUserInfo();
             })
     }
     changeNameInfo = () => {
@@ -130,12 +133,17 @@ export default class PersonalInformation extends Component {
                 Taro.hideLoading();
                 if (res.status_code == 200) {
                     Taro.showToast({ title: '修改成功', icon: 'none' })
+                    this.setState({ name: '' })
                 } else {
-                    Taro.showToast({ title: '修改失败', icon: 'none' })
+                    Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
+                    this.setState({ name: '' })
+                    this.getUserInfo();
                 }
             }).catch(err => {
                 Taro.hideLoading();
-                Taro.showToast({ title: '修改失败', icon: 'none' })
+                Taro.showToast({ title: err.message || '修改失败', icon: 'none' })
+                this.setState({ name: '' })
+                this.getUserInfo();
             })
     }
     render() {
