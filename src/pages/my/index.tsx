@@ -3,6 +3,7 @@ import { View, Image, Text } from "@tarojs/components"
 import request from '@/services/request'
 import LandingBounced from '@/components/landing_bounced'
 import { getUserInfo } from '@/utils/getInfo';
+import Cookie from 'js-cookie'
 import "./index.styl"
 
 type Props = any
@@ -70,7 +71,7 @@ export default class NewPage extends Component<Props>{
 
 
   componentDidMount() {
-    let phone_status = Taro.getStorageSync('phone_status')
+    let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bind_success') {
       this.setState({ settingShow: true })
     } else { this.setState({ settingShow: false }) }
@@ -114,7 +115,7 @@ export default class NewPage extends Component<Props>{
 
   // 跳转路径
   jumpData = (data: string) => {
-    let phone_status = Taro.getStorageSync('phone_status')
+    let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bindsuccess') {
       Taro.navigateTo({ url: data })
       return

@@ -688,12 +688,15 @@ export default class Group extends Component<Props>{
   }
 
   goToaConfirm = (e) => {
-    let phone_status = Taro.getStorageSync('phone_status')
-    if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
+    let phone_status = Cookie.get('phone_status')
+    console.log(phone_status,'phone_status')
+    if (phone_status != 'binded' && phone_status != 'bindsuccess') {
+      console.log('触发')
       this.setState({ showBounced: true })
       return
     }
 
+    console.log('第二个')
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       if (this.$router.params.type == '5') {
@@ -707,13 +710,12 @@ export default class Group extends Component<Props>{
           url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       }
-      return
+      // return
     }
-    this.setState({ showBounced: true })
   }
   goToaConfirmAddGroup = (_id, e) => {
-    let phone_status = Taro.getStorageSync('phone_status')
-    if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bindsuccess') {
       this.setState({ showBounced: true })
       return
     }

@@ -11,6 +11,7 @@ import request from '../../services/request'
 import { getLocation } from "@/utils/getInfo"
 import { getBrowserType } from "@/utils/common";
 import LandingBounced from '@/components/landing_bounced'//登录弹框
+import Cookie from 'js-cookie'
 import wx from 'weixin-js-sdk';
 
 
@@ -99,7 +100,7 @@ export default class TicketBuy extends Component {
     }
     Taro.showLoading({
       title: 'loading',
-      mask:true
+      mask: true
     })
     getLocation().then((res: any) => {
       let xPoint = res.longitude;
@@ -215,14 +216,15 @@ export default class TicketBuy extends Component {
 
 
   handleClick = (id, e) => {
-    let phone_status = Taro.getStorageSync('phone_status')
-    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
-      Taro.navigateTo({
-        url: '../../business-pages/confirm-order/index?id=' + id
-      })
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bindsuccess') {//两者不等，需要登录
+      this.setState({ showBounced: true })
       return
     }
-    this.setState({ showBounced: true })
+    Taro.navigateTo({
+      url: '../../business-pages/confirm-order/index?id=' + id
+    })
+
   }
   handleClick2 = (_id, e) => {
     Taro.navigateTo({
