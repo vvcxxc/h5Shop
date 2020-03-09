@@ -9,6 +9,7 @@ import Cookie from 'js-cookie';
 import { getLocation } from "@/utils/getInfo";
 import AddressImg from '../../../assets/address.png';
 import MobileImg from '../../../assets/dianhua.png';
+import Zoom from '../../../components/zoom/index';
 import './index.scss';
 import { getTime } from '@/utils/common';
 import dayjs from 'dayjs'
@@ -23,6 +24,8 @@ let interval;
 export default class Group extends Component<Props>{
   state = {
     ruleMore: false,
+    imgZoom: false,
+    imgZoomSrc: '',
     xPoint: '',
     yPoint: '',
     imagesCurrent: 0,
@@ -75,11 +78,13 @@ export default class Group extends Component<Props>{
     groupListPages: 1,
     currentPage: 0,
     allowGroup: '',
-
-    showBounced: false//登录弹框
+    showBounced:false
   };
-
+  componentDidShow() {
+    this.toShare();
+  }
   clearTimeOut = () => {
+    console.log('清除计时器');
     var end = setTimeout(function () { }, 1);
     var start = (end - 100) > 0 ? end - 100 : 0;
     for (var i = start; i <= end; i++) {
@@ -91,7 +96,7 @@ export default class Group extends Component<Props>{
     this.clearTimeOut();
   }
 
-  componentDidShow() {
+  componentDidMount = () => {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({
@@ -375,6 +380,7 @@ export default class Group extends Component<Props>{
   payment() {
     let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
     let _temptype = this.$router.params.type;
+    console.log(_temptype, '_temptype', _tempid, '_tempid')
     Taro.showLoading({
       title: 'loading',
     })
@@ -395,6 +401,7 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
         activity_id: this.$router.params.activity_id,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
         type: this.$router.params.type,
@@ -405,6 +412,7 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
         activity_id: this.$router.params.activity_id,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         type: this.$router.params.type,
         xcx: 0,
         number: 1,
@@ -568,6 +576,7 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: _groupid,
         activity_id: this.$router.params.activity_id,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         open_id: Cookie.get(process.env.OPEN_ID),
         unionid: Cookie.get(process.env.UNION_ID),
         type: 55,
@@ -578,6 +587,7 @@ export default class Group extends Component<Props>{
       datas = {
         public_type_id: _groupid,
         activity_id: this.$router.params.activity_id,
+        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
         type: 55,
         xcx: 0,
         number: 1,
@@ -656,10 +666,14 @@ export default class Group extends Component<Props>{
       })
   }
 
-  /**回首页 */
+  /**
+   * 回首页
+   */
   handleGoHome = () => {
     this.clearTimeOut();
-    Taro.navigateTo({ url: '/' })
+    Taro.navigateTo({
+      url: '/'
+    })
   }
 
   addGroupList = () => {
@@ -686,17 +700,13 @@ export default class Group extends Component<Props>{
       return;
     }
   }
-
   goToaConfirm = (e) => {
     let phone_status = Cookie.get('phone_status')
-    console.log(phone_status,'phone_status')
-    if (phone_status != 'binded' && phone_status != 'bindsuccess') {
-      console.log('触发')
+    if (phone_status != 'binded' && phone_status != 'bindsuccess') {//两者不等，需要登录
       this.setState({ showBounced: true })
       return
     }
 
-    console.log('第二个')
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       if (this.$router.params.type == '5') {
@@ -710,16 +720,11 @@ export default class Group extends Component<Props>{
           url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       }
-      // return
+    } else {
+      this.payment();
     }
   }
   goToaConfirmAddGroup = (_id, e) => {
-    let phone_status = Cookie.get('phone_status')
-    if (phone_status != 'binded' && phone_status != 'bindsuccess') {
-      this.setState({ showBounced: true })
-      return
-    }
-
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
@@ -736,18 +741,17 @@ export default class Group extends Component<Props>{
     const { showBounced } = this.state
     return (
       <View className="d_appre" >
-
         {
           showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
             this.setState({ showBounced: false })
           }} /> : null
         }
-
         {
           this.state.groupListShow ? <View className="d_appre_groupList" onClick={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }} onTouchMove={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }}>
             <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation(); }}>
               <View className="d_appre_groupList_box_title">正在拼团</View>
               <View className="d_appre_groupList_box_slideBox">
+                {/* <View className="d_appre_groupList_box_slideBox_content" > */}
                 <ScrollView
                   className='d_appre_groupList_box_slideBox_content'
                   scrollY
@@ -784,8 +788,12 @@ export default class Group extends Component<Props>{
                   }
 
                 </ScrollView>
+                {/* </View> */}
               </View>
               <View className="group_list_toast" >上滑查看更多</View>
+              {/* {
+                this.state.data2.data && this.state.data2.data.length > 5 ? <View className="group_list_toast" >上滑查看更多</View> : null
+              } */}
             </View>
             <View className="group_list_closebtn" >
               <AtIcon value='close-circle' size="28px" color='#fff'></AtIcon>
@@ -798,7 +806,10 @@ export default class Group extends Component<Props>{
         </View >
 
         {
-          this.state.data.images.length > 0 ? <View>
+          this.state.data.images.length > 0 ? <View
+            onClick={() => {
+              this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
+            }}>
             <Swiper
               onChange={(e) => {
                 this.setState({ imagesCurrent: e.detail.current })
@@ -824,6 +835,7 @@ export default class Group extends Component<Props>{
             </Swiper>
           </View> : null
         }
+
         <View className="coupon_box_title">
           <View className="group_coupon_title" >{this.state.data.youhui_name}</View>
           <View className="group_rule_time" >
@@ -835,6 +847,7 @@ export default class Group extends Component<Props>{
             <View className="group_head_bottom_list">{this.state.data.number}人团</View>
             <View className="group_head_bottom_list">{this.state.data.team_set_end_time}小时</View>
           </View>
+
           {/* <View className="group_msg" >
             <View className="group_msg_titlebox" >商品详情</View>
             <View className="group_msgBox" >
@@ -855,7 +868,9 @@ export default class Group extends Component<Props>{
               </View>
             </View>
           </View> */}
+
         </View>
+
         {
           this.state.data.gift_id ?
             <View className="appre_gift" >
@@ -872,6 +887,7 @@ export default class Group extends Component<Props>{
               <View className="appre_gift_giftlist" >
                 <Image className="appre_gift_giftlistImg"
                   mode="widthFix"
+                  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift.cover_image }) }}
                   src={this.state.data.gift.cover_image} />
               </View>
             </View> : null
@@ -907,22 +923,23 @@ export default class Group extends Component<Props>{
             <View className="appre_rule_time_data" >{this.state.data.team_set_end_time}小时内</View>
           </View>
           {
-            description.length > 0 ?
+            (description) ?
               <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "2.5rem") }}>
                 <View className="appre_rule_list_key" >详情描述:</View>
                 <View className="appre_rule_list_data" >
                   {
-                    description.map((item) => {
+                    (description) ? description.map((item) => {
                       return (
                         <View className="appre_rule_list_msg" >. {item}</View>
                       )
-                    })
+                    }) : null
                   }
                 </View>
+
               </View> : null
           }
           {
-            description && description.length > 3 ?
+            (description && description.length > 3) ?
               <View className="appre_rule_list_more" onClick={() => { this.setState({ ruleMore: !this.state.ruleMore }) }}>
                 {this.state.ruleMore ? "收回" : "查看更多"}
                 {
@@ -983,6 +1000,11 @@ export default class Group extends Component<Props>{
           }
         </View>
 
+        <Zoom
+          src={this.state.imgZoomSrc}
+          showBool={this.state.imgZoom}
+          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+        />
         {/* 分享 */}
         {
           this.state.isShare == true ? (
