@@ -76,6 +76,7 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    console.log(err)
                     this.setState({ tipsShow: true, tipsInfo: err.data.message || '请求失败', is_ok: true })
                 })
         } else if (this.state.phone && !this.state._code) {
@@ -110,6 +111,7 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    console.log(err)
                     this.setState({ tipsShow: true, tipsInfo: err.data.message || '请求失败', is_ok: true })
                 })
         } else {
