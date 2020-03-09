@@ -133,7 +133,6 @@ export default class PersonalInformation extends Component {
                 Taro.hideLoading();
                 if (res.status_code == 200) {
                     Taro.showToast({ title: '修改成功', icon: 'none' })
-                    this.setState({ name: '' })
                 } else {
                     Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
                     this.setState({ name: '' })
