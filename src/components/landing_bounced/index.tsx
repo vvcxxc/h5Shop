@@ -1,4 +1,4 @@
-import Taro, { Component } from "@tarojs/taro"
+import Taro, { Component, setStorageSync } from "@tarojs/taro"
 import { Block, View, Image, Text } from "@tarojs/components"
 import './index.styl'
 
@@ -20,6 +20,7 @@ const PhysicalBond = (params: Params)=> {
             <li>
               <Text onClick={() =>  params.cancel()}>暂不登录</Text>
               <Text onClick={() => {
+                Taro.setStorageSync('ql_href', location.href)
                 Taro.navigateTo({ url: '/pages/my/login_page/index' })
                 params.confirm()
               }}>立即登录</Text>
