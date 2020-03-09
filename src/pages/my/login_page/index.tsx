@@ -82,7 +82,15 @@ export default class LoginPage extends Component<any>{
         if (status_code == 200) {
           switch (data.status) {//成功登录
             case "binded":
-            case "bindsuccess":
+              Taro.showToast({
+                title: '登录成功', duration: 2000, success: () => {
+                  setTimeout(() => {
+                    location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+                  }, 1000);
+                }
+              })
+              break;
+            case "bind_success":
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -111,7 +119,7 @@ export default class LoginPage extends Component<any>{
               break;
           }//end switch
         }//end if
-      })
+      }).catch(res => {})
   }
 
   // 确定合并手机
