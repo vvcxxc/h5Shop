@@ -43,7 +43,7 @@ export default class PhoneInformation extends Component {
                 }
             }).catch(err => {
                 Taro.hideLoading();
-                this.setState({ tipsShow: true, tipsInfo: err.data.message || '加载失败' })
+                this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '加载失败' })
             })
     }
     //输入框
@@ -76,7 +76,8 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
-                    this.setState({ tipsShow: true, tipsInfo: err.data.message || '请求失败', is_ok: true })
+                    console.log(err)
+                    this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败', is_ok: true })
                 })
         } else if (this.state.phone && !this.state._code) {
             this.setState({ tipsShow: true, tipsInfo: '请输入验证码', is_ok: true })
@@ -110,7 +111,8 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
-                    this.setState({ tipsShow: true, tipsInfo: err.data.message || '请求失败', is_ok: true })
+                    console.log(err)
+                    this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败', is_ok: true })
                 })
         } else {
             this.setState({ tipsShow: true, tipsInfo: '请输入新手机号和验证码' })
@@ -149,7 +151,7 @@ export default class PhoneInformation extends Component {
                     }
                 })
                 .catch(err => {
-                    _this.setState({ is_ok: true, tipsShow: true, tipsInfo: err.data.message || '请求失败' })
+                    _this.setState({ is_ok: true, tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败' })
                 })
         } else {
             type == 2 && this.setState({ tipsShow: true, tipsInfo: '请输入手机号' })
@@ -185,15 +187,15 @@ export default class PhoneInformation extends Component {
                         </View> : (
                             !this.state.successType ? <View className='phoneInformationBox'>
                                 <View className='imageBox'>
-                                    <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
+                                    <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bzWD8T257sjGTMxirfxYEX5KbNTBKnx4.png" />
                                 </View>
                                 <View className='msgBox'>验证成功</View>
                                 <View className='infoBox'>您可以直接输入要更换的手机号码</View>
-                                <View className='btnBox' onClick={() => { this.setState({ changeStep: true, successType: true }) }}>确认</View>
+                                <View className='btnBox' onClick={() => { this.setState({ changeStep: true, successType: true }) }}>立即更换</View>
                             </View> :
                                 <View className='phoneInformationBox'>
                                     <View className='imageBox'>
-                                        <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
+                                        <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bzWD8T257sjGTMxirfxYEX5KbNTBKnx4.png" />
                                     </View>
                                     <View className='msgBox'>换绑成功</View>
                                     <View className='infoBox'>点击确认后将返回个人中心</View>
@@ -226,7 +228,7 @@ export default class PhoneInformation extends Component {
                     </View> : null
                 }
 
-                {
+                {/* {
                     this.state.tipsShow ?
                         <View className='phoneMask'>
                             <View className='maskContentBox'>
@@ -237,7 +239,7 @@ export default class PhoneInformation extends Component {
                                 </View>
                             </View>
                         </View> : null
-                }
+                } */}
 
             </View >
         )

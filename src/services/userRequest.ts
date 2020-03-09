@@ -38,6 +38,7 @@ export default function request(options: Options) {
               title: 'server error :d',
               icon: 'none'
             })
+            return reject(res)
             break
           case FETCH_OK:
             return resolve(res.data)
@@ -56,12 +57,14 @@ export default function request(options: Options) {
               title: "not find",
               icon: "none"
             })
+            return reject(res)
             break
           default:
             Taro.showToast({
               title: "unknow error",
               icon: "none"
             })
+            return reject(res)
             break
         }
       },
