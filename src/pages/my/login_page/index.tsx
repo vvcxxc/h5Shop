@@ -70,6 +70,7 @@ export default class LoginPage extends Component<any>{
   //确定登录
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
+    console.log(123444)
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
     loginPhone({
