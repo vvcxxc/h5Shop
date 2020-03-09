@@ -54,7 +54,7 @@ export default class LoginPage extends Component<any>{
   //发送短信
   sendShortNote = () => {
     const { phoneNumber } = this.state
-    if (!/^1[346789]\d{9}$/.test(phoneNumber)) {
+    if (!/^1[123456789]\d{9}$/.test(phoneNumber)) {
       Taro.showToast({ title: '手机号格式有误', icon: 'none' })
       return
     }
