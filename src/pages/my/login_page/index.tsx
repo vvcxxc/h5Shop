@@ -76,13 +76,11 @@ export default class LoginPage extends Component<any>{
       phone: phoneNumber,
       verify_code: validationNumber,
       from: type
-    })
-      .then(({ status_code, data }) => {
-        // 状态 binded已绑定的  bind_success绑定成功 merge_fail合并失败   merge_success合并成功有token和用户信息  need_merge: 需要用户同意合并
+    }).then(({ status_code,data }) => {
         if (status_code == 200) {
-          switch (data.status) {
-            case 'binded'://成功登录
-            case 'bindsuccess':
+          switch (data.status) {//成功登录
+            case "binded":
+            case "bindsuccess":
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -123,8 +121,7 @@ export default class LoginPage extends Component<any>{
       mobile: phoneNumber,
       verify_code: validationNumber,
       type: type
-    })
-      .then(({ status_code, data }) => {
+    }).then(({ status_code, data }) => {
         this.setState({ prompt: false })
         if (status_code == 200) {
           Taro.showToast({
