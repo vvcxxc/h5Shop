@@ -185,15 +185,15 @@ export default class PhoneInformation extends Component {
                         </View> : (
                             !this.state.successType ? <View className='phoneInformationBox'>
                                 <View className='imageBox'>
-                                    <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
+                                    <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bzWD8T257sjGTMxirfxYEX5KbNTBKnx4.png" />
                                 </View>
                                 <View className='msgBox'>验证成功</View>
                                 <View className='infoBox'>您可以直接输入要更换的手机号码</View>
-                                <View className='btnBox' onClick={() => { this.setState({ changeStep: true, successType: true }) }}>确认</View>
+                                <View className='btnBox' onClick={() => { this.setState({ changeStep: true, successType: true }) }}>立即更换</View>
                             </View> :
                                 <View className='phoneInformationBox'>
                                     <View className='imageBox'>
-                                        <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/7f2mdFaRxyYHsDeGGRXcrpCFP5fHTfEJ.png" />
+                                        <Image className='phoneImg' src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bzWD8T257sjGTMxirfxYEX5KbNTBKnx4.png" />
                                     </View>
                                     <View className='msgBox'>换绑成功</View>
                                     <View className='infoBox'>点击确认后将返回个人中心</View>
