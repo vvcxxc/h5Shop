@@ -43,7 +43,7 @@ export default class PhoneInformation extends Component {
                 }
             }).catch(err => {
                 Taro.hideLoading();
-                this.setState({ tipsShow: true, tipsInfo: err.data.message || '加载失败' })
+                this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '加载失败' })
             })
     }
     //输入框
@@ -77,7 +77,7 @@ export default class PhoneInformation extends Component {
                 }).catch(err => {
                     Taro.hideLoading();
                     console.log(err)
-                    this.setState({ tipsShow: true, tipsInfo: err.data.message || '请求失败', is_ok: true })
+                    this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败', is_ok: true })
                 })
         } else if (this.state.phone && !this.state._code) {
             this.setState({ tipsShow: true, tipsInfo: '请输入验证码', is_ok: true })
@@ -112,7 +112,7 @@ export default class PhoneInformation extends Component {
                 }).catch(err => {
                     Taro.hideLoading();
                     console.log(err)
-                    this.setState({ tipsShow: true, tipsInfo: err.data.message || '请求失败', is_ok: true })
+                    this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败', is_ok: true })
                 })
         } else {
             this.setState({ tipsShow: true, tipsInfo: '请输入新手机号和验证码' })
@@ -151,7 +151,7 @@ export default class PhoneInformation extends Component {
                     }
                 })
                 .catch(err => {
-                    _this.setState({ is_ok: true, tipsShow: true, tipsInfo: err.data.message || '请求失败' })
+                    _this.setState({ is_ok: true, tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败' })
                 })
         } else {
             type == 2 && this.setState({ tipsShow: true, tipsInfo: '请输入手机号' })
@@ -228,7 +228,7 @@ export default class PhoneInformation extends Component {
                     </View> : null
                 }
 
-                {
+                {/* {
                     this.state.tipsShow ?
                         <View className='phoneMask'>
                             <View className='maskContentBox'>
@@ -239,7 +239,7 @@ export default class PhoneInformation extends Component {
                                 </View>
                             </View>
                         </View> : null
-                }
+                } */}
 
             </View >
         )
