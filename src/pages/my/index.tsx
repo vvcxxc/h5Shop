@@ -149,7 +149,6 @@ export default class NewPage extends Component<Props>{
               <View className='setPersonalInfo' >一键设置头像/昵称</View>
             </View> : null
           }
-
           {/* <View className='giftMoney'>
             <Text className='white'>礼品币</Text>
             <Text className='yellow'>27</Text>
