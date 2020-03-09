@@ -9,6 +9,7 @@ import { getBrowserType } from '../../../utils/common';
 import "./index.styl"
 
 const TOKEN = process.env.TOKEN
+const USER_API = process.env.USER_API//重新登录成功跳转
 
 export default class LoginPage extends Component<any>{
   state = {
@@ -68,8 +69,11 @@ export default class LoginPage extends Component<any>{
 
 //确定登录
   sureLogin = () => {
+    
+    // return 
     const { phoneNumber, validationNumber } = this.state
     let type = getBrowserType() == 'wechat' ? 'ali' : 'wx'
+    let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
   loginPhone({
     phone: phoneNumber,
     verify_code: validationNumber,
@@ -81,13 +85,10 @@ export default class LoginPage extends Component<any>{
         switch (data.status) {
           case 'binded'://成功登录
           case 'bindsuccess':
-            Cookie.set('phone_status', JSON.stringify(data.status))
             Taro.showToast({
               title: '登录成功', duration: 2000, success: () => {
                 setTimeout(() => {
-                  Taro.navigateBack({
-                    delta: 1
-                  })
+                  location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber  + '&url=' + url + '&from=' + type
                 }, 1000);
               }
             })
@@ -99,15 +100,10 @@ export default class LoginPage extends Component<any>{
             Taro.showToast({ title: '登录失败', duration: 2000, })
             break;
           case 'merge_success'://自动合并成功
-            Cookie.set('phone_status', 'binded')
-            // Taro.setStorageSync('phone_status', 'binded')
-            Cookie.set(TOKEN, data.token)
             Taro.showToast({
               title: '登录成功', duration: 2000, success: () => {
                 setTimeout(() => {
-                  Taro.navigateBack({
-                    delta: 1
-                  })
+                  location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber+ '&verify_code=' + validationNumber+  '&url=' + url + '&from=' + type
                 }, 1000);
               }
             })
@@ -123,22 +119,21 @@ export default class LoginPage extends Component<any>{
 // 确定合并手机
 sureMerge = () => {
   const { phoneNumber, validationNumber } = this.state
+  let type = getBrowserType() == 'wechat' ? 'ali' : 'wx'
+  let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
   loginMerge({
     mobile: phoneNumber,
     verify_code: validationNumber,
-    type: 'wx'
+    type: type
   })
     .then(({ status_code, data }) => {
       this.setState({ prompt: false })
       if (status_code == 200) {
-        Cookie.set('phone_status', 'binded')
-        Cookie.set(TOKEN, data.token)
         Taro.showToast({
           title: '同步成功', duration: 2000, success: () => {
             setTimeout(() => {
-              Taro.navigateBack({
-                delta: 1
-              })
+              location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + 
+              '&from=' + type
             }, 1000);
           }
         })

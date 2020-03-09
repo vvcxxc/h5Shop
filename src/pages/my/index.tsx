@@ -115,7 +115,8 @@ export default class NewPage extends Component<Props>{
 
   // 跳转路径
   jumpData = (data: string) => {
-    let phone_status = Cookie.get('phone_status')
+    let phone_status = Cookie.get("phone_status")
+    console.log(phone_status, 'phone_status')
     if (phone_status == 'binded' || phone_status == 'bindsuccess') {
       Taro.navigateTo({ url: data })
       return
