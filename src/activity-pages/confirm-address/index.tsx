@@ -199,8 +199,8 @@ export default class confirmAddress extends Component {
     }
 
     payment = () => {
-        let phone_status = Taro.getStorageSync('phone_status')
-        if (phone_status !== 'binded' && phone_status != 'bindsuccess') {
+        let phone_status = Cookie.get('phone_status')
+        if (phone_status != 'binded' && phone_status != 'bindsuccess') {//两者不等，需要登录
             this.setState({ showBounced: true })
             return
         }

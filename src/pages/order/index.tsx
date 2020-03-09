@@ -4,6 +4,7 @@ import { AtTabs, AtTabsPane, AtIcon, AtButton } from 'taro-ui'
 import "taro-ui/dist/style/components/tabs.scss";
 import CashCoupon1 from "./cash-coupon1/index";
 import CashCoupon2 from "./cash-coupon2/index";
+import Cookie from 'js-cookie';
 import "./index.scss";
 import request from "../../services/request";
 
@@ -46,8 +47,7 @@ export default class Order extends Component {
   };
 
   componentDidMount() {
-    let phone_status = Taro.getStorageSync('phone_status')
-    
+    let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bindsuccess') {
       Taro.showLoading({
         title: "loading",
@@ -57,7 +57,6 @@ export default class Order extends Component {
       return
     }
     this.setState({ no_phone_status: true })
-    
   }
 
   // 滚动

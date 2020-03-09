@@ -453,18 +453,18 @@ export default class Appre extends Component<Props>{
   }
 
   goToaConfirm = (e) => {
-    let phone_status = Taro.getStorageSync('phone_status')
-    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
-      if (this.state.data.gift_id) {
-        Taro.navigateTo({
-          url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
-        })
-      } else {
-        this.payment()
-      }
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bindsuccess') {//两者不等，需要登录
+      this.setState({ showBounced: true })
       return
     }
-    this.setState({ showBounced: true })
+    if (this.state.data.gift_id) {
+      Taro.navigateTo({
+        url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
+      })
+    } else {
+      this.payment()
+    }
   }
 
   /**
