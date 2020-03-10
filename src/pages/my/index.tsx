@@ -116,8 +116,7 @@ export default class NewPage extends Component<Props>{
   // 跳转路径
   jumpData = (data: string) => {
     let phone_status = Cookie.get("phone_status")
-    console.log(phone_status, 'phone_status')
-    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
       Taro.navigateTo({ url: data })
       return
     }
@@ -149,10 +148,14 @@ export default class NewPage extends Component<Props>{
               <View className='setPersonalInfo' >一键设置头像/昵称</View>
             </View> : null
           }
-          {/* <View className='giftMoney'>
-            <Text className='white'>礼品币</Text>
-            <Text className='yellow'>27</Text>
-          </View> */}
+          {
+            !showBounced ? <View className='setPersonalInfoBox'  >
+              <View className='my_login' onClick={() => {
+                Taro.setStorageSync('ql_href', location.href)
+                Taro.navigateTo({ url: '/pages/my/login_page/index' })
+              }}>登录</View>
+            </View> : null
+          }
         </View>
 
         <View className="newPage_content">

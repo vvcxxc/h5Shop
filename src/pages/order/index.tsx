@@ -48,7 +48,7 @@ export default class Order extends Component {
 
   componentDidMount() {
     let phone_status = Cookie.get('phone_status')
-    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
       Taro.showLoading({
         title: "loading",
         mask: true
