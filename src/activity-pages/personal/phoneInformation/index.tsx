@@ -32,6 +32,8 @@ export default class PhoneInformation extends Component {
             method: "GET",
         })
             .then((res: any) => {
+                console.log(res)
+
                 Taro.hideLoading();
                 let { status_code, data, message } = res;
                 if (status_code == 200) {
@@ -42,6 +44,8 @@ export default class PhoneInformation extends Component {
                     this.setState({ tipsShow: true, tipsInfo: message })
                 }
             }).catch(err => {
+                console.log('err')
+
                 Taro.hideLoading();
                 this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '加载失败' })
             })
@@ -228,7 +232,7 @@ export default class PhoneInformation extends Component {
                     </View> : null
                 }
 
-                {/* {
+                {
                     this.state.tipsShow ?
                         <View className='phoneMask'>
                             <View className='maskContentBox'>
@@ -239,7 +243,7 @@ export default class PhoneInformation extends Component {
                                 </View>
                             </View>
                         </View> : null
-                } */}
+                }
 
             </View >
         )
