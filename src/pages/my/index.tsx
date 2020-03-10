@@ -115,7 +115,8 @@ export default class NewPage extends Component<Props>{
 
   // 跳转路径
   jumpData = (data: string) => {
-    let phone_status = Cookie.get('phone_status')
+    let phone_status = Cookie.get("phone_status")
+    console.log(phone_status, 'phone_status')
     if (phone_status == 'binded' || phone_status == 'bindsuccess') {
       Taro.navigateTo({ url: data })
       return
@@ -145,10 +146,9 @@ export default class NewPage extends Component<Props>{
           <View className='userName'>{this.state.userData.user_name}</View>
           {
             this.state.emptyAvatar == 'Y' && this.state.settingShow ? <View className='setPersonalInfoBox' onClick={getUserInfo}  >
-              <View className='setPersonalInfo' >一键设置头像</View>
+              <View className='setPersonalInfo' >一键设置头像/昵称</View>
             </View> : null
           }
-
           {/* <View className='giftMoney'>
             <Text className='white'>礼品币</Text>
             <Text className='yellow'>27</Text>
