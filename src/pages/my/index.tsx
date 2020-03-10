@@ -17,7 +17,8 @@ interface State {
   data: string,
   list: Object[],
   userData: Object,
-  showBounced: boolean
+  showBounced: boolean,
+  needLogin: boolean
 }
 
 export default class NewPage extends Component<Props>{
@@ -65,7 +66,8 @@ export default class NewPage extends Component<Props>{
         path: "/activity-pages/Shipping-address/index",
       }
     ],
-    showBounced: false//登录弹框
+    showBounced: false,//登录弹框
+    needLogin :false
   }
 
 
@@ -73,8 +75,10 @@ export default class NewPage extends Component<Props>{
   componentDidMount() {
     let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bind_success') {
-      this.setState({ settingShow: true })
-    } else { this.setState({ settingShow: false }) }
+      this.setState({ settingShow: true, needLogin: false })
+    } else {
+      this.setState({ settingShow: false, needLogin: true })
+    }
     this.handleGetUserinfo()
     request({
       url: 'v3/user/home_index'
@@ -130,7 +134,7 @@ export default class NewPage extends Component<Props>{
   }
 
   render() {
-    const { showBounced } = this.state
+    const { showBounced, needLogin} = this.state
     return (
       <View className='newPage'>
         {
@@ -149,15 +153,17 @@ export default class NewPage extends Component<Props>{
             </View> : null
           }
           {
-            !showBounced ? <View className='setPersonalInfoBox'  >
+            needLogin ?  <View className='setPersonalInfoBox'>
               <View className='my_login' onClick={() => {
                 Taro.setStorageSync('ql_href', location.href)
                 Taro.navigateTo({ url: '/pages/my/login_page/index' })
               }}>登录</View>
-            </View> : null
-          }
+            </View>:null
+        }
         </View>
-
+        {
+          console.log(showBounced,'eee4e')
+        }
         <View className="newPage_content">
           <View className="content_my">
             {
