@@ -133,7 +133,7 @@ export default class ConfirmOrder extends Component {
 
                 Taro.switchTab({
                   url: '/pages/order/index',
-                  success: function (e) {
+                  success: (e) => {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
                     page.onShow();
@@ -159,7 +159,7 @@ export default class ConfirmOrder extends Component {
               //支付宝成功
               Taro.switchTab({
                 url: '/pages/order/index',
-                success: function (e) {
+                success: (e) => {
                   let page = Taro.getCurrentPages().pop();
                   if (page == undefined || page == null) return;
                   page.onShow();

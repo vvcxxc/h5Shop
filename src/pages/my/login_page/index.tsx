@@ -71,6 +71,7 @@ export default class LoginPage extends Component<any>{
   //确定登录
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
+    console.log(123444)
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
     loginPhone({
@@ -78,6 +79,7 @@ export default class LoginPage extends Component<any>{
       verify_code: validationNumber,
       from: type
     }).then(({ status_code,data }) => {
+      console.log(5234234)
         if (status_code == 200) {
           switch (data.status) {//成功登录
             case "binded":
@@ -123,7 +125,7 @@ export default class LoginPage extends Component<any>{
               break;
           }//end switch
         }//end if
-      })
+      }).catch(res => {})
   }
 
   // 确定合并手机
