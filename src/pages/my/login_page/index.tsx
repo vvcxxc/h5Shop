@@ -74,6 +74,7 @@ export default class LoginPage extends Component<any>{
     console.log(123444)
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
+    encodeURIComponent(url)
     loginPhone({
       phone: phoneNumber,
       verify_code: validationNumber,
@@ -174,7 +175,7 @@ export default class LoginPage extends Component<any>{
   //   const { phoneNumber, validationNumber } = this.state
   //   let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
   //   let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
-    
+
   //   updateLoginPhone({
   //     verify_code: validationNumber,
   //     phone: phoneNumber
@@ -236,7 +237,7 @@ export default class LoginPage extends Component<any>{
           />
         </View>
         <AtButton type='primary' size='small' onClick={() => {
-          this.sureLogin() 
+          this.sureLogin()
         }}>登录</AtButton>
       </View>
     )
