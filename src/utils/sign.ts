@@ -23,6 +23,7 @@ export const Login = () => {
     if (type == 'wechat'){
       console.log(from,'from')
       // let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
+      encodeURIComponent(from);
       let url = USER_API + 'v1/user/auth/auth_h5?code_id=0&from='+from
       // if(process.env.NODE_ENV == 'test'){
       //   url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
