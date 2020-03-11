@@ -22,7 +22,7 @@ module.exports = {
     TOKEN: '"token_auth"',
     ALIPAY_USER_ID: '"alipay_user_id"',
     AUTH_LOGIN_URL: '"https://wxauth.tdianyi.com/"',
-    USER_API: '"https://release.usercenter.tdianyi.com/"'，
+    USER_API: '"https://release.usercenter.tdianyi.com/"',
     WX_APPID: 'wxecdd282fde9a9dfd',
     ALI_APPID: '2017111509949310',
 
