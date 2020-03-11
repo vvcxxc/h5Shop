@@ -91,7 +91,6 @@ export default class NewPage extends Component<Props>{
         },
         emptyAvatar: res.data.emptyAvatar
       })
-      console.log(res.data.emptyAvatar,'45123')
       let myData: any = this.state.list
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
@@ -134,6 +133,12 @@ export default class NewPage extends Component<Props>{
     })
   }
 
+  // 手动登录跳转
+  handLogin = () => {
+    Taro.setStorageSync('ql_href', location.href)
+    Taro.navigateTo({ url: '/pages/my/login_page/index' })
+  }
+
   render() {
     const { showBounced, needLogin} = this.state
     return (
@@ -155,10 +160,7 @@ export default class NewPage extends Component<Props>{
           }
           {
             needLogin ?  <View className='setPersonalInfoBox'>
-              <View className='my_login' onClick={() => {
-                Taro.setStorageSync('ql_href', location.href)
-                Taro.navigateTo({ url: '/pages/my/login_page/index' })
-              }}>登录</View>
+              <View className='my_login' onClick={this.handLogin}>登录</View>
             </View>:null
         }
         </View>

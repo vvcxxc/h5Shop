@@ -71,7 +71,14 @@ export default class LoginPage extends Component<any>{
   //确定登录
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
-    console.log(123444)
+    if (!phoneNumber) {
+      Taro.showToast({ title: '手机不能为空', duration: 2000,  icon: 'none'})
+      return
+    }
+    if (!validationNumber) {
+      Taro.showToast({ title: '验证码不能为空', duration: 2000, icon: 'none'})
+      return
+    }
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
     encodeURIComponent(url)
@@ -80,10 +87,10 @@ export default class LoginPage extends Component<any>{
       verify_code: validationNumber,
       from: type
     }).then(({ status_code,data }) => {
-      console.log(5234234)
         if (status_code == 200) {
           switch (data.status) {//成功登录
             case "binded":
+              console.log(1);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -93,6 +100,7 @@ export default class LoginPage extends Component<any>{
               })
               break;
             case "bind_success":
+              console.log(2);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -102,17 +110,28 @@ export default class LoginPage extends Component<any>{
               })
               break;
             case 'need_merge'://需要合并
+              console.log(3);
               this.setState({ prompt: true })
               break;
             case 'need_switch'://跟换手机
-              setTimeout(() => {
-                location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
-              }, 1000);
+              console.log(4);
+              Taro.showToast({
+                title: '登录成功', duration: 2000, success: () => {
+                  setTimeout(() => {
+                    location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+                  }, 1000);
+                }
+              })
+              // setTimeout(() => {
+              //   location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+              // }, 1000);
               break;
             case 'merge_fail'://自动合并失败
-              Taro.showToast({ title: '登录失败', duration: 2000, })
+              console.log(5);
+              Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
               break;
             case 'merge_success'://自动合并成功
+              console.log(6);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -126,7 +145,10 @@ export default class LoginPage extends Component<any>{
               break;
           }//end switch
         }//end if
-      }).catch(res => {})
+    }).catch(res => {
+      console.log('catch')
+      Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
+      })
   }
 
   // 确定合并手机
@@ -150,50 +172,12 @@ export default class LoginPage extends Component<any>{
             }
           })
         } else {
-          Taro.showToast({ title: '同步失败', duration: 2000 })
+          Taro.showToast({ title: '同步失败', duration: 2000, icon: 'none' })
         }
-      })
+    }).catch(res => {
+      Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
+    })
   }
-
-  //修改手机号
-  // updatePhone = () => {
-  //   const { phoneNumber, validationNumber } = this.state
-  //   updateUserPhone({
-  //     verifyCode: validationNumber,
-  //     phone: phoneNumber
-  //   }).then(({ status_code}) => {
-  //     if (status_code == 200) {
-  //       Taro.showToast({ title: '修改成功', duration: 2000})
-  //     } else {
-  //       Taro.showToast({ title: '修改失败', duration: 2000 })
-  //     }//end if
-  //   })//end then
-  // }
-
-  // 切换账号
-  // switchAccount = () => {
-  //   const { phoneNumber, validationNumber } = this.state
-  //   let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
-  //   let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
-
-  //   updateLoginPhone({
-  //     verify_code: validationNumber,
-  //     phone: phoneNumber
-  //   }).then(({ status_code }) => {
-  //     if (status_code == 200) {
-  //       Taro.showToast({
-  //         title: '登录成功', duration: 2000, success: () => {
-  //           setTimeout(() => {
-  //             location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
-  //           }, 1000);
-  //         }
-  //       })
-  //     } else {
-  //       Taro.showToast({ title: '登录失败', duration: 2000 })
-  //     }//end if
-  //   })//end then
-
-  // }
 
   // 将登录接口改成需改手机号接口
   replaceInterface = () => {
@@ -236,9 +220,7 @@ export default class LoginPage extends Component<any>{
             onChange={this.handleChange.bind(this, 'validationNumber')}
           />
         </View>
-        <AtButton type='primary' size='small' onClick={() => {
-          this.sureLogin()
-        }}>登录</AtButton>
+        <AtButton type='primary' size='small' onClick={this.sureLogin}>登录</AtButton>
       </View>
     )
   }
