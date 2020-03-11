@@ -91,6 +91,7 @@ export default class NewPage extends Component<Props>{
         },
         emptyAvatar: res.data.emptyAvatar
       })
+      console.log(res.data.emptyAvatar,'45123')
       let myData: any = this.state.list
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
