@@ -173,7 +173,7 @@ export const getUserInfo = () => {
   let type = getBrowserType();
   if (type == 'wechat'){
     encodeURIComponent(from);
-    let url = USER_API + 'v1/user/auth/auth_h5?code_id=0&from='+from
+    let url = USER_API + 'v1/user/auth/get_wx_user_info?code_id=0&from='+from
     // if(process.env.NODE_ENV == 'test'){
     //   url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
     //   // url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
@@ -191,7 +191,7 @@ export const getUserInfo = () => {
 
       // 新版授权
       // let url = process.env.ALIPAY_LOGIN_URL + 'v1/user/auth/auth_ali?code_id=227&from='+ from
-      let url = USER_API + 'v1/user/auth/auth_ali?code_id=227&from='+ from
+      let url = USER_API + 'v1/user/auth/get_ali_user_info?code_id=227&from='+ from
       url = encodeURIComponent(url);
       let urls = AUTH_LOGIN_URL + 'ali.html?appid='+ ALI_APPID +'&redirect_uri='+url+'&scope=auth_user&state=STATE'
       return window.location.href = urls;
