@@ -43,17 +43,33 @@ export default class Order extends Component {
     lengthbull4: true,
     scrollTop: 0,
 
-    no_phone_status:false
+    no_phone_status: false
   };
 
-  componentDidMount() {
+  componentDidShow() {
+    let that = this;
     let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bind_success') {
       Taro.showLoading({
         title: "loading",
         mask: true
       });
-      this.getData1()
+      this.setState({
+        current: 0,
+        page1: 1,
+        page2: 1,
+        page3: 1,
+        page4: 1,
+        coupon: [],
+        coupon1: [],
+        coupon2: [],
+        coupon3: [],
+        coupon4: [],
+        lengthbull1: true,
+        lengthbull2: true,
+        lengthbull3: true,
+        lengthbull4: true,
+      }, () => { that.getData1() })
       return
     }
     this.setState({ no_phone_status: true })
@@ -278,7 +294,7 @@ export default class Order extends Component {
   }
 
   render() {
-    const { no_phone_status }=this.state
+    const { no_phone_status } = this.state
     return (
       <View className="orders flex column"  >
         {
@@ -288,7 +304,7 @@ export default class Order extends Component {
             <AtButton className="three" onClick={() => {
               Taro.navigateTo({ url: '/pages/my/login_page/index' })
             }}>去登录</AtButton>
-          </View>:null
+          </View> : null
         }
         {
           this.state._codeshow ?
