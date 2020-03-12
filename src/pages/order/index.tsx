@@ -324,6 +324,7 @@ export default class Order extends Component {
             <View className="two">登录后才可以查看登录信息哦</View>
             <AtButton className="three" onClick={() => {
               Taro.navigateTo({ url: '/pages/my/login_page/index' })
+              Taro.setStorageSync('ql_href', location.href)
             }}>去登录</AtButton>
           </View> : null
         }
