@@ -110,7 +110,7 @@ export default class LoginPage extends Component<any>{
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
-                    location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+                    location.href = USER_API + 'v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
                   }, 1000);
                 }
               })
@@ -124,7 +124,7 @@ export default class LoginPage extends Component<any>{
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
-                    location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+                    location.href = USER_API + 'v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
                   }, 1000);
                 }
               })
@@ -141,7 +141,7 @@ export default class LoginPage extends Component<any>{
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
-                    location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+                    location.href = USER_API + 'v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
                   }, 1000);
                 }
               })
