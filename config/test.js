@@ -24,7 +24,7 @@ module.exports = {
     AUTH_LOGIN_URL: '"https://wxauth.tdianyi.com/"',
     USER_API: '"https://release.usercenter.tdianyi.com/"',
     WX_APPID: "'wxecdd282fde9a9dfd'",
-    ALI_APPID: "'2017111509949310'",
+    ALI_APPID: "'2018080960968490'",
 
     GROUP_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/group/group?id="',
     APPRE_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/appreciation/appreciation?id="',
