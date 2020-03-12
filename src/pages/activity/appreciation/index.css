@@ -2,8 +2,8 @@
   width: 100%;
   height: auto;
   padding-bottom: 110px;
+  background: #ededed;
 }
-
 .d_appre .group_head_bottom_share {
   margin-left: 0;
   margin-right: 0;
@@ -28,13 +28,11 @@
   width: 170px;
   line-height: 1;
 }
-
 .d_appre .group_head_bottom_share .shareimg {
   height: 35px;
   width: 35px;
   margin-right: 10px;
 }
-
 .d_appre .appre_head_activityTitle {
   width: 100%;
   min-height: 125px;
@@ -43,7 +41,6 @@
   padding: 24px 24px 0 24px;
   background: #fff;
 }
-
 .d_appre .appre_head_activityTitle .appre_head_activityTitle_title {
   min-height: 60px;
   height: auto;
@@ -51,41 +48,34 @@
   font-weight: bold;
   line-height: 1.2;
 }
-
 .d_appre .appre_head_activityTitle .appre_head_activityTitle_time {
   font-size: 24px;
   color: #999999;
 }
-
 .d_appre .test-h {
   width: 100%;
   height: 415px;
 }
-
 .d_appre .test-h .demo-text {
   width: 100%;
   height: 100%;
 }
-
 .d_appre .test-h .demo-text .demo-text-Img {
   width: 100%;
   height: 100%;
 }
-
 .d_appre .appre_hd {
   padding: 24px 24px 0 24px;
   width: 100%;
   box-sizing: border-box;
   background: #fff;
 }
-
 .d_appre .appre_hd .appre_head {
   width: 100%;
   height: auto;
   box-sizing: border-box;
   position: relative;
 }
-
 .d_appre .appre_hd .appre_head .appre_head_ticket {
   width: 100%;
   height: 220px;
@@ -96,7 +86,6 @@
   border-radius: 8px;
   position: relative;
 }
-
 .d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_circle1 {
   width: 30px;
   height: 30px;
@@ -107,7 +96,6 @@
   top: 50%;
   margin-top: -15px;
 }
-
 .d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_circle2 {
   width: 30px;
   height: 30px;
@@ -118,7 +106,6 @@
   top: 50%;
   margin-top: -15px;
 }
-
 .d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_left {
   height: 100%;
   text-align: left;
@@ -127,26 +114,44 @@
   flex-direction: column;
   align-items: center;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_left .appre_head_left_pricebox {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_left
+  .appre_head_left_pricebox {
   text-align: center;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_left .appre_head_left_pricebox .appre_head_left_pricebox_msg {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_left
+  .appre_head_left_pricebox
+  .appre_head_left_pricebox_msg {
   height: 30px;
   font-size: 30px;
   font-weight: bold;
   line-height: 1;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_left .appre_head_left_pricebox .appre_head_left_pricebox_price {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_left
+  .appre_head_left_pricebox
+  .appre_head_left_pricebox_price {
   height: 80px;
   font-size: 60px;
   font-weight: bold;
   line-height: 80px;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_left .appre_head_left_pricebox_info {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_left
+  .appre_head_left_pricebox_info {
   font-size: 30px;
   padding: 5px 20px;
   line-height: 1;
@@ -155,7 +160,6 @@
   display: inline-block;
   border-radius: 8px;
 }
-
 .d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_right {
   width: 50%;
   height: 100%;
@@ -166,37 +170,47 @@
   align-items: flex-end;
   justify-content: flex-end;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_right .appre_head_right_type {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_right
+  .appre_head_right_type {
   padding: 5px 10px;
   line-height: 1;
   background: #fff;
-  color: #FE7450;
-  border: #FE7450 1px solid;
+  color: #fe7450;
+  border: #fe7450 1px solid;
   border-radius: 8px;
   font-size: 25px;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_right .appre_head_right_total {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_right
+  .appre_head_right_total {
   margin: 10px 0;
   text-align: right;
   color: #666666;
   font-size: 30px;
   line-height: 1;
 }
-
-.d_appre .appre_hd .appre_head .appre_head_ticket .appre_head_right .appre_head_right_days {
+.d_appre
+  .appre_hd
+  .appre_head
+  .appre_head_ticket
+  .appre_head_right
+  .appre_head_right_days {
   text-align: right;
   color: #999999;
   font-size: 30px;
 }
-
 .d_appre .appre_hd .appre_head_bottom {
   height: 90px;
   padding: 20px 40px 0 0;
   box-sizing: border-box;
 }
-
 .d_appre .appre_hd .appre_head_bottom .appre_head_bottom_gift {
   float: left;
   border: #fc4833 1px solid;
@@ -208,7 +222,6 @@
   box-sizing: border-box;
   margin-right: 18px;
 }
-
 .d_appre .appre_hd .appre_head_bottom .appre_head_bottom_list {
   float: left;
   color: #fb7968;
@@ -219,7 +232,6 @@
   box-sizing: border-box;
   margin-right: 18px;
 }
-
 .d_appre .appre_hd .appre_head_bottom .appre_head_bottom_share {
   float: right;
   color: #613f04;
@@ -229,25 +241,25 @@
   padding: 10px 25px;
   box-sizing: border-box;
 }
-
-.d_appre .appre_hd .appre_head_bottom .appre_head_bottom_share .appre_head_bottom_shareimg {
+.d_appre
+  .appre_hd
+  .appre_head_bottom
+  .appre_head_bottom_share
+  .appre_head_bottom_shareimg {
   height: 35px;
   width: 35px;
   margin-right: 10px;
   vertical-align: bottom;
 }
-
 .d_appre .appre_gift {
   padding: 30px 24px;
   background: #fff;
   margin-top: 20px;
 }
-
 .d_appre .appre_gift .appre_gift_titlebox {
   height: 40px;
   width: 100%;
 }
-
 .d_appre .appre_gift .appre_gift_titlebox .appre_gift_title {
   height: 100%;
   vertical-align: bottom;
@@ -258,7 +270,6 @@
   text-align: left;
   color: #000;
 }
-
 .d_appre .appre_gift .appre_gift_titlebox .appre_gift_Imagelist {
   height: 100%;
   vertical-align: bottom;
@@ -267,19 +278,20 @@
   text-align: right;
   color: #ff7a6b;
 }
-
 .d_appre .appre_gift .appre_gift_giftinfo {
   height: 75px;
   font-size: 25px;
   text-align: left;
   line-height: 75px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-
 .d_appre .appre_gift .appre_gift_giftmsgbox {
   height: 40px;
   margin-bottom: 20px;
 }
-
 .d_appre .appre_gift .appre_gift_giftmsgbox .appre_gift_giftmsg {
   padding: 8px 15px;
   line-height: 1;
@@ -289,18 +301,15 @@
   background: #fde8e5;
   border-radius: 8px;
 }
-
 .d_appre .appre_gift .appre_gift_giftlist {
   width: 100%;
   height: auto;
 }
-
 .d_appre .appre_gift .appre_gift_giftlist .appre_gift_giftlistImg {
   width: 100%;
   border-radius: 8px;
   height: auto;
 }
-
 .d_appre .appre_process {
   height: 85px;
   margin: 7px 0;
@@ -308,7 +317,6 @@
   background: #fff;
   justify-content: center;
 }
-
 .d_appre .appre_process .appre_process_list {
   box-sizing: border-box;
   width: 130px;
@@ -317,7 +325,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .d_appre .appre_process .appre_process_list .appre_process_list_Image {
   vertical-align: middle;
   width: 45px;
@@ -326,7 +333,6 @@
   background: #fa5d49;
   border-radius: 22.5px;
 }
-
 .d_appre .appre_process .appre_process_list .appre_process_list_msg {
   vertical-align: middle;
   width: 50px;
@@ -340,7 +346,6 @@
   justify-content: center;
   color: #7a7a7a;
 }
-
 .d_appre .appre_process .appre_process_list .appre_process_list_icon {
   vertical-align: middle;
   text-align: center;
@@ -352,33 +357,32 @@
   align-items: flex-end;
   justify-content: center;
 }
-
-.d_appre .appre_process .appre_process_list .appre_process_list_icon .appre_process_list_icon_tri {
+.d_appre
+  .appre_process
+  .appre_process_list
+  .appre_process_list_icon
+  .appre_process_list_icon_tri {
   height: 0;
   width: 0;
   box-sizing: border-box;
   border: 15px solid;
   border-color: transparent transparent transparent #c4c4c4;
 }
-
 .d_appre .appre_process2 {
   width: 100%;
   height: 90px;
   margin: 20px 0;
   padding: 0;
 }
-
 .d_appre .appre_process2 .appre_process2_Image {
   width: 100%;
   height: 100%;
 }
-
 .d_appre .appre_rule {
   background: #fff;
   padding: 24px;
   margin-bottom: 20px;
 }
-
 .d_appre .appre_rule .appre_rule_title {
   height: 60px;
   text-align: left;
@@ -388,12 +392,10 @@
   font-weight: bold;
   columns: #000;
 }
-
 .d_appre .appre_rule .appre_rule_time {
   height: 50px;
   width: 100%;
 }
-
 .d_appre .appre_rule .appre_rule_time .appre_rule_time_key {
   height: 40px;
   float: left;
@@ -405,7 +407,6 @@
   box-sizing: border-box;
   font-size: 25px;
 }
-
 .d_appre .appre_rule .appre_rule_time .appre_rule_time_data {
   float: left;
   height: 40px;
@@ -414,13 +415,11 @@
   padding-top: 10px;
   box-sizing: border-box;
 }
-
 .d_appre .appre_rule .appre_rule_list {
   width: 100%;
   min-height: 50px;
   overflow: hidden;
 }
-
 .d_appre .appre_rule .appre_rule_list .appre_rule_list_key {
   height: 40px;
   width: 165px;
@@ -432,19 +431,20 @@
   box-sizing: border-box;
   font-size: 25px;
 }
-
 .d_appre .appre_rule .appre_rule_list .appre_rule_list_data {
   height: auto;
   margin-left: 165px;
 }
-
-.d_appre .appre_rule .appre_rule_list .appre_rule_list_data .appre_rule_list_msg {
+.d_appre
+  .appre_rule
+  .appre_rule_list
+  .appre_rule_list_data
+  .appre_rule_list_msg {
   font-size: 25px;
   line-height: 30px;
   padding-top: 10px;
   box-sizing: border-box;
 }
-
 .d_appre .appre_rule .appre_rule_list_more {
   width: 100%;
   height: 65px;
@@ -454,14 +454,12 @@
   justify-content: center;
   align-items: center;
 }
-
 .d_appre .setMeal_store {
   height: 315px;
   background: #f4f4f4;
   border: none;
   margin-bottom: 100px;
 }
-
 .d_appre .setMeal_store .setMeal_store_box {
   width: 100%;
   height: 100%;
@@ -469,7 +467,6 @@
   padding: 23px 40px 28px 30px;
   box-sizing: border-box;
 }
-
 .d_appre .setMeal_store .setMeal_store_box .setMeal_store_title {
   height: 60px;
   text-align: left;
@@ -477,34 +474,47 @@
   font-size: 40px;
   line-height: 1;
 }
-
 .d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox {
   height: 115px;
   width: 100%;
   box-sizing: border-box;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_Image {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_storebox
+  .setMeal_store_Image {
   height: 115px;
   width: 115px;
   overflow: hidden;
   border-radius: 8px;
   float: left;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_Image .setMeal_store_img {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_storebox
+  .setMeal_store_Image
+  .setMeal_store_img {
   width: 100%;
   height: 100%;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_msg {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_storebox
+  .setMeal_store_msg {
   width: 500px;
   padding: 0 0 15px 25px;
   box-sizing: border-box;
   float: left;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_msg .setMeal_store_name {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_storebox
+  .setMeal_store_msg
+  .setMeal_store_name {
   height: 50px;
   font-size: 35px;
   font-weight: bold;
@@ -514,14 +524,21 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_msg .setMeal_store_price {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_storebox
+  .setMeal_store_msg
+  .setMeal_store_price {
   font-size: 24px;
   text-align: left;
   color: #666666;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_storebox .setMeal_store_icon {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_storebox
+  .setMeal_store_icon {
   height: 100%;
   width: 40px;
   box-sizing: border-box;
@@ -529,7 +546,6 @@
   padding-top: 30px;
   float: right;
 }
-
 .d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox {
   width: 100%;
   height: 80px;
@@ -538,27 +554,43 @@
   display: flex;
   line-height: 40px;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_distance {
   width: 115px;
   position: relative;
   float: left;
   border-right: 1px #ccc solid;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance .setMeal_store_distance_Image {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_distance
+  .setMeal_store_distance_Image {
   width: 30px;
   height: 40px;
   position: absolute;
   left: 0;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance .setMeal_store_distance_Image .setMeal_store_distance_AddressImg {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_distance
+  .setMeal_store_distance_Image
+  .setMeal_store_distance_AddressImg {
   width: 30px;
   height: 40px;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_distance .setMeal_store_distance_info {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_distance
+  .setMeal_store_distance_info {
   height: 40px;
   position: absolute;
   left: 30px;
@@ -566,8 +598,11 @@
   text-align: center;
   font-size: 18px;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_address {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_address {
   flex: 1;
   padding: 0 16px;
   overflow: hidden;
@@ -575,22 +610,28 @@
   white-space: nowrap;
   font-size: 26px;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_mobile {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_mobile {
   width: 60px;
   height: 40px;
   padding-left: 30px;
   float: right;
   border-left: 1px #ccc solid;
 }
-
-.d_appre .setMeal_store .setMeal_store_box .setMeal_store_addressbox .setMeal_store_mobile .setMeal_store_MobileImg {
+.d_appre
+  .setMeal_store
+  .setMeal_store_box
+  .setMeal_store_addressbox
+  .setMeal_store_mobile
+  .setMeal_store_MobileImg {
   width: 30px;
   height: 40px;
   float: right;
 }
-
-.d_appre .choose_postage {
+.d_appre .choosePostage {
   height: 55px;
   background: #fff;
   position: fixed;
@@ -600,8 +641,7 @@
   line-height: 55px;
   padding-left: 55px;
 }
-
-.d_appre .choose_postage .choose {
+.d_appre .choosePostage .choose {
   width: 32px;
   height: 32px;
   position: absolute;
@@ -609,25 +649,20 @@
   left: 20px;
   transform: translateY(-50%);
 }
-
-.d_appre .choose_postage .lbmsg {
+.d_appre .choosePostage .lbmsg {
   width: 500px;
   padding: 0;
   display: inline-block;
 }
-
-.d_appre .choose_postage .lbmsg .at-noticebar {
+.d_appre .choosePostage .lbmsg .at-noticebar {
   padding-left: 0;
 }
-
-.d_appre .choose_postage .lbmsg .at-noticebar {
+.d_appre .choosePostage .lbmsg .at-noticebar {
   background: #fff;
 }
-
-.d_appre .choose_postage .lbmsg .at-noticebar {
+.d_appre .choosePostage .lbmsg .at-noticebar {
   color: #000;
 }
-
 .d_appre .paymoney_box {
   height: 115px;
   position: fixed;
@@ -638,7 +673,6 @@
   box-sizing: border-box;
   padding: 20px 28px;
 }
-
 .d_appre .paymoney_box .paymoney_price {
   width: 450px;
   height: 55px;
@@ -647,7 +681,6 @@
   justify-content: flex-start;
   margin-top: 15px;
 }
-
 .d_appre .paymoney_box .paymoney_price .paymoney_price_icon {
   font-size: 30px;
   float: left;
@@ -656,34 +689,36 @@
   justify-content: flex-end;
   color: #ee3131;
 }
-
 .d_appre .paymoney_box .paymoney_price .paymoney_price_num {
   font-size: 50px;
   color: #ee3131;
   float: left;
   line-height: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
-
 .d_appre .paymoney_box .paymoney_price .paymoney_price_info {
   margin-left: 15px;
   font-size: 50px;
   color: #ee3131;
   width: 203px;
   line-height: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
-
 .d_appre .paymoney_box .paymoney_buynow {
   width: 225px;
   height: 75px;
   line-height: 75px;
   float: right;
   border-radius: 37.5px;
-  background: linear-gradient(90deg, #FE7450, #FF2614);
+  background: linear-gradient(90deg, #fe7450, #ff2614);
   color: #fff;
   text-align: center;
   font-size: 30px;
 }
-
 .d_appre .paymoney_box .paymoney_buynow_no {
   width: 225px;
   height: 75px;
@@ -695,7 +730,6 @@
   text-align: center;
   font-size: 30px;
 }
-
 .d_appre .share_mask {
   background: rgba(0, 0, 0, 0.7);
   height: 100vh;
@@ -704,14 +738,12 @@
   z-index: 999;
   top: 0;
 }
-
 .d_appre .share_mask .share_box {
   width: 450px;
   height: 226px;
   position: absolute;
   right: 0;
 }
-
 .d_appre .share_mask .share_text {
   position: absolute;
   right: 138px;
@@ -724,11 +756,9 @@
   text-align: right;
   color: #fabe1a;
 }
-
 .d_appre .share_mask .text_top {
   bottom: 60px;
 }
-
 .d_appre .share_mask .share_img {
   position: absolute;
   right: 0;

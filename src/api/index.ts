@@ -1,4 +1,5 @@
 import http from "./http"
+import userHttp from "@/services/userRequest"
 
 interface location {
   xpoint: number;
@@ -262,4 +263,50 @@ export const getOrderQrcode = (id) =>
 		data: {
 			id:id
 		}
-	})
+  })
+  
+/* 
+  会员中心    获取短信验证码
+*/
+export const getShortNote = (data) => {
+  return userHttp({
+    url: 'v1/user/auth/verifyCode',
+    method: "POST",
+    data
+  })
+}
+
+/* 
+   会员中心 手机号登录
+  */
+export const loginPhone = (data) => {
+  return userHttp({
+    url: 'v1/user/auth/login',
+    method: "PUT",
+    data
+  })
+}
+
+/* 
+ 会员中心  h5确定同步合并手机号
+*/
+export const loginMerge = (data) => {
+  return userHttp({
+    url: 'v1/user/user/merge_user',
+    method: "PUT",
+    data
+  })
+}
+
+/*
+  会员中心  切换账号登录
+*/
+export const updateLoginPhone = (data) => {
+  return userHttp({
+    url: 'v1/user/auth/switch_user',
+    method: "POST",
+    data
+  })
+}
+
+ 

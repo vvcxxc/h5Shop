@@ -19,23 +19,6 @@ export const getCode = (): Promise<any> => {
 }
 
 /**
- * 获取用户信息
- */
-export const getUserInfo = (): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    Taro.getUserInfo({
-      withCredentials: true,
-      success(res) {
-        return resolve(res)
-      },
-      fail(err) {
-        return reject(err)
-      }
-    })
-  })
-}
-
-/**
  * 获取open_id
  */
 interface MiniProgramConfig {
@@ -67,54 +50,6 @@ export const getOpenid = (code: string): Promise<any> => {
   })
 }
 
-/**
- * 获取定位信息
- * longitude: 经度,
- * latitude: 纬度,
- * ...
- */
-// interface Location {
-//   longitude: number;
-//   latitude: number;
-// }
-// export const getLocation = (): Promise<Location> => {
-//   return new Promise((resolve, reject) => {
-//     const location = Taro.getStorageSync("location")
-//     if (location) return resolve(location)
-//     Taro.getSetting({
-//       success({ authSetting }) {
-//         const flagLocation = authSetting["scope.userLocation"]
-//         if (flagLocation) {
-//           Taro.getLocation({
-//             type: "wgs84",
-//             success(res) {
-//               Taro.setStorageSync("location", res)
-//               return resolve(res)
-//             },
-//             fail(err) {
-//               return reject(err)
-//             }
-//           })
-//         } else if (flagLocation === false) {
-//           const errMsg = "user refused to location authorization, try authorization again please."
-//           return reject(errMsg)
-//         } else {
-//           Taro.getLocation({
-//             type: "wgs84",
-//             // @ts-ignore
-//             success(res) {
-//               Taro.setStorageSync("location", res)
-//               return resolve(res)
-//             },
-//             fail(err) {
-//               return reject(err)
-//             }
-//           })
-//         }
-//       }
-//     })
-//   })
-// }
 export const getLocation = () => {
   let type = getBrowserType();
   if (type == 'wechat') {
@@ -223,4 +158,42 @@ export const getLocation = () => {
     })
   }
 
+}
+
+const AUTH_LOGIN_URL = process.env.AUTH_LOGIN_URL
+const USER_API = process.env.USER_API
+const WX_APPID = process.env.WX_APPID
+const ALI_APPID = process.env.ALI_APPID
+export const getUserInfo = () => {
+  let from = window.location.href
+  if(from.indexOf('&from') > -1){
+    let arr = from.split('&from')
+    from = arr[0]
+  }
+  let type = getBrowserType();
+  if (type == 'wechat'){
+    encodeURIComponent(from);
+    let url = USER_API + 'v1/user/auth/get_wx_user_info?code_id=0&from='+from
+    // if(process.env.NODE_ENV == 'test'){
+    //   url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
+    //   // url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
+    // }
+    url = encodeURIComponent(url);
+    let urls = AUTH_LOGIN_URL + 'index_xcx.html?appid='+ WX_APPID +'&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&connect_redirect=1&state=STATE&state=STATE';
+    // let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
+    return window.location.href = urls;
+  }else{
+      // let url = BASIC_API +"ali/getZfbUserInfo"; // 后台接口
+      from = encodeURIComponent(from); // 当前页面
+      // url = encodeURIComponent(url);
+
+      // window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=227&url='+url;
+
+      // 新版授权
+      // let url = process.env.ALIPAY_LOGIN_URL + 'v1/user/auth/auth_ali?code_id=227&from='+ from
+      let url = USER_API + 'v1/user/auth/get_ali_user_info?code_id=227&from='+ from
+      url = encodeURIComponent(url);
+      let urls = AUTH_LOGIN_URL + 'ali.html?appid='+ ALI_APPID +'&redirect_uri='+url+'&scope=auth_user&state=STATE'
+      return window.location.href = urls;
+  }
 }

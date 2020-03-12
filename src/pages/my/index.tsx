@@ -1,24 +1,24 @@
 import Taro, { Component, Config } from "@tarojs/taro"
-// import { View } from "@tarojs/components";
-import { Block, View, Image, Text, Navigator } from "@tarojs/components"
+import { View, Image, Text } from "@tarojs/components"
 import request from '@/services/request'
+import LandingBounced from '@/components/landing_bounced'
+import { getUserInfo } from '@/utils/getInfo';
+import Cookie from 'js-cookie'
 import "./index.styl"
 
 type Props = any
 
-interface Cell {
-  text: string;
-  icon: string;
-  path: string;
-}
-
 interface State {
+  emptyAvatar: String,
+  settingShow: Boolean;
   cells: any;
   userInfo: any;
   user_img: string;
   data: string,
   list: Object[],
-  userData: Object
+  userData: Object,
+  showBounced: boolean,
+  needLogin: boolean
 }
 
 export default class NewPage extends Component<Props>{
@@ -28,6 +28,8 @@ export default class NewPage extends Component<Props>{
   }
 
   state: State = {
+    emptyAvatar: 'N',
+    settingShow: false,
     cells: {},
     userInfo: {},
     userData: {},
@@ -36,18 +38,18 @@ export default class NewPage extends Component<Props>{
     list: [
       {
         des: '我的订单',
-        prompt: '有快到期的券',
+        prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/XWWfhzTJEXwsB6DKczbKBNRpbDASRDsW.png',
         path: "/pages/order/index",
       }
       , {
         des: '我的礼品',
-        prompt: '有正在配送的礼品',
+        prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/BjNjHfJ2FstMaB4PjNbCChCS6D2FDJb5.png',
         path: "/activity-pages/my-welfare/pages/gift/welfare.gift"
       }, {
         des: '我参与的活动',
-        prompt: '有正在进行的拼团活动',
+        prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/r55CxTJ4AAkmZFHRESeFs2GAFDCJnW5Z.png',
         path: "/activity-pages/my-activity/my.activity",
       },
@@ -63,12 +65,20 @@ export default class NewPage extends Component<Props>{
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/FMMGCc7ecQ38FT3tYct45NEfBFJbhRFz.png',
         path: "/activity-pages/Shipping-address/index",
       }
-    ]
+    ],
+    showBounced: false,//登录弹框
+    needLogin :false
   }
 
 
 
-  componentDidMount() {
+  componentDidShow() {
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
+      this.setState({ settingShow: true, needLogin: false })
+    } else {
+      this.setState({ settingShow: false, needLogin: true })
+    }
     this.handleGetUserinfo()
     request({
       url: 'v3/user/home_index'
@@ -78,20 +88,22 @@ export default class NewPage extends Component<Props>{
         userData: {
           head_img: res.data.avatar,
           user_name: res.data.user_name
-        }
+        },
+        emptyAvatar: res.data.emptyAvatar
       })
       let myData: any = this.state.list
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
       myData[2].prompt = res.data.activity_msg
-      this.setState({
-        list: myData
-      })
-      // console.log(res,'res')
-      // this.setState({
-      //   user_img: res.data.avatar
-      // })
-
+      this.setState({ list: myData })
+      if(this.state.needLogin){
+        this.setState({
+          userData: {
+            head_img: 'http://oss.tdianyi.com/front/ek7cPQsFbEt7DXT7E7B6Xaf62a46SCXw.png',
+            user_name: ''
+          },
+        })
+      }
     })
   }
 
@@ -115,24 +127,57 @@ export default class NewPage extends Component<Props>{
 
   // 跳转路径
   jumpData = (data: string) => {
+    let phone_status = Cookie.get("phone_status")
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
+      Taro.navigateTo({ url: data })
+      return
+    }
+    this.setState({ showBounced: true })
+  }
+
+  setPersonalInfo = () => {
     Taro.navigateTo({
-      url: data
+      url: '/activity-pages/personal/index'
     })
   }
+
+  // 手动登录跳转
+  handLogin = () => {
+    Taro.setStorageSync('ql_href', location.href)
+    Taro.navigateTo({ url: '/pages/my/login_page/index' })
+  }
+
   render() {
+    const { showBounced, needLogin} = this.state
     return (
       <View className='newPage'>
+        {
+          this.state.settingShow ?
+            <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
+            : null
+        }
         <View className='newPage_head'>
           <View className="img_box">
             <Image src={this.state.userData.head_img} />
           </View>
           <View className='userName'>{this.state.userData.user_name}</View>
-          {/* <View className='giftMoney'>
-            <Text className='white'>礼品币</Text>
-            <Text className='yellow'>27</Text>
-          </View> */}
+          {
+            this.state.emptyAvatar == 'Y' && this.state.settingShow ? <View className='setPersonalInfoBox' onClick={getUserInfo}  >
+              <View className='setPersonalInfo' >一键设置头像/昵称</View>
+            </View> : null
+          }
+          {
+            needLogin ?   <View>
+            <View className='phone_text'>登录手机号，同步全渠道订单与优惠券</View>
+            <View className='setPersonalInfoBox' onClick={this.handLogin} >
+              <View className='setPersonalInfo' >登录</View>
+            </View>
+          </View>:null
+        }
         </View>
-
+        {
+          console.log(showBounced,'eee4e')
+        }
         <View className="newPage_content">
           <View className="content_my">
             {
@@ -153,10 +198,11 @@ export default class NewPage extends Component<Props>{
             }
           </View>
         </View>
-
-        {/* <View className="newPage_foot">
-          客服电话：10101010 <Text className='left'>（服务时间：9：00~20：00）</Text>
-        </View> */}
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
       </View>
     )
   }

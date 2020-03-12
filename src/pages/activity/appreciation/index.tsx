@@ -9,7 +9,7 @@ import { getLocation } from "@/utils/getInfo";
 import share from '../../../assets/share.png';
 import AddressImg from '../../../assets/address.png';
 import MobileImg from '../../../assets/dianhua.png';
-import Zoom from '../../../components/zoom/index';
+import LandingBounced from '@/components/landing_bounced'//登录弹框
 import './index.scss';
 
 interface Props {
@@ -20,8 +20,6 @@ let interval;
 export default class Appre extends Component<Props>{
   state = {
     ruleMore: false,
-    imgZoom: false,
-    imgZoomSrc: '',
     xPoint: '',
     yPoint: '',
     imagesCurrent: 0,
@@ -61,15 +59,14 @@ export default class Appre extends Component<Props>{
     isPostage: true,
     isShare: false,
 
-    isFromShare: false
+    isFromShare: false,
+    showBounced: false
   };
-  componentDidShow() {
-    this.toShare();
-  }
+
   componentWillUnmount() {
     clearInterval(interval);
   }
-  componentDidMount = () => {
+  componentDidShow() {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) {
       this.setState({
@@ -318,6 +315,7 @@ export default class Appre extends Component<Props>{
         title: "支付出错",
         icon: "none"
       });
+      return;
     }
     let datas = {}
     if (_type == 1) {
@@ -395,7 +393,11 @@ export default class Appre extends Component<Props>{
                   }, 500);
 
                 } else {
-                  //微信支付失败
+                  //微信支付失败 
+                  Taro.showToast({
+                    title: "支付出错",
+                    icon: "none"
+                  });
                 }
               }
             );
@@ -433,6 +435,10 @@ export default class Appre extends Component<Props>{
                 }, 500);
               } else {
                 //支付宝支付失败
+                Taro.showToast({
+                  title: "支付出错",
+                  icon: "none"
+                });
               }
             })
           } else {
@@ -447,6 +453,11 @@ export default class Appre extends Component<Props>{
   }
 
   goToaConfirm = (e) => {
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      this.setState({ showBounced: true })
+      return
+    }
     if (this.state.data.gift_id) {
       Taro.navigateTo({
         url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
@@ -454,7 +465,6 @@ export default class Appre extends Component<Props>{
     } else {
       this.payment()
     }
-
   }
 
   /**
@@ -468,8 +478,15 @@ export default class Appre extends Component<Props>{
 
   render() {
     const { images, description } = this.state.data;
+    const { showBounced } = this.state
     return (
       <View className="d_appre" >
+
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
 
         <View className="group_head_bottom_share" onClick={this.buttonToShare.bind(this)}>
           <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
@@ -483,10 +500,7 @@ export default class Appre extends Component<Props>{
 
         {
           this.state.data.type == 0 && this.state.data.images.length > 0 ?
-            <View
-              onClick={() => {
-                this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
-              }}>
+            <View>
               <Swiper
                 onChange={(e) => {
                   this.setState({ imagesCurrent: e.detail.current })
@@ -554,9 +568,7 @@ export default class Appre extends Component<Props>{
                 }</View>
               </View>
               <View className="appre_gift_giftlist" >
-                <Image className="appre_gift_giftlistImg"
-                  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift_pic }) }}
-                  src={this.state.data.gift_pic} />
+                <Image className="appre_gift_giftlistImg" src={this.state.data.gift_pic} />
               </View>
             </View> : null
         }
@@ -678,14 +690,6 @@ export default class Appre extends Component<Props>{
             ) : null
           }
         </View>
-
-        <Zoom
-          src={this.state.imgZoomSrc}
-          showBool={this.state.imgZoom}
-          onChange={() => {
-            this.setState({ imgZoom: false })
-          }}
-        />
 
         {
           this.state.isShare == true ? (

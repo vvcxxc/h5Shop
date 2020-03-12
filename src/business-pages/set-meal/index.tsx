@@ -9,6 +9,8 @@ import MobileImg from '../../assets/dianhua.png'
 import AddressImg from '../../assets/address.png'
 import { getLocation } from "@/utils/getInfo"
 import { getBrowserType } from "@/utils/common";
+import LandingBounced from '@/components/landing_bounced'//登录弹框
+import Cookie from 'js-cookie'
 import wx from 'weixin-js-sdk';
 
 const share_url = process.env.SETMEAL_URL;
@@ -79,7 +81,9 @@ export default class SetMeal extends Component {
       total_fee: '',
 
       isFromShare: false
-    }]
+    }],
+
+    showBounced: false//登录弹框
   };
 
   componentDidShow() {
@@ -97,16 +101,13 @@ export default class SetMeal extends Component {
       title: 'loading',
       mask: true
     })
-    // console.log(this.$router.params)
     getLocation().then((res: any) => {
-      console.log(res)
       let xPoint = res.longitude;
       let yPoint = res.latitude;
       request({
         url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: xPoint || '', ypoint: yPoint || '' }
       })
         .then((res: any) => {
-          console.log(res);
           if (res.code != 200) {
             Taro.hideLoading()
             Taro.showToast({ title: '信息错误', icon: 'none' })
@@ -137,7 +138,6 @@ export default class SetMeal extends Component {
         url: 'v3/discount_coupons/' + this.$router.params.id, method: "GET", data: { xpoint: '', ypoint: '' }
       })
         .then((res: any) => {
-          console.log(res);
           if (res.code != 200) {
             Taro.hideLoading()
             Taro.showToast({ title: '信息错误', icon: 'none' })
@@ -210,7 +210,11 @@ export default class SetMeal extends Component {
   }
 
   handleClick = (id, e) => {
-    console.log(id)
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      this.setState({ showBounced: true })
+      return
+    }
     Taro.navigateTo({
       url: '../../business-pages/confirm-order/index?id=' + id
     })
@@ -318,8 +322,14 @@ export default class SetMeal extends Component {
   }
 
   render() {
+    const { showBounced } = this.state
     return (
       <View className="set-meal">
+        {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
         {
           this.state.keepCollect_bull ? <AtToast isOpened text={this.state.keepCollect_data} duration={2000} ></AtToast> : ""
         }

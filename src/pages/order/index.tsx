@@ -1,9 +1,10 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtIcon, AtButton } from 'taro-ui'
 import "taro-ui/dist/style/components/tabs.scss";
 import CashCoupon1 from "./cash-coupon1/index";
 import CashCoupon2 from "./cash-coupon2/index";
+import Cookie from 'js-cookie';
 import "./index.scss";
 import request from "../../services/request";
 
@@ -25,64 +26,12 @@ export default class Order extends Component {
     current: 0,//taro组件用的
     coupon: [],//taro组件用的
     coupon1: [
-      // {
-      //   coupons_log_id: "",
-      //   coupons_id: "",
-      //   create_time: "",
-      //   expiration: "",
-      //   coupons_name: "",
-      //   money: "",
-      //   suppliername: "",
-      //   image: "",
-      //   coupons_type: "",
-      //   confirm_time: "",
-      //   total_fee: "",
-      // }
     ],//4个tab的数据分开算
     coupon2: [
-      //   {
-      //   coupons_log_id: "",
-      //   coupons_id: "",
-      //   create_time: "",
-      //   expiration: "",
-      //   coupons_name: "",
-      //   money: "",
-      //   suppliername: "",
-      //   image: "",
-      //   coupons_type: "",
-      //   confirm_time: "",
-      //   total_fee: ""
-      // }
     ],
     coupon3: [
-      //   {
-      //   coupons_log_id: "",
-      //   coupons_id: "",
-      //   create_time: "",
-      //   expiration: "",
-      //   coupons_name: "",
-      //   money: "",
-      //   suppliername: "",
-      //   image: "",
-      //   coupons_type: "",
-      //   confirm_time: "",
-      //   total_fee: ""
-      // }
     ],
     coupon4: [
-      //   {
-      //   coupons_log_id: "",
-      //   coupons_id: "",
-      //   create_time: "",
-      //   expiration: "",
-      //   coupons_name: "",
-      //   money: "",
-      //   suppliername: "",
-      //   image: "",
-      //   coupons_type: "",
-      //   confirm_time: "",
-      //   total_fee: ""
-      // }
     ],
     page1: 1,
     page2: 1,
@@ -92,26 +41,39 @@ export default class Order extends Component {
     lengthbull2: true,
     lengthbull3: true,
     lengthbull4: true,
-    scrollTop: 0
+    scrollTop: 0,
+
+    no_phone_status:false
   };
 
-
   componentDidMount() {
-    Taro.showLoading({
-      title: "loading",
-      mask: true
-    });
-    this.getData1()
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
+      Taro.showLoading({
+        title: "loading",
+        mask: true
+      });
+      this.getData1()
+      return
+    }
+    this.setState({ no_phone_status: true })
   }
 
   // 滚动
   onPageScroll(e) {
+    if (this.state.no_phone_status) return
     this.setState({
       scrollTop: e.scrollTop
     })
   }
   // 下拉
   onPullDownRefresh() {
+    if (this.state.no_phone_status) {
+      setTimeout(() => {
+        Taro.stopPullDownRefresh();
+      }, 500);
+      return
+    }
     if (this.state.current == 0) {
       this.setState({
         page1: 1,
@@ -153,6 +115,7 @@ export default class Order extends Component {
   }
   // 触底
   onReachBottom() {
+    if (this.state.no_phone_status) return
     this.state.current == 0 ? this.getData1() : (
       this.state.current == 1 ? this.getData2() : (
         this.state.current == 2 ? this.getData3() : (
@@ -268,6 +231,9 @@ export default class Order extends Component {
   }
 
   handleClick0(value, e) {
+    if (this.state.no_phone_status) {
+      return
+    }
     this.setState({
       current: value
     }, () => {
@@ -312,9 +278,18 @@ export default class Order extends Component {
   }
 
   render() {
+    const { no_phone_status }=this.state
     return (
       <View className="orders flex column"  >
-
+        {
+          no_phone_status ? <View className="no_data">
+            <Image className="no_data_img" src={require('../../assets/order_no_data.png')} />
+            <View className="two">登录后才可以查看登录信息哦</View>
+            <AtButton className="three" onClick={() => {
+              Taro.navigateTo({ url: '/pages/my/login_page/index' })
+            }}>去登录</AtButton>
+          </View>:null
+        }
         {
           this.state._codeshow ?
             <View className="code_show" onClick={() => { this.setState({ _codeshow: false, _codeimg: '', _codeinfo: '' }) }} onTouchMove={() => { this.setState({ _codeshow: false, _codeimg: '', _codeinfo: '' }) }} >
@@ -333,7 +308,7 @@ export default class Order extends Component {
 
         <View>
           {
-            (this.state.current == 0 && this.state.coupon1.length == 0) ?
+            (!no_phone_status && this.state.current == 0 && this.state.coupon1.length == 0) ?
               <View className="msgBox">
                 <View className="imgBox">
                   <Image className="logo" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/sXMSERHX2BaZa23cDXwfQ8JymfZSaGip.png"} />
@@ -345,7 +320,7 @@ export default class Order extends Component {
                       url: '../../pages/index/index'
                     })
                   }}>去首页</View>
-              </View> : ((this.state.current == 1 && this.state.coupon2.length == 0) ? <View className="msgBox">
+              </View> : ((!no_phone_status && this.state.current == 1 && this.state.coupon2.length == 0) ? <View className="msgBox">
                 <View className="imgBox">
                   <Image className="logo" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TXNJyF2kydtBeKkitG4xpcRYhAHiiseK.png"} />
                 </View>
@@ -397,6 +372,7 @@ export default class Order extends Component {
             </View>
           </View>
         </View>
+
         {
           (this.state.current == 0 && this.state.coupon1.length > 0) ? <View className="tiket_box">
             {
