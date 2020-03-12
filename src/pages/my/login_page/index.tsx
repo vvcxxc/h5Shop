@@ -65,6 +65,8 @@ export default class LoginPage extends Component<any>{
           this.performTimer()//验证码发送成功 开始倒计时
         }
         Taro.showToast({ title: message, icon: 'none' })
+      }).catch(err => {
+        Taro.showToast({title: err.message, icon: 'none'})
       })
   }
 
