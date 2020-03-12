@@ -266,7 +266,7 @@ export const getOrderQrcode = (id) =>
   })
   
 /* 
-获取短信验证码
+  会员中心    获取短信验证码
 */
 export const getShortNote = (data) => {
   return userHttp({
@@ -277,7 +277,7 @@ export const getShortNote = (data) => {
 }
 
 /* 
-   手机号登录
+   会员中心 手机号登录
   */
 export const loginPhone = (data) => {
   return userHttp({
@@ -288,7 +288,7 @@ export const loginPhone = (data) => {
 }
 
 /* 
-  h5确定同步合并手机号
+ 会员中心  h5确定同步合并手机号
 */
 export const loginMerge = (data) => {
   return userHttp({
@@ -297,3 +297,16 @@ export const loginMerge = (data) => {
     data
   })
 }
+
+/*
+  会员中心  切换账号登录
+*/
+export const updateLoginPhone = (data) => {
+  return userHttp({
+    url: 'v1/user/auth/switch_user',
+    method: "POST",
+    data
+  })
+}
+
+ 

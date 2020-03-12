@@ -2,7 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro"
 import { Block, View, Text } from "@tarojs/components"
 import { AtInput, AtButton } from 'taro-ui'
 
-import { getShortNote, loginPhone, loginMerge } from '@/api/index'
+import { getShortNote, loginPhone, loginMerge, updateLoginPhone } from '@/api/index'
 import MergePrompt from './merge_prompt'
 import Cookie from 'js-cookie'
 import { getBrowserType } from '../../../utils/common';
@@ -21,7 +21,8 @@ export default class LoginPage extends Component<any>{
 
     time: 60,
     showTime: false,
-    prompt: false
+    prompt: false,
+    replace_interface:false // true使用更改手机接口， false 使用常规登录接口
   }
 
   componentDidMount() {
@@ -70,18 +71,26 @@ export default class LoginPage extends Component<any>{
   //确定登录
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
-    console.log(123444)
+    if (!phoneNumber) {
+      Taro.showToast({ title: '手机不能为空', duration: 2000,  icon: 'none'})
+      return
+    }
+    if (!validationNumber) {
+      Taro.showToast({ title: '验证码不能为空', duration: 2000, icon: 'none'})
+      return
+    }
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
+    encodeURIComponent(url)
     loginPhone({
       phone: phoneNumber,
       verify_code: validationNumber,
       from: type
     }).then(({ status_code,data }) => {
-      console.log(5234234)
         if (status_code == 200) {
           switch (data.status) {//成功登录
             case "binded":
+              console.log(1);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -91,6 +100,7 @@ export default class LoginPage extends Component<any>{
               })
               break;
             case "bind_success":
+              console.log(2);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -100,12 +110,28 @@ export default class LoginPage extends Component<any>{
               })
               break;
             case 'need_merge'://需要合并
+              console.log(3);
               this.setState({ prompt: true })
               break;
+            case 'need_switch'://跟换手机
+              console.log(4);
+              Taro.showToast({
+                title: '登录成功', duration: 2000, success: () => {
+                  setTimeout(() => {
+                    location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+                  }, 1000);
+                }
+              })
+              // setTimeout(() => {
+              //   location.href = USER_API + '/v1/user/auth/relogin?phone=' + phoneNumber + '&verify_code=' + validationNumber + '&url=' + url + '&from=' + type
+              // }, 1000);
+              break;
             case 'merge_fail'://自动合并失败
-              Taro.showToast({ title: '登录失败', duration: 2000, })
+              console.log(5);
+              Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
               break;
             case 'merge_success'://自动合并成功
+              console.log(6);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -119,7 +145,10 @@ export default class LoginPage extends Component<any>{
               break;
           }//end switch
         }//end if
-      }).catch(res => {})
+    }).catch(res => {
+      console.log('catch')
+      Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
+      })
   }
 
   // 确定合并手机
@@ -143,20 +172,27 @@ export default class LoginPage extends Component<any>{
             }
           })
         } else {
-          Taro.showToast({ title: '同步失败', duration: 2000 })
+          Taro.showToast({ title: '同步失败', duration: 2000, icon: 'none' })
         }
-      })
+    }).catch(res => {
+      Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
+    })
+  }
+
+  // 将登录接口改成需改手机号接口
+  replaceInterface = () => {
+    this.setState({ prompt: false})
   }
 
 
   render() {
-    const { time, prompt } = this.state
+    const { time, prompt, replace_interface } = this.state
     return (
       <View className='loginPage'>
         {
           prompt ? <MergePrompt
-            cancel={() => this.setState({ prompt: false })}
-            confirm={() => this.sureMerge()}
+            cancel={this.replaceInterface}
+            confirm={this.sureMerge}
           /> : null
         }
 

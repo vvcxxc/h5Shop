@@ -702,7 +702,7 @@ export default class Group extends Component<Props>{
   }
   goToaConfirm = (e) => {
     let phone_status = Cookie.get('phone_status')
-    if (phone_status != 'binded' && phone_status != 'bindsuccess') {//两者不等，需要登录
+    if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
       this.setState({ showBounced: true })
       return
     }

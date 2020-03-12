@@ -17,7 +17,8 @@ interface State {
   data: string,
   list: Object[],
   userData: Object,
-  showBounced: boolean
+  showBounced: boolean,
+  needLogin: boolean
 }
 
 export default class NewPage extends Component<Props>{
@@ -37,18 +38,18 @@ export default class NewPage extends Component<Props>{
     list: [
       {
         des: '我的订单',
-        prompt: '有快到期的券',
+        prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/XWWfhzTJEXwsB6DKczbKBNRpbDASRDsW.png',
         path: "/pages/order/index",
       }
       , {
         des: '我的礼品',
-        prompt: '有正在配送的礼品',
+        prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/BjNjHfJ2FstMaB4PjNbCChCS6D2FDJb5.png',
         path: "/activity-pages/my-welfare/pages/gift/welfare.gift"
       }, {
         des: '我参与的活动',
-        prompt: '有正在进行的拼团活动',
+        prompt: '',
         img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/r55CxTJ4AAkmZFHRESeFs2GAFDCJnW5Z.png',
         path: "/activity-pages/my-activity/my.activity",
       },
@@ -65,7 +66,8 @@ export default class NewPage extends Component<Props>{
         path: "/activity-pages/Shipping-address/index",
       }
     ],
-    showBounced: false//登录弹框
+    showBounced: false,//登录弹框
+    needLogin :false
   }
 
 
@@ -73,8 +75,10 @@ export default class NewPage extends Component<Props>{
   componentDidShow() {
     let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bind_success') {
-      this.setState({ settingShow: true })
-    } else { this.setState({ settingShow: false }) }
+      this.setState({ settingShow: true, needLogin: false })
+    } else {
+      this.setState({ settingShow: false, needLogin: true })
+    }
     this.handleGetUserinfo()
     request({
       url: 'v3/user/home_index'
@@ -116,8 +120,7 @@ export default class NewPage extends Component<Props>{
   // 跳转路径
   jumpData = (data: string) => {
     let phone_status = Cookie.get("phone_status")
-    console.log(phone_status, 'phone_status')
-    if (phone_status == 'binded' || phone_status == 'bindsuccess') {
+    if (phone_status == 'binded' || phone_status == 'bind_success') {
       Taro.navigateTo({ url: data })
       return
     }
@@ -130,8 +133,14 @@ export default class NewPage extends Component<Props>{
     })
   }
 
+  // 手动登录跳转
+  handLogin = () => {
+    Taro.setStorageSync('ql_href', location.href)
+    Taro.navigateTo({ url: '/pages/my/login_page/index' })
+  }
+
   render() {
-    const { showBounced } = this.state
+    const { showBounced, needLogin} = this.state
     return (
       <View className='newPage'>
         {
@@ -149,12 +158,15 @@ export default class NewPage extends Component<Props>{
               <View className='setPersonalInfo' >一键设置头像/昵称</View>
             </View> : null
           }
-          {/* <View className='giftMoney'>
-            <Text className='white'>礼品币</Text>
-            <Text className='yellow'>27</Text>
-          </View> */}
+          {
+            needLogin ?  <View className='setPersonalInfoBox'>
+              <View className='my_login' onClick={this.handLogin}>登录</View>
+            </View>:null
+        }
         </View>
-
+        {
+          console.log(showBounced,'eee4e')
+        }
         <View className="newPage_content">
           <View className="content_my">
             {
