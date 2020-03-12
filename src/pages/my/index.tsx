@@ -93,21 +93,23 @@ export default class NewPage extends Component<Props>{
       if (res.data.mobile) {
         this.setState({ settingShow: true, needLogin: false })
       } else {
-        this.setState({ settingShow: false, needLogin: true })
+        this.setState({ settingShow: false, needLogin: true },()=> {
+          if(this.state.needLogin){
+            this.setState({
+              userData: {
+                head_img: 'http://oss.tdianyi.com/front/ek7cPQsFbEt7DXT7E7B6Xaf62a46SCXw.png',
+                user_name: ''
+              },
+            })
+          }
+        })
       }
       let myData: any = this.state.list
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
       myData[2].prompt = res.data.activity_msg
       this.setState({ list: myData })
-      if(this.state.needLogin){
-        this.setState({
-          userData: {
-            head_img: 'http://oss.tdianyi.com/front/ek7cPQsFbEt7DXT7E7B6Xaf62a46SCXw.png',
-            user_name: ''
-          },
-        })
-      }
+
     })
   }
 
