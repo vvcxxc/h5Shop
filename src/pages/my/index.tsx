@@ -96,6 +96,14 @@ export default class NewPage extends Component<Props>{
       myData[1].prompt = res.data.gift_msg
       myData[2].prompt = res.data.activity_msg
       this.setState({ list: myData })
+      if(this.state.needLogin){
+        this.setState({
+          userData: {
+            head_img: 'http://oss.tdianyi.com/front/ek7cPQsFbEt7DXT7E7B6Xaf62a46SCXw.png',
+            user_name: ''
+          },
+        })
+      }
     })
   }
 
@@ -159,9 +167,12 @@ export default class NewPage extends Component<Props>{
             </View> : null
           }
           {
-            needLogin ?  <View className='setPersonalInfoBox'>
-              <View className='my_login' onClick={this.handLogin}>登录</View>
-            </View>:null
+            needLogin ?   <View>
+            <View className='phone_text'>登录手机号，同步全渠道订单与优惠券</View>
+            <View className='setPersonalInfoBox' onClick={this.handLogin} >
+              <View className='setPersonalInfo' >登录</View>
+            </View>
+          </View>:null
         }
         </View>
         {
