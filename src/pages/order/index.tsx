@@ -49,26 +49,51 @@ export default class Order extends Component {
   componentDidShow() {
     let that = this;
     let phone_status = Cookie.get('phone_status')
-    if (phone_status == 'binded' || phone_status == 'bind_success') {
-      this.setState({
-        current: 0,
-        page1: 1,
-        page2: 1,
-        page3: 1,
-        page4: 1,
-        coupon: [],
-        coupon1: [],
-        coupon2: [],
-        coupon3: [],
-        coupon4: [],
-        lengthbull1: true,
-        lengthbull2: true,
-        lengthbull3: true,
-        lengthbull4: true,
-      }, () => { that.getData1() })
-      return
-    }
-    this.setState({ no_phone_status: true })
+    request({
+      url: 'v3/user/home_index'
+    }).then((res: any) => {
+      if (res.data.mobile) {
+        this.setState({
+          current: 0,
+          page1: 1,
+          page2: 1,
+          page3: 1,
+          page4: 1,
+          coupon: [],
+          coupon1: [],
+          coupon2: [],
+          coupon3: [],
+          coupon4: [],
+          lengthbull1: true,
+          lengthbull2: true,
+          lengthbull3: true,
+          lengthbull4: true,
+        }, () => { that.getData1() })
+        return
+      }else {
+        this.setState({ no_phone_status: true })
+      }
+    })
+    // if (phone_status == 'binded' || phone_status == 'bind_success') {
+    //   this.setState({
+    //     current: 0,
+    //     page1: 1,
+    //     page2: 1,
+    //     page3: 1,
+    //     page4: 1,
+    //     coupon: [],
+    //     coupon1: [],
+    //     coupon2: [],
+    //     coupon3: [],
+    //     coupon4: [],
+    //     lengthbull1: true,
+    //     lengthbull2: true,
+    //     lengthbull3: true,
+    //     lengthbull4: true,
+    //   }, () => { that.getData1() })
+    //   return
+    // }
+
   }
 
   // 滚动
