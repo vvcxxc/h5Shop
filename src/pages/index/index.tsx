@@ -443,7 +443,7 @@ export default class Index extends Component<any> {
   getPayStore = async () => {
     let id = this.$router.params.id || sessionStorage.getItem('payStore')
     // let id = 4565
-    if (id) {
+    if (id && id != 'undefined') {
       let location = await getLocation();
       // let id = this.$router.params.id;
       if (id) {
