@@ -323,8 +323,8 @@ export default class Order extends Component {
             <Image className="no_data_img" src={require('../../assets/order_no_data.png')} />
             <View className="two">登录后才可以查看登录信息哦</View>
             <AtButton className="three" onClick={() => {
-              Taro.navigateTo({ url: '/pages/my/login_page/index' })
               Taro.setStorageSync('ql_href', location.href)
+              Taro.navigateTo({ url: '/pages/my/login_page/index' })
             }}>去登录</AtButton>
           </View> : null
         }

@@ -84,6 +84,9 @@ export default class LoginPage extends Component<any>{
     }
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
+    if(url){
+      url = url.data
+    }
     encodeURIComponent(url)
     loginPhone({
       phone: phoneNumber,
