@@ -74,6 +74,7 @@ export default class LoginPage extends Component<any>{
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
     console.log(phoneNumber, validationNumber)
+    let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
     if (!phoneNumber) {
       Taro.showToast({ title: '手机不能为空', duration: 2000,  icon: 'none'})
       return
@@ -83,10 +84,8 @@ export default class LoginPage extends Component<any>{
       return
     }
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
-    let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
-    if(url){
-      url = url.data
-    }
+    console.log(url)
+    console.log(url)
     encodeURIComponent(url)
     loginPhone({
       phone: phoneNumber,
@@ -151,7 +150,7 @@ export default class LoginPage extends Component<any>{
               break;
           }//end switch
         }//end if
-    }).catch(res => {
+    }).catch(err => {
       console.log('catch')
       Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
       })
