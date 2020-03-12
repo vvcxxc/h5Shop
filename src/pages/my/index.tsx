@@ -72,7 +72,7 @@ export default class NewPage extends Component<Props>{
 
 
 
-  componentDidMount() {
+  componentDidShow() {
     let phone_status = Cookie.get('phone_status')
     if (phone_status == 'binded' || phone_status == 'bind_success') {
       this.setState({ settingShow: true, needLogin: false })
