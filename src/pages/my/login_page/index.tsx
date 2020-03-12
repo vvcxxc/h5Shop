@@ -71,6 +71,7 @@ export default class LoginPage extends Component<any>{
   //确定登录
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
+    console.log(phoneNumber, validationNumber)
     if (!phoneNumber) {
       Taro.showToast({ title: '手机不能为空', duration: 2000,  icon: 'none'})
       return
