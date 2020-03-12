@@ -18,7 +18,8 @@ interface State {
   list: Object[],
   userData: Object,
   showBounced: boolean,
-  needLogin: boolean
+  needLogin: boolean,
+  mobile: number
 }
 
 export default class NewPage extends Component<Props>{
@@ -67,18 +68,15 @@ export default class NewPage extends Component<Props>{
       }
     ],
     showBounced: false,//登录弹框
-    needLogin :false
+    needLogin :false,
+    mobile: null
   }
 
 
 
   componentDidShow() {
     let phone_status = Cookie.get('phone_status')
-    if (phone_status == 'binded' || phone_status == 'bind_success') {
-      this.setState({ settingShow: true, needLogin: false })
-    } else {
-      this.setState({ settingShow: false, needLogin: true })
-    }
+
     this.handleGetUserinfo()
     request({
       url: 'v3/user/home_index'
@@ -89,8 +87,14 @@ export default class NewPage extends Component<Props>{
           head_img: res.data.avatar,
           user_name: res.data.user_name
         },
-        emptyAvatar: res.data.emptyAvatar
+        emptyAvatar: res.data.emptyAvatar,
+        mobile: res.data.mobile
       })
+      if (res.data.mobile) {
+        this.setState({ settingShow: true, needLogin: false })
+      } else {
+        this.setState({ settingShow: false, needLogin: true })
+      }
       let myData: any = this.state.list
       myData[0].prompt = res.data.order_msg
       myData[1].prompt = res.data.gift_msg
@@ -127,8 +131,9 @@ export default class NewPage extends Component<Props>{
 
   // 跳转路径
   jumpData = (data: string) => {
-    let phone_status = Cookie.get("phone_status")
-    if (phone_status == 'binded' || phone_status == 'bind_success') {
+    // let phone_status = Cookie.get("phone_status")
+
+    if (this.state.mobile) {
       Taro.navigateTo({ url: data })
       return
     }
