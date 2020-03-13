@@ -162,7 +162,7 @@ export default class PhoneInformation extends Component {
         }
     }
     goToMy = () => {
-        Taro.reLaunch({
+        Taro.switchTab({
             url: '/pages/my/index'
         })
     }
