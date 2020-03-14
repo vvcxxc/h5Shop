@@ -4,6 +4,8 @@ import request from '@/services/request'
 import LandingBounced from '@/components/landing_bounced'
 import { getUserInfo } from '@/utils/getInfo';
 import Cookie from 'js-cookie'
+import PosterGeneral from '@/components/posters/value_added/general'//增值海报
+import SpellGroupPoster from "@/components/posters/spell_group";
 import "./index.styl"
 
 type Props = any
@@ -19,7 +21,10 @@ interface State {
   userData: Object,
   showBounced: boolean,
   needLogin: boolean,
-  mobile: number
+  mobile: Number | null,
+
+  spell_group: boolean,
+  poster_youhui_type: any
 }
 
 export default class NewPage extends Component<Props>{
@@ -68,11 +73,60 @@ export default class NewPage extends Component<Props>{
       }
     ],
     showBounced: false,//登录弹框
-    needLogin :false,
-    mobile: null
+    needLogin: false,
+    mobile: null,
+
+    //海报
+    spell_group: false,
+    poster_youhui_type: 0
   }
 
-
+  componentWillMount() {
+    //拼团海报所需信息
+    this.setState({
+      spellGroupInfo: {
+        activity_name: '活动名称',
+        group_money: 12,//拼团价
+        pay_money: 23,              //原价
+        group_number: 4,       //拼团人数
+        // ...data.supplier,
+        link: '34523342423',                       //跳转的详情页面
+        gift_id: 5,             // 礼品id为0? 不显示礼品以及信息
+        gif_name:'礼品名字',
+        gif_pic: 'http://oss.tdianyi.com/front/hr3JDhtFjQH54GW3RPcQFjdibMQy3PTs.png?x-oss-process=image/crop,x_420,y_0,w_1080,h_1080',             //礼品图片
+        gift_money: 56,     //礼品价
+        coupons_number: 7,     //猜测是几人团
+        big_pic: 'http://oss.tdianyi.com/front/hr3JDhtFjQH54GW3RPcQFjdibMQy3PTs.png?x-oss-process=image/crop,x_420,y_0,w_1080,h_1080'
+      }
+    })//end 拼团海报信息
+    this.setState({
+      poster_youhui_type: 1,//0品类券/1:全场通用
+      youhui_id: 2,
+      show_notice: true,
+      posterData: {
+        // ...data.supplier,                     //地址 店名 店铺照 电话
+        // 礼品id为0? 不显示礼品以及信息
+        gift_id: 12,
+        //活动价格
+        active_money: 23,
+        //增值最大金额
+        max_money: 34,
+        //购买券的价格
+        pay_money: 45,
+        //礼品小图
+        git_img: 'http://oss.tdianyi.com/front/hr3JDhtFjQH54GW3RPcQFjdibMQy3PTs.png?x-oss-process=image/crop,x_420,y_0,w_1080,h_1080',
+        // data.appreciation_info.images[0],
+        link: '3242342',
+        activity_name: '名字',
+        total_fee: 67,//使用门槛
+        use_tim: 78,
+        gif_name: '礼品名字',
+        gif_money: '89',
+        big_pic: 'http://oss.tdianyi.com/front/hr3JDhtFjQH54GW3RPcQFjdibMQy3PTs.png?x-oss-process=image/crop,x_420,y_0,w_1080,h_1080',
+        gif_integral: 90
+      }
+    })
+  }
 
   componentDidShow() {
     let phone_status = Cookie.get('phone_status')
@@ -93,8 +147,8 @@ export default class NewPage extends Component<Props>{
       if (res.data.mobile) {
         this.setState({ settingShow: true, needLogin: false })
       } else {
-        this.setState({ settingShow: false, needLogin: true },()=> {
-          if(this.state.needLogin){
+        this.setState({ settingShow: false, needLogin: true }, () => {
+          if (this.state.needLogin) {
             this.setState({
               userData: {
                 head_img: 'http://oss.tdianyi.com/front/ek7cPQsFbEt7DXT7E7B6Xaf62a46SCXw.png',
@@ -155,9 +209,23 @@ export default class NewPage extends Component<Props>{
   }
 
   render() {
-    const { showBounced, needLogin} = this.state
+    const { showBounced, needLogin } = this.state
     return (
       <View className='newPage'>
+        <View onClick={() => { this.setState({ spell_group: true }) }}>
+          点击生成海报
+        </View>
+        {/* <PosterGeneral
+          show={this.state.spell_group}
+          list={this.state.posterData}
+          close={() => this.setState({ spell_group: false })}
+        />  */}
+
+        <SpellGroupPoster
+          show={this.state.spell_group}
+          list={this.state.spellGroupInfo}
+          close={() => this.setState({ value_added: false })}
+        />
         {
           this.state.settingShow ?
             <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
@@ -174,16 +242,16 @@ export default class NewPage extends Component<Props>{
             </View> : null
           }
           {
-            needLogin ?   <View>
-            <View className='phone_text'>登录手机号，同步全渠道订单与优惠券</View>
-            <View className='setPersonalInfoBox' onClick={this.handLogin} >
-              <View className='setPersonalInfo' >登录</View>
-            </View>
-          </View>:null
-        }
+            needLogin ? <View>
+              <View className='phone_text'>登录手机号，同步全渠道订单与优惠券</View>
+              <View className='setPersonalInfoBox' onClick={this.handLogin} >
+                <View className='setPersonalInfo' >登录</View>
+              </View>
+            </View> : null
+          }
         </View>
         {
-          console.log(showBounced,'eee4e')
+          console.log(showBounced, 'eee4e')
         }
         <View className="newPage_content">
           <View className="content_my">
