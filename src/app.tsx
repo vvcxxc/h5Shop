@@ -76,7 +76,7 @@ class App extends Component {
       "pages/activity/pages/list/list",
       "pages/activity/appreciation/index",
       "pages/activity/group/index",
-      'pages/my/login_page/index'
+      'pages/my/login_page/index',
     ],
     subPackages: [
       {
