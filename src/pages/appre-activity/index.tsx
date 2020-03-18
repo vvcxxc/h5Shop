@@ -71,7 +71,6 @@ export default class AppreActivity extends Component {
         let arrs = Taro.getCurrentPages()
         if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
         Taro.showLoading({ title: 'loading' })
-        console.log(getLocation())
         getLocation().then((res: any) => {
             this.getAppreInfo({ youhui_id: this.$router.params.id, yPoint: res.latitude || '', xPoint: res.longitude || '' })
         }).catch((err) => {
@@ -120,7 +119,6 @@ export default class AppreActivity extends Component {
 
     /**
     * 支付,不带礼品
-    * @param {string} order_sn 订单号
     */
     payment = () => {
         Taro.showLoading({ title: 'loading' })

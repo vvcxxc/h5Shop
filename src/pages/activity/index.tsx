@@ -334,13 +334,13 @@ export default class Activity extends Component<any>  {
     const { is_share, youhui_id, gift_id, activity_id } = item;
     if (is_share == 1) {
       Taro.navigateTo({
-        url: '/pages/appre-activity/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
-        // url: '/pages/activity/appreciation/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
+        // url: '/pages/appre-activity/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
+        url: '/pages/activity/appreciation/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
       })
     } else {
       Taro.navigateTo({
-        url: '/pages/group-activity/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
-        // url: '/pages/activity/group/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+        // url: '/pages/group-activity/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+        url: '/pages/activity/group/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
       })
     }
   }

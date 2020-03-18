@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro"
-import TimeUp from '../../../../pages/activity/group/TimeUp'
+import TimeUp from '@/components/TimeUp';
 import QRCode from 'qrcode'
 import { AtCurtain } from 'taro-ui'
 import { View, Image, Text } from "@tarojs/components"

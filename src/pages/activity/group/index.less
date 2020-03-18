@@ -1,0 +1,711 @@
+.group-activity-detail {
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #f3f4f8;
+    padding-bottom: 140px;
+
+    .group-banner {
+        width: 100vw;
+        height: 100vw;
+
+        .group-banner-swiperItem {
+            width: 100%;
+            height: 100%;
+
+            .group-banner-img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .banner-number-box {
+        position: absolute;
+        top: calc(100vw - 46px);
+        right: 32px;
+        z-index: 2;
+        height: 34px;
+        width: 74px;
+        background: url('http://oss.tdianyi.com/front/dj5XWsKSyw57QtzYabJmFSQe6M64TyTP.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: row;
+
+        .banner-number {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 1);
+            line-height: 1;
+        }
+    }
+
+    .collect-box {
+        width: 58px;
+        height: 58px;
+        border-radius: 29px;
+        background: rgba(0, 0, 0, .5);
+        position: absolute;
+        z-index: 2;
+        right: 120px;
+        top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .collect-img {
+            width: 43px;
+            height: 40px;
+        }
+    }
+
+    .share-box {
+        width: 58px;
+        height: 58px;
+        border-radius: 29px;
+        background: rgba(0, 0, 0, .5);
+        position: absolute;
+        z-index: 2;
+        right: 42px;
+        top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .share-img {
+            width: 42px;
+            height: 39px;
+        }
+    }
+
+    .group-info-content {
+        width: 100vw;
+        height: 212px;
+        padding: 30px 30px 0;
+        box-sizing: border-box;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+
+        .group-info-title {
+            width: 100%;
+            height: 36px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 30px;
+
+            .group-info-title-label {
+                width: 76px;
+                height: 29px;
+                background: rgba(255, 68, 68, 1);
+                border-radius: 6px;
+                font-size: 20px;
+                color: rgba(255, 255, 255, 1);
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 12px;
+            }
+
+            .group-info-title-text {
+                width: calc(100% - 90px);
+                height: 36px;
+                font-size: 36px;
+                color: rgba(1, 1, 1, 1);
+                line-height: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .group-info-price {
+            width: 100%;
+            height: 36px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 23px;
+
+            .group-price-info {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: flex-start;
+
+                .group-price-info-text {
+                    font-size: 20px;
+                    color: rgba(255, 68, 68, 1);
+                    line-height: 1;
+                }
+
+                .group-price-info-new {
+                    font-size: 36px;
+                    color: rgba(255, 68, 68, 1);
+                    line-height: 1;
+                }
+
+                .group-price-info-old {
+                    font-size: 22px;
+                    text-decoration: line-through;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                }
+            }
+
+            .group-price-discounts {
+                width: 184px;
+                height: 36px;
+                background: rgba(255, 68, 68, 1);
+                border-radius: 18px;
+                font-size: 20px;
+                line-height: 1;
+                color: rgba(254, 254, 254, 1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .group-info-label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+
+            .group-info-label-item {
+                height: 36px;
+                padding: 0 12px;
+                font-size: 20px;
+                color: rgba(255, 68, 68, 1);
+                line-height: 1;
+                background: #ffecec;
+                border-radius: 18px;
+                margin-right: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .group-banner-img {
+        width: 100vw;
+        height: 10.6vw;
+        margin-bottom: 15px;
+    }
+
+
+    .group-group-num {
+        height: 95px;
+        width: 100vw;
+        padding: 0 32px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        background: #fff;
+
+        .apply-title-box {
+            height: 35px;
+            width: 250px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            box-sizing: border-box;
+
+            .apply-title-left {
+                width: 8px;
+                height: 25px;
+                background: #FF4444;
+                border-radius: 4px;
+                margin-right: 11px;
+            }
+
+            .apply-title {
+                font-size: 36px;
+                font-weight: bold;
+            }
+        }
+
+        .apply-title-right {
+            font-size: 26px;
+            color: rgba(255, 68, 68, 1);
+            line-height: 1;
+        }
+    }
+
+    .swiper-group-list {
+        width: 100vw;
+        height: 34.6vw;
+        overflow: hidden;
+
+        .swiper-group-list-atTabsPane {
+            width: 100vw;
+            height: 34.6vw;
+            overflow: hidden;
+
+            .swiper-group-list-item {
+                width: 100vw;
+                height: 34.6vw;
+                overflow: hidden;
+
+                .swiper-item {
+                    height: 17.3vw;
+                    width: 100%;
+                    padding: 30px 25px 20px;
+                    background: #fff;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .group-user {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-start;
+
+                        .group-list-img {
+                            height: 80px;
+                            width: 80px;
+                            border-radius: 40px;
+                            overflow: hidden;
+                            margin-right: 20px;
+
+                            .listImg {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+
+                        .group-list-name {
+                            height: 26px;
+                            font-size: 26px;
+                            line-height: 1;
+                            width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    .group-info {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-end;
+
+                        .group-list-timesbox {
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-end;
+                            margin-right: 20px;
+                            font-size: 24px;
+
+                            .group-list-lack {
+                                height: 34px;
+                                color: #313131;
+                                display: flex;
+                                flex-direction: row;
+                                align-items: flex-start;
+                                flex-wrap: nowrap;
+
+                                .group-list-lackredblack1 {
+                                    width: 65px;
+                                    text-align: right;
+                                }
+
+                                .group-list-lackred {
+                                    flex: 2;
+                                    color: #ff8576;
+                                    text-align: right;
+                                }
+
+                                .group-list-lackredblack2 {
+                                    width: 65px;
+                                    text-align: right;
+                                }
+                            }
+
+                            .group-list-times {
+                                height: 25px;
+                                color: #666666;
+                                text-align: right;
+                                font-size: 24px;
+
+                                .at-countdown--time-box {
+                                    color: #666666;
+                                    font-size: 24px;
+                                    font-family: sans-serif;
+                                }
+
+                                .at-countdown--separator {
+                                    color: #666666;
+                                    font-size: 20px;
+                                    padding: 0 2px;
+                                }
+                            }
+                        }
+
+                        .group-list-btnbox {
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: flex-end;
+
+                            .group-list-btn {
+                                font-size: 26px;
+                                color: rgba(255, 255, 255, 1);
+                                width: 91px;
+                                height: 50px;
+                                background: linear-gradient(0deg, rgba(255, 68, 68, 1), rgba(255, 103, 68, 1));
+                                border-radius: 25px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                line-height: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .group-group-bottom {
+        height: 24px;
+        width: 100vw;
+        background: #fff;
+        margin-bottom: 15px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .group-store-info {
+        height: auto;
+        width: 100vw;
+        border: 15px;
+        background: #fff;
+        margin-bottom: 15px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .group-gift {
+        width: 100vw;
+        height: auto;
+        padding: 0 0 32px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        background: #fff;
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        .group-title-box {
+            height: 95px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            background: #fff;
+            padding: 0 32px;
+            box-sizing: border-box;
+
+            .group-title-left-box {
+                height: 35px;
+                width: 250px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                .group-title-left {
+                    width: 8px;
+                    height: 25px;
+                    background: #FF4444;
+                    border-radius: 4px;
+                    margin-right: 11px;
+                }
+
+                .group-title {
+                    font-size: 36px;
+                    font-weight: bold;
+                }
+            }
+
+            .group-title-right {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+
+                .group-title-right-info {
+                    font-size: 20px;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                    margin-right: 15px;
+                }
+
+                .group-title-right-icon {
+                    width: 12px;
+                    height: 21px;
+                }
+            }
+        }
+
+        .group-gift-brief {
+            width: 100%;
+            height: 50px;
+            font-size: 26px;
+            line-height: 1;
+            color: rgba(0, 0, 0, 1);
+            padding: 0 32px;
+            box-sizing: border-box;
+
+        }
+
+        .group-gift-label-box {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 32px;
+            box-sizing: border-box;
+
+            .group-gift-label {
+                font-size: 20px;
+                color: rgba(255, 68, 68, 1);
+                height: 36px;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #ffecec;
+                padding: 0 12px;
+                margin-right: 12px;
+                border-radius: 18px;
+            }
+
+        }
+
+        .group-gift-img {
+            width: 100vw;
+        }
+    }
+
+    .group-rules {
+        width: 100vw;
+        height: auto;
+        padding: 0 32px 32px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        background: #fff;
+        overflow: hidden;
+
+        .group-title-box {
+            height: 95px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            background: #fff;
+            box-sizing: border-box;
+
+            .group-title-left {
+                width: 8px;
+                height: 25px;
+                background: #FF4444;
+                border-radius: 4px;
+                margin-right: 11px;
+            }
+
+            .group-title {
+                font-size: 36px;
+                font-weight: bold;
+            }
+
+        }
+
+        .group-rules-item {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 36px;
+
+            .rules-key {
+                padding: 0 15px 0 0;
+                line-height: 1;
+                font-size: 24px;
+                font-weight: bold;
+                display: inline-block;
+            }
+
+            .rules-words {
+                padding: 0;
+                line-height: 1;
+                font-size: 24px;
+                display: inline-block;
+            }
+        }
+
+        .group-rules-list-title {
+            font-size: 26px;
+            font-weight: bold;
+            line-height: 35px;
+        }
+
+        .group-rules-list-text {
+            font-size: 26px;
+            line-height: 35px;
+        }
+
+        .group-more {
+            width: 100%;
+            height: 35px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+
+            .group-more-icon {
+                width: 21px;
+                height: 12px;
+                margin-right: 12px;
+            }
+
+            .group-more-text {
+                font-size: 20px;
+                color: rgba(153, 153, 153, 1);
+                line-height: 1;
+            }
+        }
+    }
+
+    .group-buy-box {
+        width: 100vw;
+        height: 100px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 0 20px;
+        box-sizing: border-box;
+        box-shadow: 0 0 4px 3px rgba(0, 0, 0, .2);
+
+        .group-buy-price-box {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: flex-start;
+
+            .group-buy-price-icon {
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(255, 68, 68, 1);
+
+            }
+
+            .group-buy-price-num {
+                font-size: 54px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(255, 68, 68, 1);
+
+            }
+        }
+
+        .group-buy-btn-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 72px;
+            width: 444px;
+
+            .group-buy-btn-left {
+                height: 100%;
+                width: 50%;
+                background: url("http://oss.tdianyi.com/front/ZXFyhEQmcP85skmZQ8B265sJabZXYMzD.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: rgba(255, 255, 255, 1);
+                line-height: 1;
+            }
+
+            .group-buy-btn-right {
+                height: 100%;
+                width: 50%;
+                background: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: rgba(255, 255, 255, 1);
+
+                .group-buy-btn-group {
+                    font-size: 26px;
+                    line-height: 1;
+                }
+
+                .group-buy-btn-groupnum {
+                    font-size: 20px;
+                    margin-top: 5px;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+
+
+
+
+
+}
