@@ -239,7 +239,7 @@ export default class GroupActivity extends Component {
                 <View className="group-group-bottom"></View>
                 <View className="group-store-info">
                     <ApplyToTheStore
-                        isTitle={false}
+                        isTitle={true}
                         img={'http://oss.tdianyi.com/front/t4nspcwf3Dbb722DKrGHBaahDcXbJeMj.png'}
                         name={'灰喉'}
                         phone={'14255552222'}

@@ -287,7 +287,7 @@ export default class AppreActivity extends Component {
 
                 <View className="appre-store-info">
                     <ApplyToTheStore
-                        isTitle={false}
+                        isTitle={true}
                         img={this.state.data.preview}
                         name={this.state.data.location_name}
                         phone={this.state.data.tel}
@@ -348,20 +348,20 @@ export default class AppreActivity extends Component {
                     {
                         (this.state.data.type == 0 && description.length) ? <View>
                             <View className="appre-rules-list-title" >使用规则：</View>
-                            {/* {
+                            {
                                 description.map((item) => {
                                     return (
                                         <View className="appre-rules-list-text" >-{item}</View>
                                     )
                                 })
-                            } */}
+                            }
                         </View> : null
                     }
 
-                    <View className="appre-more" >
+                    {/* <View className="appre-more" >
                         <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
                         <View className="appre-more-text" >查看更多</View>
-                    </View>
+                    </View> */}
                     {/* <View className="appre-more" >
                         <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/EhJAKdDjiD2N4D4MjJ2wWsdkHDf6bMkw.png"} />
                         <View className="appre-more-text" >收起</View>
@@ -392,7 +392,7 @@ export default class AppreActivity extends Component {
                 }
                 {
                     this.state.isFromShare ? (
-                        <View style={{ position: 'fixed', bottom: '50%', right: '0px' }} onClick={this.handleGoHome.bind(this)}>
+                        <View style={{ position: 'fixed', bottom: '50%', right: '0px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
                             <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
                         </View>
                     ) : ''

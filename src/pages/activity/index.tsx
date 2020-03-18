@@ -339,7 +339,8 @@ export default class Activity extends Component<any>  {
       })
     } else {
       Taro.navigateTo({
-        url: '/pages/activity/group/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+        url: '/pages/group-activity/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
+        // url: '/pages/activity/group/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
       })
     }
   }
