@@ -65,16 +65,15 @@ class IndexSearchPage extends PureComponent<Props> {
 			meta.unshift(this.state.searchStr)
 			Taro.setStorageSync("searchKey", meta)
 		}
-    if (meta.length>=1) this.setState({ showStorage:true})
-    console.log(this.state.searchStr)
-		Taro.navigateTo(
-			{ url: '/pages/merchant/index?value=' + this.state.searchStr  }
+		if (meta.length>=1) this.setState({ showStorage:true})
+		Taro.reLaunch(
+			{ url: '../../merchant/index?value=' + this.state.searchStr  }
     )
 	}
 
 	lineOnclick = (item) => {
-		Taro.navigateTo(
-			{ url: '/pages/merchant/index?value=' + item }
+		Taro.reLaunch(
+			{ url: '../../merchant/index?value=' + item }
 		)
 	}
 
@@ -109,7 +108,7 @@ class IndexSearchPage extends PureComponent<Props> {
 						<View className="history">
 							{
 								saveSearch.map((item, index) => {
-									return <View className="item" onClick={this.lineOnclick.bind(this,item)} key={index}>{item}</View>
+									return <View className="item" onClick={this.lineOnclick.bind(this,item)} key={item}>{item}</View>
 								})
 							}
 						</View>
@@ -119,7 +118,7 @@ class IndexSearchPage extends PureComponent<Props> {
 						{/* <View className="history" style="padding:0px 20px 0px 20px;">
 							{
 								this.state.list.map((item, index) => {
-									return <View className="item" key={index}>{item}</View>
+									return <View className="item" key={item}>{item}</View>
 								})
 							}
 						</View> */}
