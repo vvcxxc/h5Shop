@@ -16,12 +16,14 @@ export default class AppreActivity extends Component {
 
 
     state = {
+        //图片轮播下标
         bannerImgIndex: 0,
-        ruleMore: false,
         //是否从分享链接进入
         isFromShare: false,
         //是否登录
         showBounced: false,
+        //查看更多
+        showMoreRules: false,
         data: {
             activity_begin_time: "",
             activity_end_time: "",
@@ -115,6 +117,7 @@ export default class AppreActivity extends Component {
     * 支付,不带礼品
     */
     payment = () => {
+        let that = this;
         Taro.showLoading({ title: 'loading' })
         let sameDatas = {
             youhui_id: this.$router.params.id,
@@ -158,7 +161,7 @@ export default class AppreActivity extends Component {
                         function (res) {
                             //微信支付成功
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                this.getLastYouhuiId(order_sn)
+                                that.getLastYouhuiId(order_sn)
                             } else { Taro.showToast({ title: "微信支付失败", icon: "none" }); }
                         })
                 }
@@ -168,7 +171,7 @@ export default class AppreActivity extends Component {
                     }, res => {
                         //支付宝支付成功
                         if (res.resultCode === "9000") {
-                            this.getLastYouhuiId(order_sn)
+                            that.getLastYouhuiId(order_sn)
                         } else { Taro.showToast({ title: "支付宝支付失败", icon: "none" }); }
                     })
                 }
@@ -186,6 +189,7 @@ export default class AppreActivity extends Component {
      * @param {string} order_sn 订单号
      */
     getLastYouhuiId = (order_sn) => {
+        let that = this;
         Taro.showLoading({ title: '支付成功，正在查询用户增值活动id' });
         let timer = setTimeout(() => {
             clearTimeout(timer);
@@ -196,17 +200,17 @@ export default class AppreActivity extends Component {
                         //得到增值活动id并跳转活动详情
                         Taro.navigateTo({
                             url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                            success: function (e) {
+                            success: (e) => {
                                 let page = Taro.getCurrentPages().pop();
                                 if (page == undefined || page == null) return;
                                 page.onShow();
                             }
                         })
                     } else {
-                        this.getLastYouhuiId(order_sn)
+                        that.getLastYouhuiId(order_sn)
                     }
                 }).catch((err) => {
-                    this.getLastYouhuiId(order_sn)
+                    that.getLastYouhuiId(order_sn)
                 })
         }, 500);
     }
@@ -269,9 +273,8 @@ export default class AppreActivity extends Component {
                         <View className="appre-price-info">
                             <View className="appre-price-info-text">优惠价￥</View>
                             <View className="appre-price-info-new">{this.state.data.pay_money}</View>
-                            <View className="appre-price-info-old">￥{this.state.data.pay_money}</View>
                         </View>
-                        <View className="appre-price-discounts">已优惠￥100.00</View>
+                        <View className="appre-price-discounts">最高抵用￥{this.state.data.return_money}</View>
                     </View>
 
                 </View>
@@ -296,8 +299,8 @@ export default class AppreActivity extends Component {
                                     <View className='appre-title-left'></View>
                                     <View className='appre-title'>赠送礼品</View>
                                 </View>
-                                <View className='appre-title-right'>
-                                    <View className='appre-title-right-info' onClick={this.toImgList.bind(this)} >查看详情</View>
+                                <View className='appre-title-right' onClick={this.toImgList.bind(this)}>
+                                    <View className='appre-title-right-info'  >查看详情</View>
                                     <Image className="appre-title-right-icon" src={"http://oss.tdianyi.com/front/SpKtBHYnYMDGks85zyxGHrHc43K5cxRE.png"} />
                                 </View>
                             </View>
@@ -307,8 +310,7 @@ export default class AppreActivity extends Component {
                                     this.state.data.gift.mail_mode == 1 ? '免运费' : `运费${this.state.data.gift.postage}元`
                                 }</View>
                             </View>
-                            <Image className="appre-gift-img" src={"http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png"} mode={'widthFix'} />
-                            <Image className="appre-gift-img" src={"http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png"} mode={'widthFix'} />
+                            <Image className="appre-gift-img" src={this.state.data.gift_pic} mode={'widthFix'} />
                         </View> : null
                 }
 
@@ -338,7 +340,23 @@ export default class AppreActivity extends Component {
                         <View className="rules-words">成团后{this.state.data.validity}日内可用</View>
                     </View>
                     {
-                        (this.state.data.type == 0 && description.length) ? <View>
+                        this.state.data.type == 0 && description.length && !this.state.showMoreRules ? <View>
+                            <View className="appre-rules-list-title" >使用规则：</View>                            {
+                                description.length > 0 ? <View className="appre-rules-list-text" >-{description[0]}</View> : null
+                            }
+                            {
+                                description.length > 1 ? <View className="appre-rules-list-text" >-{description[1]}</View> : null
+                            }
+                            {
+                                description.length > 2 ? <View className="appre-rules-list-text" >-{description[2]}</View> : null
+                            }
+                            {
+                                description.length > 3 ? <View className="appre-rules-list-text" >-{description[3]}</View> : null
+                            }
+                        </View> : null
+                    }
+                    {
+                        this.state.data.type == 0 && description.length && description.length > 4 && this.state.showMoreRules ? <View>
                             <View className="appre-rules-list-title" >使用规则：</View>
                             {
                                 description.map((item) => {
@@ -349,15 +367,12 @@ export default class AppreActivity extends Component {
                             }
                         </View> : null
                     }
-
-                    {/* <View className="appre-more" >
-                        <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
-                        <View className="appre-more-text" >查看更多</View>
-                    </View> */}
-                    {/* <View className="appre-more" >
-                        <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/EhJAKdDjiD2N4D4MjJ2wWsdkHDf6bMkw.png"} />
-                        <View className="appre-more-text" >收起</View>
-                    </View> */}
+                    {
+                        description.length && description.length > 4 && !this.state.showMoreRules ? <View className="appre-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+                            <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                            <View className="appre-more-text" >查看更多</View>
+                        </View> : null
+                    }
                 </View>
                 <View className="appre-buy-box" >
                     <View className="appre-buy-price-box" >
@@ -384,7 +399,7 @@ export default class AppreActivity extends Component {
                 }
                 {
                     this.state.isFromShare ? (
-                        <View style={{ position: 'fixed', bottom: '50%', right: '0px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
+                        <View style={{ position: 'fixed', bottom: '50%', right: '20px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
                             <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
                         </View>
                     ) : ''

@@ -20,12 +20,16 @@ export default class GroupActivity extends Component {
     state = {
         //允许参加活动
         allowGroup: '',
-        isShare: false,
+        //从分享进入
         isFromShare: false,
+        //登录弹框
         showBounced: false,
+        //图片轮播下标
         bannerImgIndex: 0,
+        //列表轮播下标
         current: 0,
-        ruleMore: false,
+        //查看更多
+        showMoreRules: false,
         data: {
             activity_begin_time: "",
             activity_end_time: "",
@@ -114,6 +118,7 @@ export default class GroupActivity extends Component {
       * @param {object} data 活动id，页数
       */
     getGroupList = (data: object) => {
+        Taro.showLoading({ title: 'loading' })
         getGroupbuyings(data).then((res: any) => {
             Taro.hideLoading();
             if (res.code == 200) {
@@ -368,6 +373,7 @@ export default class GroupActivity extends Component {
     *  @param {object} order_sn 订单号
     */
     getLastGroupId = (order_sn) => {
+        let that = this;
         Taro.showLoading({ title: '支付成功，正在查询用户增值活动id' });
         let timer = setTimeout(() => {
             clearTimeout(timer);
@@ -375,12 +381,12 @@ export default class GroupActivity extends Component {
                 .then((res: any) => {
                     if (res.code == 200) {
                         Taro.hideLoading();
-                        this.goToGroupInfo(res.data.id)
+                        that.goToGroupInfo(res.data.id)
                     } else {
-                        this.getLastGroupId(order_sn)
+                        that.getLastGroupId(order_sn)
                     }
                 }).catch((err) => {
-                    this.getLastGroupId(order_sn)
+                    that.getLastGroupId(order_sn)
                 })
         }, 1000);
     }
@@ -630,11 +636,11 @@ export default class GroupActivity extends Component {
                 {this.state.data.gift ?
                     <View className="group-gift">
                         <View className="group-title-box">
-                            <View className='group-title-left-box'>
+                            <View className='group-title-left-box' >
                                 <View className='group-title-left'></View>
                                 <View className='group-title'>赠送礼品</View>
                             </View>
-                            <View className='group-title-right'>
+                            <View className='group-title-right' onClick={this.toImgList.bind(this)}>
                                 <View className='group-title-right-info'>查看详情</View>
                                 <Image className="group-title-right-icon" src={"http://oss.tdianyi.com/front/SpKtBHYnYMDGks85zyxGHrHc43K5cxRE.png"} />
                             </View>
@@ -665,9 +671,25 @@ export default class GroupActivity extends Component {
                         <View className="rules-key">有效期：</View>
                         <View className="rules-words">成团后7日内可用</View>
                     </View> */}
-
                     {
-                        description.length ? <View>
+                        description.length && !this.state.showMoreRules ? <View>
+                            <View className="group-rules-list-title" >使用规则：</View>
+                            {
+                                description.length > 0 ? <View className="group-rules-list-text" >-{description[0]}</View> : null
+                            }
+                            {
+                                description.length > 1 ? <View className="group-rules-list-text" >-{description[1]}</View> : null
+                            }
+                            {
+                                description.length > 2 ? <View className="group-rules-list-text" >-{description[2]}</View> : null
+                            }
+                            {
+                                description.length > 3 ? <View className="group-rules-list-text" >-{description[3]}</View> : null
+                            }
+                        </View> : null
+                    }
+                    {
+                        description.length && description.length > 4 && this.state.showMoreRules ? <View>
                             <View className="group-rules-list-title" >使用规则：</View>
                             {
                                 description.map((item) => {
@@ -678,15 +700,12 @@ export default class GroupActivity extends Component {
                             }
                         </View> : null
                     }
-
-                    {/* <View className="group-more" >
-                        <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
-                        <View className="group-more-text" >查看更多</View>
-                    </View> */}
-                    {/* <View className="group-more" >
-                        <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/EhJAKdDjiD2N4D4MjJ2wWsdkHDf6bMkw.png"} />
-                        <View className="group-more-text" >收起</View>
-                    </View> */}
+                    {
+                        description.length && description.length > 4 && !this.state.showMoreRules ? <View className="group-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+                            <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                            <View className="group-more-text" >查看更多</View>
+                        </View> : null
+                    }
                 </View>
                 <View className="group-buy-box" >
                     <View className="group-buy-price-box" >
@@ -711,7 +730,7 @@ export default class GroupActivity extends Component {
                 }
                 {
                     this.state.isFromShare ? (
-                        <View style={{ position: 'fixed', bottom: '50%', right: '0px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
+                        <View style={{ position: 'fixed', bottom: '50%', right: '20px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
                             <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
                         </View>
                     ) : ''

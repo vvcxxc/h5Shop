@@ -77,9 +77,7 @@ class App extends Component {
       "pages/activity/appreciation/index",
       "pages/activity/group/index",
       'pages/my/login_page/index',
-      'pages/store-detail/index',
-      'pages/group-activity/index',
-      'pages/appre-activity/index',
+      'pages/store-detail/index'
     ],
     subPackages: [
       {
