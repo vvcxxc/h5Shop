@@ -449,9 +449,9 @@ export default class GroupActivity extends Component {
                     <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
                     <View className="banner-number">{this.state.data.images.length}</View>
                 </View>
-                <View className="collect-box">
+                {/* <View className="collect-box">
                     <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
-                </View>
+                </View> */}
                 <View className="share-box">
                     <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
                 </View>
