@@ -708,7 +708,6 @@ export default class GroupActivity extends Component {
                     }
                 </View>
                 <View className="group-buy-box" >
-                    <View className="group-flex-box" >
                         <View className="group-buy-price-box" >
                             <View className="group-buy-price-icon" >￥</View>
                             <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
@@ -723,7 +722,6 @@ export default class GroupActivity extends Component {
                                     </View>
                             }
                         </View>
-                    </View>
                 </View>
                 {
                     showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {

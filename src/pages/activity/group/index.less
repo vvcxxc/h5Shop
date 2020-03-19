@@ -623,95 +623,95 @@
         position: fixed;
         bottom: 0;
         z-index: 10;
-
         background: #fff;
         padding: 0 20px;
         box-sizing: border-box;
         border-top: 1px solid #eee;
 
-        .group-flex-box {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            height: 100%;
+        .group-buy-price-box {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translate(0, -50%);
+            height: 55px;
 
-            .group-buy-price-box {
-                display: flex;
-                flex-direction: row;
-                align-items: baseline;
-                justify-content: flex-start;
+            .group-buy-price-icon {
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(255, 68, 68, 1);
+                display: inline-block;
+                position: absolute;
+                left: 0;
+                bottom: 0;
 
-                .group-buy-price-icon {
-                    font-size: 24px;
-                    font-weight: bold;
-                    line-height: 1;
-                    color: rgba(255, 68, 68, 1);
-
-                }
-
-                .group-buy-price-num {
-                    font-size: 54px;
-                    font-weight: bold;
-                    line-height: 1;
-                    color: rgba(255, 68, 68, 1);
-
-                }
             }
 
-            .group-buy-btn-box {
+            .group-buy-price-num {
+                font-size: 54px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(255, 68, 68, 1);
+                position: absolute;
+                left: 25px;
+                bottom: 0;
+            }
+        }
+
+        .group-buy-btn-box {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translate(0, -50%);
+            height: 72px;
+            width: 444px;
+
+            .group-buy-btn-left {
+                height: 100%;
+                width: 50%;
+                float: left;
+                background-image: url("http://oss.tdianyi.com/front/ZXFyhEQmcP85skmZQ8B265sJabZXYMzD.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                height: 72px;
-                width: 444px;
+                color: rgba(255, 255, 255, 1);
+                line-height: 1;
+            }
 
-                .group-buy-btn-left {
-                    height: 100%;
-                    width: 50%;
-                    background-image: url("http://oss.tdianyi.com/front/ZXFyhEQmcP85skmZQ8B265sJabZXYMzD.png");
-                    background-repeat: no-repeat;
-                    background-size: 100% 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    color: rgba(255, 255, 255, 1);
+            .group-buy-btn-right {
+                height: 100%;
+                width: 50%;
+                float: left;
+                background-image: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: rgba(255, 255, 255, 1);
+                line-height: 1;
+                font-size: 26px;
+
+                .group-buy-btn-group {
+                    font-size: 26px;
                     line-height: 1;
+                    color: rgba(255, 255, 255, 1);
                 }
 
-                .group-buy-btn-right {
-                    height: 100%;
-                    width: 50%;
-                    background-image: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
-                    background-repeat: no-repeat;
-                    background-size: 100% 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    color: rgba(255, 255, 255, 1);
+                .group-buy-btn-groupnum {
+                    font-size: 20px;
+                    margin-top: 5px;
                     line-height: 1;
-                    font-size: 26px;
-
-                    .group-buy-btn-group {
-                        font-size: 26px;
-                        line-height: 1;
-                        color: rgba(255, 255, 255, 1);
-                    }
-
-                    .group-buy-btn-groupnum {
-                        font-size: 20px;
-                        margin-top: 5px;
-                        line-height: 1;
-                        color: rgba(255, 255, 255, 1);
-                    }
+                    color: rgba(255, 255, 255, 1);
                 }
             }
         }
     }
+
 
 
 
