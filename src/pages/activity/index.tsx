@@ -53,7 +53,7 @@ export default class Activity extends Component<any>  {
   }
 
   componentDidShow() {
-    console.log('global',iNoBounce)
+    console.log('global', iNoBounce)
     // let u = navigator.userAgent
     // if (u.indexOf('iPhone') > -1) {
     //     console.log('iNoBounce',iNoBounce)
@@ -63,12 +63,12 @@ export default class Activity extends Component<any>  {
 
   componentDidMount() {
 
-    
+
   }
 
   onReachBottom() {
     const { current, flag } = this.state;
-    if(!this.state.dataList.length){
+    if (!this.state.dataList.length) {
       console.log('禁止触底')
       return
     }
@@ -96,7 +96,7 @@ export default class Activity extends Component<any>  {
   }
 
   componentWillMount = () => {
-    Taro.pageScrollTo({scrollTop: 0})
+    Taro.pageScrollTo({ scrollTop: 0 })
     getLocation().then((res: any) => {
       this.setState({
         yPoint: res.latitude || '',
@@ -172,7 +172,7 @@ export default class Activity extends Component<any>  {
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
-          duration:2000
+          duration: 2000
         })
         this.setState({
           flag: false
@@ -205,7 +205,7 @@ export default class Activity extends Component<any>  {
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
-          duration:2000
+          duration: 2000
         })
         this.setState({
           flag: false
@@ -239,7 +239,7 @@ export default class Activity extends Component<any>  {
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
-          duration:2000
+          duration: 2000
         })
         this.setState({
           flag: false
@@ -334,10 +334,12 @@ export default class Activity extends Component<any>  {
     const { is_share, youhui_id, gift_id, activity_id } = item;
     if (is_share == 1) {
       Taro.navigateTo({
+        // url: '/pages/appre-activity/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
         url: '/pages/activity/appreciation/index?id=' + youhui_id + '&type=1&gift_id=' + gift_id + '&activity_id=' + activity_id
       })
     } else {
       Taro.navigateTo({
+        // url: '/pages/group-activity/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
         url: '/pages/activity/group/index?id=' + youhui_id + '&type=5&gift_id=' + gift_id + '&activity_id=' + activity_id
       })
     }

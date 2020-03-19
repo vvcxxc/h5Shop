@@ -103,7 +103,7 @@ export default class Index extends Component<any> {
     const {changeBottom, changePull} = this.state
     return (
       <View className="index">
-        { this.state.is_marketing ? <MarketingIndex/> : <OldIndex changeBottom={changeBottom} changePull={changePull}/> }
+        { this.state.is_marketing ? <MarketingIndex changeBottom={changeBottom} changePull={changePull}/> : <OldIndex changeBottom={changeBottom} changePull={changePull}/> }
       </View>
     );
   }

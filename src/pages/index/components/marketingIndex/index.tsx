@@ -5,7 +5,7 @@ import { data, tabList } from './data'
 import RecommendBox from '../recommendBox'
 import CouponBox from '../couponBox'
 import { getChannelInfo, getTabList } from '../../service'
-export default class MarketingIndex extends Component {
+export default class MarketingIndex extends Component<any> {
   config: Config = {
     navigationBarTitleText: '小熊敬礼',
     enablePullDownRefresh: true,
@@ -18,9 +18,10 @@ export default class MarketingIndex extends Component {
     hotRecommendList: [], // 网红店推荐
     brandRecommendList: [], // 品牌连锁推荐
     list: [],
-    id: 6, // tab的id,
+    id: 6, // tab的id
     city_name: '新会区',
-    banner: []
+    banner: [],
+    page: 1
   }
   componentDidMount() {
     getChannelInfo().then((res: any) => {
@@ -32,12 +33,29 @@ export default class MarketingIndex extends Component {
         })
       }
     })
-    getTabList({ id: 6 }).then(res => {
+    getTabList({ channel_id: 6 }).then(res => {
       console.log(res)
       if (res.code == 200) {
-        this.setState({ list: res.data })
+        this.setState({ list: res.data.data })
       }
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // 下拉刷新
+    if(this.props.changePull != nextProps.changePull){
+
+    }
+    // 触底加载更多
+    if(this.props.changeBottom != nextProps.changeBottom){
+      this.setState({page: this.state.page + 1},()=> {
+        getTabList({channel_id: this.state.id, page: this.state.page}).then(res => {
+          if(res.code == 200){
+            this.setState({list: [...this.state.list,...res.data.data]})
+          }
+        })
+      })
+    }
   }
 
   // 跳转 搜素城市页面
@@ -53,11 +71,11 @@ export default class MarketingIndex extends Component {
 
   // tab切换
   handlerTabChange(current, id, _this) {
-    this.setState({ current });
+    this.setState({ current,id });
     // this.setState({ meta: data })
-    getTabList({ id }).then(res => {
+    getTabList({ channel_id: id }).then(res => {
       if (res.code == 200) {
-        this.setState({ list: res.data, id })
+        this.setState({ list: res.data.data, id })
       }
     })
   }
@@ -93,6 +111,11 @@ export default class MarketingIndex extends Component {
         })
         break
     }
+  }
+
+  // 跳转
+  goTo = (router) => {
+    Taro.navigateTo({url: router})
   }
 
   render() {
@@ -194,7 +217,7 @@ export default class MarketingIndex extends Component {
           {/* 图片 */}
           <View className='image-box'>
             {data.map(res => {
-              return <Image className='img-item' src={res.url} />
+              return <Image className='img-item' src={res.url} onClick={this.goTo.bind(this,res.router)}/>
             })}
           </View>
 
