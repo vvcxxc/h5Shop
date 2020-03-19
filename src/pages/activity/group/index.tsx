@@ -708,20 +708,20 @@ export default class GroupActivity extends Component {
                     }
                 </View>
                 <View className="group-buy-box" >
-                    <View className="group-buy-price-box" >
-                        <View className="group-buy-price-icon" >￥</View>
-                        <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
-                    </View>
-                    <View className="group-buy-btn-box" >
-                        <View className="group-buy-btn-left" >分享活动</View>
-                        {
-                            this.state.allowGroup ? <View className="group-buy-btn-right" >{this.state.allowGroup}</View>
-                                : <View className="group-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >
-                                    <View className="group-buy-btn-group" > {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}</View>
-                                    <View className="group-buy-btn-groupnum" >{this.state.data.number}人成团</View>
-                                </View>
-                        }
-                    </View>
+                        <View className="group-buy-price-box" >
+                            <View className="group-buy-price-icon" >￥</View>
+                            <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
+                        </View>
+                        <View className="group-buy-btn-box" >
+                            <View className="group-buy-btn-left" >分享活动</View>
+                            {
+                                this.state.allowGroup ? <View className="group-buy-btn-right" >{this.state.allowGroup}</View>
+                                    : <View className="group-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >
+                                        <View className="group-buy-btn-group" > {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}</View>
+                                        <View className="group-buy-btn-groupnum" >{this.state.data.number}人成团</View>
+                                    </View>
+                            }
+                        </View>
                 </View>
                 {
                     showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
