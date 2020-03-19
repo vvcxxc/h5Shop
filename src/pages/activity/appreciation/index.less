@@ -1,0 +1,701 @@
+.appre-activity-detail {
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #f3f4f8;
+    padding-bottom: 140px;
+
+    .appre-banner {
+        width: 100vw;
+        height: 100vw;
+
+        .appre-banner-swiperItem {
+            width: 100%;
+            height: 100%;
+
+            .appre-banner-img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .banner-number-box {
+        position: absolute;
+        top: calc(100vw - 46px);
+        right: 32px;
+        z-index: 2;
+        height: 34px;
+        width: 74px;
+        background: url('http://oss.tdianyi.com/front/dj5XWsKSyw57QtzYabJmFSQe6M64TyTP.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: row;
+
+        .banner-number {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 1);
+            line-height: 1;
+        }
+    }
+
+    .collect-box {
+        width: 58px;
+        height: 58px;
+        border-radius: 29px;
+        background: rgba(0, 0, 0, .5);
+        position: absolute;
+        z-index: 2;
+        right: 120px;
+        top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .collect-img {
+            width: 43px;
+            height: 40px;
+        }
+    }
+
+    .share-box {
+        width: 58px;
+        height: 58px;
+        border-radius: 29px;
+        background: rgba(0, 0, 0, .5);
+        position: absolute;
+        z-index: 2;
+        right: 42px;
+        top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .share-img {
+            width: 42px;
+            height: 39px;
+        }
+    }
+
+    .appre-info-content {
+        width: 100vw;
+        height: auto;
+        padding: 30px 30px;
+        box-sizing: border-box;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+
+        .appre-info-title {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 30px;
+            position: relative;
+
+            .appre-info-title-label {
+                width: 76px;
+                height: 29px;
+                background: rgba(255, 68, 68, 1);
+                border-radius: 6px;
+                font-size: 20px;
+                color: rgba(255, 255, 255, 1);
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 12px;
+                position: absolute;
+                top: 21px;
+                left: 0;
+                transform: translate(0, -50%);
+            }
+
+            .appre-info-title-text {
+                width: 100%;
+                height: auto;
+                text-indent: 90px;
+                min-height: 42px;
+                max-height: 84px;
+                font-size: 36px;
+                line-height: 42px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                /* autoprefixer: off */
+                -webkit-box-orient: vertical;
+                /* autoprefixer: on */
+
+            }
+        }
+
+        .appre-info-price {
+            width: 100%;
+            height: 36px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .appre-price-info {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: flex-start;
+
+                .appre-price-info-text {
+                    font-size: 20px;
+                    color: rgba(255, 68, 68, 1);
+                    line-height: 1;
+                }
+
+                .appre-price-info-new {
+                    font-size: 36px;
+                    color: rgba(255, 68, 68, 1);
+                    line-height: 1;
+                }
+
+                .appre-price-info-old {
+                    font-size: 22px;
+                    text-decoration: line-through;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                }
+            }
+
+            .appre-price-discounts {
+                width: 184px;
+                height: 36px;
+                background: rgba(255, 68, 68, 1);
+                border-radius: 18px;
+                font-size: 20px;
+                line-height: 1;
+                color: rgba(254, 254, 254, 1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .appre-banner-img {
+        width: 100vw;
+        height: 10.6vw;
+        margin-bottom: 15px;
+    }
+
+
+    .appre-appre-num {
+        height: 95px;
+        width: 100vw;
+        padding: 0 32px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        background: #fff;
+
+        .apply-title-box {
+            height: 35px;
+            width: 250px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            box-sizing: border-box;
+
+            .apply-title-left {
+                width: 8px;
+                height: 25px;
+                background: #FF4444;
+                border-radius: 4px;
+                margin-right: 11px;
+            }
+
+            .apply-title {
+                font-size: 36px;
+                font-weight: bold;
+            }
+        }
+
+        .apply-title-right {
+            font-size: 26px;
+            color: rgba(255, 68, 68, 1);
+            line-height: 1;
+        }
+    }
+
+    .swiper-appre-list {
+        width: 100vw;
+        height: 34.6vw;
+        overflow: hidden;
+
+        .swiper-appre-list-atTabsPane {
+            width: 100vw;
+            height: 34.6vw;
+            overflow: hidden;
+
+            .swiper-appre-list-item {
+                width: 100vw;
+                height: 34.6vw;
+                overflow: hidden;
+
+                .swiper-item {
+                    height: 17.3vw;
+                    width: 100%;
+                    padding: 30px 25px 20px;
+                    background: #fff;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .appre-user {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-start;
+
+                        .appre-list-img {
+                            height: 80px;
+                            width: 80px;
+                            border-radius: 40px;
+                            overflow: hidden;
+                            margin-right: 20px;
+
+                            .listImg {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+
+                        .appre-list-name {
+                            height: 26px;
+                            font-size: 26px;
+                            line-height: 1;
+                            width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    .appre-info {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-end;
+
+                        .appre-list-timesbox {
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-end;
+                            margin-right: 20px;
+                            font-size: 24px;
+
+                            .appre-list-lack {
+                                height: 34px;
+                                color: #313131;
+                                display: flex;
+                                flex-direction: row;
+                                align-items: flex-start;
+                                flex-wrap: nowrap;
+
+                                .appre-list-lackredblack1 {
+                                    width: 65px;
+                                    text-align: right;
+                                }
+
+                                .appre-list-lackred {
+                                    flex: 2;
+                                    color: #ff8576;
+                                    text-align: right;
+                                }
+
+                                .appre-list-lackredblack2 {
+                                    width: 65px;
+                                    text-align: right;
+                                }
+                            }
+
+                            .appre-list-times {
+                                height: 25px;
+                                color: #666666;
+                                text-align: right;
+                                font-size: 24px;
+
+                                .at-countdown--time-box {
+                                    color: #666666;
+                                    font-size: 24px;
+                                    font-family: sans-serif;
+                                }
+
+                                .at-countdown--separator {
+                                    color: #666666;
+                                    font-size: 20px;
+                                    padding: 0 2px;
+                                }
+                            }
+                        }
+
+                        .appre-list-btnbox {
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: flex-end;
+
+                            .appre-list-btn {
+                                font-size: 26px;
+                                color: rgba(255, 255, 255, 1);
+                                width: 91px;
+                                height: 50px;
+                                background: linear-gradient(0deg, rgba(255, 68, 68, 1), rgba(255, 103, 68, 1));
+                                border-radius: 25px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                line-height: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .appre-appre-bottom {
+        height: 24px;
+        width: 100vw;
+        background: #fff;
+        margin-bottom: 15px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .appre-store-info {
+        height: auto;
+        width: 100vw;
+        border: 15px;
+        background: #fff;
+        margin-bottom: 15px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .appre-gift {
+        width: 100vw;
+        height: auto;
+        padding: 0 0 32px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        background: #fff;
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        .appre-title-box {
+            height: 95px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            background: #fff;
+            padding: 0 32px;
+            box-sizing: border-box;
+
+            .appre-title-left-box {
+                height: 35px;
+                width: 250px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                .appre-title-left {
+                    width: 8px;
+                    height: 25px;
+                    background: #FF4444;
+                    border-radius: 4px;
+                    margin-right: 11px;
+                }
+
+                .appre-title {
+                    font-size: 36px;
+                    font-weight: bold;
+                }
+            }
+
+            .appre-title-right {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+
+                .appre-title-right-info {
+                    font-size: 20px;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                    margin-right: 15px;
+                }
+
+                .appre-title-right-icon {
+                    width: 12px;
+                    height: 21px;
+                }
+            }
+        }
+
+        .appre-gift-brief {
+            width: 100%;
+            height: 50px;
+            font-size: 26px;
+            line-height: 1;
+            color: rgba(0, 0, 0, 1);
+            padding: 0 32px;
+            box-sizing: border-box;
+
+        }
+
+        .appre-gift-label-box {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 32px;
+            box-sizing: border-box;
+
+            .appre-gift-label {
+                font-size: 20px;
+                color: rgba(255, 68, 68, 1);
+                height: 36px;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #ffecec;
+                padding: 0 12px;
+                margin-right: 12px;
+                border-radius: 18px;
+            }
+
+        }
+
+        .appre-gift-img {
+            width: 100vw;
+        }
+    }
+
+    .appre-rules {
+        width: 100vw;
+        height: auto;
+        padding: 0 32px 32px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        background: #fff;
+        overflow: hidden;
+
+        .appre-title-box {
+            height: 95px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            background: #fff;
+            box-sizing: border-box;
+
+            .appre-title-left {
+                width: 8px;
+                height: 25px;
+                background: #FF4444;
+                border-radius: 4px;
+                margin-right: 11px;
+            }
+
+            .appre-title {
+                font-size: 36px;
+                font-weight: bold;
+            }
+
+        }
+
+        .appre-rules-item {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 36px;
+
+            .rules-key {
+                padding: 0 15px 0 0;
+                line-height: 1;
+                font-size: 24px;
+                font-weight: bold;
+                display: inline-block;
+            }
+
+            .rules-words {
+                padding: 0;
+                line-height: 1;
+                font-size: 24px;
+                display: inline-block;
+            }
+        }
+
+        .appre-rules-list-title {
+            font-size: 26px;
+            font-weight: bold;
+            line-height: 35px;
+        }
+
+        .appre-rules-list-text {
+            font-size: 26px;
+            line-height: 35px;
+        }
+
+        .appre-more {
+            width: 100%;
+            height: 35px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+
+            .appre-more-icon {
+                width: 21px;
+                height: 12px;
+                margin-right: 12px;
+            }
+
+            .appre-more-text {
+                font-size: 20px;
+                color: rgba(153, 153, 153, 1);
+                line-height: 1;
+            }
+        }
+    }
+
+    .appre-buy-box {
+        width: 100vw;
+        height: 100px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 0 20px;
+        box-sizing: border-box;
+        box-shadow: 0 0 4px 3px rgba(0, 0, 0, .2);
+
+        .appre-buy-price-box {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: flex-start;
+
+            .appre-buy-price-icon {
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(255, 68, 68, 1);
+
+            }
+
+            .appre-buy-price-num {
+                font-size: 54px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(255, 68, 68, 1);
+
+            }
+        }
+
+        .appre-buy-btn-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 72px;
+            width: 444px;
+
+            .appre-buy-btn-left {
+                height: 100%;
+                width: 50%;
+                background: url("http://oss.tdianyi.com/front/ZXFyhEQmcP85skmZQ8B265sJabZXYMzD.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: rgba(255, 255, 255, 1);
+                line-height: 1;
+            }
+
+            .appre-buy-btn-right {
+                height: 100%;
+                width: 50%;
+                background: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: rgba(255, 255, 255, 1);
+
+                .appre-buy-btn-appre {
+                    font-size: 26px;
+                    line-height: 1;
+                }
+
+                .appre-buy-btn-apprenum {
+                    font-size: 20px;
+                    margin-top: 5px;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+
+
+
+
+
+}

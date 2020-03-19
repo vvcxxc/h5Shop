@@ -76,7 +76,8 @@ class App extends Component {
       "pages/activity/pages/list/list",
       "pages/activity/appreciation/index",
       "pages/activity/group/index",
-      'pages/my/login_page/index'
+      'pages/my/login_page/index',
+      'pages/store-detail/index'
     ],
     subPackages: [
       {
@@ -121,6 +122,8 @@ class App extends Component {
           'personal/index',
           'personal/personalInformation/index',
           'personal/phoneInformation/index',
+          'activity-list/index',
+
         ]
       }
     ],

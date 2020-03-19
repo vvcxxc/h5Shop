@@ -1,1032 +1,741 @@
 import Taro, { Component } from "@tarojs/taro";
-import { AtIcon, AtNoticebar, AtCountdown } from 'taro-ui';
-import { View, Image, Swiper, SwiperItem, ScrollView } from "@tarojs/components";
-import request from '../../../services/request';
+import { AtIcon, AtToast, AtTabs, AtTabsPane } from "taro-ui";
+import { View, Text, Image, ScrollView, Button, Swiper, SwiperItem } from "@tarojs/components";
+import "./index.less";
 import { getBrowserType } from "@/utils/common";
-import TimeUp from './TimeUp';
-import wx from 'weixin-js-sdk';
-import Cookie from 'js-cookie';
+import { getGroupYouhuiInfo, getGroupbuyings, getShareSign, toWxPay, getUserYouhuiGroupId } from "./service";
 import { getLocation } from "@/utils/getInfo";
-import AddressImg from '../../../assets/address.png';
-import MobileImg from '../../../assets/dianhua.png';
-import Zoom from '../../../components/zoom/index';
-import './index.scss';
-import { getTime } from '@/utils/common';
-import dayjs from 'dayjs'
-import Scrolltab from './scrollTab';
+import Cookie from 'js-cookie';
+import ApplyToTheStore from '@/components/applyToTheStore';
+import TimeUp from '@/components/TimeUp';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 
-interface Props {
-  id: any;
-}
-const share_url = process.env.GROUP_Details_URL;
-let interval;
-export default class Group extends Component<Props>{
-  state = {
-    ruleMore: false,
-    imgZoom: false,
-    imgZoomSrc: '',
-    xPoint: '',
-    yPoint: '',
-    imagesCurrent: 0,
-    data: {
-      activity_begin_time: "",
-      activity_end_time: "",
-      activity_id: 0,
-      activity_time_status: 0,
-      address: "",
-      begin_time: "",
-      description: [],
-      distances: "",
-      end_time: "",
-      gift: { title: "", price: "", postage: "", mail_mode: 2, cover_image: '' },
-      gift_id: 0,
-      icon: "",
-      id: 0,//店id
-      image: "",
-      images: [],
-      is_show_button: 0,
-      list_brief: "",
-      locate_match_row: "",
-      name: "",//店名
-      number: 0,
-      participate_number: 0,
-      participation_money: "",
-      pay_money: "",
-      preview: '',
-      route: "",
-      succeed_participate_number: 0,
-      supplier_id: 0,
-      team_set_end_time: '',
-      tel: "",
-      xpoint: '',
-      youhui_id: 0,//活动id
-      youhui_name: "",//活动名
-      ypoint: ""
-    },
-    data2: {
-      data: [],
-      page: 1,
-      pageRow: 2,
-      total: 0,
-    },
-    newGroupList: [],
-    isPostage: true,
-    isShare: false,
-    isFromShare: false,
-    groupListShow: false,
-    groupListPages: 1,
-    currentPage: 0,
-    allowGroup: '',
-    showBounced:false
-  };
-  componentDidShow() {
-    this.toShare();
-  }
-  clearTimeOut = () => {
-    console.log('清除计时器');
-    var end = setTimeout(function () { }, 1);
-    var start = (end - 100) > 0 ? end - 100 : 0;
-    for (var i = start; i <= end; i++) {
-      clearTimeout(i);
-    }
-  }
-
-  componentWillUnmount() {
-    this.clearTimeOut();
-  }
-
-  componentDidMount = () => {
-    let arrs = Taro.getCurrentPages()
-    if (arrs.length <= 1) {
-      this.setState({
-        isFromShare: true
-      })
-    }
-    Taro.showLoading({
-      title: 'loading',
-    })
-    getLocation().then((res: any) => {
-      this.setState({
-        yPoint: res.latitude || '',
-        xPoint: res.longitude || ''
-      }, () => {
-        request({
-          url: 'api/wap/user/getGroupbuyings',
-          method: "GET",
-          data: {
-            group_info_id: this.$router.params.id,
-            page: 1
-          }
-        })
-          .then((res: any) => {
-            let newGroupList = this.chunk(res.data.data, 2);
-            this.setState({ data2: res.data, newGroupList: newGroupList });
-          });
-        request({
-          url: 'api/wap/user/getGroupYouhuiInfo',
-          method: "GET",
-          data: {
-            group_info_id: this.$router.params.id,
-            is_xcx: 0,
-            xpoint: this.state.xPoint,
-            ypoint: this.state.yPoint
-          }
-        })
-          .then((res: any) => {
-            if (res.code == 200) {
-              if (res.data.gift_id) {
-                if (res.data.gift.mail_mode == 2) {
-                  this.setState({ isPostage: true })
-                }
-              } else {
-                this.setState({ isPostage: false })
-              }
-
-              let new_time = new Date().getTime()//ql
-              new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
-              new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-
-              this.setState({ data: res.data }, () => {
-                this.toShare();
-              });
-              Taro.hideLoading()
-            }
-          }).catch(err => {
-            console.log(err);
-          })
-      })
-    }).catch(err => {
-      this.setState({
-        yPoint: '',
-        xPoint: ''
-      }, () => {
-        request({
-          url: 'api/wap/user/getGroupbuyings',
-          method: "GET",
-          data: {
-            group_info_id: this.$router.params.id,
-            page: 1
-          }
-        })
-          .then((res: any) => {
-            let newGroupList = this.chunk(res.data.data, 2);
-            this.setState({ data2: res.data, newGroupList: newGroupList });
-          });
-        request({
-          url: 'api/wap/user/getGroupYouhuiInfo',
-          method: "GET",
-          data: {
-            group_info_id: this.$router.params.id,
-            is_xcx: 0,
-            xpoint: this.state.xPoint,
-            ypoint: this.state.yPoint
-          }
-        })
-          .then((res: any) => {
-            if (res.code == 200) {
-              if (res.data.gift_id) {
-                if (res.data.gift.mail_mode == 2) {
-                  this.setState({ isPostage: true })
-                }
-              } else {
-                this.setState({ isPostage: false })
-              }
-              this.setState({ data: res.data }, () => {
-                this.toShare();
-              });
-              Taro.hideLoading()
-            } else {
-              Taro.showToast({
-                title: res.data,
-                icon: 'none',
-                duration: 2000
-              })
-              setTimeout(() => {
-                Taro.navigateBack()
-              }, 2000)
-            }
-          }).catch(err => {
-            console.log(err);
-          })
-      })
-    })
-  };
+export default class GroupActivity extends Component {
+    config = {
+        navigationBarTitleText: "拼团活动",
+        enablePullDownRefresh: false
+    };
 
 
-  toShare = () => {
-    let userAgent = navigator.userAgent;
-    let isIos = userAgent.indexOf('iPhone') > -1;
-    let url: any;
-    if (isIos) {
-      url = sessionStorage.getItem('url');
-    } else {
-      url = location.href;
-    }
-    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
-    let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
-    Taro.request({
-      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
-      method: 'GET',
-      data: {
-        url
-      }
-    })
-      .then(res => {
-        let { data } = res;
-        wx.config({
-          debug: false,
-          appId: data.appId,
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
-        })
-        wx.ready(() => {
-          wx.updateAppMessageShareData({
-            title: titleMsg,
-            desc: descMsg,
-            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id,
-            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
-            success: function () {
-              //成功后触发
-              console.log("分享成功")
-            }
-          })
-        })
-      })
-  }
-  buttonToShare = () => {
-    this.setState({ isShare: true });
-  }
-  closeShare = () => {
-    this.setState({ isShare: false });
-  }
-
-  chunk = (arr, size) => {
-    var arr1 = new Array();
-    for (var i = 0; i < Math.ceil(arr.length / size); i++) {
-      arr1[i] = new Array();
-    }
-    var j = 0;
-    var x = 0;
-    for (var i = 0; i < arr.length; i++) {
-      if (!((i % size == 0) && (i != 0))) {
-        arr1[j][x] = arr[i];
-        x++;
-      } else {
-        j++;
-        x = 0;
-        arr1[j][x] = arr[i];
-        x++;
-      }
-    }
-    return arr1;
-  }
-
-
-  //去图文详情
-  toImgList = () => {
-    this.clearTimeOut();
-    Taro.navigateTo({
-      url: '/detail-pages/gift/gift?gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
-    })
-  }
-  //去商店
-  handleClick2 = (e) => {
-    this.clearTimeOut();
-    Taro.navigateTo({
-      // url: '/detail-pages/business/index?id=' + _id
-      url: '/pages/business/index?id=' + this.state.data.id
-    })
-  };
-  //打电话
-  makePhoneCall = (e) => {
-    Taro.makePhoneCall({
-      phoneNumber: this.state.data.tel
-    })
-      .then((res: any) => {
-        console.log(res)
-      });
-    e.stopPropagation();
-  }
-
-  //地图
-  routePlanning = (e) => {
-    let browserType = getBrowserType();
-    if (browserType == 'wechat') {
-      let longitude = parseFloat(this.state.data.xpoint);
-      let latitude = parseFloat(this.state.data.ypoint);
-      let userAgent = navigator.userAgent;
-      let isIos = userAgent.indexOf('iPhone') > -1;
-      let url: any;
-      if (isIos) {
-        url = sessionStorage.getItem('url');
-      } else {
-        url = location.href;
-      }
-      Taro.request({
-        url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
-        method: 'GET',
+    state = {
+        //允许参加活动
+        allowGroup: '',
+        //从分享进入
+        isFromShare: false,
+        //登录弹框
+        showBounced: false,
+        //图片轮播下标
+        bannerImgIndex: 0,
+        //列表轮播下标
+        current: 0,
+        //查看更多
+        showMoreRules: false,
         data: {
-          url
-        }
-      })
-        .then(res => {
-          let { data } = res;
-          wx.config({
-            debug: false,
-            appId: data.appId,
-            timestamp: data.timestamp,
-            nonceStr: data.nonceStr,
-            signature: data.signature,
-            jsApiList: [
-              "getLocation",
-              "openLocation"
-            ]
-          })
-          wx.ready(() => {
-            wx.openLocation({
-              latitude,
-              longitude,
-              scale: 18,
-              name: this.state.data.name,
-              address: this.state.data.address,
-            })
+            activity_begin_time: "",
+            activity_end_time: "",
+            activity_id: 0,
+            activity_time_status: 0,
+            address: "",
+            begin_time: "",
+            description: [],
+            distances: "",
+            end_time: "",
+            gift: { title: "", price: "", postage: "", mail_mode: 2, cover_image: '' },
+            gift_id: 0,
+            icon: "",
+            id: 0,//店id
+            image: "",
+            images: [],
+            is_show_button: 0,
+            list_brief: "",
+            locate_match_row: "",
+            name: "",//店名
+            number: 0,
+            participate_number: 0,
+            participation_money: "",
+            pay_money: "",
+            preview: '',
+            route: "",
+            succeed_participate_number: 0,
+            supplier_id: 0,
+            team_set_end_time: '',
+            tel: "",
+            xpoint: '',
+            youhui_id: 0,//活动id
+            youhui_name: "",//活动名
+            ypoint: ""
+        },
+        data2: {
+            data: [],
+            page: 1,
+            pageRow: 2,
+            total: 0,
+        },
+        newGroupList: []
+    };
 
-          })
+    /**
+         * 获取位置信息
+         */
+    componentDidShow() {
+        let arrs = Taro.getCurrentPages()
+        if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
+        Taro.showLoading({ title: 'loading' })
+        getLocation().then((res: any) => {
+            this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, yPoint: res.latitude || '', xPoint: res.longitude || '' })
+        }).catch((err) => {
+            this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, yPoint: '', xPoint: '' })
         })
-
-
-    } else if (browserType == 'alipay') {
-      Taro.navigateTo({
-        url: 'https://m.amap.com/navi/?start=' + this.state.xPoint + ',' + this.state.yPoint + '&dest=' + this.state.data.xpoint + ',' + this.state.data.ypoint + '&destName=' + this.state.data.name + '&key=67ed2c4b91bf9720f108ae2cc686ec19'
-      })
-    } else {
-      Taro.showToast({
-        title: "信息出错",
-        icon: "none"
-      });
     }
-    e.stopPropagation();
-  }
 
-  // 是否选择礼品
-  chooseGift = () => {
-    this.setState({ isPostage: !this.state.isPostage })
-  }
-
-
-  payment() {
-    let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
-    let _temptype = this.$router.params.type;
-    console.log(_temptype, '_temptype', _tempid, '_tempid')
-    Taro.showLoading({
-      title: 'loading',
-    })
-    let _type;
-    let browserType = getBrowserType();
-    if (browserType == 'wechat') {
-      _type = 1;
-    } else if (browserType == 'alipay') {
-      _type = 2;
-    } else {
-      Taro.showToast({
-        title: "支付出错",
-        icon: "none"
-      });
-    }
-    let datas = {}
-    if (_type == 1) {
-      datas = {
-        public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
-        activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
-        open_id: Cookie.get(process.env.OPEN_ID),
-        unionid: Cookie.get(process.env.UNION_ID),
-        type: this.$router.params.type,
-        xcx: 0,
-        number: 1,
-      }
-    } else {
-      datas = {
-        public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
-        activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
-        type: this.$router.params.type,
-        xcx: 0,
-        number: 1,
-        alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
-      }
-    }
-    //请求支付属性
-    request({
-      url: 'payCentre/toWxPay',
-      method: "POST",
-      header: {
-        "Content-Type": "application/json"
-      },
-      data: JSON.stringify(datas)
-    })
-      .then((res: any) => {
-        Taro.hideLoading();
-        if (res.code == 200) {
-          let order_sn = res.channel_order_sn;//比增值少一层data
-          if (_type == 1) {
-            //微信支付
-            window.WeixinJSBridge.invoke(
-              'getBrandWCPayRequest', {
-              "appId": res.data.appId,
-              "timeStamp": res.data.timeStamp,
-              "nonceStr": res.data.nonceStr,
-              "package": res.data.package,
-              "signType": res.data.signType,
-              "paySign": res.data.paySign
-            },
-              function (res) {
-                //微信支付成功
-                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  if (_temptype == '5') {
-                    //开团要得到开团活动id再跳转活动详情
-                    Taro.showLoading({
-                      title: 'loading',
-                      mask: true
-                    });
-                    interval = setInterval(() => {
-                      request({
-                        url: 'api/wap/user/getUserYouhuiGroupId',
-                        method: "GET",
-                        data: { order_sn: order_sn }
-                      }).then((res: any) => {
-                        if (res.code == 200) {
-                          clearInterval(interval);
-                          Taro.hideLoading();
-                          let resGroupid = res.data.id;
-                          Taro.navigateTo({
-                            url: '/pages/activity/pages/group/group?id=' + resGroupid,
-                            success: () => {
-                              var page = Taro.getCurrentPages().pop();
-                              if (page == undefined || page == null) return;
-                              page.onLoad();
-                            }
-                          })
-                        }
-                      })
-                    }, 1000);
-                  } else if (_temptype == '55') {
-                    Taro.navigateTo({
-                      url: '/pages/activity/pages/group/group?id=' + _tempid,
-                      success: () => {
-                        var page = Taro.getCurrentPages().pop();
-                        if (page == undefined || page == null) return;
-                        page.onLoad();
-                      }
-                    })
-                  } else {
-                    console.log('类型出错');
-                    return;
-                  }
-
+    /**
+     * 获取拼团活动信息
+     * @param {object} data 活动id，坐标
+     */
+    getGroupInfo = (data: object) => {
+        getGroupYouhuiInfo(data)
+            .then((res: any) => {
+                Taro.hideLoading();
+                if (res.code == 200) {
+                    let isPostage = false;
+                    if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
+                    let new_time = new Date().getTime()//ql
+                    new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
+                    new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
+                    this.setState({ data: res.data, isPostage });
+                    this.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
                 } else {
-                  //微信支付失败
+                    Taro.showToast({ title: '请求失败', icon: 'none' });
                 }
-              }
-            );
-          } else if (_type == 2) {
-            //支付宝支付
-            window.AlipayJSBridge.call('tradePay', {
-              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-            }, res => {
-              //支付宝支付成功
-              if (res.resultCode === "9000") {
-                if (_temptype == '5') {
-                  //开团要得到开团活动id再跳转活动详情
-                  Taro.showLoading({
-                    title: 'loading',
-                    mask: true
-                  });
-                  interval = setInterval(() => {
-                    request({
-                      url: 'api/wap/user/getUserYouhuiGroupId',
-                      method: "GET",
-                      data: { order_sn: order_sn }
-                    }).then((res: any) => {
-                      if (res.code == 200) {
-                        clearInterval(interval);
-                        Taro.hideLoading();
-                        let resGroupid = res.data.id;
-                        Taro.navigateTo({
-                          url: '/pages/activity/pages/group/group?id=' + resGroupid,
-                          success: () => {
-                            var page = Taro.getCurrentPages().pop();
-                            if (page == undefined || page == null) return;
-                            page.onLoad();
-                          }
-                        })
-                      }
-                    })
-                  }, 1000);
-                } else if (_temptype == '55') {
-                  Taro.navigateTo({
-                    url: '/pages/activity/pages/group/group?id=' + _tempid,
-                    success: () => {
-                      var page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onLoad();
-                    }
-                  })
-                } else {
-                  console.log('类型出错');
-                  return;
-                }
-
-              } else {
-                //支付宝支付失败
-              }
+            }).catch(err => {
+                Taro.hideLoading();
+                Taro.showToast({ title: '请求失败', icon: 'none' });
             })
-          } else {
-            console.log(_type)
-          }
-        } else {
-          Taro.showToast({ title: res.message, icon: 'none' })
-        }
-      }).catch(err => {
-        Taro.hideLoading();
-      })
-  }
-
-  payment2(_groupid) {
-    Taro.showLoading({
-      title: 'loading',
-    })
-    let _type;
-    let browserType = getBrowserType();
-    if (browserType == 'wechat') {
-      _type = 1;
-    } else if (browserType == 'alipay') {
-      _type = 2;
-    } else {
-      Taro.showToast({
-        title: "支付出错",
-        icon: "none"
-      });
-    }
-    let datas = {}
-    if (_type == 1) {
-      datas = {
-        public_type_id: _groupid,
-        activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
-        open_id: Cookie.get(process.env.OPEN_ID),
-        unionid: Cookie.get(process.env.UNION_ID),
-        type: 55,
-        xcx: 0,
-        number: 1,
-      }
-    } else {
-      datas = {
-        public_type_id: _groupid,
-        activity_id: this.$router.params.activity_id,
-        gift_id: this.state.isPostage ? this.$router.params.gift_id : undefined,
-        type: 55,
-        xcx: 0,
-        number: 1,
-        alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
-      }
-    }
-    //请求支付属性
-    request({
-      url: 'payCentre/toWxPay',
-      method: "POST",
-      header: {
-        "Content-Type": "application/json"
-      },
-      data: JSON.stringify(datas)
-    })
-      .then((res: any) => {
-        Taro.hideLoading();
-        if (res.code == 200) {
-          let order_id = res.data.order_id;
-          if (_type == 1) {
-            //微信支付
-            window.WeixinJSBridge.invoke(
-              'getBrandWCPayRequest', {
-              "appId": res.data.appId,
-              "timeStamp": res.data.timeStamp,
-              "nonceStr": res.data.nonceStr,
-              "package": res.data.package,
-              "signType": res.data.signType,
-              "paySign": res.data.paySign
-            },
-              function (res) {
-                //微信支付成功
-                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  Taro.navigateTo({
-                    url: '/pages/activity/pages/group/group?id=' + _groupid,
-                    // url: '/activity-pages/my-activity/my.activity',
-                    success: function (e) {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
-                    }
-                  })
-                } else {
-                  //微信支付失败
-                }
-              }
-            );
-          } else if (_type == 2) {
-            //支付宝支付
-            window.AlipayJSBridge.call('tradePay', {
-              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-            }, res => {
-              //支付宝支付成功
-              if (res.resultCode === "9000") {
-                Taro.navigateTo({
-                  url: '/pages/activity/pages/group/group?id=' + _groupid,
-                  // url: '/activity-pages/my-activity/my.activity',
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
-                  }
-                })
-              } else {
-                //支付宝支付失败
-              }
-            })
-          } else {
-            console.log(_type)
-          }
-        } else {
-          Taro.showToast({ title: res.message, icon: 'none' })
-        }
-      }).catch(err => {
-        Taro.hideLoading();
-      })
-  }
-
-  /**
-   * 回首页
-   */
-  handleGoHome = () => {
-    this.clearTimeOut();
-    Taro.navigateTo({
-      url: '/'
-    })
-  }
-
-  addGroupList = () => {
-    if ((this.state.data2.total / this.state.data2.pageRow) > this.state.groupListPages) {
-      let thePage = this.state.groupListPages + 1;
-      this.setState({ groupListPages: thePage }, () => {
-        request({
-          url: 'api/wap/user/getGroupbuyings',
-          method: "GET",
-          data: {
-            group_info_id: this.$router.params.id,
-            page: thePage
-          }
-        })
-          .then((res: any) => {
-            let newDate = this.state.data2.data.concat(res.data.data);
-            let newObj = this.state.data2;
-            newObj.data = newDate;
-            this.setState({ data2: newObj });
-          });
-
-      });
-    } else {
-      return;
-    }
-  }
-  goToaConfirm = (e) => {
-    let phone_status = Cookie.get('phone_status')
-    if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
-      this.setState({ showBounced: true })
-      return
     }
 
-    if (this.state.data.gift_id) {
-      this.clearTimeOut();
-      if (this.$router.params.type == '5') {
-        //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
-        Taro.navigateTo({
-          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
-        })
-      } else if (this.$router.params.type == '55') {
-        //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
-        Taro.navigateTo({
-          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
-        })
-      }
-    } else {
-      this.payment();
-    }
-  }
-  goToaConfirmAddGroup = (_id, e) => {
-    if (this.state.data.gift_id) {
-      this.clearTimeOut();
-      //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
-      Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
-      })
-    } else {
-      this.payment2(_id);
-    }
-  }
-
-  render() {
-    const { description } = this.state.data;
-    const { showBounced } = this.state
-    return (
-      <View className="d_appre" >
-        {
-          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
-            this.setState({ showBounced: false })
-          }} /> : null
-        }
-        {
-          this.state.groupListShow ? <View className="d_appre_groupList" onClick={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }} onTouchMove={(e) => { this.setState({ groupListShow: false }); e.stopPropagation(); }}>
-            <View className="d_appre_groupList_box" onClick={(e) => { e.stopPropagation() }} onTouchMove={(e) => { e.stopPropagation(); }}>
-              <View className="d_appre_groupList_box_title">正在拼团</View>
-              <View className="d_appre_groupList_box_slideBox">
-                {/* <View className="d_appre_groupList_box_slideBox_content" > */}
-                <ScrollView
-                  className='d_appre_groupList_box_slideBox_content'
-                  scrollY
-                  scrollWithAnimation
-                  onScrollToLower={this.addGroupList}
-                >
-                  {
-                    this.state.data2.data.map((item: any) => {
-                      return (
-                        <View className="group_list0" >
-                          <View className="group_list_img0" >
-                            <Image className="listImg0" src={item.avatar} />
-                          </View>
-                          <View className="group_list_name0" >{item.real_name}</View>
-                          <View className="group_list_timesbox0" >
-                            <View className="group_list_lack0" >
-                              <View className="group_list_lackredblack10" >还差</View>
-                              <View className="group_list_lackred0" >{item.number - item.participation_number}人</View>
-                              <View className="group_list_lackredblack20" >拼成</View>
-                            </View>
-                            <View className="group_list_times0" >
-                              <TimeUp itemtime={item.end_at} />
-                            </View>
-                          </View>
-                          <View className="group_list_btnbox0" >
-                            {
-                              item.is_team ? <View className="group_list_btn0" style={{ background: '#999999' }} >您已参团</View>
-                                : <View className="group_list_btn0" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >立即参团</View>
-                            }
-                          </View>
-                        </View>
-                      )
-                    })
-                  }
-
-                </ScrollView>
-                {/* </View> */}
-              </View>
-              <View className="group_list_toast" >上滑查看更多</View>
-              {/* {
-                this.state.data2.data && this.state.data2.data.length > 5 ? <View className="group_list_toast" >上滑查看更多</View> : null
-              } */}
-            </View>
-            <View className="group_list_closebtn" >
-              <AtIcon value='close-circle' size="28px" color='#fff'></AtIcon>
-            </View>
-          </View> : null
-        }
-        <View className="group_head_bottom_share" onClick={this.buttonToShare.bind(this)}>
-          <Image className="shareimg" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TTbP3DjHQZPhRCxkcY7aSBAaSxKKS3Wi.png" />
-          分享
-        </View >
-
-        {
-          this.state.data.images.length > 0 ? <View
-            onClick={() => {
-              this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.imagesCurrent] })
-            }}>
-            <Swiper
-              onChange={(e) => {
-                this.setState({ imagesCurrent: e.detail.current })
-              }}
-              className='test-h'
-              indicatorColor='#999'
-              indicatorActiveColor='#333'
-              circular
-              indicatorDots
-              autoplay
-            >
-              {
-                this.state.data.images ? this.state.data.images.map((item, index) => {
-                  return (
-                    <SwiperItem key={item} >
-                      <View className='demo-text'>
-                        <Image className="demo-text-Img" src={item} />
-                      </View>
-                    </SwiperItem>
-                  )
-                }) : null
-              }
-            </Swiper>
-          </View> : null
-        }
-
-        <View className="coupon_box_title">
-          <View className="group_coupon_title" >{this.state.data.youhui_name}</View>
-          <View className="group_rule_time" >
-            <View className="group_rule_time_key" >活动时间:</View>
-            <View className="group_rule_time_data" > {this.state.data.activity_begin_time}-{this.state.data.activity_end_time}</View>
-          </View>
-          <View className="group_head_bottom" style={{ borderBottom: "none" }}>
-            {this.state.data.gift ? <View className="group_head_bottom_gift">送{this.state.data.gift.title}</View> : null}
-            <View className="group_head_bottom_list">{this.state.data.number}人团</View>
-            <View className="group_head_bottom_list">{this.state.data.team_set_end_time}小时</View>
-          </View>
-
-          {/* <View className="group_msg" >
-            <View className="group_msg_titlebox" >商品详情</View>
-            <View className="group_msgBox" >
-              <View className="group_msgTitle_Box" >
-                <View className="group_msgTitle" >名称</View>
-                <View className="group_msgTitle" >数量</View>
-                <View className="group_msgTitle" >价格</View>
-              </View>
-              <View className="group_msgContent_Box" >
-                <View className="group_msgContent" >番茄炒蛋</View>
-                <View className="group_msgContent" >2</View>
-                <View className="group_msgContent" >￥200</View>
-              </View>
-              <View className="group_msgContent_Box" >
-                <View className="group_msgContent" >麦当劳开心乐园儿童套餐</View>
-                <View className="group_msgContent" >1</View>
-                <View className="group_msgContent" >￥150</View>
-              </View>
-            </View>
-          </View> */}
-
-        </View>
-
-        {
-          this.state.data.gift_id ?
-            <View className="appre_gift" >
-              <View className="appre_gift_titlebox" >
-                <View className="appre_gift_title" >赠送礼品</View>
-                <View className="appre_gift_Imagelist" onClick={this.toImgList.bind(this)}>图文详情</View>
-              </View>
-              <View className="appre_gift_giftinfo" >{this.state.data.gift.title}</View>
-              <View className="appre_gift_giftmsgbox" >
-                <View className="appre_gift_giftmsg" >{
-                  this.state.data.gift.mail_mode == 1 ? '免运费' : `运费${this.state.data.gift.postage}元`
-                }</View>
-              </View>
-              <View className="appre_gift_giftlist" >
-                <Image className="appre_gift_giftlistImg"
-                  mode="widthFix"
-                  onClick={() => { this.setState({ imgZoom: true, imgZoomSrc: this.state.data.gift.cover_image }) }}
-                  src={this.state.data.gift.cover_image} />
-              </View>
-            </View> : null
-        }
-        <View className="appre_process2" >
-          <Image className="appre_process2_Image" src="http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/x2WBTiwQwdap5ktNYYTyrGeP7E4zD5Qk.png" />
-        </View>
-
-
-        {
-          this.state.data2.data && this.state.data2.data.length > 0 ? <View className="group_num" >
-            <View className="group_num_titlebox" >
-              <View className="group_num_title" >{this.state.data2.total}人正在拼</View>
-              <View className="group_num_now" onClick={() => this.setState({ groupListShow: true })}>查看更多</View>
-            </View>
-          </View> : null
-        }
-        {
-          this.state.data2.data && this.state.data2.data.length > 0 ? <View>
-            <View className='diu'>
-              <Scrolltab tabList={this.state.newGroupList} storeName={this.state.data.name} isPostage={this.state.isPostage} gift_id={this.state.data.gift_id} />
-            </View>
-          </View> : null
-        }
-        <View className="appre_rule" >
-          <View className="appre_rule_title" >使用规则</View>
-          <View className="appre_rule_time" >
-            <View className="appre_rule_time_key" >拼团人数:</View>
-            <View className="appre_rule_time_data" >{this.state.data.number}人团</View>
-          </View>
-          <View className="appre_rule_time" >
-            <View className="appre_rule_time_key" >时间限制:</View>
-            <View className="appre_rule_time_data" >{this.state.data.team_set_end_time}小时内</View>
-          </View>
-          {
-            (description) ?
-              <View className="appre_rule_list" style={{ height: description.length <= 3 ? "auto" : (this.state.ruleMore ? "auto" : "2.5rem") }}>
-                <View className="appre_rule_list_key" >详情描述:</View>
-                <View className="appre_rule_list_data" >
-                  {
-                    (description) ? description.map((item) => {
-                      return (
-                        <View className="appre_rule_list_msg" >. {item}</View>
-                      )
-                    }) : null
-                  }
-                </View>
-
-              </View> : null
-          }
-          {
-            (description && description.length > 3) ?
-              <View className="appre_rule_list_more" onClick={() => { this.setState({ ruleMore: !this.state.ruleMore }) }}>
-                {this.state.ruleMore ? "收回" : "查看更多"}
-                {
-                  this.state.ruleMore ?
-                    <AtIcon value="chevron-up" color="#999" size="16px" /> : <AtIcon value="chevron-down" color="#999" size="16px" />
-                }
-              </View> : null
-          }
-        </View>
-        <View className="setMeal_store">
-          <View className="setMeal_store_box" onClick={this.handleClick2.bind(this)}>
-            <View className="setMeal_store_title">适用店铺</View>
-            <View className="setMeal_store_storebox">
-              <View className="setMeal_store_Image">
-                <Image className="setMeal_store_img" src={this.state.data.preview} />
-              </View>
-              <View className="setMeal_store_msg">
-                <View className="setMeal_store_name">{this.state.data.name}</View>
-                {/* <View className="setMeal_store_price">人均：￥222</View> */}
-              </View>
-              <View className="setMeal_store_icon">
-                <AtIcon value='chevron-right' size='20' color='#ccc'></AtIcon>
-              </View>
-            </View>
-            <View className="setMeal_store_addressbox">
-              <View className="setMeal_store_distance" onClick={this.routePlanning.bind(this)}>
-                <View className="setMeal_store_distance_Image" >
-                  <Image className="setMeal_store_distance_AddressImg" src={AddressImg} />
-                </View>
-                <View className="setMeal_store_distance_info" >{this.state.data.distances}</View>
-              </View>
-              <View className="setMeal_store_address" onClick={this.routePlanning.bind(this)}>{this.state.data.address}</View>
-              <View className="setMeal_store_mobile" onClick={this.makePhoneCall.bind(this)}>
-                <Image className="setMeal_store_MobileImg" src={MobileImg} />
-              </View>
-            </View>
-          </View>
-        </View>
-        <View className="paymoney_box">
-          <View className="paymoney_price">
-            <View className="paymoney_price_icon">￥</View>
-            <View className="paymoney_price_num">{this.state.data.participation_money}</View>
-            <View className="paymoney_price_oldprice">￥{this.state.data.pay_money}</View>
-            {
-              this.state.isPostage ? <View className='paymoney_price_info'> {
-                this.state.data.gift.mail_mode == 1 ? null :
-                  '+' + this.state.data.gift.postage}</View> : null
+    /**
+      * 获取拼团列表
+      * @param {object} data 活动id，页数
+      */
+    getGroupList = (data: object) => {
+        Taro.showLoading({ title: 'loading' })
+        getGroupbuyings(data).then((res: any) => {
+            Taro.hideLoading();
+            if (res.code == 200) {
+                let newGroupList = this.chunk(res.data.data, 2);
+                this.setState({ data2: res.data, newGroupList: newGroupList }, () => { this.listAtb() });
+            } else {
+                Taro.showToast({ title: res.message, icon: 'none' });
             }
-          </View>
-          {
-            this.state.allowGroup ?
-              <View className="paymoney_buynow" id="prohibit">
-                {this.state.allowGroup}
-              </View> :
-              <View className="paymoney_buynow" id="allow" onClick={this.goToaConfirm.bind(this)}>
-                {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}
-              </View>
-          }
-        </View>
+        }).catch((err) => {
+            Taro.hideLoading();
+        })
+    }
 
-        <Zoom
-          src={this.state.imgZoomSrc}
-          showBool={this.state.imgZoom}
-          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
-        />
-        {/* 分享 */}
-        {
-          this.state.isShare == true ? (
-            <View className='share_mask' onClick={this.closeShare}>
-              <View className='share_box'>
-                <View className='share_text text_top'>
-                  点击此按钮分享给好友
+    /**
+       * 切割数组
+       * @param {object} arr 旧数组
+       * @param {object} size 二维数组第二层长度
+       */
+    chunk = (arr, size) => {
+        var arr1 = new Array();
+        for (var i = 0; i < Math.ceil(arr.length / size); i++) {
+            arr1[i] = new Array();
+        }
+        var j = 0;
+        var x = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (!((i % size == 0) && (i != 0))) {
+                arr1[j][x] = arr[i];
+                x++;
+            } else {
+                j++;
+                x = 0;
+                arr1[j][x] = arr[i];
+                x++;
+            }
+        }
+        return arr1;
+    }
+
+    /**
+          * 去图文详情
+          */
+    toImgList = () => {
+        Taro.navigateTo({
+            url: '/detail-pages/gift/gift?gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
+        })
+    }
+
+    /**
+      * 底部发团参团，判断登录，判断带不带礼品
+      */
+    goToaConfirm = (e) => {
+        let phone_status = Cookie.get('phone_status')
+        if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+            this.setState({ showBounced: true })
+            return
+        }
+
+        if (this.state.data.gift_id) {
+            if (this.$router.params.type == '5') {
+                //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+                Taro.navigateTo({
+                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+                })
+            } else if (this.$router.params.type == '55') {
+                //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
+                Taro.navigateTo({
+                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
+                })
+            }
+        } else {
+            this.payment();
+        }
+    }
+
+    /**
+      * 列表参团，判断登录，判断带不带礼品
+      */
+    goToaConfirmAddGroup = (_id, e) => {
+        let phone_status = Cookie.get('phone_status')
+        if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+            this.setState({ showBounced: true })
+            return
+        }
+        if (this.state.data.gift_id) {
+            Taro.navigateTo({
+                url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
+            })
+        } else {
+            this.groupPayment(_id);
+        }
+    }
+
+    /**
+      * 底部按钮发团或者拼团支付,不带礼品
+      */
+    payment() {
+        let that = this;
+        let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
+        let _temptype = this.$router.params.type;
+        Taro.showLoading({ title: 'loading' });
+        let sameDatas = {
+            public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
+            activity_id: this.$router.params.activity_id,
+            type: this.$router.params.type,
+            xcx: 0,
+            number: 1,
+        };
+        let browserType = getBrowserType();
+        let datas;
+        if (browserType == 'wechat') {
+            datas = {
+                ...sameDatas,
+                open_id: Cookie.get(process.env.OPEN_ID),
+                unionid: Cookie.get(process.env.UNION_ID),
+            }
+        }
+        else if (browserType == 'alipay') {
+            datas = {
+                ...sameDatas,
+                alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
+            }
+        }
+        else {
+            Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
+        }
+        toWxPay(datas).then((res: any) => {
+            Taro.hideLoading();
+            if (res.code == 200) {
+                let order_sn = res.channel_order_sn;//比增值少一层data
+                if (browserType == 'wechat') {
+                    //微信支付
+                    window.WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest', {
+                        "appId": res.data.appId,
+                        "timeStamp": res.data.timeStamp,
+                        "nonceStr": res.data.nonceStr,
+                        "package": res.data.package,
+                        "signType": res.data.signType,
+                        "paySign": res.data.paySign
+                    },
+                        function (res) {
+                            //微信支付成功
+                            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                if (_temptype == '5') {
+                                    //开团要得到开团活动id再跳转活动详情
+                                    that.getLastGroupId(order_sn);
+                                } else if (_temptype == '55') {
+                                    that.goToGroupInfo(_tempid);
+                                }
+                            } else { Taro.showToast({ title: "微信支付失败", icon: "none" }); }
+                        }
+                    );
+                }
+                else if (browserType == 'alipay') {
+                    //支付宝支付
+                    window.AlipayJSBridge.call('tradePay', {
+                        tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+                    }, res => {
+                        //支付宝支付成功
+                        if (res.resultCode === "9000") {
+                            if (_temptype == '5') {
+                                //开团要得到开团活动id再跳转活动详情
+                                that.getLastGroupId(order_sn);
+                            } else if (_temptype == '55') {
+                                that.goToGroupInfo(_tempid);
+                            }
+                        } else { Taro.showToast({ title: "支付宝支付失败", icon: "none" }); }
+                    })
+                } else {
+                    Taro.showToast({ title: res.message, icon: 'none' })
+                }
+            }
+        })
+    }
+
+    /**
+     * 列表参团，不带礼品
+     * @param {object} _groupid 团id
+     */
+    groupPayment(_groupid) {
+        let that = this;
+        Taro.showLoading({ title: 'loading' });
+        let sameDatas = {
+            public_type_id: _groupid,
+            activity_id: this.$router.params.activity_id,
+            type: 55,
+            xcx: 0,
+            number: 1,
+        };
+        let browserType = getBrowserType();
+        let datas;
+        if (browserType == 'wechat') {
+            datas = {
+                ...sameDatas,
+                open_id: Cookie.get(process.env.OPEN_ID),
+                unionid: Cookie.get(process.env.UNION_ID),
+            }
+        }
+        else if (browserType == 'alipay') {
+            datas = {
+                ...sameDatas,
+                alipay_user_id: Cookie.get(process.env.ALIPAY_USER_ID),
+            }
+        }
+        else {
+            Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
+        }
+
+        toWxPay(datas).then((res: any) => {
+            Taro.hideLoading();
+            if (res.code == 200) {
+                if (browserType == 'wechat') {
+                    //微信支付
+                    window.WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest', {
+                        "appId": res.data.appId,
+                        "timeStamp": res.data.timeStamp,
+                        "nonceStr": res.data.nonceStr,
+                        "package": res.data.package,
+                        "signType": res.data.signType,
+                        "paySign": res.data.paySign
+                    },
+                        function (res) {
+                            //微信支付成功
+                            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                that.goToGroupInfo(_groupid);
+                            } else { Taro.showToast({ title: "微信支付失败", icon: "none" }); }
+                        }
+                    );
+                }
+                else if (browserType == 'alipay') {
+                    //支付宝支付
+                    window.AlipayJSBridge.call('tradePay', {
+                        tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+                    }, res => {
+                        //支付宝支付成功
+                        if (res.resultCode === "9000") {
+                            that.goToGroupInfo(_groupid);
+                        } else { Taro.showToast({ title: "支付宝支付失败", icon: "none" }); }
+                    })
+                } else {
+                    Taro.showToast({ title: res.message, icon: 'none' })
+                }
+            }
+        })
+    }
+
+
+    /**
+    * 发团支付后查询团id跳转
+    *  @param {object} order_sn 订单号
+    */
+    getLastGroupId = (order_sn) => {
+        let that = this;
+        Taro.showLoading({ title: '支付成功，正在查询用户增值活动id' });
+        let timer = setTimeout(() => {
+            clearTimeout(timer);
+            getUserYouhuiGroupId({ order_sn: order_sn })
+                .then((res: any) => {
+                    if (res.code == 200) {
+                        Taro.hideLoading();
+                        that.goToGroupInfo(res.data.id)
+                    } else {
+                        that.getLastGroupId(order_sn)
+                    }
+                }).catch((err) => {
+                    that.getLastGroupId(order_sn)
+                })
+        }, 1000);
+    }
+
+    /**
+     * 跳转团详情
+     *  @param {object} _tempid 团id
+     */
+    goToGroupInfo = (_tempid: any) => {
+        Taro.navigateTo({
+            url: '/pages/activity/pages/group/group?id=' + _tempid,
+            success: () => {
+                var page = Taro.getCurrentPages().pop();
+                if (page == undefined || page == null) return;
+                page.onLoad();
+            }
+        })
+    }
+
+    /**
+     * 列表轮播
+     */
+    listAtb = () => {
+        let timer = setTimeout(() => {
+            clearTimeout(timer);
+            let tempPage = this.state.current == this.state.newGroupList.length - 1 ? 0 : this.state.current + 1;
+            this.setState({ current: tempPage }, () => { this.listAtb() })
+        }, 3000)
+    }
+
+    /**
+    * 回首页
+    */
+    handleGoHome = () => { Taro.navigateTo({ url: '/' }) }
+
+    render() {
+        const { description } = this.state.data;
+        const { showBounced } = this.state;
+        return (
+            <View className="group-activity-detail">
+                <Swiper
+                    onChange={(e) => {
+                        this.setState({ bannerImgIndex: e.detail.current })
+                    }}
+                    className='group-banner'
+                    circular
+                    autoplay
+                >
+                    {
+                        this.state.data.images.length ? this.state.data.images.map((item, index) => {
+                            return (
+                                <SwiperItem className="group-banner-swiperItem" key={item}>
+                                    <Image className="group-banner-img" src={item} />
+                                </SwiperItem>
+                            )
+                        }) : null
+                    }
+                </Swiper>
+                <View className="banner-number-box">
+                    <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                    <View className="banner-number">{this.state.data.images.length}</View>
                 </View>
-                <Image src={require('../../../assets/share_arro.png')} className='share_img' />
-              </View>
+                <View className="collect-box">
+                    <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
+                </View>
+                <View className="share-box">
+                    <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
+                </View>
+
+                <View className="group-info-content">
+                    <View className="group-info-title">
+                        <View className="group-info-title-label">拼团券</View>
+                        <View className="group-info-title-text">{this.state.data.youhui_name}</View>
+                    </View>
+                    <View className="group-info-price">
+                        <View className="group-price-info">
+                            <View className="group-price-info-text">优惠价￥</View>
+                            <View className="group-price-info-new">{this.state.data.participation_money}</View>
+                            <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
+                        </View>
+                        <View className="group-price-discounts">已优惠￥{Number(this.state.data.pay_money) - Number(this.state.data.participation_money)}</View>
+                    </View>
+                    <View className="group-info-label">
+                        <View className="group-info-label-item">{this.state.data.number}人团</View>
+                        {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null}
+                    </View>
+                </View>
+                <Image className="group-banner-img" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
+
+                {
+                    this.state.newGroupList.length ? <View className="group-group-num">
+                        <View className='apply-title-box'>
+                            <View className='apply-title-left'></View>
+                            <View className='apply-title'>{this.state.data2.total}人正在拼</View>
+                        </View>
+                        <View className='apply-title-right'>正在拼团</View>
+                    </View> : null
+
+                }
+                {
+                    this.state.newGroupList.length ? <AtTabs
+                        current={this.state.current}
+                        scroll
+                        className="swiper-group-list"
+                        tabDirection='vertical'
+                        height={'34.6vw'}
+                        tabList={[]}
+                        onClick={() => { }}>
+                        {
+                            this.state.newGroupList.map((item: any, index) => {
+                                return (
+                                    <AtTabsPane tabDirection='vertical' current={this.state.current} index={index} key={index} className="swiper-group-list-atTabsPane">
+                                        <View className="swiper-group-list-item">
+                                            <View className="swiper-item" onClick={() => { console.log(item[0]) }}>
+                                                <View className="group-user" >
+                                                    <View className="group-list-img" >
+                                                        <Image className="listImg" src={item[0].avatar} />
+                                                    </View>
+                                                    <View className="group-list-name" >{item[0].real_name}</View>
+                                                </View>
+
+                                                <View className="group-info" >
+                                                    <View className="group-list-timesbox" >
+                                                        <View className="group-list-lack" >
+                                                            <View className="group-list-lackredblack1" >还差</View>
+                                                            <View className="group-list-lackred" >{item[0].number - item[0].participation_number}人</View>
+                                                            <View className="group-list-lackredblack2" >拼成</View>
+                                                        </View>
+                                                        <View className="group-list-times" >
+                                                            <TimeUp itemtime={item[0].end_at} />
+                                                        </View>
+                                                    </View>
+                                                    <View className="group-list-btnbox" >
+                                                        {
+                                                            item[0].is_team ? <View className="group-list-btn" style={{ background: '#999999' }}  >您已参团</View> :
+                                                                <View className="group-list-btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                                                        }
+                                                    </View>
+                                                </View>
+                                            </View>
+                                            {
+                                                item[1] ? <View className="swiper-item" >
+
+                                                    <View className="group-user" >
+                                                        <View className="group-list-img" >
+                                                            <Image className="listImg" src={item[1].avatar} />
+                                                        </View>
+                                                        <View className="group-list-name" >{item[1].real_name}</View>
+                                                    </View>
+
+                                                    <View className="group-info" >
+                                                        <View className="group-list-timesbox" >
+                                                            <View className="group-list-lack" >
+                                                                <View className="group-list-lackredblack1" >还差</View>
+                                                                <View className="group-list-lackred" >{item[1].number - item[1].participation_number}人</View>
+                                                                <View className="group-list-lackredblack2" >拼成</View>
+                                                            </View>
+                                                            <View className="group-list-times" >
+                                                                <TimeUp itemtime={item[1].end_at} />
+                                                            </View>
+                                                        </View>
+                                                        <View className="group-list-btnbox" >
+                                                            {
+                                                                item[1] && item[1].is_team ? <View className="group-list-btn" style={{ background: '#999999' }} >已参团</View> :
+                                                                    <View className="group-list-btn" onClick={this.goToaConfirmAddGroup.bind(this, item[1].id)}  >参团</View>
+                                                            }
+                                                        </View>
+                                                    </View>
+
+                                                </View> : null
+                                            }
+                                        </View>
+                                    </AtTabsPane>
+                                )
+                            })
+                        }
+                    </AtTabs>
+                        : null
+
+                }
+                {/* <Swiper
+                    onChange={(e) => {
+                        // console.log(this.state.current, e.detail.current)
+                        // if (this.state.current == this.state.list.length - 2) {
+                        //     this.setState({ current: 0 })
+                        // }
+                        // else {
+                        //     this.setState({ current: e.detail.current })
+                        // };
+                    }}
+                    className='swiper-group-list'
+                    autoplay
+                    // circular
+                    displayMultipleItems={2}
+                    vertical
+                >
+                    {
+                        this.state.list.map((item, index) => {
+                            return (
+                                <SwiperItem key={item} >
+                                    <View className="swiper-item" onClick={() => { console.log(item) }}>
+
+                                        <View className="group-user" >
+                                            <View className="group-list-img" >
+                                                <Image className="listImg" src={"http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png"} />
+                                            </View>
+                                            <View className="group-list-name" >{index}测试测试测试测试</View>
+                                        </View>
+
+                                        <View className="group-info" >
+                                            <View className="group-list-timesbox" >
+                                                <View className="group-list-lack" >
+                                                    <View className="group-list-lackredblack1" >还差</View>
+                                                    <View className="group-list-lackred" >33人</View>
+                                                    <View className="group-list-lackredblack2" >拼成</View>
+                                                </View>
+                                                <View className="group-list-times" >
+                                                    <TimeUp itemtime={'2020-6-8'} />
+                                                </View>
+                                            </View>
+                                            <View className="group-list-btnbox" >
+                                                <View className="group-list-btn" >参团</View>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </SwiperItem>
+                            )
+                        })
+                    }
+                </Swiper> */}
+                {
+                    this.state.newGroupList.length ? <View className="group-group-bottom"></View> : null
+                }
+
+                <View className="group-store-info">
+                    <ApplyToTheStore
+                        isTitle={true}
+                        img={this.state.data.preview}
+                        name={this.state.data.name}
+                        phone={this.state.data.tel}
+                        address={this.state.data.address}
+                        location={{ xpoint: this.state.data.xpoint, ypoint: this.state.data.ypoint }}
+                    />
+                </View>
+
+                {this.state.data.gift ?
+                    <View className="group-gift">
+                        <View className="group-title-box">
+                            <View className='group-title-left-box' >
+                                <View className='group-title-left'></View>
+                                <View className='group-title'>赠送礼品</View>
+                            </View>
+                            <View className='group-title-right' onClick={this.toImgList.bind(this)}>
+                                <View className='group-title-right-info'>查看详情</View>
+                                <Image className="group-title-right-icon" src={"http://oss.tdianyi.com/front/SpKtBHYnYMDGks85zyxGHrHc43K5cxRE.png"} />
+                            </View>
+                        </View>
+                        <View className='group-gift-brief'>{this.state.data.gift.title}</View>
+                        <View className='group-gift-label-box'>
+                            <View className='group-gift-label'>{this.state.data.gift.mail_mode == 1 ? '免运费' : `运费${this.state.data.gift.postage}元`}</View>
+                        </View>
+                        <Image className="group-gift-img" src={this.state.data.gift.cover_image} mode={'widthFix'} />
+                    </View> : null
+                }
+
+
+                <View className="group-rules">
+                    <View className="group-title-box">
+                        <View className='group-title-left'></View>
+                        <View className='group-title'>使用说明</View>
+                    </View>
+                    <View className="group-rules-item" >
+                        <View className="rules-key">拼团人数：</View>
+                        <View className="rules-words">{this.state.data.number}人成团</View>
+                    </View>
+                    <View className="group-rules-item" >
+                        <View className="rules-key"> 拼团时限：</View>
+                        <View className="rules-words">需{this.state.data.team_set_end_time}时内成团</View>
+                    </View>
+                    {/* <View className="group-rules-item" >
+                        <View className="rules-key">有效期：</View>
+                        <View className="rules-words">成团后7日内可用</View>
+                    </View> */}
+                    {
+                        description.length && !this.state.showMoreRules ? <View>
+                            <View className="group-rules-list-title" >使用规则：</View>
+                            {
+                                description.length > 0 ? <View className="group-rules-list-text" >-{description[0]}</View> : null
+                            }
+                            {
+                                description.length > 1 ? <View className="group-rules-list-text" >-{description[1]}</View> : null
+                            }
+                            {
+                                description.length > 2 ? <View className="group-rules-list-text" >-{description[2]}</View> : null
+                            }
+                            {
+                                description.length > 3 ? <View className="group-rules-list-text" >-{description[3]}</View> : null
+                            }
+                        </View> : null
+                    }
+                    {
+                        description.length && description.length > 4 && this.state.showMoreRules ? <View>
+                            <View className="group-rules-list-title" >使用规则：</View>
+                            {
+                                description.map((item) => {
+                                    return (
+                                        <View className="group-rules-list-text" >-{item}</View>
+                                    )
+                                })
+                            }
+                        </View> : null
+                    }
+                    {
+                        description.length && description.length > 4 && !this.state.showMoreRules ? <View className="group-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+                            <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                            <View className="group-more-text" >查看更多</View>
+                        </View> : null
+                    }
+                </View>
+                <View className="group-buy-box" >
+                    <View className="group-buy-price-box" >
+                        <View className="group-buy-price-icon" >￥</View>
+                        <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
+                    </View>
+                    <View className="group-buy-btn-box" >
+                        <View className="group-buy-btn-left" >分享活动</View>
+                        {
+                            this.state.allowGroup ? <View className="group-buy-btn-right" >{this.state.allowGroup}</View>
+                                : <View className="group-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >
+                                    <View className="group-buy-btn-group" > {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}</View>
+                                    <View className="group-buy-btn-groupnum" >{this.state.data.number}人成团</View>
+                                </View>
+                        }
+                    </View>
+                </View>
+                {
+                    showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+                        this.setState({ showBounced: false })
+                    }} /> : null
+                }
+                {
+                    this.state.isFromShare ? (
+                        <View style={{ position: 'fixed', bottom: '50%', right: '20px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
+                            <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
+                        </View>
+                    ) : ''
+                }
             </View>
-          ) : null
-        }
-        {/* 去首页 */}
-        {
-          this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '50%', right: '0px', zIndex: 3 }} onClick={this.handleGoHome.bind(this)}>
-              <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
-            </View>
-          ) : ''
-        }
-      </View>
-    );
-  }
+        );
+    }
 }
