@@ -72,7 +72,7 @@ class IndexSearchPage extends PureComponent<Props> {
 	}
 
 	lineOnclick = (item) => {
-		Taro.reLaunch(
+		Taro.redirectTo(
 			{ url: '/pages/merchant/index?value=' + item }
 		)
 	}
