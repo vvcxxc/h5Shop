@@ -103,23 +103,28 @@ export default class ApplyToTheStore extends Component<Props> {
     return (
       <View>
         {
-          !this.props.isTitle ?
+          this.props.isTitle ?
             (<View className='apply-page'>
               <View className='apply-title-box'>
                 <View className='apply-title-left'></View>
                 <View className='apply-title'>适用店铺</View>
               </View>
               <View className='apply-main'>
-                <Image className='store-img' src={this.props.img} />
-                <View className='store-detail'>
+                <Image className='store-img small' src={this.props.img} />
+                <View className='store-detail small-detail'>
                   <View className='store-name-box'>
                     <View className='store-name'>{this.props.name}</View>
-                    <View className='store-icon'>
+                    <View className='store-icon small-icon'>
                       <Image className='icon' src={require('@/assets/store/phone.png')} onClick={this.makePhoneCall} />
                     </View>
                   </View>
                   <View className='store-text' onClick={this.routePlanning}>
-                    {this.props.address}
+                    <View className='store-address'>{this.props.address}</View>
+                    <View className='meter-box'>
+                      <Image className='address-icon' src={require('@/assets/store/address.png')} />
+                        300m
+                        <Image className='right-arrow' src={require('@/assets/store/right-arrow.png')} />
+                    </View>
                   </View>
                 </View>
               </View>
@@ -140,7 +145,7 @@ export default class ApplyToTheStore extends Component<Props> {
                       <View className='meter-box'>
                         <Image className='address-icon' src={require('@/assets/store/address.png')} />
                         300m
-                        <Image className='right-arrow' src={require('@/assets/store/right-arrow.png')}/>
+                        <Image className='right-arrow' src={require('@/assets/store/right-arrow.png')} />
                       </View>
                     </View>
                   </View>
