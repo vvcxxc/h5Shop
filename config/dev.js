@@ -1,8 +1,8 @@
 module.exports = {
   env: {
     NODE_ENV: '"development"',
-    BASIC_API: '"http://test.api.tdianyi.com/"',
-    // BASIC_API: '"https://api.tdianyi.com/"',
+    // BASIC_API: '"http://test.api.tdianyi.com/"',
+    BASIC_API: '"https://api.tdianyi.com/"',
     ALIPAY_LOGIN_URL: '"http://test.usercenter.tdianyi.com/v1/user/auth/auth_ali"',
     OPEN_ID: '"test_open_id"',
     TOKEN: '"test_token_auth"',
