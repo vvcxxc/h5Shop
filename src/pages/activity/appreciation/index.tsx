@@ -262,9 +262,9 @@ export default class AppreActivity extends Component {
                 {/* <View className="collect-box">
                     <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
                 </View> */}
-                <View className="share-box">
+                {/* <View className="share-box">
                     <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
-                </View>
+                </View> */}
 
                 <View className="appre-info-content">
                     <View className="appre-info-title">
