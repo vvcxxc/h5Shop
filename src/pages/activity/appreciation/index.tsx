@@ -290,6 +290,7 @@ export default class AppreActivity extends Component {
                         phone={this.state.data.tel}
                         address={this.state.data.address}
                         location={{ xpoint: 111, ypoint: 222 }}
+                        meter={this.state.data.distances}
                     />
                 </View>
 
