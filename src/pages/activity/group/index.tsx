@@ -327,7 +327,6 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
-
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
