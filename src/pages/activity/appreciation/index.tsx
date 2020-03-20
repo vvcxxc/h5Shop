@@ -207,9 +207,11 @@ export default class AppreActivity extends Component {
                             }
                         })
                     } else {
+                        console.log(res)
                         that.getLastYouhuiId(order_sn)
                     }
                 }).catch((err) => {
+                    console.log('err', err)
                     that.getLastYouhuiId(order_sn)
                 })
         }, 500);

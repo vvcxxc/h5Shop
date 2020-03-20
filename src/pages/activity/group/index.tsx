@@ -374,7 +374,7 @@ export default class GroupActivity extends Component {
     */
     getLastGroupId = (order_sn) => {
         let that = this;
-        Taro.showLoading({ title: '支付成功，正在查询用户增值活动id' });
+        Taro.showLoading({ title: '支付成功，正在查询用户团活动id' });
         let timer = setTimeout(() => {
             clearTimeout(timer);
             getUserYouhuiGroupId({ order_sn: order_sn })
@@ -383,9 +383,11 @@ export default class GroupActivity extends Component {
                         Taro.hideLoading();
                         that.goToGroupInfo(res.data.id)
                     } else {
+                        console.log(res)
                         that.getLastGroupId(order_sn)
                     }
                 }).catch((err) => {
+                    console.log('err',err)
                     that.getLastGroupId(order_sn)
                 })
         }, 1000);
