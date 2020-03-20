@@ -9,6 +9,7 @@ interface Location {
 }
 
 interface Props {
+  id?: string|number;
   isTitle?: boolean; // 是否展示店铺名
   img: string; // 店铺图片
   name: string; // 店铺名称
@@ -18,6 +19,7 @@ interface Props {
 }
 export default class ApplyToTheStore extends Component<Props> {
   ApplyToTheStore.defaultProps = {
+    id: 0,
     isTitle: false, // 是否展示店铺名
     img: '', // 店铺图片
     name: '', // 店铺名称

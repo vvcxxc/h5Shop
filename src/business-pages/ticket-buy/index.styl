@@ -171,6 +171,7 @@
                     font-size: 36px;
                     color: rgba(255, 68, 68, 1);
                     line-height: 1;
+                    font-weight: 500;
                 }
 
                 .appre-price-info-old {
@@ -401,10 +402,8 @@
         height: auto;
         width: 100vw;
         border: 15px;
-        background: #fff;
         margin-bottom: 15px;
         overflow: hidden;
-        background: #fff;
     }
 
     .appre-gift {
@@ -674,7 +673,7 @@
             .appre-buy-btn-right {
                 height: 100%;
                 width: 50%;
-                background: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
+                background-image: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 display: flex;
@@ -735,7 +734,7 @@
                 .good_img {
                     width:160px;
                     height: 160px;
-                    border: 1px solid #ccc;
+                    border-radius: 16px;
                 }
                 .good_detail {
                     margin-left: 20px;
@@ -745,15 +744,19 @@
                     .good_detail_info {
                         .good_title {
                             display: flex;
+                            align-items: center;
                             margin-bottom: 10px;
                             .good_type { 
+                                width: 76px;
+                                height: 29px;
                                 margin-right:10px;
+                                background: rgba(255, 68, 68, 1);
+                                border-radius: 6px;
+                                line-height: 29px;
+                                text-align: center;
                                 .text {
-                                    background: #FF4444;
-                                    color: #fff;
-                                    border-radius: 8px;
-                                    padding: 5px 8px;
                                     font-size: 20px;
+                                    color: rgba(255, 255, 255, 1);
                                 }
                             }
                             .good_cash {
@@ -761,6 +764,9 @@
                                 font-size: 26px;
                                 font-weight: bold;
                                 width: 250px;
+                                overflow: hidden;
+                                text-overflow:ellipsis;
+                                white-space: nowrap;
                             }
                         }
                         .good_desc {
@@ -783,7 +789,7 @@
                         .good_old_money {
                             font-size: 20px;
                             color: #999999;
-                            text-decoration:line-through
+                        
                         }
                     }
                 }
@@ -794,7 +800,7 @@
                     padding: 10px 30px;
                     color: #fff;
                     font-size: 26px;
-                    background: linear-gradient(#FF4444, #FF6744);
+                    background: linear-gradient(#FF6744,#FF4444);
                 }
             }
         }

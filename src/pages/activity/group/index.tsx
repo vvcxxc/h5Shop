@@ -530,8 +530,8 @@ export default class GroupActivity extends Component {
                           </View>
                           <View className="group-list-btnbox" >
                             {
-                              item[0].is_team ? <View className="group-list-btn" style={{ background: '#999999' }}  >您已参团</View> :
-                                <View className="group-list-btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >立即参团</View>
+                              item[0].is_team ? <View className="group-list-btn" style={{ background: '#999999' }}  >已参团</View> :
+                                <View className="group-list-btn" onClick={this.goToaConfirmAddGroup.bind(this, item[0].id)} >参团</View>
                             }
                           </View>
                         </View>
@@ -633,6 +633,7 @@ export default class GroupActivity extends Component {
 
         <View className="group-store-info">
           <ApplyToTheStore
+            id={this.state.data.id}
             isTitle={true}
             img={this.state.data.preview}
             name={this.state.data.name}
