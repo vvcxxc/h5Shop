@@ -245,9 +245,11 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
+    console.log('datas', datas)
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
+        console.log('订单成功:', res)
         let order_sn = res.channel_order_sn;//比增值少一层data
         if (browserType == 'wechat') {
           //微信支付
@@ -263,6 +265,7 @@ export default class GroupActivity extends Component {
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
+                console.log('微信支付成功,order_sn:', order_sn)
                 if (_temptype == '5') {
                   //开团要得到开团活动id再跳转活动详情
                   that.getLastGroupId(order_sn);
@@ -288,10 +291,12 @@ export default class GroupActivity extends Component {
               }
             } else { Taro.showToast({ title: "支付宝支付失败", icon: "none" }); }
           })
-        } else {
-          Taro.showToast({ title: res.message, icon: 'none' })
         }
+      } else {
+        Taro.showToast({ title: res.message, icon: 'none' })
       }
+    }).catch(err => {
+      Taro.showToast({ title: '调起支付失败', icon: 'none' })
     })
   }
 
@@ -327,6 +332,7 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
+    console.log('datas', datas)
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
@@ -344,6 +350,7 @@ export default class GroupActivity extends Component {
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
+                console.log('微信支付成功')
                 that.goToGroupInfo(_groupid);
               } else { Taro.showToast({ title: "微信支付失败", icon: "none" }); }
             }

@@ -180,7 +180,7 @@ export default class AppreActivity extends Component {
             }
         }).catch(err => {
             Taro.hideLoading();
-            Taro.showToast({ title: "支付宝支付失败", icon: "none" });
+            Taro.showToast({ title: "调起支付失败", icon: "none" });
         })
     }
 
@@ -207,9 +207,11 @@ export default class AppreActivity extends Component {
                             }
                         })
                     } else {
+                        console.log(res)
                         that.getLastYouhuiId(order_sn)
                     }
                 }).catch((err) => {
+                    console.log('err', err)
                     that.getLastYouhuiId(order_sn)
                 })
         }, 500);
