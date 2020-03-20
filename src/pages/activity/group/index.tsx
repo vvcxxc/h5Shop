@@ -639,6 +639,7 @@ export default class GroupActivity extends Component {
             phone={this.state.data.tel}
             address={this.state.data.address}
             location={{ xpoint: this.state.data.xpoint, ypoint: this.state.data.ypoint }}
+            meter={this.state.data.distances}
           />
         </View>
 

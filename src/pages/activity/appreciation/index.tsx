@@ -290,6 +290,7 @@ export default class AppreActivity extends Component {
                         phone={this.state.data.tel}
                         address={this.state.data.address}
                         location={{ xpoint: 111, ypoint: 222 }}
+                        meter={this.state.data.distances}
                     />
                 </View>
 
@@ -334,7 +335,7 @@ export default class AppreActivity extends Component {
                         this.state.data.type != 0 ?
                             <View className="appre-rules-item" >
                                 <View className="rules-key"> 使用门槛：</View>
-                                <View className="rules-words">{this.state.data.total_fee}</View>
+                                <View className="rules-words">满{this.state.data.total_fee}可用</View>
                             </View> : null
                     }
                     <View className="appre-rules-item" >
