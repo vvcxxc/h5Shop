@@ -67,13 +67,13 @@ class IndexSearchPage extends PureComponent<Props> {
 		}
 		if (meta.length>=1) this.setState({ showStorage:true})
 		Taro.reLaunch(
-			{ url: '../../merchant/index?value=' + this.state.searchStr  }
+			{ url: '/pages/merchant/index?value=' + this.state.searchStr  }
     )
 	}
 
 	lineOnclick = (item) => {
 		Taro.reLaunch(
-			{ url: '../../merchant/index?value=' + item }
+			{ url: '/pages/merchant/index?value=' + item }
 		)
 	}
 
