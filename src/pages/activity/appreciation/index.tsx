@@ -180,7 +180,7 @@ export default class AppreActivity extends Component {
             }
         }).catch(err => {
             Taro.hideLoading();
-            Taro.showToast({ title: "支付宝支付失败", icon: "none" });
+            Taro.showToast({ title: "调起支付失败", icon: "none" });
         })
     }
 
