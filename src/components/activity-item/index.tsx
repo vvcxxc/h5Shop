@@ -29,7 +29,7 @@ export default class ActivityItem extends Component<Props> {
 
         return (
             <View className="activity-item">
-                <View className="item-img-box">
+                <View className="item-img-box" onClick={this.handleClick}>
                     <Image className="item-img" src={this.props.img} />
                     {
             this.props.imgIconType == 'group' ? <View className="item-group-btn">拼团购</View> : (
@@ -63,7 +63,7 @@ export default class ActivityItem extends Component<Props> {
                         <View className="old-price">￥{this.props.newPrice}</View>
                     </View>
                 </View>
-                <View className="item-btn-box" onClick={this.handleClick}>
+                <View className="item-btn-box">
                     <View className="item-group-btn">{this.props.btnText}</View>
                     {
                         this.props.unBtnText ? <View className="item-group-number">{this.props.unBtnText}</View> : null

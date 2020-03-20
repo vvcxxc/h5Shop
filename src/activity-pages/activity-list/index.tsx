@@ -145,6 +145,11 @@ export default class ActivityList extends Component {
         break
     }
   }
+  handleClick = (_id, e) => {
+    Taro.navigateTo({
+      url: '/pages/business/index?id=' + _id
+    })
+  };
 
     render() {
       const { list } = this.state
@@ -159,7 +164,7 @@ export default class ActivityList extends Component {
               list.length ? list.map(item => {
                 return (
                   <View className="activity-item-padding">
-                    <View className="store-info">
+                    <View className="store-info" onClick={this.handleClick.bind(this,item.store.supplier_id)}>
                       <View className="store-name-info">
                         <Image className="item-shop-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
                         <View className="item-store-name">多美蛋糕店</View>
