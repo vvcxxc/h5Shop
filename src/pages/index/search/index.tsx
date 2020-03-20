@@ -66,7 +66,7 @@ class IndexSearchPage extends PureComponent<Props> {
 			Taro.setStorageSync("searchKey", meta)
 		}
 		if (meta.length>=1) this.setState({ showStorage:true})
-		Taro.reLaunch(
+		Taro.redirectTo(
 			{ url: '/pages/merchant/index?value=' + this.state.searchStr  }
     )
 	}
