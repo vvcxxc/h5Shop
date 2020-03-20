@@ -725,6 +725,11 @@ export default class Group extends Component<Props>{
     }
   }
   goToaConfirmAddGroup = (_id, e) => {
+    let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      this.setState({ showBounced: true })
+      return
+    }
     if (this.state.data.gift_id) {
       this.clearTimeOut();
       //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
