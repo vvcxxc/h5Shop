@@ -28,7 +28,7 @@ export default class CouponBox extends Component<Props> {
               {item.name}
             </Text>
           </View>
-          <View className='coupon-validity'>有效期：7天有效</View>
+          <View className='coupon-validity'>有效期：{item.expire_day}天有效</View>
           <View className='coupon-label'>立减￥{ item.is_share == 5 ? accSubtr(item.pay_money,item.participation_money) : accSubtr(item.return_money, item.pay_money)}</View>
           <View className='coupon-money'>
             优惠价￥
