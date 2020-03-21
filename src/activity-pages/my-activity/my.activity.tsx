@@ -32,13 +32,11 @@ export default class MyActivity extends Component<MyActivityProp> {
     let activity_type = Cookie.get('activity_type');
     // Cookie.set('activity_type', '');
     if (activity_type && activity_type == '拼团') {
-      console.log('7666')
       const current = 1;
       const { api } = myActivity[current]
       this.setState({ current: 1 })
       this.fetchActivity(api, current)
     } else {
-      console.log(3223223)
       const { current = 0 } = this.props
       const { api } = myActivity[current]
       this.fetchActivity(api, current)
