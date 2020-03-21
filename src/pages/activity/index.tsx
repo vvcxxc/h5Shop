@@ -59,11 +59,20 @@ export default class Activity extends Component<any>  {
     //     console.log('iNoBounce',iNoBounce)
     //     iNoBounce.enable()
     // }
+    let router = JSON.parse(sessionStorage.getItem('router'));
+    console.log(router,1112)
+    if(router){
+      if(router.city_id){
+        this.setState({
+          cityId: router.city_id
+        })
+      }
+    }
   }
 
   componentDidMount() {
 
-    
+
   }
 
   onReachBottom() {
