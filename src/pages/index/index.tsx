@@ -73,6 +73,7 @@ export default class Index extends Component<any> {
         getCityName(data).then((res: any) => {
           router = {}
           router.city_name = res.data.city
+          router.city_id = res.data.city_id
           if(res.data.district == '新会区'){
             this.setState({is_marketing: true})
             router.city_name = res.data.district
