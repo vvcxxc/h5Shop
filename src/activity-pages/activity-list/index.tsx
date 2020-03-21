@@ -164,7 +164,7 @@ export default class ActivityList extends Component {
               list.length ? list.map(item => {
                 return (
                   <View className="activity-item-padding">
-                    <View className="store-info" onClick={this.handleClick.bind(this,item.store.supplier_id)}>
+                    <View className="store-info" onClick={this.handleClick.bind(this,item.store.id)}>
                       <View className="store-name-info">
                         <Image className="item-shop-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
                         <View className="item-store-name">{item.store.name}</View>
