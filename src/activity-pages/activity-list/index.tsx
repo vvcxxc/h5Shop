@@ -177,7 +177,7 @@ export default class ActivityList extends Component {
                       img={'http://oss.tdianyi.com/' + item.icon}
                       label={''}
                       name={item.name}
-                      brief={'有效期：7天有效'}
+                      brief={'有效期：'+ item.expire_day +'天有效'}
                       oldPrice={item.is_share == 5 ? item.participation_money : item.pay_money}
                       newPrice={item.is_share == 5 ? item.pay_money : item.return_money}
                       btnText={'拼团'}
