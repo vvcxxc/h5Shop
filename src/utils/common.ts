@@ -61,3 +61,19 @@ export const accSubtr = (arg1, arg2) => {
   n = (r1 >= r2) ? r1 : r2;
   return ((arg1 * m - arg2 * m) / m); //.toFixed(n)
 }
+
+/**
+ * 获取url参数
+ */
+export const getUrlParams = (original = window.location.href) => {
+  if (!original.includes('?')) return {}
+  let paramsStr = original.split('?')[1]
+  let paramsArr = paramsStr && paramsStr.split('&')
+  let result = {}
+  paramsArr.length &&
+    paramsArr.forEach(item => {
+      let paramsItem = item.split('=')
+      result[paramsItem[0]] = paramsItem[1]
+    })
+  return result
+}

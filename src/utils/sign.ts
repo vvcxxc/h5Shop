@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro";
 import Cookie from 'js-cookie'
 import request from '@/services/request';
+import {getUrlParams} from './common'
 import { getBrowserType } from './common';
 const BASIC_API = process.env.BASIC_API;
 const LOGIN_URL = process.env.LOGIN_URL
@@ -18,32 +19,25 @@ export const Login = () => {
     from = arr[0]
   }
   let type = getBrowserType();
+  let query = getUrlParams()
   if (process.env.NODE_ENV == 'development') {
     Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC51c2VyY2VudGVyLnRkaWFueWkuY29tL3YxL3VzZXIvYXV0aC9hdXRoX2g1IiwiaWF0IjoxNTg0NjY2MjM5LCJleHAiOjE1ODQ3NTYyMzksIm5iZiI6MTU4NDY2NjIzOSwianRpIjoiN2RGdTFPZTdwbncyVm9OZSIsInN1YiI6MzY3NTUsInBydiI6IjU4N2VkNGViNGZmNmIwYjJkODk2YTliN2I3MTA0ZTcwYTViN2EwMDAifQ.1C7ratBMKfXSw_k8UXsCa-GgrQb2O3E8q1X-OQzhWe0')
   } else {
     if (type == 'wechat') {
-      console.log(from, 'from')
-      // let url =  BASIC_API + 'wechat/wxoauth?code_id=0&from='+from;
       encodeURIComponent(from);
       let url = USER_API + 'v1/user/auth/auth_h5?code_id=0&from=' + from
-      // if(process.env.NODE_ENV == 'test'){
-      //   url = LOGIN_URL+'/wechat/wxoauth?code_id=0&from='+from
-      //   // url = 'http://test.usercenter.tdianyi.com/v1/user/auth/auth_h5?code_id=0&from='+from
-      // }
+      if(query.invitation_user_id){
+        url = USER_API + 'v1/user/auth/auth_h5?code_id=0&invitation_user_id='+ query.invitation_user_id +'&from=' + from
+      }
       url = encodeURIComponent(url);
       let urls = AUTH_LOGIN_URL + 'index_xcx.html?appid=' + WX_APPID + '&redirect_uri=' + url + '&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
-      // let urls = 'http://wxauth.tdianyi.com/index.html?appid=wxecdd282fde9a9dfd&redirect_uri='+url+'&response_type=code&scope=snsapi_base&connect_redirect=1&state=STATE&state=STATE';
       return window.location.href = urls;
     } else {
-      // let url = BASIC_API +"ali/getZfbUserInfo"; // 后台接口
       from = encodeURIComponent(from); // 当前页面
-      // url = encodeURIComponent(url);
-
-      // window.location.href = BASIC_API +'ali/zfbUserAuth?from='+from+'&code_id=227&url='+url;
-
-      // 新版授权
-      // let url = process.env.ALIPAY_LOGIN_URL + 'v1/user/auth/auth_ali?code_id=227&from='+ from
       let url = USER_API + 'v1/user/auth/auth_ali?code_id=227&from=' + from
+      if(query.invitation_user_id){
+        url = USER_API + 'v1/user/auth/auth_ali?code_id=227&invitation_user_id='+ query.invitation_user_id +'&from=' + from
+      }
       url = encodeURIComponent(url);
       let urls = AUTH_LOGIN_URL + 'ali.html?appid=' + ALI_APPID + '&redirect_uri=' + url + '&scope=auth_base&state=STATE'
       return window.location.href = urls;
