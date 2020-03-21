@@ -84,6 +84,7 @@ export default class MyActivity extends Component<MyActivityProp> {
   }
 
   handleToggle = (current: number) => {
+    console.log(current)
     current = Number(current)
     const { api } = myActivity[current]
     this.fetchActivity(api, current)
@@ -93,7 +94,7 @@ export default class MyActivity extends Component<MyActivityProp> {
     * 获取参加活动
     */
   async fetchActivity(api: string, current) {
-    // this.setState({ current })
+    this.setState({ current })
     if (current === 1) return
     const { data } = await getActivity({ url: api })
     this.setState({
