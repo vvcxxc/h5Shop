@@ -181,10 +181,16 @@ export default class AppreActivity extends Component<Props> {
                             <Image className="my-head-img" src={this.state.userData.head_img} />
                         </View>
                         {
+                            this.state.emptyAvatar != 'Y' ?
+                                <View className="my-text">
+                                    <View className="my-text-top">{this.state.userData.user_name}</View>
+                                </View> : null
+                        }
+                        {
                             this.state.emptyAvatar == 'Y' && this.state.settingShow ?
                                 <View className="my-text" onClick={getUserInfo}>
-                                    <View className="my-text-top">登录/注册</View>
-                                    <View className="my-text-bottom">立即开启购物之旅~</View>
+                                    <View className="my-text-top">{this.state.userData.user_name}</View>
+                                    <View className="my-text-bottom">一键获取用户头像~</View>
                                 </View> : null
                         }
                         {
