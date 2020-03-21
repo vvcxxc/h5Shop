@@ -64,6 +64,7 @@ class App extends Component {
       'pages/index/index',
       'pages/index/search/index',
       'pages/my/index',
+      'pages/my/invitation-list/index',
       'pages/order/index',
       'pages/mycardticket/index',
       'pages/merchant/index',
