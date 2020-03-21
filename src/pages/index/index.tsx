@@ -55,7 +55,7 @@ export default class Index extends Component<any> {
   }
 
   componentDidShow(){
-    let router = JSON.parse(sessionStorage.getItem('router'))
+    let router = JSON.parse(sessionStorage.getItem('router')) || {}
     if(router.city_name){
 
       if(router.city_name == '新会区'){
