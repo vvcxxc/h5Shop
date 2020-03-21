@@ -8,6 +8,7 @@ import ActivityGroup from "./types/activity.group"
 import Tab from "@/activity-pages/components/tab/tab"
 import "./style.styl"
 import TuxedoInformation from "./components/Tuxedo_information"
+import Cookie from 'js-cookie'
 
 interface MyActivityProp {
   current?: number;
@@ -28,9 +29,23 @@ export default class MyActivity extends Component<MyActivityProp> {
   }
   componentDidMount() {
     // Taro.showShareMenu()
-    const { current = 0 } = this.props
-    const { api } = myActivity[current]
-    this.fetchActivity(api, current)
+    let activity_type = Cookie.get('activity_type');
+    // Cookie.set('activity_type', '');
+    if (activity_type && activity_type == '拼团') {
+      console.log('7666')
+      const current = 1;
+      const { api } = myActivity[current]
+      this.setState({ current: 1 })
+      this.fetchActivity(api, current)
+    } else {
+      console.log(3223223)
+      const { current = 0 } = this.props
+      const { api } = myActivity[current]
+      this.fetchActivity(api, current)
+    }
+  }
+  componentWillUnmount(){
+    Cookie.set('activity_type', '');
   }
 
   onShareAppMessage = e => {
@@ -80,7 +95,7 @@ export default class MyActivity extends Component<MyActivityProp> {
     * 获取参加活动
     */
   async fetchActivity(api: string, current) {
-    this.setState({ current })
+    // this.setState({ current })
     if (current === 1) return
     const { data } = await getActivity({ url: api })
     this.setState({
@@ -93,9 +108,10 @@ export default class MyActivity extends Component<MyActivityProp> {
     return (
       <Block>
         <View className="my-activity">
-          <Tab data={activtys} onToggle={this.handleToggle} />
+          <Tab data={activtys} onToggle={this.handleToggle} index={this.state.current} />
           <ScrollView scrollY className="container-wrapper">
             <View className="container">
+              {console.log(current,'current')}
               {
                 current == 0 && list.map((item, index) => {
                   return <View className="activity-appreciation">

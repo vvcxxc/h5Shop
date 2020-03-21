@@ -155,6 +155,16 @@ export default class AppreActivity extends Component<Props> {
         Taro.setStorageSync('ql_href', location.href)
         Taro.navigateTo({ url: '/pages/my/login_page/index' })
     }
+    setOrderInfo = (type) => {
+        Cookie.set("order_type", type)
+        Taro.switchTab({
+            url: '/pages/order/index'
+        })
+    }
+    setActivityInfo = (type) => {
+        Cookie.set("activity_type", type)
+        Taro.navigateTo({ url: '/activity-pages/my-activity/my.activity' })
+    }
 
     render() {
         const { showBounced, needLogin } = this.state
@@ -187,45 +197,49 @@ export default class AppreActivity extends Component<Props> {
 
                 </View>
                 <View className="my-list-nav">
-                    <View className="my-list-nav-title-box">
+                    <View className="my-list-nav-title-box" onClick={this.setOrderInfo.bind(this, '待使用')}>
                         <View className="name-box">我的订单</View>
-                        <View className="icon-box">
+                        <View className="icon-box" >
                             <View className="icon-box-text">查看全部</View>
                             <Image className="icon-box-icon" src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/MWCtxcnQ6AmEpbHRedHfjeDhde2t5fr8.png' />
 
                         </View>
                     </View>
                     <View className="my-list-nav-btn-box">
-                        <View className="nav-btn-item">
+                        <View className="nav-btn-item" onClick={this.setOrderInfo.bind(this, '待使用')}>
                             <Image className='item-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/TThxprTzKKiDQZR2zA8zt7TH2bpGKewC.png' />
                             <View className="item-text">待使用</View>
                         </View>
-                        <View className="nav-btn-item">
+                        <View className="nav-btn-item" onClick={this.setOrderInfo.bind(this, '已完成')}>
                             <Image className='item-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/NwjXRGmCTmymnjC52J3E7btfzDX2FX7t.png' />
                             <View className="item-text">已完成</View>
                         </View>
-                        <View className="nav-btn-item">
+                        <View className="nav-btn-item" onClick={this.setOrderInfo.bind(this, '已过期')}>
                             <Image className='item-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/GfMPAZctjGhKbbr2HXjdkdAsdj3WaKTr.png' />
                             <View className="item-text">已过期</View>
                         </View>
-                        <View className="nav-btn-item">
+                        <View className="nav-btn-item" onClick={this.setOrderInfo.bind(this, '已退款')}>
                             <Image className='item-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/jz3pRNMrsikaNDyipdmZMdGZ2Qhzjhjr.png' />
                             <View className="item-text">已退款</View>
                         </View>
                     </View>
                 </View>
                 <View className="my-tab-content">
-                    {
-                        this.state.activityList.map((item: any, index) => {
-                            return <View className="my-tab-item" key={item} onClick={this.jumpData.bind(this, item.path)}>
-                                <View className="tab-item-box">
-                                    <Image className='item-box-img' src={item.img} />
-                                    <View className="item-box-text">{item.des}</View>
-                                </View>
-                                <Image className="tab-item-icon" src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/MWCtxcnQ6AmEpbHRedHfjeDhde2t5fr8.png' />
-                            </View>
-                        })
-                    }
+                    <View className="my-tab-item" onClick={this.setActivityInfo.bind(this, '拼团')}>
+                        <View className="tab-item-box">
+                            <Image className='item-box-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/JXPsxjERwiZNEeJYjBtNeEkZDenaxRsw.png' />
+                            <View className="item-box-text">我的拼团活动</View>
+                        </View>
+                        <Image className="tab-item-icon" src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/MWCtxcnQ6AmEpbHRedHfjeDhde2t5fr8.png' />
+                    </View>
+                    <View className="my-tab-item" onClick={this.setActivityInfo.bind(this, '增值')}>
+                        <View className="tab-item-box">
+                            <Image className='item-box-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/iKrnFcGfytkT6nGEiZYscGAwkmhwMtt4.png' />
+                            <View className="item-box-text">我的增值活动</View>
+                        </View>
+                        <Image className="tab-item-icon" src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/MWCtxcnQ6AmEpbHRedHfjeDhde2t5fr8.png' />
+                    </View>
+
                 </View>
                 <View className="my-tab-content">
                     {

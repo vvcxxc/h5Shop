@@ -1,10 +1,13 @@
 import Taro, { Component } from "@tarojs/taro"
 import { Block, View, ScrollView } from "@tarojs/components"
 import "./style.tab.styl"
+import Cookie from 'js-cookie'
+
 interface TabProp {
   data: any[];
   current?: string | number;
   onToggle?: any;
+  index?: any;
 }
 interface State {
   checked: string;
@@ -30,10 +33,21 @@ export default class Tab extends Component<TabProp> {
     onToggle: null
   }
   state: State = {
-    checked: ""
+    checked: ''
   }
+
+  componentDidMount() {
+    let activity_type = Cookie.get('activity_type');
+    console.log('22', activity_type)
+    if (activity_type && activity_type == '拼团') {
+      this.setState({ checked: 1 })
+    }
+  }
+
+
   handleToggle = e => {
     const { index } = e.currentTarget.dataset
+    console.log(index)
     this.setState({
       checked: index
     })
