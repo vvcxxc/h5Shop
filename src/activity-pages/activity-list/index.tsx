@@ -145,6 +145,11 @@ export default class ActivityList extends Component {
         break
     }
   }
+  handleClick = (_id, e) => {
+    Taro.navigateTo({
+      url: '/pages/business/index?id=' + _id
+    })
+  };
 
     render() {
       const { list } = this.state
@@ -159,13 +164,13 @@ export default class ActivityList extends Component {
               list.length ? list.map(item => {
                 return (
                   <View className="activity-item-padding">
-                    <View className="store-info">
+                    <View className="store-info" onClick={this.handleClick.bind(this,item.store.id)}>
                       <View className="store-name-info">
                         <Image className="item-shop-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
-                        <View className="item-store-name">多美蛋糕店</View>
+                        <View className="item-store-name">{item.store.name}</View>
                         <Image className="item-go-icon" src="http://oss.tdianyi.com/front/fpsw5CyhYJQTDEABZhs4iFDdC48ZGidn.png" />
                       </View>
-                      <View className="store-distance">3000m</View>
+                      <View className="store-distance">{item.store.distance}</View>
                     </View>
                     <ActivityItem
                       imgIconType={item.activity_type}
