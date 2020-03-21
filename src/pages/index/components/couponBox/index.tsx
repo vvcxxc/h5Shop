@@ -19,7 +19,7 @@ export default class CouponBox extends Component<Props> {
   render() {
     const { item } = this.props
     return (
-      <View className='coupon-box'>
+      <View className='coupon-box' onClick={this.handleClick.bind(this,item)}>
         <Image className='coupon-img' src={'http://oss.tdianyi.com/' + item.icon} />
         <View className='coupon-detail'>
           <View className='coupon-title'>
@@ -35,7 +35,7 @@ export default class CouponBox extends Component<Props> {
             <Text className='new-money'>{item.is_share == 5 ? item.participation_money : item.pay_money}</Text>
             <Text className='old-money'>￥{item.is_share == 5 ? item.pay_money : item.return_money}</Text>
           </View>
-          <View className='coupon-button' onClick={this.handleClick.bind(this,item)}>抢购</View>
+          <View className='coupon-button'>抢购</View>
         </View>
       </View>
     )
