@@ -73,8 +73,9 @@ export default class Index extends Component<any> {
         getCityName(data).then((res: any) => {
           router = {}
           router.city_name = res.data.city
-          if(res.data.city == '新会区'){
+          if(res.data.district == '新会区'){
             this.setState({is_marketing: true})
+            router.city_name = res.data.district
           }else{
             this.setState({is_marketing: false})
           }
