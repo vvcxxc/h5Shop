@@ -423,7 +423,7 @@ export default class GroupActivity extends Component {
       clearTimeout(timer);
       let tempPage = this.state.current == this.state.newGroupList.length - 1 ? 0 : this.state.current + 1;
       this.setState({ current: tempPage }, () => { this.listAtb() })
-    }, 3000)
+    }, 5000)
   }
 
   /**
