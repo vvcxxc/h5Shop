@@ -191,13 +191,13 @@ export default class AppreActivity extends Component<Props> {
                             this.state.emptyAvatar == 'Y' && this.state.settingShow ?
                                 <View className="my-text" onClick={getUserInfo}>
                                     <View className="my-text-top">{this.state.userData.user_name}</View>
-                                    <View className="my-text-bottom">一键获取用户头像~</View>
+                                    <View className="my-text-btn">一键获取用户头像</View>
                                 </View> : null
                         }
                         {
                             needLogin ? <View className="my-text" onClick={this.handLogin}>
                                 <View className="my-text-top">登录手机号</View>
-                                <View className="my-text-bottom">同步全渠道订单与优惠券~</View>
+                                <View className="my-text-btn">同步全渠道订单与优惠券</View>
                             </View> : null
                         }
                     </View>
