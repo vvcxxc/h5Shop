@@ -10,79 +10,87 @@ import { getList } from './service'
 
 
 export default class ActivityList extends Component {
-    config = {
-        navigationBarTitleText: "",
-        enablePullDownRefresh: false
-    };
+  config = {
+    navigationBarTitleText: "",
+    enablePullDownRefresh: false
+  };
 
 
-    state = {
-      list: [],
-      page: 1,
-      is_more: true
-    };
+  state = {
+    list: [],
+    page: 1,
+    is_more: true,
+    bannerImg: ''
+  };
 
-    componentDidShow() {
-      let id = this.$router.params.id
-      switch (id) {
-        case 1:
-          Taro.setNavigationBarTitle({ title: '网红店推荐活动列表' })
-          break
-        case 2:
-          Taro.setNavigationBarTitle({ title: '低到爆活动列表' })
-          break
-        case 3:
-          Taro.setNavigationBarTitle({ title: '抢得快活动列表' })
-          break
-        case 4:
-          Taro.setNavigationBarTitle({ title: '值得购活动列表' })
-          break
-        case 5:
-          Taro.setNavigationBarTitle({ title: '品牌连锁推荐活动列表' })
-          break
+  componentDidShow() {
+    let id = this.$router.params.id;
+    let that = this;
+    switch (id) {
+      case '1':
+        Taro.setNavigationBarTitle({ title: '网红店推荐活动列表' });
+        console.log(id, this)
+        that.setState({ bannerImg: "http://oss.tdianyi.com/front/hSBhjxfpWprBHmJijdaGwtWPfSsJ6X4y.png" });
+        break
+      case '2':
+        Taro.setNavigationBarTitle({ title: '低到爆活动列表' });
+        that.setState({ bannerImg: "http://oss.tdianyi.com/front/tTGybaH684mCNzTbidr5YsFAwzQrw2dZ.png" });
+        break
+      case '3':
+        Taro.setNavigationBarTitle({ title: '抢得快活动列表' });
+        that.setState({ bannerImg: "http://oss.tdianyi.com/front/rrZEs58MPxi7YPYGh4xY5MHCS6pyCJzG.png" });
+        break
+      case '4':
+        Taro.setNavigationBarTitle({ title: '值得购活动列表' });
+        that.setState({ bannerImg: "http://oss.tdianyi.com/front/RkE8pbFxHXB8imKPmmPjTnxxPsHfC8jy.png" });
+        break
+      case '5':
+        Taro.setNavigationBarTitle({ title: '品牌连锁推荐活动列表' });
+        that.setState({ bannerImg: "http://oss.tdianyi.com/front/aSFeTMpP5dSFTKX3YAf6xYzFhFzAaDGe.png" });
+        break
+    }
+    getLocation().then(res => {
+      let data = {
+        xpoint: res.longitude,
+        ypoint: res.latitude,
+        channel_id: id,
+        page: 1,
+        from: 'detail'
       }
+      getList(data).then(res => {
+        this.getNewList(res.data.data)
+      })
+    })
+    Taro.setNavigationBarTitle({ title: '团购活动列表' })
+  }
+  onReachBottom() {
+    if (!this.state.is_more) { // 下一页没数据
+      return
+    }
+    let id = this.$router.params.id
+    this.setState({ page: this.state.page + 1 }, () => {
       getLocation().then(res => {
         let data = {
           xpoint: res.longitude,
           ypoint: res.latitude,
           channel_id: id,
-          page: 1,
+          page: this.state.page,
           from: 'detail'
         }
         getList(data).then(res => {
-          this.getNewList(res.data.data)
-        })
-      })
-        Taro.setNavigationBarTitle({ title: '团购活动列表' })
-    }
-    onReachBottom() {
-      if(!this.state.is_more){ // 下一页没数据
-        return
-      }
-      let id = this.$router.params.id
-      this.setState({ page: this.state.page + 1 }, () => {
-        getLocation().then(res => {
-          let data = {
-            xpoint: res.longitude,
-            ypoint: res.latitude,
-            channel_id: id,
-            page: this.state.page,
-            from: 'detail'
+          if (res.data.data.length) {
+            this.getNewList([...this.state.list, ...res.data.data])
+          } else {
+            this.setState({ is_more: false })
           }
-          getList(data).then(res => {
-            if(res.data.data.length){
-              this.getNewList([...this.state.list, ...res.data.data])
-            }else{
-              this.setState({is_more: false})
-            }
-          })
         })
-
       })
 
-    }
+    })
 
-    // 变历数组
+  }
+
+  // 变历数组
   getNewList(arr) {
     console.log(arr)
     let list = []
@@ -114,9 +122,9 @@ export default class ActivityList extends Component {
     this.setState({ list })
   }
 
-  handleAction (item: any){
+  handleAction(item: any) {
     const { is_share } = item
-    switch(is_share) {
+    switch (is_share) {
       case 1:
         // 增值
         Taro.navigateTo({
@@ -125,12 +133,12 @@ export default class ActivityList extends Component {
         break
       case 4:
         // 现金券兑换券
-        if(item.youhui_type){
+        if (item.youhui_type) {
           // 现金券
           Taro.navigateTo({
             url: '/business-pages/ticket-buy/index?id=' + item.youhui_id
           })
-        }else{
+        } else {
           // 兑换券
           Taro.navigateTo({
             url: '/business-pages/set-meal/index?id=' + item.youhui_id
@@ -151,21 +159,20 @@ export default class ActivityList extends Component {
     })
   };
 
-    render() {
-      const { list } = this.state
-        return (
-          <View className="activity-list">
-          <View className="activity-banner">
-            {/* <Image className="activity-banner-img" src="http://oss.tdianyi.com/front/t4nspcwf3Dbb722DKrGHBaahDcXbJeMj.png" /> */}
-            <Image className="activity-banner-img" src="http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png" />
-          </View>
-
+  render() {
+    const { list } = this.state
+    return (
+      <View className="activity-list">
+        <View className="activity-banner">
+          <Image className="activity-banner-img" src={this.state.bannerImg} />
+        </View>
+        {
+          list.length ? <View className="activity-content">
             {
-              list.length ? list.map(item => {
+              list.map((item: any) => {
                 return (
-                  <View className="activity-content">
                   <View className="activity-item-padding">
-                    <View className="store-info" onClick={this.handleClick.bind(this,item.store.id)}>
+                    <View className="store-info" onClick={this.handleClick.bind(this, item.store.id)}>
                       <View className="store-name-info">
                         <Image className="item-shop-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
                         <View className="item-store-name">{item.store.name}</View>
@@ -178,7 +185,7 @@ export default class ActivityList extends Component {
                       img={'http://oss.tdianyi.com/' + item.icon}
                       label={''}
                       name={item.name}
-                      brief={'有效期：'+ item.expire_day +'天有效'}
+                      brief={'有效期：' + item.expire_day + '天有效'}
                       oldPrice={item.is_share == 5 ? item.participation_money : item.pay_money}
                       newPrice={item.is_share == 5 ? item.pay_money : item.return_money}
                       btnText={'拼团'}
@@ -186,20 +193,22 @@ export default class ActivityList extends Component {
                       item={item}
                     />
                   </View>
-                  </View>
                 )
-              }) : (
-                  <View className='list-no-data'>
-                    <View className='no-data-box'>
-                      <Image className='no-data-img' src={require('@/assets/index/no-data.png')} />
-                      <View>暂时没有活动，看看其他吧</View>
-                    </View>
-                  </View>
-                )
+              })
             }
+          </View> : null
+        }
+        {
+          !list.length ?
+            <View className='list-no-data'>
+              <View className='no-data-box'>
+                <Image className='no-data-img' src={require('@/assets/index/no-data.png')} />
+                <View>暂时没有活动，看看其他吧</View>
+              </View>
+            </View> : null
+        }
 
-
-            {/* <View className="activity-item-padding">
+        {/* <View className="activity-item-padding">
 
               <View className="store-info">
                 <View className="store-name-info">
@@ -222,7 +231,7 @@ export default class ActivityList extends Component {
               />
             </View> */}
 
-        </View>
-        );
-    }
+      </View>
+    );
+  }
 }
