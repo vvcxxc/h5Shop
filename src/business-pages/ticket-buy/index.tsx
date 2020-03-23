@@ -251,8 +251,8 @@ export default class TicketBuy extends Component {
 
 
         {
-          this.state.recommend.length > 0 ?
-            (<View className="more_goods">
+          this.state.recommend && this.state.recommend.length > 0 ?
+            <View className="more_goods">
               <View className="title-box">
                 <View className='title-left'></View>
                 <View className="title">更多本店宝贝</View>
@@ -354,7 +354,7 @@ export default class TicketBuy extends Component {
                     </View> : null
                   )
               }
-            </View>) : ""
+            </View> : ""
         }
 
         <View className="appre-buy-box" >

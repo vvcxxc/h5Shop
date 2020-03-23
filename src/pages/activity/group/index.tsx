@@ -689,7 +689,7 @@ export default class GroupActivity extends Component {
                         <View className="rules-words">成团后7日内可用</View>
                     </View> */}
           {
-            description.length && !this.state.showMoreRules ? <View>
+            description && description.length && !this.state.showMoreRules ? <View>
               <View className="group-rules-list-title" >使用规则：</View>
               {
                 description.length > 0 ? <View className="group-rules-list-text" >-{description[0]}</View> : null
@@ -706,7 +706,7 @@ export default class GroupActivity extends Component {
             </View> : null
           }
           {
-            description.length && description.length > 4 && this.state.showMoreRules ? <View>
+            description && description.length && description.length > 4 && this.state.showMoreRules ? <View>
               <View className="group-rules-list-title" >使用规则：</View>
               {
                 description.map((item) => {
@@ -718,7 +718,7 @@ export default class GroupActivity extends Component {
             </View> : null
           }
           {
-            description.length && description.length > 4 && !this.state.showMoreRules ? <View className="group-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+            description && description.length && description.length > 4 && !this.state.showMoreRules ? <View className="group-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
               <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
               <View className="group-more-text" >查看更多</View>
             </View> : null
