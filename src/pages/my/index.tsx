@@ -23,9 +23,11 @@ interface State {
     mobile: number | string
 }
 export default class AppreActivity extends Component<Props> {
-    config = {
+    config: Config = {
         navigationBarTitleText: "我的",
-        enablePullDownRefresh: false
+        enablePullDownRefresh: false,
+        navigationBarBackgroundColor: '#ff4444',
+        navigationBarTextStyle: 'white'
     };
 
     state: State = {

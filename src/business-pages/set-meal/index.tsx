@@ -182,7 +182,7 @@ export default class AppreActivity extends Component {
         <View className="appre-info-content">
           <View className="appre-info-title">
             <View className="appre-info-title-label">兑换券</View>
-            <View className="appre-info-title-text">{this.state.store.sname}</View>
+            <View className="appre-info-title-text">{this.state.coupon.yname}</View>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">
