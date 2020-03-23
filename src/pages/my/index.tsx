@@ -162,8 +162,13 @@ export default class AppreActivity extends Component<Props> {
         })
     }
     setActivityInfo = (type) => {
-        Cookie.set("activity_type", type)
-        Taro.navigateTo({ url: '/activity-pages/my-activity/my.activity' })
+        if (this.state.mobile) {
+            Cookie.set("activity_type", type)
+            Taro.navigateTo({ url: '/activity-pages/my-activity/my.activity' })
+            return
+        }
+        this.setState({ showBounced: true })
+
     }
 
     render() {
@@ -173,7 +178,7 @@ export default class AppreActivity extends Component<Props> {
                 <View className="my-list-banner">
                     {
                         this.state.settingShow ?
-                            <Image className='my-list-set' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' />
+                            <Image className='my-list-set' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo} />
                             : null
                     }
                     <View className="my-list-info">

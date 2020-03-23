@@ -68,7 +68,7 @@ export default class RecommendBox extends Component<Props> {
             indicatorColor='#999'
             indicatorActiveColor='#333'
             circular
-            indicatorDots
+            // indicatorDots
             autoplay
             >
             {

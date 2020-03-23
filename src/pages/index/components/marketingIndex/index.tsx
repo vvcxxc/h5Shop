@@ -163,8 +163,8 @@ export default class MarketingIndex extends Component<any> {
               }
             </Swiper>
             <View className='indicator'>
-              <Text>{this.state.bannerTag}</Text>
-              <Text>{banner.length}</Text>
+              <View className='banner-number'>{this.state.bannerTag}</View>
+              <View className='banner-number'>{this.state.banner.length}</View>
             </View>
           </View>
 
