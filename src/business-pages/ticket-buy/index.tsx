@@ -171,7 +171,7 @@ export default class TicketBuy extends Component {
 
     return (
       <View className="appre-activity-detail">
-        <Image className='appre-banner' src={require('@/assets/xianjin.png')}
+        <Image className='appre-banner' src={this.state.coupon.image}
           onClick={(e) => {
             this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
           }}
