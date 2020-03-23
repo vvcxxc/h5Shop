@@ -15,7 +15,7 @@ export default class AppreActivity extends Component {
         total: 0,
         last_page: 0,
         list: [
-          
+
         ]
     };
 
@@ -65,24 +65,37 @@ export default class AppreActivity extends Component {
                     <View className='invitation-title-left'></View>
                     <View className='invitation-title'>赠送礼品</View>
                 </View>
-                <View className='item-content'>
                     {
-                        this.state.list.length ? this.state.list.map((item: any, index: any) => {
-                            return (
-                                <View className='invitation-item' key={item}>
-                                    <View className='invitation-item-uesr'>
-                                        <View className='invitation-photo'>
-                                            <Image className="invitation-img" src={item.avatar} />
-                                        </View>
-                                        <View className='invitation-name'>{item.name}</View>
-                                    </View>
-                                    <View className='invitation-item-time'>{item.created_at}</View>
+                        this.state.list.length ?
+                            <View className='item-content'>
+                                {
+                                    this.state.list.map((item: any, index: any) => {
+                                        return (
+                                            <View className='invitation-item' key={item}>
+                                                <View className='invitation-item-uesr'>
+                                                    <View className='invitation-photo'>
+                                                        <Image className="invitation-img" src={item.avatar} />
+                                                    </View>
+                                                    <View className='invitation-name'>{item.name}</View>
+                                                </View>
+                                                <View className='invitation-item-time'>{item.created_at}</View>
+                                            </View>
+                                        )
+                                    })
+                                }
+                            </View> : null
+                    }
+                    {
+                        !this.state.list.length ?
+                            <View className='list-no-data'>
+                                <View className='no-data-box'>
+                                    <Image className='no-data-img' src={require('@/assets/index/no-data.png')} />
+                                    <View>暂时没有活动，看看其他吧</View>
                                 </View>
-                            )
-                        }) : null
+                            </View>
+                            : null
                     }
                 </View>
-            </View>
 
         );
     }

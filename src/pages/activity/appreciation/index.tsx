@@ -71,9 +71,9 @@ export default class AppreActivity extends Component {
         if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
         Taro.showLoading({ title: 'loading' })
         getLocation().then((res: any) => {
-            this.getAppreInfo({ youhui_id: this.$router.params.id, yPoint: res.latitude || '', xPoint: res.longitude || '' })
+            this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: res.latitude || '', xpoint: res.longitude || '' })
         }).catch((err) => {
-            this.getAppreInfo({ youhui_id: this.$router.params.id, yPoint: '', xPoint: '' })
+            this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: '', xpoint: '' })
         })
     }
     /**
