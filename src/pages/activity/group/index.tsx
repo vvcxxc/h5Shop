@@ -84,9 +84,9 @@ export default class GroupActivity extends Component {
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
     getLocation().then((res: any) => {
-      this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, yPoint: res.latitude || '', xPoint: res.longitude || '' })
+      this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch((err) => {
-      this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, yPoint: '', xPoint: '' })
+      this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
     })
   }
 

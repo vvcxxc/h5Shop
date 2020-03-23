@@ -104,7 +104,7 @@ export default class AppreActivity extends Component {
     }
     Taro.showLoading({ title: 'loading', mask: true })
     getLocation().then((res: any) => {
-      this.getTicketInfo(this.$router.params.id, { yPoint: res.latitude || '', xPoint: res.longitude || '' })
+      this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch(err => {
       this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
     })
