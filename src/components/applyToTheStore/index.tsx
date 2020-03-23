@@ -124,8 +124,8 @@ export default class ApplyToTheStore extends Component<Props> {
                     <View className='store-address'>{this.props.address}</View>
                     <View className='meter-box'>
                       <Image className='address-icon' src={require('@/assets/store/address.png')} />
-                        300m
-                        <Image className='right-arrow' src={require('@/assets/store/right-arrow.png')} />
+                      {this.props.meter}
+                      <Image className='right-arrow' src={require('@/assets/store/right-arrow.png')} />
                     </View>
                   </View>
                 </View>
@@ -146,7 +146,7 @@ export default class ApplyToTheStore extends Component<Props> {
                       <View className='store-address'>{this.props.address}</View>
                       <View className='meter-box'>
                         <Image className='address-icon' src={require('@/assets/store/address.png')} />
-                        300m
+                        {this.props.meter}
                         <Image className='right-arrow' src={require('@/assets/store/right-arrow.png')} />
                       </View>
                     </View>
