@@ -225,7 +225,7 @@ export default class AppreActivity extends Component<Props> {
                             <View className="item-text">已过期</View>
                         </View>
                         <View className="nav-btn-item" onClick={this.setOrderInfo.bind(this, '已退款')}>
-                            <Image className='item-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/jz3pRNMrsikaNDyipdmZMdGZ2Qhzjhjr.png' />
+                            <Image className='item-img-refund' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/zjbwTHQJEWZh2waG6K2xYjkAP26Gbktr.png' />
                             <View className="item-text">已退款</View>
                         </View>
                     </View>
