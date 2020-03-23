@@ -7,6 +7,7 @@ import { getLocation } from "@/utils/getInfo";
 import ApplyToTheStore from '@/components/applyToTheStore';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Cookie from 'js-cookie';
+import Zoom from '@/components/zoom';
 
 export default class AppreActivity extends Component {
     config = {
@@ -16,6 +17,8 @@ export default class AppreActivity extends Component {
 
 
     state = {
+        imgZoomSrc: '',
+        imgZoom: false,
         //图片轮播下标
         bannerImgIndex: 0,
         //是否从分享链接进入
@@ -237,24 +240,28 @@ export default class AppreActivity extends Component {
         const { images, description } = this.state.data;
         return (
             <View className="appre-activity-detail">
-                <Swiper
-                    onChange={(e) => {
-                        this.setState({ bannerImgIndex: e.detail.current })
-                    }}
-                    className='appre-banner'
-                    circular
-                    autoplay
-                >
-                    {
-                        this.state.data.images.length ? this.state.data.images.map((item, index) => {
-                            return (
-                                <SwiperItem className="appre-banner-swiperItem" key={item}>
-                                    <Image className="appre-banner-img" src={item} />
-                                </SwiperItem>
-                            )
-                        }) : null
-                    }
-                </Swiper>
+                <View onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.bannerImgIndex] })
+                }}>
+                    <Swiper
+                        onChange={(e) => {
+                            this.setState({ bannerImgIndex: e.detail.current })
+                        }}
+                        className='appre-banner'
+                        circular
+                        autoplay
+                    >
+                        {
+                            this.state.data.images.length ? this.state.data.images.map((item, index) => {
+                                return (
+                                    <SwiperItem className="appre-banner-swiperItem" key={item}>
+                                        <Image className="appre-banner-img" src={item} />
+                                    </SwiperItem>
+                                )
+                            }) : null
+                        }
+                    </Swiper>
+                </View>
                 <View className="banner-number-box">
                     <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
                     <View className="banner-number">{this.state.data.images.length}</View>
@@ -344,7 +351,7 @@ export default class AppreActivity extends Component {
                         <View className="rules-words">成团后{this.state.data.validity}日内可用</View>
                     </View>
                     {
-                        this.state.data.type == 0 && description.length && !this.state.showMoreRules ? <View>
+                        this.state.data.type == 0 && description && description.length && !this.state.showMoreRules ? <View>
                             <View className="appre-rules-list-title" >使用规则：</View>                            {
                                 description.length > 0 ? <View className="appre-rules-list-text" >-{description[0]}</View> : null
                             }
@@ -360,7 +367,7 @@ export default class AppreActivity extends Component {
                         </View> : null
                     }
                     {
-                        this.state.data.type == 0 && description.length && description.length > 4 && this.state.showMoreRules ? <View>
+                        this.state.data.type == 0 && description && description.length && description.length > 4 && this.state.showMoreRules ? <View>
                             <View className="appre-rules-list-title" >使用规则：</View>
                             {
                                 description.map((item) => {
@@ -372,13 +379,13 @@ export default class AppreActivity extends Component {
                         </View> : null
                     }
                     {
-                        description.length && description.length > 4 && !this.state.showMoreRules ? <View className="appre-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+                        this.state.data.type == 0 && description && description.length && description.length > 4 && !this.state.showMoreRules ? <View className="appre-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
                             <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
                             <View className="appre-more-text" >查看更多</View>
                         </View> : null
                     }
                 </View>
-                <View className="appre-buy-box" >
+                {/* <View className="appre-buy-box" >
                     <View className="appre-buy-price-box" >
                         <View className="appre-buy-price-icon" >￥</View>
                         <View className="appre-buy-price-num" >{this.state.data.pay_money}</View>
@@ -395,6 +402,24 @@ export default class AppreActivity extends Component {
                             ) : null
                         }
                     </View>
+                </View> */}
+                <View className="new-buy-box" >
+                    <View className="new-price-box" >
+                        <View className="new-price-icon" >￥</View>
+                        <View className="new-price-num" >{this.state.data.pay_money}</View>
+                    </View>
+                    <View className="new-buy-btn-box" >
+                        <View className="new-buy-btn-left" >分享活动</View>
+                        {
+                            this.state.data.activity_time_status == 1 ? (
+                                <View className="new-buy-btn-right">暂未开始</View>
+                            ) : this.state.data.activity_time_status == 2 ? (
+                                <View className="new-buy-btn-right" onClick={this.goToaConfirm.bind(this)}>立即购买</View>
+                            ) : this.state.data.activity_time_status == 3 ? (
+                                <View className="new-buy-btn-right">已结束</View>
+                            ) : null
+                        }
+                    </View>
                 </View>
                 {
                     showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
@@ -403,12 +428,18 @@ export default class AppreActivity extends Component {
                 }
                 {
                     this.state.isFromShare ? (
-                        <View style={{ position: 'fixed', bottom: '50%', right: '20px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
+                        <View style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
                             <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
                         </View>
                     ) : ''
                 }
 
+
+                <Zoom
+                    src={this.state.imgZoomSrc}
+                    showBool={this.state.imgZoom}
+                    onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+                />
             </View>
         );
     }

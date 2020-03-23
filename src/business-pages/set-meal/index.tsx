@@ -7,6 +7,7 @@ import { discountCoupons } from "./service";
 import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie'
 import LandingBounced from '@/components/landing_bounced'//登录弹框
+import Zoom from '@/components/zoom';
 
 // import ShareBox from '@/components/share-box';
 export default class AppreActivity extends Component {
@@ -16,6 +17,8 @@ export default class AppreActivity extends Component {
   };
 
   state = {
+    imgZoomSrc: '',
+    imgZoom: false,
     bannerImgIndex: 0,
     yPoint: '',
     xPoint: '',
@@ -165,10 +168,13 @@ export default class AppreActivity extends Component {
   }
 
   render() {
-
+    const { description } = this.state.coupon;
     return (
       <View className="appre-activity-detail">
-        <Image className='appre-banner' src={this.state.coupon.image} />
+        <Image className='appre-banner' src={this.state.coupon.image}
+          onClick={(e) => {
+            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+          }} />
         <View className="banner-number-box">
           <View className="banner-number">1</View>
           <View className="banner-number">1</View>
@@ -182,7 +188,7 @@ export default class AppreActivity extends Component {
         <View className="appre-info-content">
           <View className="appre-info-title">
             <View className="appre-info-title-label">兑换券</View>
-            <View className="appre-info-title-text">{this.state.store.sname}</View>
+            <View className="appre-info-title-text">{this.state.coupon.yname}</View>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">
@@ -222,27 +228,27 @@ export default class AppreActivity extends Component {
             <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
           </View>
           {
-            this.state.coupon.description && this.state.coupon.description.length && !this.state.showMoreRules ? <View>
+            description && description.length && !this.state.showMoreRules ? <View>
               <View className="appre-rules-list-title" >使用规则：</View>
               {
-                this.state.coupon.description.length > 0 ? <View className="appre-rules-list-text" >-{this.state.coupon.description[0]}</View> : null
+                description.length > 0 ? <View className="appre-rules-list-text" >-{description[0]}</View> : null
               }
               {
-                this.state.coupon.description.length > 1 ? <View className="appre-rules-list-text" >-{this.state.coupon.description[1]}</View> : null
+                description.length > 1 ? <View className="appre-rules-list-text" >-{description[1]}</View> : null
               }
               {
-                this.state.coupon.description.length > 2 ? <View className="appre-rules-list-text" >-{this.state.coupon.description[2]}</View> : null
+                description.length > 2 ? <View className="appre-rules-list-text" >-{description[2]}</View> : null
               }
               {
-                this.state.coupon.description.length > 3 ? <View className="appre-rules-list-text" >-{this.state.coupon.description[3]}</View> : null
+                description.length > 3 ? <View className="appre-rules-list-text" >-{description[3]}</View> : null
               }
             </View> : null
           }
           {
-            this.state.coupon.description && this.state.coupon.description.length && this.state.coupon.description.length > 4 && this.state.showMoreRules ? <View>
+            description && description.length && description.length > 4 && this.state.showMoreRules ? <View>
               <View className="appre-rules-list-title" >使用规则：</View>
               {
-                this.state.coupon.description.map((item) => {
+                description.map((item) => {
                   return (
                     <View className="appre-rules-list-text" >-{item}</View>
                   )
@@ -251,7 +257,7 @@ export default class AppreActivity extends Component {
             </View> : null
           }
           {
-            this.state.coupon.description.length && this.state.coupon.description.length > 4 && !this.state.showMoreRules ? <View className="appre-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+            description && description.length && description.length > 4 && !this.state.showMoreRules ? <View className="appre-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
               <Image className="appre-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
               <View className="appre-more-text" >查看更多</View>
             </View> : null
@@ -259,8 +265,8 @@ export default class AppreActivity extends Component {
         </View>
 
         {
-          this.state.recommend.length > 0 ?
-            (<View className="more_goods">
+          this.state.recommend && this.state.recommend.length && this.state.recommend.length > 0 ?
+            <View className="more_goods">
               <View className="title-box">
                 <View className='title-left'></View>
                 <View className="title">更多本店宝贝</View>
@@ -362,7 +368,7 @@ export default class AppreActivity extends Component {
                     </View> : null
                   )
               }
-            </View>) : ""
+            </View> : null
         }
 
         <View className="appre-buy-box" >
@@ -383,12 +389,18 @@ export default class AppreActivity extends Component {
         }
         {
           this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '50%', right: '0px', zIndex: 88 }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
         }
 
+
+        <Zoom
+          src={this.state.imgZoomSrc}
+          showBool={this.state.imgZoom}
+          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+        />
       </View>
     );
   }

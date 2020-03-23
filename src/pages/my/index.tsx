@@ -23,9 +23,11 @@ interface State {
     mobile: number | string
 }
 export default class AppreActivity extends Component<Props> {
-    config = {
+    config: Config = {
         navigationBarTitleText: "我的",
-        enablePullDownRefresh: false
+        enablePullDownRefresh: false,
+        navigationBarBackgroundColor: '#ff4444',
+        navigationBarTextStyle: 'white'
     };
 
     state: State = {
@@ -56,23 +58,22 @@ export default class AppreActivity extends Component<Props> {
                 des: '我的邮寄礼品',
                 img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/en6B6t6aYzMPTwpFTWYxE378ykzasSeC.png',
                 path: "/activity-pages/my-welfare/pages/gift/welfare.gift"
-            }
-            ,
+            },
             {
                 des: '我的到店奖品',
-                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/en6B6t6aYzMPTwpFTWYxE378ykzasSeC.png',
+                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/Kw2nhNTkChiWrnX3nPiMMTxy87Efmj4w.png',
                 path: "/activity-pages/my-prize/index"
             }
             , {
                 des: '我的收货地址',
                 prompt: '',
-                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/Kw2nhNTkChiWrnX3nPiMMTxy87Efmj4w.png',
+                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/PhwEi7cAeBRncA6rhHBWrtKEyGGCraJz.png',
                 path: "/activity-pages/Shipping-address/index",
             },
             {
                 des: '我的邀请列表',
                 prompt: '',
-                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/PhwEi7cAeBRncA6rhHBWrtKEyGGCraJz.png',
+                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/JaSrdADTMkfAyZtwzn3mh2aEytc5yFpF.png',
                 path: "/pages/my/invitation-list/index",
             },
 
@@ -195,13 +196,13 @@ export default class AppreActivity extends Component<Props> {
                             this.state.emptyAvatar == 'Y' && this.state.settingShow ?
                                 <View className="my-text" onClick={getUserInfo}>
                                     <View className="my-text-top">{this.state.userData.user_name}</View>
-                                    <View className="my-text-bottom">一键获取用户头像~</View>
+                                    <View className="my-text-btn">一键获取用户头像</View>
                                 </View> : null
                         }
                         {
                             needLogin ? <View className="my-text" onClick={this.handLogin}>
                                 <View className="my-text-top">登录手机号</View>
-                                <View className="my-text-bottom">同步全渠道订单与优惠券~</View>
+                                <View className="my-text-btn">同步全渠道订单与优惠券</View>
                             </View> : null
                         }
                     </View>
@@ -230,7 +231,7 @@ export default class AppreActivity extends Component<Props> {
                             <View className="item-text">已过期</View>
                         </View>
                         <View className="nav-btn-item" onClick={this.setOrderInfo.bind(this, '已退款')}>
-                            <Image className='item-img' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/jz3pRNMrsikaNDyipdmZMdGZ2Qhzjhjr.png' />
+                            <Image className='item-img-refund' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/zjbwTHQJEWZh2waG6K2xYjkAP26Gbktr.png' />
                             <View className="item-text">已退款</View>
                         </View>
                     </View>
