@@ -495,7 +495,7 @@ export default class GroupActivity extends Component {
           this.state.newGroupList.length ? <View className="group-group-num">
             <View className='apply-title-box'>
               <View className='apply-title-left'></View>
-              <View className='apply-title'>{this.state.data2.total}人正在拼</View>
+              <View className='apply-title'>{this.state.data2.total}个团正在拼</View>
             </View>
             <View className='apply-title-right'>正在拼团</View>
           </View> : null

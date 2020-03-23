@@ -58,23 +58,22 @@ export default class AppreActivity extends Component<Props> {
                 des: '我的邮寄礼品',
                 img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/en6B6t6aYzMPTwpFTWYxE378ykzasSeC.png',
                 path: "/activity-pages/my-welfare/pages/gift/welfare.gift"
-            }
-            ,
+            },
             {
                 des: '我的到店奖品',
-                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/en6B6t6aYzMPTwpFTWYxE378ykzasSeC.png',
+                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/Kw2nhNTkChiWrnX3nPiMMTxy87Efmj4w.png',
                 path: "/activity-pages/my-prize/index"
             }
             , {
                 des: '我的收货地址',
                 prompt: '',
-                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/Kw2nhNTkChiWrnX3nPiMMTxy87Efmj4w.png',
+                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/PhwEi7cAeBRncA6rhHBWrtKEyGGCraJz.png',
                 path: "/activity-pages/Shipping-address/index",
             },
             {
                 des: '我的邀请列表',
                 prompt: '',
-                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/PhwEi7cAeBRncA6rhHBWrtKEyGGCraJz.png',
+                img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/JaSrdADTMkfAyZtwzn3mh2aEytc5yFpF.png',
                 path: "/pages/my/invitation-list/index",
             },
 
