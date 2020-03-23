@@ -724,7 +724,7 @@ export default class GroupActivity extends Component {
             </View> : null
           }
         </View>
-        <View className="group-buy-box" >
+        {/* <View className="group-buy-box" >
           <View className="group-buy-price-box" >
             <View className="group-buy-price-icon" >￥</View>
             <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
@@ -739,7 +739,26 @@ export default class GroupActivity extends Component {
                 </View>
             }
           </View>
+        </View> */}
+
+
+        <View className="new-buy-box" > 
+          <View className="new-price-box" >
+            <View className="new-price-icon" >￥</View>
+            <View className="new-price-num" >{this.state.data.participation_money}</View>
+          </View>
+          <View className="new-buy-btn-box" >
+            <View className="new-buy-btn-left" >分享活动</View>
+            {
+              this.state.allowGroup ? <View className="new-buy-btn-right" >{this.state.allowGroup}</View>
+                : <View className="new-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >
+                  {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}
+                </View>
+            }
+          </View>
         </View>
+
+
         {
           showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
             this.setState({ showBounced: false })
