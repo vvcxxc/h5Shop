@@ -742,7 +742,7 @@ export default class GroupActivity extends Component {
         </View> */}
 
 
-        <View className="new-buy-box" > 
+        <View className="new-buy-box" >
           <View className="new-price-box" >
             <View className="new-price-icon" >￥</View>
             <View className="new-price-num" >{this.state.data.participation_money}</View>
