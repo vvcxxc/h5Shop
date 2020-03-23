@@ -16,6 +16,28 @@ export default class CouponBox extends Component<Props> {
     this.props.onAction(item)
   }
 
+  couponType(item) {
+    const { is_share } = item
+    let type = ''
+    if(is_share == 1) {
+        // 增值
+        type = '增值券'
+    }else if(is_share == 4){
+      // 现金券兑换券
+      if(item.youhui_type){
+        // 现金券
+        type = '现金券'
+      }else{
+        // 兑换券
+        type = '兑换券'
+      }
+    }else if(is_share == 5){
+       // 拼团
+       type = '拼团券'
+    }
+    return type
+  }
+
   render() {
     const { item } = this.props
     return (
@@ -23,7 +45,7 @@ export default class CouponBox extends Component<Props> {
         <Image className='coupon-img' src={'http://oss.tdianyi.com/' + item.icon} />
         <View className='coupon-detail'>
           <View className='coupon-title'>
-            <View className='coupon-type'>拼团券</View>
+            <View className='coupon-type'>{this.couponType(item)}</View>
             <Text>
               {item.name}
             </Text>

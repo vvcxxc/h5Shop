@@ -159,10 +159,11 @@ export default class ActivityList extends Component {
             {/* <Image className="activity-banner-img" src="http://oss.tdianyi.com/front/t4nspcwf3Dbb722DKrGHBaahDcXbJeMj.png" /> */}
             <Image className="activity-banner-img" src="http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png" />
           </View>
-          <View className="activity-content">
+
             {
               list.length ? list.map(item => {
                 return (
+                  <View className="activity-content">
                   <View className="activity-item-padding">
                     <View className="store-info" onClick={this.handleClick.bind(this,item.store.id)}>
                       <View className="store-name-info">
@@ -184,6 +185,7 @@ export default class ActivityList extends Component {
                       handleClick={this.handleAction}
                       item={item}
                     />
+                  </View>
                   </View>
                 )
               }) : (
@@ -219,7 +221,7 @@ export default class ActivityList extends Component {
                 handleClick={() => { }}
               />
             </View> */}
-          </View>
+
         </View>
         );
     }
