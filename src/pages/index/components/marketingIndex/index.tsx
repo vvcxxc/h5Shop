@@ -182,13 +182,10 @@ export default class MarketingIndex extends Component<any> {
               autoplay
               >
               <SwiperItem>
-                <View className='bulletin-item'>原价79元的烤鱼仅需9.9元！<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
+                <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
               </SwiperItem>
               <SwiperItem>
-                <View className='bulletin-item'>原价79元的烤鱼仅需19.9元！！<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
-              </SwiperItem>
-              <SwiperItem>
-                <View className='bulletin-item'>原价79元的烤鱼仅需29.9元！！<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
+                <View className='bulletin-item'>商家免费进驻，获取海量流量!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
               </SwiperItem>
             </Swiper>
           </View>
