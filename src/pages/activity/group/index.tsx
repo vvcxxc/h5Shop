@@ -80,6 +80,7 @@ export default class GroupActivity extends Component {
        * 获取位置信息
        */
   componentDidShow() {
+    console.log(this.$router.params)
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
@@ -218,6 +219,7 @@ export default class GroupActivity extends Component {
     * 底部按钮发团或者拼团支付,不带礼品
     */
   payment() {
+    console.log(this.$router.params)
     let that = this;
     let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
     let _temptype = this.$router.params.type;
