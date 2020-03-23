@@ -7,6 +7,7 @@ import { discountCoupons } from "./service";
 import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie'
 import LandingBounced from '@/components/landing_bounced'//登录弹框
+import Zoom from '@/components/zoom';
 
 // import ShareBox from '@/components/share-box';
 export default class AppreActivity extends Component {
@@ -16,6 +17,8 @@ export default class AppreActivity extends Component {
   };
 
   state = {
+    imgZoomSrc: '',
+    imgZoom: false,
     bannerImgIndex: 0,
     yPoint: '',
     xPoint: '',
@@ -168,7 +171,10 @@ export default class AppreActivity extends Component {
 
     return (
       <View className="appre-activity-detail">
-        <Image className='appre-banner' src={this.state.coupon.image} />
+        <Image className='appre-banner' src={this.state.coupon.image}
+          onClick={(e) => {
+            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+          }} />
         <View className="banner-number-box">
           <View className="banner-number">1</View>
           <View className="banner-number">1</View>
@@ -383,12 +389,18 @@ export default class AppreActivity extends Component {
         }
         {
           this.state.isFromShare ? (
-            <View style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px'}} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
         }
 
+
+        <Zoom
+          src={this.state.imgZoomSrc}
+          showBool={this.state.imgZoom}
+          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+        />
       </View>
     );
   }

@@ -7,6 +7,7 @@ import { getLocation } from "@/utils/getInfo";
 import ApplyToTheStore from '@/components/applyToTheStore';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Cookie from 'js-cookie';
+import Zoom from '@/components/zoom';
 
 export default class AppreActivity extends Component {
     config = {
@@ -16,6 +17,8 @@ export default class AppreActivity extends Component {
 
 
     state = {
+        imgZoomSrc: '',
+        imgZoom: false,
         //图片轮播下标
         bannerImgIndex: 0,
         //是否从分享链接进入
@@ -237,24 +240,28 @@ export default class AppreActivity extends Component {
         const { images, description } = this.state.data;
         return (
             <View className="appre-activity-detail">
-                <Swiper
-                    onChange={(e) => {
-                        this.setState({ bannerImgIndex: e.detail.current })
-                    }}
-                    className='appre-banner'
-                    circular
-                    autoplay
-                >
-                    {
-                        this.state.data.images.length ? this.state.data.images.map((item, index) => {
-                            return (
-                                <SwiperItem className="appre-banner-swiperItem" key={item}>
-                                    <Image className="appre-banner-img" src={item} />
-                                </SwiperItem>
-                            )
-                        }) : null
-                    }
-                </Swiper>
+                <View onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.bannerImgIndex] })
+                }}>
+                    <Swiper
+                        onChange={(e) => {
+                            this.setState({ bannerImgIndex: e.detail.current })
+                        }}
+                        className='appre-banner'
+                        circular
+                        autoplay
+                    >
+                        {
+                            this.state.data.images.length ? this.state.data.images.map((item, index) => {
+                                return (
+                                    <SwiperItem className="appre-banner-swiperItem" key={item}>
+                                        <Image className="appre-banner-img" src={item} />
+                                    </SwiperItem>
+                                )
+                            }) : null
+                        }
+                    </Swiper>
+                </View>
                 <View className="banner-number-box">
                     <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
                     <View className="banner-number">{this.state.data.images.length}</View>
@@ -404,11 +411,17 @@ export default class AppreActivity extends Component {
                 {
                     this.state.isFromShare ? (
                         <View style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
-                            <Image src={require('../../../assets/go-home/go_home.png')} style={{width: '80px', height: '80px' }} />
+                            <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
                         </View>
                     ) : ''
                 }
 
+
+                <Zoom
+                    src={this.state.imgZoomSrc}
+                    showBool={this.state.imgZoom}
+                    onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+                />
             </View>
         );
     }

@@ -9,7 +9,7 @@ import Cookie from 'js-cookie';
 import ApplyToTheStore from '@/components/applyToTheStore';
 import TimeUp from '@/components/TimeUp';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
-
+import Zoom from '@/components/zoom';
 export default class GroupActivity extends Component {
   config = {
     navigationBarTitleText: "拼团活动",
@@ -18,6 +18,8 @@ export default class GroupActivity extends Component {
 
 
   state = {
+    imgZoomSrc: '',
+    imgZoom: false,
     //允许参加活动
     allowGroup: '',
     //从分享进入
@@ -436,24 +438,28 @@ export default class GroupActivity extends Component {
     const { showBounced } = this.state;
     return (
       <View className="group-activity-detail">
-        <Swiper
-          onChange={(e) => {
-            this.setState({ bannerImgIndex: e.detail.current })
-          }}
-          className='group-banner'
-          circular
-          autoplay
-        >
-          {
-            this.state.data.images.length ? this.state.data.images.map((item, index) => {
-              return (
-                <SwiperItem className="group-banner-swiperItem" key={item}>
-                  <Image className="group-banner-img" src={item} />
-                </SwiperItem>
-              )
-            }) : null
-          }
-        </Swiper>
+        <View onClick={(e) => {
+          this.setState({ imgZoom: true, imgZoomSrc: this.state.data.images[this.state.bannerImgIndex] })
+        }}>
+          <Swiper
+            onChange={(e) => {
+              this.setState({ bannerImgIndex: e.detail.current })
+            }}
+            className='group-banner'
+            circular
+            autoplay
+          >
+            {
+              this.state.data.images.length ? this.state.data.images.map((item, index) => {
+                return (
+                  <SwiperItem className="group-banner-swiperItem" key={item}>
+                    <Image className="group-banner-img" src={item} />
+                  </SwiperItem>
+                )
+              }) : null
+            }
+          </Swiper>
+        </View>
         <View className="banner-number-box">
           <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
           <View className="banner-number">{this.state.data.images.length}</View>
@@ -461,9 +467,9 @@ export default class GroupActivity extends Component {
         {/* <View className="collect-box">
                     <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
                 </View> */}
-        <View className="share-box">
+        {/* <View className="share-box">
           <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
-        </View>
+        </View> */}
 
         <View className="group-info-content">
           <View className="group-info-title">
@@ -741,11 +747,18 @@ export default class GroupActivity extends Component {
         }
         {
           this.state.isFromShare ? (
-            <View style={{position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px'}} onClick={this.handleGoHome.bind(this)}>
-              <Image src={require('../../../assets/go-home/go_home.png')} style={{width: '80px', height: '80px'}} />
+            <View style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
+              <Image src={require('../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
         }
+
+
+        <Zoom
+          src={this.state.imgZoomSrc}
+          showBool={this.state.imgZoom}
+          onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
+        />
       </View>
     );
   }
