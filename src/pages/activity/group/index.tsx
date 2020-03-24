@@ -221,11 +221,10 @@ export default class GroupActivity extends Component {
     * 底部按钮发团或者拼团支付,不带礼品
     */
   payment() {
-    console.log(this.$router.params)
     let that = this;
     let _tempid = this.$router.params.publictypeid ? this.$router.params.publictypeid : undefined;
     let _temptype = this.$router.params.type;
-    Taro.showLoading({ title: 'loading' });
+    Taro.showLoading({ title: 'loading', mask: true });
     let sameDatas = {
       public_type_id: this.$router.params.publictypeid ? this.$router.params.publictypeid : this.$router.params.id,
       activity_id: this.$router.params.activity_id,
@@ -312,7 +311,7 @@ export default class GroupActivity extends Component {
    */
   groupPayment(_groupid) {
     let that = this;
-    Taro.showLoading({ title: 'loading' });
+    Taro.showLoading({ title: 'loading', mask: true });
     let sameDatas = {
       public_type_id: _groupid,
       activity_id: this.$router.params.activity_id,
@@ -386,7 +385,7 @@ export default class GroupActivity extends Component {
   */
   getLastGroupId = (order_sn) => {
     let that = this;
-    Taro.showLoading({ title: '支付成功，正在查询用户团活动id' });
+    Taro.showLoading({ title: '支付成功，正在查询用户团活动id', mask: true });
     console.log('getLastGroupId', order_sn)
     let timer = setTimeout(() => {
       clearTimeout(timer);
