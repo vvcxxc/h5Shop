@@ -282,7 +282,7 @@ export default class AppreActivity extends Component {
                           <View className="good_type">
                             <View className="text">{this.state.recommend[0].youhui_type == 0 ? "兑换券" : "现金券"}</View>
                           </View>
-                          <View className="good_cash">{this.state.recommend[0].sname}</View>
+                          <View className="good_cash">{this.state.recommend[0].yname}</View>
                         </View>
                         <View className="good_desc">
                           <View className="good_desc_info">购买后{this.state.recommend[0].expire_day}天内有效</View>
@@ -310,7 +310,7 @@ export default class AppreActivity extends Component {
                           <View className="good_type">
                             <View className="text">{this.state.recommend[1].youhui_type == 0 ? "兑换券" : "现金券"}</View>
                           </View>
-                          <View className="good_cash">{this.state.recommend[1].sname}</View>
+                          <View className="good_cash">{this.state.recommend[1].yname}</View>
                         </View>
                         <View className="good_desc">
                           <View className="good_desc_info">购买后{this.state.recommend[1].expire_day}天内有效</View>
@@ -339,7 +339,7 @@ export default class AppreActivity extends Component {
                             <View className="good_type">
                               <View className="text">{item.youhui_type == 0 ? "兑换券" : "现金券"}</View>
                             </View>
-                            <View className="good_cash">{item.sname}</View>
+                            <View className="good_cash">{item.yname}</View>
                           </View>
                           <View className="good_desc">
                             <View className="good_desc_info">购买后{item.expire_day}天内有效</View>
