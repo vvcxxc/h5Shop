@@ -496,7 +496,7 @@ export default class GroupActivity extends Component {
             {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null}
           </View>
         </View>
-        <Image className="group-banner-img" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
+        <Image className="group-banner-nav" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
 
         {
           this.state.newGroupList.length ? <View className="group-group-num">

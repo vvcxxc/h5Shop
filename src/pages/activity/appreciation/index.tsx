@@ -292,7 +292,7 @@ export default class AppreActivity extends Component {
                     </View>
 
                 </View>
-                <Image className="appre-banner-img" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
+                <Image className="appre-banner-nav" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
 
                 <View className="appre-store-info">
                     <ApplyToTheStore
