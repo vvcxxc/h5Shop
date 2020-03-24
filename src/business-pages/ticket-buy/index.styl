@@ -780,16 +780,23 @@
                     
                     .good_money {
                         display:flex;
-                        align-items: center;
+                        flex-direction: row
+                        align-items: baseline;
+                        justify-content: flex-start;
+                        .good_new_money_icon{
+                            font-size: 20px;
+                            color: #FF4444;
+                        }    
                         .good_new_money {
                             font-size: 32px;
                             color: #FF4444;
                             font-weight: bold;
                         }
                         .good_old_money {
-                            font-size: 20px;
+                            font-size: 22px;
                             color: #999999;
                             text-decoration: line-through;
+                            margin-left: 10px;
                         }
                     }
                 }
