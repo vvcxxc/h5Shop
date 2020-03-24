@@ -76,6 +76,14 @@ export default class AppreActivity extends Component {
             this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: '', xpoint: '' })
         })
     }
+
+    /**
+       * 滑到顶部
+       */
+    ScrollTop = () => {
+        window.scrollTo(0, 0)
+    }
+
     /**
        * 获取增值活动信息
        * @param {object} data 增值id,坐标
@@ -95,6 +103,7 @@ export default class AppreActivity extends Component {
                 Taro.hideLoading();
                 Taro.showToast({ title: '请求失败', icon: 'none' });
             })
+        this.ScrollTop()
     }
 
     /**

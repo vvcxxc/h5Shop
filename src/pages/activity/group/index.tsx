@@ -92,6 +92,13 @@ export default class GroupActivity extends Component {
   }
 
   /**
+   * 滑到顶部
+   */
+  ScrollTop = () => {
+    window.scrollTo(0, 0)
+  }
+
+  /**
    * 获取拼团活动信息
    * @param {object} data 活动id，坐标
    */
@@ -133,6 +140,7 @@ export default class GroupActivity extends Component {
     }).catch((err) => {
       Taro.hideLoading();
     })
+    this.ScrollTop()
   }
 
   /**
