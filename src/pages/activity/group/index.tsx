@@ -91,13 +91,6 @@ export default class GroupActivity extends Component {
     })
   }
 
-  /**
-   * 滑到顶部
-   */
-  ScrollTop = () => {
-    console.log('ScrollTop')
-    window.scrollTo(0, 0)
-  }
 
   /**
    * 获取拼团活动信息
@@ -141,7 +134,6 @@ export default class GroupActivity extends Component {
     }).catch((err) => {
       Taro.hideLoading();
     })
-    this.ScrollTop()
   }
 
   /**

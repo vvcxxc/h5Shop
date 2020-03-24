@@ -77,13 +77,6 @@ export default class AppreActivity extends Component {
         })
     }
 
-    /**
-       * 滑到顶部
-       */
-    ScrollTop = () => {
-        console.log('ScrollTop')
-        window.scrollTo(0, 0)
-    }
 
     /**
        * 获取增值活动信息
@@ -104,7 +97,6 @@ export default class AppreActivity extends Component {
                 Taro.hideLoading();
                 Taro.showToast({ title: '请求失败', icon: 'none' });
             })
-        this.ScrollTop()
     }
 
     /**
