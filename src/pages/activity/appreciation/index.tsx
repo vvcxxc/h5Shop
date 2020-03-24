@@ -81,6 +81,7 @@ export default class AppreActivity extends Component {
        * 滑到顶部
        */
     ScrollTop = () => {
+        console.log('ScrollTop')
         window.scrollTo(0, 0)
     }
 
