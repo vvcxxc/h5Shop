@@ -87,10 +87,10 @@ export default class AppreActivity extends Component {
     showMoreRules: false
   }
 
-  /**
+   /**
     * 回首页
     */
-  handleGoHome = () => {
+   handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
 

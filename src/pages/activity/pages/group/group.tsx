@@ -320,13 +320,11 @@ export default class Group extends Component {
     this.setState({ isShare: false });
   }
 
-  /**
-   * 回首页
-   */
-  handleGoHome = () => {
-    Taro.navigateTo({
-      url: '/'
-    })
+   /**
+    * 回首页
+    */
+   handleGoHome = () => {
+    Taro.switchTab({ url: '/pages/index/index' })
   }
   /**
   * 定时

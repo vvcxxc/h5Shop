@@ -431,10 +431,12 @@ export default class GroupActivity extends Component {
     }, 5000)
   }
 
-  /**
-  * 回首页
-  */
-  handleGoHome = () => { Taro.navigateTo({ url: '/' }) }
+   /**
+    * 回首页
+    */
+   handleGoHome = () => {
+    Taro.switchTab({ url: '/pages/index/index' })
+  }
 
   render() {
     const { description } = this.state.data;

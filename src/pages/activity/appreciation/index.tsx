@@ -232,9 +232,11 @@ export default class AppreActivity extends Component {
     }
 
     /**
-       * 回首页
-       */
-    handleGoHome = () => { Taro.navigateTo({ url: '/' }) }
+   * 回首页
+   */
+    handleGoHome = () => {
+        Taro.switchTab({ url: '/pages/index/index' })
+    }
 
 
     render() {
