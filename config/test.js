@@ -34,7 +34,7 @@ module.exports = {
     BUSINESS_URL: '"http://test.mall.tdianyi.com/pages/business/index?id="',
     TICKETBUY_URL: '"http://test.mall.tdianyi.com/business-pages/ticket-buy/index?id="',
     SETMEAL_URL: '"http://test.mall.tdianyi.com/business-pages/set-meal/index?id="',
-
+    
   },
   defineConstants: {
   },
