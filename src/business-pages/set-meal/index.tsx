@@ -8,6 +8,10 @@ import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie'
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
+import ShareBox from "@/components/share-box";//分享组件
+import wx from 'weixin-js-sdk';
+const share_url = process.env.SETMEAL_URL;
+const H5_URL = process.env.H5_URL
 
 // import ShareBox from '@/components/share-box';
 export default class AppreActivity extends Component {
@@ -26,6 +30,8 @@ export default class AppreActivity extends Component {
     //表面收藏
     keepCollect_bull: false,
     coupon: {
+      invitation_user_id:'',
+      share_text:'',
       begin_time: "",
       brief: "",
       //真正的收藏
@@ -84,7 +90,9 @@ export default class AppreActivity extends Component {
     is_alert: false,
     showAll: false,
     showBounced: false,
-    showMoreRules: false
+    showMoreRules: false,
+    showShare: false, //显示分享
+    isShare: false
   }
 
    /**
@@ -104,6 +112,7 @@ export default class AppreActivity extends Component {
     }
     Taro.showLoading({ title: 'loading', mask: true })
     getLocation().then((res: any) => {
+      this.toShare();
       this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch(err => {
       this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
@@ -118,6 +127,7 @@ export default class AppreActivity extends Component {
     discountCoupons(id, data)
       .then((res: any) => {
         Taro.hideLoading()
+        console.log(res.data,'mememe')
         this.setState({
           coupon: res.data.info.coupon,
           store: res.data.info.store,
@@ -167,10 +177,102 @@ export default class AppreActivity extends Component {
     }
   }
 
+  buttonToShare = () => {
+    this.setState({ isShare: true });
+  }
+  closeShare = () => {
+    this.setState({ isShare: false });
+  }
+  toShare = () => {
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
+    let titleMsg = this.state.store.sname + '正在派发' + this.state.coupon.return_money + '元兑换券，手慢无，速抢！';
+    let descMsg = '拼手速的时候来了，超值兑换券限量抢购，手慢就没了！速速戳进来一起领取！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + this.$router.params.id + '&invitation_user_id=' + this.state.coupon.invitation_user_id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+  copyText = () => {
+    let code = this.state.coupon.share_text.replace(/@#@#/, H5_URL)
+    Taro.setClipboardData({
+      data: code,
+      success() {
+        Taro.showToast({ title: '复制成功，请前往微信发送给好友。', icon: 'none' })
+      },
+      fail() {
+        Taro.showToast({ title: '复制失败，请刷新页面重试', icon: 'none' })
+      },
+      complete: () => {
+        this.setState({ showShare: false })
+      },
+    })
+  }
+
   render() {
     const { description } = this.state.coupon;
     return (
       <View className="appre-activity-detail">
+        {/* 分享组件 */}
+        <ShareBox
+          show={this.state.showShare}
+          onClose={() => this.setState({ showShare: false })}
+          sendText={() => {
+            this.copyText()
+            this.setState({ showShare: false })
+          }}
+          sendLink={() => {
+            this.buttonToShare()
+            this.setState({ showShare: false })
+          }}
+          createPoster={() => {
+            this.setState({ showPoster: true })
+          }}
+        />
+        {
+          this.state.isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  点击此按钮分享给好友
+                                    </View>
+                <Image src={require('@/assets/share_arro.png')} className='share_img' />
+              </View>
+            </View>
+          ) : null
+        }
         <Image className='appre-banner' src={this.state.coupon.image}
           onClick={(e) => {
             this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
@@ -380,7 +482,9 @@ export default class AppreActivity extends Component {
             <View className="appre-buy-price-num" >{this.state.coupon.pay_money}</View>
           </View>
           <View className="appre-buy-btn-box" >
-            <View className="appre-buy-btn-left" >分享活动</View>
+            <View className="appre-buy-btn-left" onClick={() => {
+              this.setState({ showShare:true})
+            }}>分享活动</View>
             <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
 
           </View>

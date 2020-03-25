@@ -17,7 +17,8 @@ module.exports = {
     GROUP_Details_URL: '"http://mall.tdianyi.com/pages/activity/group/index?"',
     BUSINESS_URL:'"http://mall.tdianyi.com/pages/business/index?id="',
     TICKETBUY_URL:'"http://mall.tdianyi.com/business-pages/ticket-buy/index?id="',
-    SETMEAL_URL:'"http://mall.tdianyi.com/business-pages/set-meal/index?id="'
+    SETMEAL_URL: '"http://mall.tdianyi.com/business-pages/set-meal/index?id="',
+    H5_URL: '"http://mall.tdianyi.com"',
   },
   defineConstants: {
   },
