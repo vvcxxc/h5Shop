@@ -9,6 +9,7 @@ module.exports = {
     UNION_ID: '"unionid"',
     ALIPAY_USER_ID: '"test_alipay_user_id"',
     USER_API: '"http://test.usercenter.tdianyi.com/"',
+    H5_URL: 'http://test.mall.tdianyi.com',
   },
   defineConstants: {
   },

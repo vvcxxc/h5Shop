@@ -10,6 +10,12 @@ import ApplyToTheStore from '@/components/applyToTheStore';
 import TimeUp from '@/components/TimeUp';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
+import ShareBox from "@/components/share-box";//分享组件
+import wx from 'weixin-js-sdk';
+const share_url = process.env.APPRE_Details_URL;
+const H5_URL = process.env.H5_URL
+let interval;
+
 export default class GroupActivity extends Component {
   config = {
     navigationBarTitleText: "拼团活动",
@@ -33,6 +39,7 @@ export default class GroupActivity extends Component {
     //查看更多
     showMoreRules: false,
     data: {
+      share_text:'',
       activity_begin_time: "",
       activity_end_time: "",
       activity_id: 0,
@@ -73,7 +80,9 @@ export default class GroupActivity extends Component {
       pageRow: 2,
       total: 0,
     },
-    newGroupList: []
+    newGroupList: [],
+    showShare: false, //显示分享
+    isShare: false
   };
 
   /**
@@ -85,6 +94,7 @@ export default class GroupActivity extends Component {
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
     getLocation().then((res: any) => {
+      this.toShare()
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch((err) => {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
@@ -439,12 +449,108 @@ export default class GroupActivity extends Component {
   handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
+  toShare = () => {
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
+    let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
+    let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
+    let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id;
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: [
+            'updateAppMessageShareData',
+            'updateTimelineShareData',
+            'onMenuShareAppMessage', //旧的接口，即将废弃
+            'onMenuShareTimeline'//旧的接口，即将废弃
+          ]
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: linkMsg,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+            }
+          })
+        })
+      })
+  }
+  buttonToShare = () => {
+    this.setState({ isShare: true });
+  }
+  closeShare = () => {
+    this.setState({ isShare: false });
+  }
+  copyText = () => {
+    let code = this.state.data.share_text.replace(/@#@#/, H5_URL)
+    Taro.setClipboardData({
+      data: code,
+      success() {
+        Taro.showToast({ title: '复制成功，请前往微信发送给好友。', icon: 'none' })
+      },
+      fail() {
+        Taro.showToast({ title: '复制失败，请刷新页面重试', icon: 'none' })
+      },
+      complete: () => {
+        this.setState({ showShare: false })
+      },
+    })
+  }
 
   render() {
     const { description } = this.state.data;
     const { showBounced } = this.state;
     return (
       <View className="group-activity-detail">
+        {/* 分享组件 */}
+        <ShareBox
+          show={this.state.showShare}
+          onClose={() => this.setState({ showShare: false })}
+          sendText={() => { 
+            this.copyText()
+            this.setState({ showShare: false })
+          }}
+          sendLink={() => {
+            this.buttonToShare()
+            this.setState({ showShare: false })
+          }}
+          createPoster={() => {
+            this.setState({ showPoster: true })
+          }}
+        />
+        {
+          this.state.isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  点击此按钮分享给好友
+                                    </View>
+                <Image src={require('../../../assets/share_arro.png')} className='share_img' />
+              </View>
+            </View>
+          ) : null
+        }
         <View
           className="swiper-content"
           onClick={(e) => {
@@ -758,7 +864,8 @@ export default class GroupActivity extends Component {
             <View className="new-price-num" >{this.state.data.participation_money}</View>
           </View>
           <View className="new-buy-btn-box" >
-            <View className="new-buy-btn-left" >分享活动</View>
+            <View className="new-buy-btn-left" onClick={() =>
+              this.setState({ showShare: true })}>分享活动</View>
             {
               this.state.allowGroup ? <View className="new-buy-btn-right" >{this.state.allowGroup}</View>
                 : <View className="new-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >

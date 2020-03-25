@@ -9,6 +9,8 @@ import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie'
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
+import ShareBox from "@/components/share-box";//分享组件
+import wx from 'weixin-js-sdk';
 
 // import ShareBox from '@/components/share-box';
 export default class TicketBuy extends Component {
@@ -84,7 +86,9 @@ export default class TicketBuy extends Component {
       youhui_type: 0
     }],
 
-    isFromShare: false
+    isFromShare: false,
+    showShare: false, //显示分享
+    isShare: false
   }
 
   /**
@@ -104,6 +108,7 @@ export default class TicketBuy extends Component {
     }
     Taro.showLoading({ title: 'loading', mask: true })
     getLocation().then((res: any) => {
+      this.toShare()
       this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch(err => {
       this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
@@ -167,10 +172,86 @@ export default class TicketBuy extends Component {
     }
   }
 
+  toShare = () => {
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
+    let titleMsg = '嘘，这里有一张' + this.state.coupon.return_money + '元现金券，悄悄领了，别声张！';
+    let descMsg = this.state.store.sname + '又搞活动啦，是好友我才偷偷告诉你，现金券数量有限，领券要快姿势要帅！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + this.$router.params.id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+  buttonToShare = () => {
+    this.setState({ isShare: true });
+  }
+  closeShare = () => {
+    this.setState({ isShare: false });
+  }
+
+
   render() {
 
     return (
       <View className="appre-activity-detail">
+        {/* 分享组件 */}
+        <ShareBox
+          astrict={2}
+          show={this.state.showShare}
+          onClose={() => this.setState({ showShare: false })}
+          sendText={() => { }}
+          sendLink={() => {
+            this.buttonToShare()
+            this.setState({ showShare: false })
+          }}
+          createPoster={() => {
+            this.setState({ showPoster: true })
+          }}
+        />
+        {
+          this.state.isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  点击此按钮分享给好友
+                                    </View>
+                <Image src={require('@/assets/share_arro.png')} className='share_img' />
+              </View>
+            </View>
+          ) : null
+        }
         <Image className='appre-banner' src={this.state.coupon.image}
           onClick={(e) => {
             this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
@@ -366,7 +447,9 @@ export default class TicketBuy extends Component {
             <View className="appre-buy-price-num" >{this.state.coupon.pay_money}</View>
           </View>
           <View className="appre-buy-btn-box" >
-            <View className="appre-buy-btn-left" >分享活动</View>
+            <View className="appre-buy-btn-left" onClick={() => {
+              this.setState({ showShare: true })
+            }}>分享活动</View>
 
             <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
 
