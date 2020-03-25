@@ -4,8 +4,12 @@ import request from '@/services/request'
 import LandingBounced from '@/components/landing_bounced'
 import { getUserInfo } from '@/utils/getInfo';
 import Cookie from 'js-cookie'
-import PosterGeneral from '@/components/posters/value_added/general'//增值海报
+// import PosterGeneral from '@/components/posters/value_added/general'//增值海报
 import SpellGroupPoster from "@/components/posters/spell_group";
+
+import PosterCategory from "@/components/posters/value_added/category";
+import PosterGeneral from "@/components/posters/value_added/general";
+
 import "./index.styl"
 
 type Props = any
@@ -24,7 +28,9 @@ interface State {
   mobile: Number | null,
 
   spell_group: boolean,
-  poster_youhui_type: any
+  poster_youhui_type: any,
+  posterData: any,
+  spellGroupInfo:any
 }
 
 export default class NewPage extends Component<Props>{
@@ -78,7 +84,9 @@ export default class NewPage extends Component<Props>{
 
     //海报
     spell_group: false,
-    poster_youhui_type: 0
+    poster_youhui_type: 0,
+    posterData: {},
+    spellGroupInfo:{}
   }
 
   componentWillMount() {
@@ -215,17 +223,15 @@ export default class NewPage extends Component<Props>{
         <View onClick={() => { this.setState({ spell_group: true }) }}>
           点击生成海报
         </View>
-        {/* <PosterGeneral
-          show={this.state.spell_group}
-          list={this.state.posterData}
-          close={() => this.setState({ spell_group: false })}
-        />  */}
+        <PosterCategory show={this.state.spell_group}
+          list={this.state.spellGroupInfo}
+          close={() => this.setState({ value_added: false })} />
 
-        <SpellGroupPoster
+        {/* <SpellGroupPoster
           show={this.state.spell_group}
           list={this.state.spellGroupInfo}
           close={() => this.setState({ value_added: false })}
-        />
+        /> */}
         {
           this.state.settingShow ?
             <Image className='settleIcon' src='http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/nAP8aBrDk2yGzG7AdaTrPDWey8fDB2KP.png' onClick={this.setPersonalInfo.bind(this)} />
