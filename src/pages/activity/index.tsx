@@ -53,22 +53,31 @@ export default class Activity extends Component<any>  {
   }
 
   componentDidShow() {
-    console.log('global',iNoBounce)
+    console.log('global', iNoBounce)
     // let u = navigator.userAgent
     // if (u.indexOf('iPhone') > -1) {
     //     console.log('iNoBounce',iNoBounce)
     //     iNoBounce.enable()
     // }
+    // let router = JSON.parse(sessionStorage.getItem('router'));
+    // console.log(router, 1112)
+    // if (router) {
+    //   if (router.city_id) {
+    //     this.setState({
+    //       cityId: router.city_id
+    //     })
+    //   }
+    // }
   }
 
   componentDidMount() {
 
-    
+
   }
 
   onReachBottom() {
     const { current, flag } = this.state;
-    if(!this.state.dataList.length){
+    if (!this.state.dataList.length) {
       console.log('禁止触底')
       return
     }
@@ -96,7 +105,7 @@ export default class Activity extends Component<any>  {
   }
 
   componentWillMount = () => {
-    Taro.pageScrollTo({scrollTop: 0})
+    Taro.pageScrollTo({ scrollTop: 0 })
     getLocation().then((res: any) => {
       this.setState({
         yPoint: res.latitude || '',
@@ -110,12 +119,23 @@ export default class Activity extends Component<any>  {
     this.requestTab();
 
     // 获取广告
-    let data: any = Taro.getStorageSync('router')
-    this.setState({
-      city: data.city_id
-    }, () => {
+    let data: any = JSON.parse(sessionStorage.getItem('router'));
+    console.log(data, 'data')
+    if (data) {
+      if (data.city_id) {
+        console.log(data,35555)
+        this.setState({
+          cityId: data.city_id
+        }, () => {
+          this.getAdvertising()
+        })
+      } else {
+        this.getAdvertising()
+      }
+    } else {
       this.getAdvertising()
-    })
+    }
+
   }
 
   // 获取标题列表
@@ -172,7 +192,7 @@ export default class Activity extends Component<any>  {
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
-          duration:2000
+          duration: 2000
         })
         this.setState({
           flag: false
@@ -205,7 +225,7 @@ export default class Activity extends Component<any>  {
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
-          duration:2000
+          duration: 2000
         })
         this.setState({
           flag: false
@@ -239,7 +259,7 @@ export default class Activity extends Component<any>  {
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
-          duration:2000
+          duration: 2000
         })
         this.setState({
           flag: false

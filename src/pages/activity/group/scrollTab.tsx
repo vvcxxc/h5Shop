@@ -6,7 +6,7 @@ import TimeUp from './TimeUp';
 import request from '../../../services/request';
 import { getBrowserType } from "@/utils/common";
 import Cookie from 'js-cookie';
-
+import LandingBounced from '@/components/landing_bounced'//登录弹框
 interface Props {
     tabList: Array<any>;
     storeName?: any;
@@ -16,7 +16,9 @@ interface Props {
 let timer;
 let timeout;
 export default class Scrolltab extends Component<Props>{
-
+    state = {
+      showBounced:false
+    }
     componentDidMount() {
         timer = setInterval(() => {
             let tempPage = this.state.current == this.props.tabList.length - 1 ? 0 : this.state.current + 1;
@@ -45,6 +47,11 @@ export default class Scrolltab extends Component<Props>{
         })
     }
     goToaConfirmAddGroup = (_id, e) => {
+      let phone_status = Cookie.get('phone_status')
+    if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      this.setState({ showBounced: true })
+      return
+    }
         if (this.props.gift_id) {
             clearInterval(timer);
             //轮播列表参团,路由params带过来的id为活动id, 接口传过来的id为团id
@@ -181,8 +188,14 @@ export default class Scrolltab extends Component<Props>{
         }, 3000);
     }
     render() {
+      const { showBounced } = this.state
         return (
             <div className="scrolltab" onTouchStart={this.touchStart.bind(this)} onTouchMove={this.touchMove.bind(this)}>
+               {
+          showBounced ? <LandingBounced cancel={() => { this.setState({ showBounced: false }) }} confirm={() => {
+            this.setState({ showBounced: false })
+          }} /> : null
+        }
                 <AtTabs
                     current={this.state.current}
                     scroll
