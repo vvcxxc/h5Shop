@@ -97,8 +97,10 @@ export default class GroupActivity extends Component {
    * @param {object} data 活动id，坐标
    */
   getGroupInfo = (data: object) => {
+    let that = this;
     getGroupYouhuiInfo(data)
       .then((res: any) => {
+        that.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
         Taro.hideLoading();
         if (res.code == 200) {
           let isPostage = false;
@@ -106,14 +108,14 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-          this.setState({ data: res.data, isPostage });
-          this.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
+          that.setState({ data: res.data, isPostage });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
         }
       }).catch(err => {
         Taro.hideLoading();
         Taro.showToast({ title: '请求失败', icon: 'none' });
+        that.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
       })
   }
 
@@ -431,10 +433,10 @@ export default class GroupActivity extends Component {
     }, 5000)
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
 

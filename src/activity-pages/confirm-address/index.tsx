@@ -102,60 +102,7 @@ export default class confirmAddress extends Component {
 
         }
     }
-    // componentDidMount() {
-    //     console.log(this.$router.params);
-    //     Taro.showLoading({
-    //         title: ""
-    //     });
-    //     let data;
-    //     if (this.$router.params.address_id) {
-    //         data = { youhui_id: this.$router.params.id, address_id: this.$router.params.address_id }
-    //     } else {
-    //         data = { youhui_id: this.$router.params.id }
-    //     }
-    //     if (this.$router.params.activityType == '1') {
-    //         request({
-    //             url: 'api/wap/user/appreciation/appreciationOrderInfo',
-    //             method: "GET",
-    //             data: data
-    //         }).then((res: any) => {
-    //             if (res.code == 200) {
-    //                 Taro.hideLoading();
-    //                 this.setState({ data: res.data })
-    //             } else {
-    //                 Taro.hideLoading();
-    //                 Taro.showToast({ title: '加载失败', icon: 'none' })
-    //             }
-
-    //         }).catch((err) => {
-    //             Taro.hideLoading();
-    //             console.log(err);
-    //             Taro.showToast({ title: '加载失败', icon: 'none' })
-    //         })
-
-    //     } else {
-    //         request({
-    //             url: 'api/wap/user/groupOrderInfo',
-    //             method: "GET",
-    //             data: data
-    //         }).then((res: any) => {
-    //             if (res.code == 200) {
-    //                 Taro.hideLoading();
-    //                 console.log(res)
-    //                 this.setState({ data: res.data })
-    //             } else {
-    //                 Taro.hideLoading();
-    //                 Taro.showToast({ title: '加载失败', icon: 'none' })
-    //             }
-
-    //         }).catch((err) => {
-    //             Taro.hideLoading();
-    //             console.log(err);
-    //             Taro.showToast({ title: '加载失败', icon: 'none' })
-    //         })
-
-    //     }
-    // }
+    
     clickGift = (e) => {
         if (this.state.giftChoice == true) {
             this.setState({ giftChoice: false })
