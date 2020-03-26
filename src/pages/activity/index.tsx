@@ -59,6 +59,15 @@ export default class Activity extends Component<any>  {
     //     console.log('iNoBounce',iNoBounce)
     //     iNoBounce.enable()
     // }
+    // let router = JSON.parse(sessionStorage.getItem('router'));
+    // console.log(router, 1112)
+    // if (router) {
+    //   if (router.city_id) {
+    //     this.setState({
+    //       cityId: router.city_id
+    //     })
+    //   }
+    // }
   }
 
   componentDidMount() {
@@ -110,12 +119,23 @@ export default class Activity extends Component<any>  {
     this.requestTab();
 
     // 获取广告
-    let data: any = Taro.getStorageSync('router')
-    this.setState({
-      city: data.city_id
-    }, () => {
+    let data: any = JSON.parse(sessionStorage.getItem('router'));
+    console.log(data, 'data')
+    if (data) {
+      if (data.city_id) {
+        console.log(data,35555)
+        this.setState({
+          cityId: data.city_id
+        }, () => {
+          this.getAdvertising()
+        })
+      } else {
+        this.getAdvertising()
+      }
+    } else {
       this.getAdvertising()
-    })
+    }
+
   }
 
   // 获取标题列表
