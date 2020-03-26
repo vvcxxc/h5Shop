@@ -225,20 +225,32 @@ export default class AppreActivity extends Component {
         })
       })
   }
+
   copyText = () => {
-    let code = this.state.coupon.share_text.replace(/@#@#/, H5_URL)
-    Taro.setClipboardData({
-      data: code,
-      success() {
-        Taro.showToast({ title: '复制成功，请前往微信发送给好友。', icon: 'none' })
-      },
-      fail() {
-        Taro.showToast({ title: '复制失败，请刷新页面重试', icon: 'none' })
-      },
-      complete: () => {
-        this.setState({ showShare: false })
-      },
-    })
+    let NValue = this.state.coupon.share_text.replace(/@#@#/, H5_URL)
+    let NumClip = document.createElement("textarea");
+    NumClip.value = NValue;
+    document.body.appendChild(NumClip);
+    NumClip.select();
+    this.selectText(NumClip, 0, NValue.length);
+    if (document.execCommand('copy', false)) {
+      document.execCommand('copy', false)// 执行浏览器复制命令
+      Taro.showToast({ title: '复制成功，请前往微信发送给好友。' })
+    } else {
+      Taro.showToast({ title: '该浏览器不支持点击复制到剪贴板', icon: 'none' })
+    }
+    this.setState({ showShare: false })
+  }
+
+  selectText = (textbox, startIndex, stopIndex) => {
+    if (textbox.createTextRange) {//ie
+      var range = textbox.createTextRange();
+      range.collapse(true);
+      range.select();//不兼容苹果
+    } else {//firefox/chrome
+      textbox.setSelectionRange(startIndex, stopIndex);
+      textbox.focus();
+    }
   }
 
   render() {
