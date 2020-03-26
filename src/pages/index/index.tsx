@@ -58,11 +58,10 @@ export default class Index extends Component<any> {
     let router = JSON.parse(sessionStorage.getItem('router')) || {}
     if(router.city_name){
 
-      if(router.city_name == '新会区'){
-        console.log(router.city_name,'12344')
-        this.setState({is_marketing: true})
-      }else{
-        this.setState({is_marketing: false})
+      if(router.type_index_id){
+        this.setState({ is_marketing: true })
+      }else {
+        this.setState({ is_marketing: false })
       }
     }else {
       getLocation().then(res => {
@@ -74,12 +73,12 @@ export default class Index extends Component<any> {
           router = {}
           router.city_name = res.data.city
           router.city_id = res.data.city_id
-          if(res.data.district == '新会区'){
-            this.setState({is_marketing: true})
-            router.city_name = res.data.district
-          }else{
-            this.setState({is_marketing: false})
-          }
+          router.type_index_id = res.data.type_index_id
+            if (res.data.type_index_id) {
+              this.setState({ is_marketing: true })
+            } else {
+              this.setState({ is_marketing: false })
+            }
           sessionStorage.setItem('router',JSON.stringify(router))
         })
       })

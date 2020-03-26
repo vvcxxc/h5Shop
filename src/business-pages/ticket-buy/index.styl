@@ -1,12 +1,15 @@
 .appre-activity-detail {
-    width: 100vw;
-    height: auto;
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    // height: auto;
+    // height: 100%;
+    position: absolute;
+    // min-height: 100vh;
+    top: 0;
+    bottom: 0;
+    overflow-y: scroll;
     background: #f3f4f8;
     padding-bottom: 140px;
+    -webkit-overflow-scrolling: touch;
 
     .appre-banner {
         width: 100vw;
@@ -111,7 +114,7 @@
             position: relative;
 
             .appre-info-title-label {
-                width: 176px;
+                width: 140px;
                 height: 29px;
                 background: rgba(255, 68, 68, 1);
                 border-radius: 6px;
@@ -131,7 +134,7 @@
             .appre-info-title-text {
                 width: 100%;
                 height: auto;
-                text-indent: 190px;
+                text-indent: 154px;
                 min-height: 42px;
                 max-height: 84px;
                 font-size: 36px;
@@ -746,8 +749,8 @@
                             display: flex;
                             align-items: center;
                             margin-bottom: 10px;
-                            .good_type { 
-                                width: 176px;
+                            .good_type {
+                                width: 139px;
                                 height: 29px;
                                 margin-right:10px;
                                 background: rgba(255, 68, 68, 1);
@@ -763,7 +766,7 @@
                                 color: #000;
                                 font-size: 26px;
                                 font-weight: bold;
-                                width: 250px;
+                                width: 248px;
                                 overflow: hidden;
                                 text-overflow:ellipsis;
                                 white-space: nowrap;
@@ -777,7 +780,7 @@
                             }
                         }
                     }
-                    
+
                     .good_money {
                         display:flex;
                         flex-direction: row
@@ -786,7 +789,7 @@
                         .good_new_money_icon{
                             font-size: 20px;
                             color: #FF4444;
-                        }    
+                        }
                         .good_new_money {
                             font-size: 32px;
                             color: #FF4444;
@@ -795,7 +798,7 @@
                         .good_old_money {
                             font-size: 22px;
                             color: #999999;
-                            text-decoration: line-through;
+                            text-decoration:line-through;
                             margin-left: 10px;
                         }
                     }
@@ -821,4 +824,45 @@
 
 
 
+}
+
+.share_mask {
+    background: rgba(0, 0, 0, .7);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+
+    .share_box {
+        width: 450px;
+        height: 226px;
+        position: absolute;
+        right: 0;
+    }
+
+    .share_text {
+        position: absolute;
+        right: 138px;
+        font-weight: bold;
+        bottom: 0;
+        width: 350px;
+        letter-spacing: 4px;
+        float: left;
+        font-size: 30px;
+        text-align: right;
+        color: #fabe1a;
+
+    }
+
+    .text_top {
+        bottom: 60px;
+    }
+
+    .share_img {
+        position: absolute;
+        right: 0;
+        width: 138px;
+        height: 226px;
+    }
 }
