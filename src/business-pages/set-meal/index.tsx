@@ -216,7 +216,7 @@ export default class SetMeal extends Component {
       return
     }
     Taro.navigateTo({
-      url: '../../business-pages/confirm-order/index?id=' + id
+      url: '../../business-pages/coupon-distribution/index?id=' + id
     })
   };
   handleClick2 = (_id, e) => {
