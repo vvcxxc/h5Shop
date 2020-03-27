@@ -85,7 +85,6 @@ export default class Orderdetail extends Component {
         .then((res: any) => {
           console.log(res);
           that.setState({ defaultData: res.data }, () => {
-            console.log('log1', this.state.defaultData)
             if (this.state.defaultData.coupons_type * 1 == 0) { //兑换券获取兑换码
               request({
                 url: 'api/wap/coupon/showCode',
