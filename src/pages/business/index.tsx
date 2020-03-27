@@ -192,7 +192,6 @@ export default class PaySuccess extends Component<Props> {
         }
 
       }).catch(err => {
-        console.log(err);
       })
   }
 

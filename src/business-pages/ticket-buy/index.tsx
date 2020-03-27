@@ -1,6 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
 import { AtIcon } from 'taro-ui';
-// import { AtIcon, AtToast, AtTabs, AtTabsPane } from "taro-ui";
 import { View, Text, Image, ScrollView, Button, Swiper, SwiperItem } from "@tarojs/components";
 import "./index.styl";
 import ApplyToTheStore from '@/components/applyToTheStore';
@@ -11,6 +10,9 @@ import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
+import Poster from '@/components/posters/ticket-buy'//   海报无礼品
+import { moneyPoster, getXcxQrcode } from '@/api/poster'
+const BASIC_API = process.env.BASIC_API;//二维码域名
 
 const share_url = process.env.TICKETBUY_URL;
 // import ShareBox from '@/components/share-box';
@@ -90,7 +92,26 @@ export default class TicketBuy extends Component {
 
     isFromShare: false,
     showShare: false, //显示分享
-    isShare: false
+    isShare: false,
+    showPoster: false, //显示海报
+    posterList: {},
+  }
+
+
+  componentDidMount() {
+    let youhui_id = this.$router.params.id
+    moneyPoster({ youhui_id, from: 'h5' })
+      .then(({ data, code }) => {
+        console.log('798098798798784798e7qw89e798wq78',data,'吸纳进券')
+        this.setState({ posterList: data })
+        let link = data.link
+        getXcxQrcode({ link })
+          .then((res) => {
+            let meta = this.state.posterList
+            meta['wx_img'] = BASIC_API + res.data.url
+            this.setState({ posterList: meta })
+          })
+      })
   }
 
   /**
@@ -223,9 +244,13 @@ export default class TicketBuy extends Component {
     this.setState({ isShare: false });
   }
 
+  /* 关闭海报 */
+  closePoster = () => {
+    this.setState({ showPoster: false, showShare: false })
+  }
 
   render() {
-
+    const { showPoster, posterList} = this.state
     return (
       <View className="appre-activity-detail">
         {/* 分享组件 */}
@@ -239,9 +264,13 @@ export default class TicketBuy extends Component {
             this.setState({ showShare: false })
           }}
           createPoster={() => {
-            this.setState({ showPoster: true })
-          }}
-        />
+            this.setState({ showPoster: true,showShare: false })
+      }}
+    />
+        <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+          <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          <View className="click-save">长按保存图片到相册</View>
+        </View>
         {
           this.state.isShare == true ? (
             <View className='share_mask' onClick={this.closeShare}>

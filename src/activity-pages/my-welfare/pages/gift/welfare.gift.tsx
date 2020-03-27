@@ -69,7 +69,6 @@ export default class MyWelfare extends Component {
   handleUserWriteinfo = (e) => {
     const { value, dataset: { type } } = e.currentTarget
     const merge = Object.assign({}, this.state.userReceiveinfo, { [type]: value })
-    // console.log(merge)
     this.setState({
       userReceiveinfo: merge
     })
@@ -92,7 +91,6 @@ export default class MyWelfare extends Component {
    */
   async fetchAddReceiveinfo(userReceiveinfo: UserReceiveinfo) {
     await addUserReceiveinfo(userReceiveinfo).catch(err => {
-      console.log(err)
       throw Error("--- 提交信息错误 ---")
     })
     this.fetchGift()

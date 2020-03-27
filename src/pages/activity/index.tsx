@@ -53,10 +53,8 @@ export default class Activity extends Component<any>  {
   }
 
   componentDidShow() {
-    console.log('global', iNoBounce)
     // let u = navigator.userAgent
     // if (u.indexOf('iPhone') > -1) {
-    //     console.log('iNoBounce',iNoBounce)
     //     iNoBounce.enable()
     // }
   }
@@ -69,7 +67,6 @@ export default class Activity extends Component<any>  {
   onReachBottom() {
     const { current, flag } = this.state;
     if (!this.state.dataList.length) {
-      console.log('禁止触底')
       return
     }
     if (current == 0 && flag) {
@@ -168,7 +165,6 @@ export default class Activity extends Component<any>  {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length == 0) {
-        console.log(1)
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
@@ -201,7 +197,6 @@ export default class Activity extends Component<any>  {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length === 0) {
-        console.log(2)
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
@@ -235,7 +230,6 @@ export default class Activity extends Component<any>  {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length == 0) {
-        console.log(3)
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none',
@@ -255,7 +249,6 @@ export default class Activity extends Component<any>  {
    * 切换选中checkbox
    */
   handleSelected = (id) => {
-    console.log('handleSelected', id)
     if (this.state.indexGroup.includes(id)) {
       this.state.indexGroup.forEach((item, index) => {
         if (item == id) {
@@ -278,7 +271,6 @@ export default class Activity extends Component<any>  {
 
   // get 广告
   getAdvertising = () => {
-    console.log('广告')
     request({
       url: "v3/ads",
       method: 'GET',
@@ -288,7 +280,6 @@ export default class Activity extends Component<any>  {
       }
     })
       .then((res: any) => {
-        // console.log(res,'res');
         if (res.code == 200) {
           this.setState({ indexImg: res.data.pic })
           this.setState({ indexImgId: res.data.id })

@@ -92,18 +92,14 @@ export default class ActivityList extends Component {
 
   // 变历数组
   getNewList(arr) {
-    console.log(arr)
     let list = []
-    console.log(list)
     arr.map(res => {
       let { is_share } = res
       if (is_share == 1) {
         // 增值
-        console.log(111)
         res.activity_type = 'appre'
       } else if (is_share == 4) {
         // 现金券兑换券
-        console.log(222)
         if (res.youhui_type) {
           // 现金券
           res.activity_type = 'cash'
@@ -113,7 +109,6 @@ export default class ActivityList extends Component {
         }
       } else if (is_share == 5) {
         // 拼团
-        console.log(333)
         res.activity_type = 'group'
       }
       list.push(res)
