@@ -56,7 +56,7 @@ export default class Orderdetail extends Component {
         district: '',
         detail: '',
         delivery_status: 0,	//配送状态:0待接单 1配送中 2配送成功 3配送失败
-        supplierDelivery: {
+        supplier_delivery: {
           id: '',
           delivery_phone: '',
           delivery_start_time: '',
@@ -71,17 +71,21 @@ export default class Orderdetail extends Component {
   };
 
   componentWillMount() {
+    let that = this;
     getLocation().then((res: any) => {
       // xpoint: res.longitude, ypoint: res.latitude
       let xPoint = res.longitude;
       let yPoint = res.latitude;
+      console.log('log0', this.state)
+
       request({
         url: "v3/user/coupons/info",
         data: { coupons_log_id: this.$router.params.id, xpoint: xPoint, ypoint: yPoint }
       })
         .then((res: any) => {
           console.log(res);
-          this.setState({ defaultData: res.data }, () => {
+          that.setState({ defaultData: res.data }, () => {
+            console.log('log1', this.state.defaultData)
             if (this.state.defaultData.coupons_type * 1 == 0) { //兑换券获取兑换码
               request({
                 url: 'api/wap/coupon/showCode',
@@ -137,7 +141,7 @@ export default class Orderdetail extends Component {
   //打电话给配送员
   makePhoneCall = () => {
     Taro.makePhoneCall({
-      phoneNumber: this.state.defaultData.order_delivery_log.supplierDelivery.delivery_phone
+      phoneNumber: this.state.defaultData.order_delivery_log.supplier_delivery.delivery_phone
     })
       .then((res: any) => {
       })
@@ -338,7 +342,9 @@ export default class Orderdetail extends Component {
                   <View>{this.state.defaultData.order_delivery_log.delivery_status == 0 ? '待接单' : (
                     this.state.defaultData.order_delivery_log.delivery_status == 1 ? '配送中' : (
                       this.state.defaultData.order_delivery_log.delivery_status == 2 ? '配送成功' : (
-                        this.state.defaultData.order_delivery_log.delivery_status == 3 ? '配送失败' : ''
+                        this.state.defaultData.order_delivery_log.delivery_status == 3 ? '配送失败' : (
+                          this.state.defaultData.order_delivery_log.delivery_status == 4 ? '接单中' : ''
+                        )
                       )
                     )
                   )}</View>
@@ -353,11 +359,11 @@ export default class Orderdetail extends Component {
                 </View>
                 <View className="flex">
                   <View className="a_billingInfo_1">配送时间</View>：
-                  <View>{this.state.defaultData.order_delivery_log.supplierDelivery.delivery_start_time + '-' + this.state.defaultData.order_delivery_log.supplierDelivery.delivery_end_time}</View>
+                  <View>{defaultData.order_delivery_log.supplier_delivery.delivery_start_time + '-' + defaultData.order_delivery_log.supplier_delivery.delivery_end_time}</View>
                 </View>
                 <View className="flex">
                   <View className="a_billingInfo_1">收货地址</View>：
-            <View className="a_billingInfo_3">{this.state.defaultData.order_delivery_log.province + this.state.defaultData.order_delivery_log.city + this.state.defaultData.order_delivery_log.district + this.state.defaultData.order_delivery_log.detail}</View>
+            <View className="a_billingInfo_3">{defaultData.order_delivery_log.province + defaultData.order_delivery_log.city + defaultData.order_delivery_log.district + defaultData.order_delivery_log.detail}</View>
                 </View>
                 <View className="call_poster_box" onClick={this.makePhoneCall.bind(this)}>
                   <View className="call_poster">联系配送员</View>
