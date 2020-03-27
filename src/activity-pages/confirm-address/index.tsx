@@ -52,6 +52,7 @@ export default class confirmAddress extends Component {
     };
 
     componentDidShow() {
+        this.setState({ contentboxShow: false })
         let u = navigator.userAgent
         if (u.indexOf('iPhone') > -1) {
             console.log('iNoBounce', iNoBounce)
@@ -691,7 +692,7 @@ export default class confirmAddress extends Component {
                                     <View className="group-msgbox-content-name">{this.state.data.youhui.name}</View>
                                     <View className="group-msgbox-label-box">
                                         {
-                                            this.state.data.youhui.participation_number? <View className="group-msgbox-label">{this.state.data.youhui.participation_number}人团</View>:null
+                                            this.state.data.youhui.participation_number ? <View className="group-msgbox-label">{this.state.data.youhui.participation_number}人团</View> : null
                                         }
                                         <View className="group-msgbox-label">{this.state.data.team_set_end_time}小时</View>
                                     </View>

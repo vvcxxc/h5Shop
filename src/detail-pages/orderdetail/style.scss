@@ -3,15 +3,17 @@
     padding: 23px 17px;
     position: relative;
 }
-.a_head_content{
+
+.a_head_content {
     position: absolute;
     left: 0;
     top: 0;
     z-index: 5;
     // background: rgba(0,0,0,.7);
-    width:100%;
+    width: 100%;
     height: 100%;
 }
+
 .a_buyBox {
     margin-bottom: 13px;
     background-color: #fff;
@@ -108,14 +110,24 @@
             display: inline-block;
             text-align: justify
         }
+
         .a_billingInfo_1:after {
-          content: '';
-          width: 100%;
-          display: inline-block;
-      }
+            content: '';
+            width: 100%;
+            display: inline-block;
+        }
 
         .a_billingInfo_2 {
             // color: rgba(153, 153, 153, 0.8);
+        }
+
+        .a_billingInfo_3 {
+            font-size: 28px;
+            font-family: PingFang-SC-Regular;
+            color: rgba(49, 49, 49, 1);
+            width: calc(100% - 200px);
+            display: inline-block;
+            text-align: justify
         }
 
         .a_returnState {
@@ -131,6 +143,29 @@
             line-height: 44px;
             text-align: center;
         }
+
+        .call_poster_box {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .call_poster {
+                font-size: 26px;
+                font-family: PingFang SC;
+                font-weight: 500;
+                color: rgba(255, 68, 68, 1);
+                width: 215px;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                border: 1.5px solid rgba(255, 68, 68, 1);
+                border-radius: 16px;
+            }
+        }
+
+
     }
 
     .a_imgBox {

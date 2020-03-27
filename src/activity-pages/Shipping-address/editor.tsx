@@ -269,6 +269,7 @@ export default class EditorAddress extends Component {
 
 
     saveAndUse = () => {
+        let that = this;
         Taro.pageScrollTo({ scrollTop: 0 });
         const { nameValue, phoneValue, cityValue, TextareaValue, chooseMove } = this.state;
         if (!nameValue) {
@@ -283,12 +284,12 @@ export default class EditorAddress extends Component {
             })
             return;
         }
-        // if (cityValue.length == 0) {
-        //     this.setState({ toastInfo: '请选择地区', toastShow: true }, () => {
-        //         setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
-        //     })
-        //     return;
-        // }
+        if (cityValue.length == 0) {
+            this.setState({ toastInfo: '请选择地区', toastShow: true }, () => {
+                setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
+            })
+            return;
+        }
         if (!TextareaValue) {
             this.setState({ toastInfo: '请输入详细地址', toastShow: true }, () => {
                 setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
@@ -326,24 +327,42 @@ export default class EditorAddress extends Component {
                     if (res.code == 200) {
                         Taro.showToast({ title: '收货地址添加成功', icon: 'none' });
                         let adderssId;
-                        if (this.$router.params.type == 'useItemChange') {
-                            adderssId = this.$router.params.editorId;
+                        if (that.$router.params.type == 'useItemChange') {
+                            adderssId = that.$router.params.editorId;
                         } else {
                             adderssId = res.data.data.id;
                         }
                         setTimeout(() => {
-                            if (this.$router.params.activityType == '55') {
+                            if (that.$router.params.activityType == '55') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId,
+                                    url: '/activity-pages/group-distribution/index?activityType=55&id=' + that.$router.params.goodsId + '&groupId=' + that.$router.params.groupId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId,
                                     success: function (e) {
                                         let page = Taro.getCurrentPages().pop();
                                         if (page == undefined || page == null) return;
                                         page.onShow();
                                     }
                                 })
-                            } else {
+                            } else if (that.$router.params.activityType == '5') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + adderssId,
+                                    url: '/activity-pages/group-distribution/index?activityType=5&id=' + that.$router.params.goodsId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId,
+                                    success: function (e) {
+                                        let page = Taro.getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
+                                })
+                            } else if (that.$router.params.activityType == '1') {
+                                Taro.navigateTo({
+                                    url: '/activity-pages/confirm-address/index?activityType=1&id=' + that.$router.params.goodsId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId,
+                                    success: function (e) {
+                                        let page = Taro.getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
+                                })
+                            } else if (that.$router.params.activityType == 'duihuan') {
+                                Taro.navigateTo({
+                                    url: '/business-pages/coupon-distribution/index?activityType=duihuan&id=' + that.$router.params.goodsId + '&address_id=' + adderssId,
                                     success: function (e) {
                                         let page = Taro.getCurrentPages().pop();
                                         if (page == undefined || page == null) return;
@@ -393,14 +412,6 @@ export default class EditorAddress extends Component {
                             onInput={this.onHandelChangePhone.bind(this)}
                         />
                     </View>
-                    {/* <View className="editor-box">
-                    <View className="editor-box_left">所在区域:</View>
-                        <View className="editor-box_input0" >{this.state.tempCityInfo}</View>
-                        <View className="editor-box_right">
-                            <AtIcon className="editor-box_icon" value='chevron-right' color='#f2f2f2' />
-                        </View> 
-                         </View> 
-                        */}
                     <CitySelecter getCity={this.cityEnd} border={true} tempCityInfo={this.state.tempCityInfo} />
 
                     <View className="editor-box2">
@@ -454,22 +465,6 @@ export default class EditorAddress extends Component {
                         </View>
                     </View> : null
                 }
-
-
-                {/* <AtActionSheet isOpened={this.state.actionsheetShow ? true : false} onCancel={(e) => { this.setState({ actionsheetShow: false }) }} onClose={(e) => { this.setState({ actionsheetShow: false }) }}>
-                    <View className="AtActionSheetBox">
-                        <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
-                    </View>
-                </AtActionSheet> */}
-
-                {/* {
-                    this.state.actionsheetShow ? <View  className="AtActionSheetBox-content"  onClick={() => { this.setState({ actionsheetShow: false }) }}>
-                        <View className="AtActionSheetBox" onClick={(e) => { e.stopPropagation() }}>
-                            <CitySelecter getCity={this.cityEnd} onclose={() => { this.setState({ actionsheetShow: false }) }} />
-                        </View>
-                    </View> : null
-                } */}
-
             </View>
         );
     }

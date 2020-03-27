@@ -41,20 +41,6 @@ export default class ShippingAddress extends Component<Props> {
     Taro.removeStorage({ key: 'cityList' })
   }
 
-  componentDidMount() {
-    Taro.showLoading({
-      title: ""
-    });
-    request({
-      url: 'v3/address',
-      method: "GET",
-    })
-      .then((res: any) => {
-        Taro.hideLoading();
-        this.setState({ myAddressList: res.data })
-      })
-  }
-
   componentDidShow() {
     let u = navigator.userAgent
     if (u.indexOf('iPhone') > -1) {
