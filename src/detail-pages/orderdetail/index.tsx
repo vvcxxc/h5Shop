@@ -353,7 +353,7 @@ export default class Orderdetail extends Component {
                 </View>
                 <View className="flex">
                   <View className="a_billingInfo_1">配送时间</View>：
-                  <View>{this.state.defaultData.order_delivery_log.supplierDelivery.delivery_start_time}-{this.state.defaultData.order_delivery_log.supplierDelivery.delivery_end_time}</View>
+                  <View>{this.state.defaultData.order_delivery_log.supplierDelivery.delivery_start_time + '-' + this.state.defaultData.order_delivery_log.supplierDelivery.delivery_end_time}</View>
                 </View>
                 <View className="flex">
                   <View className="a_billingInfo_1">收货地址</View>：
