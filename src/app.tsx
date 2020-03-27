@@ -87,7 +87,12 @@ class App extends Component {
         pages: [
           'gift/gift',
           'orderdetail/index',
-          'orderdetail/refundProgress'
+          'orderdetail/refundProgress',
+          'course/advantage',
+          'course/characteristic',
+          'course/make_money_plan',
+          'course/group_strategy',
+          'course/newbie',
         ]
       },
       {
