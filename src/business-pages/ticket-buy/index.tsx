@@ -349,7 +349,7 @@ export default class TicketBuy extends Component {
                       <View className="good_detail_info">
                         <View className="good_title">
                           <View className="good_type">
-                            <View className="text">{this.state.recommend[0].youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                            <View className="text">{this.state.recommend[0].youhui_type == 0 ? "到店支付可用" : "到店支付可用"}</View>
                           </View>
                           <View className="good_cash">{this.state.recommend[0].yname}</View>
                         </View>
@@ -378,7 +378,7 @@ export default class TicketBuy extends Component {
                       <View className="good_detail_info">
                         <View className="good_title">
                           <View className="good_type">
-                            <View className="text">{this.state.recommend[1].youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                            <View className="text">{this.state.recommend[1].youhui_type == 0 ? "到店支付可用" : "到店支付可用"}</View>
                           </View>
                           <View className="good_cash">{this.state.recommend[1].yname}</View>
                         </View>
@@ -408,7 +408,7 @@ export default class TicketBuy extends Component {
                         <View className="good_detail_info">
                           <View className="good_title">
                             <View className="good_type">
-                              <View className="text">{item.youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                              <View className="text">{item.youhui_type == 0 ? "到店支付可用" : "到店支付可用"}</View>
                             </View>
                             <View className="good_cash">{item.yname}</View>
                           </View>
