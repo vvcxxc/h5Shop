@@ -82,16 +82,34 @@ export default class ChooseAddress extends Component {
             setTimeout(() => {
                 if (this.$router.params.activityType == '55') {
                     Taro.navigateTo({
-                        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id,
-                         success: function (e) {
+                        url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&groupId=' + this.$router.params.groupId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id,
+                        success: function (e) {
                             let page = Taro.getCurrentPages().pop();
                             if (page == undefined || page == null) return;
                             page.onShow();
                         }
                     })
-                } else {
+                } else if (this.$router.params.activityType == '5') {
                     Taro.navigateTo({
-                        url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id, 
+                        url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.activityType + '&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id,
+                        success: function (e) {
+                            let page = Taro.getCurrentPages().pop();
+                            if (page == undefined || page == null) return;
+                            page.onShow();
+                        }
+                    })
+                } else if (this.$router.params.activityType == '1') {
+                    Taro.navigateTo({
+                        url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.goodsId + '&storeName=' + this.$router.params.storeName + '&address_id=' + _id,
+                        success: function (e) {
+                            let page = Taro.getCurrentPages().pop();
+                            if (page == undefined || page == null) return;
+                            page.onShow();
+                        }
+                    })
+                } else if (this.$router.params.activityType == 'duihuan') {
+                    Taro.navigateTo({
+                        url: '/business-pages/coupon-distribution/index?activityType=duihuan&id=' + this.$router.params.goodsId + '&address_id=' + _id,
                         success: function (e) {
                             let page = Taro.getCurrentPages().pop();
                             if (page == undefined || page == null) return;

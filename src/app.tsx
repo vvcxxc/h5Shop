@@ -87,7 +87,12 @@ class App extends Component {
         pages: [
           'gift/gift',
           'orderdetail/index',
-          'orderdetail/refundProgress'
+          'orderdetail/refundProgress',
+          'course/advantage',
+          'course/characteristic',
+          'course/make_money_plan',
+          'course/group_strategy',
+          'course/newbie',
         ]
       },
       {
@@ -104,7 +109,8 @@ class App extends Component {
           'set-meal/index',
           'ticket-buy/index',
           'daily-recommend/index',
-          'search/index'
+          'search/index',
+          'coupon-distribution/index'
         ]
       },
       {
@@ -124,7 +130,7 @@ class App extends Component {
           'personal/personalInformation/index',
           'personal/phoneInformation/index',
           'activity-list/index',
-
+          'group-distribution/index'
         ]
       }
     ],

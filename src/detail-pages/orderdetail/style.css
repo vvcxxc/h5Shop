@@ -1,15 +1,22 @@
 .a_head {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   padding: 23px 17px;
+  position: relative;
 }
-
+.a_head_content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+}
 .a_buyBox {
   margin-bottom: 13px;
   background-color: #fff;
   padding-left: 23px;
   padding-bottom: 23px;
 }
-
 .a_buyBox .a_one {
   font-size: 38px;
   font-family: PingFang-SC-Medium;
@@ -19,24 +26,21 @@
   line-height: 90px;
   padding-right: 23px;
 }
-
 .a_buyBox .a_one .a_state {
   float: right;
   padding-right: 30px;
   font-size: 30px;
   line-height: 6;
 }
-
 .a_buyBox .a_two {
   height: 44px;
   font-size: 30px;
   font-family: PingFang-SC-Regular;
-  color: #999999;
+  color: #999;
   font-weight: bold;
   line-height: 44px;
   opacity: 0.8;
 }
-
 .a_buyBox .a_three {
   height: 62px;
   line-height: 62px;
@@ -45,35 +49,31 @@
   font-family: PingFang-SC-Regular;
   color: #313131;
 }
-
 .a_buyBox .a_four {
   font-size: 30px;
   font-family: PingFang-SC-Regular;
   font-weight: bold;
-  color: #999999;
+  color: #999;
   height: 54px;
   opacity: 0.8;
   line-height: 54px;
 }
-
 .a_buyBox .a_item {
   font-size: 28px;
   font-family: PingFang-SC-Regular;
   color: #313131;
   line-height: 44px;
 }
-
 .a_buyBox .a_last {
   font-size: 30px;
   font-family: PingFang-SC-Regular;
-  color: #999999;
+  color: #999;
   height: 50px;
   opacity: 0.8;
   line-height: 50px;
   text-align: center;
   margin-left: -12px;
 }
-
 .a_buyBox .a_outTime {
   float: right;
   font-size: 28px;
@@ -82,49 +82,75 @@
   color: #313131;
   line-height: 90px;
 }
-
 .a_buyBox .a_billingInfo {
-  line-height: 56px;
+  line-height: 30px;
 }
-
 .a_buyBox .a_billingInfo .a_billingInfo_1 {
   font-size: 28px;
   font-family: PingFang-SC-Regular;
   color: #313131;
-  margin-left: 34px;
+  width: 140px;
+  display: inline-block;
+  text-align: justify;
 }
-
+.a_buyBox .a_billingInfo .a_billingInfo_1:after {
+  content: "";
+  width: 100%;
+  display: inline-block;
+}
+.a_buyBox .a_billingInfo .a_billingInfo_3 {
+  font-size: 28px;
+  font-family: PingFang-SC-Regular;
+  color: #313131;
+  width: calc(100% - 200px);
+  display: inline-block;
+  text-align: justify;
+}
 .a_buyBox .a_billingInfo .a_returnState {
   width: 134px;
   height: 44px;
-  border: 1Px solid #999999;
+  border: 1px solid #999;
   border-radius: 5px;
   display: inline-block;
   float: right;
-  margin-right: 23px;
-  margin-top: 10px;
+  margin-left: 100px;
   line-height: 44px;
   text-align: center;
 }
-
+.a_buyBox .a_billingInfo .call_poster_box {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.a_buyBox .a_billingInfo .call_poster_box .call_poster {
+  font-size: 26px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #f44;
+  width: 215px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border: 1.5px solid #f44;
+  border-radius: 16px;
+}
 .a_buyBox .a_imgBox {
   height: 113px;
   padding-bottom: 5px;
   display: flex;
 }
-
 .a_buyBox .a_imgBox ._img {
   height: 113px;
   width: 113px;
   border-radius: 4px;
 }
-
 .a_buyBox .a_imgBox .a_imgDes {
   flex: 1;
   padding-left: 27px;
   position: relative;
 }
-
 .a_buyBox .a_imgBox .a_imgDes .a_imgDes_info1 {
   width: 500px;
   text-overflow: ellipsis;
@@ -134,18 +160,16 @@
   margin-top: 10px;
   font-family: PingFang-SC-Bold;
   font-weight: bold;
-  color: #333333;
+  color: #333;
   line-height: 60px;
 }
-
 .a_buyBox .a_imgBox .a_imgDes .a_imgDes_info2 {
   font-size: 28px;
   font-family: PingFang-SC-Regular;
   font-weight: 400;
-  color: #666666;
+  color: #666;
   line-height: 38px;
 }
-
 .a_buyBox .a_imgBox .a_imgDes .a_text {
   position: absolute;
   right: 23px;
@@ -154,7 +178,6 @@
   font-size: 34px;
   color: #999;
 }
-
 .a_dres {
   height: 84px;
   font-size: 28px;
@@ -164,19 +187,16 @@
   line-height: 84px;
   width: 100%;
 }
-
 .a_dres ._address_distance {
   float: left;
   margin-right: 10px;
 }
-
 .a_dres ._address_icon {
   float: left;
   width: 30px;
   font-size: 26px;
   color: rgba(153, 153, 153, 0.4);
 }
-
 .a_dres ._address {
   float: left;
   width: 80%;
@@ -184,21 +204,18 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .z_applyReturn {
   display: flex;
   padding: 5px 24px 25px 31px;
 }
-
 .z_applyReturn .z_applyReturn_info {
   height: 91px;
-  border: 1Px solid #999999;
+  border: 1px solid #999;
   border-radius: 10px;
   line-height: 91px;
   flex: 1;
   text-align: center;
 }
-
 .a_mast {
   position: fixed;
   left: 0;
@@ -208,16 +225,14 @@
   background: rgba(0, 0, 0, 0.7);
   z-index: 999;
 }
-
 .a_mastContent {
   position: absolute;
   top: 20%;
   left: 52px;
   right: 52px;
   height: 322px;
-  background: white;
+  background: #fff;
 }
-
 .a_return {
   font-size: 36px;
   font-family: PingFang-SC-Regular;
@@ -229,42 +244,35 @@
   height: 220px;
   border-bottom: 1px solid #eee;
 }
-
 .a_returnB {
   display: flex;
   height: 101px;
 }
-
 .a_returnB .a_returnB_info1,
 .a_returnB .a_returnB_info2 {
   flex: 1;
   line-height: 101px;
   text-align: center;
-  color: #FF6654;
+  color: #ff6654;
 }
-
 .a_returnB .a_returnB_info1 {
   border-right: 1px solid #eee;
 }
-
 .a_returnState {
   width: 134px;
   height: 44px;
-  border: 1px solid #999999;
+  border: 1px solid #999;
   border-radius: 5px;
   display: inline-block;
   float: right;
-  margin-right: 23px;
-  margin-top: 10px;
+  margin-left: 100px;
   line-height: 44px;
   text-align: center;
 }
-
 .z_refundBox {
   padding-left: 23px;
   background-color: #fff;
 }
-
 .z_refundBox .z_head {
   font-size: 38px;
   font-family: PingFang-SC-Medium;
@@ -273,19 +281,16 @@
   height: 90px;
   line-height: 90px;
 }
-
 .z_refundBox .z_item {
   height: 52px;
   line-height: 52px;
 }
-
 .z_refundBox .z_item .z_item_info1 {
   font-size: 30px;
   font-family: PingFang-SC-Regular;
-  color: #999999;
+  color: #999;
   opacity: 0.8;
 }
-
 .z_refundBox .z_item .z_item_info2 {
   font-size: 28px;
   font-family: PingFang-SC-Regular;
@@ -293,25 +298,21 @@
   color: #313131;
   margin-left: 33px;
 }
-
 .a_sanCodeBox {
   height: 415px;
   box-sizing: border-box;
   padding-top: 315px;
   position: relative;
 }
-
 .a_sanCodeBox .a_sancodeLast {
   height: 100px;
   line-height: 100px;
 }
-
 .a_sanCodeBox .a_sancodeLast .a_sanCodeBox_text {
   font-size: 30px;
   font-family: PingFang-SC-Regular;
-  color: #999999;
+  color: #999;
 }
-
 .z_sanCodeContent {
   position: absolute;
   bottom: 0;
@@ -320,24 +321,21 @@
   width: 315px;
   height: 415px;
 }
-
 .z_sanCodeContent .code_box1 {
   width: 315px;
   height: 315px;
-  background: white;
+  background: #fff;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
   padding: 8px;
 }
-
 .z_sanCodeContent .code_box1 .code_image {
   flex: 1;
   width: 306px;
   height: 306px;
 }
-
 .z_sanCodeContent .code_box2 {
   height: 100px;
   line-height: 100px;
