@@ -142,7 +142,8 @@ export default class SelectCity extends Component {
     hot_city: [],
     showSearchList: false,
     searchValue: '',
-    showIndicator: false
+    showIndicator: false,
+    type_index_id: 0
   };
   globalData: {
     userInfo: {}
@@ -191,7 +192,7 @@ export default class SelectCity extends Component {
       data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
     })
       .then((res: any) => {
-        this.setState({ cityName: res.data.city })
+        this.setState({ cityName: res.data.city, type_index_id: res.data.type_index_id })
       })
   }
   // agin location
@@ -202,7 +203,7 @@ export default class SelectCity extends Component {
     //   key: 'router',
     //   data: { xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }
     // })
-    sessionStorage.setItem('router',JSON.stringify({ xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude }))
+    sessionStorage.setItem('router',JSON.stringify({ xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude, type_index_id: this.state.type_index_id }))
     setTimeout(() => {
       this.setState({ showIndicator: false })
       Taro.switchTab({ url: '/pages/index/index' })
@@ -227,23 +228,23 @@ export default class SelectCity extends Component {
   }
 
   // click 热门城市
-  searchData = (name, id) => {
+  searchData = (name, id, type_index_id) => {
     // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
-    sessionStorage.setItem('router',JSON.stringify( { city_id: id, city_name: name }))
+    sessionStorage.setItem('router',JSON.stringify( { city_id: id, city_name: name, type_index_id }))
     Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
 
   // 全国列表数据 点击
   onClick = (item, event) => {
     // Taro.setStorage({ key: 'router', data: { city_id: item.id, city_name: item.name } })
-    sessionStorage.setItem('router',JSON.stringify({ city_id: item.id, city_name: item.name }))
+    sessionStorage.setItem('router',JSON.stringify({ city_id: item.id, city_name: item.name, type_index_id: item.type_index_id }))
     Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
 
   // 搜索列表点击
-  lineOnClick = (id, name) => {
+  lineOnClick = (id, name, type_index_id) => {
     // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
-    sessionStorage.setItem('router',JSON.stringify({ city_id: id, city_name: name }))
+    sessionStorage.setItem('router',JSON.stringify({ city_id: id, city_name: name, type_index_id }))
     Taro.navigateTo({ url: '/pages/index/index?router=1' })
   }
   // 回车键 模糊搜索
@@ -337,7 +338,7 @@ export default class SelectCity extends Component {
         >
           {
             this.state.searchList.map((item: any, index: any) => {
-              return <View className="line" key={index} onClick={this.lineOnClick.bind(this, item.id, item.name)}>{item.name}</View>
+              return <View className="line" key={index} onClick={this.lineOnClick.bind(this, item.id, item.name, item.type_index_id)}>{item.name}</View>
             })
           }
         </View>
@@ -370,7 +371,7 @@ export default class SelectCity extends Component {
             <View className="big-item">
               {
                 this.state.hot_city.map((item: any, index: number) => {
-                  return <View className="item" key={index} onClick={this.searchData.bind(this, item.name, item.id)}>{item.name}</View>
+                  return <View className="item" key={index} onClick={this.searchData.bind(this, item.name, item.id, item.type_index_id)}>{item.name}</View>
                 })
               }
             </View>

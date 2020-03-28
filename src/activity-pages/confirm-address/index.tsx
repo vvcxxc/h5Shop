@@ -55,7 +55,6 @@ export default class confirmAddress extends Component {
         this.setState({ contentboxShow: false })
         let u = navigator.userAgent
         if (u.indexOf('iPhone') > -1) {
-            console.log('iNoBounce', iNoBounce)
             iNoBounce.enable()
         }
         console.log(this.$router.params);
@@ -79,7 +78,6 @@ export default class confirmAddress extends Component {
                 }
 
             }).catch((err) => {
-                console.log(err);
                 Taro.showToast({ title: '加载失败', icon: 'none' })
             })
 
@@ -90,73 +88,18 @@ export default class confirmAddress extends Component {
                 data: data
             }).then((res: any) => {
                 if (res.code == 200) {
-                    console.log(res)
                     this.setState({ data: res.data })
                 } else {
                     Taro.showToast({ title: '加载失败', icon: 'none' })
                 }
 
             }).catch((err) => {
-                console.log(err);
                 Taro.showToast({ title: '加载失败', icon: 'none' })
             })
 
         }
     }
-    // componentDidMount() {
-    //     console.log(this.$router.params);
-    //     Taro.showLoading({
-    //         title: ""
-    //     });
-    //     let data;
-    //     if (this.$router.params.address_id) {
-    //         data = { youhui_id: this.$router.params.id, address_id: this.$router.params.address_id }
-    //     } else {
-    //         data = { youhui_id: this.$router.params.id }
-    //     }
-    //     if (this.$router.params.activityType == '1') {
-    //         request({
-    //             url: 'api/wap/user/appreciation/appreciationOrderInfo',
-    //             method: "GET",
-    //             data: data
-    //         }).then((res: any) => {
-    //             if (res.code == 200) {
-    //                 Taro.hideLoading();
-    //                 this.setState({ data: res.data })
-    //             } else {
-    //                 Taro.hideLoading();
-    //                 Taro.showToast({ title: '加载失败', icon: 'none' })
-    //             }
-
-    //         }).catch((err) => {
-    //             Taro.hideLoading();
-    //             console.log(err);
-    //             Taro.showToast({ title: '加载失败', icon: 'none' })
-    //         })
-
-    //     } else {
-    //         request({
-    //             url: 'api/wap/user/groupOrderInfo',
-    //             method: "GET",
-    //             data: data
-    //         }).then((res: any) => {
-    //             if (res.code == 200) {
-    //                 Taro.hideLoading();
-    //                 console.log(res)
-    //                 this.setState({ data: res.data })
-    //             } else {
-    //                 Taro.hideLoading();
-    //                 Taro.showToast({ title: '加载失败', icon: 'none' })
-    //             }
-
-    //         }).catch((err) => {
-    //             Taro.hideLoading();
-    //             console.log(err);
-    //             Taro.showToast({ title: '加载失败', icon: 'none' })
-    //         })
-
-    //     }
-    // }
+    
     clickGift = (e) => {
         if (this.state.giftChoice == true) {
             this.setState({ giftChoice: false })
@@ -226,7 +169,6 @@ export default class confirmAddress extends Component {
             //1增值activityType == '1'
             if (_type == 1) {
                 //增值--微信浏览器
-                console.log('增值--微信浏览器')
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
                     //增值--微信浏览器--有选礼品
                     datas = {

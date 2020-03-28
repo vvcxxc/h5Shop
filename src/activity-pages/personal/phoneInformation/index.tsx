@@ -32,8 +32,6 @@ export default class PhoneInformation extends Component {
             method: "GET",
         })
             .then((res: any) => {
-                console.log(res)
-
                 Taro.hideLoading();
                 let { status_code, data, message } = res;
                 if (status_code == 200) {
@@ -80,7 +78,6 @@ export default class PhoneInformation extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
-                    console.log(err)
                     this.setState({ tipsShow: true, tipsInfo: err.message || err.data.message || '请求失败', is_ok: true })
                 })
         } else if (this.state.phone && !this.state._code) {
@@ -165,6 +162,9 @@ export default class PhoneInformation extends Component {
         Taro.switchTab({
             url: '/pages/my/index'
         })
+        // Taro.navigateBack({
+        //     delta:2
+        // })
     }
     render() {
         return (

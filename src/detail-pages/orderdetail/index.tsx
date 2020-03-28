@@ -76,6 +76,8 @@ export default class Orderdetail extends Component {
       // xpoint: res.longitude, ypoint: res.latitude
       let xPoint = res.longitude;
       let yPoint = res.latitude;
+      console.log('log0', this.state)
+
       request({
         url: "v3/user/coupons/info",
         data: { coupons_log_id: this.$router.params.id, xpoint: xPoint, ypoint: yPoint }
@@ -254,7 +256,6 @@ export default class Orderdetail extends Component {
                   <Text className="a_billingInfo_1">退款时间</Text>:
           <Text className="a_billingInfo_2" style={{ marginLeft: '9px' }}  >{this.state.defaultData.refund_time}</Text>
                   <Text className='a_returnState' onClick={() => {
-                    // console.log(this.state.defaultData.coupons_id,this.state.defaultData.coupons_log_id)
                     Taro.navigateTo({
                       url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
                     })

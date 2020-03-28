@@ -41,7 +41,6 @@ export default class EditorAddress extends Component {
             actionsheetShow: true
         }, () => {
             let el = document.getElementById('AtActionSheetBox');
-            console.log(el)
             if (el) {
                 el.style.transform = "translate(0,-75vh)";
                 el.style.transition = "all .8s";
@@ -63,7 +62,6 @@ export default class EditorAddress extends Component {
 
 
     componentDidMount() {
-        console.log(this.$router.params);
         if (this.$router.params.type == "editorItem" || this.$router.params.type == "useItemChange") {
             Taro.showLoading({
                 title: ""
@@ -76,7 +74,6 @@ export default class EditorAddress extends Component {
                 .then((res: any) => {
                     Taro.hideLoading();
                     let tempCityInfo = res.data.province + '-' + res.data.city + '-' + res.data.district;
-                    console.log(tempCityInfo)
                     let tempCityValue = [res.data.province_id, res.data.city_id, res.data.district_id];
                     this.setState({
                         nameValue: res.data.name,
@@ -164,7 +161,6 @@ export default class EditorAddress extends Component {
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
-                    console.log(res)
                 }).catch((err) => {
                     Taro.hideLoading();
                     Taro.showToast({ title: '请求失败', icon: 'none' })
@@ -178,13 +174,11 @@ export default class EditorAddress extends Component {
         Taro.showLoading({
             title: ""
         });
-        console.log(tempid);
         request({
             url: 'v3/address/' + tempid,
             method: "DELETE",
         })
             .then((res: any) => {
-                console.log('res', res);
                 Taro.hideLoading();
                 if (res.code == 200) {
                     Taro.showToast({ title: '删除成功', icon: 'none' })
@@ -195,7 +189,6 @@ export default class EditorAddress extends Component {
                 } else {
                     Taro.showToast({ title: res.message, icon: 'none' })
                 }
-                console.log(res)
             }).catch((err) => {
                 Taro.hideLoading();
                 Taro.showToast({ title: '请求失败', icon: 'none' })
@@ -259,7 +252,6 @@ export default class EditorAddress extends Component {
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
-                    console.log(res)
                 }).catch((err) => {
                     Taro.hideLoading();
                     Taro.showToast({ title: '请求失败', icon: 'none' })
@@ -281,6 +273,12 @@ export default class EditorAddress extends Component {
         if (!phoneValue || !(/^1[3456789]\d{9}$/.test(phoneValue))) {
             this.setState({ toastShow: true, toastInfo: '请输入正确的手机号码' }, () => {
                 setTimeout(() => { this.setState({ toastInfo: '', toastShow: false }) }, 1000)
+            })
+            return;
+        }
+        if (cityValue.length == 0) {
+            this.setState({ toastInfo: '请选择地区', toastShow: true }, () => {
+                setTimeout(() => { this.setState({ toastShow: false, toastInfo: '' }) }, 1000)
             })
             return;
         }
@@ -368,7 +366,6 @@ export default class EditorAddress extends Component {
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                     }
-                    console.log(res)
                 }).catch(() => {
                     Taro.hideLoading();
                     Taro.showToast({ title: '请求失败', icon: 'none' })

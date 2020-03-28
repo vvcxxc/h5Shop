@@ -64,6 +64,7 @@ class App extends Component {
       'pages/index/index',
       'pages/index/search/index',
       'pages/my/index',
+      'pages/my/invitation-list/index',
       'pages/order/index',
       'pages/mycardticket/index',
       'pages/merchant/index',
@@ -77,6 +78,7 @@ class App extends Component {
       "pages/activity/appreciation/index",
       "pages/activity/group/index",
       'pages/my/login_page/index',
+      'pages/store-detail/index',
     ],
     subPackages: [
       {
@@ -85,7 +87,12 @@ class App extends Component {
         pages: [
           'gift/gift',
           'orderdetail/index',
-          'orderdetail/refundProgress'
+          'orderdetail/refundProgress',
+          'course/advantage',
+          'course/characteristic',
+          'course/make_money_plan',
+          'course/group_strategy',
+          'course/newbie',
         ]
       },
       {
@@ -122,6 +129,7 @@ class App extends Component {
           'personal/index',
           'personal/personalInformation/index',
           'personal/phoneInformation/index',
+          'activity-list/index',
           'group-distribution/index'
         ]
       }
