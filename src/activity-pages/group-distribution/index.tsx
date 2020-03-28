@@ -150,7 +150,6 @@ export default class distributionDetail extends Component {
             this.setState({ showBounced: true })
             return
         }
-
         if ((!this.state.data.address || !this.state.data.address.detail) &&
             (
                 (this.state.data.youhui.gift_id && this.state.chooseGift) ||
@@ -168,11 +167,12 @@ export default class distributionDetail extends Component {
             activity_id: this.state.data.youhui.activity_id,
             gift_id: this.state.chooseGift ? this.state.data.youhui.gift_id : undefined,
             is_distribution: this.state.chooseDistribution ? 1 : 0,
-            address_id: this.state.data.address.id,
+            address_id: this.state.data.address && this.state.data.address.id ? this.state.data.address.id : undefined,
             type: this.$router.params.activityType,
             xcx: 0,
             number: 1,
         };
+        console.log('sameDatas', sameDatas)
         let data;
         let that = this;
         let browserType = getBrowserType();
