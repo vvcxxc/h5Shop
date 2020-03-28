@@ -54,7 +54,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
 
   componentDidMount() {
     const { type = 1, id = "", gift_id = "", activity_id = "" } = this.$router.params
-    console.log(gift_id)
     this.fetchDetail(type, id)
     this.fetchGiftinfo(gift_id, activity_id)
     sessionStorage.setItem('qilin','123')
@@ -116,9 +115,7 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
    * @type TYPE_GROUP_OPEN => 开团
    */
   async fetchPayment(): Promise<void> {
-    console.log('支付')
     let as = getBrowserType();
-    console.log(as)
     if (as == 'alipay') {
       alert('请前往微信进行购买')
       return
@@ -165,11 +162,9 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
         console.log("no type~")
     }
     // const { data } = await getPaymentSignture(params).catch(err => {
-    //   console.log(err)
     //   throw Error("--- 获取支付签名错误 ---")
     // })
     // await payment(data).catch(err => {
-    //   console.log(err)
     //   throw Error("--- 支付调起出错 ---")
     // })
     const { data } = await getPaymentSignture(params)
@@ -193,7 +188,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       gift_id
     }
     const { data } = await getGiftinfo(JSON.stringify(params))
-    console.log('data',data)
     const isFreePostage = data.mail_mode === FREE_POSTAGE
     this.setState({
       giftBasicInfo: data,
@@ -214,7 +208,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
     //   },
     //   data : JSON.stringify(params),
     // }).then(res => {
-    //   console.log(res)
     // })
   }
 
@@ -248,7 +241,6 @@ export default class Detail extends Component<{ getPaymentSignature: Function; t
       showButton
     } = this.state
     const types = this.$router.params.type
-    console.log(types)
     return (
       <Block>
         {

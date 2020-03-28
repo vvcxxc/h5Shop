@@ -12,6 +12,10 @@ import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
+import Poster from '@/components/posters/spell_group'//   海报无礼品
+import { getGroupPoster, getXcxQrcode } from '@/api/poster'
+
+const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
 export default class GroupActivity extends Component {
@@ -81,14 +85,15 @@ export default class GroupActivity extends Component {
     },
     newGroupList: [],
     showShare: false, //显示分享
-    isShare: false
+    isShare: false,
+    posterList: {},
+    showPoster: false,
   };
 
   /**
        * 获取位置信息
        */
   componentDidShow() {
-    console.log(this.$router.params)
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
@@ -117,7 +122,7 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-          that.setState({ data: res.data, isPostage });
+          that.setState({ data: res.data, isPostage }, () => { this.getPostList() });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
         }
@@ -189,7 +194,6 @@ export default class GroupActivity extends Component {
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
       this.setState({ showBounced: true })
-      console.log(333)
       return
     }
 
@@ -261,11 +265,9 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
-    console.log('datas', datas)
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
-        console.log('订单成功:', res)
         let order_sn = res.channel_order_sn;//比增值少一层data
         if (browserType == 'wechat') {
           //微信支付
@@ -281,7 +283,6 @@ export default class GroupActivity extends Component {
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                console.log('微信支付成功,order_sn:', order_sn)
                 if (_temptype == '5') {
                   //开团要得到开团活动id再跳转活动详情
                   that.getLastGroupId(order_sn);
@@ -348,7 +349,6 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
-    console.log('datas', datas)
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
@@ -366,7 +366,6 @@ export default class GroupActivity extends Component {
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                console.log('微信支付成功')
                 that.goToGroupInfo(_groupid);
               } else { Taro.showToast({ title: "微信支付失败", icon: "none" }); }
             }
@@ -397,7 +396,6 @@ export default class GroupActivity extends Component {
   getLastGroupId = (order_sn) => {
     let that = this;
     Taro.showLoading({ title: '支付成功，正在查询用户团活动id', mask: true });
-    console.log('getLastGroupId', order_sn)
     let timer = setTimeout(() => {
       clearTimeout(timer);
       getUserYouhuiGroupId({ order_sn: order_sn })
@@ -406,11 +404,9 @@ export default class GroupActivity extends Component {
             Taro.hideLoading();
             that.goToGroupInfo(res.data.id)
           } else {
-            console.log('res', res)
             that.getLastGroupId(order_sn)
           }
         }).catch((err) => {
-          console.log('err', err)
           that.getLastGroupId(order_sn)
         })
     }, 1000);
@@ -528,9 +524,34 @@ export default class GroupActivity extends Component {
       textbox.focus();
     }
   }
+
+
+  /* 请求海报数据 */
+  getPostList = () => {
+    const { youhui_id } = this.state.data
+    getGroupPoster({ youhui_id, from: 'wx' })
+      .then(({ data, code }) => {
+        this.setState({ posterList: data })
+        console.log(data, '拼团海报数据')
+        let link = data.link
+        getXcxQrcode({ link })
+          .then((res) => {
+            let meta = this.state.posterList
+            meta['wx_img'] = BASIC_API + res.data.url
+            this.setState({ posterList: meta })
+          })
+      })
+
+  }
+
+  /* 关闭海报 */
+  closePoster = () => {
+    this.setState({ showPoster: false, showShare: false })
+  }
+
   render() {
     const { description } = this.state.data;
-    const { showBounced } = this.state;
+    const { showBounced, showPoster, posterList } = this.state;
     return (
       <View className="group-activity-detail">
         {/* 分享组件 */}
@@ -546,9 +567,15 @@ export default class GroupActivity extends Component {
             this.setState({ showShare: false })
           }}
           createPoster={() => {
-            this.setState({ showPoster: true })
+            this.setState({ showPoster: true, showShare: false })
           }}
         />
+
+        <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+          <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          <View className="click-save">长按保存图片到相册</View>
+        </View>
+
         {
           this.state.isShare == true ? (
             <View className='share_mask' onClick={this.closeShare}>
@@ -710,7 +737,6 @@ export default class GroupActivity extends Component {
         }
         {/* <Swiper
                     onChange={(e) => {
-                        // console.log(this.state.current, e.detail.current)
                         // if (this.state.current == this.state.list.length - 2) {
                         //     this.setState({ current: 0 })
                         // }

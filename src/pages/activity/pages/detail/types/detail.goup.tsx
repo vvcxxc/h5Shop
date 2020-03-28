@@ -31,7 +31,6 @@ export default class DetailAppreciation extends Component<DetailProp> {
   }
   render() {
     const { data, giftinfo, isChecked, isFreePostage } = this.props
-    console.log('giftinfo',giftinfo)
     const checkedStyle = isChecked
       ? "active-get-gift"
       : ""

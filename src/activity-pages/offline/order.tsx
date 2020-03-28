@@ -51,11 +51,9 @@ export default class Order extends Component {
 	
   fetchOrder = async () => {
     const { data } = await getOfflineOrder()
-    console.log(data)
 		if(data.length == 0){
 			return
 		}else{
-			console.log(data[0].create_time)
 			for(var i=0;i < data.length; i++){
 				var time = new Date(data[i].create_time * 1000)
 				var year = time.getFullYear();
@@ -80,7 +78,6 @@ export default class Order extends Component {
 	* */ 
 	async fetchOrderQrcode(id: string) {
 	  const {data} = await getOrderQrcode(id)
-		// console.log(data.code)
 		this.setState({
 		  qrcode: data.code,
 			 isQrcode: true,

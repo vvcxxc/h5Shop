@@ -55,7 +55,6 @@ export default class confirmAddress extends Component {
         this.setState({ contentboxShow: false })
         let u = navigator.userAgent
         if (u.indexOf('iPhone') > -1) {
-            console.log('iNoBounce', iNoBounce)
             iNoBounce.enable()
         }
         console.log(this.$router.params);
@@ -79,7 +78,6 @@ export default class confirmAddress extends Component {
                 }
 
             }).catch((err) => {
-                console.log(err);
                 Taro.showToast({ title: '加载失败', icon: 'none' })
             })
 
@@ -90,14 +88,12 @@ export default class confirmAddress extends Component {
                 data: data
             }).then((res: any) => {
                 if (res.code == 200) {
-                    console.log(res)
                     this.setState({ data: res.data })
                 } else {
                     Taro.showToast({ title: '加载失败', icon: 'none' })
                 }
 
             }).catch((err) => {
-                console.log(err);
                 Taro.showToast({ title: '加载失败', icon: 'none' })
             })
 
@@ -173,7 +169,6 @@ export default class confirmAddress extends Component {
             //1增值activityType == '1'
             if (_type == 1) {
                 //增值--微信浏览器
-                console.log('增值--微信浏览器')
                 if (this.state.giftChoice && this.state.data.youhui.gift_id) {
                     //增值--微信浏览器--有选礼品
                     datas = {

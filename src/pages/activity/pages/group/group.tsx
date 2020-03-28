@@ -85,7 +85,6 @@ export default class Group extends Component {
      */
     Taro.setStorageSync("authid", id)
     const location = await getLocation().catch(err => {
-      console.log(err)
     })
     await this.fetchBasicinfo(id)
     this.fetchCoupon(location)
@@ -160,7 +159,6 @@ export default class Group extends Component {
    * 计算: 已完成?|参团?|去使用?
    */
   handleCalculate(data: any): void {
-    // console.log(data)
     const {
       number: groupNumber,
       participation_number: groupParticipator,
@@ -175,7 +173,6 @@ export default class Group extends Component {
     // const isJoin = true
     // const isShowUse = false
     const isShowStartGroup = isFinish && !is_group_participation
-    console.log(is_group_participation, '222')
     this.setState({
       isFinish,
       isJoin,
@@ -192,7 +189,6 @@ export default class Group extends Component {
       basicinfo: { youhui_log_id }
     } = this.state
     const { data } = await listenQrcodeForGroup({ youhui_log_id })
-    console.log(data.status, '二维码status')
     if (data.status === USED) {
       this.setState({
         isQrcode: false
@@ -263,7 +259,6 @@ export default class Group extends Component {
       group_id: id
     }
     const { data } = await getCouponinforForGroup(params)
-    console.log(data)
     const { gift_id = "", activity_id = "" } = data
     this.fetchGiftinfo(gift_id, activity_id)
     this.handleCalculate(data)
@@ -407,7 +402,6 @@ export default class Group extends Component {
       isShowStartGroup,
       groupDesc
     } = this.state
-    console.log(isFinish, '123')
     const surplus = basicinfo.number
       ? basicinfo.number - basicinfo.participation_number
       : 0
