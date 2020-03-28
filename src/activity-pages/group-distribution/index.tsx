@@ -160,7 +160,7 @@ export default class distributionDetail extends Component {
             this.setState({ contentboxShow: true })
             return;
         }
-
+        console.log('payment')
         Taro.showLoading({ title: 'loading', mask: true });
         let _tempid = this.$router.params.groupId ? this.$router.params.groupId : undefined;
         let _temptype = this.$router.params.activityType;
@@ -174,6 +174,7 @@ export default class distributionDetail extends Component {
             xcx: 0,
             number: 1,
         };
+        console.log('sameDatas', sameDatas)
         let data;
         let that = this;
         let browserType = getBrowserType();
