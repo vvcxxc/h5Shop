@@ -288,9 +288,6 @@ export default class distributionDetail extends Component {
         })
     }
 
-
-
-
     render() {
         return (
             <View className="distribution-detail">
