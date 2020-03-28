@@ -73,7 +73,6 @@ export default class LoginPage extends Component<any>{
   //确定登录
   sureLogin = () => {
     const { phoneNumber, validationNumber } = this.state
-    console.log(phoneNumber, validationNumber)
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
     if (!phoneNumber) {
       Taro.showToast({ title: '手机不能为空', duration: 2000,  icon: 'none'})
@@ -93,7 +92,6 @@ export default class LoginPage extends Component<any>{
         if (status_code == 200) {
           switch (data.status) {//成功登录
             case "binded":
-              console.log(1);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -103,7 +101,6 @@ export default class LoginPage extends Component<any>{
               })
               break;
             case "bind_success":
-              console.log(2);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -113,11 +110,9 @@ export default class LoginPage extends Component<any>{
               })
               break;
             case 'need_merge'://需要合并
-              console.log(3);
               this.setState({ prompt: true })
               break;
             case 'need_switch'://跟换手机
-              console.log(4);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -130,11 +125,9 @@ export default class LoginPage extends Component<any>{
               // }, 1000);
               break;
             case 'merge_fail'://自动合并失败
-              console.log(5);
               Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
               break;
             case 'merge_success'://自动合并成功
-              console.log(6);
               Taro.showToast({
                 title: '登录成功', duration: 2000, success: () => {
                   setTimeout(() => {
@@ -144,12 +137,10 @@ export default class LoginPage extends Component<any>{
               })
               break;
             default://其它情况
-              console.log('其他错误')
               break;
           }//end switch
         }//end if
     }).catch(err => {
-      console.log('catch')
       Taro.showToast({ title: '登录失败', duration: 2000, icon: 'none' })
       })
   }

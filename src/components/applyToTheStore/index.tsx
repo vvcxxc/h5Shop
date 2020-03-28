@@ -40,7 +40,6 @@ export default class ApplyToTheStore extends Component<Props> {
       phoneNumber: this.props.phone
     })
       .then((res: any) => {
-        console.log(res)
       });
     e.stopPropagation();
   }

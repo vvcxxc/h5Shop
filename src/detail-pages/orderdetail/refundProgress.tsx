@@ -28,8 +28,6 @@ export default class Orderdetail extends Component {
             url: "v3/user/coupons/refund/schedule",
             data: { coupons_log_id: this.$router.params._logid },
         }).then((res: any) => {
-
-            console.log(res)
             //res.data=>res
             this.setState({ info: res.data })
 

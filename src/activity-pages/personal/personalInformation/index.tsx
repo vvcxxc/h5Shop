@@ -63,13 +63,11 @@ export default class PersonalInformation extends Component {
             })
     }
     onSexChange = e => {
-        console.log(this.state.selectorNum)
         this.setState({
             selectorNum: e.detail.value,
             selectorChecked: this.state.selector[e.detail.value],
             sex: e.detail.value == 0 ? 1 : 2
         }, () => {
-            console.log(this.state.selectorNum)
             this.sumbitInfo()
         })
     }

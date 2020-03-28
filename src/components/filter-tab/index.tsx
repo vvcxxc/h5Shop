@@ -32,7 +32,6 @@ class FilterTab extends PureComponent<Props> {
 	// this.props.type
 
 	handleClick = current => () => {
-		console.log(current, 'current')
 	
 		// this.setState({ titleList:[]})
 		if (this.state.current === current) {
@@ -50,7 +49,6 @@ class FilterTab extends PureComponent<Props> {
 			data:{type:1}
 		})
 			.then((res: any) => {
-				console.log(res,'defienres')
 			})
 			.catch(() => {
 			})

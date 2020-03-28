@@ -18,10 +18,8 @@ export default class List extends Component {
     list: []
   }
   componentDidMount() {
-    // console.log( Cookie.get('tempLocation'))
     // Taro.showShareMenu()
     const { type } = this.$router.params
-    console.log(type);
     this.handleSetTitle(type)
     this.fetchCoupon(type);
   }
@@ -87,7 +85,6 @@ export default class List extends Component {
     //   ypoint: location.latitude || ""
     // }
 
-    console.log(location, "~~~~~~~~~~~~~~~~~")
     const {
       list: { api, method }
     } = activityData[type]

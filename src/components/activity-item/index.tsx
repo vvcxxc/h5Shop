@@ -23,7 +23,6 @@ interface Props {
 export default class ActivityItem extends Component<Props> {
 
   handleClick = () => {
-    console.log(624234)
     this.props.handleClick(this.props.item)
   }
   render() {

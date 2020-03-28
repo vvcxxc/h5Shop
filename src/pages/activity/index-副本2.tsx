@@ -175,7 +175,6 @@ export default class Activity extends Component {
           dataList: res.data.concat(this.state.dataList)
         })
       } else if (res.data.length === 0) {
-        console.log('getAppreciationData:暂无更多数据')
         Taro.showToast({
           title: '暂无更多数据',
           icon: 'none'
@@ -311,7 +310,6 @@ export default class Activity extends Component {
       start_y = this.state.start_p.clientY,
       move_x = move_p.clientX,
       move_y = move_p.clientY;
-    console.log(start_x, start_y, move_x, move_y)
     //得到偏移数值
     let dev = Math.abs(move_x - start_x) / Math.abs(move_y - start_y);
     if (dev < deviationX) {//当偏移数值大于设置的偏移数值时则不执行操作
@@ -362,7 +360,6 @@ export default class Activity extends Component {
       title: 'loading',
       mask: true
     })
-    console.log('下拉')
   }
 
   /**
@@ -376,7 +373,6 @@ export default class Activity extends Component {
    * 切换选中checkbox
    */
   handleSelected = (id) => {
-    console.log('handleSelected', id)
     if (this.state.indexGroup.includes(id)) {
       this.state.indexGroup.forEach((item, index) => {
         if (item == id) {
@@ -399,7 +395,6 @@ export default class Activity extends Component {
 
   // get 广告
   getAdvertising = () => {
-    console.log('广告')
     request({
       url: "v3/ads",
       method: 'GET',
@@ -409,7 +404,6 @@ export default class Activity extends Component {
       }
     })
       .then((res: any) => {
-        // console.log(res,'res');
         if (res.code == 200) {
           this.setState({ indexImg: res.data.pic })
           this.setState({ indexImgId: res.data.id })
