@@ -28,7 +28,6 @@ export default class ActivityGroup extends Component<ActivityGroupProp> {
     })
   }
   goTo = () =>{
-    console.log(this.props)
     const id = this.props.data.id
     Taro.navigateTo({url:'/pages/activity/pages/group/group?id='+id})
   }

@@ -10,6 +10,11 @@ import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
+// import Poster from '@/components/posters/vouchers'//   海报无礼品
+import Poster from '@/components/posters/set-meal'//   海报无礼品
+import { shopPoster } from '@/api/poster'
+
+const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
 
@@ -92,7 +97,17 @@ export default class AppreActivity extends Component {
     showBounced: false,
     showMoreRules: false,
     showShare: false, //显示分享
-    isShare: false
+    isShare: false,
+    posterList: {},
+    showPoster: false,
+  }
+
+  componentDidMount() {
+    let youhui_id = this.$router.params.id
+    shopPoster({ youhui_id, from: 'h5' })
+      .then(({ data, code }) => {
+        this.setState({ posterList: data })
+      })
   }
 
    /**
@@ -127,7 +142,6 @@ export default class AppreActivity extends Component {
     discountCoupons(id, data)
       .then((res: any) => {
         Taro.hideLoading()
-        console.log(res.data,'mememe')
         this.setState({
           coupon: res.data.info.coupon,
           store: res.data.info.store,
@@ -253,8 +267,15 @@ export default class AppreActivity extends Component {
     }
   }
 
+  /* 关闭海报 */
+  closePoster = () => {
+    this.setState({ showPoster: false, showShare: false })
+  }
+
+
   render() {
     const { description } = this.state.coupon;
+    const { showPoster, posterList } = this.state
     return (
       <View className="appre-activity-detail">
         {/* 分享组件 */}
@@ -270,9 +291,14 @@ export default class AppreActivity extends Component {
             this.setState({ showShare: false })
           }}
           createPoster={() => {
-            this.setState({ showPoster: true })
+            this.setState({ showPoster: true, showShare:false})
           }}
         />
+
+        <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+          <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          <View className="click-save">长按保存图片到相册</View>
+        </View>
         {
           this.state.isShare == true ? (
             <View className='share_mask' onClick={this.closeShare}>

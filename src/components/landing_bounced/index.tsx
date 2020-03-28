@@ -20,7 +20,6 @@ const PhysicalBond = (params: Params)=> {
             <li>
               <Text onClick={() =>  params.cancel()}>暂不登录</Text>
               <Text onClick={() => {
-                console.log(location.href)
                 Taro.setStorageSync('ql_href', location.href)
                 Taro.navigateTo({ url: '/pages/my/login_page/index' })
                 params.confirm()

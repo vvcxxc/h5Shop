@@ -184,8 +184,6 @@ export default class filterTotal extends Component<Props> {
         // this.setState({ selectData1: res.data })
         this.setState({
           selectData1: this.state.selectData1.concat(res.data)
-        }, () => {
-          console.log(this.state)
         })
       })
   }
@@ -225,7 +223,6 @@ export default class filterTotal extends Component<Props> {
   }
 
   // this.props. hidden = () => {
-  //   console.log('3233')
   // }
 
   render() {

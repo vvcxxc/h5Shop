@@ -19,7 +19,6 @@ export default class TimeUp extends Component<Props>{
     }
     /** 定时 */
     setTime = () => {
-        // console.log('计时器')
         let timer;
         if (this.state.time.display <= 0) {
             clearTimeout(timer)

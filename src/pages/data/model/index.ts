@@ -35,7 +35,6 @@ export default {
       try {
         // res = yield call(dataServices.getAsyncData)
       } catch (e) {
-        console.log('fetch 请求失败!')
         Taro.showToast({
           title: '请求失败',
           icon: 'loading',

@@ -19,7 +19,6 @@ export default class GiftWriteInfo extends Component<{data: any; onWrite: any; o
   }
   render() {
     const { data, onWrite, info } = this.props
-    console.log(info)
     return (
       <Block>
         <View className="gift-write-info">

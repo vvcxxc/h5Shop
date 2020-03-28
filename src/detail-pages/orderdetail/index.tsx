@@ -85,7 +85,6 @@ export default class Orderdetail extends Component {
         .then((res: any) => {
           console.log(res);
           that.setState({ defaultData: res.data }, () => {
-            console.log('log1', this.state.defaultData)
             if (this.state.defaultData.coupons_type * 1 == 0) { //兑换券获取兑换码
               request({
                 url: 'api/wap/coupon/showCode',
@@ -257,7 +256,6 @@ export default class Orderdetail extends Component {
                   <Text className="a_billingInfo_1">退款时间</Text>:
           <Text className="a_billingInfo_2" style={{ marginLeft: '9px' }}  >{this.state.defaultData.refund_time}</Text>
                   <Text className='a_returnState' onClick={() => {
-                    // console.log(this.state.defaultData.coupons_id,this.state.defaultData.coupons_log_id)
                     Taro.navigateTo({
                       url: './refundProgress?_logid=' + this.state.defaultData.coupons_log_id
                     })

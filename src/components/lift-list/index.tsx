@@ -34,7 +34,6 @@ class LiftList extends PureComponent<Props> {
   };
 
   render() {
-    console.log(this.state.data,'data')
     const tabsEle = this.props.merchant.map((item, index,_) => {
       const checked = index === this.state.current;
       return (

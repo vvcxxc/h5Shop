@@ -13,15 +13,15 @@ export const data = [
   },
   {
     url: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/aZsANKK6S7iXciGfnRS6NK8iXyjtcs3Q.png',
-    router: '/activity-pages/activity-list/index?id='
+    router: '/detail-pages/course/advantage'
   },
   {
     url: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/sSaGPECiXaCCrW7PE3phBKM8Zy8Zmbfd.png',
-    router: '/activity-pages/activity-list/index?id='
+    router: '/detail-pages/course/group_strategy'
   },
   {
     url: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/fhfPEADCeGf26Q3BPHemJamJY8Jb3NDa.png',
-    router: '/activity-pages/activity-list/index?id='
+    router: '/detail-pages/course/newbie'
   },
 
 ]

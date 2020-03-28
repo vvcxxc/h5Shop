@@ -55,12 +55,10 @@ export default class DetailAppreciation extends Component{
   };
 
   componentDidMount = () => {
-    console.log(this.$router.params);
     Taro.showLoading({
       title: 'loading',
     })
     getLocation().then((res: any) => {
-      console.log(res);
       this.setState({
         yPoint: res.latitude || '',
         xPoint: res.longitude || ''
@@ -95,7 +93,6 @@ export default class DetailAppreciation extends Component{
               Taro.hideLoading()
             }
           }).catch(err => {
-            console.log(err);
           })
       })
     }).catch(err => {
@@ -129,9 +126,7 @@ export default class DetailAppreciation extends Component{
               } else {
                 this.setState({ isPostage: false })
               }
-              console.log("lala", imgList)
               this.setState({ data: res.data, imagesList: imgList }, () => {
-                console.log("lalaal", this.state.imagesList)
               });
               Taro.hideLoading()
             } else {
@@ -147,7 +142,6 @@ export default class DetailAppreciation extends Component{
             }
 
           }).catch(err => {
-            console.log(err);
           })
       })
     })
@@ -172,7 +166,6 @@ export default class DetailAppreciation extends Component{
       phoneNumber: this.state.data.tel
     })
       .then((res: any) => {
-        console.log(res)
       });
     e.stopPropagation();
   }
@@ -257,7 +250,6 @@ export default class DetailAppreciation extends Component{
       });
     }
     let datas = {}
-    console.log(Taro.getStorageSync("open_id"))
     if (_type == 1) {
       datas = {
         youhui_id: this.$router.params.id,
@@ -339,7 +331,6 @@ export default class DetailAppreciation extends Component{
             }
           })
         } else {
-          console.log(_type)
         }
       })
   }

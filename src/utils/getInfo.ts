@@ -109,7 +109,6 @@ export const getLocation = () => {
             })
           },
           fail: function () {
-            console.log('定位失败啦')
             reject({
               latitude: '',
               longitude: ''
