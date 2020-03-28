@@ -160,7 +160,6 @@ export default class distributionDetail extends Component {
             this.setState({ contentboxShow: true })
             return;
         }
-
         Taro.showLoading({ title: 'loading', mask: true });
         let _tempid = this.$router.params.groupId ? this.$router.params.groupId : undefined;
         let _temptype = this.$router.params.activityType;
@@ -240,9 +239,12 @@ export default class distributionDetail extends Component {
                     })
                 }
             } else {
+                console.log('res失败', res)
                 Taro.showToast({ title: res.message, icon: 'none' })
             }
         }).catch(err => {
+            console.log('err', err)
+            console.log('err', err.json())
             Taro.showToast({ title: '调起支付失败', icon: 'none' })
         })
     }
