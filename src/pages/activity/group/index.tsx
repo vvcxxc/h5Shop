@@ -78,7 +78,7 @@ export default class Group extends Component<Props>{
     groupListPages: 1,
     currentPage: 0,
     allowGroup: '',
-    showBounced:false
+    showBounced: false
   };
   componentDidShow() {
     this.toShare();
@@ -707,7 +707,7 @@ export default class Group extends Component<Props>{
       return
     }
 
-    if (this.state.data.gift_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
       this.clearTimeOut();
       if (this.$router.params.type == '5') {
         //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
@@ -730,7 +730,7 @@ export default class Group extends Component<Props>{
       this.setState({ showBounced: true })
       return
     }
-    if (this.state.data.gift_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
       this.clearTimeOut();
       //轮表参团,路由params带播列过来的id为活动id, 接口传过来的id为团id
       Taro.navigateTo({
