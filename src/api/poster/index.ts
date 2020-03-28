@@ -1,15 +1,5 @@
 import http from "../http"
-// import userHttp from "@/services/userRequest"
 import request from '@/services/request';
-
-/* 小程序海报二维码 */
-export const getXcxQrcode = (data) =>
-  http({
-    url: "v3/get_xcx_qrcode",
-    method: "get",
-    data
-  })
-
 
 /**
 *  增值海报
