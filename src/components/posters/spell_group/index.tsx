@@ -105,7 +105,7 @@ export default class Poster extends Component<Props> {
           }
         </View>
 
-        <View className="project-info">
+        <View className="project-info-spell_group">
           <View className="info-left">
             <View className="info-left-first-line">拼团价 ￥
               <Text>{listData.pay_money}</Text>
@@ -125,7 +125,7 @@ export default class Poster extends Component<Props> {
             <View className="info-left-fifth-line"> 店铺地址：{listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
             </View>
           </View>
-          <View className="info-right" >
+          <View className="info-right-spell_group" >
             <View className="info-right-first-line">
               <Image className="qr-code" src={gift} />
             </View>
@@ -136,7 +136,7 @@ export default class Poster extends Component<Props> {
     </View>
     return this.state.show ?
       !this.state.imgurl ? dom : <Image
-        onClick={this.noAllow.bind(this)} className="my-img" src={this.state.imgurl} />
+        onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
       : null
   }
 }

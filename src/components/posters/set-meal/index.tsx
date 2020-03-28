@@ -92,7 +92,7 @@ export default class OtherPoster extends Component<Props> {
         <View className="gift-img">
           <Image className="gift-image" src={listData.image} />
         </View>
-        <View className="project-info">
+        <View className="project-info-set-meal">
           <View className="info-left" >
             <View className="info-left-first-line">活动价 ￥
               <Text className="font">{listData.pay_money}</Text>
@@ -112,7 +112,7 @@ export default class OtherPoster extends Component<Props> {
               店铺地址：{listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
             </View>
           </View>
-          <View className="info-right" >
+          <View className="info-right-set-meal" >
             <View className="info-right-first-line">
               <Image className="qr-code" src={gift} />
             </View>
@@ -123,7 +123,7 @@ export default class OtherPoster extends Component<Props> {
       </View>
     </View>
     return  this.state.show ?
-      !this.state.imgurl ?dom : <Image onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
+      !this.state.imgurl ? dom : <Image onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
       : null
   }
 }

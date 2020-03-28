@@ -57,7 +57,7 @@ export default class NoGiftPoster extends Component<Props> {
   }
 
   showMyPoster = () => {
-    let dom = document.getElementById('no-gift-poster')
+    let dom = document.getElementById('poster-ticket-buy')
     QRCode.toDataURL(this.props.list.link)                                      // 网络链接转化为二维码
       .then((url: any) => {
         this.setState({ gift: url }, () => {
@@ -90,7 +90,7 @@ export default class NoGiftPoster extends Component<Props> {
   render() {
     const { listData, gift} = this.state
     const dom = <View
-      className="poster_no_gift" id="no-gift-poster" >
+      className="poster-ticket-buy" id="no-gift-poster" >
       <Image className="title_img" src="https://oss.tdianyi.com/front/tiDd8wiT68yDJ7tsKJWbRz3W7R5DMXWP.png" />
       <View className="main">
         <View className="gift_img">
@@ -123,7 +123,7 @@ export default class NoGiftPoster extends Component<Props> {
           </View>
         </View>
 
-        <View className="info">
+        <View className="info-ticket-buy">
           <View className="project_info">
             <View className="info_left">
               <View className="info-left-first-line">
@@ -142,7 +142,7 @@ export default class NoGiftPoster extends Component<Props> {
                 {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
               </View>
             </View>
-            <View className="info-right" >
+            <View className="info-right-ticket-buy" >
               <View className="info-right-first-line">
                 <Image className="qr-code" src={gift} />
               </View>
@@ -154,7 +154,7 @@ export default class NoGiftPoster extends Component<Props> {
     </View>
     return  this.state.show ?
       !this.state.imgurl ? dom : <Image
-        onClick={this.noAllow.bind(this)} className="img_no_gift" src={this.state.imgurl} />
+        onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
       : null
     
   }

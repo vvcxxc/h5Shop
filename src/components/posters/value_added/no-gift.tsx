@@ -132,7 +132,7 @@ export default class NoGiftPoster extends Component<Props> {
           </View>
         </View>
 
-        <View className="info">
+        <View className="info-no-gift">
           <View className="project_info">
             <View className="info_left">
               <View className="info-left-first-line">
@@ -151,7 +151,7 @@ export default class NoGiftPoster extends Component<Props> {
                 {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
               </View>
             </View>
-            <View className="info-right" >
+            <View className="info-right-no-gift" >
               <View className="info-right-first-line">
                 <Image className="qr-code" src={gift} />
               </View>
