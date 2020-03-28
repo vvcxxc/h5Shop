@@ -160,7 +160,7 @@ export default class HavegiftPoster extends Component<Props> {
                 {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
               </View>
             </View>
-            <View className="info-right" >
+            <View className="info-right-have-gift" >
               <View className="info-right-first-line">
                 <Image className="qr-code" src={gift} />
               </View>
