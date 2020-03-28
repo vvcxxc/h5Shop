@@ -19,6 +19,7 @@ export const Login = () => {
     from = arr[0]
   }
   let type = getBrowserType();
+  let query = getUrlParams() || {}
   if(process.env.NODE_ENV == 'development'){
     Cookie.set('test_token_auth', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdGVzdC51c2VyY2VudGVyLnRkaWFueWkuY29tL3YxL3VzZXIvYXV0aC9hdXRoX2g1IiwiaWF0IjoxNTg1MzY0NDAxLCJleHAiOjE1ODU0NTQ0MDEsIm5iZiI6MTU4NTM2NDQwMSwianRpIjoiOHBsYmR1YzhFcEs5NFg2MCIsInN1YiI6MzY3NzIsInBydiI6IjU4N2VkNGViNGZmNmIwYjJkODk2YTliN2I3MTA0ZTcwYTViN2EwMDAifQ.vWup45RpVlKarkT3SYNK-xtBT5O5BrwgFEHUB1oOKAc')
 
