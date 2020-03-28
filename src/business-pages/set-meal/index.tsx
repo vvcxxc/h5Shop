@@ -12,7 +12,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 // import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
-import { shopPoster, getXcxQrcode } from '@/api/poster'
+import { shopPoster } from '@/api/poster'
 
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
@@ -106,15 +106,7 @@ export default class AppreActivity extends Component {
     let youhui_id = this.$router.params.id
     shopPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        console.log(data,'data')
         this.setState({ posterList: data })
-        let link = data.link
-        getXcxQrcode({ link })
-          .then((res) => {
-            let meta = this.state.posterList
-            meta['wx_img'] = BASIC_API + res.data.url
-            this.setState({ posterList: meta })
-          })
       })
   }
 

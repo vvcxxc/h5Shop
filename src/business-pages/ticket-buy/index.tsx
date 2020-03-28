@@ -11,7 +11,7 @@ import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/ticket-buy'//   海报无礼品
-import { moneyPoster, getXcxQrcode } from '@/api/poster'
+import { moneyPoster } from '@/api/poster'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 
 const share_url = process.env.TICKETBUY_URL;
@@ -102,15 +102,7 @@ export default class TicketBuy extends Component {
     let youhui_id = this.$router.params.id
     moneyPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        console.log('798098798798784798e7qw89e798wq78',data,'吸纳进券')
         this.setState({ posterList: data })
-        let link = data.link
-        getXcxQrcode({ link })
-          .then((res) => {
-            let meta = this.state.posterList
-            meta['wx_img'] = BASIC_API + res.data.url
-            this.setState({ posterList: meta })
-          })
       })
   }
 

@@ -10,7 +10,7 @@ import Cookie from 'js-cookie';
 import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
-import { geValueAddedPoster, getXcxQrcode } from '@/api/poster'
+import { geValueAddedPoster } from '@/api/poster'
 import HavegiftPoster from '@/components/posters/value_added/have-gift'// 海报存在礼品
 import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报无礼品
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
@@ -322,14 +322,6 @@ export default class AppreActivity extends Component {
         geValueAddedPoster({ youhui_id: id, from: 'h5' })
             .then(({ data, code }) => {
                 this.setState({ posterList: data })
-                let link = data.link
-                console.log(data,'海报的数据')
-                getXcxQrcode({ link })
-                    .then((res) => {
-                        let meta = this.state.posterList
-                        meta['wx_img'] = BASIC_API + res.data.url
-                        this.setState({ posterList: meta })
-                    })
                 switch (data.youhui_type) {
                     case 0:
                         this.setState({ posterType: 'Other' })

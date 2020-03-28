@@ -13,7 +13,7 @@ import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
-import { getGroupPoster, getXcxQrcode } from '@/api/poster'
+import { getGroupPoster } from '@/api/poster'
 
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
@@ -528,17 +528,9 @@ export default class GroupActivity extends Component {
   /* 请求海报数据 */
   getPostList = () => {
     const { youhui_id } = this.state.data
-    getGroupPoster({ youhui_id, from: 'wx' })
+    getGroupPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
         this.setState({ posterList: data })
-        console.log(data,'拼团海报数据')
-        let link = data.link
-        getXcxQrcode({ link })
-          .then((res) => {
-            let meta = this.state.posterList
-            meta['wx_img'] = BASIC_API + res.data.url
-            this.setState({ posterList: meta })
-          })
       })
 
   }
