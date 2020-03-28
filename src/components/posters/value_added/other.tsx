@@ -140,9 +140,8 @@ export default class OtherPoster extends Component<Props> {
 
       </View>
     </View>
-    return dom
-    // this.state.show ?
-    //   !this.state.imgurl ?dom : <Image onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
-    //   : null
+    return this.state.show ?
+      !this.state.imgurl ?dom : <Image onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
+      : null
   }
 }
