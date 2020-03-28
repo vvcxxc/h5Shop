@@ -167,8 +167,8 @@ export default class distributionDetail extends Component {
         let sameDatas = {
             public_type_id: this.$router.params.activityType == '55' ? this.$router.params.groupId : this.$router.params.id,
             activity_id: this.state.data.youhui.activity_id,
-            gift_id: this.state.chooseGift && this.state.data.youhui.gift_id ? this.state.data.youhui.gift_id : undefined,
-            is_distribution: this.state.chooseDistribution && this.state.data.youhui.is_delivery ? 1 : 0,
+            gift_id: this.state.chooseGift ? this.state.data.youhui.gift_id : undefined,
+            is_distribution: this.state.chooseDistribution ? 1 : 0,
             address_id: this.state.data.address.id,
             type: this.$router.params.activityType,
             xcx: 0,
@@ -183,7 +183,6 @@ export default class distributionDetail extends Component {
                 open_id: Cookie.get(process.env.OPEN_ID),
                 unionid: Cookie.get(process.env.UNION_ID),
             }
-
         } else if (browserType == 'alipay') {
             data = {
                 ...sameDatas,
@@ -193,6 +192,7 @@ export default class distributionDetail extends Component {
             Taro.showToast({ title: "网页类型出错", icon: "none" });
             return;
         }
+        console.log('data_', data)
         toWxPay(data).then((res: any) => {
             Taro.hideLoading();
             if (res.code == 200) {
