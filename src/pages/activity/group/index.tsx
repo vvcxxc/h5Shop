@@ -476,7 +476,7 @@ export default class GroupActivity extends Component {
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id,,
+            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
@@ -486,7 +486,7 @@ export default class GroupActivity extends Component {
         })
       })
   }
-  
+
   buttonToShare = () => {
     this.setState({ isShare: true });
   }
@@ -495,9 +495,14 @@ export default class GroupActivity extends Component {
   }
 
   copyText = () => {
+    
     let NValue = this.state.data.share_text.replace(/@#@#/, H5_URL)
     let NumClip = document.createElement("textarea");
     NumClip.value = NValue;
+    NumClip.style.height = '0px';
+    NumClip.style.overflow = 'hidden';
+    NumClip.style.opacity = '0';
+    NumClip.readOnly = true//防止ios键盘弹出
     document.body.appendChild(NumClip);
     NumClip.select();
     this.selectText(NumClip, 0, NValue.length);
@@ -514,10 +519,13 @@ export default class GroupActivity extends Component {
     if (textbox.createTextRange) {//ie
       var range = textbox.createTextRange();
       range.collapse(true);
+      range.moveStart('character', startIndex);//起始光标
+      range.moveEnd('character', stopIndex - startIndex);//结束光标
       range.select();//不兼容苹果
+      
     } else {//firefox/chrome
       textbox.setSelectionRange(startIndex, stopIndex);
-      textbox.focus();
+      // textbox.focus();
     }
   }
 
@@ -558,7 +566,6 @@ export default class GroupActivity extends Component {
             this.setState({ showPoster: true, showShare: false })
           }}
         />
-
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
           <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>

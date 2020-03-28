@@ -244,6 +244,10 @@ export default class AppreActivity extends Component {
     let NValue = this.state.coupon.share_text.replace(/@#@#/, H5_URL)
     let NumClip = document.createElement("textarea");
     NumClip.value = NValue;
+    NumClip.style.height = '0px';
+    NumClip.style.overflow = 'hidden';
+    NumClip.style.opacity = '0';
+    NumClip.readOnly = true//防止ios键盘弹出
     document.body.appendChild(NumClip);
     NumClip.select();
     this.selectText(NumClip, 0, NValue.length);
@@ -263,7 +267,7 @@ export default class AppreActivity extends Component {
       range.select();//不兼容苹果
     } else {//firefox/chrome
       textbox.setSelectionRange(startIndex, stopIndex);
-      textbox.focus();
+      // textbox.focus();
     }
   }
 
