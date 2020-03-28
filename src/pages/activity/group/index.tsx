@@ -444,6 +444,7 @@ export default class GroupActivity extends Component {
   handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
+
   toShare = () => {
     let userAgent = navigator.userAgent;
     let isIos = userAgent.indexOf('iPhone') > -1;
@@ -453,9 +454,8 @@ export default class GroupActivity extends Component {
     } else {
       url = location.href;
     }
-    let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
-    let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
-    let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
+    let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -471,26 +471,23 @@ export default class GroupActivity extends Component {
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
           signature: data.signature,
-          jsApiList: [
-            'updateAppMessageShareData',
-            'updateTimelineShareData',
-            'onMenuShareAppMessage', //旧的接口，即将废弃
-            'onMenuShareTimeline'//旧的接口，即将废弃
-          ]
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: linkMsg + '&invitation_user_id=' + this.state.data.invitation_user_id,
+            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id,,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
+              console.log("分享成功")
             }
           })
         })
       })
   }
+  
   buttonToShare = () => {
     this.setState({ isShare: true });
   }
