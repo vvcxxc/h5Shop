@@ -204,7 +204,6 @@ export default class GroupActivity extends Component {
           url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       } else if (this.$router.params.type == '55') {
-        //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
         Taro.navigateTo({
           url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
