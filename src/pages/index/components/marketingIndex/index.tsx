@@ -24,6 +24,10 @@ export default class MarketingIndex extends Component<any> {
     page: 1
   }
   componentDidMount() {
+    let router = JSON.parse(sessionStorage.getItem('router'))
+    if(router){
+      this.setState({city_name: router.city_name})
+    }
     getChannelInfo().then((res: any) => {
       if (res.code == 200) {
         this.setState({
