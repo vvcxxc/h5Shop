@@ -150,7 +150,7 @@ export default class distributionDetail extends Component {
             this.setState({ showBounced: true })
             return
         }
-
+        console.log('payment')
         if ((!this.state.data.address || !this.state.data.address.detail) &&
             (
                 (this.state.data.youhui.gift_id && this.state.chooseGift) ||
@@ -173,6 +173,7 @@ export default class distributionDetail extends Component {
             xcx: 0,
             number: 1,
         };
+        console.log('sameDatas', sameDatas)
         let data;
         let that = this;
         let browserType = getBrowserType();
