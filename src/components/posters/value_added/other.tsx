@@ -53,7 +53,7 @@ export default class OtherPoster extends Component<Props> {
           setTimeout(() => {
             list.youhui_type == 0 ?    Taro.hideLoading():null
             this.showMyPoster()
-          }, 500);
+          }, 800);
       })
 
     }
@@ -152,7 +152,5 @@ export default class OtherPoster extends Component<Props> {
         onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
     </View>
       : null
-      // !this.state.imgurl ? dom : <Image onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
-      // : null
   }
 }

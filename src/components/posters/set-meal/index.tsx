@@ -48,10 +48,7 @@ export default class OtherPoster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-          setTimeout(() => {
-            Taro.hideLoading()
-            this.showMyPoster()
-          }, 500);
+          this.showMyPoster()
       })
 
     }
@@ -69,7 +66,9 @@ export default class OtherPoster extends Component<Props> {
             useCORS: true,
           }).then((res: any) => {
             let imgurl = res.toDataURL('image/jpeg');
-            this.setState({ imgurl })
+            this.setState({ imgurl }, () => {
+              Taro.hideLoading()
+            })
           })
         })
       })
@@ -98,11 +97,12 @@ export default class OtherPoster extends Component<Props> {
         </View>
         <View className="project-info-set-meal">
           <View className="info-left" >
-            <View className="info-left-first-line">活动价 ￥
+            <View className="info-left-first-line">优惠价 ￥
               <Text className="font">{listData.pay_money}</Text>
+              <Text className="original-price">￥<Text>{listData.return_money}</Text></Text>
             </View>
             <View className="info-left-second-line">
-              <Text className="font">最高可抵{listData.return_money}元</Text>
+              {/* <Text className="font">最高可抵{listData.return_money}元</Text> */}
             </View>
             <View className="info-left-third-line">
               {
@@ -131,13 +131,10 @@ export default class OtherPoster extends Component<Props> {
 
       </View>
     </View>
-    return this.state.show ? <View className="set-meal-ql">
+    return  this.state.show ? <View className="set-meal-ql">
       {dom}  <Image
         onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
     </View>
       : null
-      
-      // !this.state.imgurl ? dom : <Image onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
-      // : null
   }
 }

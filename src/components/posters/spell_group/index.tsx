@@ -50,10 +50,11 @@ export default class Poster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-          setTimeout(() => {
-            Taro.hideLoading()
           this.showMyPoster()
-        }, 500);
+        //   setTimeout(() => {
+        //     Taro.hideLoading()
+        //   this.showMyPoster()
+        // }, 800);
       })
     }
   }
@@ -70,7 +71,9 @@ export default class Poster extends Component<Props> {
             useCORS: true,
           }).then((res: any) => {
             let imgurl = res.toDataURL('image/jpeg');
-            this.setState({ imgurl })
+            this.setState({ imgurl }, () => {
+              Taro.hideLoading()
+            })
           })
         })
       })
@@ -103,7 +106,7 @@ export default class Poster extends Component<Props> {
                 <Image src={listData.gift_pic} />
                 <Image className="test" src={require('@/assets/box_shadow.png')} />
                 <Text className="giving" >赠</Text>
-                <Text className="price" style={{ color: '#fff' }}>￥{listData.gift_price}</Text>
+                <Text className="price-spell_group" style={{ color: '#fff' }}>￥<Text>{listData.gift_price}</Text></Text>
               </View>
             </View> : null
           }
@@ -112,7 +115,7 @@ export default class Poster extends Component<Props> {
         <View className="project-info-spell_group">
           <View className="info-left">
             <View className="info-left-first-line">拼团价 ￥
-              <Text>{listData.pay_money}</Text>
+              <Text>{listData.participation_money}</Text>
               <Text>￥{listData.pay_money}</Text>
             </View>
             <View className="info-left-second-line">
@@ -144,7 +147,6 @@ export default class Poster extends Component<Props> {
         </View>
       </View>
     </View>
-    // !this.state.imgurl ?
     return this.state.show ? <View className="spell_group-ql">
      { dom }  <Image
         onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
