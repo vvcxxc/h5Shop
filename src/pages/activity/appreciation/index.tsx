@@ -81,7 +81,8 @@ export default class AppreActivity extends Component {
             },
             youhui_type: ''
         },
-        posterType: ''
+        posterType: '',
+        securityPoster: false// fasle不允许显示海报
     };
 
     /**
@@ -114,6 +115,7 @@ export default class AppreActivity extends Component {
                     if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
                     this.setState({ data: res.data, isPostage }, () => {
                         this.toShare()
+                        this.setState({ securityPoster: true })
                     });
                 } else {
                     Taro.showToast({ title: '请求失败', icon: 'none' });
@@ -339,6 +341,13 @@ export default class AppreActivity extends Component {
         this.setState({ showPoster: false, showShare: false })
     }
 
+    createPosterData = () => {
+        if (this.state.securityPoster) {
+            this.setState({ showPoster: true, showShare: false })
+        } else {
+            Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+        }
+    }
 
     render() {
         const { showBounced } = this.state;
@@ -356,9 +365,7 @@ export default class AppreActivity extends Component {
                         this.buttonToShare()
                         this.setState({ showShare: false })
                     }}
-                    createPoster={() => {
-                        this.setState({ showPoster: true, showShare: false })
-                    }}
+                    createPoster={this.createPosterData}
                 />
                 <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
                     <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />

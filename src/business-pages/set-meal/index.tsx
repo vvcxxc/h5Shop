@@ -93,13 +93,16 @@ export default class AppreActivity extends Component {
     isShare: false,
     posterList: {},
     showPoster: false,
+    securityPoster: false// fasle不允许显示海报
   }
 
   componentDidMount() {
     let youhui_id = this.$router.params.id
     shopPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data })
+        this.setState({ posterList: data }, () => {
+          this.setState({ securityPoster: true })
+        })
       })
   }
 
@@ -269,6 +272,14 @@ export default class AppreActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
+  createPosterData = () => {
+    if (this.state.securityPoster) {
+      this.setState({ showPoster: true, showShare: false })
+    } else {
+      Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+    }
+  }
+
   render() {
     const { description } = this.state.coupon;
     const { showPoster, posterList } = this.state
@@ -286,9 +297,7 @@ export default class AppreActivity extends Component {
             this.buttonToShare()
             this.setState({ showShare: false })
           }}
-          createPoster={() => {
-            this.setState({ showPoster: true, showShare: false })
-          }}
+          createPoster={this.createPosterData}
         />
 
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>

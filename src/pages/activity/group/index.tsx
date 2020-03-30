@@ -94,7 +94,8 @@ export default class GroupActivity extends Component {
       },
       youhui_type: ''
     },
-    posterType: ''
+    posterType: '',
+    securityPoster:false// fasle不允许显示海报
   };
 
   /**
@@ -131,6 +132,7 @@ export default class GroupActivity extends Component {
           that.setState({ data: res.data, isPostage }, () => {
             this.getPostList();
             this.toShare();
+            this.setState({ securityPoster:true})
           });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
@@ -141,6 +143,7 @@ export default class GroupActivity extends Component {
         that.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
       })
   }
+
 
   /**
     * 获取拼团列表
@@ -203,7 +206,6 @@ export default class GroupActivity extends Component {
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
       this.setState({ showBounced: true })
-      console.log(333)
       return
     }
 
@@ -275,11 +277,9 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
-    console.log('datas', datas)
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
-        console.log('订单成功:', res)
         let order_sn = res.channel_order_sn;//比增值少一层data
         if (browserType == 'wechat') {
           //微信支付
@@ -295,7 +295,6 @@ export default class GroupActivity extends Component {
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                console.log('微信支付成功,order_sn:', order_sn)
                 if (_temptype == '5') {
                   //开团要得到开团活动id再跳转活动详情
                   that.getLastGroupId(order_sn);
@@ -362,7 +361,6 @@ export default class GroupActivity extends Component {
     else {
       Taro.showToast({ title: "浏览器类型出错", icon: "none" }); return;
     }
-    console.log('datas', datas)
     toWxPay(datas).then((res: any) => {
       Taro.hideLoading();
       if (res.code == 200) {
@@ -411,7 +409,6 @@ export default class GroupActivity extends Component {
   getLastGroupId = (order_sn) => {
     let that = this;
     Taro.showLoading({ title: '支付成功，正在查询用户团活动id', mask: true });
-    console.log('getLastGroupId', order_sn)
     let timer = setTimeout(() => {
       clearTimeout(timer);
       getUserYouhuiGroupId({ order_sn: order_sn })
@@ -420,11 +417,9 @@ export default class GroupActivity extends Component {
             Taro.hideLoading();
             that.goToGroupInfo(res.data.id)
           } else {
-            console.log('res', res)
             that.getLastGroupId(order_sn)
           }
         }).catch((err) => {
-          console.log('err', err)
           that.getLastGroupId(order_sn)
         })
     }, 1000);
@@ -564,7 +559,13 @@ export default class GroupActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
-  
+  createPosterData = () => {
+    if (this.state.securityPoster) {
+      this.setState({ showPoster: true, showShare: false })
+    } else {
+      Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+    }
+  }
 
   render() {
     const { description } = this.state.data;
@@ -583,9 +584,7 @@ export default class GroupActivity extends Component {
             this.buttonToShare()
             this.setState({ showShare: false })
           }}
-          createPoster={() => {
-            this.setState({ showPoster: true, showShare: false })
-          }}
+          createPoster={this.createPosterData}
         />
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
           <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
