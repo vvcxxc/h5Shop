@@ -61,7 +61,7 @@ export default class NoGiftPoster extends Component<Props> {
   }
 
   showMyPoster = () => {
-    let dom = document.getElementById('poster-ticket-buy')
+    let dom = document.getElementById('ticket-buy-poster')
     QRCode.toDataURL(this.props.list.link)                                      // 网络链接转化为二维码
       .then((url: any) => {
         this.setState({ gift: url }, () => {
@@ -94,7 +94,7 @@ export default class NoGiftPoster extends Component<Props> {
   render() {
     const { listData, gift} = this.state
     const dom = <View
-      className="poster-ticket-buy" id="no-gift-poster" >
+      className="poster-ticket-buy" id="ticket-buy-poster" >
       <Image className="title_img" src="https://oss.tdianyi.com/front/tiDd8wiT68yDJ7tsKJWbRz3W7R5DMXWP.png" />
       <View className="main">
         <View className="gift_img">
