@@ -40,6 +40,7 @@ export default class GroupActivity extends Component {
     current: 0,
     //查看更多
     showMoreRules: false,
+    showMoreImages: false,
     data: {
       invitation_user_id: '',
       share_text: '',
@@ -552,7 +553,7 @@ export default class GroupActivity extends Component {
   }
 
   render() {
-    const { description } = this.state.data;
+    const { images, description } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
     return (
       <View className="group-activity-detail">
@@ -877,23 +878,44 @@ export default class GroupActivity extends Component {
             </View> : null
           }
         </View>
-        {/* <View className="group-buy-box" >
-          <View className="group-buy-price-box" >
-            <View className="group-buy-price-icon" >￥</View>
-            <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
-          </View>
-          <View className="group-buy-btn-box" >
-            <View className="group-buy-btn-left" >分享活动</View>
-            {
-              this.state.allowGroup ? <View className="group-buy-btn-right" >{this.state.allowGroup}</View>
-                : <View className="group-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >
-                  <View className="group-buy-btn-group" > {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}</View>
-                  <View className="group-buy-btn-groupnum" >{this.state.data.number}人成团</View>
-                </View>
-            }
-          </View>
-        </View> */}
 
+        {
+          images.length ? <View className="img-list-box">
+            <View className="img-title-box">
+              <View className='img-title-left'></View>
+              <View className='img-title'>图文详情</View>
+            </View>
+            <View className="images-content">
+              {
+                !this.state.showMoreImages && images.length > 0 ? <Image className="images-item" mode={'widthFix'} src={images[0]} />
+                  : null
+              }
+              {
+                !this.state.showMoreImages && images.length > 1 ? <Image className="images-item" mode={'widthFix'} src={images[1]} />
+                  : null
+              }
+              {
+                this.state.showMoreImages && images.length > 2 ? images.map((item: any, index: any) => {
+                  return (
+                    <Image className="images-item" mode={'widthFix'} key={item} src={item} />
+                  )
+                }) : null
+              }
+            </View>
+            {
+              images.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+                <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                <View className="img-more-text" >查看更多</View>
+              </View>
+                : (
+                  images.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                    <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
+                    <View className="img-more-text" >收起</View>
+                  </View> : null
+                )
+            }
+          </View> : null
+        }
 
         <View className="new-buy-box" >
           <View className="new-price-box" >
