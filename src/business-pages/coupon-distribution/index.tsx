@@ -13,8 +13,8 @@ export default class distributionDetail extends Component {
         enablePullDownRefresh: false
     };
     state = {
-        chooseDistribution: false,
-        contentboxShow: true,
+        chooseDistribution: true,
+        contentboxShow: false,
         sumMoney: 0,
         coupon: {
             id: 0,
