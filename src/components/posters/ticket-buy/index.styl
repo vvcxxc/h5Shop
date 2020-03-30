@@ -13,15 +13,19 @@
     height 854px;
     background: rgba(255, 255, 255, 1);
     position absolute;
-    z-index: -100;
+    z-index: 100;
     top: 0;
     left 0;
   }
 
-  .title_img { 
-      height auto;
+   .taro-img {
       width: 100%;
+      height auto;
+      img {
+        height:auto;
+      }
     }
+    
 
   .main {
     margin-top: 12px;
@@ -41,6 +45,10 @@
           .taro-img {
             height 30px;
             width 143px;
+          }
+          .login-img {
+            display: flex;
+            justify-content: center;
           }
         
         .max_money {
@@ -95,18 +103,19 @@
           flex-direction:column;
           align-items: center;
           width: 120px;
-          span {
+          .type {
             display: inline-block;
             width: 120px;
             text-align: center;
-          }
-          .type {
             font-size:19px;
             font-family:PingFang SC;
             font-weight:800;
             color:rgba(195,36,41,1);
           }
           .doorsill {
+            display: inline-block;
+            width: 120px;
+            text-align: center;
             font-size:14px;
             font-family:PingFang SC;
             font-weight:800;

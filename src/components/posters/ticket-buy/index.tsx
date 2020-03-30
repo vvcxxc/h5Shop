@@ -52,10 +52,7 @@ export default class NoGiftPoster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-          setTimeout(() => {
-            Taro.hideLoading()
-            this.showMyPoster()
-          }, 800);
+          this.showMyPoster()
       })
     } 
   }
@@ -72,7 +69,9 @@ export default class NoGiftPoster extends Component<Props> {
             useCORS: true,
           }).then((res: any) => {
             let imgurl = res.toDataURL('image/jpeg');
-            this.setState({ imgurl })
+            this.setState({ imgurl }, () => {
+              Taro.hideLoading()
+            })
           })
         })
       })
@@ -95,15 +94,21 @@ export default class NoGiftPoster extends Component<Props> {
     const { listData, gift} = this.state
     const dom = <View
       className="poster-ticket-buy" id="ticket-buy-poster" >
-      <Image className="title_img" src="https://oss.tdianyi.com/front/tiDd8wiT68yDJ7tsKJWbRz3W7R5DMXWP.png" />
+      {/* <View className="img-title-box"> */}
+        <Image className="img-title" src="https://oss.tdianyi.com/front/tiDd8wiT68yDJ7tsKJWbRz3W7R5DMXWP.png" />
+      {/* </View> */}
+      
       <View className="main">
         <View className="gift_img">
 
           <View className="gift-img-first-line">
-            <Image
-              src="https://oss.tdianyi.com/front/ExebSGpSecxPwNFa43i7wRxwJjZftasn.png"
-            />
-            <View className="max_money">最高抵用{listData.return_money}元</View>
+            <View className="login-img">
+              <Image
+                src="https://oss.tdianyi.com/front/ExebSGpSecxPwNFa43i7wRxwJjZftasn.png"
+              />
+            </View>
+            
+            <View className="max_money">最高抵用<Text>{listData.return_money}</Text>元</View>
           </View>
           <View className="gift-img-second-line">
             <Image src={require('@/assets/progress_bar.png')} />
@@ -118,7 +123,7 @@ export default class NoGiftPoster extends Component<Props> {
               </View>
               <View className="doorsill-box">
                 <Text className="type">通用券</Text>
-                <Text className="doorsill">满{listData.total_fee}元可用</Text>
+                <Text className="doorsill">满<Text>{listData.total_fee}</Text>元可用</Text>
               </View>
             </View>
           </View>
@@ -160,7 +165,10 @@ export default class NoGiftPoster extends Component<Props> {
         </View>
       </View>
     </View>
-    return this.state.show ? <View className="ticket-buy-ql">
+    return <View className="ticket-buy-ql">
+      {dom}  
+    </View>
+    this.state.show ? <View className="ticket-buy-ql">
       {dom}  <Image
         onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
     </View>

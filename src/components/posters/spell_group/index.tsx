@@ -50,10 +50,11 @@ export default class Poster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-          setTimeout(() => {
-            Taro.hideLoading()
           this.showMyPoster()
-        }, 800);
+        //   setTimeout(() => {
+        //     Taro.hideLoading()
+        //   this.showMyPoster()
+        // }, 800);
       })
     }
   }
@@ -70,7 +71,9 @@ export default class Poster extends Component<Props> {
             useCORS: true,
           }).then((res: any) => {
             let imgurl = res.toDataURL('image/jpeg');
-            this.setState({ imgurl })
+            this.setState({ imgurl }, () => {
+              Taro.hideLoading()
+            })
           })
         })
       })
