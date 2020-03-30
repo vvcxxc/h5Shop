@@ -60,6 +60,17 @@ export default class ActivityList extends Component {
       getList(data).then(res => {
         this.getNewList(res.data.data)
       })
+    }).catch(()=> {
+      let data = {
+        xpoint: '',
+        ypoint: '',
+        channel_id: id,
+        page: 1,
+        from: 'detail'
+      }
+      getList(data).then(res => {
+        this.getNewList(res.data.data)
+      })
     })
     Taro.setNavigationBarTitle({ title: '团购活动列表' })
   }
@@ -73,6 +84,21 @@ export default class ActivityList extends Component {
         let data = {
           xpoint: res.longitude,
           ypoint: res.latitude,
+          channel_id: id,
+          page: this.state.page,
+          from: 'detail'
+        }
+        getList(data).then(res => {
+          if (res.data.data.length) {
+            this.getNewList([...this.state.list, ...res.data.data])
+          } else {
+            this.setState({ is_more: false })
+          }
+        })
+      }).catch(()=> {
+        let data = {
+          xpoint: '',
+          ypoint: '',
           channel_id: id,
           page: this.state.page,
           from: 'detail'
