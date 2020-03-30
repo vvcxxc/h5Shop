@@ -23,7 +23,6 @@ export default {
   },
   reducers: { // 处理同步操作
     SEARCHNAME(state: any, payload: any): any {
-      console.log(payload,'paylodad')
       return state
         .merge({
           serchName: payload.payload.serchName

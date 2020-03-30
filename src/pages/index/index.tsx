@@ -55,16 +55,18 @@ export default class Index extends Component<any> {
   }
 
   componentDidShow(){
+    console.log('触发触发')
     let router = JSON.parse(sessionStorage.getItem('router')) || {}
+    console.log(router)
     if(router.city_name){
-
-      if(router.city_name == '新会区'){
-        console.log(router.city_name,'12344')
-        this.setState({is_marketing: true})
-      }else{
-        this.setState({is_marketing: false})
+      console.log('3333')
+      if(router.type_index_id){
+        this.setState({ is_marketing: true })
+      }else {
+        this.setState({ is_marketing: false })
       }
     }else {
+      console.log('4444')
       getLocation().then(res => {
         let data = {
           xpoint: res.longitude,
@@ -74,12 +76,12 @@ export default class Index extends Component<any> {
           router = {}
           router.city_name = res.data.city
           router.city_id = res.data.city_id
-          if(res.data.district == '新会区'){
-            this.setState({is_marketing: true})
-            router.city_name = res.data.district
-          }else{
-            this.setState({is_marketing: false})
-          }
+          router.type_index_id = res.data.type_index_id
+            if (res.data.type_index_id) {
+              this.setState({ is_marketing: true })
+            } else {
+              this.setState({ is_marketing: false })
+            }
           sessionStorage.setItem('router',JSON.stringify(router))
         })
       })

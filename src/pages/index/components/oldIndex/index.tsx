@@ -51,7 +51,7 @@ export default class Index extends Component<any> {
 
 
   componentDidMount() {
-    console.log('更新了')
+    console.log('触发触发111')
     let id = this.$router.params.id;
     let store_id = this.$router.params.store_id
     if (id) {
@@ -97,18 +97,18 @@ export default class Index extends Component<any> {
       let res = {
         data: router
       }
+      if(router.type_index_id){ // 存在并且等于1，是营销首页
+        return
+      }
       // res.data= router
-      // console.log(res)
       if (Object.keys(res.data).length < 1) {
         this.requestTab(); //经营列表
         this.getLocationxy()// 获取定位和 城市id 城市名字
-        console.log(1)
         // alert()
         return
       }
       this.requestTab();
       if (res.data.city_id && res.data.city_name) {
-        console.log(2)
         getLocation().then((res2: any) => {
           let data: any = this.state.meta
           data.xpoint = res2.longitude
@@ -121,14 +121,11 @@ export default class Index extends Component<any> {
             this.requestHomeList(data)
           })
         }).catch(() => {
-          console.log(3)
         })
 
         return
       }
       if (res.data.xpoint && res.data.ypoint) {
-        console.log(4)
-
         let data: any = this.state.meta
         data.xpoint = res.data.xpoint
         data.ypoint = res.data.ypoint
@@ -137,7 +134,6 @@ export default class Index extends Component<any> {
         this.setState({ meta: data })
       }
       if (res.data.city_id && !res.data.xpoint && !res.data.ypoint) {
-        console.log(5)
         let diff: any = this.state.meta
         diff.city_id = 1942
         diff.xpoint = ''
@@ -172,12 +168,10 @@ export default class Index extends Component<any> {
           })
           return
         }
-        console.log(8)
         this.getCity()
       })
 
     }).catch(err => {
-      console.log(9)
       let diff: any = this.state.meta
       diff.city_id = 1942
       diff.xpoint = ''
@@ -216,7 +210,6 @@ export default class Index extends Component<any> {
     let define = data ? data : this.state.meta
     this.showLoading();
     // Taro.stopPullDownRefresh()
-    console.log(data)
     request({
       url: 'v3/stores',
       data: define
@@ -264,7 +257,6 @@ export default class Index extends Component<any> {
   }
 
   handlerTablChange(current, id, _this) {
-    console.log(11)
     this.setState({ current });
     let data: any = this.state.meta
     data.pages = 1
@@ -280,7 +272,6 @@ export default class Index extends Component<any> {
   }
 
   onPullDownRefresh() { // 自带 下拉事件
-    console.log(12)
     let data = this.state.meta
     data.pages = 1
     this.setState({ meta: data })
@@ -295,7 +286,6 @@ export default class Index extends Component<any> {
       sessionStorage.removeItem('qilin')
       return
     }
-    console.log(13)
     this.setState({ page: this.state.page + 1 }, () => {
       this.requestHomeList({ ...this.state.meta })
     })
@@ -337,7 +327,6 @@ export default class Index extends Component<any> {
 
 
   handleClick = (_id, e) => {
-    console.log('test跳转', _id, e)
     Taro.navigateTo({
       url: '/pages/business/index?id=' + _id
     })

@@ -24,6 +24,10 @@ export default class MarketingIndex extends Component<any> {
     page: 1
   }
   componentDidMount() {
+    let router = JSON.parse(sessionStorage.getItem('router'))
+    if(router){
+      this.setState({city_name: router.city_name})
+    }
     getChannelInfo().then((res: any) => {
       if (res.code == 200) {
         this.setState({
@@ -192,14 +196,14 @@ export default class MarketingIndex extends Component<any> {
 
           {/* 赚钱计划 */}
           <View className='feature-box'>
-            <View className='feature'>
+            <View className='feature' onClick={this.goTo.bind(this,'/detail-pages/course/characteristic')}>
               <Image className='feature-img' src={require('@/assets/index/xiong.png')} />
               <View className='feature-text'>
                 <View className='text-title'>小熊敬礼特色</View>
                 <View>小熊敬礼</View>
               </View>
             </View>
-            <View className='feature'>
+            <View className='feature' onClick={this.goTo.bind(this,'/detail-pages/course/make_money_plan')}>
               <Image className='feature-img' src={require('@/assets/index/zhuan.png')} />
               <View className='feature-text'>
                 <View className='text-title'>赚钱计划</View>
