@@ -144,13 +144,10 @@ export default class Poster extends Component<Props> {
         </View>
       </View>
     </View>
-    return <View className="spell_group-ql">
-      {dom} 
+    return this.state.show ? <View className="spell_group-ql">
+     { dom }  <Image
+        onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
     </View>
-    // this.state.show ? <View className="spell_group-ql">
-    //  { dom }  <Image
-    //     onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
-    // </View>
-    //   : null
+      : null
   }
 }
