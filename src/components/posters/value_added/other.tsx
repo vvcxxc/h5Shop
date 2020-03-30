@@ -147,14 +147,11 @@ export default class OtherPoster extends Component<Props> {
 
       </View>
     </View>
-    return <View className="value_added-other-ql">
-       {dom}  
-     </View>
-    // this.state.show ? <View className="value_added-other-ql">
-    //   {dom}  <Image
-    //     onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
-    // </View>
-    //   : null
+    return  this.state.show ? <View className="value_added-other-ql">
+      {dom}  <Image
+        onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
+    </View>
+      : null
       // !this.state.imgurl ? dom : <Image onClick={this.noAllow.bind(this)} className="generate-images" src={this.state.imgurl} />
       // : null
   }
