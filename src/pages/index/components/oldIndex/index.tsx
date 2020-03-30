@@ -51,6 +51,7 @@ export default class Index extends Component<any> {
 
 
   componentDidMount() {
+    console.log('触发触发111')
     let id = this.$router.params.id;
     let store_id = this.$router.params.store_id
     if (id) {
@@ -95,6 +96,9 @@ export default class Index extends Component<any> {
     if (router) {
       let res = {
         data: router
+      }
+      if(router.type_index_id){ // 存在并且等于1，是营销首页
+        return
       }
       // res.data= router
       if (Object.keys(res.data).length < 1) {

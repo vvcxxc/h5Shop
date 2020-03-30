@@ -1,6 +1,19 @@
+  //生成海报图片
+.generate-images-set-meal {
+  width: 544px;
+  height: auto;
+  position absolute;
+  z-index: 100;
+  top: 0;
+  left 0;
+}
   .poster-box {
     width: 544px;
-    height auto;
+    height 880px;
+    position absolute;
+    z-index: -100;
+    top: 0;
+    left 0;
     background: rgba(255, 255, 255, 1);
 
     //头部tltle图片
@@ -84,13 +97,15 @@
               color: rgba(255, 255, 255, 1);
             }
 
-            .price {
+            .price-set-meal {
               position: absolute;
               left: 15px;
               bottom: 15px;
               font-size: 26px;
               font-family: PingFang SC;
               font-weight: 800;
+              display: inline-block;
+              width: 165px;
             }
           }
         }
@@ -101,7 +116,7 @@
   }
 
 
-.project-info {
+.project-info-set-meal {
   display: flex;
   border: 1px solid rgba(226, 226, 226, 1);
   margin: 0 26px;
@@ -153,7 +168,9 @@
     }
 
     .info-left-third-line {
-      height: 60px;
+      // height: 60px;
+      padding-top 5px;
+      height 55px;
       font-size: 22px;
       font-family: PingFang SC;
       font-weight: bold;
@@ -178,35 +195,7 @@
 
   }
 
-  // .info-right {
-  //   flex: 1;
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
-  //   justify-content: space-between;
-
-  //   &-first-line {
-  //     margin-top: 13px;
-  //     margin-bottom: 12px;
-  //     height: 152px;
-  //     width: 152px;
-  //     background: rgba(247, 247, 247, 1);
-  //     .taro-img {//礼品图
-  //       width: 150px;
-  //       height: 150px;
-  //       border-radius: 0px 0px 10px 10px;
-  //     }
-  //   }
-
-  //   &-second-line {
-  //     font-size: 14px;
-  //     font-family: PingFang SC;
-  //     font-weight: bold;
-  //     color: rgba(85, 85, 85, 1);
-  //   }
-
-  // }
-  .info-right {
+  .info-right-set-meal {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -237,9 +226,11 @@
   }
 }
 
-//生成海报图片
-.generate-images {
+.set-meal-ql {
+  position relative;
   width: 544px;
-  height: auto;
+  height 880px;
 }
+
+
 

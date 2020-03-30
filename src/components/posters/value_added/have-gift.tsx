@@ -39,6 +39,7 @@ export default class HavegiftPoster extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
       const { list, show } = nextProps
+      list.youhui_type && list.gift.gift_pic ?  Taro.showLoading({ title: 'loading', mask: true }):null
       this.setState({
         show: list.youhui_type && list.gift.gift_pic ? true : false,
         listData: {
@@ -57,7 +58,10 @@ export default class HavegiftPoster extends Component<Props> {
           youhui_type: list.youhui_type
         }
       }, () => {
-        this.showMyPoster()
+          setTimeout(() => {
+            list.youhui_type && list.gift.gift_pic ?       Taro.hideLoading():null
+            this.showMyPoster()
+          }, 800);
       })
     }
   }
@@ -104,7 +108,7 @@ export default class HavegiftPoster extends Component<Props> {
             <Image
               src="https://oss.tdianyi.com/front/ExebSGpSecxPwNFa43i7wRxwJjZftasn.png"
             />
-            <View className="max_money">最高抵用{listData.return_money}元</View>
+            <View className="max_money"><Text>最高抵用{listData.return_money}元</Text></View>
           </View>
           <View className="gift-img-second-line">
             <Image src={require('@/assets/progress_bar.png')} />
@@ -116,9 +120,9 @@ export default class HavegiftPoster extends Component<Props> {
                 <Text className="symbol"> ￥</Text>
                 <Text className="price">{listData.gift_price}</Text>
               </View>
-              <View className="doorsill-box">
+              <View className="doorsill-box-have-gift">
                 <Text className="type">通用券</Text>
-                <Text className="doorsill">满{listData.total_fee}元可用</Text>
+                <Text className="doorsill">满<Text>{listData.total_fee}</Text>元可用</Text>
               </View>
             </View>
           </View>
@@ -154,13 +158,17 @@ export default class HavegiftPoster extends Component<Props> {
                 }
               </View>
               <View className="info-left-third-line"> 适用店铺：
+                <Text className="text">
                   {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
+                </Text>
               </View>
               <View className="info-left-fourth-line">店铺地址：
-                {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+                <Text className="text">
+                  {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+                </Text>
               </View>
             </View>
-            <View className="info-right" >
+            <View className="info-right-have-gift" >
               <View className="info-right-first-line">
                 <Image className="qr-code" src={gift} />
               </View>
@@ -171,10 +179,10 @@ export default class HavegiftPoster extends Component<Props> {
         </View>
       </View>
     </View>
-    return  this.state.show ?
-      !this.state.imgurl ? dom : <Image
+    return this.state.show ? <View className="value_added-have-gift-ql">
+      {dom}  <Image
         onClick={this.noAllow.bind(this)} className="have-gift-img" src={this.state.imgurl} />
+    </View>
       : null
-
   }
 }

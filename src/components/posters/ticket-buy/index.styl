@@ -1,15 +1,21 @@
 
-  //无礼品的海报
-  .img_no_gift {
+  .img-ticket-buy {
     width: 544px;
     height: auto;
+    position absolute;
+    z-index: 100;
+    top: 0;
+    left 0;
   }
 
-  .poster_no_gift {
-    position: relative;
+  .poster-ticket-buy {
     width: 544px;
     height 854px;
     background: rgba(255, 255, 255, 1);
+    position absolute;
+    z-index: -100;
+    top: 0;
+    left 0;
   }
 
   .title_img { 
@@ -131,7 +137,7 @@
 
 
 
-.info {
+.info-ticket-buy {
   margin: 0 26px;
   padding-top 21px;
   display: flex;
@@ -158,7 +164,7 @@
   }
 
 
-  .right {
+  .right-ticket-buy {
     padding-left: 5px;
 
     .price {
@@ -231,14 +237,19 @@
       font-weight:bold;
       color:rgba(179,179,179,1);
     }
+    .text {
+      width: 300px;
+      overflow: hidden;
+    }
 
   }
 
-  .info-right {
+  .info-right-ticket-buy {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left 15px
+    margin-left 15px;
+    margin-top 3px;
 
   .info-right-first-line {
     margin-top -8px;
@@ -289,4 +300,10 @@
   font-family: PingFang SC;
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
+}
+
+.ticket-buy-ql {
+  position relative;
+  width: 544px;
+  height 854px;
 }

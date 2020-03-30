@@ -55,15 +55,18 @@ export default class Index extends Component<any> {
   }
 
   componentDidShow(){
+    console.log('触发触发')
     let router = JSON.parse(sessionStorage.getItem('router')) || {}
+    console.log(router)
     if(router.city_name){
-
+      console.log('3333')
       if(router.type_index_id){
         this.setState({ is_marketing: true })
       }else {
         this.setState({ is_marketing: false })
       }
     }else {
+      console.log('4444')
       getLocation().then(res => {
         let data = {
           xpoint: res.longitude,

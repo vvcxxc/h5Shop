@@ -37,6 +37,7 @@ export default class NoGiftPoster extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
       const { list } = nextProps
+      Taro.showLoading({ title: 'loading', mask: true });
       this.setState({
         show: true,
         listData: {
@@ -51,13 +52,16 @@ export default class NoGiftPoster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-          this.showMyPoster()
+          setTimeout(() => {
+            Taro.hideLoading()
+            this.showMyPoster()
+          }, 800);
       })
     } 
   }
 
   showMyPoster = () => {
-    let dom = document.getElementById('no-gift-poster')
+    let dom = document.getElementById('poster-ticket-buy')
     QRCode.toDataURL(this.props.list.link)                                      // 网络链接转化为二维码
       .then((url: any) => {
         this.setState({ gift: url }, () => {
@@ -90,7 +94,7 @@ export default class NoGiftPoster extends Component<Props> {
   render() {
     const { listData, gift} = this.state
     const dom = <View
-      className="poster_no_gift" id="no-gift-poster" >
+      className="poster-ticket-buy" id="no-gift-poster" >
       <Image className="title_img" src="https://oss.tdianyi.com/front/tiDd8wiT68yDJ7tsKJWbRz3W7R5DMXWP.png" />
       <View className="main">
         <View className="gift_img">
@@ -123,7 +127,7 @@ export default class NoGiftPoster extends Component<Props> {
           </View>
         </View>
 
-        <View className="info">
+        <View className="info-ticket-buy">
           <View className="project_info">
             <View className="info_left">
               <View className="info-left-first-line">
@@ -136,13 +140,17 @@ export default class NoGiftPoster extends Component<Props> {
                 }
               </View>
               <View className="info-left-third-line"> 适用店铺：
+              <Text className="text">
                   {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
+              </Text>
               </View>
               <View className="info-left-fourth-line">店铺地址：
-                {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+              <Text className="text">
+                  {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+              </Text>
               </View>
             </View>
-            <View className="info-right" >
+            <View className="info-right-ticket-buy" >
               <View className="info-right-first-line">
                 <Image className="qr-code" src={gift} />
               </View>
@@ -152,10 +160,14 @@ export default class NoGiftPoster extends Component<Props> {
         </View>
       </View>
     </View>
-    return  this.state.show ?
-      !this.state.imgurl ? dom : <Image
-        onClick={this.noAllow.bind(this)} className="img_no_gift" src={this.state.imgurl} />
+    return this.state.show ? <View className="ticket-buy-ql">
+      {dom}  <Image
+        onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
+    </View>
       : null
+      // !this.state.imgurl ? dom : <Image
+      //   onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
+      // : null
     
   }
 }
