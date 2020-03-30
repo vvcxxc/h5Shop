@@ -112,7 +112,7 @@ export default class Poster extends Component<Props> {
         <View className="project-info-spell_group">
           <View className="info-left">
             <View className="info-left-first-line">拼团价 ￥
-              <Text>{listData.pay_money}</Text>
+              <Text>{listData.participation_money}</Text>
               <Text>￥{listData.pay_money}</Text>
             </View>
             <View className="info-left-second-line">
