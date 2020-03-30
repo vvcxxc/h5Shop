@@ -165,9 +165,5 @@ export default class NoGiftPoster extends Component<Props> {
         onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
     </View>
       : null
-      // !this.state.imgurl ? dom : <Image
-      //   onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
-      // : null
-    
   }
 }
