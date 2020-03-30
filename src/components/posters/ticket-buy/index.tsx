@@ -165,10 +165,7 @@ export default class NoGiftPoster extends Component<Props> {
         </View>
       </View>
     </View>
-    return <View className="ticket-buy-ql">
-      {dom}  
-    </View>
-    this.state.show ? <View className="ticket-buy-ql">
+    return  this.state.show ? <View className="ticket-buy-ql">
       {dom}  <Image
         onClick={this.noAllow.bind(this)} className="img-ticket-buy" src={this.state.imgurl} />
     </View>

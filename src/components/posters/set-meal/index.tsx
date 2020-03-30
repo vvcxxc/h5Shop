@@ -131,10 +131,7 @@ export default class OtherPoster extends Component<Props> {
 
       </View>
     </View>
-    return <View className="set-meal-ql">
-      {dom} 
-    </View>
-    this.state.show ? <View className="set-meal-ql">
+    return  this.state.show ? <View className="set-meal-ql">
       {dom}  <Image
         onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
     </View>
