@@ -1,0 +1,106 @@
+.share-mask {
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, .7);
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    .share-content {
+        width: 100%;
+        height: 408px;
+        background: #fff;
+        border-radius: 14px 14px 0px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 46px;
+        box-sizing: border-box;
+
+        .share-title {
+            width: 100%;
+            height: 108px;
+            font-size: 34px;
+            color: rgba(0, 0, 0, 1);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-btn {
+            margin-bottom: 20px;
+            height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+
+            .share-item {
+                position: relative;
+                flex: 1;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                .share-banner-img {
+                    width: 82px;
+                    height: 82px;
+                    margin-bottom: 25px;
+                }
+
+                button {
+                    width: 100%;
+                    height: 24px;
+                    font-size: 24px;
+                    color: rgba(153, 153, 153, 1);
+                }
+
+                .share-btn-title {
+                    width: 100%;
+                    height: 24px;
+                    font-size: 24px;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                    text-align: center;
+                    line-height: 1;
+                }
+
+                .share-btn {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    border: none !important;
+                    opacity:0;
+                }
+
+                .share-btn::after {
+                    border: none !important;
+                }
+            }
+        }
+
+        .share-cancle {
+            height: 120px;
+            width: 100%;
+            border-top: 1px solid rgba(226, 226, 226, 1);
+            box-sizing: border-box;
+            font-size: 24px;
+            color: rgba(153, 153, 153, 1);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+    }
+}

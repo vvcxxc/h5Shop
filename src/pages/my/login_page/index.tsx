@@ -84,9 +84,7 @@ export default class LoginPage extends Component<any>{
       return
     }
     let type = getBrowserType() == 'wechat' ? 'wx' : 'ali'
-    console.log(url)
-    console.log(url)
-    encodeURIComponent(url)
+    url = encodeURIComponent(url)
     loginPhone({
       phone: phoneNumber,
       verify_code: validationNumber,
@@ -161,6 +159,7 @@ export default class LoginPage extends Component<any>{
     const { phoneNumber, validationNumber } = this.state
     let type = getBrowserType() == 'wechat' ? 'ali' : 'wx'
     let url = Taro.getStorageSync('ql_href')//登录成功后跳转回来的页面
+    url = encodeURIComponent(url)
     loginMerge({
       mobile: phoneNumber,
       verify_code: validationNumber,

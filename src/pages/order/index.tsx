@@ -48,13 +48,14 @@ export default class Order extends Component {
 
   componentDidShow() {
     let that = this;
-    let phone_status = Cookie.get('phone_status')
+    let phone_status = Cookie.get('phone_status');
+    let order_type = Cookie.get('order_type');
+    Cookie.set('order_type', '');
     request({
       url: 'v3/user/home_index'
     }).then((res: any) => {
       if (res.data.mobile) {
         this.setState({
-          current: 0,
           page1: 1,
           page2: 1,
           page3: 1,
@@ -68,32 +69,17 @@ export default class Order extends Component {
           lengthbull2: true,
           lengthbull3: true,
           lengthbull4: true,
-        }, () => { that.getData1() })
+        }, () => {
+          if (order_type && order_type == '已完成') { that.setState({ current: 1 }, () => { that.getData2() }) }
+          else if (order_type && order_type == '已过期') { that.setState({ current: 2 }, () => { that.getData3() }) }
+          else if (order_type && order_type == '已退款') { that.setState({ current: 3 }, () => { that.getData4() }) }
+          else { that.setState({ current: 0 }, () => { that.getData1() }) }
+        })
         return
-      }else {
+      } else {
         this.setState({ no_phone_status: true })
       }
     })
-    // if (phone_status == 'binded' || phone_status == 'bind_success') {
-    //   this.setState({
-    //     current: 0,
-    //     page1: 1,
-    //     page2: 1,
-    //     page3: 1,
-    //     page4: 1,
-    //     coupon: [],
-    //     coupon1: [],
-    //     coupon2: [],
-    //     coupon3: [],
-    //     coupon4: [],
-    //     lengthbull1: true,
-    //     lengthbull2: true,
-    //     lengthbull3: true,
-    //     lengthbull4: true,
-    //   }, () => { that.getData1() })
-    //   return
-    // }
-
   }
 
   // 滚动

@@ -21,19 +21,15 @@ export default class Zoom extends Component<Props> {
     };
 
     handlerTablChange() {
-        console.log(this);
-        const { onChange } = this.props;
-        onChange && onChange();
+        this.props.onChange && this.props.onChange();
     }
 
     render() {
         return (
             <View
                 onClick={this.handlerTablChange.bind(this)}
-                style={{ height: "100vh", width: "100vw", position: "fixed", top: "0", background: "rgb(0,0,0,.9)",zIndex:999, display: this.props.showBool ? "block" : "none" }}>
-                <View style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                    <Image src={this.props.src} style={{ height: "auto",width: "100%" }} />
-                </View>
+                style={{ height: "100vh", width: "100vw", position: "fixed", top: "0", left: '0', background: "rgba(0,0,0,.9)", zIndex: 99, display: this.props.showBool ? "block" : "none" }}>
+                <Image mode={'widthFix'} src={this.props.src} style={{ height: "auto", width: "100%", position: 'absolute', left: '0', top: '50%', transform: 'translate(0,-50%)' }} />
             </View>
         );
     }
