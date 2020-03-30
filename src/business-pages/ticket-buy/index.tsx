@@ -256,7 +256,7 @@ export default class TicketBuy extends Component {
             this.setState({ showPoster: true, showShare: false })
           }}
         />
-        <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+        <View className={showPoster ? "show-poster-ticket-buy" : "hidden-poster-ticket-buy"} onClick={() => this.setState({ showPoster: false })}>
           <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>
         </View>

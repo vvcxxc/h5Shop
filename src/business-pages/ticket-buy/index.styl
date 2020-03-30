@@ -822,3 +822,71 @@
 
 
 }
+
+.share_mask {
+    background: rgba(0, 0, 0, .7);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+
+    .share_box {
+        width: 450px;
+        height: 226px;
+        position: absolute;
+        right: 0;
+    }
+
+    .share_text {
+        position: absolute;
+        right: 138px;
+        font-weight: bold;
+        bottom: 0;
+        width: 350px;
+        letter-spacing: 4px;
+        float: left;
+        font-size: 30px;
+        text-align: right;
+        color: #fabe1a;
+
+    }
+
+    .text_top {
+        bottom: 60px;
+    }
+
+    .share_img {
+        position: absolute;
+        right: 0;
+        width: 138px;
+        height: 226px;
+    }
+}
+
+.show-poster-ticket-buy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+
+    .click-save {
+        margin-top: 20px;
+        font-size: 36px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+    }
+}
+
+.hidden-poster-ticket-buy {
+    height: 0;
+    overflow: hidden;
+}
