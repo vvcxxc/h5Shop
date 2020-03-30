@@ -191,19 +191,22 @@ export default class GroupActivity extends Component {
     * 底部发团参团，判断登录，判断带不带礼品
     */
   goToaConfirm = (e) => {
+    Taro.showLoading({ title: 'loading', mask: true });
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      Taro.hideLoading();
       this.setState({ showBounced: true })
       return
     }
-
     if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
       if (this.$router.params.type == '5') {
         //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+        Taro.hideLoading();
         Taro.navigateTo({
           url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       } else if (this.$router.params.type == '55') {
+        Taro.hideLoading();
         Taro.navigateTo({
           url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
@@ -217,12 +220,15 @@ export default class GroupActivity extends Component {
     * 列表参团，判断登录，判断带不带礼品
     */
   goToaConfirmAddGroup = (_id, e) => {
+    Taro.showLoading({ title: 'loading', mask: true });
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      Taro.hideLoading();
       this.setState({ showBounced: true })
       return
     }
     if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
+      Taro.hideLoading();
       Taro.navigateTo({
         url: '/activity-pages/group-distribution/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
       })
@@ -495,7 +501,7 @@ export default class GroupActivity extends Component {
   }
 
   copyText = () => {
-    
+
     let NValue = this.state.data.share_text.replace(/@#@#/, H5_URL)
     let NumClip = document.createElement("textarea");
     NumClip.value = NValue;
@@ -522,7 +528,7 @@ export default class GroupActivity extends Component {
       range.moveStart('character', startIndex);//起始光标
       range.moveEnd('character', stopIndex - startIndex);//结束光标
       range.select();//不兼容苹果
-      
+
     } else {//firefox/chrome
       textbox.setSelectionRange(startIndex, stopIndex);
       // textbox.focus();

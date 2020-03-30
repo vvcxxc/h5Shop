@@ -130,12 +130,15 @@ export default class AppreActivity extends Component {
        * 判断是否登录
        */
     goToaConfirm = () => {
+        Taro.showLoading({ title: 'loading', mask: true })
         let phone_status = Cookie.get('phone_status')
         if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+            Taro.hideLoading();
             this.setState({ showBounced: true })
             return
         }
         if (this.state.data.gift_id) {
+            Taro.hideLoading();
             Taro.navigateTo({
                 url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
             })
@@ -359,7 +362,7 @@ export default class AppreActivity extends Component {
                         this.setState({ showPoster: true, showShare: false })
                     }}
                 />
-                <View className={showPoster ? "show-poster" :"hidden-poster"} onClick={()=>this.setState({showPoster:false})}>
+                <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
                     <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
                     <NogiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
                     <OtherPoster show={showPoster} list={posterList} onClose={this.closePoster} />

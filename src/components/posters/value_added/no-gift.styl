@@ -2,13 +2,20 @@
   .img_no_gift {
     width: 544px;
     height: auto;
+    position absolute;
+    z-index: 100;
+    top: 0;
+    left 0;
   }
 
   .poster_no_gift {
-    position: relative;
     width: 544px;
     height 860px
     background: rgba(255, 255, 255, 1);
+    position absolute;
+    z-index: -100;
+    top: 0;
+    left 0;
   }
 
   .title_img { 
@@ -82,30 +89,6 @@
           }
         }
         
-
-        .doorsill-box {
-          display: flex;
-          flex-direction:column;
-          align-items: center;
-          width: 120px;
-           span {
-            display: inline-block;
-            width: 120px;
-            text-align: center;
-          }
-          .type {
-            font-size:19px;
-            font-family:PingFang SC;
-            font-weight:800;
-            color:rgba(195,36,41,1);
-          }
-          .doorsill {
-            font-size:14px;
-            font-family:PingFang SC;
-            font-weight:800;
-            color:rgba(195,36,41,1);
-          }
-        }
 
       }
 
@@ -228,6 +211,11 @@
       color:rgba(179,179,179,1);
     }
 
+    .text {
+      width: 300px;
+      overflow: hidden;
+    }
+
   }
 
   .info-right-no-gift {
@@ -285,3 +273,34 @@
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
 }
+
+  .doorsill-no-gift {
+      display: flex;
+      flex-direction:column;
+      align-items: center;
+      width: 120px;
+      .type {
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+        font-size:19px;
+        font-family:PingFang SC;
+        font-weight:800;
+        color:rgba(195,36,41,1);
+      }
+      .doorsill {
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+        font-size:14px;
+        font-family:PingFang SC;
+        font-weight:800;
+        color:rgba(195,36,41,1);
+      }
+    }
+
+  .value_added-no-gift-ql {
+    position relative;
+    width: 544px;
+    height 860px
+  }

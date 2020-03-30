@@ -3,6 +3,10 @@
     width: 544px;
     height 880px
     background: rgba(255, 255, 255, 1);
+    position absolute;
+    z-index: -100;
+    top: 0;
+    left 0;
 
     .taro-img {
       width: 100%;
@@ -80,13 +84,16 @@
               color: rgba(255, 255, 255, 1);
             }
 
-            .price {
+            .price-spell_group {
               position: absolute;
               left: 15px;
               bottom: 15px;
               font-size: 26px;
               font-family: PingFang SC;
               font-weight: 800;
+              display: inline-block;
+              width: 165px;
+              text-align: left;
             }
           }
         }
@@ -111,7 +118,6 @@
   .info-left {
     flex: 1.8;
     padding-top: 10px;
-
     .info-left-first-line {
       font-size: 15px;
       font-family: PingFang SC;
@@ -171,7 +177,8 @@
 
     .info-left-fourth-line,
     .info-left-fifth-line {
-      width: 100%;
+      // width: 100%;
+      width: 300px;
       font-size: 16px;
       font-family: PingFang SC;
       font-weight: bold;
@@ -230,6 +237,16 @@
 }
 
 .my-img-spell_group {
+  position absolute;
+  left 0;
+  top: 0;
+  z-index: 100;
   width: 544px;
   height auto;
+}
+
+.spell_group-ql {
+  position relative;
+  width: 544px;
+  height 880px;
 }
