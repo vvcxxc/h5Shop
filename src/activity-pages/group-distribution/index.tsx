@@ -15,7 +15,7 @@ export default class distributionDetail extends Component {
     state = {
         chooseGift: true,
         chooseDistribution: true,
-        contentboxShow: true,
+        contentboxShow: false,
         sumMoney: 0,
         data: {
             address: {
