@@ -330,7 +330,7 @@ export default class distributionDetail extends Component {
                             <Image className="store-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
                             <View className="store-name">{this.state.data.supplier_location.name}</View>
                         </View>
-                        <Image className="store-right" src="http://oss.tdianyi.com/front/fpsw5CyhYJQTDEABZhs4iFDdC48ZGidn.png" />
+                        <Image className="store-right" src="http://oss.tdianyi.com/front/SpKtBHYnYMDGks85zyxGHrHc43K5cxRE.png" />
                     </View>
                     <View className="activity-content">
                         <Image className="activity-img" src={this.state.data.youhui.image_url} />
@@ -351,15 +351,17 @@ export default class distributionDetail extends Component {
                                 <View className="gift-choose-area">
                                     {
                                         this.state.chooseGift ?
-                                            <Image className="gift-choose-icon" src="http://oss.tdianyi.com/front/mhth4rhHmcW3SmQ8kWiHeNw2NDdYxiwc.png" />
+                                            <Image className="gift-choose-icon" src="http://oss.tdianyi.com/front/Dx5xds6atc3ip3eRRdT3aaHm7abTCFWs.png" />
                                             :
                                             <Image className="gift-choose-icon" src="http://oss.tdianyi.com/front/nppTFyPWrnAGC535GBc2mddSfrXAwR5e.png" />
 
                                     }
                                 </View>
                                 <View className="gift-info-area">
-                                    <Image className="gift-img" src={this.state.data.youhui.gift_pic} />
-                                    <View className="gift-info">
+                                    <View className="gift-img">
+                                        <Image className="gift-img-img" src={this.state.data.youhui.gift_pic} />
+                                        <Image className="gift-img-icon" src="http://oss.tdianyi.com/front/J4DmETc3KiSHZTjPkth6EETAHGTwHede.png" />
+                                    </View>                                    <View className="gift-info">
                                         <View className="gift-title">{this.state.data.youhui.gift_name}</View>
                                         <View className="gift-labels">
                                             <View className="gift-label-item">价值￥{this.state.data.youhui.gift_price}</View>
@@ -375,7 +377,7 @@ export default class distributionDetail extends Component {
                                 <View className="distribution-choose-area">
                                     {
                                         this.state.chooseDistribution ?
-                                            <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/mhth4rhHmcW3SmQ8kWiHeNw2NDdYxiwc.png" />
+                                            <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/Dx5xds6atc3ip3eRRdT3aaHm7abTCFWs.png" />
                                             :
                                             <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/nppTFyPWrnAGC535GBc2mddSfrXAwR5e.png" />
                                     }
