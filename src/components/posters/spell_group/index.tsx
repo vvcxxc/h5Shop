@@ -53,7 +53,7 @@ export default class Poster extends Component<Props> {
           setTimeout(() => {
             Taro.hideLoading()
           this.showMyPoster()
-        }, 500);
+        }, 800);
       })
     }
   }
@@ -103,7 +103,7 @@ export default class Poster extends Component<Props> {
                 <Image src={listData.gift_pic} />
                 <Image className="test" src={require('@/assets/box_shadow.png')} />
                 <Text className="giving" >赠</Text>
-                <Text className="price" style={{ color: '#fff' }}>￥{listData.gift_price}</Text>
+                <Text className="price-spell_group" style={{ color: '#fff' }}>￥{listData.gift_price}</Text>
               </View>
             </View> : null
           }
@@ -144,7 +144,6 @@ export default class Poster extends Component<Props> {
         </View>
       </View>
     </View>
-    // !this.state.imgurl ?
     return this.state.show ? <View className="spell_group-ql">
      { dom }  <Image
         onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />

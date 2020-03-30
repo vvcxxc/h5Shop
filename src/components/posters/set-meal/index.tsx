@@ -51,7 +51,7 @@ export default class OtherPoster extends Component<Props> {
           setTimeout(() => {
             Taro.hideLoading()
             this.showMyPoster()
-          }, 500);
+          }, 800);
       })
 
     }

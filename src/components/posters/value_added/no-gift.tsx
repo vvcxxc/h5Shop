@@ -64,7 +64,7 @@ export default class NoGiftPoster extends Component<Props> {
           setTimeout(() => {
             list.youhui_type && !list.gift.gift_pic?   Taro.hideLoading():null
             this.showMyPoster()
-          }, 500);
+          }, 800);
       })
       
     }
@@ -175,9 +175,5 @@ export default class NoGiftPoster extends Component<Props> {
         onClick={this.noAllow.bind(this)} className="img_no_gift" src={this.state.imgurl} />
     </View>
       : null
-      // !this.state.imgurl ? dom : <Image
-      //   onClick={this.noAllow.bind(this)} className="img_no_gift" src={this.state.imgurl} />
-      // : null
-    
   }
 }
