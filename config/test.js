@@ -14,7 +14,7 @@ module.exports = {
     USER_API: '"http://test.usercenter.tdianyi.com/"',
     WX_APPID: "'wxfe816c3a5440ce7a'",
     ALI_APPID: "'2018080960968490'",
-
+    H5_URL: '"http://test.mall.tdianyi.com"',
     // 预发布环境
     // BASIC_API: '"http://release.api.tdianyi.com/"',
     // LOGIN_URL: '"http://release.api.tdianyi.com"',

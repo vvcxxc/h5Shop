@@ -10,6 +10,12 @@ import ApplyToTheStore from '@/components/applyToTheStore';
 import TimeUp from '@/components/TimeUp';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
+import ShareBox from "@/components/share-box";//分享组件
+import wx from 'weixin-js-sdk';
+import Poster from '@/components/posters/spell_group'//   海报无礼品
+import { getGroupPoster } from '@/api/poster'
+const share_url = process.env.GROUP_Details_URL;
+const H5_URL = process.env.H5_URL
 export default class GroupActivity extends Component {
   config = {
     navigationBarTitleText: "拼团活动",
@@ -73,14 +79,28 @@ export default class GroupActivity extends Component {
       pageRow: 2,
       total: 0,
     },
-    newGroupList: []
+    newGroupList: [],
+    showShare: false, //显示分享
+    isShare: false,
+    showPoster: false,
+    posterList: {//海报数据
+      gift: {
+        gift_pic: '',
+        gift_price: ''
+      },
+      store: {
+        name: '',
+        address: ''
+      },
+      youhui_type: ''
+    },
+    posterType: ''
   };
 
   /**
        * 获取位置信息
        */
   componentDidShow() {
-    console.log(this.$router.params)
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
@@ -108,7 +128,10 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-          that.setState({ data: res.data, isPostage });
+          that.setState({ data: res.data, isPostage }, () => {
+            this.getPostList();
+            this.toShare();
+          });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
         }
@@ -440,11 +463,147 @@ export default class GroupActivity extends Component {
     Taro.switchTab({ url: '/pages/index/index' })
   }
 
+  toShare = () => {
+    let userAgent = navigator.userAgent;
+    let isIos = userAgent.indexOf('iPhone') > -1;
+    let url: any;
+    if (isIos) {
+      url = sessionStorage.getItem('url');
+    } else {
+      url = location.href;
+    }
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
+    let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
+    Taro.request({
+      url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+      method: 'GET',
+      data: {
+        url
+      }
+    })
+      .then(res => {
+        let { data } = res;
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
+        })
+        wx.ready(() => {
+          wx.updateAppMessageShareData({
+            title: titleMsg,
+            desc: descMsg,
+            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id,
+            imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+            success: function () {
+              //成功后触发
+              console.log("分享成功")
+            }
+          })
+        })
+      })
+  }
+
+  buttonToShare = () => {
+    this.setState({ isShare: true });
+  }
+  closeShare = () => {
+    this.setState({ isShare: false });
+  }
+
+  copyText = () => {
+
+    let NValue = this.state.data.share_text.replace(/@#@#/, H5_URL)
+    let NumClip = document.createElement("textarea");
+    NumClip.value = NValue;
+    NumClip.style.height = '0px';
+    NumClip.style.overflow = 'hidden';
+    NumClip.style.opacity = '0';
+    NumClip.readOnly = true//防止ios键盘弹出
+    document.body.appendChild(NumClip);
+    NumClip.select();
+    this.selectText(NumClip, 0, NValue.length);
+    if (document.execCommand('copy', false)) {
+      document.execCommand('copy', false)// 执行浏览器复制命令
+      Taro.showToast({ title: '复制成功，请前往微信发送给好友。' })
+    } else {
+      Taro.showToast({ title: '该浏览器不支持点击复制到剪贴板', icon: 'none' })
+    }
+    this.setState({ showShare: false })
+  }
+
+  selectText = (textbox, startIndex, stopIndex) => {
+    if (textbox.createTextRange) {//ie
+      var range = textbox.createTextRange();
+      range.collapse(true);
+      range.moveStart('character', startIndex);//起始光标
+      range.moveEnd('character', stopIndex - startIndex);//结束光标
+      range.select();//不兼容苹果
+
+    } else {//firefox/chrome
+      textbox.setSelectionRange(startIndex, stopIndex);
+      // textbox.focus();
+    }
+  }
+
+
+  /* 请求海报数据 */
+  getPostList = () => {
+    const { youhui_id } = this.state.data
+    getGroupPoster({ youhui_id, from: 'h5' })
+      .then(({ data, code }) => {
+        this.setState({ posterList: data })
+      })
+
+  }
+
+  /* 关闭海报 */
+  closePoster = () => {
+    this.setState({ showPoster: false, showShare: false })
+  }
+
+  
+
   render() {
     const { description } = this.state.data;
-    const { showBounced } = this.state;
+    const { showBounced, showPoster, posterList } = this.state;
     return (
       <View className="group-activity-detail">
+        {/* 分享组件 */}
+        <ShareBox
+          show={this.state.showShare}
+          onClose={() => this.setState({ showShare: false })}
+          sendText={() => {
+            this.copyText()
+            this.setState({ showShare: false })
+          }}
+          sendLink={() => {
+            this.buttonToShare()
+            this.setState({ showShare: false })
+          }}
+          createPoster={() => {
+            this.setState({ showPoster: true, showShare: false })
+          }}
+        />
+        <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+          <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          <View className="click-save">长按保存图片到相册</View>
+        </View>
+
+        {
+          this.state.isShare == true ? (
+            <View className='share_mask' onClick={this.closeShare}>
+              <View className='share_box'>
+                <View className='share_text text_top'>
+                  点击此按钮分享给好友
+                                    </View>
+                <Image src={require('../../../assets/share_arro.png')} className='share_img' />
+              </View>
+            </View>
+          ) : null
+        }
         <View
           className="swiper-content"
           onClick={(e) => {
@@ -758,7 +917,8 @@ export default class GroupActivity extends Component {
             <View className="new-price-num" >{this.state.data.participation_money}</View>
           </View>
           <View className="new-buy-btn-box" >
-            <View className="new-buy-btn-left" >分享活动</View>
+            <View className="new-buy-btn-left" onClick={() =>
+              this.setState({ showShare: true })}>分享活动</View>
             {
               this.state.allowGroup ? <View className="new-buy-btn-right" >{this.state.allowGroup}</View>
                 : <View className="new-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >

@@ -8,6 +8,13 @@ import ApplyToTheStore from '@/components/applyToTheStore';
 import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Cookie from 'js-cookie';
 import Zoom from '@/components/zoom';
+import ShareBox from "@/components/share-box";//分享组件
+import wx from 'weixin-js-sdk';
+import { geValueAddedPoster } from '@/api/poster'
+import HavegiftPoster from '@/components/posters/value_added/have-gift'// 海报存在礼品
+import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报无礼品
+import OtherPoster from '@/components/posters/value_added/other'//   其他类型
+const share_url = process.env.APPRE_Details_URL;
 
 export default class AppreActivity extends Component {
     config = {
@@ -59,7 +66,22 @@ export default class AppreActivity extends Component {
             xpoint: "",
             ypoint: "",
             dp_count: 0
-        }
+        },
+        showShare: false, //显示分享
+        isShare: false,
+        showPoster: false,
+        posterList: {//海报数据
+            gift: {
+                gift_pic: '',
+                gift_price: ''
+            },
+            store: {
+                name: '',
+                address: ''
+            },
+            youhui_type: ''
+        },
+        posterType: ''
     };
 
     /**
@@ -88,8 +110,11 @@ export default class AppreActivity extends Component {
                 Taro.hideLoading();
                 if (res.code == 200) {
                     let isPostage = false;
+                    this.getPostList(res.data.id)
                     if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
-                    this.setState({ data: res.data, isPostage });
+                    this.setState({ data: res.data, isPostage }, () => {
+                        this.toShare()
+                    });
                 } else {
                     Taro.showToast({ title: '请求失败', icon: 'none' });
                 }
@@ -237,13 +262,123 @@ export default class AppreActivity extends Component {
     handleGoHome = () => {
         Taro.switchTab({ url: '/pages/index/index' })
     }
+    toShare = () => {
+        let userAgent = navigator.userAgent;
+        let isIos = userAgent.indexOf('iPhone') > -1;
+        let url: any;
+        if (isIos) {
+            url = sessionStorage.getItem('url');
+        } else {
+            url = location.href;
+        }
+        let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
+        let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
+        let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
+        Taro.request({
+            url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
+            method: 'GET',
+            data: {
+                url
+            }
+        })
+            .then(res => {
+                let { data } = res;
+                wx.config({
+                    debug: false,
+                    appId: data.appId,
+                    timestamp: data.timestamp,
+                    nonceStr: data.nonceStr,
+                    signature: data.signature,
+                    jsApiList: [
+                        'updateAppMessageShareData',
+                        'updateTimelineShareData',
+                        'onMenuShareAppMessage', //旧的接口，即将废弃
+                        'onMenuShareTimeline'//旧的接口，即将废弃
+                    ]
+                })
+                wx.ready(() => {
+                    wx.updateAppMessageShareData({
+                        title: titleMsg,
+                        desc: descMsg,
+                        link: linkMsg + '&invitation_user_id=' + this.state.data.invitation_user_id,
+                        imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
+                        success: function () {
+                            //成功后触发
+                        }
+                    })
+                })
+            })
+    }
+
+    buttonToShare = () => {
+        this.setState({ isShare: true });
+    }
+    closeShare = () => {
+        this.setState({ isShare: false });
+    }
+
+    /* 请求海报数据 */
+    getPostList = (id: number) => {
+        geValueAddedPoster({ youhui_id: id, from: 'h5' })
+            .then(({ data, code }) => {
+                this.setState({ posterList: data })
+                switch (data.youhui_type) {
+                    case 0:
+                        this.setState({ posterType: 'Other' })
+                        break;
+                    default:
+                        this.setState({ posterType: data.gift.gift_pic ? 'HaveGift' : 'NoGift' })
+                        break;
+                }
+
+            })
+    }
+
+    /* 关闭海报 */
+    closePoster = () => {
+        this.setState({ showPoster: false, showShare: false })
+    }
 
 
     render() {
         const { showBounced } = this.state;
         const { images, description } = this.state.data;
+        const { posterList, posterType, showPoster } = this.state
         return (
             <View className="appre-activity-detail">
+                {/* 分享组件 */}
+                <ShareBox
+                    astrict={2}
+                    show={this.state.showShare}
+                    onClose={() => this.setState({ showShare: false })}
+                    sendText={() => { }}
+                    sendLink={() => {
+                        this.buttonToShare()
+                        this.setState({ showShare: false })
+                    }}
+                    createPoster={() => {
+                        this.setState({ showPoster: true, showShare: false })
+                    }}
+                />
+                <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+                    <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <NogiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <OtherPoster show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <View className="click-save">长按保存图片到相册</View>
+                </View>
+
+                {
+                    this.state.isShare == true ? (
+                        <View className='share_mask' onClick={this.closeShare}>
+                            <View className='share_box'>
+                                <View className='share_text text_top'>
+                                    点击此按钮分享给好友
+                                    </View>
+                                <Image src={require('@/assets/share_arro.png')} className='share_img' />
+                            </View>
+                        </View>
+                    ) : null
+                }
                 <View
                     className="swiper-content"
                     onClick={(e) => {
@@ -416,7 +551,8 @@ export default class AppreActivity extends Component {
                         <View className="new-price-num" >{this.state.data.pay_money}</View>
                     </View>
                     <View className="new-buy-btn-box" >
-                        <View className="new-buy-btn-left" >分享活动</View>
+                        <View className="new-buy-btn-left" onClick={() =>
+                            this.setState({ showShare: true })}>分享活动</View>
                         {
                             this.state.data.activity_time_status == 1 ? (
                                 <View className="new-buy-btn-right">暂未开始</View>
