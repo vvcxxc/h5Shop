@@ -33,6 +33,7 @@ export default class Poster extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
       const { list, show } = nextProps
+      Taro.showLoading({ title: 'loading', mask: true });
       this.setState({
         show: true,
         listData: {
@@ -49,7 +50,10 @@ export default class Poster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-        this.showMyPoster()
+          setTimeout(() => {
+            Taro.hideLoading()
+          this.showMyPoster()
+        }, 500);
       })
     }
   }
@@ -120,9 +124,15 @@ export default class Poster extends Component<Props> {
               }
             </View>
             <View className="info-left-fourth-line">适用店铺：
-              {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
+              <Text className="text">
+                {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
+              </Text>
             </View>
-            <View className="info-left-fifth-line"> 店铺地址：{listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+            <View className="info-left-fifth-line"> 店铺地址：
+            <Text className="text">
+                {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+            </Text>
+            
             </View>
           </View>
           <View className="info-right-spell_group" >
@@ -134,9 +144,11 @@ export default class Poster extends Component<Props> {
         </View>
       </View>
     </View>
-    return this.state.show ?
-      !this.state.imgurl ? dom : <Image
+    // !this.state.imgurl ?
+    return this.state.show ? <View className="spell_group-ql">
+     { dom }  <Image
         onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
+    </View>
       : null
   }
 }

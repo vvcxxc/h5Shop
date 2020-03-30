@@ -34,6 +34,7 @@ export default class OtherPoster extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
       const { list, show } = nextProps
+      Taro.showLoading({ title: 'loading', mask: true });
       this.setState({
         show: list.youhui_type == 0 ? true : false,
         listData: {
@@ -47,7 +48,10 @@ export default class OtherPoster extends Component<Props> {
           wx_img: list.wx_img
         }
       }, () => {
-          this.showMyPoster()
+          setTimeout(() => {
+            Taro.hideLoading()
+            this.showMyPoster()
+          }, 500);
       })
 
     }
@@ -106,10 +110,15 @@ export default class OtherPoster extends Component<Props> {
               }
             </View>
             <View className="info-left-fourth-line">适用店铺：
-              {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
+            <Text className="text">
+                {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
+            </Text>
             </View>
             <View className="info-left-fifth-line">
-              店铺地址：{listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+              店铺地址：
+              <Text className="text">
+                {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+              </Text>
             </View>
           </View>
           <View className="info-right-set-meal" >
@@ -122,8 +131,13 @@ export default class OtherPoster extends Component<Props> {
 
       </View>
     </View>
-    return  this.state.show ?
-      !this.state.imgurl ? dom : <Image onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
+    return this.state.show ? <View className="set-meal-ql">
+      {dom}  <Image
+        onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
+    </View>
       : null
+      
+      // !this.state.imgurl ? dom : <Image onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
+      // : null
   }
 }
