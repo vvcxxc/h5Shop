@@ -103,7 +103,7 @@ export default class Poster extends Component<Props> {
                 <Image src={listData.gift_pic} />
                 <Image className="test" src={require('@/assets/box_shadow.png')} />
                 <Text className="giving" >赠</Text>
-                <Text className="price-spell_group" style={{ color: '#fff' }}>￥{listData.gift_price}</Text>
+                <Text className="price-spell_group" style={{ color: '#fff' }}>￥<Text>{listData.gift_price}</Text></Text>
               </View>
             </View> : null
           }
@@ -144,10 +144,13 @@ export default class Poster extends Component<Props> {
         </View>
       </View>
     </View>
-    return this.state.show ? <View className="spell_group-ql">
-     { dom }  <Image
-        onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
+    return <View className="spell_group-ql">
+      {dom} 
     </View>
-      : null
+    // this.state.show ? <View className="spell_group-ql">
+    //  { dom }  <Image
+    //     onClick={this.noAllow.bind(this)} className="my-img-spell_group" src={this.state.imgurl} />
+    // </View>
+    //   : null
   }
 }
