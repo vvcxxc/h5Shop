@@ -13,8 +13,8 @@ export default class distributionDetail extends Component {
         enablePullDownRefresh: false
     };
     state = {
-        chooseDistribution: false,
-        contentboxShow: true,
+        chooseDistribution: true,
+        contentboxShow: false,
         sumMoney: 0,
         coupon: {
             id: 0,
@@ -302,7 +302,7 @@ export default class distributionDetail extends Component {
                             <Image className="store-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
                             <View className="store-name">{this.state.store.sname}</View>
                         </View>
-                        <Image className="store-right" src="http://oss.tdianyi.com/front/fpsw5CyhYJQTDEABZhs4iFDdC48ZGidn.png" />
+                        <Image className="store-right" src="http://oss.tdianyi.com/front/SpKtBHYnYMDGks85zyxGHrHc43K5cxRE.png" />
                     </View>
                     <View className="activity-content">
                         <Image className="activity-img" src={this.state.coupon.image} />
@@ -323,7 +323,7 @@ export default class distributionDetail extends Component {
                                 <View className="distribution-choose-area">
                                     {
                                         this.state.chooseDistribution ?
-                                            <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/mhth4rhHmcW3SmQ8kWiHeNw2NDdYxiwc.png" />
+                                            <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/Dx5xds6atc3ip3eRRdT3aaHm7abTCFWs.png" />
                                             :
                                             <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/nppTFyPWrnAGC535GBc2mddSfrXAwR5e.png" />
                                     }
