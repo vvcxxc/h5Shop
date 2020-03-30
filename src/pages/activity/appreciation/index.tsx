@@ -96,7 +96,6 @@ export default class AppreActivity extends Component {
         Taro.showLoading({ title: 'loading' })
         getLocation().then((res: any) => {
             this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: res.latitude || '', xpoint: res.longitude || '' })
-            this.toShare()
         }).catch((err) => {
             this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: '', xpoint: '' })
         })
@@ -115,7 +114,9 @@ export default class AppreActivity extends Component {
                     let isPostage = false;
                     if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
                     this.getPostList(res.data.id)
-                    this.setState({ data: res.data, isPostage });
+                    this.setState({ data: res.data, isPostage }, () => {
+                        this.toShare()
+                    });
                 } else {
                     Taro.showToast({ title: '请求失败', icon: 'none' });
                 }

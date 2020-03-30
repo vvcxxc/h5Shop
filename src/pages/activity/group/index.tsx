@@ -98,7 +98,6 @@ export default class GroupActivity extends Component {
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
     getLocation().then((res: any) => {
-      this.toShare()
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch((err) => {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
@@ -122,7 +121,10 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-          that.setState({ data: res.data, isPostage }, () => { this.getPostList() });
+          that.setState({ data: res.data, isPostage }, () => {
+            this.getPostList();
+            this.toShare();
+          });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
         }
