@@ -200,14 +200,14 @@ export default class MarketingIndex extends Component<any> {
               <Image className='feature-img' src={require('@/assets/index/xiong.png')} />
               <View className='feature-text'>
                 <View className='text-title'>小熊敬礼特色</View>
-                <View>小熊敬礼</View>
+                <View>平台价值观</View>
               </View>
             </View>
             <View className='feature' onClick={this.goTo.bind(this,'/detail-pages/course/make_money_plan')}>
               <Image className='feature-img' src={require('@/assets/index/zhuan.png')} />
               <View className='feature-text'>
                 <View className='text-title'>赚钱计划</View>
-                <View>小熊敬礼</View>
+                <View>零投入！零囤货！</View>
               </View>
             </View>
           </View>
