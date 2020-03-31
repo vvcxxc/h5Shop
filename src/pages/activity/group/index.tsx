@@ -647,6 +647,7 @@ export default class GroupActivity extends Component {
             <View className="group-price-discounts">已优惠￥{accAdd(this.state.data.pay_money, this.state.data.participation_money)}</View>
           </View>
           <View className="group-info-label">
+            {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
             <View className="group-info-label-item">{this.state.data.number}人团</View>
             {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null}
           </View>
