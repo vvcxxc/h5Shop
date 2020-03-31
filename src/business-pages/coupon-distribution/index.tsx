@@ -10,7 +10,7 @@ import { accAdd } from '@/components/acc-num'
 
 export default class distributionDetail extends Component {
     config = {
-        navigationBarTitleText: "拼团活动购买订单页",
+        navigationBarTitleText: "兑换券购买订单页",
         enablePullDownRefresh: false
     };
     state = {
@@ -351,7 +351,7 @@ export default class distributionDetail extends Component {
                         <View className='order-item-words'>￥{this.state.coupon.pay_money}</View>
                     </View>
                     {
-                        this.state.chooseDistribution ?
+                        this.state.chooseDistribution && this.state.coupon.is_delivery ?
                             <View className='order-item'>
                                 <View className='order-item-key'>配送金额</View>
                                 <View className='order-item-words'>￥{this.state.coupon.supplierDelivery.delivery_service_money}</View>

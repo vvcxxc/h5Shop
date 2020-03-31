@@ -410,7 +410,7 @@ export default class distributionDetail extends Component {
                                 <View className='order-item-words'>￥{this.state.data.youhui.postage}</View>
                             </View> : null
                     }{
-                        this.state.chooseDistribution ?
+                        this.state.chooseDistribution && this.state.data.youhui.is_delivery ?
                             <View className='order-item'>
                                 <View className='order-item-key'>配送金额</View>
                                 <View className='order-item-words'>￥{this.state.data.youhui.supplier_delivery_service_money}</View>
