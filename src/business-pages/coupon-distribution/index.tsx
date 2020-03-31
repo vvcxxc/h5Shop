@@ -28,19 +28,11 @@ export default class distributionDetail extends Component {
             youhui_type: 0,
         },
         supplierDelivery: {
-            created_at: null,
             delivery_end_time: "",
-            delivery_phone: "",
             delivery_radius_m: 0,
             delivery_service_money: 0,
             delivery_start_time: "",
-            delivery_status: 0,
-            id: 0,
-            location_xpoint: "",
-            location_ypoint: "",
-            supplier_id: 0,
-            supplier_location_id: 0,
-            updated_at: null,
+            id: 0
         },
         store: {
             id: 0,
@@ -76,7 +68,7 @@ export default class distributionDetail extends Component {
                 .then((res: any) => {
                     if (res.code == 200) {
                         that.getTheAddress(that.$router.params.address_id);
-                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store, supplierDelivery: res.data.supplierDelivery }, () => { that.calculateSumMoney() })
+                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store, supplierDelivery: res.data.delivery_service_info }, () => { that.calculateSumMoney() })
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                         that.getTheAddress(that.$router.params.address_id);
