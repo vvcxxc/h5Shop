@@ -801,7 +801,7 @@ export default class GroupActivity extends Component {
 
         <View className="group-store-info">
           <ApplyToTheStore
-            id={this.state.data.id}
+            store_id={this.state.data.id}
             isTitle={true}
             img={this.state.data.preview}
             name={this.state.data.name}
