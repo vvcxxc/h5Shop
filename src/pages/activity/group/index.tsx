@@ -14,6 +14,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
+import { accSubtr, accAdd } from '@/utils/common'
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
 export default class GroupActivity extends Component {
@@ -95,7 +96,7 @@ export default class GroupActivity extends Component {
       youhui_type: ''
     },
     posterType: '',
-    securityPoster:false// fasle不允许显示海报
+    securityPoster: false// fasle不允许显示海报
   };
 
   /**
@@ -132,7 +133,7 @@ export default class GroupActivity extends Component {
           that.setState({ data: res.data, isPostage }, () => {
             this.getPostList();
             this.toShare();
-            this.setState({ securityPoster:true})
+            this.setState({ securityPoster: true })
           });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
@@ -627,7 +628,7 @@ export default class GroupActivity extends Component {
             }
           </Swiper>
           <View className="banner-number-box">
-            <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+            <View className="banner-number">{accAdd(this.state.bannerImgIndex, 1)}</View>
             <View className="banner-number">{this.state.data.images.length}</View>
           </View>
         </View>
@@ -650,7 +651,7 @@ export default class GroupActivity extends Component {
               <View className="group-price-info-new">{this.state.data.participation_money}</View>
               <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
             </View>
-            <View className="group-price-discounts">已优惠￥{Number(this.state.data.pay_money) - Number(this.state.data.participation_money)}</View>
+            <View className="group-price-discounts">已优惠￥{accSubtr(Number(this.state.data.pay_money), Number(this.state.data.participation_money))}</View>
           </View>
           <View className="group-info-label">
             <View className="group-info-label-item">{this.state.data.number}人团</View>

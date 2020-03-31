@@ -12,6 +12,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
+import {accSubtr } from '@/utils/common'
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
 export default class AppreActivity extends Component {
@@ -341,7 +342,7 @@ export default class AppreActivity extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{Number(this.state.coupon.return_money) - Number(this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money)) }</View>
           </View>
 
         </View>

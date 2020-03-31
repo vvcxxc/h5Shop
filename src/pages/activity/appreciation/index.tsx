@@ -14,6 +14,7 @@ import { geValueAddedPoster } from '@/api/poster'
 import HavegiftPoster from '@/components/posters/value_added/have-gift'// 海报存在礼品
 import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报无礼品
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
+import { accSubtr, accAdd } from '@/utils/common'
 const share_url = process.env.APPRE_Details_URL;
 
 export default class AppreActivity extends Component {
@@ -410,7 +411,7 @@ export default class AppreActivity extends Component {
                         }
                     </Swiper>
                     <View className="banner-number-box">
-                        <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                        <View className="banner-number">{accAdd(this.state.bannerImgIndex, 1)}</View>
                         <View className="banner-number">{this.state.data.images.length}</View>
                     </View>
                 </View>

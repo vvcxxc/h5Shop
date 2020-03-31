@@ -13,6 +13,8 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/ticket-buy'//   海报无礼品
 import { moneyPoster } from '@/api/poster'
+import { accSubtr, accAdd } from '@/utils/common'
+
 const share_url = process.env.TICKETBUY_URL;
 
 export default class TicketBuy extends Component {
@@ -307,7 +309,7 @@ export default class TicketBuy extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{Number(this.state.coupon.return_money) - Number(this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money))}</View>
           </View>
 
         </View>
