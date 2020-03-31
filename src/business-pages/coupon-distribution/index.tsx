@@ -6,6 +6,7 @@ import { getBrowserType } from "@/utils/common";
 import { discount_coupons, defaultAddress, wxWechatPay, getAddress } from "./service";
 import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie';
+import { accAdd } from '@/components/acc-num'
 
 export default class distributionDetail extends Component {
     config = {
@@ -164,7 +165,7 @@ export default class distributionDetail extends Component {
      */
     calculateSumMoney = () => {
         let sum = Number(this.state.coupon.pay_money);
-        if (this.state.chooseDistribution) { sum = sum + Number(this.state.coupon.supplierDelivery.delivery_service_money) }
+        if (this.state.chooseDistribution) { sum = accAdd(sum, this.state.coupon.supplierDelivery.delivery_service_money) }
         this.setState({ sumMoney: sum })
     }
 

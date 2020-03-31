@@ -16,6 +16,7 @@ import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报�
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
 const share_url = process.env.APPRE_Details_URL;
 const BASIC_API = process.env.BASIC_API;//二维码域名
+import { accAdd } from '@/components/acc-num'
 
 export default class AppreActivity extends Component {
     config = {
@@ -359,7 +360,7 @@ export default class AppreActivity extends Component {
                         this.setState({ showPoster: true, showShare: false })
                     }}
                 />
-                <View className={showPoster ? "show-poster" :"hidden-poster"} onClick={()=>this.setState({showPoster:false})}>
+                <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
                     <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
                     <NogiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
                     <OtherPoster show={showPoster} list={posterList} onClose={this.closePoster} />
@@ -402,7 +403,7 @@ export default class AppreActivity extends Component {
                         }
                     </Swiper>
                     <View className="banner-number-box">
-                        <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                        <View className="banner-number">{accAdd(this.state.bannerImgIndex, 1)}</View>
                         <View className="banner-number">{this.state.data.images.length}</View>
                     </View>
                 </View>
