@@ -109,15 +109,16 @@
         justify-content: flex-start;
         margin-bottom: 15px;
 
-        .appre-info-title {
+        .appre-info-title-ticket {
             margin-bottom: 30px;
             display: flex;
             align-items: center;
 
 
-            .appre-info-title-label {
-                display: inline-block;
+            .appre-info-title-label-ticket {
+                min-width: 140px;
                 height: 29px;
+                text-align: center;
                 background: rgba(255, 68, 68, 1);
                 padding: 0px 8px;
                 border-radius: 6px;
@@ -127,19 +128,13 @@
                 margin-right: 12px;
             }
 
-            .appre-info-title-text {
-                display: inline-block;
+            .appre-info-title-text-ticket {
                 height: auto;
                 font-size: 36px;
                 line-height: 42px;
-                //overflow: hidden;
-                //text-overflow: ellipsis;
-                //display: -webkit-box;
-                //-webkit-line-clamp: 2;
-                /* autoprefixer: off */
-                //-webkit-box-orient: vertical;
-                /* autoprefixer: on */
-
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
             }
         }
 
