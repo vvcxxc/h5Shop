@@ -330,9 +330,9 @@ export default class AppreActivity extends Component {
           <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
         </View> */}
         <View className="appre-info-content">
-          <View className="appre-info-title">
-            <View className="appre-info-title-label">小熊敬礼</View>
-            <View className="appre-info-title-text">{this.state.coupon.yname}</View>
+          <View className="appre-info-title-setmeal">
+            <View className="appre-info-title-label-setmeal">小熊敬礼</View>
+            <View className="appre-info-title-text-setmeal">{this.state.coupon.yname}</View>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">

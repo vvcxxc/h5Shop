@@ -291,9 +291,10 @@ export default class TicketBuy extends Component {
           <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
         </View> */}
         <View className="appre-info-content">
-          <View className="appre-info-title">
-            <View className="appre-info-title-label">到店支付可用</View>
-            <View className="appre-info-title-text">{this.state.coupon.yname}</View>
+          <View className="appre-info-title-ticket">
+            <View className="appre-info-title-label-ticket">到店支付可用</View>
+            {/* <View className="appre-info-title-text-ticket">{this.state.coupon.yname}</View> */}
+            <View className="appre-info-title-text-ticket">到店支付可用到店支付可用到店支付可用到店支付可用</View>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">
