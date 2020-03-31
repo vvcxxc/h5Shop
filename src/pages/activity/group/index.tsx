@@ -840,7 +840,7 @@ export default class GroupActivity extends Component {
               <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
               <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
               <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
-              <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View>
+              {/* <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View> */}
             </View> : null
           }
           {
