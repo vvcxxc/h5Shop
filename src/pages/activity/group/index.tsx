@@ -839,10 +839,15 @@ export default class GroupActivity extends Component {
             <View className="rules-key"> 拼团时限：</View>
             <View className="rules-words">需{this.state.data.team_set_end_time}时内成团</View>
           </View>
-          {/* <View className="group-rules-item" >
-                        <View className="rules-key">有效期：</View>
-                        <View className="rules-words">成团后7日内可用</View>
-                    </View> */}
+
+          <View className="group-rules-list-margin">
+            <View className="group-rules-list-title" >配送服务：</View>
+            <View className="group-rules-list-text" >-配送费用：5元</View>
+            <View className="group-rules-list-text" >-配送范围：10km</View>
+            <View className="group-rules-list-text" >-配送时间：9:00-21:00</View>
+            <View className="group-rules-list-text" >-联系电话：15888888888</View>
+          </View>
+
           {
             description && description.length && !this.state.showMoreRules ? <View>
               <View className="group-rules-list-title" >使用规则：</View>

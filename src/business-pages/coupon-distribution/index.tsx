@@ -165,7 +165,7 @@ export default class distributionDetail extends Component {
      */
     calculateSumMoney = () => {
         let sum = Number(this.state.coupon.pay_money);
-        if (this.state.chooseDistribution) { sum = accAdd(sum, this.state.coupon.supplierDelivery.delivery_service_money) }
+        if (this.state.chooseDistribution && this.state.coupon.is_delivery) { sum = accAdd(sum, this.state.coupon.supplierDelivery.delivery_service_money) }
         this.setState({ sumMoney: sum })
     }
 
