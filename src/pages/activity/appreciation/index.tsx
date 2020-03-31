@@ -433,7 +433,7 @@ export default class AppreActivity extends Component {
 
                 <View className="appre-store-info">
                     <ApplyToTheStore
-                        id={this.state.data.store_id}
+                        store_id={this.state.data.store_id}
                         isTitle={true}
                         img={this.state.data.preview}
                         name={this.state.data.location_name}

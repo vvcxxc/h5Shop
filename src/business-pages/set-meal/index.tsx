@@ -47,7 +47,8 @@ export default class AppreActivity extends Component {
       return_money: "",
       yname: "",
       youhui_type: 0,
-      expire_day: ''
+      expire_day: '',
+      images: []
     },
     store: {
       brief: "",
@@ -307,14 +308,50 @@ export default class AppreActivity extends Component {
             </View>
           ) : null
         }
-        <Image className='appre-banner' src={this.state.coupon.image}
-          onClick={(e) => {
-            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
-          }} />
-        <View className="banner-number-box">
-          <View className="banner-number">1</View>
-          <View className="banner-number">1</View>
-        </View>
+        {
+          this.state.coupon.images.length ? (
+            <View
+              className="swiper-content"
+              onClick={(e) => {
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.images[this.state.bannerImgIndex] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  this.setState({ bannerImgIndex: e.detail.current })
+                }}
+                className='group-banner'
+                circular
+                autoplay
+              >
+                {
+                  this.state.coupon.images.length ? this.state.coupon.images.map((item, index) => {
+                    return (
+                      <SwiperItem className="group-banner-swiperItem" key={item}>
+                        <Image className="group-banner-img" src={item} />
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+              <View className="banner-number-box">
+                <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                <View className="banner-number">{this.state.coupon.images.length}</View>
+              </View>
+            </View>
+          ) : (
+              <View>
+                <Image className='appre-banner' src={this.state.coupon.image}
+                  onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+                  }} />
+                <View className="banner-number-box">
+                  <View className="banner-number">1</View>
+                  <View className="banner-number">1</View>
+                </View>
+              </View>
+
+            )
+        }
         {/* <View className="collect-box">
           <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
         </View>
@@ -340,7 +377,7 @@ export default class AppreActivity extends Component {
 
         <View className="appre-store-info">
           <ApplyToTheStore
-            id={this.state.store.id}
+            store_id={this.state.store.id}
             isTitle={true}
             img={this.state.store.shop_door_header_img}
             name={this.state.store.sname}
