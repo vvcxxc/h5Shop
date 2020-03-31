@@ -385,7 +385,7 @@ export default class distributionDetail extends Component {
                                     }
                                 </View>
                                 <View className="distribution-info">
-                                    <View className="distribution-tips">选择后，商家将会提高送货上门的服务。</View>
+                                    <View className="distribution-tips">选择后，商家将会提供送货上门的服务。</View>
                                     <View className="distribution-labels">
                                         <View className="distribution-label-item">配送费{this.state.data.youhui.supplier_delivery_service_money}元</View>
                                         {/* <View className="distribution-label-item">10km可送</View> */}
