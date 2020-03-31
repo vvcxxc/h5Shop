@@ -26,21 +26,21 @@ export default class distributionDetail extends Component {
             total_fee: '',
             yname: "",
             youhui_type: 0,
-            supplierDelivery: {
-                created_at: null,
-                delivery_end_time: "",
-                delivery_phone: "",
-                delivery_radius_m: 0,
-                delivery_service_money: 0,
-                delivery_start_time: "",
-                delivery_status: 0,
-                id: 0,
-                location_xpoint: "",
-                location_ypoint: "",
-                supplier_id: 0,
-                supplier_location_id: 0,
-                updated_at: null,
-            }
+        },
+        supplierDelivery: {
+            created_at: null,
+            delivery_end_time: "",
+            delivery_phone: "",
+            delivery_radius_m: 0,
+            delivery_service_money: 0,
+            delivery_start_time: "",
+            delivery_status: 0,
+            id: 0,
+            location_xpoint: "",
+            location_ypoint: "",
+            supplier_id: 0,
+            supplier_location_id: 0,
+            updated_at: null,
         },
         store: {
             id: 0,
@@ -76,7 +76,7 @@ export default class distributionDetail extends Component {
                 .then((res: any) => {
                     if (res.code == 200) {
                         that.getTheAddress(that.$router.params.address_id);
-                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store }, () => { that.calculateSumMoney() })
+                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store, supplierDelivery: res.data.supplierDelivery }, () => { that.calculateSumMoney() })
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                         that.getTheAddress(that.$router.params.address_id);
@@ -165,7 +165,7 @@ export default class distributionDetail extends Component {
      */
     calculateSumMoney = () => {
         let sum = Number(this.state.coupon.pay_money);
-        if (this.state.chooseDistribution && this.state.coupon.is_delivery) { sum = accAdd(sum, this.state.coupon.supplierDelivery.delivery_service_money) }
+        if (this.state.chooseDistribution && this.state.coupon.is_delivery) { sum = accAdd(sum, this.state.supplierDelivery.delivery_service_money) }
         this.setState({ sumMoney: sum })
     }
 
@@ -332,9 +332,9 @@ export default class distributionDetail extends Component {
                                 <View className="distribution-info">
                                     <View className="distribution-tips">选择后，商家将会提高送货上门的服务。</View>
                                     <View className="distribution-labels">
-                                        <View className="distribution-label-item">配送费{this.state.coupon.supplierDelivery.delivery_service_money}元</View>
-                                        <View className="distribution-label-item">{this.state.coupon.supplierDelivery.delivery_radius_m}km可送</View>
-                                        <View className="distribution-label-item">{this.state.coupon.supplierDelivery.delivery_start_time}-{this.state.coupon.supplierDelivery.delivery_end_time}配送</View>
+                                        <View className="distribution-label-item">配送费{this.state.supplierDelivery.delivery_service_money}元</View>
+                                        <View className="distribution-label-item">{this.state.supplierDelivery.delivery_radius_m}km可送</View>
+                                        <View className="distribution-label-item">{this.state.supplierDelivery.delivery_start_time}-{this.state.supplierDelivery.delivery_end_time}配送</View>
                                     </View>
                                 </View>
                             </View> : null
@@ -354,7 +354,7 @@ export default class distributionDetail extends Component {
                         this.state.chooseDistribution && this.state.coupon.is_delivery ?
                             <View className='order-item'>
                                 <View className='order-item-key'>配送金额</View>
-                                <View className='order-item-words'>￥{this.state.coupon.supplierDelivery.delivery_service_money}</View>
+                                <View className='order-item-words'>￥{this.state.supplierDelivery.delivery_service_money}</View>
                             </View> : null
                     }
                     <View className='order-item-all'>
