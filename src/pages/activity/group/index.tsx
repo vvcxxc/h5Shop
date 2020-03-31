@@ -14,7 +14,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
-
+import { accAdd } from '@/components/acc-num'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
@@ -75,7 +75,14 @@ export default class GroupActivity extends Component {
       xpoint: '',
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
-      ypoint: ""
+      ypoint: "",
+      delivery_service_info: {
+        delivery_end_time: '',
+        delivery_radius_m: 0,
+        delivery_service_money: 0,
+        delivery_start_time: '',
+        id: 0
+      }
     },
     data2: {
       data: [],
@@ -98,13 +105,11 @@ export default class GroupActivity extends Component {
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
     getLocation().then((res: any) => {
-      this.toShare()
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch((err) => {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
     })
   }
-
 
   /**
    * 获取拼团活动信息
@@ -122,7 +127,10 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-          that.setState({ data: res.data, isPostage }, () => { this.getPostList() });
+          that.setState({ data: res.data, isPostage }, () => {
+            this.getPostList();
+            this.toShare();
+          });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
         }
@@ -552,7 +560,7 @@ export default class GroupActivity extends Component {
   }
 
   render() {
-    const { description } = this.state.data;
+    const { description, delivery_service_info } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
     return (
       <View className="group-activity-detail">
@@ -636,9 +644,10 @@ export default class GroupActivity extends Component {
               <View className="group-price-info-new">{this.state.data.participation_money}</View>
               <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
             </View>
-            <View className="group-price-discounts">已优惠￥{Number(this.state.data.pay_money) - Number(this.state.data.participation_money)}</View>
+            <View className="group-price-discounts">已优惠￥{accAdd(this.state.data.pay_money, this.state.data.participation_money)}</View>
           </View>
           <View className="group-info-label">
+            {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
             <View className="group-info-label-item">{this.state.data.number}人团</View>
             {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null}
           </View>
@@ -823,7 +832,6 @@ export default class GroupActivity extends Component {
           </View> : null
         }
 
-
         <View className="group-rules">
           <View className="group-title-box">
             <View className='group-title-left'></View>
@@ -837,10 +845,15 @@ export default class GroupActivity extends Component {
             <View className="rules-key"> 拼团时限：</View>
             <View className="rules-words">需{this.state.data.team_set_end_time}时内成团</View>
           </View>
-          {/* <View className="group-rules-item" >
-                        <View className="rules-key">有效期：</View>
-                        <View className="rules-words">成团后7日内可用</View>
-                    </View> */}
+          {
+            delivery_service_info.id ? <View className="group-rules-list-margin">
+              <View className="group-rules-list-title" >配送服务：</View>
+              <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
+              <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
+              <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
+              <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View>
+            </View> : null
+          }
           {
             description && description.length && !this.state.showMoreRules ? <View>
               <View className="group-rules-list-title" >使用规则：</View>

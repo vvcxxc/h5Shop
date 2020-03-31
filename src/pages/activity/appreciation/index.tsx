@@ -16,6 +16,7 @@ import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报�
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
 const share_url = process.env.APPRE_Details_URL;
 const BASIC_API = process.env.BASIC_API;//二维码域名
+import { accAdd } from '@/components/acc-num'
 
 export default class AppreActivity extends Component {
     config = {
@@ -96,7 +97,6 @@ export default class AppreActivity extends Component {
         Taro.showLoading({ title: 'loading' })
         getLocation().then((res: any) => {
             this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: res.latitude || '', xpoint: res.longitude || '' })
-            this.toShare()
         }).catch((err) => {
             this.getAppreInfo({ youhui_id: this.$router.params.id, ypoint: '', xpoint: '' })
         })
@@ -115,7 +115,9 @@ export default class AppreActivity extends Component {
                     let isPostage = false;
                     if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
                     this.getPostList(res.data.id)
-                    this.setState({ data: res.data, isPostage });
+                    this.setState({ data: res.data, isPostage }, () => {
+                        this.toShare()
+                    });
                 } else {
                     Taro.showToast({ title: '请求失败', icon: 'none' });
                 }
@@ -405,7 +407,7 @@ export default class AppreActivity extends Component {
                         }
                     </Swiper>
                     <View className="banner-number-box">
-                        <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                        <View className="banner-number">{accAdd(this.state.bannerImgIndex, 1)}</View>
                         <View className="banner-number">{this.state.data.images.length}</View>
                     </View>
                 </View>

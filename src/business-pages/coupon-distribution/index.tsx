@@ -6,15 +6,16 @@ import { getBrowserType } from "@/utils/common";
 import { discount_coupons, defaultAddress, wxWechatPay, getAddress } from "./service";
 import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie';
+import { accAdd } from '@/components/acc-num'
 
 export default class distributionDetail extends Component {
     config = {
-        navigationBarTitleText: "拼团活动购买订单页",
+        navigationBarTitleText: "兑换券购买订单页",
         enablePullDownRefresh: false
     };
     state = {
-        chooseDistribution: false,
-        contentboxShow: true,
+        chooseDistribution: true,
+        contentboxShow: false,
         sumMoney: 0,
         coupon: {
             id: 0,
@@ -25,21 +26,13 @@ export default class distributionDetail extends Component {
             total_fee: '',
             yname: "",
             youhui_type: 0,
-            supplierDelivery: {
-                created_at: null,
-                delivery_end_time: "",
-                delivery_phone: "",
-                delivery_radius_m: 0,
-                delivery_service_money: 0,
-                delivery_start_time: "",
-                delivery_status: 0,
-                id: 0,
-                location_xpoint: "",
-                location_ypoint: "",
-                supplier_id: 0,
-                supplier_location_id: 0,
-                updated_at: null,
-            }
+        },
+        supplierDelivery: {
+            delivery_end_time: "",
+            delivery_radius_m: 0,
+            delivery_service_money: 0,
+            delivery_start_time: "",
+            id: 0
         },
         store: {
             id: 0,
@@ -75,7 +68,9 @@ export default class distributionDetail extends Component {
                 .then((res: any) => {
                     if (res.code == 200) {
                         that.getTheAddress(that.$router.params.address_id);
-                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store }, () => { that.calculateSumMoney() })
+                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store, supplierDelivery: res.data.delivery_service_info }, () => {
+                            that.calculateSumMoney()
+                        })
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                         that.getTheAddress(that.$router.params.address_id);
@@ -89,7 +84,7 @@ export default class distributionDetail extends Component {
                 .then((res: any) => {
                     if (res.code == 200) {
                         that.getDefaultAddress();
-                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store }, () => { that.calculateSumMoney() })
+                        that.setState({ coupon: res.data.info.coupon, store: res.data.info.store, supplierDelivery: res.data.delivery_service_info }, () => { that.calculateSumMoney() })
                     } else {
                         Taro.showToast({ title: res.message, icon: 'none' })
                         that.getDefaultAddress();
@@ -164,7 +159,7 @@ export default class distributionDetail extends Component {
      */
     calculateSumMoney = () => {
         let sum = Number(this.state.coupon.pay_money);
-        if (this.state.chooseDistribution) { sum = sum + Number(this.state.coupon.supplierDelivery.delivery_service_money) }
+        if (this.state.chooseDistribution && this.state.coupon.is_delivery) { sum = accAdd(sum, this.state.supplierDelivery.delivery_service_money) }
         this.setState({ sumMoney: sum })
     }
 
@@ -302,7 +297,7 @@ export default class distributionDetail extends Component {
                             <Image className="store-icon" src="http://oss.tdianyi.com/front/JhGtnn46tJksAaNCCMXaWWCGmsEKJZds.png" />
                             <View className="store-name">{this.state.store.sname}</View>
                         </View>
-                        <Image className="store-right" src="http://oss.tdianyi.com/front/fpsw5CyhYJQTDEABZhs4iFDdC48ZGidn.png" />
+                        <Image className="store-right" src="http://oss.tdianyi.com/front/SpKtBHYnYMDGks85zyxGHrHc43K5cxRE.png" />
                     </View>
                     <View className="activity-content">
                         <Image className="activity-img" src={this.state.coupon.image} />
@@ -323,7 +318,7 @@ export default class distributionDetail extends Component {
                                 <View className="distribution-choose-area">
                                     {
                                         this.state.chooseDistribution ?
-                                            <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/mhth4rhHmcW3SmQ8kWiHeNw2NDdYxiwc.png" />
+                                            <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/Dx5xds6atc3ip3eRRdT3aaHm7abTCFWs.png" />
                                             :
                                             <Image className="distribution-choose-icon" src="http://oss.tdianyi.com/front/nppTFyPWrnAGC535GBc2mddSfrXAwR5e.png" />
                                     }
@@ -331,9 +326,9 @@ export default class distributionDetail extends Component {
                                 <View className="distribution-info">
                                     <View className="distribution-tips">选择后，商家将会提高送货上门的服务。</View>
                                     <View className="distribution-labels">
-                                        <View className="distribution-label-item">配送费{this.state.coupon.supplierDelivery.delivery_service_money}元</View>
-                                        <View className="distribution-label-item">{this.state.coupon.supplierDelivery.delivery_radius_m}km可送</View>
-                                        <View className="distribution-label-item">{this.state.coupon.supplierDelivery.delivery_start_time}-{this.state.coupon.supplierDelivery.delivery_end_time}配送</View>
+                                        <View className="distribution-label-item">配送费{this.state.supplierDelivery.delivery_service_money}元</View>
+                                        <View className="distribution-label-item">{this.state.supplierDelivery.delivery_radius_m}km可送</View>
+                                        <View className="distribution-label-item">{this.state.supplierDelivery.delivery_start_time}-{this.state.supplierDelivery.delivery_end_time}配送</View>
                                     </View>
                                 </View>
                             </View> : null
@@ -350,10 +345,10 @@ export default class distributionDetail extends Component {
                         <View className='order-item-words'>￥{this.state.coupon.pay_money}</View>
                     </View>
                     {
-                        this.state.chooseDistribution ?
+                        this.state.chooseDistribution && this.state.coupon.is_delivery ?
                             <View className='order-item'>
                                 <View className='order-item-key'>配送金额</View>
-                                <View className='order-item-words'>￥{this.state.coupon.supplierDelivery.delivery_service_money}</View>
+                                <View className='order-item-words'>￥{this.state.supplierDelivery.delivery_service_money}</View>
                             </View> : null
                     }
                     <View className='order-item-all'>

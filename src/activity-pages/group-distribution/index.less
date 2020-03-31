@@ -252,6 +252,7 @@
                     max-height: 66px;
                     font-size: 26px;
                     line-height: 33px;
+                    font-weight: bold;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
@@ -313,6 +314,7 @@
             width: 100%;
             height: auto;
             min-height: 175px;
+            border-bottom: 1px solid #f3f4f8;
 
             .gift-choose-area {
                 height: 100px;
@@ -348,7 +350,22 @@
                     width: 114px;
                     height: 114px;
                     border-radius: 16px;
+                    overflow: hidden;
                     margin-right: 20px;
+                    position: relative;
+
+                    .gift-img-img {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .gift-img-icon {
+                        width: 34px;
+                        height: 34px;
+                        position: absolute;
+                        bottom: 6px;
+                        right: 6px;
+                    }
                 }
 
                 .gift-info {
