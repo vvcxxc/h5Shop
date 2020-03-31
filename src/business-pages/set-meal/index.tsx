@@ -345,7 +345,11 @@ export default class AppreActivity extends Component {
             </View>
             <View className="appre-price-discounts">已优惠￥{accSub(this.state.coupon.return_money, this.state.coupon.pay_money)}</View>
           </View>
-
+          {
+            delivery_service_info.id ? <View className="appre-info-label">
+              <View className="appre-info-label-item">可配送</View>
+            </View> : null
+          }
         </View>
         <Image className="appre-banner-img" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
 
