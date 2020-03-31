@@ -12,6 +12,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/ticket-buy'//   海报无礼品
 import { moneyPoster } from '@/api/poster'
+import { accSub } from '@/components/acc-num'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 
 const share_url = process.env.TICKETBUY_URL;
@@ -219,7 +220,7 @@ export default class TicketBuy extends Component {
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: share_url + this.$router.params.id+ '&invitation_user_id=' + this.state.coupon.invitation_user_id,
+            link: share_url + this.$router.params.id + '&invitation_user_id=' + this.state.coupon.invitation_user_id,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
@@ -242,7 +243,7 @@ export default class TicketBuy extends Component {
   }
 
   render() {
-    const { showPoster, posterList} = this.state
+    const { showPoster, posterList } = this.state
     return (
       <View className="appre-activity-detail">
         {/* 分享组件 */}
@@ -256,9 +257,9 @@ export default class TicketBuy extends Component {
             this.setState({ showShare: false })
           }}
           createPoster={() => {
-            this.setState({ showPoster: true,showShare: false })
-      }}
-    />
+            this.setState({ showPoster: true, showShare: false })
+          }}
+        />
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
           <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>
@@ -301,7 +302,7 @@ export default class TicketBuy extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{Number(this.state.coupon.return_money) - Number(this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSub(this.state.coupon.return_money, this.state.coupon.pay_money)}</View>
           </View>
 
         </View>

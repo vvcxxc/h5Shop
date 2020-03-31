@@ -6,6 +6,7 @@ import { getBrowserType } from "@/utils/common";
 import { groupOrderInfo, toWxPay, getUserYouhuiGroupId } from "./service";
 import { getLocation } from "@/utils/getInfo";
 import Cookie from 'js-cookie';
+import { accAdd } from '@/components/acc-num'
 
 export default class distributionDetail extends Component {
     config = {
@@ -136,8 +137,8 @@ export default class distributionDetail extends Component {
      */
     calculateSumMoney = () => {
         let sum = Number(this.state.data.youhui.pay_money);
-        if (this.state.chooseGift) { sum = sum + Number(this.state.data.youhui.postage) }
-        if (this.state.chooseDistribution) { sum = sum + Number(this.state.data.youhui.supplier_delivery_service_money) }
+        if (this.state.chooseGift) { sum = accAdd(sum, this.state.data.youhui.postage) }
+        if (this.state.chooseDistribution) { sum = accAdd(sum, this.state.data.youhui.supplier_delivery_service_money) }
         this.setState({ sumMoney: sum })
     }
 
@@ -410,7 +411,7 @@ export default class distributionDetail extends Component {
                                 <View className='order-item-words'>￥{this.state.data.youhui.postage}</View>
                             </View> : null
                     }{
-                        this.state.chooseDistribution ?
+                        this.state.chooseDistribution && this.state.data.youhui.is_delivery ?
                             <View className='order-item'>
                                 <View className='order-item-key'>配送金额</View>
                                 <View className='order-item-words'>￥{this.state.data.youhui.supplier_delivery_service_money}</View>

@@ -13,7 +13,7 @@ import wx from 'weixin-js-sdk';
 // import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
-
+import { accSub } from '@/components/acc-num'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
@@ -35,8 +35,8 @@ export default class AppreActivity extends Component {
     //表面收藏
     keepCollect_bull: false,
     coupon: {
-      invitation_user_id:'',
-      share_text:'',
+      invitation_user_id: '',
+      share_text: '',
       begin_time: "",
       brief: "",
       //真正的收藏
@@ -110,10 +110,10 @@ export default class AppreActivity extends Component {
       })
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
 
@@ -295,7 +295,7 @@ export default class AppreActivity extends Component {
             this.setState({ showShare: false })
           }}
           createPoster={() => {
-            this.setState({ showPoster: true, showShare:false})
+            this.setState({ showPoster: true, showShare: false })
           }}
         />
 
@@ -340,7 +340,7 @@ export default class AppreActivity extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{Number(this.state.coupon.return_money) - Number(this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSub(this.state.coupon.return_money, this.state.coupon.pay_money)}</View>
           </View>
 
         </View>
@@ -433,7 +433,7 @@ export default class AppreActivity extends Component {
                         </View>
                       </View>
                       <View className="good_money">
-                      <View className="good_new_money_icon">￥</View>
+                        <View className="good_new_money_icon">￥</View>
                         <View className="good_new_money">{this.state.recommend[0].pay_money}</View>
                         <View className="good_old_money">￥{this.state.recommend[0].return_money}</View>
                       </View>
@@ -462,7 +462,7 @@ export default class AppreActivity extends Component {
                         </View>
                       </View>
                       <View className="good_money">
-                      <View className="good_new_money_icon">￥</View>
+                        <View className="good_new_money_icon">￥</View>
                         <View className="good_new_money">{this.state.recommend[1].pay_money}</View>
                         <View className="good_old_money">￥{this.state.recommend[1].return_money}</View>
                       </View>
@@ -492,7 +492,7 @@ export default class AppreActivity extends Component {
                           </View>
                         </View>
                         <View className="good_money">
-                        <View className="good_new_money_icon">￥</View>
+                          <View className="good_new_money_icon">￥</View>
                           <View className="good_new_money">{item.pay_money}</View>
                           <View className="good_old_money">￥{item.return_money}</View>
                         </View>
@@ -525,7 +525,7 @@ export default class AppreActivity extends Component {
           </View>
           <View className="appre-buy-btn-box" >
             <View className="appre-buy-btn-left" onClick={() => {
-              this.setState({ showShare:true})
+              this.setState({ showShare: true })
             }}>分享活动</View>
             <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
 
