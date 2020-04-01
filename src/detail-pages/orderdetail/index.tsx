@@ -402,8 +402,9 @@ export default class Orderdetail extends Component {
         </View>
         { /* 申请退款 */}
         {
-          this.state.defaultData.status * 1 === 1 && (this.state.defaultData.source == 3 || this.state.defaultData.source == 4 || this.state.defaultData.source == 5) ?
-            <View className='z_applyReturn' >
+          (this.state.defaultData.status * 1 === 1 && (this.state.defaultData.source == 3 || this.state.defaultData.source == 4 || this.state.defaultData.source == 5)) ||
+            (this.state.defaultData.order_delivery_log.delivery_status && this.state.defaultData.order_delivery_log.delivery_status != 1 && this.state.defaultData.order_delivery_log.delivery_status != 2 && this.state.defaultData.order_delivery_log.delivery_status != 3)
+            ? <View className='z_applyReturn' >
               <View className='z_applyReturn_info' onClick={() => { this.setState({ isApply: !this.state.isApply }) }} >申请退款</View>
             </View>
             : null
