@@ -91,7 +91,7 @@ export default class Group extends Component {
     this.setTime()
     this.share()
     let res = this.groupDesc()
-    this.setState({groupDesc: res})
+    this.setState({ groupDesc: res })
   }
 
   // onShareAppMessage() {
@@ -206,10 +206,10 @@ export default class Group extends Component {
    */
   async fetchQrcode(): Promise<void> {
     const { youhui_log_id } = this.state.basicinfo
-    const { data,code } = await getQrcode({ youhui_log_id })
-    if(code == 0){
-      Taro.showToast({title: '卡券已核销使用'})
-    }else{
+    const { data, code } = await getQrcode({ youhui_log_id })
+    if (code == 0) {
+      Taro.showToast({ title: '卡券已核销使用' })
+    } else {
       this.setState({
         isQrcode: true,
         base64: data
@@ -315,11 +315,13 @@ export default class Group extends Component {
     this.setState({ isShare: false });
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index' })
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    console.log(333)
+    Taro.navigateTo({ url: '/pages/index/index' })
+    // Taro.reLaunch({ url: '/pages/index/index' })
   }
   /**
   * 定时
@@ -486,7 +488,7 @@ export default class Group extends Component {
                                   onClick={this.handleClick}
                                 >
                                   参加拼团
-                          </Button>
+                                </Button>
                               )
                             }
                             {
@@ -497,7 +499,7 @@ export default class Group extends Component {
                                   onClick={this.handleClick}
                                 >
                                   去使用
-                        </Button>
+                                </Button>
                               )
                             }
                             {
@@ -509,7 +511,7 @@ export default class Group extends Component {
                                   onClick={this.clickShare}
                                 >
                                   邀请好友参团
-                        </Button>
+                                </Button>
                               )
                             }
                           </View>
@@ -606,7 +608,7 @@ export default class Group extends Component {
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{position: 'fixed', bottom: '80px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '80px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
