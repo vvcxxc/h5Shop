@@ -17,14 +17,17 @@
     position relative
     .coupon-title
       width 100%
+      height auto
       max-height: 61px
       line-height: 32px
       position: relative
-      overflow : hidden
-      text-overflow: ellipsis
-      display: -webkit-box
-      -webkit-line-clamp: 2
-      -webkit-box-orient: vertical
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* autoprefixer: off */
+      -webkit-box-orient: vertical;
+      /* autoprefixer: on */
       .coupon-type
         display inline-block
         background: #ff4444
