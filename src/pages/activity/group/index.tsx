@@ -14,7 +14,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
-import { accAdd } from '@/components/acc-num'
+import { accAdd, accSub } from '@/components/acc-num'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
@@ -633,7 +633,7 @@ export default class GroupActivity extends Component {
               <View className="group-price-info-new">{this.state.data.participation_money}</View>
               <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
             </View>
-            <View className="group-price-discounts">已优惠￥{accAdd(this.state.data.pay_money, this.state.data.participation_money)}</View>
+            <View className="group-price-discounts">已优惠￥{accSub(this.state.data.pay_money, this.state.data.participation_money)}</View>
           </View>
           <View className="group-info-label">
             {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
