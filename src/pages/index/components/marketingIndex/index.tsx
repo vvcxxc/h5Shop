@@ -153,7 +153,9 @@ export default class MarketingIndex extends Component<any> {
               indicatorColor='#999'
               indicatorActiveColor='#333'
               circular
-              onChange={e => this.setState({ bannerTag: e.detail.current + 1 })}
+              onChange={e => {
+                this.setState({ bannerTag: e.detail.current + 1 })
+              }}
               // autoplay
               >
               {
