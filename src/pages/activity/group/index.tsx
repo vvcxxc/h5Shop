@@ -14,7 +14,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
-import { accAdd } from '@/components/acc-num'
+import { accAdd, accSub } from '@/components/acc-num'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
@@ -621,7 +621,7 @@ export default class GroupActivity extends Component {
             }
           </Swiper>
           <View className="banner-number-box">
-            <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+            <View className="banner-number">{accAdd(this.state.bannerImgIndex, 1)}</View>
             <View className="banner-number">{this.state.data.images.length}</View>
           </View>
         </View>
@@ -644,7 +644,7 @@ export default class GroupActivity extends Component {
               <View className="group-price-info-new">{this.state.data.participation_money}</View>
               <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
             </View>
-            <View className="group-price-discounts">已优惠￥{accAdd(this.state.data.pay_money, this.state.data.participation_money)}</View>
+            <View className="group-price-discounts">已优惠￥{accSub(this.state.data.pay_money, this.state.data.participation_money)}</View>
           </View>
           <View className="group-info-label">
             {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
@@ -851,7 +851,7 @@ export default class GroupActivity extends Component {
               <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
               <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
               <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
-              <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View>
+              {/* <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View> */}
             </View> : null
           }
           {
