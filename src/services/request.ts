@@ -43,14 +43,12 @@ export default function request(options: Options) {
           case FETCH_OK:
             return resolve(res.data)
           case FETCH_BAD:
-            console.log(FETCH_BAD)
             Taro.showToast({
               title: data.message || "bad request",
               icon: "none"
             })
             break
           case NOT_SIGN:
-            console.log('没有登录')
             Login();
             return reject(new Error('--- no Sign ---'))
           case NOT_FIND:
@@ -71,7 +69,6 @@ export default function request(options: Options) {
         let aa = err.json()
         let a = await Promise.resolve(aa)
         // a.then(function (result) { console.log(result,123123) })
-        console.log(a, 123123)
         const { code, message } = a;
         switch (code) {
           case SERVER_ERROR:
@@ -81,14 +78,12 @@ export default function request(options: Options) {
             })
             break
           case FETCH_BAD:
-            console.log(FETCH_BAD)
             Taro.showToast({
               title: message,
               icon: "none"
             })
             break
           case NOT_SIGN:
-            console.log('没有登录')
             Login();
             return reject(new Error('--- no Sign ---'))
           case NOT_FIND:

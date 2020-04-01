@@ -16,6 +16,8 @@ import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报�
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
 import { accSubtr, accAdd } from '@/utils/common'
 const share_url = process.env.APPRE_Details_URL;
+const BASIC_API = process.env.BASIC_API;//二维码域名
+import { accAdd } from '@/components/acc-num'
 
 export default class AppreActivity extends Component {
     config = {
@@ -36,6 +38,7 @@ export default class AppreActivity extends Component {
         //查看更多
         showMoreRules: false,
         data: {
+            invitation_user_id: '',
             activity_begin_time: "",
             activity_end_time: "",
             activity_time_status: 0,
@@ -132,12 +135,15 @@ export default class AppreActivity extends Component {
        * 判断是否登录
        */
     goToaConfirm = () => {
+        Taro.showLoading({ title: 'loading', mask: true })
         let phone_status = Cookie.get('phone_status')
         if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+            Taro.hideLoading();
             this.setState({ showBounced: true })
             return
         }
         if (this.state.data.gift_id) {
+            Taro.hideLoading();
             Taro.navigateTo({
                 url: '/activity-pages/confirm-address/index?activityType=1&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.location_name)
             })
@@ -240,11 +246,9 @@ export default class AppreActivity extends Component {
                             }
                         })
                     } else {
-                        console.log(res)
                         that.getLastYouhuiId(order_sn)
                     }
                 }).catch((err) => {
-                    console.log('err', err)
                     that.getLastYouhuiId(order_sn)
                 })
         }, 500);
@@ -382,7 +386,7 @@ export default class AppreActivity extends Component {
                                 <View className='share_text text_top'>
                                     点击此按钮分享给好友
                                     </View>
-                                <Image src={require('@/assets/share_arro.png')} className='share_img' />
+                                <Image src={require('../../../assets/share_arro.png')} className='share_img' />
                             </View>
                         </View>
                     ) : null
@@ -441,7 +445,7 @@ export default class AppreActivity extends Component {
 
                 <View className="appre-store-info">
                     <ApplyToTheStore
-                        id={this.state.data.store_id}
+                        store_id={this.state.data.store_id}
                         isTitle={true}
                         img={this.state.data.preview}
                         name={this.state.data.location_name}

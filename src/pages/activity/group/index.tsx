@@ -14,7 +14,9 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
-import { accSubtr, accAdd } from '@/utils/common'
+import { accSubtr } from '@/utils/common'
+import { accAdd, accSub } from '@/components/acc-num'
+const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
 export default class GroupActivity extends Component {
@@ -40,6 +42,8 @@ export default class GroupActivity extends Component {
     //查看更多
     showMoreRules: false,
     data: {
+      invitation_user_id: '',
+      share_text: '',
       activity_begin_time: "",
       activity_end_time: "",
       activity_id: 0,
@@ -72,7 +76,14 @@ export default class GroupActivity extends Component {
       xpoint: '',
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
-      ypoint: ""
+      ypoint: "",
+      delivery_service_info: {
+        delivery_end_time: '',
+        delivery_radius_m: 0,
+        delivery_service_money: 0,
+        delivery_start_time: '',
+        id: 0
+      }
     },
     data2: {
       data: [],
@@ -112,7 +123,6 @@ export default class GroupActivity extends Component {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
     })
   }
-
 
   /**
    * 获取拼团活动信息
@@ -204,22 +214,24 @@ export default class GroupActivity extends Component {
     * 底部发团参团，判断登录，判断带不带礼品
     */
   goToaConfirm = (e) => {
+    Taro.showLoading({ title: 'loading', mask: true });
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      Taro.hideLoading();
       this.setState({ showBounced: true })
       return
     }
-
-    if (this.state.data.gift_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
       if (this.$router.params.type == '5') {
         //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+        Taro.hideLoading();
         Taro.navigateTo({
-          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
+          url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       } else if (this.$router.params.type == '55') {
-        //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
+        Taro.hideLoading();
         Taro.navigateTo({
-          url: '/activity-pages/confirm-address/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
+          url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       }
     } else {
@@ -231,14 +243,17 @@ export default class GroupActivity extends Component {
     * 列表参团，判断登录，判断带不带礼品
     */
   goToaConfirmAddGroup = (_id, e) => {
+    Taro.showLoading({ title: 'loading', mask: true });
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      Taro.hideLoading();
       this.setState({ showBounced: true })
       return
     }
-    if (this.state.data.gift_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
+      Taro.hideLoading();
       Taro.navigateTo({
-        url: '/activity-pages/confirm-address/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
+        url: '/activity-pages/group-distribution/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
       })
     } else {
       this.groupPayment(_id);
@@ -379,7 +394,6 @@ export default class GroupActivity extends Component {
             function (res) {
               //微信支付成功
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                console.log('微信支付成功')
                 that.goToGroupInfo(_groupid);
               } else { Taro.showToast({ title: "微信支付失败", icon: "none" }); }
             }
@@ -569,7 +583,7 @@ export default class GroupActivity extends Component {
   }
 
   render() {
-    const { description } = this.state.data;
+    const { description, delivery_service_info } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
     return (
       <View className="group-activity-detail">
@@ -654,6 +668,7 @@ export default class GroupActivity extends Component {
             <View className="group-price-discounts">已优惠￥{accSubtr(Number(this.state.data.pay_money), Number(this.state.data.participation_money))}</View>
           </View>
           <View className="group-info-label">
+            {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
             <View className="group-info-label-item">{this.state.data.number}人团</View>
             {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null}
           </View>
@@ -753,7 +768,6 @@ export default class GroupActivity extends Component {
         }
         {/* <Swiper
                     onChange={(e) => {
-                        // console.log(this.state.current, e.detail.current)
                         // if (this.state.current == this.state.list.length - 2) {
                         //     this.setState({ current: 0 })
                         // }
@@ -808,7 +822,7 @@ export default class GroupActivity extends Component {
 
         <View className="group-store-info">
           <ApplyToTheStore
-            id={this.state.data.id}
+            store_id={this.state.data.id}
             isTitle={true}
             img={this.state.data.preview}
             name={this.state.data.name}
@@ -839,7 +853,6 @@ export default class GroupActivity extends Component {
           </View> : null
         }
 
-
         <View className="group-rules">
           <View className="group-title-box">
             <View className='group-title-left'></View>
@@ -853,10 +866,15 @@ export default class GroupActivity extends Component {
             <View className="rules-key"> 拼团时限：</View>
             <View className="rules-words">需{this.state.data.team_set_end_time}时内成团</View>
           </View>
-          {/* <View className="group-rules-item" >
-                        <View className="rules-key">有效期：</View>
-                        <View className="rules-words">成团后7日内可用</View>
-                    </View> */}
+          {
+            delivery_service_info.id ? <View className="group-rules-list-margin">
+              <View className="group-rules-list-title" >配送服务：</View>
+              <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
+              <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
+              <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
+              {/* <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View> */}
+            </View> : null
+          }
           {
             description && description.length && !this.state.showMoreRules ? <View>
               <View className="group-rules-list-title" >使用规则：</View>

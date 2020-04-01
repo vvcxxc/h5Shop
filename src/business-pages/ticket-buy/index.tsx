@@ -1,6 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
 import { AtIcon } from 'taro-ui';
-// import { AtIcon, AtToast, AtTabs, AtTabsPane } from "taro-ui";
 import { View, Text, Image, ScrollView, Button, Swiper, SwiperItem } from "@tarojs/components";
 import "./index.styl";
 import ApplyToTheStore from '@/components/applyToTheStore';
@@ -14,9 +13,13 @@ import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/ticket-buy'//   海报无礼品
 import { moneyPoster } from '@/api/poster'
 import { accSubtr, accAdd } from '@/utils/common'
-
+import { accSub } from '@/components/acc-num'
 const share_url = process.env.TICKETBUY_URL;
 
+const BASIC_API = process.env.BASIC_API;//二维码域名
+
+
+// import ShareBox from '@/components/share-box';
 export default class TicketBuy extends Component {
   config = {
     navigationBarTitleText: "现金券",
@@ -36,6 +39,7 @@ export default class TicketBuy extends Component {
     keepCollect_bull: false,
     is_alert: false, //登录弹窗
     coupon: {
+      invitation_user_id: '',
       begin_time: "",
       brief: "",
       description: [],
@@ -52,7 +56,8 @@ export default class TicketBuy extends Component {
       yname: "",
       youhui_type: 0,
       expire_day: '',
-      total_fee: 0
+      total_fee: 0,
+      images: []
     },
     store: {
       brief: "",
@@ -126,7 +131,7 @@ export default class TicketBuy extends Component {
     }
     Taro.showLoading({ title: 'loading', mask: true })
     getLocation().then((res: any) => {
-      this.toShare();
+      this.toShare()
       this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch(err => {
       this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
@@ -283,15 +288,51 @@ export default class TicketBuy extends Component {
             </View>
           ) : null
         }
-        <Image className='appre-banner' src={this.state.coupon.image}
-          onClick={(e) => {
-            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
-          }}
-        />
-        <View className="banner-number-box">
-          <View className="banner-number">1</View>
-          <View className="banner-number">1</View>
-        </View>
+        {
+          this.state.coupon.images.length ? (
+            <View
+              className="swiper-content"
+              onClick={(e) => {
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.images[this.state.bannerImgIndex] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  this.setState({ bannerImgIndex: e.detail.current })
+                }}
+                className='group-banner'
+                circular
+                autoplay
+              >
+                {
+                  this.state.coupon.images.length ? this.state.coupon.images.map((item, index) => {
+                    return (
+                      <SwiperItem className="group-banner-swiperItem" key={item}>
+                        <Image className="group-banner-img" src={item} />
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+              <View className="banner-number-box">
+                <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                <View className="banner-number">{this.state.coupon.images.length}</View>
+              </View>
+            </View>
+          ) : (
+              <View>
+                <Image className='appre-banner' src={this.state.coupon.image}
+                  onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+                  }} />
+                <View className="banner-number-box">
+                  <View className="banner-number">1</View>
+                  <View className="banner-number">1</View>
+                </View>
+              </View>
+
+            )
+        }
+
         {/* <View className="collect-box">
           <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
         </View>
@@ -299,9 +340,9 @@ export default class TicketBuy extends Component {
           <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
         </View> */}
         <View className="appre-info-content">
-          <View className="appre-info-title">
-            <View className="appre-info-title-label">到店支付可用</View>
-            <View className="appre-info-title-text">{this.state.coupon.yname}</View>
+          <View className="appre-info-title-ticket">
+            <View className="appre-info-title-label-ticket">到店支付可用</View>
+            <View className="appre-info-title-text-ticket">{this.state.coupon.yname}</View>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">
@@ -317,7 +358,7 @@ export default class TicketBuy extends Component {
 
         <View className="appre-store-info">
           <ApplyToTheStore
-            id={this.state.store.id}
+            store_id={this.state.store.id}
             isTitle={true}
             img={this.state.store.shop_door_header_img}
             name={this.state.store.sname}
@@ -378,7 +419,7 @@ export default class TicketBuy extends Component {
                       <View className="good_detail_info">
                         <View className="good_title">
                           <View className="good_type">
-                            <View className="text">{this.state.recommend[0].youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                            <View className="text">{this.state.recommend[0].youhui_type == 0 ? "到店支付可用" : "到店支付可用"}</View>
                           </View>
                           <View className="good_cash">{this.state.recommend[0].yname}</View>
                         </View>
@@ -407,7 +448,7 @@ export default class TicketBuy extends Component {
                       <View className="good_detail_info">
                         <View className="good_title">
                           <View className="good_type">
-                            <View className="text">{this.state.recommend[1].youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                            <View className="text">{this.state.recommend[1].youhui_type == 0 ? "到店支付可用" : "到店支付可用"}</View>
                           </View>
                           <View className="good_cash">{this.state.recommend[1].yname}</View>
                         </View>
@@ -437,7 +478,7 @@ export default class TicketBuy extends Component {
                         <View className="good_detail_info">
                           <View className="good_title">
                             <View className="good_type">
-                              <View className="text">{item.youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                              <View className="text">{item.youhui_type == 0 ? "到店支付可用" : "到店支付可用"}</View>
                             </View>
                             <View className="good_cash">{item.yname}</View>
                           </View>
@@ -480,7 +521,7 @@ export default class TicketBuy extends Component {
           <View className="appre-buy-btn-box" >
             <View className="appre-buy-btn-left" onClick={() => {
               this.setState({ showShare: true })
-            }} >分享活动</View>
+            }}>分享活动</View>
 
             <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
 

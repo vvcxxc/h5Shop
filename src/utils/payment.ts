@@ -13,7 +13,6 @@ export interface Signature {
   paySign: string;
 }
 export const payment = (signature: Signature): Promise<any> => {
-  // console.log("signature",signature)
   let type = getBrowserType()
   if(type == 'wechat'){
     return new Promise((resolve, reject) => {

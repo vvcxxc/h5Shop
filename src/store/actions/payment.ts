@@ -11,7 +11,6 @@ export const getSignature = (params: GetPaymentSignture) =>
       type: types.GET_SIGNATRUE
     })
     const { data, code, message } = await getPaymentSignture(params).catch(err => {
-      console.log(err)
       dispatch({
         type: types.GET_SIGNATRUE_ERROR,
         payload: err

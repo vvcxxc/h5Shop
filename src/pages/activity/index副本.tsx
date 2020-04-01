@@ -71,7 +71,6 @@ export default class Activity extends Component<ActivityProps> {
   componentDidMount() {
     // Taro.showShareMenu()
     this.fetchActivityCenter()
-    // console.log(JSON.parse(sessionStorage.getItem('router'));
 
   }
 
@@ -86,7 +85,6 @@ export default class Activity extends Component<ActivityProps> {
       }
     })
       .then((res: any) => {
-        // console.log(res,'res');
         if (res.code == 200) {
           this.setState({ indexImg: res.data.pic })
           this.setState({ indexImgId: res.data.id })
@@ -173,7 +171,6 @@ export default class Activity extends Component<ActivityProps> {
         menu,
       }
     } = await getActivityCenter(params).catch(err => {
-      console.log(err)
       throw Error("--- 获取活动中心数据错误 ---")
     })
     this.setState({

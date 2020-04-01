@@ -30,7 +30,6 @@ class PagePicker extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         shen = [];
         shi = [];
         qu = [];

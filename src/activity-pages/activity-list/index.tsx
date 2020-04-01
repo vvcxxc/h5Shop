@@ -60,6 +60,17 @@ export default class ActivityList extends Component {
       getList(data).then(res => {
         this.getNewList(res.data.data)
       })
+    }).catch(()=> {
+      let data = {
+        xpoint: '',
+        ypoint: '',
+        channel_id: id,
+        page: 1,
+        from: 'detail'
+      }
+      getList(data).then(res => {
+        this.getNewList(res.data.data)
+      })
     })
     Taro.setNavigationBarTitle({ title: '团购活动列表' })
   }
@@ -84,6 +95,21 @@ export default class ActivityList extends Component {
             this.setState({ is_more: false })
           }
         })
+      }).catch(()=> {
+        let data = {
+          xpoint: '',
+          ypoint: '',
+          channel_id: id,
+          page: this.state.page,
+          from: 'detail'
+        }
+        getList(data).then(res => {
+          if (res.data.data.length) {
+            this.getNewList([...this.state.list, ...res.data.data])
+          } else {
+            this.setState({ is_more: false })
+          }
+        })
       })
 
     })
@@ -92,18 +118,14 @@ export default class ActivityList extends Component {
 
   // 变历数组
   getNewList(arr) {
-    console.log(arr)
     let list = []
-    console.log(list)
     arr.map(res => {
       let { is_share } = res
       if (is_share == 1) {
         // 增值
-        console.log(111)
         res.activity_type = 'appre'
       } else if (is_share == 4) {
         // 现金券兑换券
-        console.log(222)
         if (res.youhui_type) {
           // 现金券
           res.activity_type = 'cash'
@@ -113,7 +135,6 @@ export default class ActivityList extends Component {
         }
       } else if (is_share == 5) {
         // 拼团
-        console.log(333)
         res.activity_type = 'group'
       }
       list.push(res)

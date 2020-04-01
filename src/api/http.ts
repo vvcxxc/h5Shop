@@ -84,7 +84,6 @@ const http = (params: Params): Promise<any> => {
         let aa = err.json()
         let a = await Promise.resolve(aa)
         // a.then(function (result) { console.log(result,123123) })
-        console.log(a, 123123)
         const { code, message } = a;
         switch (code) {
           case SERVER_ERROR:
@@ -94,7 +93,6 @@ const http = (params: Params): Promise<any> => {
             })
             break
           case FETCH_BAD:
-            console.log(FETCH_BAD)
             Taro.showToast({
               title: message,
               icon: "none"

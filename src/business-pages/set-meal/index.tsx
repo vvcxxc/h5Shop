@@ -10,11 +10,16 @@ import LandingBounced from '@/components/landing_bounced'//登录弹框
 import Zoom from '@/components/zoom';
 import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
+// import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
 import {accSubtr } from '@/utils/common'
+import { accSub } from '@/components/acc-num'
+const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
+
+// import ShareBox from '@/components/share-box';
 export default class AppreActivity extends Component {
   config = {
     navigationBarTitleText: "兑换券",
@@ -31,6 +36,8 @@ export default class AppreActivity extends Component {
     //表面收藏
     keepCollect_bull: false,
     coupon: {
+      invitation_user_id: '',
+      share_text: '',
       begin_time: "",
       brief: "",
       //真正的收藏
@@ -48,7 +55,15 @@ export default class AppreActivity extends Component {
       return_money: "",
       yname: "",
       youhui_type: 0,
-      expire_day: ''
+      expire_day: '',
+      images: []
+    },
+    delivery_service_info: {
+      delivery_end_time: '',
+      delivery_radius_m: 0,
+      delivery_service_money: 0,
+      delivery_start_time: '',
+      id: 0
     },
     store: {
       brief: "",
@@ -84,7 +99,6 @@ export default class AppreActivity extends Component {
       youhui_type: 0,
       expire_day: '',
     }],
-
     isFromShare: false,
     is_alert: false,
     showAll: false,
@@ -107,10 +121,10 @@ export default class AppreActivity extends Component {
       })
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
 
@@ -143,7 +157,8 @@ export default class AppreActivity extends Component {
           coupon: res.data.info.coupon,
           store: res.data.info.store,
           goods_album: res.data.info.goods_album,
-          recommend: res.data.recommend.data
+          recommend: res.data.recommend.data,
+          delivery_service_info: res.data.delivery_service_info
         })
       }).catch(err => {
         Taro.hideLoading()
@@ -163,7 +178,7 @@ export default class AppreActivity extends Component {
       return
     }
     Taro.navigateTo({
-      url: '../../business-pages/confirm-order/index?id=' + id
+      url: '../../business-pages/coupon-distribution/index?id=' + id
     })
   }
 
@@ -283,7 +298,7 @@ export default class AppreActivity extends Component {
 
   render() {
     const { description } = this.state.coupon;
-    const { showPoster, posterList } = this.state
+    const { showPoster, posterList, delivery_service_info } = this.state
     return (
       <View className="appre-activity-detail">
         {/* 分享组件 */}
@@ -317,14 +332,50 @@ export default class AppreActivity extends Component {
             </View>
           ) : null
         }
-        <Image className='appre-banner' src={this.state.coupon.image}
-          onClick={(e) => {
-            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
-          }} />
-        <View className="banner-number-box">
-          <View className="banner-number">1</View>
-          <View className="banner-number">1</View>
-        </View>
+        {
+          this.state.coupon.images.length ? (
+            <View
+              className="swiper-content"
+              onClick={(e) => {
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.images[this.state.bannerImgIndex] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  this.setState({ bannerImgIndex: e.detail.current })
+                }}
+                className='group-banner'
+                circular
+                autoplay
+              >
+                {
+                  this.state.coupon.images.length ? this.state.coupon.images.map((item, index) => {
+                    return (
+                      <SwiperItem className="group-banner-swiperItem" key={item}>
+                        <Image className="group-banner-img" src={item} />
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+              <View className="banner-number-box">
+                <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                <View className="banner-number">{this.state.coupon.images.length}</View>
+              </View>
+            </View>
+          ) : (
+              <View>
+                <Image className='appre-banner' src={this.state.coupon.image}
+                  onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+                  }} />
+                <View className="banner-number-box">
+                  <View className="banner-number">1</View>
+                  <View className="banner-number">1</View>
+                </View>
+              </View>
+
+            )
+        }
         {/* <View className="collect-box">
           <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
         </View>
@@ -332,9 +383,9 @@ export default class AppreActivity extends Component {
           <Image className="share-img" src="http://oss.tdianyi.com/front/Af5WfM7xaAjFHSWNeCtY4Hnn4t54i8me.png" />
         </View> */}
         <View className="appre-info-content">
-          <View className="appre-info-title">
-            <View className="appre-info-title-label">小熊敬礼</View>
-            <View className="appre-info-title-text">{this.state.coupon.yname}</View>
+          <View className="appre-info-title-setmeal">
+            <View className="appre-info-title-label-setmeal">小熊敬礼</View>
+            <View className="appre-info-title-text-setmeal">{this.state.coupon.yname}</View>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">
@@ -344,13 +395,17 @@ export default class AppreActivity extends Component {
             </View>
             <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money)) }</View>
           </View>
-
+          {
+            delivery_service_info.id ? <View className="appre-info-label">
+              <View className="appre-info-label-item">可配送</View>
+            </View> : null
+          }
         </View>
         <Image className="appre-banner-img" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
 
         <View className="appre-store-info">
           <ApplyToTheStore
-            id={this.state.store.id}
+            store_id={this.state.store.id}
             isTitle={true}
             img={this.state.store.shop_door_header_img}
             name={this.state.store.sname}
@@ -360,8 +415,6 @@ export default class AppreActivity extends Component {
             meter={this.state.store.distance}
           />
         </View>
-
-
 
         <View className="appre-rules">
           <View className="appre-title-box">
@@ -373,6 +426,15 @@ export default class AppreActivity extends Component {
             <View className="rules-key">有效期：</View>
             <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
           </View>
+          {
+            delivery_service_info.id ? <View className="group-rules-list-margin">
+              <View className="group-rules-list-title" >配送服务：</View>
+              <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
+              <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
+              <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
+              {/* <View className="group-rules-list-text" >-联系电话：{this.state.store.tel}</View> */}
+            </View> : null
+          }
           {
             description && description.length && !this.state.showMoreRules ? <View>
               <View className="appre-rules-list-title" >使用规则：</View>
@@ -426,7 +488,7 @@ export default class AppreActivity extends Component {
                       <View className="good_detail_info">
                         <View className="good_title">
                           <View className="good_type">
-                            <View className="text">{this.state.recommend[0].youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                            <View className="text">{this.state.recommend[0].youhui_type == 0 ? "小熊敬礼" : "小熊敬礼"}</View>
                           </View>
                           <View className="good_cash">{this.state.recommend[0].yname}</View>
                         </View>
@@ -435,7 +497,7 @@ export default class AppreActivity extends Component {
                         </View>
                       </View>
                       <View className="good_money">
-                      <View className="good_new_money_icon">￥</View>
+                        <View className="good_new_money_icon">￥</View>
                         <View className="good_new_money">{this.state.recommend[0].pay_money}</View>
                         <View className="good_old_money">￥{this.state.recommend[0].return_money}</View>
                       </View>
@@ -455,7 +517,7 @@ export default class AppreActivity extends Component {
                       <View className="good_detail_info">
                         <View className="good_title">
                           <View className="good_type">
-                            <View className="text">{this.state.recommend[1].youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                            <View className="text">{this.state.recommend[1].youhui_type == 0 ? "小熊敬礼" : "小熊敬礼"}</View>
                           </View>
                           <View className="good_cash">{this.state.recommend[1].yname}</View>
                         </View>
@@ -464,7 +526,7 @@ export default class AppreActivity extends Component {
                         </View>
                       </View>
                       <View className="good_money">
-                      <View className="good_new_money_icon">￥</View>
+                        <View className="good_new_money_icon">￥</View>
                         <View className="good_new_money">{this.state.recommend[1].pay_money}</View>
                         <View className="good_old_money">￥{this.state.recommend[1].return_money}</View>
                       </View>
@@ -485,7 +547,7 @@ export default class AppreActivity extends Component {
                         <View className="good_detail_info">
                           <View className="good_title">
                             <View className="good_type">
-                              <View className="text">{item.youhui_type == 0 ? "小熊敬礼" : "到店支付可用"}</View>
+                              <View className="text">{item.youhui_type == 0 ? "小熊敬礼" : "小熊敬礼"}</View>
                             </View>
                             <View className="good_cash">{item.yname}</View>
                           </View>
@@ -494,7 +556,7 @@ export default class AppreActivity extends Component {
                           </View>
                         </View>
                         <View className="good_money">
-                        <View className="good_new_money_icon">￥</View>
+                          <View className="good_new_money_icon">￥</View>
                           <View className="good_new_money">{item.pay_money}</View>
                           <View className="good_old_money">￥{item.return_money}</View>
                         </View>

@@ -14,7 +14,9 @@ export default class RecommendBox extends Component<Props> {
   }
   state = {
     list: [1, 2, 3, 4, 5, 6, 7],
-    result: [[]]
+    result: [[]],
+    flag: false,
+    current: 0
   }
   componentDidMount() {
   }
@@ -27,7 +29,7 @@ export default class RecommendBox extends Component<Props> {
           result.push(list.slice(i, i + 3));
         }
       }
-      this.setState({ result })
+      this.setState({ result, flag: true })
     }
 
   }
@@ -39,8 +41,18 @@ export default class RecommendBox extends Component<Props> {
     Taro.navigateTo({url: '/activity-pages/activity-list/index?id=' + id})
   }
 
+  handleChange(e){
+    if(this.state.result.length == e.detail.current+1){
+      setTimeout(()=>{
+        this.setState({current: this.state.current+1})
+      },5000)
+    }
+    // this.setState({current: e.detail.current})
+  }
+
   render() {
     const { result } = this.state
+
     return (
       <View className='recommend-box'>
         <View className='recommend-title-box'>
@@ -63,22 +75,27 @@ export default class RecommendBox extends Component<Props> {
           <View className='look-more' onClick={this.goTo}>查看更多</View>
         </View>
         <View>
-          <Swiper
+          {
+            result.length ? (
+              <Swiper
             className='coupon-list'
             indicatorColor='#999'
             indicatorActiveColor='#333'
             circular
             // indicatorDots
+            interval={5000}
             autoplay
+            key={this.state.current}
+            onChange={this.handleChange.bind(this)}
             >
             {
-              result.length ? result.map((res: any) => {
+              this.state.flag ? result.map((res: any,idx) => {
                 return (
-                  <SwiperItem>
+                  <SwiperItem key={idx}>
                     <View className='coupon-list-item'>
                       {
                         res.map((item: any, index: any) => (
-                          <View className='recommend-coupon-box' onClick={this.handleClick.bind(this,item)} key={item.channel_id}>
+                          <View className='recommend-coupon-box' key={item.id} onClick={this.handleClick.bind(this,item)} key={item.channel_id}>
                             <Image src={'http://oss.tdianyi.com/'+ item.icon} className='recommend-coupon-img' />
                             <View className='recommend-coupon-name ellipsis-one'>
                               {item.name}
@@ -99,8 +116,10 @@ export default class RecommendBox extends Component<Props> {
                 )
               }) : null
             }
-
           </Swiper>
+            ) : null
+          }
+
         </View>
       </View>
     )

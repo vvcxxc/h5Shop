@@ -85,14 +85,13 @@ export default class Group extends Component {
      */
     Taro.setStorageSync("authid", id)
     const location = await getLocation().catch(err => {
-      console.log(err)
     })
     await this.fetchBasicinfo(id)
     this.fetchCoupon(location)
     this.setTime()
     this.share()
     let res = this.groupDesc()
-    this.setState({groupDesc: res})
+    this.setState({ groupDesc: res })
   }
 
   // onShareAppMessage() {
@@ -160,7 +159,6 @@ export default class Group extends Component {
    * 计算: 已完成?|参团?|去使用?
    */
   handleCalculate(data: any): void {
-    // console.log(data)
     const {
       number: groupNumber,
       participation_number: groupParticipator,
@@ -175,7 +173,6 @@ export default class Group extends Component {
     // const isJoin = true
     // const isShowUse = false
     const isShowStartGroup = isFinish && !is_group_participation
-    console.log(is_group_participation, '222')
     this.setState({
       isFinish,
       isJoin,
@@ -192,7 +189,6 @@ export default class Group extends Component {
       basicinfo: { youhui_log_id }
     } = this.state
     const { data } = await listenQrcodeForGroup({ youhui_log_id })
-    console.log(data.status, '二维码status')
     if (data.status === USED) {
       this.setState({
         isQrcode: false
@@ -210,10 +206,10 @@ export default class Group extends Component {
    */
   async fetchQrcode(): Promise<void> {
     const { youhui_log_id } = this.state.basicinfo
-    const { data,code } = await getQrcode({ youhui_log_id })
-    if(code == 0){
-      Taro.showToast({title: '卡券已核销使用'})
-    }else{
+    const { data, code } = await getQrcode({ youhui_log_id })
+    if (code == 0) {
+      Taro.showToast({ title: '卡券已核销使用' })
+    } else {
       this.setState({
         isQrcode: true,
         base64: data
@@ -263,7 +259,6 @@ export default class Group extends Component {
       group_id: id
     }
     const { data } = await getCouponinforForGroup(params)
-    console.log(data)
     const { gift_id = "", activity_id = "" } = data
     this.fetchGiftinfo(gift_id, activity_id)
     this.handleCalculate(data)
@@ -320,11 +315,13 @@ export default class Group extends Component {
     this.setState({ isShare: false });
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index' })
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    console.log(333)
+    Taro.navigateTo({ url: '/pages/index/index' })
+    // Taro.reLaunch({ url: '/pages/index/index' })
   }
   /**
   * 定时
@@ -407,7 +404,6 @@ export default class Group extends Component {
       isShowStartGroup,
       groupDesc
     } = this.state
-    console.log(isFinish, '123')
     const surplus = basicinfo.number
       ? basicinfo.number - basicinfo.participation_number
       : 0
@@ -492,7 +488,7 @@ export default class Group extends Component {
                                   onClick={this.handleClick}
                                 >
                                   参加拼团
-                          </Button>
+                                </Button>
                               )
                             }
                             {
@@ -503,7 +499,7 @@ export default class Group extends Component {
                                   onClick={this.handleClick}
                                 >
                                   去使用
-                        </Button>
+                                </Button>
                               )
                             }
                             {
@@ -515,7 +511,7 @@ export default class Group extends Component {
                                   onClick={this.clickShare}
                                 >
                                   邀请好友参团
-                        </Button>
+                                </Button>
                               )
                             }
                           </View>
@@ -612,7 +608,7 @@ export default class Group extends Component {
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{position: 'fixed', bottom: '80px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '80px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
