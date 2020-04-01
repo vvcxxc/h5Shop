@@ -41,6 +41,7 @@ export default class RecommendBox extends Component<Props> {
 
   render() {
     const { result } = this.state
+
     return (
       <View className='recommend-box'>
         <View className='recommend-title-box'>
