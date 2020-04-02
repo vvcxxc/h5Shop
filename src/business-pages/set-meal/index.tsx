@@ -488,7 +488,7 @@ export default class AppreActivity extends Component {
                 <View className="title">更多本店宝贝</View>
               </View>
               {
-                this.state.recommend.length > 0 && !this.state.showAll ? <View className="good_info">
+                this.state.recommend.length > 0 && !this.state.showAll ? <View className="good_info" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[0].youhui_type, this.state.recommend[0].id)}>
                   <View className="good_msg">
                     <Image className="good_img" src={this.state.recommend[0].image} />
 
@@ -512,13 +512,13 @@ export default class AppreActivity extends Component {
                     </View>
                   </View>
 
-                  <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[0].youhui_type, this.state.recommend[0].id)}>
+                  <View className="good_btn">
                     <View className="text">抢购</View>
                   </View>
                 </View> : null
               }
               {
-                this.state.recommend.length > 1 && !this.state.showAll ? <View className="good_info">
+                this.state.recommend.length > 1 && !this.state.showAll ? <View className="good_info" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[1].youhui_type, this.state.recommend[1].id)}>
                   <View className="good_msg">
                     <Image className="good_img" src={this.state.recommend[1].image} />
                     <View className="good_detail">
@@ -540,14 +540,14 @@ export default class AppreActivity extends Component {
                       </View>
                     </View>
                   </View>
-                  <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[1].youhui_type, this.state.recommend[1].id)}>
+                  <View className="good_btn">
                     <View className="text">抢购</View>
                   </View>
                 </View> : null
               }
               {
                 this.state.showAll && this.state.recommend.map((item) => (
-                  <View className="good_info">
+                  <View className="good_info" onClick={this.gotoTicketBuy.bind(this, item.youhui_type, item.id)}>
                     <View className="good_msg">
                       <Image className="good_img" src={item.image} />
 
@@ -571,7 +571,7 @@ export default class AppreActivity extends Component {
                       </View>
                     </View>
 
-                    <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, item.youhui_type, item.id)}>
+                    <View className="good_btn">
                       <View className="text">抢购</View>
                     </View>
                   </View>
