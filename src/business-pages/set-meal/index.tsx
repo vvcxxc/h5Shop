@@ -15,6 +15,8 @@ import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
 import {accSubtr } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
+import QRCode from 'qrcode';
+
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
@@ -106,18 +108,30 @@ export default class AppreActivity extends Component {
     showMoreRules: false,
     showShare: false, //显示分享
     isShare: false,
-    posterList: {},
-    showPoster: false,
-    securityPoster: false// fasle不允许显示海报
+    posterList: {
+      name:'',
+      store: {
+        name: '',
+        address:''
+      },
+
+    },
+    showPoster: false
   }
 
   componentDidMount() {
     let youhui_id = this.$router.params.id
     shopPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data }, () => {
-          this.setState({ securityPoster: true })
-        })
+        QRCode.toDataURL(data.link)
+          .then((url: any) => {
+            this.setState({
+              posterList: { ...data, qr_code: url }
+            })
+          })
+          .catch((err: any) => {
+            console.log('二维码生成失败', err, 'err')
+          })
       })
   }
 
@@ -288,14 +302,6 @@ export default class AppreActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
-  createPosterData = () => {
-    if (this.state.securityPoster) {
-      this.setState({ showPoster: true, showShare: false })
-    } else {
-      Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
-    }
-  }
-
   render() {
     const { description } = this.state.coupon;
     const { showPoster, posterList, delivery_service_info } = this.state
@@ -313,7 +319,9 @@ export default class AppreActivity extends Component {
             this.buttonToShare()
             this.setState({ showShare: false })
           }}
-          createPoster={this.createPosterData}
+          createPoster={() => {
+            this.setState({ showPoster: true, showShare: false })
+          }}
         />
 
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>

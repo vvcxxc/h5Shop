@@ -16,6 +16,8 @@ import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
 import { accSubtr } from '@/utils/common'
 import { accAdd, accSub } from '@/components/acc-num'
+import QRCode from 'qrcode'; //生成二维码
+
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
@@ -110,6 +112,8 @@ export default class GroupActivity extends Component {
     securityPoster: false// fasle不允许显示海报
   };
 
+
+
   /**
        * 获取位置信息
        */
@@ -122,6 +126,12 @@ export default class GroupActivity extends Component {
     }).catch((err) => {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
     })
+  }
+
+  componentDidMount() {
+    console.log(this.$router.params.id, 'this.$router.params.id')
+    this.setState({ securityPoster: true })
+    this.getPostList()
   }
 
   /**
@@ -140,10 +150,9 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
+
           that.setState({ data: res.data, isPostage }, () => {
-            this.getPostList();
             this.toShare();
-            this.setState({ securityPoster: true })
           });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
@@ -561,10 +570,18 @@ export default class GroupActivity extends Component {
 
   /* 请求海报数据 */
   getPostList = () => {
-    const { youhui_id } = this.state.data
+    let youhui_id = this.$router.params.id
     getGroupPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data })
+        QRCode.toDataURL(data.link)                                      // 网络链接转化为二维码
+          .then((url: any) => {
+            this.setState({
+              posterList: { ...data, qr_code: url }
+            })
+          })
+          .catch((err: any) => {
+            console.log('二维码生成失败', err, 'err')
+          })
       })
 
   }
@@ -585,6 +602,7 @@ export default class GroupActivity extends Component {
   render() {
     const { description, delivery_service_info } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
+    // console.log(posterList,'ddd')
     return (
       <View className="group-activity-detail">
         {/* 分享组件 */}
@@ -602,10 +620,16 @@ export default class GroupActivity extends Component {
           createPoster={this.createPosterData}
         />
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
-          <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          < Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>
         </View>
-
+        {
+          // posterList.store.name && posterList.image ?
+          //   <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+          //     < Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          //     <View className="click-save">长按保存图片到相册</View>
+          //   </View> : null
+        }
         {
           this.state.isShare == true ? (
             <View className='share_mask' onClick={this.closeShare}>

@@ -18,12 +18,14 @@
 
     .spell-group-main {
       .gift-img {
-        text-align: center;
+        display: flex;
+        justify-content: center;
         height: 507px;
         position: relative;
 
         .gift-image {//主图
           height 100%;
+          width: auto;
         }
 
         .give-gift {
@@ -39,6 +41,7 @@
           .give-gift-first-line {
             padding: 12px 0px;
             font-size: 28px;
+            text-align: center;
             font-family: PingFang SC;
             font-weight: 800;
             color: rgba(255, 255, 255, 1);
@@ -243,10 +246,12 @@
   z-index: 100;
   width: 544px;
   height auto;
+  //  height 880px
 }
 
 .spell_group-ql {
   position relative;
   width: 544px;
   height 880px;
+  overflow hidden;
 }

@@ -8,7 +8,8 @@ import './other.styl'
 interface Props {
   show: boolean,
   onClose: () => void,
-  list: any
+  list: any,
+  type:string
 }
 // 拼团海报
 export default class OtherPoster extends Component<Props> {
@@ -32,11 +33,12 @@ export default class OtherPoster extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
+
     if (nextProps.show && !this.state.show) {
-      const { list, show } = nextProps
-      list.youhui_type == 0 ? Taro.showLoading({ title: 'loading', mask: true }):null
+      const { list, show ,type} = nextProps
+      list.youhui_type == 0 && type =='Other' ? Taro.showLoading({ title: 'loading', mask: true }):null
       this.setState({
-        show: list.youhui_type == 0 ? true : false,
+        show: list.youhui_type == 0 && type == 'Other' ? true : false,
         listData: {
           image: list.image,
           pay_money: list.pay_money,
@@ -51,7 +53,7 @@ export default class OtherPoster extends Component<Props> {
         }
       }, () => {
           setTimeout(() => {
-            list.youhui_type == 0 ?    Taro.hideLoading():null
+            list.youhui_type == 0 && type == 'Other' ?    Taro.hideLoading():null
             this.showMyPoster()
           }, 800);
       })
