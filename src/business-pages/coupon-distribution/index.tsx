@@ -54,7 +54,8 @@ export default class distributionDetail extends Component {
             province: "",
             province_id: 0,
             user_id: 0
-        }
+        },
+        tipsMessage: ''
 
     }
     componentDidShow() {
@@ -368,6 +369,14 @@ export default class distributionDetail extends Component {
                     </View>
                     <View className="paymoney_buynow" onClick={this.payMoney.bind(this)} >提交订单</View>
                 </View>
+
+
+                <View className="tips-mask">
+                    <View className="tips-content"></View>
+                </View>
+
+
+
             </View>
         );
     }
