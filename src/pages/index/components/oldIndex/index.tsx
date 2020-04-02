@@ -97,6 +97,7 @@ export default class Index extends Component<any> {
       let res = {
         data: router
       }
+      console.log('触发444')
       if(router.type_index_id){ // 存在并且等于1，是营销首页
         return
       }
