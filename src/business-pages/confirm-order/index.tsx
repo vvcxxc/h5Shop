@@ -32,7 +32,7 @@ export default class ConfirmOrder extends Component {
       id: "",
       sname: ""
     },
-
+    tipsMessage: ''
   };
   componentWillMount() {
 
@@ -229,6 +229,16 @@ export default class ConfirmOrder extends Component {
             ￥{this.state.tempNum} 去支付
           </View>
         </View>
+
+        {
+          this.state.tipsMessage ? <View className="tips-mask">
+            <View className="tips-content">
+              <View className="tips-title">提现申请失败</View>
+              <View className="tips-info">{this.state.tipsMessage}</View>
+              <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
+            </View>
+          </View> : null
+        }
       </View>
     );
   }
