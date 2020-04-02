@@ -390,14 +390,14 @@ export default class PaySuccess extends Component<Props> {
               <View className="name">{this.state.business_list.name}</View>
               {/* <View className="money">人均：￥62</View> */}
             </View>
-            {
+            {/* {
 
               this.state.keepCollect_bull ?
                 <AtIcon className="image" value="star-2" color="#FFBF00" size="24px" onClick={this.keepCollect.bind(this)} />
                 :
                 <AtIcon className="image" value="star" color="#999" size="24px" onClick={this.keepCollect.bind(this)} />
 
-            }
+            } */}
           </View>
           <ScrollView scrollX className="scroll-view" >
             <View className="flex">
