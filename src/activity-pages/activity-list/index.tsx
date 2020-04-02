@@ -11,7 +11,7 @@ import { getList } from './service'
 
 export default class ActivityList extends Component {
   config = {
-    navigationBarTitleText: "",
+    // navigationBarTitleText: "",
     enablePullDownRefresh: false
   };
 
@@ -28,8 +28,11 @@ export default class ActivityList extends Component {
     let that = this;
     switch (id) {
       case '1':
-        Taro.setNavigationBarTitle({ title: '网红店推荐活动列表' });
-        console.log(id, this)
+        Taro.setNavigationBarTitle({ title: '网红店推荐活动列表' }).then(res => {
+          console.log(res,'res')
+        }).catch(err => {
+          console.log(err)
+        });
         that.setState({ bannerImg: "http://oss.tdianyi.com/front/hSBhjxfpWprBHmJijdaGwtWPfSsJ6X4y.png" });
         break
       case '2':
@@ -48,6 +51,8 @@ export default class ActivityList extends Component {
         Taro.setNavigationBarTitle({ title: '品牌连锁推荐活动列表' });
         that.setState({ bannerImg: "http://oss.tdianyi.com/front/aSFeTMpP5dSFTKX3YAf6xYzFhFzAaDGe.png" });
         break
+      default:
+        Taro.setNavigationBarTitle({ title: '活动列表' });
     }
     getLocation().then(res => {
       let data = {
@@ -72,7 +77,7 @@ export default class ActivityList extends Component {
         this.getNewList(res.data.data)
       })
     })
-    Taro.setNavigationBarTitle({ title: '团购活动列表' })
+    // Taro.setNavigationBarTitle({ title: '团购活动列表' })
   }
   onReachBottom() {
     if (!this.state.is_more) { // 下一页没数据
