@@ -25,7 +25,8 @@ export default class ConfirmOrder extends Component {
       brief: "",
       list_brief: "",
       description: "0",
-      yname: ""
+      yname: "",
+      total_num: 0
     },
     store: {
       id: "",
@@ -60,7 +61,7 @@ export default class ConfirmOrder extends Component {
 
   }
   addnum() {
-    if (this.state.amount < 10) {
+    if (this.state.amount < 10 && this.state.amount < this.state.coupon.total_num) {
       this.setState({ amount: Number(this.state.amount) + 1 }, () => {
         this.accMul();
       })
@@ -208,7 +209,7 @@ export default class ConfirmOrder extends Component {
               <View className="amount" >{this.state.amount}</View>
               {/* <AtIcon value="add-circle" color={this.state.amount < 10 ? "#FF6654" : "#999"} onClick={this.addnum.bind(this)} /> */}
               <View className="addimg" style={{ width: "22px", height: "22px" }} onClick={this.addnum.bind(this)}>
-                <Image className="image" style={{ width: "100%", height: "100%" }} src={this.state.amount < 10 ? addimg : addimg2} />
+                <Image className="image" style={{ width: "100%", height: "100%" }} src={this.state.amount < 10 && this.state.amount < this.state.coupon.total_num ? addimg : addimg2} />
               </View>
             </View>
           </View>
