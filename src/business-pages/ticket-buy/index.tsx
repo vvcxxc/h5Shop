@@ -12,7 +12,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/ticket-buy'//   海报无礼品
 import { moneyPoster } from '@/api/poster'
-import { accSubtr, accAdd } from '@/utils/common'
+import { accSubtr } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
 const share_url = process.env.TICKETBUY_URL;
 
@@ -57,7 +57,8 @@ export default class TicketBuy extends Component {
       youhui_type: 0,
       expire_day: '',
       total_fee: 0,
-      images: []
+      images: [],
+      total_num: 0
     },
     store: {
       brief: "",
@@ -350,7 +351,7 @@ export default class TicketBuy extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money))}</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money), Number(this.state.coupon.pay_money))}</View>
           </View>
 
         </View>
@@ -522,9 +523,10 @@ export default class TicketBuy extends Component {
             <View className="appre-buy-btn-left" onClick={() => {
               this.setState({ showShare: true })
             }}>分享活动</View>
-
-            <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
-
+            {
+              this.state.coupon.total_num ? <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View> :
+                <View className="appre-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>库存不足</View>
+            }
           </View>
         </View>
         {
@@ -545,7 +547,7 @@ export default class TicketBuy extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
-      </View>
+      </View >
     );
   }
 }
