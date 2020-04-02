@@ -14,6 +14,7 @@ import { geValueAddedPoster } from '@/api/poster'
 import HavegiftPoster from '@/components/posters/value_added/have-gift'// 海报存在礼品
 import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报无礼品
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
+import { accSubtr, accAdd } from '@/utils/common'
 const share_url = process.env.APPRE_Details_URL;
 const BASIC_API = process.env.BASIC_API;//二维码域名
 import { accAdd } from '@/components/acc-num'
@@ -84,7 +85,8 @@ export default class AppreActivity extends Component {
             },
             youhui_type: ''
         },
-        posterType: ''
+        posterType: '',
+        securityPoster: false// fasle不允许显示海报
     };
 
     /**
@@ -117,6 +119,7 @@ export default class AppreActivity extends Component {
                     if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
                     this.setState({ data: res.data, isPostage }, () => {
                         this.toShare()
+                        this.setState({ securityPoster: true })
                     });
                 } else {
                     Taro.showToast({ title: '请求失败', icon: 'none' });
@@ -343,81 +346,12 @@ export default class AppreActivity extends Component {
         this.setState({ showPoster: false, showShare: false })
     }
 
-    toShare = () => {
-        let userAgent = navigator.userAgent;
-        let isIos = userAgent.indexOf('iPhone') > -1;
-        let url: any;
-        if (isIos) {
-            url = sessionStorage.getItem('url');
+    createPosterData = () => {
+        if (this.state.securityPoster) {
+            this.setState({ showPoster: true, showShare: false })
         } else {
-            url = location.href;
+            Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
         }
-        let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
-        let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
-        let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
-        Taro.request({
-            url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
-            method: 'GET',
-            data: {
-                url
-            }
-        })
-            .then(res => {
-                let { data } = res;
-                wx.config({
-                    debug: false,
-                    appId: data.appId,
-                    timestamp: data.timestamp,
-                    nonceStr: data.nonceStr,
-                    signature: data.signature,
-                    jsApiList: [
-                        'updateAppMessageShareData',
-                        'updateTimelineShareData',
-                        'onMenuShareAppMessage', //旧的接口，即将废弃
-                        'onMenuShareTimeline'//旧的接口，即将废弃
-                    ]
-                })
-                wx.ready(() => {
-                    wx.updateAppMessageShareData({
-                        title: titleMsg,
-                        desc: descMsg,
-                        link: linkMsg + '&invitation_user_id=' + this.state.data.invitation_user_id,
-                        imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
-                        success: function () {
-                            //成功后触发
-                        }
-                    })
-                })
-            })
-    }
-
-    buttonToShare = () => {
-        this.setState({ isShare: true });
-    }
-    closeShare = () => {
-        this.setState({ isShare: false });
-    }
-
-    /* 请求海报数据 */
-    getPostList = (id: number) => {
-        geValueAddedPoster({ youhui_id: id, from: 'h5' })
-            .then(({ data, code }) => {
-                this.setState({ posterList: data })
-                switch (data.youhui_type) {
-                    case 0:
-                        this.setState({ posterType: 'Other' })
-                        break;
-                    default:
-                        this.setState({ posterType: data.gift.gift_pic ? 'HaveGift' : 'NoGift' })
-                        break;
-                }
-
-            })
-    }
-
-    /* 关闭海报 */
-    closePoster = () => {
-        this.setState({ showPoster: false, showShare: false })
     }
 
     render() {
@@ -436,14 +370,12 @@ export default class AppreActivity extends Component {
                         this.buttonToShare()
                         this.setState({ showShare: false })
                     }}
-                    createPoster={() => {
-                        this.setState({ showPoster: true, showShare: false })
-                    }}
+                    createPoster={this.createPosterData}
                 />
                 <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
-                    <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
-                    <NogiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
-                    <OtherPoster show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <HavegiftPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <NogiftPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <OtherPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
                     <View className="click-save">长按保存图片到相册</View>
                 </View>
 
