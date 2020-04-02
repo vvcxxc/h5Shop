@@ -14,6 +14,7 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
+import { accSubtr } from '@/utils/common'
 import { accAdd, accSub } from '@/components/acc-num'
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
@@ -93,8 +94,20 @@ export default class GroupActivity extends Component {
     newGroupList: [],
     showShare: false, //显示分享
     isShare: false,
-    posterList: {},
     showPoster: false,
+    posterList: {//海报数据
+      gift: {
+        gift_pic: '',
+        gift_price: ''
+      },
+      store: {
+        name: '',
+        address: ''
+      },
+      youhui_type: ''
+    },
+    posterType: '',
+    securityPoster: false// fasle不允许显示海报
   };
 
   /**
@@ -105,7 +118,6 @@ export default class GroupActivity extends Component {
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
     getLocation().then((res: any) => {
-      this.toShare()
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch((err) => {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
@@ -128,7 +140,11 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
-          that.setState({ data: res.data, isPostage }, () => { this.getPostList() });
+          that.setState({ data: res.data, isPostage }, () => {
+            this.getPostList();
+            this.toShare();
+            this.setState({ securityPoster: true })
+          });
         } else {
           Taro.showToast({ title: '请求失败', icon: 'none' });
         }
@@ -138,6 +154,7 @@ export default class GroupActivity extends Component {
         that.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
       })
   }
+
 
   /**
     * 获取拼团列表
@@ -197,20 +214,22 @@ export default class GroupActivity extends Component {
     * 底部发团参团，判断登录，判断带不带礼品
     */
   goToaConfirm = (e) => {
+    Taro.showLoading({ title: 'loading', mask: true });
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      Taro.hideLoading();
       this.setState({ showBounced: true })
       return
     }
-
-    if (this.state.data.gift_id) {
-      if (this.$router.params.type == '5' || this.state.data.supplier_delivery_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
+      if (this.$router.params.type == '5') {
         //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
+        Taro.hideLoading();
         Taro.navigateTo({
           url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
       } else if (this.$router.params.type == '55') {
-        //打开分享链接进入参团，接口的youhui_id为活动id，路由过来的id为团id
+        Taro.hideLoading();
         Taro.navigateTo({
           url: '/activity-pages/group-distribution/index?activityType=' + this.$router.params.type + '&id=' + this.$router.params.id + '&groupId=' + this.$router.params.publictypeid + '&storeName=' + encodeURIComponent(this.state.data.name)
         })
@@ -224,12 +243,15 @@ export default class GroupActivity extends Component {
     * 列表参团，判断登录，判断带不带礼品
     */
   goToaConfirmAddGroup = (_id, e) => {
+    Taro.showLoading({ title: 'loading', mask: true });
     let phone_status = Cookie.get('phone_status')
     if (phone_status != 'binded' && phone_status != 'bind_success') {//两者不等，需要登录
+      Taro.hideLoading();
       this.setState({ showBounced: true })
       return
     }
     if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
+      Taro.hideLoading();
       Taro.navigateTo({
         url: '/activity-pages/group-distribution/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
       })
@@ -450,6 +472,7 @@ export default class GroupActivity extends Component {
   handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
+
   toShare = () => {
     let userAgent = navigator.userAgent;
     let isIos = userAgent.indexOf('iPhone') > -1;
@@ -459,9 +482,8 @@ export default class GroupActivity extends Component {
     } else {
       url = location.href;
     }
-    let titleMsg = this.state.data.gift_id ? '你有一张' + this.state.data.return_money + '元增值券待领取，邀请好友助力还有免费好礼拿！' : '什么？' + this.state.data.pay_money + '元还可以当' + this.state.data.return_money + '元花，走过路过不要错过！';
-    let descMsg = this.state.data.gift_id ? this.state.data.pay_money + '元当' + this.state.data.return_money + '元花的秘密，我只告诉你一个！增值成功还有' + this.state.data.gift.price + '元' + this.state.data.gift.title + '免费拿！' : this.state.data.location_name + '增值券福利来了！只要邀请' + this.state.data.dp_count + '个好友助力，' + this.state.data.pay_money + '元秒变' + this.state.data.return_money + '元，感觉能省一个亿！';
-    let linkMsg = share_url + 'id=' + this.$router.params.id + '&type=1&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id
+    let titleMsg = this.state.data.gift_id ? '在吗？现只需' + this.state.data.participation_money + '元疯抢价值' + this.state.data.pay_money + '元套餐，并送价值' + this.state.data.gift.price + '元大礼，快戳！' : '在吗？现只需' + this.state.data.participation_money + '元疯抢价值 ' + this.state.data.pay_money + '元套餐，快戳';
+    let descMsg = this.state.data.gift_id ? '重磅！你！就是你！已被' + this.state.data.name + '选为幸运用户，现拼团成功可获得价值' + this.state.data.gift.price + '元的精美礼品！' : '花最低的价格买超值套餐，团购让你嗨翻天！';
     Taro.request({
       url: 'http://api.supplier.tdianyi.com/wechat/getShareSign',
       method: 'GET',
@@ -477,26 +499,23 @@ export default class GroupActivity extends Component {
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
           signature: data.signature,
-          jsApiList: [
-            'updateAppMessageShareData',
-            'updateTimelineShareData',
-            'onMenuShareAppMessage', //旧的接口，即将废弃
-            'onMenuShareTimeline'//旧的接口，即将废弃
-          ]
+          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
         })
         wx.ready(() => {
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: linkMsg + '&invitation_user_id=' + this.state.data.invitation_user_id,
+            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发
+              console.log("分享成功")
             }
           })
         })
       })
   }
+
   buttonToShare = () => {
     this.setState({ isShare: true });
   }
@@ -505,9 +524,14 @@ export default class GroupActivity extends Component {
   }
 
   copyText = () => {
+
     let NValue = this.state.data.share_text.replace(/@#@#/, H5_URL)
     let NumClip = document.createElement("textarea");
     NumClip.value = NValue;
+    NumClip.style.height = '0px';
+    NumClip.style.overflow = 'hidden';
+    NumClip.style.opacity = '0';
+    NumClip.readOnly = true//防止ios键盘弹出
     document.body.appendChild(NumClip);
     NumClip.select();
     this.selectText(NumClip, 0, NValue.length);
@@ -524,10 +548,13 @@ export default class GroupActivity extends Component {
     if (textbox.createTextRange) {//ie
       var range = textbox.createTextRange();
       range.collapse(true);
+      range.moveStart('character', startIndex);//起始光标
+      range.moveEnd('character', stopIndex - startIndex);//结束光标
       range.select();//不兼容苹果
+
     } else {//firefox/chrome
       textbox.setSelectionRange(startIndex, stopIndex);
-      textbox.focus();
+      // textbox.focus();
     }
   }
 
@@ -547,6 +574,14 @@ export default class GroupActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
+  createPosterData = () => {
+    if (this.state.securityPoster) {
+      this.setState({ showPoster: true, showShare: false })
+    } else {
+      Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+    }
+  }
+
   render() {
     const { description, delivery_service_info } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
@@ -564,11 +599,8 @@ export default class GroupActivity extends Component {
             this.buttonToShare()
             this.setState({ showShare: false })
           }}
-          createPoster={() => {
-            this.setState({ showPoster: true, showShare: false })
-          }}
+          createPoster={this.createPosterData}
         />
-
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
           <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>
@@ -610,7 +642,7 @@ export default class GroupActivity extends Component {
             }
           </Swiper>
           <View className="banner-number-box">
-            <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+            <View className="banner-number">{accAdd(this.state.bannerImgIndex, 1)}</View>
             <View className="banner-number">{this.state.data.images.length}</View>
           </View>
         </View>
@@ -633,7 +665,7 @@ export default class GroupActivity extends Component {
               <View className="group-price-info-new">{this.state.data.participation_money}</View>
               <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
             </View>
-            <View className="group-price-discounts">已优惠￥{accSub(this.state.data.pay_money, this.state.data.participation_money)}</View>
+            <View className="group-price-discounts">已优惠￥{accSubtr(Number(this.state.data.pay_money), Number(this.state.data.participation_money))}</View>
           </View>
           <View className="group-info-label">
             {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
@@ -790,7 +822,7 @@ export default class GroupActivity extends Component {
 
         <View className="group-store-info">
           <ApplyToTheStore
-            id={this.state.data.id}
+            store_id={this.state.data.id}
             isTitle={true}
             img={this.state.data.preview}
             name={this.state.data.name}
