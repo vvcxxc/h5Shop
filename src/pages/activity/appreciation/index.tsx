@@ -14,6 +14,7 @@ import { geValueAddedPoster } from '@/api/poster'
 import HavegiftPoster from '@/components/posters/value_added/have-gift'// 海报存在礼品
 import NogiftPoster from '@/components/posters/value_added/no-gift'//   海报无礼品
 import OtherPoster from '@/components/posters/value_added/other'//   其他类型
+import { accSubtr, accAdd } from '@/utils/common'
 const share_url = process.env.APPRE_Details_URL;
 const BASIC_API = process.env.BASIC_API;//二维码域名
 import { accAdd } from '@/components/acc-num'
@@ -84,7 +85,8 @@ export default class AppreActivity extends Component {
             },
             youhui_type: ''
         },
-        posterType: ''
+        posterType: '',
+        securityPoster: false// fasle不允许显示海报
     };
 
     /**
@@ -113,10 +115,11 @@ export default class AppreActivity extends Component {
                 Taro.hideLoading();
                 if (res.code == 200) {
                     let isPostage = false;
-                    if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
                     this.getPostList(res.data.id)
+                    if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
                     this.setState({ data: res.data, isPostage }, () => {
                         this.toShare()
+                        this.setState({ securityPoster: true })
                     });
                 } else {
                     Taro.showToast({ title: '请求失败', icon: 'none' });
@@ -266,7 +269,6 @@ export default class AppreActivity extends Component {
     handleGoHome = () => {
         Taro.switchTab({ url: '/pages/index/index' })
     }
-
     toShare = () => {
         let userAgent = navigator.userAgent;
         let isIos = userAgent.indexOf('iPhone') > -1;
@@ -344,6 +346,14 @@ export default class AppreActivity extends Component {
         this.setState({ showPoster: false, showShare: false })
     }
 
+    createPosterData = () => {
+        if (this.state.securityPoster) {
+            this.setState({ showPoster: true, showShare: false })
+        } else {
+            Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+        }
+    }
+
     render() {
         const { showBounced } = this.state;
         const { images, description } = this.state.data;
@@ -360,14 +370,12 @@ export default class AppreActivity extends Component {
                         this.buttonToShare()
                         this.setState({ showShare: false })
                     }}
-                    createPoster={() => {
-                        this.setState({ showPoster: true, showShare: false })
-                    }}
+                    createPoster={this.createPosterData}
                 />
                 <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
-                    <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
-                    <NogiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
-                    <OtherPoster show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <HavegiftPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <NogiftPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <OtherPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
                     <View className="click-save">长按保存图片到相册</View>
                 </View>
 
@@ -437,7 +445,7 @@ export default class AppreActivity extends Component {
 
                 <View className="appre-store-info">
                     <ApplyToTheStore
-                        id={this.state.data.store_id}
+                        store_id={this.state.data.store_id}
                         isTitle={true}
                         img={this.state.data.preview}
                         name={this.state.data.location_name}

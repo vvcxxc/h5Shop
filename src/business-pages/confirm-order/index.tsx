@@ -194,8 +194,8 @@ export default class ConfirmOrder extends Component {
     return (
       <View className="confirm-order" >
         <View className="content">
-          <View className="flex center">
-            <View className="item label">{this.state.store.sname}{this.state.coupon.yname}</View>
+          <View className="flex center snameBox">
+            <View className="item label sname">{this.state.store.sname}{this.state.coupon.yname}</View>
             <View>{this.state.coupon.pay_money}元</View>
           </View>
           <View className="flex center">

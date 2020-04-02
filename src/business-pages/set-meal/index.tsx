@@ -13,7 +13,10 @@ import wx from 'weixin-js-sdk';
 // import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
+import {accSubtr } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
+import QRCode from 'qrcode';
+
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
@@ -54,7 +57,8 @@ export default class AppreActivity extends Component {
       return_money: "",
       yname: "",
       youhui_type: 0,
-      expire_day: ''
+      expire_day: '',
+      images: []
     },
     delivery_service_info: {
       delivery_end_time: '',
@@ -104,15 +108,30 @@ export default class AppreActivity extends Component {
     showMoreRules: false,
     showShare: false, //显示分享
     isShare: false,
-    posterList: {},
-    showPoster: false,
+    posterList: {
+      name:'',
+      store: {
+        name: '',
+        address:''
+      },
+
+    },
+    showPoster: false
   }
 
   componentDidMount() {
     let youhui_id = this.$router.params.id
     shopPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data })
+        QRCode.toDataURL(data.link)
+          .then((url: any) => {
+            this.setState({
+              posterList: { ...data, qr_code: url }
+            })
+          })
+          .catch((err: any) => {
+            console.log('二维码生成失败', err, 'err')
+          })
       })
   }
 
@@ -283,7 +302,6 @@ export default class AppreActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
-
   render() {
     const { description } = this.state.coupon;
     const { showPoster, posterList, delivery_service_info } = this.state
@@ -322,14 +340,50 @@ export default class AppreActivity extends Component {
             </View>
           ) : null
         }
-        <Image className='appre-banner' src={this.state.coupon.image}
-          onClick={(e) => {
-            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
-          }} />
-        <View className="banner-number-box">
-          <View className="banner-number">1</View>
-          <View className="banner-number">1</View>
-        </View>
+        {
+          this.state.coupon.images.length ? (
+            <View
+              className="swiper-content"
+              onClick={(e) => {
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.images[this.state.bannerImgIndex] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  this.setState({ bannerImgIndex: e.detail.current })
+                }}
+                className='group-banner'
+                circular
+                autoplay
+              >
+                {
+                  this.state.coupon.images.length ? this.state.coupon.images.map((item, index) => {
+                    return (
+                      <SwiperItem className="group-banner-swiperItem" key={item}>
+                        <Image className="group-banner-img" src={item} />
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+              <View className="banner-number-box">
+                <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                <View className="banner-number">{this.state.coupon.images.length}</View>
+              </View>
+            </View>
+          ) : (
+              <View>
+                <Image className='appre-banner' src={this.state.coupon.image}
+                  onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+                  }} />
+                <View className="banner-number-box">
+                  <View className="banner-number">1</View>
+                  <View className="banner-number">1</View>
+                </View>
+              </View>
+
+            )
+        }
         {/* <View className="collect-box">
           <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
         </View>
@@ -347,7 +401,7 @@ export default class AppreActivity extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{accSub(this.state.coupon.return_money, this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money)) }</View>
           </View>
           {
             delivery_service_info.id ? <View className="appre-info-label">
@@ -359,7 +413,7 @@ export default class AppreActivity extends Component {
 
         <View className="appre-store-info">
           <ApplyToTheStore
-            id={this.state.store.id}
+            store_id={this.state.store.id}
             isTitle={true}
             img={this.state.store.shop_door_header_img}
             name={this.state.store.sname}
@@ -386,7 +440,7 @@ export default class AppreActivity extends Component {
               <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
               <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
               <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
-              <View className="group-rules-list-text" >-联系电话：{this.state.store.tel}</View>
+              {/* <View className="group-rules-list-text" >-联系电话：{this.state.store.tel}</View> */}
             </View> : null
           }
           {

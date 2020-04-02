@@ -15,7 +15,6 @@ module.exports = {
     WX_APPID: "'wxfe816c3a5440ce7a'",
     ALI_APPID: "'2018080960968490'",
     H5_URL: '"http://test.mall.tdianyi.com"',
-
     // 预发布环境
     // BASIC_API: '"http://release.api.tdianyi.com/"',
     // LOGIN_URL: '"http://release.api.tdianyi.com"',
@@ -26,6 +25,7 @@ module.exports = {
     // USER_API: '"https://release.usercenter.tdianyi.com/"',
     // WX_APPID: "'wxecdd282fde9a9dfd'",
     // ALI_APPID: "'2018080960968490'",
+    // H5_URL: '"http://test.mall.tdianyi.com"',
 
     GROUP_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/group/group?id="',
     APPRE_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/appreciation/appreciation?id="',
@@ -34,7 +34,7 @@ module.exports = {
     BUSINESS_URL: '"http://test.mall.tdianyi.com/pages/business/index?id="',
     TICKETBUY_URL: '"http://test.mall.tdianyi.com/business-pages/ticket-buy/index?id="',
     SETMEAL_URL: '"http://test.mall.tdianyi.com/business-pages/set-meal/index?id="',
-    
+
   },
   defineConstants: {
   },

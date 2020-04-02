@@ -385,7 +385,7 @@ export default class distributionDetail extends Component {
                                     }
                                 </View>
                                 <View className="distribution-info">
-                                    <View className="distribution-tips">选择后，商家将会提高送货上门的服务。</View>
+                                    <View className="distribution-tips">选择后，商家将会提供送货上门的服务。</View>
                                     <View className="distribution-labels">
                                         <View className="distribution-label-item">配送费{this.state.data.youhui.supplier_delivery_service_money}元</View>
                                         {/* <View className="distribution-label-item">10km可送</View> */}
@@ -405,7 +405,7 @@ export default class distributionDetail extends Component {
                         <View className='order-item-words'>￥{this.state.data.youhui.pay_money}</View>
                     </View>
                     {
-                        this.state.chooseGift ?
+                        this.state.chooseGift && this.state.data.youhui.gift_id ?
                             <View className='order-item'>
                                 <View className='order-item-key'>礼品运费</View>
                                 <View className='order-item-words'>￥{this.state.data.youhui.postage}</View>

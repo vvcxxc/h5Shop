@@ -62,6 +62,28 @@ export const accSubtr = (arg1, arg2) => {
   return ((arg1 * m - arg2 * m) / m); //.toFixed(n)
 }
 
+// 加法函数
+export const accAdd = (arg1, arg2) => {
+  let r1 = 0;
+  let r2 = 0;
+  let m;
+  let c;
+
+  try {
+    r1 = String(arg1).split('.')[1].length;
+  } catch (e) { }
+
+  try {
+    r2 = String(arg2).split('.')[1].length;
+  } catch (e) { }
+
+  m = Math.pow(10, Math.max(r1, r2));
+  arg1 = arg1 * m;
+  arg2 = arg2 * m;
+
+  return (arg1 + arg2) / m;
+}
+
 /**
  * 获取url参数
  */

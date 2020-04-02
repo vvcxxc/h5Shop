@@ -1,6 +1,5 @@
 import Taro, { Component, Config } from "@tarojs/taro"
 import html2canvas from 'html2canvas'
-import QRCode from 'qrcode';
 import { View, Image, Text } from "@tarojs/components"
 import './index.styl'
 
@@ -14,65 +13,36 @@ interface Props {
 export default class OtherPoster extends Component<Props> {
   state = {
     imgurl: '',
-    show: false,
-    gift: '',
-
-    listData: {
-      image: '',
-      pay_money: '',
-      return_money: '',
-      name: '',
-      store_name: '',
-      store_address: '',
-      link: '',
-      wx_img: '',
-      gift_pic: '',
-      gift_price: ''
-    }
+    show: false
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
-      const { list, show } = nextProps
       Taro.showLoading({ title: 'loading', mask: true });
-      this.setState({
-        show: list.youhui_type == 0 ? true : false,
-        listData: {
-          image: list.image,
-          pay_money: list.pay_money,
-          return_money: list.return_money,
-          name: list.name,
-          store_name: list.store.name,
-          store_address: list.store.address,
-          link: list.link,
-          wx_img: list.wx_img
-        }
-      }, () => {
-          this.showMyPoster()
-      })
-
+      this.setState({show: true})
+      setTimeout(() => {
+        this.showMyPoster()
+        Taro.hideLoading()
+      }, 1000);
     }
   }
 
   showMyPoster = () => {
-    let dom = document.getElementById('other-poster')
-    QRCode.toDataURL(this.props.list.link)                  // 网络链接转化为二维码
-      .then((url: any) => {
-        this.setState({ gift: url }, () => {
-          dom && html2canvas(dom, {                                //canvas截图生成图片
-            height: dom.offsetHeight,
-            width: dom.offsetWidth,
-            allowTaint: false,
-            useCORS: true,
-          }).then((res: any) => {
-            let imgurl = res.toDataURL('image/jpeg');
-            this.setState({ imgurl }, () => {
-              Taro.hideLoading()
-            })
-          })
-        })
+    let dom = document.getElementById('set-meal-poster')
+    dom && html2canvas(dom, {                                //canvas截图生成图片
+      height: dom.offsetHeight,
+      width: dom.offsetWidth,
+      allowTaint: false,
+      useCORS: true,
+    }).then((res: any) => {
+      let imgurl = res.toDataURL('image/jpeg');
+      this.setState({ imgurl }, () => {
+        Taro.hideLoading()
       })
-      .catch((err: any) => { })
+    }).catch((err: any) => {
+      Taro.showLoading({ title: 'loading', mask: true });
+      this.showMyPoster()
+    })
   }
 
   //关闭海报
@@ -88,42 +58,40 @@ export default class OtherPoster extends Component<Props> {
   }
 
   render() {
-    const { listData, gift } = this.state
-    const dom = <View className="poster-box" id="other-poster" onClick={this.closePoster}>
+    const { list, show } = this.props
+    const dom = <View className="poster-box" id="set-meal-poster" onClick={this.closePoster}>
       <Image className="title-img" src="https://oss.tdianyi.com/front/tiDd8wiT68yDJ7tsKJWbRz3W7R5DMXWP.png" />
       <View className="main">
         <View className="gift-img">
-          <Image className="gift-image" src={listData.image} />
+          <Image className="gift-image" src={list.image} />
         </View>
         <View className="project-info-set-meal">
           <View className="info-left" >
             <View className="info-left-first-line">优惠价 ￥
-              <Text className="font">{listData.pay_money}</Text>
-              <Text className="original-price">￥<Text>{listData.return_money}</Text></Text>
+              <Text className="font">{list.pay_money}</Text>
+              <Text className="original-price">￥<Text>{list.return_money}</Text></Text>
             </View>
-            <View className="info-left-second-line">
-              {/* <Text className="font">最高可抵{listData.return_money}元</Text> */}
-            </View>
+            <View className="info-left-second-line" />
             <View className="info-left-third-line">
               {
-                listData.name && listData.name.length > 20 ? listData.name.slice(0, 24) + '...' : listData.name
+                list.name && list.name.length > 20 ? list.name.slice(0, 23) + '...' : list.name
               }
             </View>
             <View className="info-left-fourth-line">适用店铺：
             <Text className="text">
-                {listData.store_name && listData.store_name.length > 11 ? listData.store_name.slice(0, 11) + '...' : listData.store_name}
-            </Text>
+                {list.store.name && list.store.name.length > 11 ? list.store.name.slice(0, 11) + '...' : list.store.name}
+              </Text>
             </View>
             <View className="info-left-fifth-line">
               店铺地址：
               <Text className="text">
-                {listData.store_address && listData.store_address.length > 11 ? listData.store_address.slice(0, 11) + '...' : listData.store_address}
+                {list.store.address && list.store.address.length > 11 ? list.store.address.slice(0, 11) + '...' : list.store.address}
               </Text>
             </View>
           </View>
           <View className="info-right-set-meal" >
             <View className="info-right-first-line">
-              <Image className="qr-code" src={gift} />
+              <Image className="qr-code" src={list.qr_code} />
             </View>
             <View className="info-right-second-line">长按查看活动详情</View>
           </View>
@@ -131,7 +99,7 @@ export default class OtherPoster extends Component<Props> {
 
       </View>
     </View>
-    return  this.state.show ? <View className="set-meal-ql">
+    return show ? <View className="set-meal-ql">
       {dom}  <Image
         onClick={this.noAllow.bind(this)} className="generate-images-set-meal" src={this.state.imgurl} />
     </View>

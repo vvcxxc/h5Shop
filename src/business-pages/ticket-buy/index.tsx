@@ -12,10 +12,13 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/ticket-buy'//   海报无礼品
 import { moneyPoster } from '@/api/poster'
+import { accSubtr, accAdd } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
+const share_url = process.env.TICKETBUY_URL;
+
 const BASIC_API = process.env.BASIC_API;//二维码域名
 
-const share_url = process.env.TICKETBUY_URL;
+
 // import ShareBox from '@/components/share-box';
 export default class TicketBuy extends Component {
   config = {
@@ -53,7 +56,8 @@ export default class TicketBuy extends Component {
       yname: "",
       youhui_type: 0,
       expire_day: '',
-      total_fee: 0
+      total_fee: 0,
+      images: []
     },
     store: {
       brief: "",
@@ -96,6 +100,7 @@ export default class TicketBuy extends Component {
     isShare: false,
     showPoster: false, //显示海报
     posterList: {},
+    securityPoster: false// fasle不允许显示海报
   }
 
 
@@ -103,7 +108,9 @@ export default class TicketBuy extends Component {
     let youhui_id = this.$router.params.id
     moneyPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data })
+        this.setState({ posterList: data }, () => {
+          this.setState({ securityPoster: true })
+        })
       })
   }
 
@@ -187,7 +194,6 @@ export default class TicketBuy extends Component {
       Taro.navigateTo({ url: '../ticket-buy/index?id=' + _id })
     }
   }
-
   toShare = () => {
     let userAgent = navigator.userAgent;
     let isIos = userAgent.indexOf('iPhone') > -1;
@@ -242,6 +248,14 @@ export default class TicketBuy extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
+  createPosterData = () => {
+    if (this.state.securityPoster) {
+      this.setState({ showPoster: true, showShare: false })
+    } else {
+      Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+    }
+  }
+
   render() {
     const { showPoster, posterList } = this.state
     return (
@@ -256,11 +270,9 @@ export default class TicketBuy extends Component {
             this.buttonToShare()
             this.setState({ showShare: false })
           }}
-          createPoster={() => {
-            this.setState({ showPoster: true, showShare: false })
-          }}
+          createPoster={this.createPosterData}
         />
-        <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+        <View className={showPoster ? "show-poster-ticket-buy" : "hidden-poster-ticket-buy"} onClick={() => this.setState({ showPoster: false })}>
           <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>
         </View>
@@ -276,15 +288,51 @@ export default class TicketBuy extends Component {
             </View>
           ) : null
         }
-        <Image className='appre-banner' src={this.state.coupon.image}
-          onClick={(e) => {
-            this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
-          }}
-        />
-        <View className="banner-number-box">
-          <View className="banner-number">1</View>
-          <View className="banner-number">1</View>
-        </View>
+        {
+          this.state.coupon.images.length ? (
+            <View
+              className="swiper-content"
+              onClick={(e) => {
+                this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.images[this.state.bannerImgIndex] })
+              }}>
+              <Swiper
+                onChange={(e) => {
+                  this.setState({ bannerImgIndex: e.detail.current })
+                }}
+                className='group-banner'
+                circular
+                autoplay
+              >
+                {
+                  this.state.coupon.images.length ? this.state.coupon.images.map((item, index) => {
+                    return (
+                      <SwiperItem className="group-banner-swiperItem" key={item}>
+                        <Image className="group-banner-img" src={item} />
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
+              <View className="banner-number-box">
+                <View className="banner-number">{Number(this.state.bannerImgIndex) + 1}</View>
+                <View className="banner-number">{this.state.coupon.images.length}</View>
+              </View>
+            </View>
+          ) : (
+              <View>
+                <Image className='appre-banner' src={this.state.coupon.image}
+                  onClick={(e) => {
+                    this.setState({ imgZoom: true, imgZoomSrc: this.state.coupon.image })
+                  }} />
+                <View className="banner-number-box">
+                  <View className="banner-number">1</View>
+                  <View className="banner-number">1</View>
+                </View>
+              </View>
+
+            )
+        }
+
         {/* <View className="collect-box">
           <Image className="collect-img" src="http://oss.tdianyi.com/front/7mXMpkiaD24hiAEw3pEJMQxx6cnEbxdX.png" />
         </View>
@@ -302,7 +350,7 @@ export default class TicketBuy extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{accSub(this.state.coupon.return_money, this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money))}</View>
           </View>
 
         </View>
@@ -310,7 +358,7 @@ export default class TicketBuy extends Component {
 
         <View className="appre-store-info">
           <ApplyToTheStore
-            id={this.state.store.id}
+            store_id={this.state.store.id}
             isTitle={true}
             img={this.state.store.shop_door_header_img}
             name={this.state.store.sname}
