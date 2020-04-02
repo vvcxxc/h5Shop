@@ -201,41 +201,45 @@ export default class distributionDetail extends Component {
         wxWechatPay(datas)
             .then((res: any) => {
                 Taro.hideLoading();
-                if (browserType == 'wechat') {
-                    //微信
-                    window.WeixinJSBridge.invoke(
-                        'getBrandWCPayRequest', {
-                        "appId": res.data.appId,
-                        "timeStamp": res.data.timeStamp,
-                        "nonceStr": res.data.nonceStr,
-                        "package": res.data.package,
-                        "signType": res.data.signType,
-                        "paySign": res.data.paySign
-                    },
-                        function (res) {
+                if (res.code == 200) {
+                    if (browserType == 'wechat') {
+                        //微信
+                        window.WeixinJSBridge.invoke(
+                            'getBrandWCPayRequest', {
+                            "appId": res.data.appId,
+                            "timeStamp": res.data.timeStamp,
+                            "nonceStr": res.data.nonceStr,
+                            "package": res.data.package,
+                            "signType": res.data.signType,
+                            "paySign": res.data.paySign
+                        },
+                            function (res) {
+                                Taro.hideLoading();
+                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                    //微信成功
+                                    Taro.showToast({ title: '支付成功', icon: 'none' })
+                                    that.goToOrder();
+                                } else {
+                                    Taro.showToast({ title: '支付失败', icon: 'none' })
+                                }
+                            }
+                        );
+                    }
+                    else if (browserType == 'alipay') {
+                        window.AlipayJSBridge.call('tradePay', {
+                            tradeNO: res.data.alipayOrderSn,
+                        }, res => {
                             Taro.hideLoading();
-                            if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                //微信成功
+                            if (res.resultCode === "9000") {
                                 Taro.showToast({ title: '支付成功', icon: 'none' })
                                 that.goToOrder();
                             } else {
                                 Taro.showToast({ title: '支付失败', icon: 'none' })
                             }
-                        }
-                    );
-                }
-                else if (browserType == 'alipay') {
-                    window.AlipayJSBridge.call('tradePay', {
-                        tradeNO: res.data.alipayOrderSn,
-                    }, res => {
-                        Taro.hideLoading();
-                        if (res.resultCode === "9000") {
-                            Taro.showToast({ title: '支付成功', icon: 'none' })
-                            that.goToOrder();
-                        } else {
-                            Taro.showToast({ title: '支付失败', icon: 'none' })
-                        }
-                    })
+                        })
+                    }
+                } else {
+                    Taro.showToast({ title: res.message, icon: 'none' })
                 }
             })
     }
