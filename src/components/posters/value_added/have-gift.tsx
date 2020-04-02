@@ -8,7 +8,8 @@ import './have-gift.styl'
 interface Props {
   show: boolean,
   onClose: () => void,
-  list: any
+  list: any,
+  type: string
 }
 
 // 增值海报
@@ -38,10 +39,10 @@ export default class HavegiftPoster extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
-      const { list, show } = nextProps
-      list.youhui_type && list.gift.gift_pic ?  Taro.showLoading({ title: 'loading', mask: true }):null
+      const { list, show ,type} = nextProps
+      list.youhui_type && type =='HaveGift' ?  Taro.showLoading({ title: 'loading', mask: true }):null
       this.setState({
-        show: list.youhui_type && list.gift.gift_pic ? true : false,
+        show: list.youhui_type && type == 'HaveGift' ? true : false,
         listData: {
           return_money: list.return_money,
           total_fee: list.total_fee,
@@ -59,7 +60,7 @@ export default class HavegiftPoster extends Component<Props> {
         }
       }, () => {
           setTimeout(() => {
-            list.youhui_type && list.gift.gift_pic ?       Taro.hideLoading():null
+            list.youhui_type && type == 'HaveGift' ?       Taro.hideLoading():null
             this.showMyPoster()
           }, 800);
       })

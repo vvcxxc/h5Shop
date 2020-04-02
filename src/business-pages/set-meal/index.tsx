@@ -13,7 +13,10 @@ import wx from 'weixin-js-sdk';
 // import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
+import {accSubtr } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
+import QRCode from 'qrcode';
+
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.SETMEAL_URL;
 const H5_URL = process.env.H5_URL
@@ -105,15 +108,30 @@ export default class AppreActivity extends Component {
     showMoreRules: false,
     showShare: false, //显示分享
     isShare: false,
-    posterList: {},
-    showPoster: false,
+    posterList: {
+      name:'',
+      store: {
+        name: '',
+        address:''
+      },
+
+    },
+    showPoster: false
   }
 
   componentDidMount() {
     let youhui_id = this.$router.params.id
     shopPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data })
+        QRCode.toDataURL(data.link)
+          .then((url: any) => {
+            this.setState({
+              posterList: { ...data, qr_code: url }
+            })
+          })
+          .catch((err: any) => {
+            console.log('二维码生成失败', err, 'err')
+          })
       })
   }
 
@@ -284,7 +302,6 @@ export default class AppreActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
-
   render() {
     const { description } = this.state.coupon;
     const { showPoster, posterList, delivery_service_info } = this.state
@@ -384,7 +401,7 @@ export default class AppreActivity extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{accSub(this.state.coupon.return_money, this.state.coupon.pay_money)}</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money)) }</View>
           </View>
           {
             delivery_service_info.id ? <View className="appre-info-label">

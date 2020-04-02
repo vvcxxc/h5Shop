@@ -14,7 +14,10 @@ import ShareBox from "@/components/share-box";//分享组件
 import wx from 'weixin-js-sdk';
 import Poster from '@/components/posters/spell_group'//   海报无礼品
 import { getGroupPoster } from '@/api/poster'
+import { accSubtr } from '@/utils/common'
 import { accAdd, accSub } from '@/components/acc-num'
+import QRCode from 'qrcode'; //生成二维码
+
 const BASIC_API = process.env.BASIC_API;//二维码域名
 const share_url = process.env.GROUP_Details_URL;
 const H5_URL = process.env.H5_URL
@@ -93,9 +96,23 @@ export default class GroupActivity extends Component {
     newGroupList: [],
     showShare: false, //显示分享
     isShare: false,
-    posterList: {},
     showPoster: false,
+    posterList: {//海报数据
+      gift: {
+        gift_pic: '',
+        gift_price: ''
+      },
+      store: {
+        name: '',
+        address: ''
+      },
+      youhui_type: ''
+    },
+    posterType: '',
+    securityPoster: false// fasle不允许显示海报
   };
+
+
 
   /**
        * 获取位置信息
@@ -109,6 +126,12 @@ export default class GroupActivity extends Component {
     }).catch((err) => {
       this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
     })
+  }
+
+  componentDidMount() {
+    console.log(this.$router.params.id, 'this.$router.params.id')
+    this.setState({ securityPoster: true })
+    this.getPostList()
   }
 
   /**
@@ -127,8 +150,8 @@ export default class GroupActivity extends Component {
           let new_time = new Date().getTime()//ql
           new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
           new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
+
           that.setState({ data: res.data, isPostage }, () => {
-            this.getPostList();
             this.toShare();
           });
         } else {
@@ -140,6 +163,7 @@ export default class GroupActivity extends Component {
         that.getGroupList({ group_info_id: this.$router.params.id, page: 1 });
       })
   }
+
 
   /**
     * 获取拼团列表
@@ -546,10 +570,18 @@ export default class GroupActivity extends Component {
 
   /* 请求海报数据 */
   getPostList = () => {
-    const { youhui_id } = this.state.data
+    let youhui_id = this.$router.params.id
     getGroupPoster({ youhui_id, from: 'h5' })
       .then(({ data, code }) => {
-        this.setState({ posterList: data })
+        QRCode.toDataURL(data.link)                                      // 网络链接转化为二维码
+          .then((url: any) => {
+            this.setState({
+              posterList: { ...data, qr_code: url }
+            })
+          })
+          .catch((err: any) => {
+            console.log('二维码生成失败', err, 'err')
+          })
       })
 
   }
@@ -559,9 +591,18 @@ export default class GroupActivity extends Component {
     this.setState({ showPoster: false, showShare: false })
   }
 
+  createPosterData = () => {
+    if (this.state.securityPoster) {
+      this.setState({ showPoster: true, showShare: false })
+    } else {
+      Taro.showToast({ title: '页面加载失败,请重试', icon: 'none' })
+    }
+  }
+
   render() {
     const { description, delivery_service_info } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
+    // console.log(posterList,'ddd')
     return (
       <View className="group-activity-detail">
         {/* 分享组件 */}
@@ -576,15 +617,19 @@ export default class GroupActivity extends Component {
             this.buttonToShare()
             this.setState({ showShare: false })
           }}
-          createPoster={() => {
-            this.setState({ showPoster: true, showShare: false })
-          }}
+          createPoster={this.createPosterData}
         />
         <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
-          <Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          < Poster show={showPoster} list={posterList} onClose={this.closePoster} />
           <View className="click-save">长按保存图片到相册</View>
         </View>
-
+        {
+          // posterList.store.name && posterList.image ?
+          //   <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
+          //     < Poster show={showPoster} list={posterList} onClose={this.closePoster} />
+          //     <View className="click-save">长按保存图片到相册</View>
+          //   </View> : null
+        }
         {
           this.state.isShare == true ? (
             <View className='share_mask' onClick={this.closeShare}>
@@ -644,7 +689,7 @@ export default class GroupActivity extends Component {
               <View className="group-price-info-new">{this.state.data.participation_money}</View>
               <View className="group-price-info-old">￥{this.state.data.pay_money}</View>
             </View>
-            <View className="group-price-discounts">已优惠￥{accSub(this.state.data.pay_money, this.state.data.participation_money)}</View>
+            <View className="group-price-discounts">已优惠￥{accSubtr(Number(this.state.data.pay_money), Number(this.state.data.participation_money))}</View>
           </View>
           <View className="group-info-label">
             {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
