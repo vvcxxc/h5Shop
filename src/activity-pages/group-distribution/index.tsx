@@ -434,7 +434,7 @@ export default class distributionDetail extends Component {
                 {
                     this.state.tipsMessage ? <View className="tips-mask">
                         <View className="tips-content">
-                            <View className="tips-title">提现申请失败</View>
+                            <View className="tips-title">购买失败</View>
                             <View className="tips-info">{this.state.tipsMessage}</View>
                             <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
                         </View>
