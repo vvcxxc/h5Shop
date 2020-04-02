@@ -570,11 +570,11 @@ export default class AppreActivity extends Component {
                             this.state.data.total_num == 0 ? (
                                 <View className="new-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>库存不足</View>
                             ) : this.state.data.activity_time_status == 1 ? (
-                                <View className="new-buy-btn-right">暂未开始</View>
+                                <View className="new-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>暂未开始</View>
                             ) : this.state.data.activity_time_status == 2 ? (
                                 <View className="new-buy-btn-right" onClick={this.goToaConfirm.bind(this)}>立即购买</View>
                             ) : this.state.data.activity_time_status == 3 ? (
-                                <View className="new-buy-btn-right">已结束</View>
+                                <View className="new-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>已结束</View>
                             ) : null
                         }
                     </View>
