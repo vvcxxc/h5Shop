@@ -76,7 +76,7 @@ export default class ConfirmOrder extends Component {
   }
   payMoney() {
     if (this.state.coupon.limit_purchase_quantity && (accAdd(this.state.amount, this.state.coupon.user_youhu_log_sum)) > this.state.coupon.limit_purchase_quantity) {
-      this.setState({ tipsMessage: '本优惠已达购买上限，无法购买。' })
+      this.setState({ tipsMessage: '已超过购买上限,请重新设置购买数量' })
       return;
     }
     Taro.showLoading({
