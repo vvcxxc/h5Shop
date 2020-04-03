@@ -181,8 +181,8 @@ export default class distributionDetail extends Component {
             store_id: this.state.store.id,
             youhui_number: 1,
             xcx: 0,
-            is_distribution: this.state.chooseDistribution ? 1 : 0,
-            address_id: this.state.address.id
+            is_distribution: this.state.coupon.is_delivery && this.state.chooseDistribution ? 1 : 0,
+            address_id: this.state.address && this.state.address.id ? this.state.address.id : undefined,
         }
         if (browserType == 'wechat') {
             datas = {
