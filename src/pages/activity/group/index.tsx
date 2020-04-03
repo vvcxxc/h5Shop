@@ -790,56 +790,6 @@ export default class GroupActivity extends Component {
             : null
 
         }
-        {/* <Swiper
-                    onChange={(e) => {
-                        // if (this.state.current == this.state.list.length - 2) {
-                        //     this.setState({ current: 0 })
-                        // }
-                        // else {
-                        //     this.setState({ current: e.detail.current })
-                        // };
-                    }}
-                    className='swiper-group-list'
-                    autoplay
-                    // circular
-                    displayMultipleItems={2}
-                    vertical
-                >
-                    {
-                        this.state.list.map((item, index) => {
-                            return (
-                                <SwiperItem key={item} >
-                                    <View className="swiper-item" onClick={() => { console.log(item) }}>
-
-                                        <View className="group-user" >
-                                            <View className="group-list-img" >
-                                                <Image className="listImg" src={"http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png"} />
-                                            </View>
-                                            <View className="group-list-name" >{index}测试测试测试测试</View>
-                                        </View>
-
-                                        <View className="group-info" >
-                                            <View className="group-list-timesbox" >
-                                                <View className="group-list-lack" >
-                                                    <View className="group-list-lackredblack1" >还差</View>
-                                                    <View className="group-list-lackred" >33人</View>
-                                                    <View className="group-list-lackredblack2" >拼成</View>
-                                                </View>
-                                                <View className="group-list-times" >
-                                                    <TimeUp itemtime={'2020-6-8'} />
-                                                </View>
-                                            </View>
-                                            <View className="group-list-btnbox" >
-                                                <View className="group-list-btn" >参团</View>
-                                            </View>
-                                        </View>
-
-                                    </View>
-                                </SwiperItem>
-                            )
-                        })
-                    }
-                </Swiper> */}
         {
           this.state.newGroupList.length ? <View className="group-group-bottom"></View> : null
         }
