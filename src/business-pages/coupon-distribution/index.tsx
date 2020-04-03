@@ -56,7 +56,6 @@ export default class distributionDetail extends Component {
             user_id: 0
         },
         tipsMessage: ''
-
     }
     componentDidShow() {
         this.setState({ contentboxShow: false })
