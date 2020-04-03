@@ -56,7 +56,9 @@ export default class AppreActivity extends Component {
       youhui_type: 0,
       expire_day: '',
       total_num: 0,
-      publish_wait: 0
+      publish_wait: 0,
+      limit_purchase_quantity: 0,//限购数量
+      user_youhu_log_sum: 0// 已购数量
     },
     delivery_service_info: {
       delivery_end_time: '',
@@ -108,6 +110,7 @@ export default class AppreActivity extends Component {
     isShare: false,
     posterList: {},
     showPoster: false,
+    tipsMessage: ''
   }
 
   componentDidMount() {
@@ -174,9 +177,13 @@ export default class AppreActivity extends Component {
       this.setState({ showBounced: true })
       return
     }
-    Taro.navigateTo({
-      url: '../../business-pages/coupon-distribution/index?id=' + id
-    })
+    if (this.state.coupon.limit_purchase_quantity && this.state.coupon.user_youhu_log_sum >= this.state.coupon.limit_purchase_quantity) {
+      this.setState({ tipsMessage: '本优惠已达购买上限，无法购买。' })
+    } else {
+      Taro.navigateTo({
+        url: '../../business-pages/coupon-distribution/index?id=' + id
+      })
+    }
   }
 
   // 登录弹窗
@@ -379,6 +386,12 @@ export default class AppreActivity extends Component {
             <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
           </View>
           {
+            this.state.coupon.limit_purchase_quantity ? <View className="appre-rules-item" >
+              <View className="rules-key">购买限制：</View>
+              <View className="rules-words">每人最多可购买{this.state.coupon.limit_purchase_quantity}份</View>
+            </View> : null
+          }
+          {
             delivery_service_info.id ? <View className="group-rules-list-margin">
               <View className="group-rules-list-title" >配送服务：</View>
               <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
@@ -568,6 +581,17 @@ export default class AppreActivity extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
+
+        {
+          this.state.tipsMessage ? <View className="tips-mask">
+            <View className="tips-content">
+              <View className="tips-title">购买失败</View>
+              <View className="tips-info">{this.state.tipsMessage}</View>
+              <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
+            </View>
+          </View> : null
+        }
+
       </View>
     );
   }
