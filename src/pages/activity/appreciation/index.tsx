@@ -375,9 +375,9 @@ export default class AppreActivity extends Component {
                     createPoster={this.createPosterData}
                 />
                 <View className={showPoster ? "show-poster" : "hidden-poster"} onClick={() => this.setState({ showPoster: false })}>
-                    <HavegiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
-                    <NogiftPoster show={showPoster} list={posterList} onClose={this.closePoster} />
-                    <OtherPoster show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <HavegiftPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <NogiftPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
+                    <OtherPoster type={posterType} show={showPoster} list={posterList} onClose={this.closePoster} />
                     <View className="click-save">长按保存图片到相册</View>
                 </View>
 
