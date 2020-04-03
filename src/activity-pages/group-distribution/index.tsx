@@ -167,8 +167,8 @@ export default class distributionDetail extends Component {
         let sameDatas = {
             public_type_id: this.$router.params.activityType == '55' ? this.$router.params.groupId : this.$router.params.id,
             activity_id: this.state.data.youhui.activity_id,
-            gift_id: this.state.chooseGift ? this.state.data.youhui.gift_id : undefined,
-            is_distribution: this.state.chooseDistribution ? 1 : 0,
+            gift_id: this.state.data.youhui.gift_id && this.state.chooseGift ? this.state.data.youhui.gift_id : undefined,
+            is_distribution: this.state.data.youhui.is_delivery && this.state.chooseDistribution ? 1 : 0,
             address_id: this.state.data.address && this.state.data.address.id ? this.state.data.address.id : undefined,
             type: this.$router.params.activityType,
             xcx: 0,
