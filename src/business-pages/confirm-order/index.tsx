@@ -65,8 +65,9 @@ export default class ConfirmOrder extends Component {
 
   }
   addnum() {
+    let add = accAdd(this.state.amount, 1);
     if (this.state.amount < 10 && this.state.amount < this.state.coupon.total_num && (
-      (!this.state.coupon.limit_purchase_quantity || (this.state.coupon.limit_purchase_quantity && accAdd(this.state.amount, this.state.coupon.user_youhu_log_sum)) <= this.state.coupon.limit_purchase_quantity)
+      (!this.state.coupon.limit_purchase_quantity || (this.state.coupon.limit_purchase_quantity && accAdd(add, this.state.coupon.user_youhu_log_sum)) <= this.state.coupon.limit_purchase_quantity)
     )) {
       let add = accAdd(this.state.amount, 1);
       this.setState({ amount: add }, () => {
@@ -75,7 +76,8 @@ export default class ConfirmOrder extends Component {
     }
   }
   payMoney() {
-    if (this.state.coupon.limit_purchase_quantity && (accAdd(this.state.amount, this.state.coupon.user_youhu_log_sum)) > this.state.coupon.limit_purchase_quantity) {
+    let add = accAdd(this.state.amount, 1);
+    if (this.state.coupon.limit_purchase_quantity && (accAdd(add, this.state.coupon.user_youhu_log_sum)) > this.state.coupon.limit_purchase_quantity) {
       this.setState({ tipsMessage: '已超过购买上限,请重新设置购买数量' })
       return;
     }
