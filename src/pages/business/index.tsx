@@ -435,7 +435,7 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box", display: 'flex' }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: 3, padding: "5px 10px 5px 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex", justifyContent: "flex-end" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥{item.participation_money}</View>
@@ -445,7 +445,7 @@ export default class PaySuccess extends Component<Props> {
                           </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box", display: 'flex' }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: 3, padding: "5px 10px 5px 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex", justifyContent: "flex-end" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥{item.participation_money}</View>
