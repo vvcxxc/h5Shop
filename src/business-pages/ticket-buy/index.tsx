@@ -57,7 +57,11 @@ export default class TicketBuy extends Component {
       youhui_type: 0,
       expire_day: '',
       total_fee: 0,
-      images: []
+      images: [],
+      total_num: 0,
+      publish_wait: 0,
+      limit_purchase_quantity: 0,//限购数量
+      user_youhu_log_sum: 0// 已购数量
     },
     store: {
       brief: "",
@@ -100,7 +104,8 @@ export default class TicketBuy extends Component {
     isShare: false,
     showPoster: false, //显示海报
     posterList: {},
-    securityPoster: false// fasle不允许显示海报
+    securityPoster: false,// fasle不允许显示海报
+    tipsMessage: ''
   }
 
 
@@ -169,9 +174,13 @@ export default class TicketBuy extends Component {
       this.setState({ showBounced: true })
       return
     }
-    Taro.navigateTo({
-      url: '../../business-pages/confirm-order/index?id=' + id
-    })
+    if (this.state.coupon.limit_purchase_quantity && this.state.coupon.user_youhu_log_sum >= this.state.coupon.limit_purchase_quantity) {
+      this.setState({ tipsMessage: '本优惠已达购买上限，无法购买。' })
+    } else {
+      Taro.navigateTo({
+        url: '../../business-pages/confirm-order/index?id=' + id
+      })
+    }
   }
 
   // 登录弹窗
@@ -390,6 +399,12 @@ export default class TicketBuy extends Component {
             <View className="rules-key">有效期：</View>
             <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
           </View>
+          {
+            this.state.coupon.limit_purchase_quantity ? <View className="appre-rules-item" >
+              <View className="rules-key">购买限制：</View>
+              <View className="rules-words">每人最多可购买{this.state.coupon.limit_purchase_quantity}份</View>
+            </View> : null
+          }
           {/* {
             this.state.coupon.description&&this.state.coupon.description.length ? <View>
               <View className="appre-rules-list-title" >使用规则：</View>
@@ -522,9 +537,10 @@ export default class TicketBuy extends Component {
             <View className="appre-buy-btn-left" onClick={() => {
               this.setState({ showShare: true })
             }}>分享活动</View>
-
-            <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
-
+            {
+              this.state.coupon.total_num && this.state.coupon.publish_wait == 1 ? <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View> :
+                <View className="appre-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>已结束</View>
+            }
           </View>
         </View>
         {
@@ -545,7 +561,18 @@ export default class TicketBuy extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
-      </View>
+
+        {
+          this.state.tipsMessage ? <View className="tips-mask">
+            <View className="tips-content">
+              <View className="tips-title">购买失败</View>
+              <View className="tips-info">{this.state.tipsMessage}</View>
+              <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
+            </View>
+          </View> : null
+        }
+
+      </View >
     );
   }
 }
