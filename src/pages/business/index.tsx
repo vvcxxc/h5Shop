@@ -506,37 +506,13 @@ export default class PaySuccess extends Component<Props> {
                         <View className="item desc">{item.name}</View>
                       </View>
                     </View>
-                    {/* <View className="image-list" style={{ position: "relative", marginBottom: "10px" }}>
-                      {
-                        item.gift_pic == "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} /> :
-                          <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} />
-                      }
-                      <View className="img" style={{ width: "100%" }}   >
-                        <View className="box_left">
-                        <View className="box_left_return">最高价值</View>
-                          <View className="box_left_price">￥ <View className="_price">{item.return_money}</View></View>
-                        </View>
-                        <View className="box_center">
-                          <View className="present">
-                            <View className="present_text1">
-                              <View className="present_text1_box">全场通用</View>
-                            </View>
-                            <View className="present_text2">{item.expire_day}天内有效</View>
-                            <View className="present_text3">满{item.init_money}元可用</View>
-                          </View>
-                        </View>
-                        <View className="box_right" style={{ overflow: "hidden" }}>
-                          <Image className="image" src={item.gift_pic} style={{ width: "100%", height: "100%" }} />
-                        </View>
-                      </View>
-                    </View> */}
 
                     {
                       item.youhui_type == 1 ? (
                         <View className="image-list" style={{ position: "relative", marginBottom: "5px" }} onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                           {
-                            item.gift_id && item.gift_pic != "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} /> :
-                              <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} />
+                            item.gift_id && item.gift_pic != "" ? <Image className="backg-image-business" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} /> :
+                              <Image className="backg-image-business" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} />
                           }
                           <View className="img" style={{ width: "100%" }}   >
                             <View className="box_left">
