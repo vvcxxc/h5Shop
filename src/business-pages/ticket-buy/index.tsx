@@ -343,7 +343,10 @@ export default class TicketBuy extends Component {
         <View className="appre-info-content">
           <View className="appre-info-title-ticket">
             <View className="appre-info-title-label-ticket">到店支付可用</View>
-            <View className="appre-info-title-text-ticket">{this.state.coupon.yname}</View>
+            {/* <View className="appre-info-title-text-ticket">{this.state.coupon.yname}</View> */}
+            <Text className="appre-info-title-text-ticket">
+              {this.state.coupon.yname}
+            </Text>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">

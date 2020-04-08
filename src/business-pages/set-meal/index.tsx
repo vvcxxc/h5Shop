@@ -13,7 +13,7 @@ import wx from 'weixin-js-sdk';
 // import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
-import {accSubtr } from '@/utils/common'
+import { accSubtr } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
 import QRCode from 'qrcode';
 
@@ -110,10 +110,10 @@ export default class AppreActivity extends Component {
     showShare: false, //显示分享
     isShare: false,
     posterList: {
-      name:'',
+      name: '',
       store: {
         name: '',
-        address:''
+        address: ''
       },
 
     },
@@ -394,7 +394,10 @@ export default class AppreActivity extends Component {
         <View className="appre-info-content">
           <View className="appre-info-title-setmeal">
             <View className="appre-info-title-label-setmeal">小熊敬礼</View>
-            <View className="appre-info-title-text-setmeal">{this.state.coupon.yname}</View>
+            {/* <View className="appre-info-title-text-setmeal">{this.state.coupon.yname}</View> */}
+            <Text className="appre-info-title-text-setmeal">
+              {this.state.coupon.yname}
+            </Text>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">
@@ -402,7 +405,7 @@ export default class AppreActivity extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money)) }</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money), Number(this.state.coupon.pay_money))}</View>
           </View>
           {
             delivery_service_info.id ? <View className="appre-info-label">
