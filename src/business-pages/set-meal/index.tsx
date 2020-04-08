@@ -403,7 +403,10 @@ export default class AppreActivity extends Component {
         <View className="appre-info-content">
           <View className="appre-info-title-setmeal">
             <View className="appre-info-title-label-setmeal">小熊敬礼</View>
-            <View className="appre-info-title-text-setmeal">{this.state.coupon.yname}</View>
+            {/* <View className="appre-info-title-text-setmeal">{this.state.coupon.yname}</View> */}
+            <Text className="appre-info-title-text-setmeal">
+              {this.state.coupon.yname}
+            </Text>
           </View>
           <View className="appre-info-price">
             <View className="appre-price-info">

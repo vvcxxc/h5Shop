@@ -158,12 +158,22 @@
         margin-bottom: 15px;
 
         .appre-info-title-ticket {
+            width:100%;
+            height:auto;
             margin-bottom: 30px;
-            display: flex;
-            align-items: center;
+            line-height: 0px;
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* autoprefixer: off */
+            -webkit-box-orient: vertical;
+            /* autoprefixer: on */
 
 
             .appre-info-title-label-ticket {
+                display: inline-block;
                 min-width: 140px;
                 height: 29px;
                 text-align: center;
@@ -174,15 +184,12 @@
                 color: rgba(255, 255, 255, 1);
                 line-height: 29px;
                 margin-right: 12px;
+                margin-bottom: 12px;
             }
 
             .appre-info-title-text-ticket {
-                height: auto;
                 font-size: 36px;
                 line-height: 42px;
-                overflow: hidden;
-                text-overflow:ellipsis;
-                white-space: nowrap;
             }
         }
 
