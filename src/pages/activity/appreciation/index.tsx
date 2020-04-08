@@ -71,6 +71,7 @@ export default class AppreActivity extends Component {
             xpoint: "",
             ypoint: "",
             dp_count: 0,
+            publish_wait: 0
         },
         showShare: false, //显示分享
         isShare: false,
@@ -540,24 +541,7 @@ export default class AppreActivity extends Component {
                         </View> : null
                     }
                 </View>
-                {/* <View className="appre-buy-box" >
-                    <View className="appre-buy-price-box" >
-                        <View className="appre-buy-price-icon" >￥</View>
-                        <View className="appre-buy-price-num" >{this.state.data.pay_money}</View>
-                    </View>
-                    <View className="appre-buy-btn-box" >
-                        <View className="appre-buy-btn-left" >分享活动</View>
-                        {
-                            this.state.data.activity_time_status == 1 ? (
-                                <View className="appre-buy-btn-right" >暂未开始</View>
-                            ) : this.state.data.activity_time_status == 2 ? (
-                                <View className="appre-buy-btn-right" onClick={this.goToaConfirm.bind(this)}>立即购买</View>
-                            ) : this.state.data.activity_time_status == 3 ? (
-                                <View className="appre-buy-btn-right">已结束</View>
-                            ) : null
-                        }
-                    </View>
-                </View> */}
+
                 <View className="new-buy-box" >
                     <View className="new-price-box" >
                         <View className="new-price-icon" >￥</View>
@@ -567,14 +551,12 @@ export default class AppreActivity extends Component {
                         <View className="new-buy-btn-left" onClick={() =>
                             this.setState({ showShare: true })}>分享活动</View>
                         {
-                            this.state.data.total_num == 0 ? (
-                                <View className="new-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>库存不足</View>
+                            this.state.data.publish_wait != 1 || this.state.data.total_num == 0 || this.state.data.activity_time_status == 3 ? (
+                                <View className="new-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>已结束</View>
                             ) : this.state.data.activity_time_status == 1 ? (
-                                <View className="new-buy-btn-right">暂未开始</View>
+                                <View className="new-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>暂未开始</View>
                             ) : this.state.data.activity_time_status == 2 ? (
                                 <View className="new-buy-btn-right" onClick={this.goToaConfirm.bind(this)}>立即购买</View>
-                            ) : this.state.data.activity_time_status == 3 ? (
-                                <View className="new-buy-btn-right">已结束</View>
                             ) : null
                         }
                     </View>

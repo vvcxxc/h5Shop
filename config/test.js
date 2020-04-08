@@ -25,7 +25,6 @@ module.exports = {
     // USER_API: '"https://release.usercenter.tdianyi.com/"',
     // WX_APPID: "'wxecdd282fde9a9dfd'",
     // ALI_APPID: "'2018080960968490'",
-    // H5_URL: '"http://test.mall.tdianyi.com"',
 
     GROUP_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/group/group?id="',
     APPRE_URL: '"http://test.mall.tdianyi.com/pages/activity/pages/appreciation/appreciation?id="',

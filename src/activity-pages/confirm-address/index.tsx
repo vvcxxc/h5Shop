@@ -47,8 +47,9 @@ export default class confirmAddress extends Component {
                 youhuiHour: '',
                 participation_number: 0
             },
-            team_set_end_time: ''
-        }
+            team_set_end_time: '',
+        },
+        tipsMessage: ''
     };
 
     componentDidShow() {
@@ -99,7 +100,7 @@ export default class confirmAddress extends Component {
 
         }
     }
-    
+
     clickGift = (e) => {
         if (this.state.giftChoice == true) {
             this.setState({ giftChoice: false })
@@ -312,7 +313,8 @@ export default class confirmAddress extends Component {
                             console.log('不知道啥子支付类型', _type)
                         }
                     } else {
-                        Taro.showToast({ title: res.message, icon: 'none' })
+                        this.setState({ tipsMessage: res.message })
+                        // Taro.showToast({ title: res.message, icon: 'none' })
                     }
                 }).catch(err => {
                     Taro.hideLoading();
@@ -470,7 +472,8 @@ export default class confirmAddress extends Component {
                             console.log('不知道啥子支付类型', _type)
                         }
                     } else {
-                        Taro.showToast({ title: res.message, icon: 'none' })
+                        this.setState({ tipsMessage: res.message })
+                        // Taro.showToast({ title: res.message, icon: 'none' })
                     }
                 }).catch(err => {
                     Taro.hideLoading();
@@ -598,7 +601,8 @@ export default class confirmAddress extends Component {
                             console.log(_type)
                         }
                     } else {
-                        Taro.showToast({ title: res.message, icon: 'none' })
+                        this.setState({ tipsMessage: res.message })
+                        // Taro.showToast({ title: res.message, icon: 'none' })
                     }
                 }).catch(err => {
                     Taro.hideLoading();
@@ -792,6 +796,15 @@ export default class confirmAddress extends Component {
                     <View className="paymoney_buynow" onClick={this.payment.bind(this)} >立即购买</View>
                 </View>
 
+                {
+                    this.state.tipsMessage ? <View className="tips-mask">
+                        <View className="tips-content">
+                            <View className="tips-title">购买失败</View>
+                            <View className="tips-info">{this.state.tipsMessage}</View>
+                            <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
+                        </View>
+                    </View> : null
+                }
             </View>
         );
     }

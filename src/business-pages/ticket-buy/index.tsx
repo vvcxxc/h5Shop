@@ -41,7 +41,7 @@ export default class TicketBuy extends Component {
     coupon: {
       invitation_user_id: '',
       begin_time: "",
-      brief: "",
+      brief: [],
       description: [],
       end_time: "",
       icon: "",
@@ -58,7 +58,10 @@ export default class TicketBuy extends Component {
       expire_day: '',
       total_fee: 0,
       images: [],
-      total_num: 0
+      total_num: 0,
+      publish_wait: 0,
+      limit_purchase_quantity: 0,//限购数量
+      user_youhu_log_sum: 0// 已购数量
     },
     store: {
       brief: "",
@@ -95,13 +98,14 @@ export default class TicketBuy extends Component {
       image: "",
       youhui_type: 0
     }],
-
     isFromShare: false,
     showShare: false, //显示分享
     isShare: false,
     showPoster: false, //显示海报
     posterList: {},
-    securityPoster: false// fasle不允许显示海报
+    securityPoster: false,// fasle不允许显示海报
+    tipsMessage: '',
+    showMoreImages: false,
   }
 
 
@@ -170,9 +174,13 @@ export default class TicketBuy extends Component {
       this.setState({ showBounced: true })
       return
     }
-    Taro.navigateTo({
-      url: '../../business-pages/confirm-order/index?id=' + id
-    })
+    if (this.state.coupon.limit_purchase_quantity && this.state.coupon.user_youhu_log_sum >= this.state.coupon.limit_purchase_quantity) {
+      this.setState({ tipsMessage: '本优惠已达购买上限，无法购买。' })
+    } else {
+      Taro.navigateTo({
+        url: '../../business-pages/confirm-order/index?id=' + id
+      })
+    }
   }
 
   // 登录弹窗
@@ -258,6 +266,7 @@ export default class TicketBuy extends Component {
   }
 
   render() {
+    const { description, brief } = this.state.coupon;
     const { showPoster, posterList } = this.state
     return (
       <View className="appre-activity-detail">
@@ -372,9 +381,6 @@ export default class TicketBuy extends Component {
             meter={this.state.store.distance}
           />
         </View>
-
-
-
         <View className="appre-rules">
           <View className="appre-title-box">
             <View className='appre-title-left'></View>
@@ -394,6 +400,12 @@ export default class TicketBuy extends Component {
             <View className="rules-key">有效期：</View>
             <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
           </View>
+          {
+            this.state.coupon.limit_purchase_quantity ? <View className="appre-rules-item" >
+              <View className="rules-key">购买限制：</View>
+              <View className="rules-words">每人最多可购买{this.state.coupon.limit_purchase_quantity}份</View>
+            </View> : null
+          }
           {/* {
             this.state.coupon.description&&this.state.coupon.description.length ? <View>
               <View className="appre-rules-list-title" >使用规则：</View>
@@ -405,8 +417,43 @@ export default class TicketBuy extends Component {
             </View> : null
           } */}
         </View>
-
-
+        {
+          brief.length ? <View className="img-list-box">
+            <View className="img-title-box">
+              <View className='img-title-left'></View>
+              <View className='img-title'>图文详情</View>
+            </View>
+            <View className="images-content">
+              {
+                !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
+                  : null
+              }
+              {
+                !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
+                  : null
+              }
+              {
+                this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
+                  return (
+                    <Image className="images-item" mode={'widthFix'} key={item} src={item} />
+                  )
+                }) : null
+              }
+            </View>
+            {
+              brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+                <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                <View className="img-more-text" >查看更多</View>
+              </View>
+                : (
+                  brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                    <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
+                    <View className="img-more-text" >收起</View>
+                  </View> : null
+                )
+            }
+          </View> : null
+        }
         {
           this.state.recommend && this.state.recommend.length > 0 ?
             <View className="more_goods">
@@ -415,7 +462,7 @@ export default class TicketBuy extends Component {
                 <View className="title">更多本店宝贝</View>
               </View>
               {
-                this.state.recommend.length > 0 && !this.state.showAll ? <View className="good_info">
+                this.state.recommend.length > 0 && !this.state.showAll ? <View className="good_info" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[0].youhui_type, this.state.recommend[0].id)}>
                   <View className="good_msg">
                     <Image className="good_img" src={this.state.recommend[0].image} />
 
@@ -439,13 +486,13 @@ export default class TicketBuy extends Component {
                     </View>
                   </View>
 
-                  <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[0].youhui_type, this.state.recommend[0].id)}>
+                  <View className="good_btn">
                     <View className="text">抢购</View>
                   </View>
                 </View> : null
               }
               {
-                this.state.recommend.length > 1 && !this.state.showAll ? <View className="good_info">
+                this.state.recommend.length > 1 && !this.state.showAll ? <View className="good_info" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[1].youhui_type, this.state.recommend[1].id)}>
                   <View className="good_msg">
                     <Image className="good_img" src={this.state.recommend[1].image} />
                     <View className="good_detail">
@@ -467,14 +514,14 @@ export default class TicketBuy extends Component {
                       </View>
                     </View>
                   </View>
-                  <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[1].youhui_type, this.state.recommend[1].id)}>
+                  <View className="good_btn">
                     <View className="text">抢购</View>
                   </View>
                 </View> : null
               }
               {
                 this.state.showAll && this.state.recommend.map((item) => (
-                  <View className="good_info">
+                  <View className="good_info" onClick={this.gotoTicketBuy.bind(this, item.youhui_type, item.id)}>
                     <View className="good_msg">
                       <Image className="good_img" src={item.image} />
 
@@ -498,7 +545,7 @@ export default class TicketBuy extends Component {
                       </View>
                     </View>
 
-                    <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, item.youhui_type, item.id)}>
+                    <View className="good_btn">
                       <View className="text">抢购</View>
                     </View>
                   </View>
@@ -527,8 +574,8 @@ export default class TicketBuy extends Component {
               this.setState({ showShare: true })
             }}>分享活动</View>
             {
-              this.state.coupon.total_num ? <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View> :
-                <View className="appre-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>库存不足</View>
+              this.state.coupon.total_num && this.state.coupon.publish_wait == 1 ? <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View> :
+                <View className="appre-buy-btn-right" style={{ backgroundImage: 'url("http://oss.tdianyi.com/front/TaF78G3Nk2HzZpY7z6Zj4eaScAxFKJHN.png")' }}>已结束</View>
             }
           </View>
         </View>
@@ -550,6 +597,17 @@ export default class TicketBuy extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
+
+        {
+          this.state.tipsMessage ? <View className="tips-mask">
+            <View className="tips-content">
+              <View className="tips-title">购买失败</View>
+              <View className="tips-info">{this.state.tipsMessage}</View>
+              <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
+            </View>
+          </View> : null
+        }
+
       </View >
     );
   }

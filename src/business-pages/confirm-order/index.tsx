@@ -9,6 +9,7 @@ import addimg from '../../assets/add.png';
 import addimg2 from '../../assets/add2.png';
 import cutimg from '../../assets/cut.png';
 import cutimg2 from '../../assets/cut2.png';
+import { accAdd, accSub } from '@/components/acc-num'
 
 export default class ConfirmOrder extends Component {
   config = {
@@ -25,13 +26,16 @@ export default class ConfirmOrder extends Component {
       brief: "",
       list_brief: "",
       description: "0",
-      yname: ""
+      yname: "",
+      total_num: 0,
+      limit_purchase_quantity: 0,//限购数量
+      user_youhu_log_sum: 0// 已购数量
     },
     store: {
       id: "",
       sname: ""
     },
-
+    tipsMessage: ''
   };
   componentWillMount() {
 
@@ -53,20 +57,29 @@ export default class ConfirmOrder extends Component {
   }
   cutnum() {
     if (this.state.amount > 1) {
-      this.setState({ amount: Number(this.state.amount) - 1 }, () => {
+      let cut = accSub(this.state.amount, 1);
+      this.setState({ amount: cut }, () => {
         this.accMul();
       })
     }
 
   }
   addnum() {
-    if (this.state.amount < 10) {
-      this.setState({ amount: Number(this.state.amount) + 1 }, () => {
+    let add = accAdd(this.state.amount, 1);
+    if (this.state.amount < 10 && this.state.amount < this.state.coupon.total_num && (
+      (!this.state.coupon.limit_purchase_quantity || (this.state.coupon.limit_purchase_quantity && accAdd(add, this.state.coupon.user_youhu_log_sum)) <= this.state.coupon.limit_purchase_quantity)
+    )) {
+      let add = accAdd(this.state.amount, 1);
+      this.setState({ amount: add }, () => {
         this.accMul();
       })
     }
   }
   payMoney() {
+    if (this.state.coupon.limit_purchase_quantity && (accAdd(this.state.amount, this.state.coupon.user_youhu_log_sum)) > this.state.coupon.limit_purchase_quantity) {
+      this.setState({ tipsMessage: '已超过购买上限,请重新设置购买数量' })
+      return;
+    }
     Taro.showLoading({
       title: 'loading',
     })
@@ -114,63 +127,68 @@ export default class ConfirmOrder extends Component {
     })
       .then((res: any) => {
         Taro.hideLoading();
-        if (_type == 1) {
-          //微信
-          window.WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-            "appId": res.data.appId,
-            "timeStamp": res.data.timeStamp,
-            "nonceStr": res.data.nonceStr,
-            "package": res.data.package,
-            "signType": res.data.signType,
-            "paySign": res.data.paySign
-          },
-            function (res) {
-              if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //微信成功
+        if (res.code == 200) {
+          if (_type == 1) {
+            //微信
+            window.WeixinJSBridge.invoke(
+              'getBrandWCPayRequest', {
+              "appId": res.data.appId,
+              "timeStamp": res.data.timeStamp,
+              "nonceStr": res.data.nonceStr,
+              "package": res.data.package,
+              "signType": res.data.signType,
+              "paySign": res.data.paySign
+            },
+              function (res) {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  //微信成功
+                  Taro.showToast({ title: '支付成功', icon: 'none' })
+
+                  Taro.switchTab({
+                    url: '/pages/order/index',
+                    success: (e) => {
+                      let page = Taro.getCurrentPages().pop();
+                      if (page == undefined || page == null) return;
+                      page.onShow();
+                    }
+                  })
+                } else {
+                  Taro.showToast({ title: '支付失败', icon: 'none' })
+                }
+              }
+            );
+          }
+          else if (_type == 2) {
+            //支付宝
+            window.AlipayJSBridge.call('tradePay', {
+              tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
+              // bizType:"xxx",                          // 非必传，默认为 “trade”
+              // bizSubType:"",                          // 非必传，默认为 “”
+              // bizContext:""                           // 非必传，默认为H5启动选项(safePayContext)
+            }, res => {
+              if (res.resultCode === "9000") {
                 Taro.showToast({ title: '支付成功', icon: 'none' })
 
+                //支付宝成功
                 Taro.switchTab({
                   url: '/pages/order/index',
                   success: (e) => {
                     let page = Taro.getCurrentPages().pop();
                     if (page == undefined || page == null) return;
                     page.onShow();
+
                   }
                 })
               } else {
                 Taro.showToast({ title: '支付失败', icon: 'none' })
               }
-            }
-          );
-        }
-        else if (_type == 2) {
-          //支付宝
-          window.AlipayJSBridge.call('tradePay', {
-            tradeNO: res.data.alipayOrderSn, // 必传，此使用方式下该字段必传
-            // bizType:"xxx",                          // 非必传，默认为 “trade”
-            // bizSubType:"",                          // 非必传，默认为 “”
-            // bizContext:""                           // 非必传，默认为H5启动选项(safePayContext)
-          }, res => {
-            if (res.resultCode === "9000") {
-              Taro.showToast({ title: '支付成功', icon: 'none' })
-
-              //支付宝成功
-              Taro.switchTab({
-                url: '/pages/order/index',
-                success: (e) => {
-                  let page = Taro.getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onShow();
-
-                }
-              })
-            } else {
-              Taro.showToast({ title: '支付失败', icon: 'none' })
-            }
-          })
+            })
+          } else {
+            console.log(_type)
+          }
         } else {
-          console.log(_type)
+          this.setState({ tipsMessage: res.message })
+          // Taro.showToast({ title: res.message, icon: 'none' })
         }
       })
   }
@@ -208,7 +226,7 @@ export default class ConfirmOrder extends Component {
               <View className="amount" >{this.state.amount}</View>
               {/* <AtIcon value="add-circle" color={this.state.amount < 10 ? "#FF6654" : "#999"} onClick={this.addnum.bind(this)} /> */}
               <View className="addimg" style={{ width: "22px", height: "22px" }} onClick={this.addnum.bind(this)}>
-                <Image className="image" style={{ width: "100%", height: "100%" }} src={this.state.amount < 10 ? addimg : addimg2} />
+                <Image className="image" style={{ width: "100%", height: "100%" }} src={this.state.amount < 10 && this.state.amount < this.state.coupon.total_num ? addimg : addimg2} />
               </View>
             </View>
           </View>
@@ -228,18 +246,17 @@ export default class ConfirmOrder extends Component {
             ￥{this.state.tempNum} 去支付
           </View>
         </View>
+
+        {
+          this.state.tipsMessage ? <View className="tips-mask">
+            <View className="tips-content">
+              <View className="tips-title">购买失败</View>
+              <View className="tips-info">{this.state.tipsMessage}</View>
+              <View className="tips-btn" onClick={() => { this.setState({ tipsMessage: '' }) }}>确定</View>
+            </View>
+          </View> : null
+        }
       </View>
     );
   }
 }
-
-
-
-// Taro.switchTab({
-//   url: '/pages/order/index',
-//   success: () => {
-//     var page = Taro.getCurrentPages().pop();
-//     if (page == undefined || page == null) return;
-//     page.onLoad();
-//   }
-// })

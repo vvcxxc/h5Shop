@@ -390,14 +390,14 @@ export default class PaySuccess extends Component<Props> {
               <View className="name">{this.state.business_list.name}</View>
               {/* <View className="money">人均：￥62</View> */}
             </View>
-            {
+            {/* {
 
               this.state.keepCollect_bull ?
                 <AtIcon className="image" value="star-2" color="#FFBF00" size="24px" onClick={this.keepCollect.bind(this)} />
                 :
                 <AtIcon className="image" value="star" color="#999" size="24px" onClick={this.keepCollect.bind(this)} />
 
-            }
+            } */}
           </View>
           <ScrollView scrollX className="scroll-view" >
             <View className="flex">
@@ -435,7 +435,7 @@ export default class PaySuccess extends Component<Props> {
 
                     {
                       item.gift_pic == "" || item.gift_pic == null ?
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box", display: 'flex' }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: 3, padding: "5px 10px 5px 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex", justifyContent: "flex-end" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥{item.participation_money}</View>
@@ -445,7 +445,7 @@ export default class PaySuccess extends Component<Props> {
                           </View>
                           <Image className="image" src={item.image_url_info} />
                         </View> :
-                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box" }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
+                        <View className="image-list" style={{ paddingTop: "10px", boxSizing: "border-box", display: 'flex' }} onClick={this.gotoGroup.bind(this, item.youhui_id, item.gift_id, item.activity_id)} >
                           <View className="image" style={{ position: "relative", overflow: "hidden" }}>
                             <View style={{ position: "absolute", left: "0", bottom: "0", background: "rgba(0,0,0,.7)", zIndex: 3, padding: "5px 10px 5px 5px", borderTopRightRadius: "8px", textAlign: "center", display: "flex", justifyContent: "flex-end" }}>
                               <View style={{ fontSize: "20px", color: "#fff", lineHeight: 1 }}>￥{item.participation_money}</View>
@@ -506,12 +506,13 @@ export default class PaySuccess extends Component<Props> {
                         <View className="item desc">{item.name}</View>
                       </View>
                     </View>
+
                     {
                       item.youhui_type == 1 ? (
                         <View className="image-list" style={{ position: "relative", marginBottom: "5px" }} onClick={this.gotoAppreciation.bind(this, item.youhui_id, item.gift_id, item.activity_id)}>
                           {
-                            item.gift_id && item.gift_pic != "" ? <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} /> :
-                              <Image className="backg-image" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} />
+                            item.gift_id && item.gift_pic != "" ? <Image className="backg-image-business" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/andhNY3XKEWrW8nYBK5pyAptaJWeJz68.png"} /> :
+                              <Image className="backg-image-business" src={"http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/bMGJKGX2JcKWbs8JEypeiB7CAbd4wAz4.png"} />
                           }
                           <View className="img" style={{ width: "100%" }}   >
                             <View className="box_left">

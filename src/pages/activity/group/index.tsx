@@ -43,6 +43,7 @@ export default class GroupActivity extends Component {
     current: 0,
     //查看更多
     showMoreRules: false,
+    showMoreImages: false,
     data: {
       invitation_user_id: '',
       share_text: '',
@@ -61,6 +62,7 @@ export default class GroupActivity extends Component {
       id: 0,//店id
       image: "",
       images: [],
+      brief: [],
       is_show_button: 0,
       list_brief: "",
       locate_match_row: "",
@@ -79,6 +81,7 @@ export default class GroupActivity extends Component {
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
       ypoint: "",
+      supplier_delivery_id:0,
       delivery_service_info: {
         delivery_end_time: '',
         delivery_radius_m: 0,
@@ -600,7 +603,7 @@ export default class GroupActivity extends Component {
   }
 
   render() {
-    const { description, delivery_service_info } = this.state.data;
+    const { description, delivery_service_info, images, brief } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
     // console.log(posterList,'ddd')
     return (
@@ -790,56 +793,6 @@ export default class GroupActivity extends Component {
             : null
 
         }
-        {/* <Swiper
-                    onChange={(e) => {
-                        // if (this.state.current == this.state.list.length - 2) {
-                        //     this.setState({ current: 0 })
-                        // }
-                        // else {
-                        //     this.setState({ current: e.detail.current })
-                        // };
-                    }}
-                    className='swiper-group-list'
-                    autoplay
-                    // circular
-                    displayMultipleItems={2}
-                    vertical
-                >
-                    {
-                        this.state.list.map((item, index) => {
-                            return (
-                                <SwiperItem key={item} >
-                                    <View className="swiper-item" onClick={() => { console.log(item) }}>
-
-                                        <View className="group-user" >
-                                            <View className="group-list-img" >
-                                                <Image className="listImg" src={"http://oss.tdianyi.com/front/2tp2Gi5MjC47hd7mGBCjEGdsBiWt5Wec.png"} />
-                                            </View>
-                                            <View className="group-list-name" >{index}测试测试测试测试</View>
-                                        </View>
-
-                                        <View className="group-info" >
-                                            <View className="group-list-timesbox" >
-                                                <View className="group-list-lack" >
-                                                    <View className="group-list-lackredblack1" >还差</View>
-                                                    <View className="group-list-lackred" >33人</View>
-                                                    <View className="group-list-lackredblack2" >拼成</View>
-                                                </View>
-                                                <View className="group-list-times" >
-                                                    <TimeUp itemtime={'2020-6-8'} />
-                                                </View>
-                                            </View>
-                                            <View className="group-list-btnbox" >
-                                                <View className="group-list-btn" >参团</View>
-                                            </View>
-                                        </View>
-
-                                    </View>
-                                </SwiperItem>
-                            )
-                        })
-                    }
-                </Swiper> */}
         {
           this.state.newGroupList.length ? <View className="group-group-bottom"></View> : null
         }
@@ -935,23 +888,44 @@ export default class GroupActivity extends Component {
             </View> : null
           }
         </View>
-        {/* <View className="group-buy-box" >
-          <View className="group-buy-price-box" >
-            <View className="group-buy-price-icon" >￥</View>
-            <View className="group-buy-price-num" >{this.state.data.participation_money}</View>
-          </View>
-          <View className="group-buy-btn-box" >
-            <View className="group-buy-btn-left" >分享活动</View>
-            {
-              this.state.allowGroup ? <View className="group-buy-btn-right" >{this.state.allowGroup}</View>
-                : <View className="group-buy-btn-right" onClick={this.goToaConfirm.bind(this)} >
-                  <View className="group-buy-btn-group" > {this.$router.params.type == "55" ? '参加拼团' : '发起拼团'}</View>
-                  <View className="group-buy-btn-groupnum" >{this.state.data.number}人成团</View>
-                </View>
-            }
-          </View>
-        </View> */}
 
+        {
+          brief.length ? <View className="img-list-box">
+            <View className="img-title-box">
+              <View className='img-title-left'></View>
+              <View className='img-title'>图文详情</View>
+            </View>
+            <View className="images-content">
+              {
+                !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
+                  : null
+              }
+              {
+                !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
+                  : null
+              }
+              {
+                this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
+                  return (
+                    <Image className="images-item" mode={'widthFix'} key={item} src={item} />
+                  )
+                }) : null
+              }
+            </View>
+            {
+              brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+                <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                <View className="img-more-text" >查看更多</View>
+              </View>
+                : (
+                  brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                    <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
+                    <View className="img-more-text" >收起</View>
+                  </View> : null
+                )
+            }
+          </View> : null
+        }
 
         <View className="new-buy-box" >
           <View className="new-price-box" >
