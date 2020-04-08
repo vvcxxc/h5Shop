@@ -12,8 +12,8 @@
     -webkit-overflow-scrolling: touch;
 
     .swiper-content {
-        width: 100%;
-        height: auto;
+        width: 100vw;
+        height: 100vw;
         position: relative;
 
         .group-banner {
@@ -21,12 +21,12 @@
             height: 100vw;
 
             .group-banner-swiperItem {
-                width: 100%;
-                height: 100%;
+                width: 100vw;
+                height: 100vw;
 
                 .group-banner-img {
-                    width: 100%;
-                    height: 100%;
+                    width: 100vw;
+                    height: 100vw;
                 }
             }
             img{
@@ -547,6 +547,7 @@
         border-radius: 15px;
         background: #fff;
         overflow: hidden;
+        margin-bottom: 15px;
 
         .group-title-box {
             height: 95px;
@@ -648,92 +649,74 @@
         }
     }
 
-    .group-buy-box {
+    .img-list-box {
         width: 100vw;
-        height: 100px;
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 10;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        background: #fff;
-        padding: 0 20px;
+        height: auto;
+        padding: 0 32px 32px;
         box-sizing: border-box;
-        box-shadow: 0 0 4px 3px rgba(0, 0, 0, .2);
+        border-radius: 15px;
+        background: #fff;
+        overflow: hidden;
+        margin-bottom: 15px;
 
-        .group-buy-price-box {
-            display: flex;
-            flex-direction: row;
-            align-items: baseline;
-            justify-content: flex-start;
-
-            .group-buy-price-icon {
-                font-size: 24px;
-                font-weight: bold;
-                line-height: 1;
-                color: rgba(255, 68, 68, 1);
-
-            }
-
-            .group-buy-price-num {
-                font-size: 54px;
-                font-weight: bold;
-                line-height: 1;
-                color: rgba(255, 68, 68, 1);
-
-            }
-        }
-
-        .group-buy-btn-box {
+        .img-title-box {
+            height: 95px;
+            width: 100%;
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: center;
-            height: 72px;
-            width: 444px;
+            justify-content: flex-start;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            background: #fff;
+            box-sizing: border-box;
 
-            .group-buy-btn-left {
-                height: 100%;
-                width: 50%;
-                background-image: url("http://oss.tdianyi.com/front/ZXFyhEQmcP85skmZQ8B265sJabZXYMzD.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                color: rgba(255, 255, 255, 1);
-                line-height: 1;
+            .img-title-left {
+                width: 8px;
+                height: 25px;
+                background: #FF4444;
+                border-radius: 4px;
+                margin-right: 11px;
             }
 
-            .group-buy-btn-right {
-                height: 100%;
-                width: 50%;
-                background-image: url("http://oss.tdianyi.com/front/w7wMHM4Rtjn6rafM56SN6c6f86N74Xhf.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                color: rgba(255, 255, 255, 1);
-
-                .group-buy-btn-group {
-                    font-size: 26px;
-                    line-height: 1;
-                }
-
-                .group-buy-btn-groupnum {
-                    font-size: 20px;
-                    margin-top: 5px;
-                    line-height: 1;
-                }
+            .img-title {
+                font-size: 36px;
+                font-weight: bold;
             }
         }
+
+        .images-content {
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+
+            .images-item {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        .img-more {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+
+            .img-more-icon {
+                width: 21px;
+                height: 12px;
+                margin-right: 12px;
+            }
+
+            .img-more-text {
+                font-size: 20px;
+                color: rgba(153, 153, 153, 1);
+                line-height: 1;
+            }
+        }
+
     }
 
     .new-buy-box {
