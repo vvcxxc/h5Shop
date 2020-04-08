@@ -35,10 +35,10 @@ export default class AppreActivity extends Component {
     //表面收藏
     keepCollect_bull: false,
     coupon: {
-      invitation_user_id:'',
-      share_text:'',
+      invitation_user_id: '',
+      share_text: '',
       begin_time: "",
-      brief: "",
+      brief: [],
       //真正的收藏
       collect: "",
       description: [],
@@ -96,6 +96,7 @@ export default class AppreActivity extends Component {
     showAll: false,
     showBounced: false,
     showMoreRules: false,
+    showMoreImages: false,
     showShare: false, //显示分享
     isShare: false,
     posterList: {},
@@ -110,10 +111,10 @@ export default class AppreActivity extends Component {
       })
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
     Taro.switchTab({ url: '/pages/index/index' })
   }
 
@@ -278,7 +279,7 @@ export default class AppreActivity extends Component {
 
 
   render() {
-    const { description } = this.state.coupon;
+    const { description, brief } = this.state.coupon;
     const { showPoster, posterList } = this.state
     return (
       <View className="appre-activity-detail">
@@ -295,7 +296,7 @@ export default class AppreActivity extends Component {
             this.setState({ showShare: false })
           }}
           createPoster={() => {
-            this.setState({ showPoster: true, showShare:false})
+            this.setState({ showPoster: true, showShare: false })
           }}
         />
 
@@ -359,8 +360,6 @@ export default class AppreActivity extends Component {
           />
         </View>
 
-
-
         <View className="appre-rules">
           <View className="appre-title-box">
             <View className='appre-title-left'></View>
@@ -407,7 +406,43 @@ export default class AppreActivity extends Component {
             </View> : null
           }
         </View>
-
+        {
+          brief.length ? <View className="img-list-box">
+            <View className="img-title-box">
+              <View className='img-title-left'></View>
+              <View className='img-title'>图文详情</View>
+            </View>
+            <View className="images-content">
+              {
+                !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
+                  : null
+              }
+              {
+                !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
+                  : null
+              }
+              {
+                this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
+                  return (
+                    <Image className="images-item" mode={'widthFix'} key={item} src={item} />
+                  )
+                }) : null
+              }
+            </View>
+            {
+              brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+                <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                <View className="img-more-text" >查看更多</View>
+              </View>
+                : (
+                  brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                    <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
+                    <View className="img-more-text" >收起</View>
+                  </View> : null
+                )
+            }
+          </View> : null
+        }
         {
           this.state.recommend && this.state.recommend.length && this.state.recommend.length > 0 ?
             <View className="more_goods">
@@ -433,7 +468,7 @@ export default class AppreActivity extends Component {
                         </View>
                       </View>
                       <View className="good_money">
-                      <View className="good_new_money_icon">￥</View>
+                        <View className="good_new_money_icon">￥</View>
                         <View className="good_new_money">{this.state.recommend[0].pay_money}</View>
                         <View className="good_old_money">￥{this.state.recommend[0].return_money}</View>
                       </View>
@@ -462,7 +497,7 @@ export default class AppreActivity extends Component {
                         </View>
                       </View>
                       <View className="good_money">
-                      <View className="good_new_money_icon">￥</View>
+                        <View className="good_new_money_icon">￥</View>
                         <View className="good_new_money">{this.state.recommend[1].pay_money}</View>
                         <View className="good_old_money">￥{this.state.recommend[1].return_money}</View>
                       </View>
@@ -492,7 +527,7 @@ export default class AppreActivity extends Component {
                           </View>
                         </View>
                         <View className="good_money">
-                        <View className="good_new_money_icon">￥</View>
+                          <View className="good_new_money_icon">￥</View>
                           <View className="good_new_money">{item.pay_money}</View>
                           <View className="good_old_money">￥{item.return_money}</View>
                         </View>
@@ -525,7 +560,7 @@ export default class AppreActivity extends Component {
           </View>
           <View className="appre-buy-btn-box" >
             <View className="appre-buy-btn-left" onClick={() => {
-              this.setState({ showShare:true})
+              this.setState({ showShare: true })
             }}>分享活动</View>
             <View className="appre-buy-btn-right" onClick={this.goToPay.bind(this, this.state.coupon.id)}>立即购买</View>
 

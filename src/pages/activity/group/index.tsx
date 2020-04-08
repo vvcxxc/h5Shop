@@ -59,6 +59,7 @@ export default class GroupActivity extends Component {
       id: 0,//店id
       image: "",
       images: [],
+      brief:[],
       is_show_button: 0,
       list_brief: "",
       locate_match_row: "",
@@ -553,7 +554,7 @@ export default class GroupActivity extends Component {
   }
 
   render() {
-    const { images, description } = this.state.data;
+    const { images, description,brief } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
     return (
       <View className="group-activity-detail">
@@ -880,22 +881,22 @@ export default class GroupActivity extends Component {
         </View>
 
         {
-          images.length ? <View className="img-list-box">
+          brief.length ? <View className="img-list-box">
             <View className="img-title-box">
               <View className='img-title-left'></View>
               <View className='img-title'>图文详情</View>
             </View>
             <View className="images-content">
               {
-                !this.state.showMoreImages && images.length > 0 ? <Image className="images-item" mode={'widthFix'} src={images[0]} />
+                !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
                   : null
               }
               {
-                !this.state.showMoreImages && images.length > 1 ? <Image className="images-item" mode={'widthFix'} src={images[1]} />
+                !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
                   : null
               }
               {
-                this.state.showMoreImages && images.length > 2 ? images.map((item: any, index: any) => {
+                this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
                   return (
                     <Image className="images-item" mode={'widthFix'} key={item} src={item} />
                   )
@@ -903,12 +904,12 @@ export default class GroupActivity extends Component {
               }
             </View>
             {
-              images.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+              brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
                 <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
                 <View className="img-more-text" >查看更多</View>
               </View>
                 : (
-                  images.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                  brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
                     <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
                     <View className="img-more-text" >收起</View>
                   </View> : null
