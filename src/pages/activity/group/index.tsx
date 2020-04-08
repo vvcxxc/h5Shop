@@ -77,7 +77,7 @@ export default class GroupActivity extends Component {
       xpoint: '',
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
-      ypoint: ""
+      ypoint: "",
     },
     data2: {
       data: [],
