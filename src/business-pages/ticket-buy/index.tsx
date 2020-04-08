@@ -41,7 +41,7 @@ export default class TicketBuy extends Component {
     coupon: {
       invitation_user_id: '',
       begin_time: "",
-      brief: "",
+      brief: [],
       description: [],
       end_time: "",
       icon: "",
@@ -98,14 +98,14 @@ export default class TicketBuy extends Component {
       image: "",
       youhui_type: 0
     }],
-
     isFromShare: false,
     showShare: false, //显示分享
     isShare: false,
     showPoster: false, //显示海报
     posterList: {},
     securityPoster: false,// fasle不允许显示海报
-    tipsMessage: ''
+    tipsMessage: '',
+    showMoreImages: false,
   }
 
 
@@ -266,6 +266,7 @@ export default class TicketBuy extends Component {
   }
 
   render() {
+    const { description, brief } = this.state.coupon;
     const { showPoster, posterList } = this.state
     return (
       <View className="appre-activity-detail">
@@ -377,9 +378,6 @@ export default class TicketBuy extends Component {
             meter={this.state.store.distance}
           />
         </View>
-
-
-
         <View className="appre-rules">
           <View className="appre-title-box">
             <View className='appre-title-left'></View>
@@ -416,8 +414,43 @@ export default class TicketBuy extends Component {
             </View> : null
           } */}
         </View>
-
-
+        {
+          brief.length ? <View className="img-list-box">
+            <View className="img-title-box">
+              <View className='img-title-left'></View>
+              <View className='img-title'>图文详情</View>
+            </View>
+            <View className="images-content">
+              {
+                !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
+                  : null
+              }
+              {
+                !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
+                  : null
+              }
+              {
+                this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
+                  return (
+                    <Image className="images-item" mode={'widthFix'} key={item} src={item} />
+                  )
+                }) : null
+              }
+            </View>
+            {
+              brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+                <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                <View className="img-more-text" >查看更多</View>
+              </View>
+                : (
+                  brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                    <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
+                    <View className="img-more-text" >收起</View>
+                  </View> : null
+                )
+            }
+          </View> : null
+        }
         {
           this.state.recommend && this.state.recommend.length > 0 ?
             <View className="more_goods">
