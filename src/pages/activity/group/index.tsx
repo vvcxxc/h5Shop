@@ -62,7 +62,7 @@ export default class GroupActivity extends Component {
       id: 0,//店id
       image: "",
       images: [],
-      brief:[],
+      brief: [],
       is_show_button: 0,
       list_brief: "",
       locate_match_row: "",
@@ -603,7 +603,7 @@ export default class GroupActivity extends Component {
   }
 
   render() {
-    const { description, delivery_service_info,brief } = this.state.data;
+    const { description, delivery_service_info, images, brief } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
     // console.log(posterList,'ddd')
     return (

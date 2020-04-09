@@ -13,7 +13,7 @@ import wx from 'weixin-js-sdk';
 // import Poster from '@/components/posters/vouchers'//   海报无礼品
 import Poster from '@/components/posters/set-meal'//   海报无礼品
 import { shopPoster } from '@/api/poster'
-import {accSubtr } from '@/utils/common'
+import { accSubtr } from '@/utils/common'
 import { accSub } from '@/components/acc-num'
 import QRCode from 'qrcode';
 
@@ -113,17 +113,16 @@ export default class AppreActivity extends Component {
     showMoreImages: false,
     showShare: false, //显示分享
     isShare: false,
-    securityPoster: false,// fasle不允许显示海报
-    tipsMessage: '',
     posterList: {
-      name:'',
+      name: '',
       store: {
         name: '',
-        address:''
+        address: ''
       },
 
     },
-    showPoster: false
+    showPoster: false,
+    tipsMessage: ''
   }
 
   componentDidMount() {
@@ -412,7 +411,7 @@ export default class AppreActivity extends Component {
               <View className="appre-price-info-new">{this.state.coupon.pay_money}</View>
               <View className="appre-price-info-old">￥{this.state.coupon.return_money}</View>
             </View>
-            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money) , Number(this.state.coupon.pay_money)) }</View>
+            <View className="appre-price-discounts">已优惠￥{accSubtr(Number(this.state.coupon.return_money), Number(this.state.coupon.pay_money))}</View>
           </View>
           {
             delivery_service_info.id ? <View className="appre-info-label">
@@ -541,7 +540,7 @@ export default class AppreActivity extends Component {
                 <View className="title">更多本店宝贝</View>
               </View>
               {
-                this.state.recommend.length > 0 && !this.state.showAll ? <View className="good_info">
+                this.state.recommend.length > 0 && !this.state.showAll ? <View className="good_info" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[0].youhui_type, this.state.recommend[0].id)}>
                   <View className="good_msg">
                     <Image className="good_img" src={this.state.recommend[0].image} />
 
@@ -565,13 +564,13 @@ export default class AppreActivity extends Component {
                     </View>
                   </View>
 
-                  <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[0].youhui_type, this.state.recommend[0].id)}>
+                  <View className="good_btn">
                     <View className="text">抢购</View>
                   </View>
                 </View> : null
               }
               {
-                this.state.recommend.length > 1 && !this.state.showAll ? <View className="good_info">
+                this.state.recommend.length > 1 && !this.state.showAll ? <View className="good_info" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[1].youhui_type, this.state.recommend[1].id)}>
                   <View className="good_msg">
                     <Image className="good_img" src={this.state.recommend[1].image} />
                     <View className="good_detail">
@@ -593,14 +592,14 @@ export default class AppreActivity extends Component {
                       </View>
                     </View>
                   </View>
-                  <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, this.state.recommend[1].youhui_type, this.state.recommend[1].id)}>
+                  <View className="good_btn">
                     <View className="text">抢购</View>
                   </View>
                 </View> : null
               }
               {
                 this.state.showAll && this.state.recommend.map((item) => (
-                  <View className="good_info">
+                  <View className="good_info" onClick={this.gotoTicketBuy.bind(this, item.youhui_type, item.id)}>
                     <View className="good_msg">
                       <Image className="good_img" src={item.image} />
 
@@ -624,7 +623,7 @@ export default class AppreActivity extends Component {
                       </View>
                     </View>
 
-                    <View className="good_btn" onClick={this.gotoTicketBuy.bind(this, item.youhui_type, item.id)}>
+                    <View className="good_btn">
                       <View className="text">抢购</View>
                     </View>
                   </View>
