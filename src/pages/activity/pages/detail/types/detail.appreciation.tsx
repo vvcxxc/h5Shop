@@ -298,12 +298,7 @@ export default class DetailAppreciation extends Component{
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                 //微信成功
                 Taro.switchTab({
-                  url: '/pages/order/index',
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
-                  }
+                  url: '/pages/order/index'
                 })
               } else {
                 //微信失败
@@ -318,13 +313,7 @@ export default class DetailAppreciation extends Component{
             if (res.resultCode === "9000") {
               //支付宝成功
               Taro.switchTab({
-                url: '/pages/order/index',
-                success: function (e) {
-                  let page = Taro.getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onShow();
-
-                }
+                url: '/pages/order/index'
               })
             } else {
               //支付宝失败

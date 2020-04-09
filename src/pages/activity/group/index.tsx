@@ -458,12 +458,7 @@ export default class GroupActivity extends Component {
    */
   goToGroupInfo = (_tempid: any) => {
     Taro.navigateTo({
-      url: '/pages/activity/pages/group/group?id=' + _tempid,
-      success: () => {
-        var page = Taro.getCurrentPages().pop();
-        if (page == undefined || page == null) return;
-        page.onLoad();
-      }
+      url: '/pages/activity/pages/group/group?id=' + _tempid
     })
   }
 
