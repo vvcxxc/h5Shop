@@ -66,62 +66,62 @@ class IndexSearchPage extends PureComponent<Props> {
 			Taro.setStorageSync("searchKey", meta)
 		}
 		if (meta.length>=1) this.setState({ showStorage:true})
-		Taro.switchTab(
-			{ url: '/pages/merchant/index?value=' + this.state.searchStr,  success: ()=> {
-        console.log('34566')
+		Taro.redirectTo(
+			{ url: '/pages/merchant/index?value=' + this.state.searchStr,}
+    ).then(() => {
+      console.log('34566')
         location.href = location.href
-      }  }
-    )
+    })
 	}
 
 	lineOnclick = (item) => {
-		Taro.switchTab(
-			{ url: '/pages/merchant/index?value=' + item,  success: ()=> {
-        console.log('34566')
+		Taro.redirectTo(
+			{ url: '/pages/merchant/index?value=' + item,}
+		).then(() => {
+      console.log('34566')
         location.href = location.href
-      }
     })
-  }
+	}
 
-  clearStorage = () => {
-    this.setState({ showStorage: false })
-    Taro.clearStorageSync()
-  }
+	clearStorage = () => {
+		this.setState({ showStorage: false })
+		Taro.clearStorageSync()
+	}
 
-  handleSearch = () => { };
+	handleSearch = () => { };
 
-  render() {
-    let saveSearch = Taro.getStorageSync("searchKey") ? Taro.getStorageSync("searchKey") : []
-    return (
-      <View style='height:100vh; background-color:#fff;'>
-        <View className="flex column page">
-          <AtSearchBar
-            placeholder="请输入商家名、品类"
-            value={this.state.searchStr}
-            onChange={this.handleSearchBarChange}
-            onConfirm={this.handleSearch}
-            onActionClick={this.onActionClick.bind(this)}
-          />
-          <View className="item content"
-            style={{ display: !this.state.showStorage ? 'none' : '' }}
-          >
-            <View className="head flex center">
-              <View className="text item" style=" display:flex;  justify-content:space-between;">
-                <View style="color:#999999;">历史搜索</View>
-                <AtIcon value='trash' size='20' color='#999999' onClick={this.clearStorage.bind(this)}></AtIcon>
-              </View>
-            </View>
-            <View className="history">
-              {
-                saveSearch.map((item, index) => {
-                  return <View className="item" onClick={this.lineOnclick.bind(this, item)} key={item}>{item}</View>
-                })
-              }
-            </View>
-          </View>
-          <View >
-            {/* <View style="color:#999999; padding-left:20px;margin-bottom:20px;">大家都在搜</View> */}
-            {/* <View className="history" style="padding:0px 20px 0px 20px;">
+	render() {
+		let saveSearch = Taro.getStorageSync("searchKey") ? Taro.getStorageSync("searchKey"):[]
+		return (
+			<View style='height:100vh; background-color:#fff;'>
+				<View className="flex column page">
+					<AtSearchBar
+						placeholder="请输入商家名、品类"
+						value={this.state.searchStr}
+						onChange={this.handleSearchBarChange}
+						onConfirm={this.handleSearch}
+						onActionClick={this.onActionClick.bind(this)}
+					/>
+					<View className="item content"
+						style={{ display: !this.state.showStorage ? 'none' : '' }}
+					>
+						<View className="head flex center">
+							<View className="text item" style=" display:flex;  justify-content:space-between;">
+								<View style="color:#999999;">历史搜索</View>
+								<AtIcon value='trash' size='20' color='#999999' onClick={this.clearStorage.bind(this)}></AtIcon>
+							</View>
+						</View>
+						<View className="history">
+							{
+								saveSearch.map((item, index) => {
+									return <View className="item" onClick={this.lineOnclick.bind(this,item)} key={item}>{item}</View>
+								})
+							}
+						</View>
+					</View>
+					<View >
+						{/* <View style="color:#999999; padding-left:20px;margin-bottom:20px;">大家都在搜</View> */}
+						{/* <View className="history" style="padding:0px 20px 0px 20px;">
 							{
 								this.state.list.map((item, index) => {
 									return <View className="item" key={item}>{item}</View>
