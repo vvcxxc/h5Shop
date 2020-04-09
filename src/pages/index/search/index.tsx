@@ -11,76 +11,72 @@ interface Props {
 }
 
 class IndexSearchPage extends PureComponent<Props> {
-  config = {
-    navigationBarTitleText: '小熊敬礼'
-  };
+	config = {
+		navigationBarTitleText: '小熊敬礼'
+	};
 
-  state = {
-    searchStr: '',
-    locationList: [],
-    list: [],
-    searchData: [],
-    showStorage: true
-  };
+	state = {
+		searchStr: '',
+		locationList: [],
+		list: [],
+		searchData: [],
+		showStorage:true
+	};
 
-  constructor(props) {
-    super(props);//把this轉會
-  }
+	constructor(props) {
+		super(props);//把this轉會
+	}
 
-  componentWillMount() {
+	componentWillMount() {
 
 
-  }
+	}
 
-  componentDidMount() {
-    if (Taro.getStorageSync("searchKey").length >= 1) {
-      this.setState({ showStorage: true })
-    } else {
-      this.setState({ showStorage: false })
-    }
-  }
+	componentDidMount() {
+		if (Taro.getStorageSync("searchKey").length >= 1) {
+			this.setState({ showStorage:true})
+		} else {
+			this.setState({ showStorage: false })
+		}
+	}
 
-  // 往下滚动触发
-  onPageScroll = (e) => {
-  }
+	// 往下滚动触发
+	onPageScroll = (e) => {
+	}
 
-  requestLoading = () => {
-    Taro.showLoading({
-      title: 'loading',
-      mask: true
-    })
-  }
+	requestLoading = () => {
+		Taro.showLoading({
+			title: 'loading',
+			mask: true
+		})
+	}
 
-  handleSearchBarChange = value => {
-    this.setState({ searchStr: value });
-  }
+	handleSearchBarChange = value => {
+		this.setState({ searchStr: value });
+	}
 
-  onActionClick = () => {
-    console.log(43555)
-    let meta = Taro.getStorageSync("searchKey") ? Taro.getStorageSync("searchKey") : []
-    if (meta.length < 9 && this.state.searchStr) {
-      meta.unshift(this.state.searchStr)
-      Taro.setStorageSync("searchKey", meta)
-    } else if (meta.length >= 9 && this.state.searchStr) {
-      meta.splice(8, 1)
-      meta.unshift(this.state.searchStr)
-      Taro.setStorageSync("searchKey", meta)
-    }
-    if (meta.length >= 1) this.setState({ showStorage: true })
-    Taro.switchTab({
-      url: '/pages/merchant/index?value=' + this.state.searchStr,
-      success: () => {
+	onActionClick = () => {
+		let meta = Taro.getStorageSync("searchKey") ? Taro.getStorageSync("searchKey") : []
+		if (meta.length < 9 && this.state.searchStr) {
+			meta.unshift(this.state.searchStr)
+			Taro.setStorageSync("searchKey", meta)
+		} else if (meta.length >= 9 && this.state.searchStr) {
+			meta.splice(8, 1)
+			meta.unshift(this.state.searchStr)
+			Taro.setStorageSync("searchKey", meta)
+		}
+		if (meta.length>=1) this.setState({ showStorage:true})
+		Taro.switchTab(
+			{ url: '/pages/merchant/index?value=' + this.state.searchStr,  success: ()=> {
         console.log('34566')
         location.href = location.href
-      }
-    })
-  }
+      }  }
+    )
+	}
 
-  lineOnclick = (item) => {
-    console.log(444555)
-    Taro.switchTab({
-      url: '/pages/merchant/index?value=' + item,
-      success: () => {
+	lineOnclick = (item) => {
+		Taro.switchTab(
+			{ url: '/pages/merchant/index?value=' + item,  success: ()=> {
         console.log('34566')
         location.href = location.href
       }
