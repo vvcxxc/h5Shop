@@ -240,12 +240,7 @@ export default class AppreActivity extends Component {
                         Taro.hideLoading();
                         //得到增值活动id并跳转活动详情
                         Taro.navigateTo({
-                            url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                            success: (e) => {
-                                let page = Taro.getCurrentPages().pop();
-                                if (page == undefined || page == null) return;
-                                page.onShow();
-                            }
+                            url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id
                         })
                     } else {
                         that.getLastYouhuiId(order_sn)

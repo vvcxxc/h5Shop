@@ -113,6 +113,7 @@ export default class AppreActivity extends Component {
     showMoreImages: false,
     showShare: false, //显示分享
     isShare: false,
+    securityPoster: false,// fasle不允许显示海报
     posterList: {
       name: '',
       store: {

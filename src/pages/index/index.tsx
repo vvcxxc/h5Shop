@@ -48,6 +48,7 @@ export default class Index extends Component<any> {
     is_marketing: false,
     changePull: 0,
     changeBottom: 0,
+    flag: false
   };
 
   constructor(props) {
@@ -61,9 +62,9 @@ export default class Index extends Component<any> {
     if(router.city_name){
       console.log('3333')
       if(router.type_index_id){
-        this.setState({ is_marketing: true })
+        this.setState({ is_marketing: true, flag: true })
       }else {
-        this.setState({ is_marketing: false })
+        this.setState({ is_marketing: false, flag: true })
       }
     }else {
       console.log('4444')
@@ -78,9 +79,9 @@ export default class Index extends Component<any> {
           router.city_id = res.data.city_id
           router.type_index_id = res.data.type_index_id
             if (res.data.type_index_id) {
-              this.setState({ is_marketing: true })
+              this.setState({ is_marketing: true, flag: true })
             } else {
-              this.setState({ is_marketing: false })
+              this.setState({ is_marketing: false, flag: true })
             }
           sessionStorage.setItem('router',JSON.stringify(router))
         })
@@ -107,7 +108,7 @@ export default class Index extends Component<any> {
     const {changeBottom, changePull} = this.state
     return (
       <View className="index">
-        { this.state.is_marketing ? <MarketingIndex changeBottom={changeBottom} changePull={changePull}/> : <OldIndex changeBottom={changeBottom} changePull={changePull}/> }
+        { this.state.flag ? this.state.is_marketing ? <MarketingIndex changeBottom={changeBottom} changePull={changePull}/> : <OldIndex changeBottom={changeBottom} changePull={changePull}/> : null }
       </View>
     );
   }

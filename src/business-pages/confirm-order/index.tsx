@@ -145,12 +145,7 @@ export default class ConfirmOrder extends Component {
                   Taro.showToast({ title: '支付成功', icon: 'none' })
 
                   Taro.switchTab({
-                    url: '/pages/order/index',
-                    success: (e) => {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
-                    }
+                    url: '/pages/order/index'
                   })
                 } else {
                   Taro.showToast({ title: '支付失败', icon: 'none' })
@@ -171,13 +166,7 @@ export default class ConfirmOrder extends Component {
 
                 //支付宝成功
                 Taro.switchTab({
-                  url: '/pages/order/index',
-                  success: (e) => {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
-
-                  }
+                  url: '/pages/order/index'
                 })
               } else {
                 Taro.showToast({ title: '支付失败', icon: 'none' })

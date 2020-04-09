@@ -28,14 +28,6 @@ export default class EditorAddress extends Component {
         actionsheetShow: false,
     };
 
-    componentDidShow() {
-        let u = navigator.userAgent
-        if (u.indexOf('iPhone') > -1) {
-            console.log('iNoBounce', iNoBounce)
-            iNoBounce.enable()
-        }
-    }
-
     handleShowCity() {
         this.setState({
             actionsheetShow: true
@@ -61,7 +53,13 @@ export default class EditorAddress extends Component {
     }
 
 
-    componentDidMount() {
+    componentDidShow() {
+        let u = navigator.userAgent
+        if (u.indexOf('iPhone') > -1) {
+            console.log('iNoBounce', iNoBounce)
+            iNoBounce.enable()
+        }
+
         if (this.$router.params.type == "editorItem" || this.$router.params.type == "useItemChange") {
             Taro.showLoading({
                 title: ""
@@ -327,39 +325,19 @@ export default class EditorAddress extends Component {
                         setTimeout(() => {
                             if (that.$router.params.activityType == '55') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/group-distribution/index?activityType=55&id=' + that.$router.params.goodsId + '&groupId=' + that.$router.params.groupId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId,
-                                    success: function (e) {
-                                        let page = Taro.getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onShow();
-                                    }
+                                    url: '/activity-pages/group-distribution/index?activityType=55&id=' + that.$router.params.goodsId + '&groupId=' + that.$router.params.groupId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId
                                 })
                             } else if (that.$router.params.activityType == '5') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/group-distribution/index?activityType=5&id=' + that.$router.params.goodsId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId,
-                                    success: function (e) {
-                                        let page = Taro.getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onShow();
-                                    }
+                                    url: '/activity-pages/group-distribution/index?activityType=5&id=' + that.$router.params.goodsId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId
                                 })
                             } else if (that.$router.params.activityType == '1') {
                                 Taro.navigateTo({
-                                    url: '/activity-pages/confirm-address/index?activityType=1&id=' + that.$router.params.goodsId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId,
-                                    success: function (e) {
-                                        let page = Taro.getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onShow();
-                                    }
+                                    url: '/activity-pages/confirm-address/index?activityType=1&id=' + that.$router.params.goodsId + '&storeName=' + that.$router.params.storeName + '&address_id=' + adderssId
                                 })
                             } else if (that.$router.params.activityType == 'duihuan') {
                                 Taro.navigateTo({
-                                    url: '/business-pages/coupon-distribution/index?activityType=duihuan&id=' + that.$router.params.goodsId + '&address_id=' + adderssId,
-                                    success: function (e) {
-                                        let page = Taro.getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onShow();
-                                    }
+                                    url: '/business-pages/coupon-distribution/index?activityType=duihuan&id=' + that.$router.params.goodsId + '&address_id=' + adderssId
                                 })
                             }
                         }, 1500)

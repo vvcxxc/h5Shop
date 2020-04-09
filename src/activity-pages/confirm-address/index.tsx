@@ -258,12 +258,7 @@ export default class confirmAddress extends Component {
                                                     Taro.hideLoading();
                                                     //得到增值活动id并跳转活动详情
                                                     Taro.navigateTo({
-                                                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                                                        success: function (e) {
-                                                            let page = Taro.getCurrentPages().pop();
-                                                            if (page == undefined || page == null) return;
-                                                            page.onShow();
-                                                        }
+                                                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id
                                                     })
                                                 }
                                             })
@@ -295,12 +290,7 @@ export default class confirmAddress extends Component {
                                                 Taro.hideLoading();
                                                 //得到增值活动id并跳转活动详情
                                                 Taro.navigateTo({
-                                                    url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
-                                                    success: function (e) {
-                                                        let page = Taro.getCurrentPages().pop();
-                                                        if (page == undefined || page == null) return;
-                                                        page.onShow();
-                                                    }
+                                                    url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id
                                                 })
                                             }
                                         })
@@ -416,12 +406,7 @@ export default class confirmAddress extends Component {
                                                     Taro.hideLoading();
                                                     let resGroupid = res.data.id;
                                                     Taro.navigateTo({
-                                                        url: '/pages/activity/pages/group/group?id=' + resGroupid,
-                                                        success: () => {
-                                                            var page = Taro.getCurrentPages().pop();
-                                                            if (page == undefined || page == null) return;
-                                                            page.onLoad();
-                                                        }
+                                                        url: '/pages/activity/pages/group/group?id=' + resGroupid
                                                     })
                                                 }
                                             })
@@ -454,12 +439,7 @@ export default class confirmAddress extends Component {
                                                 Taro.hideLoading();
                                                 let resGroupid = res.data.id;
                                                 Taro.navigateTo({
-                                                    url: '/pages/activity/pages/group/group?id=' + resGroupid,
-                                                    success: () => {
-                                                        var page = Taro.getCurrentPages().pop();
-                                                        if (page == undefined || page == null) return;
-                                                        page.onLoad();
-                                                    }
+                                                    url: '/pages/activity/pages/group/group?id=' + resGroupid
                                                 })
                                             }
                                         })
@@ -564,13 +544,7 @@ export default class confirmAddress extends Component {
                                     //微信支付成功
                                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                                         Taro.navigateTo({
-                                            url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
-                                            // url: '/activity-pages/my-activity/my.activity',
-                                            success: function (e) {
-                                                let page = Taro.getCurrentPages().pop();
-                                                if (page == undefined || page == null) return;
-                                                page.onShow();
-                                            }
+                                            url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId
                                         })
                                     } else {
                                         //微信支付失败
@@ -585,13 +559,7 @@ export default class confirmAddress extends Component {
                                 //支付宝支付成功
                                 if (res.resultCode === "9000") {
                                     Taro.navigateTo({
-                                        url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId,
-                                        // url: '/activity-pages/my-activity/my.activity',
-                                        success: function (e) {
-                                            let page = Taro.getCurrentPages().pop();
-                                            if (page == undefined || page == null) return;
-                                            page.onShow();
-                                        }
+                                        url: '/pages/activity/pages/group/group?id=' + that.$router.params.groupId
                                     })
                                 } else {
                                     //支付宝支付失败
