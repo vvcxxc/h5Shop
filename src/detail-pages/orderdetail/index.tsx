@@ -301,10 +301,10 @@ export default class Orderdetail extends Component {
 
               {this.state.defaultData.description.length ? <View className="flex use_rules" style={{ overflow: "hidden", height: (this.state.checkFlag || this.state.defaultData.description.length <= 2) ? 'auto' : '4rem' }}>
                 <View className="a_billingInfo_1">使用规则</View>：
-                <View>
+                <View className="a_billingInfo_rules">
                   {
                     this.state.defaultData.description.map((item, index) => (
-                      <View key={index} style={{ height: '32px' }}>{index + 1}. {item}</View>
+                      <View key={index} >{index + 1}. {item}</View>
                     ))
                   }
                 </View>
