@@ -233,7 +233,7 @@ export default class SelectCity extends Component {
   searchData = (name, id, type_index_id) => {
     // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
     sessionStorage.setItem('router',JSON.stringify( { city_id: id, city_name: name, type_index_id }))
-    Taro.navigateTo({ url: '/pages/index/index?router=1', success: ()=> {
+    Taro.switchTab({ url: '/pages/index/index?router=1', success: ()=> {
       location.href = location.href
     } })
   }
@@ -242,7 +242,7 @@ export default class SelectCity extends Component {
   onClick = (item, event) => {
     // Taro.setStorage({ key: 'router', data: { city_id: item.id, city_name: item.name } })
     sessionStorage.setItem('router',JSON.stringify({ city_id: item.id, city_name: item.name, type_index_id: item.type_index_id }))
-    Taro.navigateTo({ url: '/pages/index/index?router=1', success: ()=> {
+    Taro.switchTab({ url: '/pages/index/index?router=1', success: ()=> {
       location.href = location.href
     } })
   }
@@ -251,7 +251,7 @@ export default class SelectCity extends Component {
   lineOnClick = (id, name, type_index_id) => {
     // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
     sessionStorage.setItem('router',JSON.stringify({ city_id: id, city_name: name, type_index_id }))
-    Taro.navigateTo({ url: '/pages/index/index?router=1', success: ()=> {
+    Taro.switchTab({ url: '/pages/index/index?router=1', success: ()=> {
       location.href = location.href
     } })
   }
