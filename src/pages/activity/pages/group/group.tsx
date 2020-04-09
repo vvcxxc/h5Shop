@@ -320,7 +320,9 @@ export default class Group extends Component {
    */
   handleGoHome = () => {
     console.log(333)
-    Taro.navigateTo({ url: '/pages/index/index' })
+    Taro.navigateTo({ url: '/pages/index/index', success: ()=> {
+      location.href = location.href
+    } })
     // Taro.reLaunch({ url: '/pages/index/index' })
   }
   /**

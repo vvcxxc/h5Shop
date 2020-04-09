@@ -250,7 +250,16 @@ export default class distributionDetail extends Component {
      */
     goToOrder = () => {
         Taro.switchTab({
-            url: '/pages/order/index'
+            url: '/pages/order/index',
+            // success: (e) => {
+            //     let page = Taro.getCurrentPages().pop();
+            //     if (page == undefined || page == null) return;
+            //     page.onShow();
+
+            // }
+            success: ()=> {
+              location.href = location.href
+            }
         })
     }
 

@@ -304,11 +304,16 @@ export default class Appreciation extends Component {
     this.setState({ isShare: false });
   }
 
-   /**
-    * 回首页
-    */
-   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index' })
+  /**
+   * 回首页
+   */
+  handleGoHome = () => {
+    Taro.switchTab({
+      url: '/pages/index/index',
+      success: () => {
+        location.href = location.href
+      }
+    })
   }
 
   render() {
@@ -539,7 +544,7 @@ export default class Appreciation extends Component {
         {/* 去首页 */}
         {
           this.state.isFromShare ? (
-            <View style={{position: 'fixed', bottom: '80px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
+            <View style={{ position: 'fixed', bottom: '80px', right: '20px', zIndex: 88, width: '80px', height: '80px' }} onClick={this.handleGoHome.bind(this)}>
               <Image src={require('../../../../assets/go-home/go_home.png')} style={{ width: '80px', height: '80px' }} />
             </View>
           ) : ''
