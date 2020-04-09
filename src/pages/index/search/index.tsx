@@ -66,14 +66,20 @@ class IndexSearchPage extends PureComponent<Props> {
 			Taro.setStorageSync("searchKey", meta)
 		}
 		if (meta.length>=1) this.setState({ showStorage:true})
-		Taro.redirectTo(
-			{ url: '/pages/merchant/index?value=' + this.state.searchStr  }
+		Taro.switchTab(
+			{ url: '/pages/merchant/index?value=' + this.state.searchStr,  success: ()=> {
+        console.log('34566')
+        location.href = location.href
+      }  }
     )
 	}
 
 	lineOnclick = (item) => {
-		Taro.redirectTo(
-			{ url: '/pages/merchant/index?value=' + item }
+		Taro.switchTab(
+			{ url: '/pages/merchant/index?value=' + item,  success: ()=> {
+        console.log('34566')
+        location.href = location.href
+      } }
 		)
 	}
 

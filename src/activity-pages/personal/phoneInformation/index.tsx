@@ -160,7 +160,10 @@ export default class PhoneInformation extends Component {
     }
     goToMy = () => {
         Taro.switchTab({
-            url: '/pages/my/index'
+            url: '/pages/my/index',
+            success: ()=> {
+              location.href = location.href
+            }
         })
         // Taro.navigateBack({
         //     delta:2

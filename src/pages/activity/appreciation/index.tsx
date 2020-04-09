@@ -269,7 +269,9 @@ export default class AppreActivity extends Component {
    * 回首页
    */
     handleGoHome = () => {
-        Taro.switchTab({ url: '/pages/index/index' })
+        Taro.switchTab({ url: '/pages/index/index', success: ()=> {
+          location.href = location.href
+        } })
     }
     toShare = () => {
         let userAgent = navigator.userAgent;

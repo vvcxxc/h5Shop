@@ -206,7 +206,9 @@ export default class SelectCity extends Component {
     sessionStorage.setItem('router',JSON.stringify({ xpoint: this.state.locations.longitude, ypoint: this.state.locations.latitude, type_index_id: this.state.type_index_id }))
     setTimeout(() => {
       this.setState({ showIndicator: false })
-      Taro.switchTab({ url: '/pages/index/index' })
+      Taro.switchTab({ url: '/pages/index/index', success: ()=> {
+        location.href = location.href
+      } })
       // Taro.reLaunch({ url: '../../pages/index/index?router' })
     }, 1000);
   }
@@ -231,21 +233,27 @@ export default class SelectCity extends Component {
   searchData = (name, id, type_index_id) => {
     // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
     sessionStorage.setItem('router',JSON.stringify( { city_id: id, city_name: name, type_index_id }))
-    Taro.navigateTo({ url: '/pages/index/index?router=1' })
+    Taro.switchTab({ url: '/pages/index/index?router=1', success: ()=> {
+      location.href = location.href
+    } })
   }
 
   // 全国列表数据 点击
   onClick = (item, event) => {
     // Taro.setStorage({ key: 'router', data: { city_id: item.id, city_name: item.name } })
     sessionStorage.setItem('router',JSON.stringify({ city_id: item.id, city_name: item.name, type_index_id: item.type_index_id }))
-    Taro.navigateTo({ url: '/pages/index/index?router=1' })
+    Taro.switchTab({ url: '/pages/index/index?router=1', success: ()=> {
+      location.href = location.href
+    } })
   }
 
   // 搜索列表点击
   lineOnClick = (id, name, type_index_id) => {
     // Taro.setStorage({ key: 'router', data: { city_id: id, city_name: name } })
     sessionStorage.setItem('router',JSON.stringify({ city_id: id, city_name: name, type_index_id }))
-    Taro.navigateTo({ url: '/pages/index/index?router=1' })
+    Taro.switchTab({ url: '/pages/index/index?router=1', success: ()=> {
+      location.href = location.href
+    } })
   }
   // 回车键 模糊搜索
   handleSearch = () => {
