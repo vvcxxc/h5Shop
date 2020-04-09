@@ -67,13 +67,17 @@ class IndexSearchPage extends PureComponent<Props> {
 		}
 		if (meta.length>=1) this.setState({ showStorage:true})
 		Taro.redirectTo(
-			{ url: '/pages/merchant/index?value=' + this.state.searchStr  }
+			{ url: '/pages/merchant/index?value=' + this.state.searchStr,  success: ()=> {
+        location.href = location.href
+      }  }
     )
 	}
 
 	lineOnclick = (item) => {
 		Taro.redirectTo(
-			{ url: '/pages/merchant/index?value=' + item }
+			{ url: '/pages/merchant/index?value=' + item,  success: ()=> {
+        location.href = location.href
+      } }
 		)
 	}
 

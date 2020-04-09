@@ -299,10 +299,13 @@ export default class DetailAppreciation extends Component{
                 //微信成功
                 Taro.switchTab({
                   url: '/pages/order/index',
-                  success: function (e) {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
+                  // success: function (e) {
+                  //   let page = Taro.getCurrentPages().pop();
+                  //   if (page == undefined || page == null) return;
+                  //   page.onShow();
+                  // }
+                  success: ()=> {
+                    location.href = location.href
                   }
                 })
               } else {
@@ -319,11 +322,14 @@ export default class DetailAppreciation extends Component{
               //支付宝成功
               Taro.switchTab({
                 url: '/pages/order/index',
-                success: function (e) {
-                  let page = Taro.getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onShow();
+                // success: function (e) {
+                //   let page = Taro.getCurrentPages().pop();
+                //   if (page == undefined || page == null) return;
+                //   page.onShow();
 
+                // }
+                success: ()=> {
+                  location.href = location.href
                 }
               })
             } else {

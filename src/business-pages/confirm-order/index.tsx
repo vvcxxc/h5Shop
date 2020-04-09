@@ -146,10 +146,13 @@ export default class ConfirmOrder extends Component {
 
                   Taro.switchTab({
                     url: '/pages/order/index',
-                    success: (e) => {
-                      let page = Taro.getCurrentPages().pop();
-                      if (page == undefined || page == null) return;
-                      page.onShow();
+                    // success: (e) => {
+                    //   let page = Taro.getCurrentPages().pop();
+                    //   if (page == undefined || page == null) return;
+                    //   page.onShow();
+                    // }
+                    success: ()=> {
+                      location.href = location.href
                     }
                   })
                 } else {
@@ -172,11 +175,14 @@ export default class ConfirmOrder extends Component {
                 //支付宝成功
                 Taro.switchTab({
                   url: '/pages/order/index',
-                  success: (e) => {
-                    let page = Taro.getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onShow();
+                  // success: (e) => {
+                  //   let page = Taro.getCurrentPages().pop();
+                  //   if (page == undefined || page == null) return;
+                  //   page.onShow();
 
+                  // }
+                  success: ()=> {
+                    location.href = location.href
                   }
                 })
               } else {
