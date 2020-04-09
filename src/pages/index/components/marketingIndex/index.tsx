@@ -25,8 +25,8 @@ export default class MarketingIndex extends Component<any> {
   }
   componentDidMount() {
     let router = JSON.parse(sessionStorage.getItem('router'))
-    if(router){
-      this.setState({city_name: router.city_name})
+    if (router) {
+      this.setState({ city_name: router.city_name })
     }
     getChannelInfo().then((res: any) => {
       if (res.code == 200) {
@@ -47,15 +47,15 @@ export default class MarketingIndex extends Component<any> {
 
   componentWillReceiveProps(nextProps) {
     // 下拉刷新
-    if(this.props.changePull != nextProps.changePull){
+    if (this.props.changePull != nextProps.changePull) {
 
     }
     // 触底加载更多
-    if(this.props.changeBottom != nextProps.changeBottom){
-      this.setState({page: this.state.page + 1},()=> {
-        getTabList({channel_id: this.state.id, page: this.state.page}).then(res => {
-          if(res.code == 200){
-            this.setState({list: [...this.state.list,...res.data.data]})
+    if (this.props.changeBottom != nextProps.changeBottom) {
+      this.setState({ page: this.state.page + 1 }, () => {
+        getTabList({ channel_id: this.state.id, page: this.state.page }).then(res => {
+          if (res.code == 200) {
+            this.setState({ list: [...this.state.list, ...res.data.data] })
           }
         })
       })
@@ -75,7 +75,7 @@ export default class MarketingIndex extends Component<any> {
 
   // tab切换
   handlerTabChange(current, id, _this) {
-    this.setState({ current,id });
+    this.setState({ current, id });
     // this.setState({ meta: data })
     getTabList({ channel_id: id }).then(res => {
       if (res.code == 200) {
@@ -119,7 +119,7 @@ export default class MarketingIndex extends Component<any> {
 
   // 跳转
   goTo = (router) => {
-    Taro.navigateTo({url: router})
+    Taro.navigateTo({ url: router })
   }
 
   render() {
@@ -156,13 +156,13 @@ export default class MarketingIndex extends Component<any> {
               onChange={e => {
                 this.setState({ bannerTag: e.detail.current + 1 })
               }}
-              // autoplay
-              >
+            // autoplay
+            >
               {
                 banner.map(res => {
                   return (
-                    <SwiperItem style={{width: '100%', height: '100%'}}>
-                      <View className='banner-img'><Image src={res} className='banner-image'/></View>
+                    <SwiperItem style={{ width: '100%', height: '100%' }}>
+                      <View className='banner-img'><Image src={res} className='banner-image' /></View>
                     </SwiperItem>
                   )
                 })
@@ -186,7 +186,7 @@ export default class MarketingIndex extends Component<any> {
               circular
               vertical
               autoplay
-              >
+            >
               <SwiperItem>
                 <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
               </SwiperItem>
@@ -198,14 +198,14 @@ export default class MarketingIndex extends Component<any> {
 
           {/* 赚钱计划 */}
           <View className='feature-box'>
-            <View className='feature' onClick={this.goTo.bind(this,'/detail-pages/course/characteristic')}>
+            <View className='feature' onClick={this.goTo.bind(this, '/detail-pages/course/characteristic')}>
               <Image className='feature-img' src={require('@/assets/index/xiong.png')} />
               <View className='feature-text'>
                 <View className='text-title'>小熊敬礼特色</View>
                 <View>平台价值观</View>
               </View>
             </View>
-            <View className='feature' onClick={this.goTo.bind(this,'/detail-pages/course/make_money_plan')}>
+            <View className='feature' onClick={this.goTo.bind(this, '/detail-pages/course/make_money_plan')}>
               <Image className='feature-img' src={require('@/assets/index/zhuan.png')} />
               <View className='feature-text'>
                 <View className='text-title'>赚钱计划</View>
@@ -220,7 +220,7 @@ export default class MarketingIndex extends Component<any> {
           {/* 图片 */}
           <View className='image-box'>
             {data.map(res => {
-              return <Image className='img-item' src={res.url} onClick={this.goTo.bind(this,res.router)}/>
+              return <Image className='img-item' src={res.url} onClick={this.goTo.bind(this, res.router)} />
             })}
           </View>
 
