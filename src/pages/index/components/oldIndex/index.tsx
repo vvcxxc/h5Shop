@@ -51,7 +51,6 @@ export default class Index extends Component<any> {
 
 
   componentDidMount() {
-    console.log('触发触发111')
     let id = this.$router.params.id;
     let store_id = this.$router.params.store_id
     if (id) {
