@@ -85,6 +85,10 @@
 .a_buyBox .a_billingInfo {
   line-height: 30px;
 }
+.a_buyBox .a_billingInfo .a_billingInfo_rules {
+  width: 200px;
+  height: auto;
+}
 .a_buyBox .a_billingInfo .a_billingInfo_1 {
   font-size: 28px;
   font-family: PingFang-SC-Regular;
