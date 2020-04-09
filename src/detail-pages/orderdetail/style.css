@@ -88,6 +88,7 @@
 .a_buyBox .a_billingInfo .a_billingInfo_rules {
   width: 450px;
   height: auto;
+  line-height: 1.2;
 }
 .a_buyBox .a_billingInfo .a_billingInfo_1 {
   font-size: 28px;
