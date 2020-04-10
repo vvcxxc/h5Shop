@@ -60,7 +60,7 @@ export default class MerChantPage extends Component {
       data.pages = 1
       this.setState({ locationPosition: data }, () => {
         if (this.$router.params.value) {
-          this.setState({ search: this.$router.params.value })
+          this.setState({ search: decodeURI(this.$router.params.value) })
           this.requestSearch(this.$router.params.value)//路由渲染
         } else {
           this.requestData(this.state.locationPosition)
