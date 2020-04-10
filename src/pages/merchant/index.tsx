@@ -73,6 +73,7 @@ export default class MerChantPage extends Component {
 
   //处理 路由跳转 和 搜索
   requestSearch = (search) => {
+    console.log(decodeURI(search))
     if (!search) return
     Taro.showLoading({ title: 'loading', mask: true })
     request({
@@ -80,16 +81,16 @@ export default class MerChantPage extends Component {
       data: {
         xpoint: this.state.locationPosition.xpoint || '',
         ypoint: this.state.locationPosition.ypoint || '',
-        keyword: search
+        keyword: decodeURI(search)
       },
     })
       .then((res: any) => {
         if (res.data.store_info.data.length < 1) {
-          this.setState({ 
+          this.setState({
             no_value:true
            })
         } else {
-          this.setState({ 
+          this.setState({
             no_value:false
            })
 
