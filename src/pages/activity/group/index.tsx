@@ -151,9 +151,9 @@ export default class GroupActivity extends Component {
           let isPostage = false;
           if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
           let new_time = new Date().getTime()//ql
-          console.log(new Date(res.data.activity_end_time).getTime(),'333')
-          new Date(res.data.activity_end_time).getTime() + 86399000 < new_time ? this.setState({ allowGroup: '已结束' }) : null
-          new Date(res.data.activity_begin_time).getTime() > new_time ? this.setState({ allowGroup: '暂未开始' }) : null
+          console.log(new Date(res.data.activity_end_time).getTime()+ 86399000,'333')
+          res.data.activity_time_status == 3 ? this.setState({ allowGroup: '已结束' }) : null
+          res.data.activity_time_status == 1 ? this.setState({ allowGroup: '暂未开始' }) : null
 
           that.setState({ data: res.data, isPostage }, () => {
             this.toShare();
