@@ -76,7 +76,7 @@ export default class TuxedoInformation extends Component<any> {
       <View id="tuxedo_box">
         {
           listData.map((item: any, index: number) => {
-            return <View className="message" >
+            return <View className="message" key={item.location}>
               <View className="tuxedo_title" onClick={this.shopDetails.bind(this, item.location_id)}>
                 <Image src={require('../../../../assets/shop_head.png')} />
                 <View className="title_right" >{item.supplier_name}
