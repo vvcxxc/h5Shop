@@ -138,7 +138,7 @@ export default class TicketBuy extends Component {
     }
     Taro.showLoading({ title: 'loading', mask: true })
     getLocation().then((res: any) => {
-      this.toShare()
+
       this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
     }).catch(err => {
       this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
@@ -158,6 +158,8 @@ export default class TicketBuy extends Component {
           store: res.data.info.store,
           goods_album: res.data.info.goods_album,
           recommend: res.data.recommend.data
+        },()=>{
+          this.toShare()
         })
       }).catch(err => {
         Taro.hideLoading()

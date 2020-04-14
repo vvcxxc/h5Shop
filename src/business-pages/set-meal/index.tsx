@@ -161,8 +161,8 @@ export default class AppreActivity extends Component {
     }
     Taro.showLoading({ title: 'loading', mask: true })
     getLocation().then((res: any) => {
-      this.toShare();
       this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
+
     }).catch(err => {
       this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
     })
@@ -182,6 +182,8 @@ export default class AppreActivity extends Component {
           goods_album: res.data.info.goods_album,
           recommend: res.data.recommend.data,
           delivery_service_info: res.data.delivery_service_info
+        },()=>{
+          this.toShare();
         })
       }).catch(err => {
         Taro.hideLoading()
@@ -237,6 +239,7 @@ export default class AppreActivity extends Component {
     this.setState({ isShare: false });
   }
   toShare = () => {
+    console.log(342223344)
     let userAgent = navigator.userAgent;
     let isIos = userAgent.indexOf('iPhone') > -1;
     let url: any;
@@ -245,6 +248,7 @@ export default class AppreActivity extends Component {
     } else {
       url = location.href;
     }
+    console.log(this.state.coupon.return_money,'this.state.coupon.return_money')
     let titleMsg = this.state.store.sname + '正在派发' + this.state.coupon.return_money + '元兑换券，手慢无，速抢！';
     let descMsg = '拼手速的时候来了，超值兑换券限量抢购，手慢就没了！速速戳进来一起领取！';
     Taro.request({
