@@ -72,7 +72,7 @@ export default class Orderdetail extends Component {
                     <Text className='z_item_info1'>退款账户：</Text><Text className='z_item_info2'>{this.handerTypeReturn()}</Text>
                 </View>
                 <View className='z_item'  >
-                    <Text className='z_item_info1'>退款进程：</Text><Text className='z_item_info2'>{this.state.info.schedule * 1 == 1 ? '未到账' : '已到账'}</Text>
+                    <Text className='z_item_info1'>退款进程：</Text><Text className='z_item_info2'>{this.state.info.schedule * 1 == 1 ? '未到账' : this.state.info.schedule * 1 == 2 ?'已到账' : this.state.info.schedule * 1 == 3 ? '退款中' : ''}</Text>
                 </View>
                 <View className='z_item'  >
                     <Text className='z_item_info1'>申请时间：</Text><Text className='z_item_info2'>{this.state.info.apply_time}</Text>
