@@ -24,6 +24,7 @@ export default class MarketingIndex extends Component<any> {
     page: 1
   }
   componentDidMount() {
+    console.log(3423423)
     let router = JSON.parse(sessionStorage.getItem('router'))
     if (router) {
       this.setState({ city_name: router.city_name })
@@ -147,32 +148,37 @@ export default class MarketingIndex extends Component<any> {
           </View>
 
           {/* banner */}
-          <View className='banner-box'>
-            <Swiper
-              className='marketing-banner'
-              indicatorColor='#999'
-              indicatorActiveColor='#333'
-              circular
-              onChange={e => {
-                this.setState({ bannerTag: e.detail.current + 1 })
-              }}
-            // autoplay
-            >
-              {
-                banner.map(res => {
-                  return (
-                    <SwiperItem style={{ width: '100%', height: '100%' }}>
-                      <View className='banner-img'><Image src={res} className='banner-image' /></View>
-                    </SwiperItem>
-                  )
-                })
-              }
-            </Swiper>
-            <View className='indicator'>
-              <View className='banner-number'>{this.state.bannerTag}</View>
-              <View className='banner-number'>{this.state.banner.length}</View>
-            </View>
-          </View>
+          {
+              banner.length ? <View className='banner-box'>
+
+              <Swiper
+                className='marketing-banner'
+                indicatorColor='#999'
+                indicatorActiveColor='#333'
+                circular
+                interval={5000}
+                onChange={e => {
+                  console.log(e.detail.current)
+                  this.setState({ bannerTag: e.detail.current + 1 })
+                }}
+              >
+                {
+                  banner.map(res => {
+                    return (
+                      <SwiperItem style={{ width: '100%', height: '100%' }}>
+                        <View className='banner-img'><Image src={res} className='banner-image' /></View>
+                      </SwiperItem>
+                    )
+                  })
+                }
+              </Swiper>
+              <View className='indicator'>
+                <View className='banner-number'>{this.state.bannerTag}</View>
+                <View className='banner-number'>{this.state.banner.length}</View>
+              </View>
+            </View> : null
+            }
+
 
           {/* 快报栏 */}
           <View className='bulletin-box'>
@@ -185,7 +191,8 @@ export default class MarketingIndex extends Component<any> {
               indicatorActiveColor='#333'
               circular
               vertical
-              autoplay
+              interval={5000}
+              // autoplay={true}
             >
               <SwiperItem>
                 <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>

@@ -21,7 +21,7 @@ export default class RecommendBox extends Component<Props> {
   componentDidMount() {
   }
   componentWillReceiveProps(nextProps) {
-    if(this.props.list.length != nextProps.list.length){
+    if (this.props.list.length != nextProps.list.length) {
       let list = nextProps.list
       let result = []
       if (list.length) {
@@ -38,14 +38,14 @@ export default class RecommendBox extends Component<Props> {
   }
   goTo = () => {
     let id = this.props.type == 1 ? 1 : 5
-    Taro.navigateTo({url: '/activity-pages/activity-list/index?id=' + id})
+    Taro.navigateTo({ url: '/activity-pages/activity-list/index?id=' + id })
   }
 
-  handleChange(e){
-    if(this.state.result.length == e.detail.current+1){
-      setTimeout(()=>{
-        this.setState({current: this.state.current+1})
-      },5000)
+  handleChange(e) {
+    if (this.state.result.length == e.detail.current + 1) {
+      setTimeout(() => {
+        this.setState({ current: this.state.current + 1 })
+      }, 5000)
     }
     // this.setState({current: e.detail.current})
   }
@@ -57,19 +57,19 @@ export default class RecommendBox extends Component<Props> {
       <View className='recommend-box'>
         <View className='recommend-title-box'>
           {/* <View className='recommend-title'> */}
-            {
-              this.props.type == 1? (
-                <View className='recommend-title'>
-                  <Image className='recommend-title-img' src={require('@/assets/index/recommend-hot.png')} />
-                  <View className='recommend-label'>网红推荐网络爆款</View>
-                </View>
-              ) : (
-                <View className='recommend-title'>
-                <Image className='recommend-title-img brand' src={require('@/assets/index/recommend-brand.png')} />
-                <View className='recommend-label'>品牌推荐放心购物</View>
+          {
+            this.props.type == 1 ? (
+              <View className='recommend-title'>
+                <Image className='recommend-title-img' src={require('@/assets/index/recommend-hot.png')} />
+                <View className='recommend-label'>网红推荐网络爆款</View>
               </View>
+            ) : (
+                <View className='recommend-title'>
+                  <Image className='recommend-title-img brand' src={require('@/assets/index/recommend-brand.png')} />
+                  <View className='recommend-label'>品牌推荐放心购物</View>
+                </View>
               )
-            }
+          }
 
           {/* </View> */}
           <View className='look-more' onClick={this.goTo}>查看更多</View>
@@ -78,45 +78,45 @@ export default class RecommendBox extends Component<Props> {
           {
             result.length ? (
               <Swiper
-            className='coupon-list'
-            indicatorColor='#999'
-            indicatorActiveColor='#333'
-            circular
-            // indicatorDots
-            interval={5000}
-            autoplay
-            key={this.state.current}
-            onChange={this.handleChange.bind(this)}
-            >
-            {
-              this.state.flag ? result.map((res: any,idx) => {
-                return (
-                  <SwiperItem key={idx}>
-                    <View className='coupon-list-item'>
-                      {
-                        res.map((item: any, index: any) => (
-                          <View className='recommend-coupon-box' key={item.id} onClick={this.handleClick.bind(this,item)} key={item.channel_id}>
-                            <Image src={'http://oss.tdianyi.com/'+ item.icon} className='recommend-coupon-img' />
-                            <View className='recommend-coupon-name ellipsis-one'>
-                              {item.name}
-                            </View>
-                            <View className='recommend-coupon-label ellipsis-one'>
-                              已优惠￥{ item.is_share == 5 ? accSubtr(item.pay_money,item.participation_money) : accSubtr(item.return_money, item.pay_money)}
-                            </View>
-                            <View className='recommend-coupon-money ellipsis-one'>
-                              <View className='recommend-new-money'>￥{item.is_share == 5 ? item.participation_money : item.pay_money}</View>
-                              <View className='recommend-old-money'>￥{item.is_share == 5 ? item.pay_money : item.return_money}</View>
-                            </View>
-                          </View>
-                        )
+                className='coupon-list'
+                indicatorColor='#999'
+                indicatorActiveColor='#333'
+                circular
+                indicatorDots
+                interval={15000}
+                autoplay
+                key={this.state.current}
+                onChange={this.handleChange.bind(this)}
+              >
+                {
+                  this.state.flag ? result.map((res: any, idx) => {
+                    return (
+                      <SwiperItem key={idx}>
+                        <View className='coupon-list-item'>
+                          {
+                            res.map((item: any, index: any) => (
+                              <View className='recommend-coupon-box' key={item.id} onClick={this.handleClick.bind(this, item)} key={item.channel_id}>
+                                <Image src={'http://oss.tdianyi.com/' + item.icon} className='recommend-coupon-img' />
+                                <View className='recommend-coupon-name ellipsis-one'>
+                                  {item.name}
+                                </View>
+                                <View className='recommend-coupon-label ellipsis-one'>
+                                  已优惠￥{item.is_share == 5 ? accSubtr(item.pay_money, item.participation_money) : accSubtr(item.return_money, item.pay_money)}
+                                </View>
+                                <View className='recommend-coupon-money ellipsis-one'>
+                                  <View className='recommend-new-money'>￥{item.is_share == 5 ? item.participation_money : item.pay_money}</View>
+                                  <View className='recommend-old-money'>￥{item.is_share == 5 ? item.pay_money : item.return_money}</View>
+                                </View>
+                              </View>
+                            )
 
                       }
-                    </View>
-                  </SwiperItem>
-                )
-              }) : null
-            }
-          </Swiper>
+                        </View>
+                      </SwiperItem>
+                    )
+                  }) : null
+                }
+              </Swiper>
             ) : null
           }
 

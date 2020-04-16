@@ -62,6 +62,7 @@ export default class Index extends Component<any> {
     if(router.city_name){
       console.log('3333')
       if(router.type_index_id){
+        console.log(router.type_index_id,'router.type_index_id')
         this.setState({ is_marketing: true, flag: true })
       }else {
         this.setState({ is_marketing: false, flag: true })
