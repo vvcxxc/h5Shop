@@ -63,7 +63,7 @@ export default class Orderdetail extends Component {
         return (
             <View className='z_refundBox' >
                 <View className='z_head'  >
-                    ￥{this.state.info.refund_money}  {this.state.info.refund_typ === 1 ? '已退款' : '部分退款'}
+                    ￥{this.state.info.refund_money}  {this.state.info.schedule * 1 == 1 ? '未到账' : this.state.info.schedule * 1 == 2 ?'已到账' : this.state.info.schedule * 1 == 3 ? '退款中' : ''}
                 </View>
                 <View className='z_item'  >
                     <Text className='z_item_info1'>退款金额：</Text><Text className='z_item_info2'>￥{this.state.info.refund_money}</Text>
