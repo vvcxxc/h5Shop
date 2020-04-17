@@ -7,6 +7,7 @@ import "./index.less"
 import { url } from "inspector"
 import CitySelecter from "../../components/citySelecter/index"
 import Citypicker from "../../components/citySelecter/index2.js"
+import upload from '@/services/oss';
 
 export default class PersonalInformation extends Component {
 
@@ -94,6 +95,7 @@ export default class PersonalInformation extends Component {
             url: 'v1/user/user/upload_user_detail',
             method: "PUT",
             data: {
+                avatar: this.state.avatar,
                 byear: this.state.byear,
                 bmonth: this.state.bmonth,
                 bday: this.state.bday,
@@ -143,12 +145,28 @@ export default class PersonalInformation extends Component {
                 this.getUserInfo();
             })
     }
+    changeImg = () => {
+        let that = this;
+        Taro.chooseImage({
+            count: 1,
+            sizeType: ['original', 'compressed'],
+            sourceType: ['album', 'camera'],
+            success(res0) {
+                const tempFilePaths = res0.tempFilePaths;
+                console.log(tempFilePaths)
+                upload(tempFilePaths).then((res: any) => {
+                    let path = JSON.parse(res.data).data.path
+                    that.setState({ avatar: 'http://oss.tdianyi.com/' + path }, () => { that.changeNameInfo() })
+                });
+            }
+        });
+    }
     render() {
         return (
             <View className='personalInformation'>
                 <View className='informationTitle'>基本信息</View>
                 <View className='informationBox'>
-                    <View className='informationItem'>
+                    <View className='informationItem' onClick={this.changeImg}>
                         <View className='itemLeft'>头像</View>
                         <View className='itemRight'>
                             <View className='itemImage'>
