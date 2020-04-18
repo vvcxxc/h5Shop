@@ -1,33 +1,9 @@
 import Taro, { RequestParams } from "@tarojs/taro";
-import {
-    FETCH_BAD,
-    FETCH_OK,
-    SERVER_ERROR,
-    NOT_FIND,
-    NOT_SIGN
-} from "@/utils/constants";
-import { resolve } from "dist/npm/promise-polyfill/lib";
+import axios, { AxiosRequestConfig } from 'axios';
 
-/**base64转blob */
-const b64toBlob = (b64Data: any, contentType = '', sliceSize = 512) => {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-        const byteNumbers = new Array(slice.length);
-        for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        const byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
-    }
-
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
+interface Options extends AxiosRequestConfig {
+  /**替换的主机域名 */
+  host?: string;
 }
 
 /**随机数 */
@@ -42,13 +18,13 @@ const randomString = (len: any) => {
     return pwd;
 }
 const host = 'https://oss.tdianyi.com';
-export default async function upload(files: any) {
+export default async function upload( files: any) {
     console.log(files)
-    const options = { method: 'post' }
+    let options:any = { method: 'post' }
 
-    const imgUrl = files[0];
+    const imgUrl = files.originalFileObj;
     const length = 14680064;
-    if (imgUrl.length > length) {
+    if (imgUrl.size > length) {
         Taro.showToast({ title: '上传失败，请上传小于10M的图片', icon: 'none' })
         return new Promise(() => { });
     } else {
@@ -85,26 +61,58 @@ export default async function upload(files: any) {
         let oss_data = JSON.parse(Taro.getStorageSync("oss_data") || '');
         let key = oss_data.key + randomString(32) + '.jpg'
         console.log('32432', key, imgUrl)
-        return Taro.uploadFile({
-            url: host,
-            filePath: imgUrl,
-            name: 'file',
-            formData: {
-                key: key,
-                policy: oss_data.policy,
-                OSSAccessKeyId: oss_data.OSSAccessKeyId,
-                signature: oss_data.signature,
-                success_action_status: '200',
-                callback: oss_data.callback,
-                file: imgUrl
-            },
-            success: (res) => {
+        const formData = new FormData();
+        // const file = new File(imgUrl, imgUrl)
+        // console.log(file,'file')
+        formData.append('OSSAccessKeyId', oss_data.OSSAccessKeyId);
+        formData.append('callback', oss_data.callback);
+        formData.append('host', oss_data.host);
+        formData.append('policy', oss_data.policy);
+        formData.append('signature', oss_data.signature);
+        formData.append('success_action_status', '200');
+        formData.append('key', oss_data.key + randomString(32) + '.png');
+        formData.append('file', imgUrl);
 
-            }
-        })
-        // return Taro.request({ ...options })
-        //     .then(res => res.data)
-        //     .catch(err => { });
+        options.headers = { ...options.headers, 'Content-Type': 'multipart/form-data' };
+        options.url = host;
+        options.data = formData;
+        return axios(options)
+          .then(res => {
+            console.log(res)
+            return res.data
+          })
+          .catch(err => { });
+
+        // return Taro.request({
+        //   url: host,
+        //   method: 'POST',
+        //   header: {
+        //     'Content-Type': 'multipart/form-data'
+        //   },
+        //   data: formData
+        // }).then (res => {
+        //   console.log(res)
+        // })
+        console.log(imgUrl)
+
+        // return Taro.uploadFile({
+        //     url: host,
+        //     filePath: imgUrl,
+        //     name: 'file',
+        //     formData: {
+        //       'content-type': 'multipart/form-data',
+        //         key: key,
+        //         policy: oss_data.policy,
+        //         OSSAccessKeyId: oss_data.OSSAccessKeyId,
+        //         signature: oss_data.signature,
+        //         success_action_status: '200',
+        //         callback: oss_data.callback,
+        //         file: imgUrl
+        //     },
+        //     success: (res) => {
+
+        //     }
+        // })
     }
 
 }

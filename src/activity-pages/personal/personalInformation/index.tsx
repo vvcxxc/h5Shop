@@ -152,10 +152,12 @@ export default class PersonalInformation extends Component {
             sizeType: ['original', 'compressed'],
             sourceType: ['album', 'camera'],
             success(res0) {
-                const tempFilePaths = res0.tempFilePaths;
-                console.log(tempFilePaths)
-                upload(tempFilePaths).then((res: any) => {
-                    let path = JSON.parse(res.data).data.path
+                const tempFiles = res0.tempFiles[0];
+                console.log(res0)
+                upload(tempFiles).then((res: any) => {
+                    // let path = JSON.parse(res.data).data.path
+                    console.log(res)
+                    let path = res.data.path
                     that.setState({ avatar: 'http://oss.tdianyi.com/' + path }, () => { that.changeNameInfo() })
                 });
             }
