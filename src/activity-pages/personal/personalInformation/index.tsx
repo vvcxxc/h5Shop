@@ -11,224 +11,251 @@ import upload from '@/services/oss';
 
 export default class PersonalInformation extends Component {
 
-    config: Config = {
-        navigationBarTitleText: "修改我的信息"
+  config: Config = {
+    navigationBarTitleText: "修改我的信息"
+  }
+  state = {
+    avatar: '',
+    sex: 0,
+    selector: ['男', '女'],
+    selectorNum: 0,
+    selectorChecked: '男',
+    byear: 0,
+    bmonth: 0,
+    bday: 0,
+    dateSel: '',
+    address: '',
+    quName: '',
+    maskShow: false,
+    name: '',
+    sumbitName: '',
+    cityIndex: []
+  }
+  componentDidMount() {
+    this.getUserInfo()
+    if (!Taro.getStorageSync("oss_data")) {
+      Taro.request(
+        {
+          url: 'http://api.supplier.tdianyi.com/api/v2/up',
+          method: "GET",
+        }
+      ).then(res => {
+        console.log('res', res)
+
+        let { data } = res.data;
+        console.log(5345345)
+        let oss_data = {
+          policy: data.policy,
+          OSSAccessKeyId: data.accessid,
+          success_action_status: 200, //让服务端返回200,不然，默认会返回204
+          signature: data.signature,
+          callback: data.callback,
+          host: data.host,
+          key: data.dir
+        };
+        Taro.setStorageSync("oss_data", JSON.stringify(oss_data))
+
+      })
+
     }
-    state = {
-        avatar: '',
-        sex: 0,
-        selector: ['男', '女'],
-        selectorNum: 0,
-        selectorChecked: '男',
-        byear: 0,
-        bmonth: 0,
-        bday: 0,
-        dateSel: '',
-        address: '',
-        quName: '',
-        maskShow: false,
-        name: '',
-        sumbitName: '',
-        cityIndex: []
-    }
-    componentDidMount() { this.getUserInfo() }
-    getUserInfo = () => {
-        Taro.showLoading();
-        userRequest({
-            url: 'v1/user/user/user_info',
-            method: "GET",
-        })
-            .then((res: any) => {
-                Taro.hideLoading();
-                let { status_code, data, message } = res;
-                if (status_code == 200) {
-                    this.setState({
-                        avatar: data.avatar,
-                        name: data.user_name,
-                        byear: data.byear,
-                        bmonth: data.bmonth,
-                        bday: data.bday,
-                        dateSel: data.byear ? data.byear + '-' + data.bmonth + '-' + data.bday : '无',
-                        sex: data.sex,
-                        selectorChecked: data.sex == 1 ? '男' : (data.sex == 2 ? '女' : '无'),
-                        cityIndex: [data.province_id, data.city_id, data.district_id],
-                        quName: data.address_detail,
-                        address: data.province + '-' + data.city + '-' + data.address_detail,
-                    })
-                } else {
-                    Taro.showToast({ title: message, icon: 'none' })
-                }
-            }).catch(err => {
-                Taro.hideLoading();
-                Taro.showToast({ title: '加载失败', icon: 'none' })
-            })
-    }
-    onSexChange = e => {
-        this.setState({
-            selectorNum: e.detail.value,
-            selectorChecked: this.state.selector[e.detail.value],
-            sex: e.detail.value == 0 ? 1 : 2
-        }, () => {
-            this.sumbitInfo()
-        })
-    }
-    onDateChange = (e: any) => {
-        this.setState({
-            dateSel: e.detail.value,
-            byear: Number(e.detail.value.split("-")[0]),
-            bmonth: Number(e.detail.value.split("-")[1]),
-            bday: Number(e.detail.value.split("-")[2])
-        }, () => { this.sumbitInfo() })
-    }
-    getCityArea = (query) => {
-        this.setState({ cityIndex: query.tempselectorid, quName: query.quName, address: query.selectorChecked }, () => { this.sumbitInfo() })
-    }
-    changeName = (e: any) => {
-        this.setState({ name: e.detail.value })
-    }
-    sumbitName = (e: any) => {
-        this.setState({ sumbitName: this.state.name, maskShow: false }, () => { this.changeNameInfo() })
-    }
-    sumbitInfo = () => {
-        Taro.showLoading();
-        userRequest({
-            url: 'v1/user/user/upload_user_detail',
-            method: "PUT",
-            data: {
-                avatar: this.state.avatar,
-                byear: this.state.byear,
-                bmonth: this.state.bmonth,
-                bday: this.state.bday,
-                sex: this.state.sex,
-                province_id: this.state.cityIndex[0],
-                city_id: this.state.cityIndex[1],
-                address_detail: this.state.quName,
-            }
-        })
-            .then((res: any) => {
-                Taro.hideLoading();
-                if (res.status_code == 200) {
-                    Taro.showToast({ title: '修改成功', icon: 'none' })
-                } else {
-                    Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
-                    this.getUserInfo();
-                }
-            }).catch(err => {
-                Taro.hideLoading();
-                Taro.showToast({ title: err.message || '修改失败', icon: 'none' })
-                this.getUserInfo();
-            })
-    }
-    changeNameInfo = () => {
-        Taro.showLoading();
-        userRequest({
-            url: 'v1/user/user/upload_user_info',
-            method: "PUT",
-            data: {
-                head: this.state.avatar,
-                name: this.state.name
-            }
-        })
-            .then((res: any) => {
-                Taro.hideLoading();
-                if (res.status_code == 200) {
-                    Taro.showToast({ title: '修改成功', icon: 'none' })
-                } else {
-                    Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
-                    this.setState({ name: '' })
-                    this.getUserInfo();
-                }
-            }).catch(err => {
-                Taro.hideLoading();
-                Taro.showToast({ title: err.message || '修改失败', icon: 'none' })
-                this.setState({ name: '' })
-                this.getUserInfo();
-            })
-    }
-    changeImg = () => {
-        let that = this;
-        Taro.chooseImage({
-            count: 1,
-            sizeType: ['original', 'compressed'],
-            sourceType: ['album', 'camera'],
-            success(res0) {
-                const tempFiles = res0.tempFiles[0];
-                console.log(res0)
-                upload(tempFiles).then((res: any) => {
-                    // let path = JSON.parse(res.data).data.path
-                    console.log(res)
-                    let path = res.data.path
-                    that.setState({ avatar: 'http://oss.tdianyi.com/' + path }, () => { that.changeNameInfo() })
-                });
-            }
+  }
+  getUserInfo = () => {
+    Taro.showLoading();
+    userRequest({
+      url: 'v1/user/user/user_info',
+      method: "GET",
+    })
+      .then((res: any) => {
+        Taro.hideLoading();
+        let { status_code, data, message } = res;
+        if (status_code == 200) {
+          this.setState({
+            avatar: data.avatar,
+            name: data.user_name,
+            byear: data.byear,
+            bmonth: data.bmonth,
+            bday: data.bday,
+            dateSel: data.byear ? data.byear + '-' + data.bmonth + '-' + data.bday : '无',
+            sex: data.sex,
+            selectorChecked: data.sex == 1 ? '男' : (data.sex == 2 ? '女' : '无'),
+            cityIndex: [data.province_id, data.city_id, data.district_id],
+            quName: data.address_detail,
+            address: data.province + '-' + data.city + '-' + data.address_detail,
+          })
+        } else {
+          Taro.showToast({ title: message, icon: 'none' })
+        }
+      }).catch(err => {
+        Taro.hideLoading();
+        Taro.showToast({ title: '加载失败', icon: 'none' })
+      })
+  }
+  onSexChange = e => {
+    this.setState({
+      selectorNum: e.detail.value,
+      selectorChecked: this.state.selector[e.detail.value],
+      sex: e.detail.value == 0 ? 1 : 2
+    }, () => {
+      this.sumbitInfo()
+    })
+  }
+  onDateChange = (e: any) => {
+    this.setState({
+      dateSel: e.detail.value,
+      byear: Number(e.detail.value.split("-")[0]),
+      bmonth: Number(e.detail.value.split("-")[1]),
+      bday: Number(e.detail.value.split("-")[2])
+    }, () => { this.sumbitInfo() })
+  }
+  getCityArea = (query) => {
+    this.setState({ cityIndex: query.tempselectorid, quName: query.quName, address: query.selectorChecked }, () => { this.sumbitInfo() })
+  }
+  changeName = (e: any) => {
+    this.setState({ name: e.detail.value })
+  }
+  sumbitName = (e: any) => {
+    this.setState({ sumbitName: this.state.name, maskShow: false }, () => { this.changeNameInfo() })
+  }
+  sumbitInfo = () => {
+    Taro.showLoading();
+    userRequest({
+      url: 'v1/user/user/upload_user_detail',
+      method: "PUT",
+      data: {
+        avatar: this.state.avatar,
+        byear: this.state.byear,
+        bmonth: this.state.bmonth,
+        bday: this.state.bday,
+        sex: this.state.sex,
+        province_id: this.state.cityIndex[0],
+        city_id: this.state.cityIndex[1],
+        address_detail: this.state.quName,
+      }
+    })
+      .then((res: any) => {
+        Taro.hideLoading();
+        if (res.status_code == 200) {
+          Taro.showToast({ title: '修改成功', icon: 'none' })
+        } else {
+          Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
+          this.getUserInfo();
+        }
+      }).catch(err => {
+        Taro.hideLoading();
+        Taro.showToast({ title: err.message || '修改失败', icon: 'none' })
+        this.getUserInfo();
+      })
+  }
+  changeNameInfo = () => {
+    Taro.showLoading();
+    userRequest({
+      url: 'v1/user/user/upload_user_info',
+      method: "PUT",
+      data: {
+        head: this.state.avatar,
+        name: this.state.name
+      }
+    })
+      .then((res: any) => {
+        Taro.hideLoading();
+        if (res.status_code == 200) {
+          Taro.showToast({ title: '修改成功', icon: 'none' })
+        } else {
+          Taro.showToast({ title: res.message || '修改失败', icon: 'none' })
+          this.setState({ name: '' })
+          this.getUserInfo();
+        }
+      }).catch(err => {
+        Taro.hideLoading();
+        Taro.showToast({ title: err.message || '修改失败', icon: 'none' })
+        this.setState({ name: '' })
+        this.getUserInfo();
+      })
+  }
+  changeImg = () => {
+    let that = this;
+    Taro.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success(res0) {
+        const tempFiles = res0.tempFiles[0];
+        console.log(res0)
+        upload(tempFiles).then((res: any) => {
+          // let path = JSON.parse(res.data).data.path
+          console.log(res)
+          let path = res.data.path
+          that.setState({ avatar: 'http://oss.tdianyi.com/' + path }, () => { that.changeNameInfo() })
         });
-    }
-    render() {
-        return (
-            <View className='personalInformation'>
-                <View className='informationTitle'>基本信息</View>
-                <View className='informationBox'>
-                    <View className='informationItem' onClick={this.changeImg}>
-                        <View className='itemLeft'>头像</View>
-                        <View className='itemRight'>
-                            <View className='itemImage'>
-                                <Image className='userImage' src={this.state.avatar} />
-                            </View>
-                            <View className='itemIcon'> </View>
-                        </View>
-                    </View>
-                    <View className='informationItem' onClick={() => { this.setState({ maskShow: true }) }}>
-                        <View className='itemLeft'>昵称</View>
-                        <View className='itemRight'>
-                            <View className='itemWords'>{this.state.name}</View>
-                            <View className='itemIcon'></View>
-                        </View>
-                    </View>
-                    <Picker mode='selector' range={this.state.selector} onChange={this.onSexChange} value={this.state.selectorNum}>
-                        <View className='informationItem'>
-                            <View className='itemLeft'>性别</View>
-                            <View className='itemRight'>
-                                <View className='itemWords'>{this.state.selectorChecked}</View>
-                                <View className='itemIcon'> </View>
-                            </View>
-                        </View>
-                    </Picker>
-                    <Picker mode='date' onChange={this.onDateChange.bind(this)} value={this.state.dateSel}
-                        end={new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()}
-                    >
-                        <View className='informationItem'>
-                            <View className='itemLeft'>生日</View>
-                            <View className='itemRight'>
-                                <View className='itemWords'>{this.state.dateSel}</View>
-                                <View className='itemIcon'> </View>
-                            </View>
-                        </View>
-                    </Picker>
-                    {
-                        this.state.address ? <Citypicker Division=" - " getCity={this.getCityArea} tempCityInfo={this.state.address}></Citypicker>
-                            :
-                            <Citypicker Division=" - " getCity={this.getCityArea}  ></Citypicker>
-                    }
-                </View>
-
-
-                {
-                    this.state.maskShow ? <View className='personalInformationMask'>
-                        <View className='personalInformationMaskContent'>
-                            <View className='contentTitle'>
-                                <View className='titleWords'>修改昵称</View>
-                                <View className='contentTitleCancle' onClick={() => { this.setState({ maskShow: false }) }}>取消</View>
-                                <View className='contentTitleSubmit' onClick={this.sumbitName.bind(this)}>确定</View>
-                            </View>
-                            <View className='pickerBox'>
-                                <View className='inputBox'>
-                                    <Input className='pickerInput' onInput={this.changeName.bind(this)} placeholder={'请输入昵称'} />
-                                </View>
-                            </View>
-                        </View>
-                    </View> : null
-                }
+      }
+    });
+  }
+  render() {
+    return (
+      <View className='personalInformation'>
+        <View className='informationTitle'>基本信息</View>
+        <View className='informationBox'>
+          <View className='informationItem' onClick={this.changeImg}>
+            <View className='itemLeft'>头像</View>
+            <View className='itemRight'>
+              <View className='itemImage'>
+                <Image className='userImage' src={this.state.avatar} />
+              </View>
+              <View className='itemIcon'> </View>
             </View>
-        )
-    }
+          </View>
+          <View className='informationItem' onClick={() => { this.setState({ maskShow: true }) }}>
+            <View className='itemLeft'>昵称</View>
+            <View className='itemRight'>
+              <View className='itemWords'>{this.state.name}</View>
+              <View className='itemIcon'></View>
+            </View>
+          </View>
+          <Picker mode='selector' range={this.state.selector} onChange={this.onSexChange} value={this.state.selectorNum}>
+            <View className='informationItem'>
+              <View className='itemLeft'>性别</View>
+              <View className='itemRight'>
+                <View className='itemWords'>{this.state.selectorChecked}</View>
+                <View className='itemIcon'> </View>
+              </View>
+            </View>
+          </Picker>
+          <Picker mode='date' onChange={this.onDateChange.bind(this)} value={this.state.dateSel}
+            end={new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()}
+          >
+            <View className='informationItem'>
+              <View className='itemLeft'>生日</View>
+              <View className='itemRight'>
+                <View className='itemWords'>{this.state.dateSel}</View>
+                <View className='itemIcon'> </View>
+              </View>
+            </View>
+          </Picker>
+          {
+            this.state.address ? <Citypicker Division=" - " getCity={this.getCityArea} tempCityInfo={this.state.address}></Citypicker>
+              :
+              <Citypicker Division=" - " getCity={this.getCityArea}  ></Citypicker>
+          }
+        </View>
+
+
+        {
+          this.state.maskShow ? <View className='personalInformationMask'>
+            <View className='personalInformationMaskContent'>
+              <View className='contentTitle'>
+                <View className='titleWords'>修改昵称</View>
+                <View className='contentTitleCancle' onClick={() => { this.setState({ maskShow: false }) }}>取消</View>
+                <View className='contentTitleSubmit' onClick={this.sumbitName.bind(this)}>确定</View>
+              </View>
+              <View className='pickerBox'>
+                <View className='inputBox'>
+                  <Input className='pickerInput' onInput={this.changeName.bind(this)} placeholder={'请输入昵称'} />
+                </View>
+              </View>
+            </View>
+          </View> : null
+        }
+      </View>
+    )
+  }
 }
