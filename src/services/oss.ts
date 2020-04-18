@@ -41,7 +41,7 @@ const randomString = (len: any) => {
     }
     return pwd;
 }
-const host = 'https://oss.tdianyi.com';
+const host = 'http://tmwl.oss-cn-shenzhen.aliyuncs.com';
 export default async function upload(files: any) {
     console.log(files)
     const options = { method: 'post' }
@@ -96,8 +96,7 @@ export default async function upload(files: any) {
                 signature: oss_data.signature,
                 success_action_status: '200',
                 callback: oss_data.callback,
-                host: oss_data.host
-                // file: imgUrl
+                host: oss_data.host,
             },
             success: (res) => {
 
