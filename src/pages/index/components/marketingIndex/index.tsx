@@ -5,6 +5,7 @@ import { data, tabList } from './data'
 import RecommendBox from '../recommendBox'
 import CouponBox from '../couponBox'
 import { getChannelInfo, getTabList } from '../../service'
+import Announcement from '../announcement'
 export default class MarketingIndex extends Component<any> {
   config: Config = {
     navigationBarTitleText: '小熊敬礼',
@@ -23,8 +24,8 @@ export default class MarketingIndex extends Component<any> {
     banner: [],
     page: 1
   }
+
   componentDidMount() {
-    console.log(3423423)
     let router = JSON.parse(sessionStorage.getItem('router'))
     if (router) {
       this.setState({ city_name: router.city_name })
@@ -127,6 +128,14 @@ export default class MarketingIndex extends Component<any> {
     const { banner } = this.state
     return (
       <View className='marketing-page'>
+
+        <View className='indicator2'>
+          <View className='banner-number2'>{Number(this.state.bannerTag) + 1}</View>
+          <View className='banner-number2'>{this.state.banner.length}</View>
+        </View>
+
+
+
         <Image className='head-bj' src={require('@/assets/index/head-bj.png')} />
         <View className='marketing-main'>
 
@@ -149,17 +158,17 @@ export default class MarketingIndex extends Component<any> {
 
           {/* banner */}
           {
-              banner.length ? <View className='banner-box'>
+            banner.length ? <View className='banner-box'>
 
               <Swiper
                 className='marketing-banner'
                 indicatorColor='#999'
                 indicatorActiveColor='#333'
+                autoplay
                 circular
                 interval={5000}
                 onChange={e => {
-                  console.log(e.detail.current)
-                  this.setState({ bannerTag: e.detail.current + 1 })
+                  this.setState({ bannerTag: e.detail.current })
                 }}
               >
                 {
@@ -172,27 +181,28 @@ export default class MarketingIndex extends Component<any> {
                   })
                 }
               </Swiper>
-              <View className='indicator'>
-                <View className='banner-number'>{this.state.bannerTag}</View>
+              {/* <View className='indicator'>
+                <View className='banner-number'>{Number(this.state.bannerTag) + 1}</View>
                 <View className='banner-number'>{this.state.banner.length}</View>
-              </View>
+              </View> */}
             </View> : null
-            }
+          }
 
 
           {/* 快报栏 */}
-          <View className='bulletin-box'>
+          <Announcement />
+          {/* <View className='bulletin-box'>
             <View className='bulletin-text'>
               <Image src={require('@/assets/index/bulletin.png')} className='bulletin-img' /> |
             </View>
             <Swiper
-              className='bulletin'
+              className='bulletin swiper-no-swiping'
               indicatorColor='#999'
               indicatorActiveColor='#333'
               circular
               vertical
               interval={5000}
-              // autoplay={true}
+              autoplay
             >
               <SwiperItem>
                 <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
@@ -201,7 +211,7 @@ export default class MarketingIndex extends Component<any> {
                 <View className='bulletin-item'>商家免费进驻，获取海量流量!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
               </SwiperItem>
             </Swiper>
-          </View>
+          </View> */}
 
           {/* 赚钱计划 */}
           <View className='feature-box'>

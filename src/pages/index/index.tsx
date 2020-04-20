@@ -60,7 +60,6 @@ export default class Index extends Component<any> {
     let router = JSON.parse(sessionStorage.getItem('router')) || {}
     console.log(router)
     if(router.city_name){
-      console.log('3333')
       if(router.type_index_id){
         console.log(router.type_index_id,'router.type_index_id')
         this.setState({ is_marketing: true, flag: true })
@@ -68,7 +67,6 @@ export default class Index extends Component<any> {
         this.setState({ is_marketing: false, flag: true })
       }
     }else {
-      console.log('4444')
       getLocation().then(res => {
         let data = {
           xpoint: res.longitude,
