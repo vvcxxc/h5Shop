@@ -82,7 +82,7 @@ export default class RecommendBox extends Component<Props> {
                 indicatorColor='#999'
                 indicatorActiveColor='#333'
                 circular
-                indicatorDots
+                indicatorDots={false}
                 interval={15000}
                 autoplay
                 key={this.state.current}
@@ -108,9 +108,9 @@ export default class RecommendBox extends Component<Props> {
                                   <View className='recommend-old-money'>￥{item.is_share == 5 ? item.pay_money : item.return_money}</View>
                                 </View>
                               </View>
-                            )
+                            ))
 
-                      }
+                          }
                         </View>
                       </SwiperItem>
                     )

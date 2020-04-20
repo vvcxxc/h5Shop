@@ -5,6 +5,7 @@ import { data, tabList } from './data'
 import RecommendBox from '../recommendBox'
 import CouponBox from '../couponBox'
 import { getChannelInfo, getTabList } from '../../service'
+import Announcement from '../announcement'
 export default class MarketingIndex extends Component<any> {
   config: Config = {
     navigationBarTitleText: '小熊敬礼',
@@ -180,7 +181,8 @@ export default class MarketingIndex extends Component<any> {
 
 
           {/* 快报栏 */}
-          <View className='bulletin-box'>
+          <Announcement />
+          {/* <View className='bulletin-box'>
             <View className='bulletin-text'>
               <Image src={require('@/assets/index/bulletin.png')} className='bulletin-img' /> |
             </View>
@@ -200,7 +202,7 @@ export default class MarketingIndex extends Component<any> {
                 <View className='bulletin-item'>商家免费进驻，获取海量流量!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
               </SwiperItem>
             </Swiper>
-          </View>
+          </View> */}
 
           {/* 赚钱计划 */}
           <View className='feature-box'>
