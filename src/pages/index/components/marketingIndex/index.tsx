@@ -158,10 +158,7 @@ export default class MarketingIndex extends Component<any> {
                 circular
                 interval={5000}
                 onChange={e => {
-                  console.log(e.detail.current)
-                  // setTimeout(() => {
-                  this.setState({ bannerTag: e.detail.current  })
-                  // }, 5000)
+                  this.setState({ bannerTag: e.detail.current })
                 }}
               >
                 {
@@ -188,13 +185,13 @@ export default class MarketingIndex extends Component<any> {
               <Image src={require('@/assets/index/bulletin.png')} className='bulletin-img' /> |
             </View>
             <Swiper
-              className='bulletin'
+              className='bulletin swiper-no-swiping'
               indicatorColor='#999'
               indicatorActiveColor='#333'
               circular
               vertical
               interval={5000}
-            // autoplay={true}
+              autoplay
             >
               <SwiperItem>
                 <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
