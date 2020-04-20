@@ -24,6 +24,7 @@ export default class MarketingIndex extends Component<any> {
     banner: [],
     page: 1
   }
+  
   componentDidMount() {
     let router = JSON.parse(sessionStorage.getItem('router'))
     if (router) {
