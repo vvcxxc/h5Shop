@@ -14,6 +14,7 @@ export default class MarketingIndex extends Component<any> {
 
   state = {
     bannerTag: 1, // banner标签当前下标
+    showbannerTag:1,
     current: 0, // tab
     hotRecommendList: [], // 网红店推荐
     brandRecommendList: [], // 品牌连锁推荐
@@ -158,6 +159,7 @@ export default class MarketingIndex extends Component<any> {
                 interval={5000}
                 onChange={e => {
                   console.log(e.detail.current)
+                  this.setState({ showbannerTag: e.detail.current + 1 })
                   setTimeout(() => {
                     this.setState({ bannerTag: e.detail.current + 1 })
                   }, 5000)
@@ -174,7 +176,7 @@ export default class MarketingIndex extends Component<any> {
                 }
               </Swiper>
               <View className='indicator'>
-                <View className='banner-number'>{this.state.bannerTag}</View>
+                <View className='banner-number'>{this.state.showbannerTag}</View>
                 <View className='banner-number'>{this.state.banner.length}</View>
               </View>
             </View> : null
