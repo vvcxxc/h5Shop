@@ -81,7 +81,7 @@ export default class GroupActivity extends Component {
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
       ypoint: "",
-      supplier_delivery_id:0,
+      supplier_delivery_id: 0,
       delivery_service_info: {
         delivery_end_time: '',
         delivery_radius_m: 0,
@@ -151,7 +151,7 @@ export default class GroupActivity extends Component {
           let isPostage = false;
           if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
           let new_time = new Date().getTime()//ql
-          console.log(new Date(res.data.activity_end_time).getTime()+ 86399000,'333')
+          console.log(new Date(res.data.activity_end_time).getTime() + 86399000, '333')
           res.data.activity_time_status == 3 ? this.setState({ allowGroup: '已结束' }) : null
           res.data.activity_time_status == 1 ? this.setState({ allowGroup: '暂未开始' }) : null
 
@@ -483,10 +483,12 @@ export default class GroupActivity extends Component {
    * 回首页
    */
   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index',
-    success: ()=> {
-      location.href = location.href
-    } })
+    Taro.switchTab({
+      url: '/pages/index/index',
+      success: () => {
+        location.href = location.href
+      }
+    })
   }
 
   toShare = () => {
@@ -968,6 +970,72 @@ export default class GroupActivity extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
+
+
+        <View className="list-mask" >
+          <View className="list-content" >
+            <View className="list-titleBox" >
+              <View className="list-title" >正在拼团</View>
+              <Image className="list-close" src='http://oss.tdianyi.com/front/6i8i3CiJzwzKR4cY4ZsJPXDfS4bzFTTR.png' />
+            </View>
+
+            <View className="item-content">
+
+
+              <View className="group-list-info" >
+                <View className="group-user" >
+                  <View className="group-list-item-img" >
+                    <Image className="listImg" src='http://oss.tdianyi.com/front/6i8i3CiJzwzKR4cY4ZsJPXDfS4bzFTTR.png' />
+                  </View>
+                  <View className="group-list-item-name" >gerwerwe</View>
+                </View>
+                <View className="group-info" >
+                  <View className="group-list-timesbox" >
+                    <View className="group-list-lack" >
+                      <View className="group-list-lackredblack1" >还差</View>
+                      <View className="group-list-lackred" >22人</View>
+                      <View className="group-list-lackredblack2" >拼成</View>
+                    </View>
+                    <View className="group-list-times" >
+                      <TimeUp itemtime='2020/08/12' />
+                    </View>
+                  </View>
+                  <View className="group-list-btnbox" >
+                    <View className="group-list-btn" >参团</View>
+                  </View>
+                </View>
+              </View>
+
+              <View className="group-list-info" >
+                <View className="group-user" >
+                  <View className="group-list-item-img" >
+                    <Image className="listImg" src='http://oss.tdianyi.com/front/6i8i3CiJzwzKR4cY4ZsJPXDfS4bzFTTR.png' />
+                  </View>
+                  <View className="group-list-item-name" >gerwerwe</View>
+                </View>
+                <View className="group-info" >
+                  <View className="group-list-timesbox" >
+                    <View className="group-list-lack" >
+                      <View className="group-list-lackredblack1" >还差</View>
+                      <View className="group-list-lackred" >22人</View>
+                      <View className="group-list-lackredblack2" >拼成</View>
+                    </View>
+                    <View className="group-list-times" >
+                      <TimeUp itemtime='2020/08/12' />
+                    </View>
+                  </View>
+                  <View className="group-list-btnbox" >
+                    <View className="group-list-btn" >参团</View>
+                  </View>
+                </View>
+              </View>
+
+            </View>
+          </View>
+        </View>
+
+
+
       </View>
     );
   }
