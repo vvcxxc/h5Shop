@@ -154,13 +154,14 @@ export default class MarketingIndex extends Component<any> {
                 className='marketing-banner'
                 indicatorColor='#999'
                 indicatorActiveColor='#333'
+                autoplay
                 circular
                 interval={5000}
                 onChange={e => {
                   console.log(e.detail.current)
-                  setTimeout(() => {
-                    this.setState({ bannerTag: e.detail.current + 1 })
-                  }, 5000)
+                  // setTimeout(() => {
+                  this.setState({ bannerTag: e.detail.current  })
+                  // }, 5000)
                 }}
               >
                 {
