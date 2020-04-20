@@ -4,6 +4,15 @@ import './index.styl';
 
 export default class Announcement extends Component<any> {
 
+    state = {
+        reportCurrent: 0
+    }
+    // handleChange(e) {
+    //     setTimeout(() => {
+    //         console.log('009', e.detail.current)
+    //         this.setState({ reportCurrent: e.detail.current })
+    //     }, 5000)
+    // }
     render() {
         return (
             <View className='bulletin-box'>
@@ -18,6 +27,8 @@ export default class Announcement extends Component<any> {
                     vertical
                     interval={5000}
                     autoplay
+                    // key={this.state.reportCurrent}
+                    // onChange={this.handleChange.bind(this)}
                 >
                     <SwiperItem>
                         <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>

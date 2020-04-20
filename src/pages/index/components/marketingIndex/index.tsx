@@ -24,7 +24,7 @@ export default class MarketingIndex extends Component<any> {
     banner: [],
     page: 1
   }
-  
+
   componentDidMount() {
     let router = JSON.parse(sessionStorage.getItem('router'))
     if (router) {
@@ -128,6 +128,14 @@ export default class MarketingIndex extends Component<any> {
     const { banner } = this.state
     return (
       <View className='marketing-page'>
+
+        <View className='indicator2'>
+          <View className='banner-number2'>{Number(this.state.bannerTag) + 1}</View>
+          <View className='banner-number2'>{this.state.banner.length}</View>
+        </View>
+
+
+
         <Image className='head-bj' src={require('@/assets/index/head-bj.png')} />
         <View className='marketing-main'>
 
@@ -173,10 +181,10 @@ export default class MarketingIndex extends Component<any> {
                   })
                 }
               </Swiper>
-              <View className='indicator'>
+              {/* <View className='indicator'>
                 <View className='banner-number'>{Number(this.state.bannerTag) + 1}</View>
                 <View className='banner-number'>{this.state.banner.length}</View>
-              </View>
+              </View> */}
             </View> : null
           }
 
