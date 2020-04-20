@@ -24,7 +24,6 @@ export default class MarketingIndex extends Component<any> {
     page: 1
   }
   componentDidMount() {
-    console.log(3423423)
     let router = JSON.parse(sessionStorage.getItem('router'))
     if (router) {
       this.setState({ city_name: router.city_name })
@@ -149,7 +148,7 @@ export default class MarketingIndex extends Component<any> {
 
           {/* banner */}
           {
-              banner.length ? <View className='banner-box'>
+            banner.length ? <View className='banner-box'>
 
               <Swiper
                 className='marketing-banner'
@@ -159,7 +158,9 @@ export default class MarketingIndex extends Component<any> {
                 interval={5000}
                 onChange={e => {
                   console.log(e.detail.current)
-                  this.setState({ bannerTag: e.detail.current + 1 })
+                  setTimeout(() => {
+                    this.setState({ bannerTag: e.detail.current + 1 })
+                  }, 5000)
                 }}
               >
                 {
@@ -177,7 +178,7 @@ export default class MarketingIndex extends Component<any> {
                 <View className='banner-number'>{this.state.banner.length}</View>
               </View>
             </View> : null
-            }
+          }
 
 
           {/* 快报栏 */}
@@ -192,7 +193,7 @@ export default class MarketingIndex extends Component<any> {
               circular
               vertical
               interval={5000}
-              // autoplay={true}
+            // autoplay={true}
             >
               <SwiperItem>
                 <View className='bulletin-item'>小熊敬礼进驻江门新会商圈!!!<Image className='right-icon' src={require('@/assets/index/right-icon.png')} /></View>
