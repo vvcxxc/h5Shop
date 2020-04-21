@@ -103,6 +103,7 @@ export default class MerChantPage extends Component {
   // 首页页面渲染
   requestData = (data, search?) => {
     if (search) return
+    console.log(43434)
     request({
       url: 'v3/stores',
       data
@@ -154,9 +155,20 @@ export default class MerChantPage extends Component {
     this.setState({
       locationPosition: define
     })
+    console.log(3232323)
+    let data = {}
+    if(define.keyword){
+      let define1 = {...define}
+      delete define1['city_id']
+       data = {
+         ...define1,
+       }
+    }else {
+      data = {...define}
+    }
     request({
       url: 'v3/stores',
-      data: define
+      data
     })
       .then((res: any) => {
         // if (res.data.store_info.data)麒麟
