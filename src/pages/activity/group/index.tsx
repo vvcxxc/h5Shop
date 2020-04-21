@@ -81,7 +81,7 @@ export default class GroupActivity extends Component {
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
       ypoint: "",
-      supplier_delivery_id:0,
+      supplier_delivery_id: 0,
       delivery_service_info: {
         delivery_end_time: '',
         delivery_radius_m: 0,
@@ -97,6 +97,9 @@ export default class GroupActivity extends Component {
       total: 0,
     },
     newGroupList: [],
+    newShowGroupList: [],
+    newShowGroupPage: 1,
+    newShowGroupListShow: false,
     showShare: false, //显示分享
     isShare: false,
     showPoster: false,
@@ -151,7 +154,7 @@ export default class GroupActivity extends Component {
           let isPostage = false;
           if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
           let new_time = new Date().getTime()//ql
-          console.log(new Date(res.data.activity_end_time).getTime()+ 86399000,'333')
+          console.log(new Date(res.data.activity_end_time).getTime() + 86399000, '333')
           res.data.activity_time_status == 3 ? this.setState({ allowGroup: '已结束' }) : null
           res.data.activity_time_status == 1 ? this.setState({ allowGroup: '暂未开始' }) : null
 
@@ -179,7 +182,7 @@ export default class GroupActivity extends Component {
       Taro.hideLoading();
       if (res.code == 200) {
         let newGroupList = this.chunk(res.data.data, 2);
-        this.setState({ data2: res.data, newGroupList: newGroupList }, () => { this.listAtb() });
+        this.setState({ data2: res.data, newGroupList: newGroupList, newShowGroupList: res.data.data }, () => { this.listAtb() });
       } else {
         Taro.showToast({ title: res.message, icon: 'none' });
       }
@@ -478,10 +481,12 @@ export default class GroupActivity extends Component {
    * 回首页
    */
   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index',
-    success: ()=> {
-      location.href = location.href
-    } })
+    Taro.switchTab({
+      url: '/pages/index/index',
+      success: () => {
+        location.href = location.href
+      }
+    })
   }
 
   toShare = () => {
@@ -601,6 +606,21 @@ export default class GroupActivity extends Component {
     }
   }
 
+  addGroupList = () => {
+    Taro.showLoading({ title: 'loading', mask: true });
+    let data = { group_info_id: this.$router.params.id, page: Number(this.state.newShowGroupPage) + 1 }
+    getGroupbuyings(data).then((res: any) => {
+      Taro.hideLoading();
+      if (res.code == 200) {
+        this.setState({ newShowGroupList: this.state.newShowGroupList.concat(res.data.data), newShowGroupPage: Number(this.state.newShowGroupPage) + 1 });
+      } else {
+        Taro.showToast({ title: res.message, icon: 'none' });
+      }
+    }).catch((err) => {
+      Taro.hideLoading();
+    })
+  }
+
   render() {
     const { description, delivery_service_info, images, brief } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
@@ -707,7 +727,7 @@ export default class GroupActivity extends Component {
               <View className='apply-title-left'></View>
               <View className='apply-title'>{this.state.data2.total}个团正在拼</View>
             </View>
-            <View className='apply-title-right'>正在拼团</View>
+            <View className='apply-title-right' onClick={() => { this.setState({ newShowGroupListShow: true }) }}>正在拼团</View>
           </View> : null
 
         }
@@ -963,6 +983,60 @@ export default class GroupActivity extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
+
+        {
+          this.state.newShowGroupListShow ?
+
+            <View className="list-mask" >
+              <View className="list-content" >
+                <View className="list-titleBox" >
+                  <View className="list-title" >正在拼团</View>
+                  <Image className="list-close" src='http://oss.tdianyi.com/front/6i8i3CiJzwzKR4cY4ZsJPXDfS4bzFTTR.png' onClick={() => { this.setState({ newShowGroupListShow: false }) }} />
+                </View>
+
+                <View className="item-content">
+
+                  {
+                    this.state.newShowGroupList.map((item: any, index: any) => {
+                      return (
+                        <View className="group-list-info" >
+                          <View className="group-user" >
+                            <View className="group-list-item-img" >
+                              <Image className="listImg" src={item.avatar} />
+                            </View>
+                            <View className="group-list-item-name" >{item.real_name}</View>
+                          </View>
+                          <View className="group-info" >
+                            <View className="group-list-timesbox" >
+                              <View className="group-list-lack" >
+                                <View className="group-list-lackredblack1" >还差</View>
+                                <View className="group-list-lackred" >{item.number - item.participation_number}人</View>
+                                <View className="group-list-lackredblack2" >拼成</View>
+                              </View>
+                              <View className="group-list-times" >
+                                <TimeUp itemtime={item.end_at} />
+                              </View>
+                            </View>
+                            <View className="group-list-btnbox" >
+                              {
+                                item.is_team ? <View className="group-list-btn" style={{ background: '#999999' }}  >已参团</View> :
+                                  <View className="group-list-btn" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >参团</View>
+                              }
+                            </View>
+                          </View>
+                        </View>
+                      )
+                    })
+                  }
+                  {
+                    this.state.newShowGroupList.length < this.state.data2.total ? <View className="group-list-item-more" onClick={this.addGroupList} >查看更多</View> : null
+                  }
+                </View>
+              </View>
+            </View> : null
+
+        }
+
       </View>
     );
   }
