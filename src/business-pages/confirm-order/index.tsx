@@ -80,9 +80,7 @@ export default class ConfirmOrder extends Component {
       this.setState({ tipsMessage: '已超过购买上限,请重新设置购买数量' })
       return;
     }
-    Taro.showLoading({
-      title: 'loading',
-    })
+    Taro.showLoading({ title: 'loading', mask: true })
     let _type;
     let browserType = getBrowserType();
     if (browserType == 'wechat') {
@@ -151,7 +149,7 @@ export default class ConfirmOrder extends Component {
                     //   if (page == undefined || page == null) return;
                     //   page.onShow();
                     // }
-                    success: ()=> {
+                    success: () => {
                       location.href = location.href
                     }
                   })
@@ -181,7 +179,7 @@ export default class ConfirmOrder extends Component {
                   //   page.onShow();
 
                   // }
-                  success: ()=> {
+                  success: () => {
                     location.href = location.href
                   }
                 })
@@ -196,6 +194,10 @@ export default class ConfirmOrder extends Component {
           this.setState({ tipsMessage: res.message })
           // Taro.showToast({ title: res.message, icon: 'none' })
         }
+      })
+      .catch(err => {
+        Taro.hideLoading();
+        Taro.showToast({ title: '支付失败', icon: 'none' })
       })
   }
 

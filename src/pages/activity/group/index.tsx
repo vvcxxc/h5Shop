@@ -81,7 +81,7 @@ export default class GroupActivity extends Component {
       youhui_id: 0,//活动id
       youhui_name: "",//活动名
       ypoint: "",
-      supplier_delivery_id:0,
+      supplier_delivery_id: 0,
       delivery_service_info: {
         delivery_end_time: '',
         delivery_radius_m: 0,
@@ -151,7 +151,7 @@ export default class GroupActivity extends Component {
           let isPostage = false;
           if (res.data.gift_id && res.data.gift.mail_mode == 2) { isPostage = true; }
           let new_time = new Date().getTime()//ql
-          console.log(new Date(res.data.activity_end_time).getTime()+ 86399000,'333')
+          console.log(new Date(res.data.activity_end_time).getTime() + 86399000, '333')
           res.data.activity_time_status == 3 ? this.setState({ allowGroup: '已结束' }) : null
           res.data.activity_time_status == 1 ? this.setState({ allowGroup: '暂未开始' }) : null
 
@@ -354,7 +354,8 @@ export default class GroupActivity extends Component {
         Taro.showToast({ title: res.message, icon: 'none' })
       }
     }).catch(err => {
-      Taro.showToast({ title: '调起支付失败', icon: 'none' })
+      Taro.hideLoading();
+      Taro.showToast({ title: '支付失败', icon: 'none' })
     })
   }
 
@@ -426,6 +427,9 @@ export default class GroupActivity extends Component {
           Taro.showToast({ title: res.message, icon: 'none' })
         }
       }
+    }).catch(err => {
+      Taro.hideLoading();
+      Taro.showToast({ title: '支付失败', icon: 'none' })
     })
   }
 
@@ -483,10 +487,12 @@ export default class GroupActivity extends Component {
    * 回首页
    */
   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index',
-    success: ()=> {
-      location.href = location.href
-    } })
+    Taro.switchTab({
+      url: '/pages/index/index',
+      success: () => {
+        location.href = location.href
+      }
+    })
   }
 
   toShare = () => {

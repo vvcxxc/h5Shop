@@ -245,9 +245,8 @@ export default class distributionDetail extends Component {
                 // Taro.showToast({ title: res.message, icon: 'none' })
             }
         }).catch(err => {
-            console.log('err', err)
-            console.log('err', err.json())
-            Taro.showToast({ title: '调起支付失败', icon: 'none' })
+            Taro.hideLoading();
+            Taro.showToast({ title: '支付失败', icon: 'none' })
         })
     }
 
