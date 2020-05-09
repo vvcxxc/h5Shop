@@ -27,13 +27,13 @@ export default class Personal extends Component {
                         </View>
                         <View className='itemRight'></View>
                     </View>
-                    <View className='setItem' onClick={this.routerPush.bind(this, '/activity-pages/personal/phoneInformation/index')}>
+                    {/* <View className='setItem' onClick={this.routerPush.bind(this, '/activity-pages/personal/phoneInformation/index')}>
                         <View className='itemLeft'>
                             <View className='leftTitle'>账号与安全</View>
                             <View className='leftInfo'>换绑手机号码</View>
                         </View>
                         <View className='itemRight'></View>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         )
