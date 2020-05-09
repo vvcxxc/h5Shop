@@ -165,6 +165,7 @@ export default class confirmAddress extends Component {
         } else {
             Taro.showToast({ title: "网页类型出错", icon: "none" });
         }
+        Taro.showLoading({ title: 'loading', mask: true })
         let that = this;
         if (this.$router.params.activityType == '1') {
             //1增值activityType == '1'
@@ -257,12 +258,23 @@ export default class confirmAddress extends Component {
                                                     clearInterval(interval);
                                                     Taro.hideLoading();
                                                     //得到增值活动id并跳转活动详情
-                                                    Taro.navigateTo({
-                                                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id
-                                                    })
+                                                    if (res.data.id && res.data.order_abnormal == 0) {
+                                                        Taro.navigateTo({
+                                                            url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                                                            success: function (e) {
+                                                                let page = Taro.getCurrentPages().pop();
+                                                                if (page == undefined || page == null) return;
+                                                                page.onShow();
+                                                            }
+                                                        })
+                                                    } else {
+                                                        Taro.showToast({ title: res.data.order_message, icon: 'none' })
+                                                    }
                                                 }
+                                            }).catch((err) => {
+                                                Taro.showToast({ title: err.message, icon: 'none' })
                                             })
-                                        }, 500);
+                                        }, 1000);
                                     } else {
                                         //微信支付失败
                                     }
@@ -289,12 +301,23 @@ export default class confirmAddress extends Component {
                                                 clearInterval(interval);
                                                 Taro.hideLoading();
                                                 //得到增值活动id并跳转活动详情
-                                                Taro.navigateTo({
-                                                    url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id
-                                                })
+                                                if (res.data.id && res.data.order_abnormal == 0) {
+                                                    Taro.navigateTo({
+                                                        url: '/pages/activity/pages/appreciation/appreciation?id=' + res.data.id,
+                                                        success: function (e) {
+                                                            let page = Taro.getCurrentPages().pop();
+                                                            if (page == undefined || page == null) return;
+                                                            page.onShow();
+                                                        }
+                                                    })
+                                                } else {
+                                                    Taro.showToast({ title: res.data.order_message, icon: 'none' })
+                                                }
                                             }
+                                        }).catch((err) => {
+                                            Taro.showToast({ title: err.message, icon: 'none' })
                                         })
-                                    }, 500);
+                                    }, 1000);
                                 } else {
                                     //支付宝支付失败
                                 }
@@ -308,6 +331,7 @@ export default class confirmAddress extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    Taro.showToast({ title: '支付失败', icon: 'none' })
                 })
 
         } else if (this.$router.params.activityType == '5') {
@@ -457,6 +481,7 @@ export default class confirmAddress extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    Taro.showToast({ title: '支付失败', icon: 'none' })
                 })
         } else if (this.$router.params.activityType == '55') {
             console.log('参团')
@@ -574,6 +599,7 @@ export default class confirmAddress extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    Taro.showToast({ title: '支付失败', icon: 'none' })
                 })
         } else {
             console.log('不知道啥子活动类型')
