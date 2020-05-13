@@ -268,10 +268,15 @@ export default class AppreActivity extends Component {
           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
         })
         wx.ready(() => {
+          let router = JSON.parse(sessionStorage.getItem('router')) || {}
+          let link = share_url + this.$router.params.id + '&invitation_user_id=' + this.state.coupon.invitation_user_id
+          if(router.city_id){
+            link =share_url + this.$router.params.id + '&invitation_user_id=' + this.state.coupon.invitation_user_id + '&c_id=' + router.city_id
+          }
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: share_url + this.$router.params.id + '&invitation_user_id=' + this.state.coupon.invitation_user_id,
+            link,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发

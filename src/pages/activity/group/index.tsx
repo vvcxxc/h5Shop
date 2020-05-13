@@ -524,10 +524,15 @@ export default class GroupActivity extends Component {
           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
         })
         wx.ready(() => {
+          let router = JSON.parse(sessionStorage.getItem('router')) || {}
+          let link = share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id
+          if(router.city_id){
+            link =share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id + '&c_id=' + router.city_id
+          }
           wx.updateAppMessageShareData({
             title: titleMsg,
             desc: descMsg,
-            link: share_url + 'id=' + this.$router.params.id + '&type=5&gift_id=' + this.$router.params.gift_id + '&activity_id=' + this.$router.params.activity_id + '&invitation_user_id=' + this.state.data.invitation_user_id,
+            link,
             imgUrl: 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM6UL4r7LnqyAVDKia7l4GlOnibryHQUJXiakS1MhZLicicMWicg/0',
             success: function () {
               //成功后触发

@@ -68,6 +68,7 @@ export default class Index extends Component<any> {
   }
   componentWillReceiveProps(nextProps) {
     // 下拉刷新
+
     if(this.props.changePull != nextProps.changePull){
       this.showGift()
       let data = this.state.meta
@@ -98,8 +99,10 @@ export default class Index extends Component<any> {
         data: router
       }
       console.log('触发444')
-      if(router.type_index_id){ // 存在并且等于1，是营销首页
-        return
+      if (res.data.type_index_id) {
+        if (res.data.type_index_id == 1) {
+          this.props.onChange(res.data.type_index_id)
+        }
       }
       // res.data= router
       if (Object.keys(res.data).length < 1) {
@@ -193,13 +196,18 @@ export default class Index extends Component<any> {
       data: datas
     })
       .then((res: any) => {
+        if (res.data.type_index_id == 1) {
+          this.props.onChange(res.data.type_index_id)
+        }
         this.setState({ cityName: res.data.city }) //城市名字
         this.setState({ // 保存了城市id 和经纬度
           meta: {
             city_id: res.data.city_id,
             xpoint: this.state.meta.xpoint,
             ypoint: this.state.meta.ypoint,
-            pages: 1
+            pages: 1,
+            city_name: res.data.city,
+            type_index_id: res.data.type_index_id
           }
         }, () => {
           this.requestHomeList(this.state.meta)

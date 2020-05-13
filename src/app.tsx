@@ -13,7 +13,7 @@ import 'taro-ui/dist/style/index.scss';
 import request from './services/request';
 import Vconsole from 'vconsole';
 import iNoBounce from 'inobounce/inobounce';
-
+import { getLocation } from '@/utils/getInfo'
 (function () {
   if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
     handleFontSize();
@@ -52,6 +52,12 @@ if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5') {
   const vConsole = new Vconsole()
 }
 class App extends Component {
+
+
+  componentDidMount() {
+    sessionStorage.setItem('url', window.location.href)
+  }
+
 	/**
 	 * 指定config的类型声明为: Taro.Config
 	 *
@@ -193,11 +199,36 @@ class App extends Component {
   defineApp: {
     define: '22'
   }
-  componentDidShow() {
+  async componentDidShow() {
+    console.log(this.$router.params, 'query')
+    if (this.$router.params.c_id) {
+      let c_id = this.$router.params.c_id
+      console.log(c_id, 'c_id')
+      try {
+        let router = JSON.parse(sessionStorage.getItem('router')) || {}
+        let res = await request({ url: 'v3/city_info/' + query.c_id })
+        if (Object.keys(router).length) {
+          router.city_id = c_id
+          router.city_name = res.data.name
+          router.type_index_id = res.data.type_index_id
+          sessionStorage.setItem('router', router)
+        } else {
+          getLocation().then(res1 => {
+            router.city_id = c_id
+            router.city_name = res.data.name
+            router.type_index_id = res.data.type_index_id
+            router.xpoint = res1.longitude
+            router.ypoint = res1.latitude
+            sessionStorage.setItem('router', router)
+          })
+
+        }
+      } catch (error) {
+      }
+    }
+
   }
-  componentDidMount() {
-    sessionStorage.setItem('url', window.location.href)
-  }
+
   componentDidHide() { }
   componentDidCatchError() { }
   // 在 App 类中的 render() 函数没有实际作用
