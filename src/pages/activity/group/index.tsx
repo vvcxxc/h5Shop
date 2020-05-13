@@ -97,9 +97,6 @@ export default class GroupActivity extends Component {
       total: 0,
     },
     newGroupList: [],
-    newShowGroupList: [],
-    newShowGroupPage: 1,
-    newShowGroupListShow: false,
     showShare: false, //显示分享
     isShare: false,
     showPoster: false,
@@ -182,7 +179,7 @@ export default class GroupActivity extends Component {
       Taro.hideLoading();
       if (res.code == 200) {
         let newGroupList = this.chunk(res.data.data, 2);
-        this.setState({ data2: res.data, newGroupList: newGroupList, newShowGroupList: res.data.data }, () => { this.listAtb() });
+        this.setState({ data2: res.data, newGroupList: newGroupList }, () => { this.listAtb() });
       } else {
         Taro.showToast({ title: res.message, icon: 'none' });
       }
@@ -466,7 +463,12 @@ export default class GroupActivity extends Component {
    */
   goToGroupInfo = (_tempid: any) => {
     Taro.navigateTo({
-      url: '/pages/activity/pages/group/group?id=' + _tempid
+      url: '/pages/activity/pages/group/group?id=' + _tempid,
+      success: () => {
+        var page = Taro.getCurrentPages().pop();
+        if (page == undefined || page == null) return;
+        page.onLoad();
+      }
     })
   }
 
@@ -615,21 +617,6 @@ export default class GroupActivity extends Component {
     }
   }
 
-  addGroupList = () => {
-    Taro.showLoading({ title: 'loading', mask: true });
-    let data = { group_info_id: this.$router.params.id, page: Number(this.state.newShowGroupPage) + 1 }
-    getGroupbuyings(data).then((res: any) => {
-      Taro.hideLoading();
-      if (res.code == 200) {
-        this.setState({ newShowGroupList: this.state.newShowGroupList.concat(res.data.data), newShowGroupPage: Number(this.state.newShowGroupPage) + 1 });
-      } else {
-        Taro.showToast({ title: res.message, icon: 'none' });
-      }
-    }).catch((err) => {
-      Taro.hideLoading();
-    })
-  }
-
   render() {
     const { description, delivery_service_info, images, brief } = this.state.data;
     const { showBounced, showPoster, posterList } = this.state;
@@ -725,7 +712,7 @@ export default class GroupActivity extends Component {
           <View className="group-info-label">
             {this.state.data.supplier_delivery_id ? <View className="group-info-label-item">可配送</View> : null}
             <View className="group-info-label-item">{this.state.data.number}人团</View>
-            {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null}
+            {/* {this.state.data.gift ? <View className="group-info-label-item">送{this.state.data.gift.title}</View> : null} */}
           </View>
         </View>
         <Image className="group-banner-nav" src="http://oss.tdianyi.com/front/AY8XDHGntwa8dWN3fJe4hTWkK4zFG7F3.png" />
@@ -736,7 +723,7 @@ export default class GroupActivity extends Component {
               <View className='apply-title-left'></View>
               <View className='apply-title'>{this.state.data2.total}个团正在拼</View>
             </View>
-            <View className='apply-title-right' onClick={() => { this.setState({ newShowGroupListShow: true }) }}>正在拼团</View>
+            <View className='apply-title-right'>正在拼团</View>
           </View> : null
 
         }
@@ -992,60 +979,6 @@ export default class GroupActivity extends Component {
           showBool={this.state.imgZoom}
           onChange={() => { this.setState({ imgZoom: !this.state.imgZoom }) }}
         />
-
-        {
-          this.state.newShowGroupListShow ?
-
-            <View className="list-mask" >
-              <View className="list-content" >
-                <View className="list-titleBox" >
-                  <View className="list-title" >正在拼团</View>
-                  <Image className="list-close" src='http://oss.tdianyi.com/front/6i8i3CiJzwzKR4cY4ZsJPXDfS4bzFTTR.png' onClick={() => { this.setState({ newShowGroupListShow: false }) }} />
-                </View>
-
-                <View className="item-content">
-
-                  {
-                    this.state.newShowGroupList.map((item: any, index: any) => {
-                      return (
-                        <View className="group-list-info" >
-                          <View className="group-user" >
-                            <View className="group-list-item-img" >
-                              <Image className="listImg" src={item.avatar} />
-                            </View>
-                            <View className="group-list-item-name" >{item.real_name}</View>
-                          </View>
-                          <View className="group-info" >
-                            <View className="group-list-timesbox" >
-                              <View className="group-list-lack" >
-                                <View className="group-list-lackredblack1" >还差</View>
-                                <View className="group-list-lackred" >{item.number - item.participation_number}人</View>
-                                <View className="group-list-lackredblack2" >拼成</View>
-                              </View>
-                              <View className="group-list-times" >
-                                <TimeUp itemtime={item.end_at} />
-                              </View>
-                            </View>
-                            <View className="group-list-btnbox" >
-                              {
-                                item.is_team ? <View className="group-list-btn" style={{ background: '#999999' }}  >已参团</View> :
-                                  <View className="group-list-btn" onClick={this.goToaConfirmAddGroup.bind(this, item.id)} >参团</View>
-                              }
-                            </View>
-                          </View>
-                        </View>
-                      )
-                    })
-                  }
-                  {
-                    this.state.newShowGroupList.length < this.state.data2.total ? <View className="group-list-item-more" onClick={this.addGroupList} >查看更多</View> : null
-                  }
-                </View>
-              </View>
-            </View> : null
-
-        }
-
       </View>
     );
   }
