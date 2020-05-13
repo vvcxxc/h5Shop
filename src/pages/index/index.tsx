@@ -55,18 +55,21 @@ export default class Index extends Component<any> {
     super(props);
   }
 
-  componentDidShow(){
+  componentDidShow() {
     console.log('触发触发')
     let router = JSON.parse(sessionStorage.getItem('router')) || {}
     console.log(router)
-    if(router.city_name){
-      if(router.type_index_id){
-        console.log(router.type_index_id,'router.type_index_id')
+    if (router.city_name) {
+      console.log('3333')
+      if (router.type_index_id) {
+        console.log(router.type_index_id, 'router.type_index_id')
         this.setState({ is_marketing: true, flag: true })
-      }else {
+      } else {
+        console.log(router.type_index_id, 'router.type_index_id')
         this.setState({ is_marketing: false, flag: true })
       }
-    }else {
+    } else {
+      console.log('4444')
       getLocation().then(res => {
         let data = {
           xpoint: res.longitude,
@@ -77,12 +80,12 @@ export default class Index extends Component<any> {
           router.city_name = res.data.city
           router.city_id = res.data.city_id
           router.type_index_id = res.data.type_index_id
-            if (res.data.type_index_id) {
-              this.setState({ is_marketing: true, flag: true })
-            } else {
-              this.setState({ is_marketing: false, flag: true })
-            }
-          sessionStorage.setItem('router',JSON.stringify(router))
+          if (res.data.type_index_id) {
+            this.setState({ is_marketing: true, flag: true })
+          } else {
+            this.setState({ is_marketing: false, flag: true })
+          }
+          sessionStorage.setItem('router', JSON.stringify(router))
         })
       })
     }
@@ -90,24 +93,35 @@ export default class Index extends Component<any> {
 
   // 下拉刷新
   onPullDownRefresh() {
-    const {changePull} = this.state
-    this.setState({changePull: changePull+1})
+    const { changePull } = this.state
+    this.setState({ changePull: changePull + 1 })
   }
 
   //  触底
   onReachBottom() {
-    const {changeBottom} = this.state
-    this.setState({changeBottom: changeBottom+1})
+    const { changeBottom } = this.state
+    this.setState({ changeBottom: changeBottom + 1 })
   }
+
+  // 避免出现定位未切换首页情况
+  handleChange = (type) => {
+    console.log(2,type, 'type change')
+    if (type == 1) {
+      this.setState({ is_marketing: true })
+    } else {
+      this.setState({ is_marketing: false })
+    }
+  }
+
 
 
 
 
   render() {
-    const {changeBottom, changePull} = this.state
+    const { changeBottom, changePull } = this.state
     return (
       <View className="index">
-        { this.state.flag ? this.state.is_marketing ? <MarketingIndex changeBottom={changeBottom} changePull={changePull}/> : <OldIndex changeBottom={changeBottom} changePull={changePull}/> : null }
+        {this.state.flag ? this.state.is_marketing ? <MarketingIndex changeBottom={changeBottom} changePull={changePull} /> : <OldIndex onChange={this.handleChange} changeBottom={changeBottom} changePull={changePull} /> : null}
       </View>
     );
   }

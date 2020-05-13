@@ -165,6 +165,7 @@ export default class confirmAddress extends Component {
         } else {
             Taro.showToast({ title: "网页类型出错", icon: "none" });
         }
+        Taro.showLoading({ title: 'loading', mask: true })
         let that = this;
         if (this.$router.params.activityType == '1') {
             //1增值activityType == '1'
@@ -308,6 +309,7 @@ export default class confirmAddress extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    Taro.showToast({ title: '支付失败', icon: 'none' })
                 })
 
         } else if (this.$router.params.activityType == '5') {
@@ -457,6 +459,7 @@ export default class confirmAddress extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    Taro.showToast({ title: '支付失败', icon: 'none' })
                 })
         } else if (this.$router.params.activityType == '55') {
             console.log('参团')
@@ -574,6 +577,7 @@ export default class confirmAddress extends Component {
                     }
                 }).catch(err => {
                     Taro.hideLoading();
+                    Taro.showToast({ title: '支付失败', icon: 'none' })
                 })
         } else {
             console.log('不知道啥子活动类型')
