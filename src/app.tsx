@@ -204,14 +204,16 @@ class App extends Component {
     if (this.$router.params.c_id) {
       let c_id = this.$router.params.c_id
       console.log(c_id, 'c_id')
-      try {
+      // try {
         let router = JSON.parse(sessionStorage.getItem('router')) || {}
-        let res = await request({ url: 'v3/city_info/' + query.c_id })
+        let res = await request({ url: 'v3/city_info/' + c_id })
+        console.log(1231123123123)
         if (Object.keys(router).length) {
           router.city_id = c_id
           router.city_name = res.data.name
           router.type_index_id = res.data.type_index_id
-          sessionStorage.setItem('router', router)
+          console.log(router,'routt')
+          sessionStorage.setItem('router', JSON.stringify(router))
         } else {
           getLocation().then(res1 => {
             router.city_id = c_id
@@ -219,12 +221,12 @@ class App extends Component {
             router.type_index_id = res.data.type_index_id
             router.xpoint = res1.longitude
             router.ypoint = res1.latitude
-            sessionStorage.setItem('router', router)
+            sessionStorage.setItem('router', JSON.stringify(router))
           })
 
         }
-      } catch (error) {
-      }
+      // } catch (error) {
+      // }
     }
 
   }

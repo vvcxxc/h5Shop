@@ -107,9 +107,9 @@ export default class Index extends Component<any> {
   handleChange = (type) => {
     console.log(2,type, 'type change')
     if (type == 1) {
-      this.setState({ is_marketing: true })
+      this.setState({ is_marketing: true, flag: true  })
     } else {
-      this.setState({ is_marketing: false })
+      this.setState({ is_marketing: false, flag: true  })
     }
   }
 
