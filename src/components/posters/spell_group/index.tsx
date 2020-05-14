@@ -12,6 +12,7 @@ interface Props {
 var IMAGEURL
 // 拼团海报
 export default class Poster extends Component<Props> {
+
   state = {
     imgurl: '',
     show: false,
@@ -28,33 +29,63 @@ export default class Poster extends Component<Props> {
       store_address: '',
       link: '',
       wx_img: '',
-      gift:''
+      gift: ''
     }
   }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.state.show) {
-      Taro.showLoading({ title: 'loading', mask: true });
-      setTimeout(() => {
-        Taro.hideLoading()
-        this.showMyPoster();
-      }, 1000);
-      this.setState({ show: true})
+
+      this.setState({show: true},()=>{
+        Taro.showLoading({ title: 'loading', mask: true });
+        setTimeout(() => {
+          Taro.hideLoading()
+          this.showMyPoster();
+        }, 1000);
+      })
+
+
     }
   }
 
+
+
+
   showMyPoster = () => {
+    console.log('触发海报')
     let dom = document.getElementById('spell_group')
+    // let dom = document.querySelector('#spell_group')
+    // if(dom){
+    //   console.log(32323)
+    //   html2canvas(dom, {                                //canvas截图生成图片
+    //     height: dom.offsetHeight,
+    //     width: dom.offsetWidth,
+    //     allowTaint: false,
+    //     useCORS: true,
+    //   }).then((res: any) => {
+
+    //     let imgurl = res.toDataURL('image/jpeg');
+    //     console.log(res, 'res')
+
+    //     this.setState({ imgurl })
+    //   }).catch((err: any) => {
+    //     console.log(err, 'eee')
+    //     Taro.showLoading({ title: 'loading', mask: true });
+    //     this.showMyPoster()
+    //   })
+    // }
     dom && html2canvas(dom, {                                //canvas截图生成图片
       height: dom.offsetHeight,
       width: dom.offsetWidth,
       allowTaint: false,
       useCORS: true,
     }).then((res: any) => {
+
       let imgurl = res.toDataURL('image/jpeg');
-      Taro.hideLoading()
+      console.log(res, 'res')
+
       this.setState({ imgurl })
     }).catch((err: any) => {
+      console.log(err, 'eee')
       Taro.showLoading({ title: 'loading', mask: true });
       this.showMyPoster()
     })
@@ -70,11 +101,12 @@ export default class Poster extends Component<Props> {
   }
 
   noAllow = (e: any) => {
+    console.log(2222)
     e.stopPropagation();
   }
 
   render() {
-    const { list, show} = this.props 
+    const { list, show } = this.props
     const dom = <View className="spell-group-poster" id="spell_group" onClick={this.closePoster}>
       <Image className="title-img" src={require('@/assets/poster_head.png')} />
       <View className="spell-group-main">
