@@ -4,6 +4,7 @@ import './index.styl';
 import { data, tabList } from './data'
 import RecommendBox from '../recommendBox'
 import CouponBox from '../couponBox'
+import request from '@/services/request';
 import { getChannelInfo, getTabList } from '../../service'
 export default class MarketingIndex extends Component<any> {
   config: Config = {
@@ -25,6 +26,7 @@ export default class MarketingIndex extends Component<any> {
   }
   componentDidMount() {
     console.log(3423423)
+    this.requestLocation();
     let router = JSON.parse(sessionStorage.getItem('router'))
     if (router) {
       this.setState({ city_name: router.city_name })
@@ -67,6 +69,14 @@ export default class MarketingIndex extends Component<any> {
   showSelectCity = () => {
     Taro.removeStorageSync('is_one')
     Taro.navigateTo({ url: '/business-pages/select-city/index' });
+  }
+
+   // 获取所有城市列表
+   requestLocation = () => {
+    request({ url: 'v3/district', data: { model_type: '2' } })
+      .then((res: any) => {
+        Taro.setStorage({ key: 'allCity', data: res.data.city_list })
+      })
   }
 
   // 跳转 搜索商家列表页面
