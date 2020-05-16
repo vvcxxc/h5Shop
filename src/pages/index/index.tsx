@@ -5,6 +5,7 @@ import { getCityName } from './service'
 import { getLocation } from '@/utils/getInfo'
 import OldIndex from './components/oldIndex'
 import MarketingIndex from './components/marketingIndex'
+import request from '@/services/request'
 @connect(
   state => ({
     serchName: state.search.get('serchName'),
@@ -60,13 +61,34 @@ export default class Index extends Component<any> {
     let router = JSON.parse(sessionStorage.getItem('router')) || {}
     console.log(router)
     if(router.city_name){
-      console.log('3333')
-      if(router.type_index_id){
-        console.log(router.type_index_id,'router.type_index_id')
-        this.setState({ is_marketing: true, flag: true })
-      }else {
-        this.setState({ is_marketing: false, flag: true })
-      }
+
+      request({ url: 'v3/city_info/' + router.city_id }).then((res: any) => {
+        if (res.code == 200 && router.type_index_id != res.data.type_index_id) {
+          let type_index_id = res.data.type_index_id
+          router.type_index_id = type_index_id
+          if (router.type_index_id >= 1) {
+            this.setState({ is_marketing: true, flag: true })
+          } else {
+            this.setState({ is_marketing: false, flag: true })
+          }
+          sessionStorage.setItem('router',JSON.stringify(router))
+        } else {
+          if (router.type_index_id >= 1) {
+            console.log('触发3323')
+            this.setState({ is_marketing: true, flag: true })
+          } else {
+            this.setState({ is_marketing: false, flag: true })
+          }
+        }
+      }).catch(() => {
+        if (router.type_index_id >= 1) {
+          console.log('触发3313')
+          this.setState({ is_marketing: true, flag: true })
+        } else {
+          this.setState({ is_marketing: false, flag: true })
+        }
+      })
+
     }else {
       console.log('4444')
       getLocation().then(res => {
@@ -86,6 +108,8 @@ export default class Index extends Component<any> {
             }
           sessionStorage.setItem('router',JSON.stringify(router))
         })
+      }).catch(()=>{
+        this.setState({ is_marketing: false, flag: true })
       })
     }
   }
