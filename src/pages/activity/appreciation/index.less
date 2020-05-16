@@ -29,7 +29,8 @@
           height: 100vw;
         }
       }
-      img{
+
+      img {
         height: 100%;
       }
     }
@@ -62,161 +63,161 @@
 
 
   .collect-box {
-      width: 58px;
-      height: 58px;
-      border-radius: 29px;
-      background: rgba(0, 0, 0, .5);
-      position: fixed;
-      z-index: 2;
-      right: 120px;
-      top: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 29px;
+    background: rgba(0, 0, 0, .5);
+    position: fixed;
+    z-index: 2;
+    right: 120px;
+    top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-      .collect-img {
-          width: 43px;
-          height: 40px;
-      }
+    .collect-img {
+      width: 43px;
+      height: 40px;
+    }
   }
 
   .share-box {
-      width: 58px;
-      height: 58px;
-      border-radius: 29px;
-      background: rgba(0, 0, 0, .5);
-      position: fixed;
-      z-index: 2;
-      right: 42px;
-      top: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 29px;
+    background: rgba(0, 0, 0, .5);
+    position: fixed;
+    z-index: 2;
+    right: 42px;
+    top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-      .share-img {
-          width: 42px;
-          height: 39px;
-      }
+    .share-img {
+      width: 42px;
+      height: 39px;
+    }
   }
 
   .appre-info-content {
-      width: 100vw;
+    width: 100vw;
+    height: auto;
+    padding: 30px 30px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+
+    .appre-info-title {
+      width: 100%;
       height: auto;
-      padding: 30px 30px;
-      box-sizing: border-box;
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-      overflow: hidden;
-      background: #fff;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
       justify-content: flex-start;
-      margin-bottom: 15px;
+      margin-bottom: 30px;
+      position: relative;
 
-      .appre-info-title {
-          width: 100%;
-          height: auto;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-start;
-          margin-bottom: 30px;
-          position: relative;
-
-          .appre-info-title-label {
-              width: 76px;
-              height: 29px;
-              background: rgba(255, 68, 68, 1);
-              border-radius: 6px;
-              font-size: 20px;
-              color: rgba(255, 255, 255, 1);
-              line-height: 1;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-right: 12px;
-              position: absolute;
-              top: 21px;
-              left: 0;
-              transform: translate(0, -50%);
-          }
-
-          .appre-info-title-text {
-              width: 100%;
-              height: auto;
-              text-indent: 90px;
-              min-height: 42px;
-              max-height: 84px;
-              font-size: 36px;
-              line-height: 42px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              /* autoprefixer: off */
-              -webkit-box-orient: vertical;
-              /* autoprefixer: on */
-
-          }
+      .appre-info-title-label {
+        width: 76px;
+        height: 29px;
+        background: rgba(255, 68, 68, 1);
+        border-radius: 6px;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 1);
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        position: absolute;
+        top: 21px;
+        left: 0;
+        transform: translate(0, -50%);
       }
 
-      .appre-info-price {
-          width: 100%;
-          height: 36px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
+      .appre-info-title-text {
+        width: 100%;
+        height: auto;
+        text-indent: 90px;
+        min-height: 42px;
+        max-height: 84px;
+        font-size: 36px;
+        line-height: 42px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        /* autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
 
-          .appre-price-info {
-              display: flex;
-              flex-direction: row;
-              align-items: flex-end;
-              justify-content: flex-start;
-
-              .appre-price-info-text {
-                  font-size: 22px;
-                  color: rgba(255, 68, 68, 1);
-                  line-height: 1;
-              }
-
-              .appre-price-info-new {
-                  font-size: 36px;
-                  color: rgba(255, 68, 68, 1);
-                  line-height: 1;
-                  font-weight: bold;
-              }
-
-              .appre-price-info-old {
-                  font-size: 22px;
-                  text-decoration: line-through;
-                  color: rgba(153, 153, 153, 1);
-                  line-height: 1;
-                  margin-left: 10px;
-              }
-          }
-
-          .appre-price-discounts {
-              width: 240px;
-              height: 40px;
-              background: rgba(255, 68, 68, 1);
-              border-radius: 18px;
-              font-size: 24px;
-              font-weight: normal;
-              line-height: 1;
-              color: rgba(254, 254, 254, 1);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-          }
       }
+    }
+
+    .appre-info-price {
+      width: 100%;
+      height: 36px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .appre-price-info {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-start;
+
+        .appre-price-info-text {
+          font-size: 22px;
+          color: rgba(255, 68, 68, 1);
+          line-height: 1;
+        }
+
+        .appre-price-info-new {
+          font-size: 36px;
+          color: rgba(255, 68, 68, 1);
+          line-height: 1;
+          font-weight: bold;
+        }
+
+        .appre-price-info-old {
+          font-size: 22px;
+          text-decoration: line-through;
+          color: rgba(153, 153, 153, 1);
+          line-height: 1;
+          margin-left: 10px;
+        }
+      }
+
+      .appre-price-discounts {
+        width: 240px;
+        height: 40px;
+        background: rgba(255, 68, 68, 1);
+        border-radius: 18px;
+        font-size: 24px;
+        font-weight: normal;
+        line-height: 1;
+        color: rgba(254, 254, 254, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 
   .appre-banner-nav {
-      width: 100vw;
-      height: 10.6vw;
-      margin-bottom: 15px;
-      display: block;
+    width: 100vw;
+    height: 10.6vw;
+    margin-bottom: 15px;
+    display: block;
   }
 
 
@@ -419,6 +420,14 @@
     border: 15px;
     margin-bottom: 15px;
     overflow: hidden;
+  }
+
+  .gift-item-content {
+    height: auto;
+    width: 100%;
+    background: #fff;
+    padding-bottom: 30px;
+    margin-bottom: 15px;
   }
 
   .appre-gift {

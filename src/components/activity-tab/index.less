@@ -1,0 +1,61 @@
+.activity-tab {
+    width: 100vw;
+    overflow-x: scroll;
+    margin-bottom: 2px;
+
+    .activity-tab-area {
+        white-space: nowrap; // 这个必须有
+        height: 85px;
+        line-height: 50px;
+        font-size: 16px;
+        overflow-y: hidden; // 这个必须有
+        background: rgba(255, 255, 255, 1);
+        border-radius: 16px 16px 0px 0px;
+
+        .activity-tab-item {
+            padding: 0 25px;
+            height: 85px;
+            display: inline-block;
+
+            .tab-word {
+                height: 85px;
+                width: 100%;
+                line-height: 85px;
+                font-size: 26px;
+                font-family: PingFang SC;
+                font-weight: 500;
+                color: rgba(0, 0, 0, 1);
+                line-height: 1;
+
+            }
+        }
+
+        .activity-tab-item-select {
+            padding: 0 25px;
+            height: 85px;
+            display: inline-block;
+            position: relative;
+
+            .tab-word-select {
+                height: 85px;
+                width: 100%;
+                line-height: 85px;
+                font-size: 26px;
+                font-family: PingFang SC;
+                font-weight: bold;
+                color: rgba(255, 68, 68, 1);
+            }
+
+            .tab-word-border {
+                width: 25px;
+                height: 8px;
+                background: rgba(255, 68, 68, 1);
+                border-radius: 4px;
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+        }
+    }
+}

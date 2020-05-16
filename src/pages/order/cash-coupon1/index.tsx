@@ -54,7 +54,7 @@ export default class CashCoupon extends Component<Props> {
       <View
         className="cash-coupon flex active"
         style={{
-          backgroundImage: this.props.bg_img_type == 0 ? `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/D3Ws4B7kH8PwEsDdJiDtzaNtZdtWcZBr.png")` : `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/by5b6PKpQ5QYREYfdMZhSPD5rBYRefyR.png")`
+          backgroundImage: this.props.bg_img_type == 0 ? `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/ZmiFY6akRrib7FBizbeFMRp8eFhMwHpA.png")` : `url("http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/phXRJ8YpsPcNwRYe5JCZStNfPHpJWBf8.png")`
         }}
         onClick={this.handleClick.bind(this, this.props._logid)}
       >

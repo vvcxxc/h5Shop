@@ -55,6 +55,11 @@ export default class Order extends Component {
       url: 'v3/user/home_index'
     }).then((res: any) => {
       if (res.data.mobile) {
+        let current;
+        if (order_type && order_type == '已完成') { current = 1 }
+        else if (order_type && order_type == '已过期') { current = 2 }
+        else if (order_type && order_type == '已退款') { current = 3 }
+        else { current = 0 }
         this.setState({
           page1: 1,
           page2: 1,
@@ -69,11 +74,12 @@ export default class Order extends Component {
           lengthbull2: true,
           lengthbull3: true,
           lengthbull4: true,
+          current
         }, () => {
-          if (order_type && order_type == '已完成') { that.setState({ current: 1 }, () => { that.getData2() }) }
-          else if (order_type && order_type == '已过期') { that.setState({ current: 2 }, () => { that.getData3() }) }
-          else if (order_type && order_type == '已退款') { that.setState({ current: 3 }, () => { that.getData4() }) }
-          else { that.setState({ current: 0 }, () => { that.getData1() }) }
+          if (order_type && order_type == '已完成') { that.getData2() }
+          else if (order_type && order_type == '已过期') { that.getData3() }
+          else if (order_type && order_type == '已退款') { that.getData4() }
+          else { that.getData1() }
         })
         return
       } else {
@@ -146,6 +152,7 @@ export default class Order extends Component {
   }
 
   getData1() {
+    console.log(323232322)
     if (this.state.lengthbull1) {
       Taro.showLoading({
         title: "loading",

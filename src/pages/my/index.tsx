@@ -57,7 +57,8 @@ export default class AppreActivity extends Component<Props> {
             {
                 des: '我的邮寄礼品',
                 img: 'http://tmwl.oss-cn-shenzhen.aliyuncs.com/front/en6B6t6aYzMPTwpFTWYxE378ykzasSeC.png',
-                path: "/activity-pages/my-welfare/pages/gift/welfare.gift"
+                // path: "/activity-pages/my-welfare/pages/gift/welfare.gift"
+                path: "/activity-pages/my-gift/index"
             },
             {
                 des: '我的到店奖品',

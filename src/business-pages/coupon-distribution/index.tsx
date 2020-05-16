@@ -10,7 +10,7 @@ import { accAdd } from '@/components/acc-num'
 
 export default class distributionDetail extends Component {
     config = {
-        navigationBarTitleText: "兑换券购买订单页",
+        navigationBarTitleText: "优惠券购买订单页",
         enablePullDownRefresh: false
     };
     state = {
@@ -58,6 +58,7 @@ export default class distributionDetail extends Component {
         tipsMessage: ''
     }
     componentDidShow() {
+        // Taro.setNavigationBarTitle({ title: this.$router.params.couponType == '1' ? '现金券购买' : '兑换券购买' })
         this.setState({ contentboxShow: false })
         let that = this;
         Taro.pageScrollTo({ scrollTop: 0 });

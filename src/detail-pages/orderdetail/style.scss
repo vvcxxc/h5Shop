@@ -171,6 +171,119 @@
             }
         }
 
+        .gift-info-area {
+            font-size: 26px;
+            color: rgba(0, 0, 0, 1);
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 32px;
+
+            .gift-img {
+                width: 114px;
+                height: 114px;
+                border-radius: 16px;
+                overflow: hidden;
+                margin-right: 20px;
+                position: relative;
+
+                .gift-img-img {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+
+                .gift-img-icon {
+                    width: 34px;
+                    height: 34px;
+                    position: absolute;
+                    bottom: 6px;
+                    right: 6px;
+                }
+            }
+
+            .gift-info {
+                height: auto;
+                width: calc(100% - 140px);
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+
+                .gift-title {
+                    width: 100%;
+                    height: auto;
+                    min-height: 33px;
+                    max-height: 66px;
+                    font-size: 26px;
+                    line-height: 33px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    /* autoprefixer: off */
+                    -webkit-box-orient: vertical;
+                    /* autoprefixer: on */
+                }
+
+                .gift-info-content {
+                    width: 100%;
+                    height: 24px;
+                    font-size: 24px;
+                    font-family: PingFang SC;
+                    font-weight: 500;
+                    color: rgba(153, 153, 153, 1);
+                    line-height: 1;
+                    margin-top: 15px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .gift-give-type,
+                    .gift-give-type2 {
+                        margin-right: 30px;
+                        width: 80px;
+                        height: 23px;
+                        text-align: right;
+                        font-size: 24px;
+                        font-family: PingFang SC;
+                        font-weight: 500;
+                        color: rgba(255, 68, 68, 1);
+                        line-height: 1;
+                    }
+
+                    .gift-give-type2 {
+                        color: #FF9B11;
+                    }
+                }
+
+                .gift-labels {
+                    display: flex;
+                    flex-direction: row;
+                    margin-top: 15px;
+
+                    .gift-label-item {
+                        padding: 0 12px;
+                        height: 36px;
+                        background: #ffecec;
+                        border-radius: 18px;
+                        font-size: 20px;
+                        color: rgba(255, 68, 68, 1);
+                        line-height: 36px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+        }
+
+        .gift-info-area:last-child {
+            margin-bottom: 0;
+        }
 
     }
 

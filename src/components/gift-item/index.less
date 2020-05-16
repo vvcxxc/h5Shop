@@ -1,0 +1,103 @@
+.gift_info {
+    width: 100%;
+    height: auto;
+
+    .gift_msg_area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 30px 0;
+        box-sizing: border-box;
+        background-color: #fff;
+
+        .gift_msg {
+            display: flex;
+
+            .gift_img {
+                width: 160px;
+                height: 160px;
+                border-radius: 16px;
+            }
+
+            .gift_detail {
+                margin-left: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .gift_detail_info {
+                    .gift_title {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 10px;
+
+                        .gift_type {
+                            width: 120px;
+                            height: 29px;
+                            margin-right: 10px;
+                            background: rgba(255, 68, 68, 1);
+                            border-radius: 6px;
+                            line-height: 29px;
+                            text-align: center;
+
+                            .text {
+                                font-size: 20px;
+                                color: rgba(255, 255, 255, 1);
+                            }
+                        }
+
+                        .gift_cash {
+                            color: #000;
+                            font-size: 26px;
+                            font-weight: bold;
+                            width: 250px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                    }
+
+                    .gift_desc {
+                        width: 380px;
+                        height: 26px;
+                        color: #333;
+                        font-size: 24px;
+                        line-height: 1;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+
+                .gift_money {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: baseline;
+                    justify-content: flex-start;
+
+                    .gift_new_money_icon {
+                        font-size: 20px;
+                        color: #FF4444;
+                    }
+
+                    .gift_new_money {
+                        font-size: 32px;
+                        color: #FF4444;
+                        font-weight: bold;
+                    }
+
+                }
+            }
+        }
+
+        .gift_btn {
+            .text {
+                border-radius: 40px;
+                padding: 10px 30px;
+                color: #fff;
+                font-size: 26px;
+                background: linear-gradient(#FF6744, #FF4444);
+            }
+        }
+    }
+}

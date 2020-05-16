@@ -130,7 +130,8 @@ class App extends Component {
           'personal/personalInformation/index',
           'personal/phoneInformation/index',
           'activity-list/index',
-          'group-distribution/index'
+          'group-distribution/index',
+          'my-gift/index',
         ]
       }
     ],

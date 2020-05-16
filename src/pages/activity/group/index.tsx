@@ -2,6 +2,8 @@ import Taro, { Component } from "@tarojs/taro";
 import { AtIcon, AtToast, AtTabs, AtTabsPane } from "taro-ui";
 import { View, Text, Image, ScrollView, Button, Swiper, SwiperItem } from "@tarojs/components";
 import "./index.less";
+import ActivityTab from '@/components/activity-tab';
+import GiftItem from '@/components/gift-item';
 import { getBrowserType } from "@/utils/common";
 import { getGroupYouhuiInfo, getGroupbuyings, getShareSign, toWxPay, getUserYouhuiGroupId } from "./service";
 import { getLocation } from "@/utils/getInfo";
@@ -29,6 +31,10 @@ export default class GroupActivity extends Component {
 
 
   state = {
+    tabCurrent: 0,
+    tabContent: [[], [], [], []],
+    tabList: [],
+    tabShow: false,
     imgZoomSrc: '',
     imgZoom: false,
     //允许参加活动
@@ -45,6 +51,7 @@ export default class GroupActivity extends Component {
     showMoreRules: false,
     showMoreImages: false,
     data: {
+      is_gift: 0,
       invitation_user_id: '',
       share_text: '',
       activity_begin_time: "",
@@ -124,10 +131,13 @@ export default class GroupActivity extends Component {
     let arrs = Taro.getCurrentPages()
     if (arrs.length <= 1) { this.setState({ isFromShare: true }) }
     Taro.showLoading({ title: 'loading' })
-    getLocation().then((res: any) => {
-      this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
-    }).catch((err) => {
-      this.getGroupInfo({ group_info_id: this.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
+    let that = this;
+    this.setState({ tabShow: false }, () => {
+      getLocation().then((res: any) => {
+        that.getGroupInfo({ group_info_id: that.$router.params.id, is_xcx: 0, ypoint: res.latitude || '', xpoint: res.longitude || '' })
+      }).catch((err) => {
+        that.getGroupInfo({ group_info_id: that.$router.params.id, is_xcx: 0, ypoint: '', xpoint: '' })
+      })
     })
   }
 
@@ -154,8 +164,27 @@ export default class GroupActivity extends Component {
           console.log(new Date(res.data.activity_end_time).getTime() + 86399000, '333')
           res.data.activity_time_status == 3 ? this.setState({ allowGroup: '已结束' }) : null
           res.data.activity_time_status == 1 ? this.setState({ allowGroup: '暂未开始' }) : null
-
-          that.setState({ data: res.data, isPostage }, () => {
+          let bindingGift: any = res.data.bindingGift;
+          let tabList: any = [];
+          let tabContent: any = [[], [], [], []];
+          let defaultCurrent = 4;
+          if (res.data.is_gift && bindingGift && bindingGift.length) {
+            for (let i in bindingGift) {
+              tabContent[Number(bindingGift[i].give_stage) - 1].push(bindingGift[i])
+            }
+            if (tabContent[0].length) { tabList.push({ index: 0, key: '开团有礼' }) }
+            if (tabContent[1].length) { tabList.push({ index: 1, key: '参团有礼' }) }
+            if (tabContent[2].length) { tabList.push({ index: 2, key: '成团有礼' }) }
+            if (tabContent[3].length) { tabList.push({ index: 3, key: '成交有礼' }) }
+            tabList.push({ index: 4, key: '商品详情' })
+            for (let i in tabContent) {
+              if (tabContent[i].length > 0) {
+                defaultCurrent = Number(i);
+                break;
+              }
+            }
+          }
+          that.setState({ data: res.data, isPostage, tabContent, tabList, tabCurrent: defaultCurrent, tabShow: true }, () => {
             this.toShare();
           });
         } else {
@@ -234,7 +263,7 @@ export default class GroupActivity extends Component {
       this.setState({ showBounced: true })
       return
     }
-    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id || this.state.data.is_gift) {
       if (this.$router.params.type == '5') {
         //列表页或商家页进入拼团，路由params带过来的为活动id,id为活动id
         Taro.hideLoading();
@@ -263,7 +292,7 @@ export default class GroupActivity extends Component {
       this.setState({ showBounced: true })
       return
     }
-    if (this.state.data.gift_id || this.state.data.supplier_delivery_id) {
+    if (this.state.data.gift_id || this.state.data.supplier_delivery_id || this.state.data.is_gift) {
       Taro.hideLoading();
       Taro.navigateTo({
         url: '/activity-pages/group-distribution/index?activityType=55&id=' + this.$router.params.id + '&groupId=' + _id + '&storeName=' + encodeURIComponent(this.state.data.name)
@@ -612,9 +641,13 @@ export default class GroupActivity extends Component {
     }
   }
 
+  changeTab = (item: any) => {
+    this.setState({ tabCurrent: item })
+  }
+
   render() {
     const { description, delivery_service_info, images, brief } = this.state.data;
-    const { showBounced, showPoster, posterList } = this.state;
+    const { showBounced, showPoster, posterList, tabCurrent, tabContent } = this.state;
     // console.log(posterList,'ddd')
     return (
       <View className="group-activity-detail">
@@ -820,7 +853,27 @@ export default class GroupActivity extends Component {
           />
         </View>
 
-        {this.state.data.gift ?
+        {
+          this.state.tabList.length > 1 && this.state.tabShow ? <ActivityTab tabList={this.state.tabList} onAtion={this.changeTab} /> : null
+        }
+        {
+          tabCurrent == 0 || tabCurrent == 1 || tabCurrent == 2 || tabCurrent == 3 ?
+            <View className='gift-item-content'  >
+              {
+                tabContent[tabCurrent].map((item: any, index: any) => {
+                  return (
+                    <View key={item.gift_id}>
+                      <GiftItem label={'平台礼品'} itemImg={item.gift_image} title={item.gift_name} desc={item.use_description} rules={item.rule_description} price={item.original_money} btn={item.each_num} />
+                    </View>
+                  )
+                })
+              }
+            </View>
+            : null
+        }
+
+        {/* {
+          tabCurrent == 4 && this.state.data.gift ?
           <View className="group-gift">
             <View className="group-title-box">
               <View className='group-title-left-box' >
@@ -838,69 +891,71 @@ export default class GroupActivity extends Component {
             </View>
             <Image className="group-gift-img" src={this.state.data.gift.cover_image} mode={'widthFix'} />
           </View> : null
+        } */}
+        {
+          tabCurrent == 4 ?
+            <View className="group-rules">
+              <View className="group-title-box">
+                <View className='group-title-left'></View>
+                <View className='group-title'>使用说明</View>
+              </View>
+              <View className="group-rules-item" >
+                <View className="rules-key">拼团人数：</View>
+                <View className="rules-words">{this.state.data.number}人成团</View>
+              </View>
+              <View className="group-rules-item" >
+                <View className="rules-key"> 拼团时限：</View>
+                <View className="rules-words">需{this.state.data.team_set_end_time}时内成团</View>
+              </View>
+              {
+                delivery_service_info.id ? <View className="group-rules-list-margin">
+                  <View className="group-rules-list-title" >配送服务：</View>
+                  <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
+                  <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
+                  <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
+                  {/* <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View> */}
+                </View> : null
+              }
+              {
+                description && description.length && !this.state.showMoreRules ? <View>
+                  <View className="group-rules-list-title" >使用规则：</View>
+                  {
+                    description.length > 0 ? <View className="group-rules-list-text" >-{description[0]}</View> : null
+                  }
+                  {
+                    description.length > 1 ? <View className="group-rules-list-text" >-{description[1]}</View> : null
+                  }
+                  {
+                    description.length > 2 ? <View className="group-rules-list-text" >-{description[2]}</View> : null
+                  }
+                  {
+                    description.length > 3 ? <View className="group-rules-list-text" >-{description[3]}</View> : null
+                  }
+                </View> : null
+              }
+              {
+                description && description.length && description.length > 4 && this.state.showMoreRules ? <View>
+                  <View className="group-rules-list-title" >使用规则：</View>
+                  {
+                    description.map((item) => {
+                      return (
+                        <View className="group-rules-list-text" >-{item}</View>
+                      )
+                    })
+                  }
+                </View> : null
+              }
+              {
+                description && description.length && description.length > 4 && !this.state.showMoreRules ? <View className="group-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
+                  <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                  <View className="group-more-text" >查看更多</View>
+                </View> : null
+              }
+            </View> : null
         }
 
-        <View className="group-rules">
-          <View className="group-title-box">
-            <View className='group-title-left'></View>
-            <View className='group-title'>使用说明</View>
-          </View>
-          <View className="group-rules-item" >
-            <View className="rules-key">拼团人数：</View>
-            <View className="rules-words">{this.state.data.number}人成团</View>
-          </View>
-          <View className="group-rules-item" >
-            <View className="rules-key"> 拼团时限：</View>
-            <View className="rules-words">需{this.state.data.team_set_end_time}时内成团</View>
-          </View>
-          {
-            delivery_service_info.id ? <View className="group-rules-list-margin">
-              <View className="group-rules-list-title" >配送服务：</View>
-              <View className="group-rules-list-text" >-配送费用：{delivery_service_info.delivery_service_money}元</View>
-              <View className="group-rules-list-text" >-配送范围：{delivery_service_info.delivery_radius_m}km</View>
-              <View className="group-rules-list-text" >-配送时间：{delivery_service_info.delivery_start_time + '-' + delivery_service_info.delivery_end_time}</View>
-              {/* <View className="group-rules-list-text" >-联系电话：{this.state.data.tel}</View> */}
-            </View> : null
-          }
-          {
-            description && description.length && !this.state.showMoreRules ? <View>
-              <View className="group-rules-list-title" >使用规则：</View>
-              {
-                description.length > 0 ? <View className="group-rules-list-text" >-{description[0]}</View> : null
-              }
-              {
-                description.length > 1 ? <View className="group-rules-list-text" >-{description[1]}</View> : null
-              }
-              {
-                description.length > 2 ? <View className="group-rules-list-text" >-{description[2]}</View> : null
-              }
-              {
-                description.length > 3 ? <View className="group-rules-list-text" >-{description[3]}</View> : null
-              }
-            </View> : null
-          }
-          {
-            description && description.length && description.length > 4 && this.state.showMoreRules ? <View>
-              <View className="group-rules-list-title" >使用规则：</View>
-              {
-                description.map((item) => {
-                  return (
-                    <View className="group-rules-list-text" >-{item}</View>
-                  )
-                })
-              }
-            </View> : null
-          }
-          {
-            description && description.length && description.length > 4 && !this.state.showMoreRules ? <View className="group-more" onClick={() => { this.setState({ showMoreRules: true }) }} >
-              <Image className="group-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
-              <View className="group-more-text" >查看更多</View>
-            </View> : null
-          }
-        </View>
-
         {
-          brief.length ? <View className="img-list-box">
+          tabCurrent == 4 && brief.length ? <View className="img-list-box">
             <View className="img-title-box">
               <View className='img-title-left'></View>
               <View className='img-title'>图文详情</View>

@@ -1,0 +1,432 @@
+.my-gift {
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background: rgba(243, 244, 248, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 85px;
+
+    .gift-tab-area {
+        width: 100vw;
+        height: 85px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 1);
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        left: 0;
+
+        .gift-tab-item {
+            width: 25%;
+            height: 85px;
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .tab-word {
+                height: 85px;
+                width: 100%;
+                text-align: center;
+                line-height: 85px;
+                font-size: 26px;
+                font-family: PingFang SC;
+                color: rgba(0, 0, 0, 1);
+            }
+        }
+
+        .gift-tab-item-select {
+            width: 25%;
+            height: 85px;
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            .tab-word-select {
+                height: 85px;
+                width: 100%;
+                text-align: center;
+                line-height: 85px;
+                font-size: 26px;
+                font-family: PingFang SC;
+                font-weight: bold;
+                color: rgba(255, 68, 68, 1);
+            }
+
+            .tab-word-border {
+                width: 25px;
+                height: 8px;
+                background: rgba(255, 68, 68, 1);
+                border-radius: 4px;
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+        }
+    }
+
+    .fan-nodata-box {
+        height: calc(100vh - 85px);
+        width: 100vw;
+        background: #fff;
+
+        .fan-nodata {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .fan-nodata-img {
+                width: 263px;
+                height: 141px;
+            }
+
+            .fan-nodata-info {
+                width: 400px;
+                height: 24px;
+                font-size: 24px;
+                text-align: center;
+                font-family: PingFang SC;
+                font-weight: 500;
+                color: rgba(0, 0, 0, 1);
+                line-height: 1;
+                margin-top: 40px;
+            }
+        }
+    }
+
+    .gift-store {
+        width: calc(100% - 46px);
+        background: rgba(255, 255, 255, 1);
+        border-radius: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 25px 30px;
+        box-sizing: border-box;
+        margin-top: 22px;
+        position: relative;
+
+        .gift-member-left {
+            width: 114px;
+            height: 114px;
+            border-radius: 16px;
+            margin-right: 22px;
+        }
+
+        .gift-member-right {
+            width: calc(100% - 100px);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+
+            .gift-member-title {
+                height: 26px;
+                width: 340px;
+                font-size: 26px;
+                font-family: PingFang SC;
+                font-weight: bold;
+                color: rgba(0, 0, 0, 1);
+                line-height: 1;
+                margin-bottom: 10px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .gift-member-method,
+            .gift-member-time {
+                height: 24px;
+                width: 340px;
+                font-size: 24px;
+                font-family: PingFang SC;
+                font-weight: 500;
+                color: rgba(153, 153, 153, 1);
+                line-height: 1;
+                margin-bottom: 15px;
+            }
+
+            .gift-member-time {
+                margin-bottom: 0;
+            }
+
+
+
+        }
+
+        .gift-member-type {
+            position: absolute;
+            right: 30px;
+            top: 25px;
+            width: 80px;
+            height: 26px;
+            text-align: right;
+            font-size: 26px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            line-height: 21px;
+        }
+
+        .postColor1 {
+            color: rgba(255, 155, 17, 1);
+        }
+
+        .postColor2 {
+            color: rgba(25, 106, 255, 1);
+        }
+
+        .postColor3 {
+            color: rgba(255, 68, 68, 1);
+        }
+
+        .gift-member-btn1,
+        .gift-member-btn2 {
+            position: absolute;
+            right: 30px;
+            bottom: 25px;
+            width: 169px;
+            height: 50px;
+            border: 1px solid rgba(255, 68, 68, 1);
+            border-radius: 25px;
+            font-size: 24px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: rgba(255, 68, 68, 1);
+            line-height: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gift-member-btn2 {
+            border: none;
+            background-color: rgba(255, 68, 68, 1);
+            color: #fff;
+        }
+
+    }
+
+    .getMore {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        font-size: 24px;
+        color: #ccc;
+    }
+
+    .ApeakerlogisticsContent {
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        background: rgba(0, 0, 0, .7);
+        z-index: 2;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        .ApeakerlogisticsContentBox {
+            width: calc(100% - 60px);
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            .Apeakerlogisticspages {
+                background: #fff;
+                border-radius: 22px;
+                width: 100%;
+                height: 1038px;
+                overflow: hidden;
+                box-sizing: border-box;
+                position: relative;
+
+                .ApeakerlogisticsContentBoxTop {
+                    height: 220px;
+                    width: 100%;
+                    background: linear-gradient(-52deg, rgba(255, 103, 68, 1) 0%, rgba(255, 68, 68, 1) 100%);
+                    padding: 0 0 0 35px;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    .topInfoBox-img {
+                        width: 115px;
+                        height: 115px;
+                        border: solid 2px #fff;
+                        margin-right: 20px;
+                        border-radius: 18px;
+                    }
+
+                    .InfoContent {
+                        height: auto;
+                        width: calc(100% - 140px);
+                        font-size: 24px;
+                        color: #fff;
+                        box-sizing: border-box;
+
+                        .InfoName {
+                            height: 45px;
+                            width: 100%;
+                            font-size: 26px;
+                            font-family: PingFang SC;
+                            font-weight: bold;
+                            color: rgba(255, 255, 255, 1);
+                            line-height: 1;
+                        }
+
+                        .InfoCompany,
+                        .InfoNumber {
+                            height: 24px;
+                            width: 100%;
+                            font-size: 24px;
+                            font-family: PingFang SC;
+                            font-weight: 500;
+                            color: rgba(255, 255, 255, 1);
+                            margin-bottom: 16px;
+                            line-height: 1;
+                        }
+
+                        .InfoNumber {
+                            margin-bottom: 0;
+                            position: relative;
+
+                            .InfoNumber-img {
+                                width: 13px;
+                                height: 23px;
+                                position: absolute;
+                                right: 35px;
+                                top: 50%;
+                                transform: translate(0, -50%);
+                            }
+                        }
+                    }
+
+                }
+
+                .ApeakerlogisticsContentBoxBottom {
+                    height: calc(100% - 220px);
+                    border-top: 2px solid #f0f2f5;
+                    box-sizing: border-box;
+
+                    .BottomContent {
+                        width: 100%;
+                        height: 100%;
+                        padding: 35px 30px 35px 65px;
+                        box-sizing: border-box;
+                        overflow-y: scroll;
+                        overflow-x: hidden;
+
+                        .adderessItem {
+                            width: 100%;
+                            box-sizing: border-box;
+                            position: relative;
+                            border-left: 2px solid #f3f4f8;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            padding: 0 0 45px;
+
+                            .adderessItemTime-img-area {
+                                position: absolute;
+                                top: 0;
+                                left: -19px;
+                                width: 38px;
+                                height: 38px;
+                                border-radius: 19px;
+                                background-color: #f3f4f8;
+                                z-index: 2;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                .adderessItemTime-red {
+                                    width: 38px;
+                                    height: 38px;
+                                }
+
+                                .adderessItemTime-img {
+                                    width: 24px;
+                                    height: 20px;
+                                }
+                            }
+
+                            .adderessItemTime {
+                                width: 130px;
+                                height: 100%;
+                                padding-top: 5px;
+                                padding-left: 16px;
+                                box-sizing: border-box;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+
+                                .ItemTime {
+                                    height: 25px;
+                                    font-size: 20px;
+                                    color: #999999;
+                                    line-height: 1;
+                                }
+
+                                .ItemDate {
+                                    height: 20px;
+                                    font-size: 20px;
+                                    color: #999999;
+                                    line-height: 1;
+                                }
+                            }
+
+
+                            .adderessItemMsg {
+                                width: calc(100% - 130px);
+                                line-height: 1.2;
+                            }
+                        }
+
+                        .adderessItem:last-child {
+                            border-left: none;
+                        }
+                    }
+                }
+            }
+
+            .ApeakerlogisticsIcon {
+                height: 10%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-end;
+
+                .ApeakerlogisticsIcon-img {
+                    width: 46px;
+                    height: 46px;
+                    margin-top: 30px;
+                }
+            }
+        }
+    }
+
+}

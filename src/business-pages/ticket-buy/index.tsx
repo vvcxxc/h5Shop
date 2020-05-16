@@ -2,6 +2,8 @@ import Taro, { Component } from "@tarojs/taro";
 import { AtIcon } from 'taro-ui';
 import { View, Text, Image, ScrollView, Button, Swiper, SwiperItem } from "@tarojs/components";
 import "./index.styl";
+import ActivityTab from '@/components/activity-tab';
+import GiftItem from '@/components/gift-item';
 import ApplyToTheStore from '@/components/applyToTheStore';
 import { discountCoupons } from "./service";
 import { getLocation } from "@/utils/getInfo";
@@ -27,6 +29,10 @@ export default class TicketBuy extends Component {
   };
 
   state = {
+    tabCurrent: 0,
+    tabContent: [[], []],
+    tabList: [],
+    tabShow: false,
     imgZoomSrc: '',
     imgZoom: false,
     showAll: false,
@@ -123,9 +129,11 @@ export default class TicketBuy extends Component {
      * 回首页
      */
   handleGoHome = () => {
-    Taro.switchTab({ url: '/pages/index/index', success: ()=> {
-      location.href = location.href
-    } })
+    Taro.switchTab({
+      url: '/pages/index/index', success: () => {
+        location.href = location.href
+      }
+    })
   }
 
   /**
@@ -137,13 +145,14 @@ export default class TicketBuy extends Component {
       this.setState({ isFromShare: true })
     }
     Taro.showLoading({ title: 'loading', mask: true })
-    getLocation().then((res: any) => {
-
-      this.getTicketInfo(this.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
-    }).catch(err => {
-      this.getTicketInfo(this.$router.params.id, { xpoint: '', ypoint: '' })
+    let that = this;
+    this.setState({ tabShow: false }, () => {
+      getLocation().then((res: any) => {
+        that.getTicketInfo(that.$router.params.id, { ypoint: res.latitude || '', xpoint: res.longitude || '' })
+      }).catch(err => {
+        that.getTicketInfo(that.$router.params.id, { xpoint: '', ypoint: '' })
+      })
     })
-
   }
 
   /**
@@ -152,13 +161,35 @@ export default class TicketBuy extends Component {
   getTicketInfo = (id: number | string, data: object) => {
     discountCoupons(id, data)
       .then((res: any) => {
-        Taro.hideLoading()
+        Taro.hideLoading();
+        let bindingGift: any = res.data.info.coupon.bindingGift;
+        let tabList: any = [];
+        let tabContent: any = [[], []];
+        let defaultCurrent = 2;
+        if (res.data.info.coupon.is_gift && bindingGift && bindingGift.length) {
+          for (let i in bindingGift) {
+            tabContent[Number(bindingGift[i].give_stage) - 1].push(bindingGift[i])
+          }
+          if (tabContent[0].length) { tabList.push({ index: 0, key: '购买有礼' }) }
+          if (tabContent[1].length) { tabList.push({ index: 1, key: '成交有礼' }) }
+          tabList.push({ index: 2, key: '商品详情' })
+          for (let i in tabContent) {
+            if (tabContent[i].length > 0) {
+              defaultCurrent = Number(i);
+              break;
+            }
+          }
+        }
         this.setState({
           coupon: res.data.info.coupon,
           store: res.data.info.store,
           goods_album: res.data.info.goods_album,
-          recommend: res.data.recommend.data
-        },()=>{
+          recommend: res.data.recommend.data,
+          tabContent,
+          tabList,
+          tabCurrent: defaultCurrent,
+          tabShow: true
+        }, () => {
           this.toShare()
         })
       }).catch(err => {
@@ -182,7 +213,7 @@ export default class TicketBuy extends Component {
       this.setState({ tipsMessage: '本优惠已达购买上限，无法购买。' })
     } else {
       Taro.navigateTo({
-        url: '../../business-pages/confirm-order/index?id=' + id
+        url: '../../business-pages/confirm-order/index?id=' + id + '&couponType=1'
       })
     }
   }
@@ -269,9 +300,13 @@ export default class TicketBuy extends Component {
     }
   }
 
+  changeTab = (item: any) => {
+    this.setState({ tabCurrent: item })
+  }
+
   render() {
     const { description, brief } = this.state.coupon;
-    const { showPoster, posterList } = this.state
+    const { showPoster, posterList, tabCurrent, tabContent } = this.state
     return (
       <View className="appre-activity-detail">
         {/* 分享组件 */}
@@ -382,80 +417,94 @@ export default class TicketBuy extends Component {
             meter={this.state.store.distance}
           />
         </View>
-        <View className="appre-rules">
-          <View className="appre-title-box">
-            <View className='appre-title-left'></View>
-            <View className='appre-title'>使用说明</View>
-          </View>
 
-          <View className="appre-rules-item" >
-            <View className="rules-key">使用方式：</View>
-            <View className="rules-words">扫码支付时抵用</View>
-          </View>
-
-          <View className="appre-rules-item" >
-            <View className="rules-key"> 使用门槛：</View>
-            <View className="rules-words">满￥{this.state.coupon.total_fee}可用</View>
-          </View>
-          <View className="appre-rules-item" >
-            <View className="rules-key">有效期：</View>
-            <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
-          </View>
-          {
-            this.state.coupon.limit_purchase_quantity ? <View className="appre-rules-item" >
-              <View className="rules-key">购买限制：</View>
-              <View className="rules-words">每人最多可购买{this.state.coupon.limit_purchase_quantity}份</View>
-            </View> : null
-          }
-          {/* {
-            this.state.coupon.description&&this.state.coupon.description.length ? <View>
-              <View className="appre-rules-list-title" >使用规则：</View>
-              {
-                this.state.coupon.description.map((item, index) => {
-                  <View className="appre-rules-list-text" >-{item}</View>
-                })
-              }
-            </View> : null
-          } */}
-        </View>
         {
-          brief.length ? <View className="img-list-box">
-            <View className="img-title-box">
-              <View className='img-title-left'></View>
-              <View className='img-title'>图文详情</View>
-            </View>
-            <View className="images-content">
-              {
-                !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
-                  : null
-              }
-              {
-                !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
-                  : null
-              }
-              {
-                this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
-                  return (
-                    <Image className="images-item" mode={'widthFix'} key={item} src={item} />
-                  )
-                }) : null
-              }
-            </View>
-            {
-              brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
-                <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
-                <View className="img-more-text" >查看更多</View>
-              </View>
-                : (
-                  brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
-                    <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
-                    <View className="img-more-text" >收起</View>
-                  </View> : null
-                )
-            }
-          </View> : null
+          this.state.tabList.length > 1 && this.state.tabShow ? <ActivityTab tabList={this.state.tabList} onAtion={this.changeTab} /> : null
         }
         {
+          tabCurrent == 0 || tabCurrent == 1 ?
+            <View className='gift-item-content'  >
+              {
+                tabContent[tabCurrent].map((item: any, index: any) => {
+                  return (
+                    <View key={item.gift_id}>
+                      <GiftItem label={'平台礼品'} itemImg={item.gift_image} title={item.gift_name} desc={item.use_description} rules={item.rule_description} price={item.original_money} btn={item.each_num} />
+                    </View>
+                  )
+                })
+              }
+            </View>
+            : null
+        }
+
+        {
+          tabCurrent == 2 ?
+            <View className="appre-rules">
+              <View className="appre-title-box">
+                <View className='appre-title-left'></View>
+                <View className='appre-title'>使用说明</View>
+              </View>
+
+              <View className="appre-rules-item" >
+                <View className="rules-key">使用方式：</View>
+                <View className="rules-words">扫码支付时抵用</View>
+              </View>
+
+              <View className="appre-rules-item" >
+                <View className="rules-key"> 使用门槛：</View>
+                <View className="rules-words">满￥{this.state.coupon.total_fee}可用</View>
+              </View>
+              <View className="appre-rules-item" >
+                <View className="rules-key">有效期：</View>
+                <View className="rules-words">购买后{this.state.coupon.expire_day}天内可用</View>
+              </View>
+              {
+                this.state.coupon.limit_purchase_quantity ? <View className="appre-rules-item" >
+                  <View className="rules-key">购买限制：</View>
+                  <View className="rules-words">每人最多可购买{this.state.coupon.limit_purchase_quantity}份</View>
+                </View> : null
+              }
+            </View> : null
+        }
+        {
+          tabCurrent == 2 && brief.length ?
+            <View className="img-list-box">
+              <View className="img-title-box">
+                <View className='img-title-left'></View>
+                <View className='img-title'>图文详情</View>
+              </View>
+              <View className="images-content">
+                {
+                  !this.state.showMoreImages && brief.length > 0 ? <Image className="images-item" mode={'widthFix'} src={brief[0]} />
+                    : null
+                }
+                {
+                  !this.state.showMoreImages && brief.length > 1 ? <Image className="images-item" mode={'widthFix'} src={brief[1]} />
+                    : null
+                }
+                {
+                  this.state.showMoreImages && brief.length > 2 ? brief.map((item: any, index: any) => {
+                    return (
+                      <Image className="images-item" mode={'widthFix'} key={item} src={item} />
+                    )
+                  }) : null
+                }
+              </View>
+              {
+                brief.length > 2 && !this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: true }) }} >
+                  <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/GQr5D7QZwJczZ6RTwDapaYXj8nMbkenx.png"} />
+                  <View className="img-more-text" >查看更多</View>
+                </View>
+                  : (
+                    brief.length > 2 && this.state.showMoreImages ? <View className="img-more" onClick={() => { this.setState({ showMoreImages: false }) }} >
+                      <Image className="img-more-icon" src={"http://oss.tdianyi.com/front/3pwMx3EMhEpZQs7jhS2zrA6fjSQdsFbW.png"} />
+                      <View className="img-more-text" >收起</View>
+                    </View> : null
+                  )
+              }
+            </View> : null
+        }
+        {/* {
           this.state.recommend && this.state.recommend.length > 0 ?
             <View className="more_goods">
               <View className="title-box">
@@ -563,7 +612,7 @@ export default class TicketBuy extends Component {
                   )
               }
             </View> : ""
-        }
+        } */}
 
         <View className="appre-buy-box" >
           <View className="appre-buy-price-box" >

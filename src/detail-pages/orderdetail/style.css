@@ -141,6 +141,125 @@
   border: 1.5px solid #f44;
   border-radius: 16px;
 }
+.a_buyBox .a_billingInfo .gift-info-area {
+  font-size: 26px;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-img {
+  width: 114px;
+  height: 114px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-right: 20px;
+  position: relative;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-img .gift-img-img {
+  width: 100% !important;
+  height: 100% !important;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-img .gift-img-icon {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-info {
+  height: auto;
+  width: calc(100% - 140px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-info .gift-title {
+  width: 100%;
+  height: auto;
+  min-height: 33px;
+  max-height: 66px;
+  font-size: 26px;
+  line-height: 33px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-info .gift-info-content {
+  width: 100%;
+  height: 24px;
+  font-size: 24px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #999;
+  line-height: 1;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.a_buyBox
+  .a_billingInfo
+  .gift-info-area
+  .gift-info
+  .gift-info-content
+  .gift-give-type,
+.a_buyBox
+  .a_billingInfo
+  .gift-info-area
+  .gift-info
+  .gift-info-content
+  .gift-give-type2 {
+  margin-right: 30px;
+  width: 80px;
+  height: 23px;
+  text-align: right;
+  font-size: 24px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #f44;
+  line-height: 1;
+}
+.a_buyBox
+  .a_billingInfo
+  .gift-info-area
+  .gift-info
+  .gift-info-content
+  .gift-give-type2 {
+  color: #ff9b11;
+}
+.a_buyBox .a_billingInfo .gift-info-area .gift-info .gift-labels {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+}
+.a_buyBox
+  .a_billingInfo
+  .gift-info-area
+  .gift-info
+  .gift-labels
+  .gift-label-item {
+  padding: 0 12px;
+  height: 36px;
+  background: #ffecec;
+  border-radius: 18px;
+  font-size: 20px;
+  color: #f44;
+  line-height: 36px;
+  margin-right: 10px;
+}
+.a_buyBox .a_billingInfo .gift-info-area:last-child {
+  margin-bottom: 0;
+}
 .a_buyBox .a_imgBox {
   height: 113px;
   padding-bottom: 5px;
