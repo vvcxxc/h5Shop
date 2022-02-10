@@ -80,7 +80,7 @@
 		"eslint-plugin-typescript": "^0.14.0",
 		"husky": "^3.0.9",
 		"lint-staged": "^9.4.2",
-		"node-sass": "^4.13.0",
+		"node-sass": "^7.0.0",
 		"omit.js": "^1.0.2",
 		"redux-logger": "^3.0.6",
 		"sass-loader": "^8.0.0",
